@@ -1,17 +1,17 @@
 #pragma once
 
+#include "Window.h"
+#include "RenderSystem.h"
+
 class Engine
 {
-	friend static void framebufferResizeCallback(GLFWwindow*, int, int);
 public:
 	void Run();
 
 private:
-	void initWindow();
-	void initVulkan();
 	void mainLoop();
 	void cleanup();
-	GLFWwindow *m_window = nullptr;
 
-	bool framebufferResized = false;
+	Window m_window;
+	RenderSystem m_renderSystem;
 };
