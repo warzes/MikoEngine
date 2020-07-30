@@ -13,4 +13,22 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/hash.hpp>
 
+#include <stb_image.h>
+
+#include <tiny_obj_loader.h>
+
+#include <iostream>
+#include <fstream>
+#include <stdexcept>
+#include <algorithm>
+#include <chrono>
+#include <vector>
+#include <cstring>
+#include <cstdlib>
+#include <cstdint>
+#include <array>
+#include <optional>
+#include <set>
+#include <unordered_map>
+
 #pragma warning( pop )
