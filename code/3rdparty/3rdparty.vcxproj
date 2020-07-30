@@ -23,6 +23,9 @@
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="empty.cpp" />
+    <ClCompile Include="glfw.c" />
+    <ClCompile Include="stb_image.c" />
+    <ClCompile Include="tiny_obj_loader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h" />
