@@ -11,9 +11,16 @@ void Engine::Run()
 //-----------------------------------------------------------------------------
 void Engine::mainLoop()
 {
+	while (!m_window.IsClose())
+	{
+		m_window.Events();
+		m_renderSystem.drawFrame(m_window.GetFramebufferResized());
+	}
 }
 //-----------------------------------------------------------------------------
 void Engine::cleanup()
 {
+	m_renderSystem.Close();
+	m_window.Close();
 }
 //-----------------------------------------------------------------------------

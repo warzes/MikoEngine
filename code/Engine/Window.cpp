@@ -21,3 +21,19 @@ GLFWwindow* Window::GetWindow()
 	return m_window;
 }
 //-----------------------------------------------------------------------------
+void Window::Close()
+{
+	glfwDestroyWindow(m_window);
+	glfwTerminate();
+}
+//-----------------------------------------------------------------------------
+bool Window::IsClose()
+{
+	return glfwWindowShouldClose(m_window);
+}
+//-----------------------------------------------------------------------------
+void Window::Events()
+{
+	glfwPollEvents();
+}
+//-----------------------------------------------------------------------------

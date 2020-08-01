@@ -19,6 +19,12 @@
     <ClInclude Include="RenderSystem.h">
       <Filter>framework</Filter>
     </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="framework">
