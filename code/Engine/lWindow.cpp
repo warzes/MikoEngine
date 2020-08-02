@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Window.h"
+#include "lWindow.h"
 //-----------------------------------------------------------------------------
 static void framebufferResizeCallback(GLFWwindow* window, int width, int height)
 {

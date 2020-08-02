@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Window.h"
-#include "RenderSystem.h"
+#include "lWindow.h"
+#include "lRenderSystem.h"
 
-class Engine
+class lEngine
 {
 public:
 	void Run();
@@ -13,5 +13,5 @@ private:
 	void cleanup();
 
 	Window m_window;
-	RenderSystem m_renderSystem;
+	iRenderSystem m_renderSystem;
 };

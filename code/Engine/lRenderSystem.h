@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vertex.h"
+#include "lVertex.h"
 
 struct QueueFamilyIndices
 {
@@ -20,7 +20,7 @@ struct SwapChainSupportDetails
 	std::vector<VkPresentModeKHR> presentModes;
 };
 
-class RenderSystem
+class iRenderSystem
 {
 public:
 	void Init(GLFWwindow *window);

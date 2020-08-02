@@ -2,6 +2,12 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Application\Application.cpp">
+      <Filter>x_Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Timer.cpp">
+      <Filter>2_Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -24,6 +30,20 @@
     <ClInclude Include="Base\DetectCompiler.h">
       <Filter>0_Base</Filter>
     </ClInclude>
+    <ClInclude Include="Utility\Version.h">
+      <Filter>2_Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilityHeader.h" />
+    <ClInclude Include="Application\Application.h">
+      <Filter>x_Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ApplicationSettings.h">
+      <Filter>x_Application</Filter>
+    </ClInclude>
+    <ClInclude Include="ApplicationHeader.h" />
+    <ClInclude Include="Utility\Timer.h">
+      <Filter>2_Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
@@ -31,6 +51,12 @@
     </Filter>
     <Filter Include="1_Core">
       <UniqueIdentifier>{d718705e-21b5-45e2-bdd7-1afe309e949d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2_Utility">
+      <UniqueIdentifier>{0ef567a3-df2a-4196-98f4-72fea53ef287}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="x_Application">
+      <UniqueIdentifier>{300e355c-439e-45ff-a74c-237736a3baa6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

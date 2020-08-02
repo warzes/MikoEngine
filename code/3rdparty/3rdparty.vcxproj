@@ -22,7 +22,6 @@
     <ProjectGuid>{66C95043-EBFC-4959-B69B-17BF9D125E97}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
-    <ClCompile Include="empty.cpp" />
     <ClCompile Include="glfw.c" />
     <ClCompile Include="stb_image.c" />
     <ClCompile Include="tiny_obj_loader.cpp" />

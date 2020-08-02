@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "Engine.h"
+#include "iEngine.h"
 //-----------------------------------------------------------------------------
-void Engine::Run()
+void lEngine::Run()
 {
 	m_window.Init();
 	m_renderSystem.Init(m_window.GetWindow());
@@ -9,7 +9,7 @@ void Engine::Run()
 	cleanup();
 }
 //-----------------------------------------------------------------------------
-void Engine::mainLoop()
+void lEngine::mainLoop()
 {
 	while (!m_window.IsClose())
 	{
@@ -18,7 +18,7 @@ void Engine::mainLoop()
 	}
 }
 //-----------------------------------------------------------------------------
-void Engine::cleanup()
+void lEngine::cleanup()
 {
 	m_renderSystem.Close();
 	m_window.Close();

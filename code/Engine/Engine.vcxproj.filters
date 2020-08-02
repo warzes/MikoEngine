@@ -1,33 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Engine.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="Window.cpp">
-      <Filter>framework</Filter>
+    <ClCompile Include="iEngine.cpp">
+      <Filter>lesson</Filter>
     </ClCompile>
-    <ClCompile Include="RenderSystem.cpp">
-      <Filter>framework</Filter>
+    <ClCompile Include="lRenderSystem.cpp">
+      <Filter>lesson</Filter>
+    </ClCompile>
+    <ClCompile Include="lWindow.cpp">
+      <Filter>lesson</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Window.h">
-      <Filter>framework</Filter>
+    <ClInclude Include="iEngine.h">
+      <Filter>lesson</Filter>
     </ClInclude>
-    <ClInclude Include="RenderSystem.h">
-      <Filter>framework</Filter>
+    <ClInclude Include="lRenderSystem.h">
+      <Filter>lesson</Filter>
     </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>framework</Filter>
+    <ClInclude Include="lUtils.h">
+      <Filter>lesson</Filter>
     </ClInclude>
-    <ClInclude Include="Vertex.h">
-      <Filter>framework</Filter>
+    <ClInclude Include="lVertex.h">
+      <Filter>lesson</Filter>
+    </ClInclude>
+    <ClInclude Include="lWindow.h">
+      <Filter>lesson</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="framework">
+    <Filter Include="lesson">
       <UniqueIdentifier>{e68a30b6-224f-4f99-b1a6-5d18128c54c6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
