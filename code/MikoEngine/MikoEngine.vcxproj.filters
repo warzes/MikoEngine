@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="BaseHeader.h" />
+    <ClInclude Include="Base\DetectOS.h">
+      <Filter>0_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\EngineVersionConst.h">
+      <Filter>0_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\VersionOSConst.h">
+      <Filter>0_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\BaseMacros.h">
+      <Filter>0_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ConfigEngine.h">
+      <Filter>0_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\DetectCompiler.h">
+      <Filter>0_Base</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="0_Base">
+      <UniqueIdentifier>{a1cd305b-0c49-4ae6-ad9f-a14b9b407400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1_Core">
+      <UniqueIdentifier>{d718705e-21b5-45e2-bdd7-1afe309e949d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
