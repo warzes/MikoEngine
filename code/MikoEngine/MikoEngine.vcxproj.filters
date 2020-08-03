@@ -144,5 +144,8 @@
     <Filter Include="6_Scene">
       <UniqueIdentifier>{e611321d-1fe1-4774-bec1-9f09faadc156}</UniqueIdentifier>
     </Filter>
+    <Filter Include="4_Render\VKWrapper">
+      <UniqueIdentifier>{0255269c-0d7e-48fc-8b83-b53fd58411aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

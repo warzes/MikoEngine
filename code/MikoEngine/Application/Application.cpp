@@ -10,18 +10,7 @@
 #    include <imgui/examples/imgui_impl_opengl3.h>
 #endif
 //-----------------------------------------------------------------------------
-#if SE_VULKAN
-void imgui_vulkan_error_check(VkResult err)
-{
-	if ( err == 0 )
-		return;
-
-	SE_LOG_ERROR("(Vulkan) Error " + std::to_string(err));
-
-	if ( err < 0 )
-		abort();
-}
-#else
+#if SE_OPENGL
 static void APIENTRY glDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* user_param)
 {
 	std::string msg_source;
@@ -104,11 +93,6 @@ int Application::Run(int argc, const char *argv[])
 	while ( !exit_requested() )
 		update_base(m_delta);
 #endif
-
-#if SE_VULKAN
-	m_vk_backend->wait_idle();
-#endif
-
 	shutdown_base();
 	return 0;
 }
@@ -335,6 +319,10 @@ void Application::update_base(double delta)
 //-----------------------------------------------------------------------------
 void Application::shutdown_base()
 {
+#if SE_VULKAN
+	m_vk_backend->wait_idle();
+#endif
+
 	// Execute user-side shutdown method.
 	shutdown();
 

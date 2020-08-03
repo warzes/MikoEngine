@@ -9,7 +9,8 @@
 
 // TODO:
 #define SE_OPENGL 1
-#define SE_VULKAN 0
+#define SE_VULKAN 1
 #if SE_VULKAN
 #	undef SE_OPENGL
+#	define SE_OPENGL 0
 #endif
