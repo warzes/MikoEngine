@@ -4,6 +4,7 @@
 #pragma comment(lib, "Engine.lib")
 #pragma comment(lib, "MikoEngine.lib")
 #pragma comment(lib, "vulkan-1.lib")
+#pragma comment(lib, "OpenGL32.lib")
 //-----------------------------------------------------------------------------
 int main(
 	[[maybe_unused]] int argc,

@@ -1,8 +1,6 @@
 #pragma once
 
-#if SE_VULKAN
-#	include "Render/VulkanRender.h"
-#endif
+#include "RenderHeader.h"
 
 #if SE_VULKAN
 #	define SE_SCOPED_SAMPLE(name, cmd_buf) profiler::ScopedProfile __FILE__##__LINE__(name, cmd_buf)

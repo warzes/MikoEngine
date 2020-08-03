@@ -22,7 +22,7 @@
 //  Only override if your GL version doesn't handle this GLSL version. See GLSL version table at the top of imgui_impl_opengl3.cpp.
 
 #pragma once
-#include "imgui.h"      // IMGUI_IMPL_API
+#include "../imgui.h"      // IMGUI_IMPL_API
 
 // Backend API
 IMGUI_IMPL_API bool     ImGui_ImplOpenGL3_Init(const char* glsl_version = NULL);
@@ -67,7 +67,7 @@ IMGUI_IMPL_API void     ImGui_ImplOpenGL3_DestroyDeviceObjects();
 #elif defined(__has_include)
 #if __has_include(<GL/glew.h>)
     #define IMGUI_IMPL_OPENGL_LOADER_GLEW
-#elif __has_include(<glad/glad.h>)
+#elif __has_include(<glad.h>)
     #define IMGUI_IMPL_OPENGL_LOADER_GLAD
 #elif __has_include(<glad/gl.h>)
     #define IMGUI_IMPL_OPENGL_LOADER_GLAD2

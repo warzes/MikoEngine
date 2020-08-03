@@ -250,6 +250,7 @@
     <ClCompile Include="assimp\contrib\zlib\trees.c" />
     <ClCompile Include="assimp\contrib\zlib\uncompr.c" />
     <ClCompile Include="assimp\contrib\zlib\zutil.c" />
+    <ClCompile Include="glad.c" />
     <ClCompile Include="glfw.c" />
     <ClCompile Include="imgui\examples\imgui_impl_dx11.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -264,12 +265,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="imgui\examples\imgui_impl_glfw.cpp" />
-    <ClCompile Include="imgui\examples\imgui_impl_opengl3.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="imgui\examples\imgui_impl_opengl3.cpp" />
     <ClCompile Include="imgui\examples\imgui_impl_vulkan.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
@@ -505,6 +501,7 @@
     <ClInclude Include="assimp\contrib\zip\src\miniz.h" />
     <ClInclude Include="assimp\contrib\zip\src\zip.h" />
     <ClInclude Include="Define.h" />
+    <ClInclude Include="glad.h" />
     <ClInclude Include="imgui\examples\imgui_impl_dx11.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -518,12 +515,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="imgui\examples\imgui_impl_glfw.h" />
-    <ClInclude Include="imgui\examples\imgui_impl_opengl3.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="imgui\examples\imgui_impl_opengl3.h" />
     <ClInclude Include="imgui\examples\imgui_impl_vulkan.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />

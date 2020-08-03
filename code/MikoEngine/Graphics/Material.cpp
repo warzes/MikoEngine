@@ -350,7 +350,7 @@ void Material::unload_texture(gl::Texture2D*& tex)
 		if ( itr.second == tex )
 		{
 			m_texture_cache.erase(itr.first);
-			DW_SAFE_DELETE(tex);
+			SafeDelete(tex);
 			return;
 		}
 	}

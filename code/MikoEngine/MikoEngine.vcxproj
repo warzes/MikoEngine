@@ -184,6 +184,7 @@
     <ClInclude Include="Math\Camera.h" />
     <ClInclude Include="Math\Geometry.h" />
     <ClInclude Include="RenderHeader.h" />
+    <ClInclude Include="Render\OpenGLRender.h" />
     <ClInclude Include="Render\VulkanRender.h" />
     <ClInclude Include="SceneHeader.h" />
     <ClInclude Include="Scene\Scene.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="Graphics\Material.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
     <ClCompile Include="Math\Camera.cpp" />
+    <ClCompile Include="Render\OpenGLRender.cpp" />
     <ClCompile Include="Render\VulkanRender.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="stdafx.cpp">

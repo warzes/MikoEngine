@@ -1,8 +1,6 @@
 #pragma once
 
-#if SE_VULKAN
-#	include "Render/VulkanRender.h"
-#endif // SE_VULKAN
+#include "RenderHeader.h"
 
 class Material;
 

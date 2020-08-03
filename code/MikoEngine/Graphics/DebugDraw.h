@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Render/VulkanRender.h"
+#include "RenderHeader.h"
 
 // Hard-limit of vertices. Used to reserve space in vertex and draw command vectors.
 #define MAX_VERTICES 100000

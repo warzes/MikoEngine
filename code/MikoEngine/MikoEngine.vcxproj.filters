@@ -35,6 +35,9 @@
     <ClCompile Include="Scene\Scene.cpp">
       <Filter>6_Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Render\OpenGLRender.cpp">
+      <Filter>4_Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -112,6 +115,9 @@
       <Filter>6_Scene</Filter>
     </ClInclude>
     <ClInclude Include="SceneHeader.h" />
+    <ClInclude Include="Render\OpenGLRender.h">
+      <Filter>4_Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">

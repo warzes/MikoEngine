@@ -21,6 +21,10 @@
 //-----------------------------------------------------------------------------
 SE_PRAGMA_WARNING_LEVEL(0);
 
+#if SE_OPENGL
+#	include "glad.h"
+#endif
+
 #if SE_VULKAN
 #	define GLFW_INCLUDE_VULKAN
 #endif
@@ -32,6 +36,7 @@ SE_PRAGMA_WARNING_LEVEL(0);
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/hash.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <stb_image.h>
 
