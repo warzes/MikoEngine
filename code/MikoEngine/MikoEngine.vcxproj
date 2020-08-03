@@ -186,6 +186,7 @@
     <ClInclude Include="RenderHeader.h" />
     <ClInclude Include="Render\OpenGLRender.h" />
     <ClInclude Include="Render\VulkanRender.h" />
+    <ClInclude Include="Render\VulkanWrapper.h" />
     <ClInclude Include="SceneHeader.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="stdafx.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="Math\Camera.cpp" />
     <ClCompile Include="Render\OpenGLRender.cpp" />
     <ClCompile Include="Render\VulkanRender.cpp" />
+    <ClCompile Include="Render\VulkanWrapper.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

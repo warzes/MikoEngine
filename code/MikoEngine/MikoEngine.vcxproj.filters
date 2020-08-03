@@ -38,6 +38,9 @@
     <ClCompile Include="Render\OpenGLRender.cpp">
       <Filter>4_Render</Filter>
     </ClCompile>
+    <ClCompile Include="Render\VulkanWrapper.cpp">
+      <Filter>4_Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -116,6 +119,9 @@
     </ClInclude>
     <ClInclude Include="SceneHeader.h" />
     <ClInclude Include="Render\OpenGLRender.h">
+      <Filter>4_Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\VulkanWrapper.h">
       <Filter>4_Render</Filter>
     </ClInclude>
   </ItemGroup>
