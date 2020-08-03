@@ -1,5 +1,7 @@
 #pragma once
 
+#define TIME_IMPL_STL 0
+
 // Build OS Version (name in VersionOSConst)
 #if SE_PLATFORM_WINDOWS
 #	define SE_WINDOWS_VERSION       SE_WINDOWS_10

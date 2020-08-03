@@ -8,6 +8,15 @@
     <ClCompile Include="Utility\Timer.cpp">
       <Filter>2_Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Logger.cpp">
+      <Filter>1_Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Utility.cpp">
+      <Filter>2_Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Camera.cpp">
+      <Filter>3_Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -44,6 +53,27 @@
     <ClInclude Include="Utility\Timer.h">
       <Filter>2_Utility</Filter>
     </ClInclude>
+    <ClInclude Include="Base\InlineFunc.h">
+      <Filter>0_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Win32PlatformDefinitions.h">
+      <Filter>0_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreHeader.h" />
+    <ClInclude Include="Core\Logger.h">
+      <Filter>1_Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Utility.h">
+      <Filter>2_Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderHeader.h" />
+    <ClInclude Include="Math\Geometry.h">
+      <Filter>3_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Camera.h">
+      <Filter>3_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="MathHeader.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
@@ -57,6 +87,12 @@
     </Filter>
     <Filter Include="x_Application">
       <UniqueIdentifier>{300e355c-439e-45ff-a74c-237736a3baa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_Render">
+      <UniqueIdentifier>{2fab659a-bf18-4b6e-bcca-503b118d0b59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3_Math">
+      <UniqueIdentifier>{917e468f-60ce-4828-b8a9-daa924241558}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
