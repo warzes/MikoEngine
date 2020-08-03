@@ -22,21 +22,24 @@
 SE_PRAGMA_WARNING_LEVEL(0);
 
 #if SE_OPENGL
-#	include "glad.h"
+#	include <glad.h>
 #endif
 
 #if SE_VULKAN
+#	define GLFW_INCLUDE_NONE
 #	define GLFW_INCLUDE_VULKAN
 #endif
 #include <GLFW/glfw3.h>
 
 #define GLM_FORCE_RADIANS
+// GLM use the OpenGL depth range of -1.0 to 1.0 by default.
+// We want range from 0.0 to 1.0 for Vulkan.
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/hash.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 #include <stb_image.h>
 
@@ -71,7 +74,7 @@ SE_PRAGMA_WARNING_LEVEL(0);
 SE_PRAGMA_WARNING_POP
 
 //-----------------------------------------------------------------------------
-// STL Header
+// STD C++17 Header
 //-----------------------------------------------------------------------------
 SE_PRAGMA_WARNING_LEVEL(0);
 

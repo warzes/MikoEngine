@@ -2,10 +2,6 @@
 
 #if SE_VULKAN
 
-//struct VmaAllocator_T;
-//struct VmaAllocation_T;
-//enum VmaMemoryUsage;
-
 namespace vk
 {
 	class Image;

@@ -198,16 +198,11 @@ bool Application::init_base(int argc, const char * argv[])
 	SE_LOG_INFO("Successfully initialized platform!");
 
 #if SE_VULKAN
-	m_vk_backend = vk::Backend::create(m_window,
+	bool enableValidationLayers = false;
 #	if SE_DEBUG
-		true
-#	else
-		false
+	enableValidationLayers = true;
 #	endif
-		,
-		settings.ray_tracing,
-		settings.device_extensions,
-		settings.device_pnext);
+	m_vk_backend = vk::Backend::create(m_window, enableValidationLayers, settings.ray_tracing, settings.device_extensions, settings.device_pnext);
 
 	m_image_available_semaphores.resize(vk::Backend::kMaxFramesInFlight);
 	m_render_finished_semaphores.resize(vk::Backend::kMaxFramesInFlight);
@@ -477,7 +472,7 @@ void Application::mouse_move(double x, double y, double deltaX, double deltaY)
 void Application::key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
 	if ( key == GLFW_KEY_ESCAPE && action == GLFW_PRESS )
-		glfwSetWindowShouldClose(window, GL_TRUE);
+		glfwSetWindowShouldClose(window, 1);
 	if ( key >= 0 && key < MAX_KEYS )
 	{
 		if ( action == GLFW_PRESS )
