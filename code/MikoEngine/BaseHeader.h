@@ -14,14 +14,16 @@
 //-----------------------------------------------------------------------------
 // Header config
 //-----------------------------------------------------------------------------
-#define _CRT_SECURE_NO_WARNINGS // TODO: удалить
+//#define _CRT_SECURE_NO_WARNINGS // TODO: удалить
 
 //-----------------------------------------------------------------------------
 // 3rd-party Header
 //-----------------------------------------------------------------------------
 SE_PRAGMA_WARNING_LEVEL(0);
 
-#define GLFW_INCLUDE_VULKAN
+#if SE_VULKAN
+#	define GLFW_INCLUDE_VULKAN
+#endif
 #include <GLFW/glfw3.h>
 
 #define GLM_FORCE_RADIANS
@@ -34,6 +36,18 @@ SE_PRAGMA_WARNING_LEVEL(0);
 #include <stb_image.h>
 
 #include <tiny_obj_loader.h>
+
+#include <imgui/imgui.h>
+
+#if SE_VULKAN
+#	include <vulkan/vulkan.h>
+#	define VMA_USE_STL_SHARED_MUTEX 0 // TODO
+#	include <vk_mem_alloc.h>
+#endif // SE_VULKAN
+
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
+#include <assimp/scene.h>
 
 SE_PRAGMA_WARNING_POP
 
@@ -72,6 +86,7 @@ SE_PRAGMA_WARNING_LEVEL(0);
 #include <vector>
 #include <array>
 #include <set>
+#include <stack>
 #include <unordered_map>
 
 #include <mutex>

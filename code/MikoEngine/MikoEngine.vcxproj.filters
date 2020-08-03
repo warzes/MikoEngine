@@ -17,6 +17,24 @@
     <ClCompile Include="Math\Camera.cpp">
       <Filter>3_Math</Filter>
     </ClCompile>
+    <ClCompile Include="Render\VulkanRender.cpp">
+      <Filter>4_Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\DebugDraw.cpp">
+      <Filter>5_Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Profiler.cpp">
+      <Filter>1_Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Material.cpp">
+      <Filter>5_Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Mesh.cpp">
+      <Filter>5_Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Scene.cpp">
+      <Filter>6_Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -74,6 +92,26 @@
       <Filter>3_Math</Filter>
     </ClInclude>
     <ClInclude Include="MathHeader.h" />
+    <ClInclude Include="Render\VulkanRender.h">
+      <Filter>4_Render</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsHeader.h" />
+    <ClInclude Include="Graphics\DebugDraw.h">
+      <Filter>5_Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Profiler.h">
+      <Filter>1_Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Material.h">
+      <Filter>5_Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Mesh.h">
+      <Filter>5_Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Scene.h">
+      <Filter>6_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneHeader.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
@@ -93,6 +131,12 @@
     </Filter>
     <Filter Include="3_Math">
       <UniqueIdentifier>{917e468f-60ce-4828-b8a9-daa924241558}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="5_Graphics">
+      <UniqueIdentifier>{e94f0097-25a8-4f5c-94cb-ec3c0e99e0d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="6_Scene">
+      <UniqueIdentifier>{e611321d-1fe1-4774-bec1-9f09faadc156}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

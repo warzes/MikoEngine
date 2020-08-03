@@ -1,0 +1,49 @@
+********************************************************************************************************
+Mon Aug  3 14:44:18 2020
+Log Started.
+********************************************************************************************************
+[ 14:44:18 | INFO    ] : Successfully initialized platform! , FILE : Application.cpp , LINE : 131
+[ 14:44:19 | ERROR   ] : (Vulkan) Validation Layer: loader_get_json: Failed to open JSON file C:\ProgramData\FPSMonitor\hooks\tools\fpsmonvk64.json , FILE : VulkanRender.cpp , LINE : 282
+[ 14:44:19 | ERROR   ] : (Vulkan) Validation Layer: loaderAddLayerNameToList: Failed to find layer name VK_MIRILLIS_LAYER to activate , FILE : VulkanRender.cpp , LINE : 282
+[ 14:44:19 | ERROR   ] : (Vulkan) Validation Layer: loaderAddLayerNameToList: Failed to find layer name VK_MIRILLIS_LAYER to activate , FILE : VulkanRender.cpp , LINE : 282
+[ 14:44:20 | INFO    ] : (Vulkan) Vendor : INTEL , FILE : VulkanRender.cpp , LINE : 3796
+[ 14:44:20 | INFO    ] : (Vulkan) Name   : Intel(R) UHD Graphics 630 , FILE : VulkanRender.cpp , LINE : 3797
+[ 14:44:20 | INFO    ] : (Vulkan) Type   : VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU , FILE : VulkanRender.cpp , LINE : 3798
+[ 14:44:20 | INFO    ] : (Vulkan) Driver : 1646390 , FILE : VulkanRender.cpp , LINE : 3799
+[ 14:44:20 | INFO    ] : (Vulkan) Number of Queue families: 1 , FILE : VulkanRender.cpp , LINE : 3831
+[ 14:44:20 | INFO    ] : (Vulkan) Family 0 , FILE : VulkanRender.cpp , LINE : 3840
+[ 14:44:20 | INFO    ] : (Vulkan) Supported Bits:  , FILE : VulkanRender.cpp , LINE : 3841
+[ 14:44:20 | INFO    ] : (Vulkan) VK_QUEUE_GRAPHICS_BIT: 1 , FILE : VulkanRender.cpp , LINE : 3842
+[ 14:44:20 | INFO    ] : (Vulkan) VK_QUEUE_COMPUTE_BIT: 1 , FILE : VulkanRender.cpp , LINE : 3843
+[ 14:44:20 | INFO    ] : (Vulkan) VK_QUEUE_TRANSFER_BIT: 1 , FILE : VulkanRender.cpp , LINE : 3844
+[ 14:44:20 | INFO    ] : (Vulkan) Number of Queues: 1 , FILE : VulkanRender.cpp , LINE : 3845
+[ 14:44:21 | ERROR   ] : (Vulkan) Validation Layer: Validation Error: [ VUID-vkAcquireNextImageKHR-semaphore-01286 ] Object 0: handle = 0x5068b60000000154, type = VK_OBJECT_TYPE_SEMAPHORE; | MessageID = 0xe9e4b2a9 | vkAcquireNextImageKHR: Semaphore must not be currently signaled or in a wait state. The Vulkan spec states: If semaphore is not VK_NULL_HANDLE it must be unsignaled (https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VUID-vkAcquireNextImageKHR-semaphore-01286) , FILE : VulkanRender.cpp , LINE : 282
+********************************************************************************************************
+Mon Aug  3 14:51:42 2020
+Log Started.
+********************************************************************************************************
+[ 14:51:42 | INFO    ] : Successfully initialized platform! , FILE : Application.cpp , LINE : 131
+[ 14:51:42 | ERROR   ] : (Vulkan) Validation Layer: loader_get_json: Failed to open JSON file C:\ProgramData\FPSMonitor\hooks\tools\fpsmonvk64.json , FILE : VulkanRender.cpp , LINE : 282
+[ 14:51:42 | ERROR   ] : (Vulkan) Validation Layer: loaderAddLayerNameToList: Failed to find layer name VK_MIRILLIS_LAYER to activate , FILE : VulkanRender.cpp , LINE : 282
+[ 14:51:42 | ERROR   ] : (Vulkan) Validation Layer: loaderAddLayerNameToList: Failed to find layer name VK_MIRILLIS_LAYER to activate , FILE : VulkanRender.cpp , LINE : 282
+[ 14:51:42 | INFO    ] : (Vulkan) Vendor : INTEL , FILE : VulkanRender.cpp , LINE : 3796
+[ 14:51:42 | INFO    ] : (Vulkan) Name   : Intel(R) UHD Graphics 630 , FILE : VulkanRender.cpp , LINE : 3797
+[ 14:51:42 | INFO    ] : (Vulkan) Type   : VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU , FILE : VulkanRender.cpp , LINE : 3798
+[ 14:51:42 | INFO    ] : (Vulkan) Driver : 1646390 , FILE : VulkanRender.cpp , LINE : 3799
+[ 14:51:42 | INFO    ] : (Vulkan) Number of Queue families: 1 , FILE : VulkanRender.cpp , LINE : 3831
+[ 14:51:42 | INFO    ] : (Vulkan) Family 0 , FILE : VulkanRender.cpp , LINE : 3840
+[ 14:51:42 | INFO    ] : (Vulkan) Supported Bits:  , FILE : VulkanRender.cpp , LINE : 3841
+[ 14:51:42 | INFO    ] : (Vulkan) VK_QUEUE_GRAPHICS_BIT: 1 , FILE : VulkanRender.cpp , LINE : 3842
+[ 14:51:42 | INFO    ] : (Vulkan) VK_QUEUE_COMPUTE_BIT: 1 , FILE : VulkanRender.cpp , LINE : 3843
+[ 14:51:42 | INFO    ] : (Vulkan) VK_QUEUE_TRANSFER_BIT: 1 , FILE : VulkanRender.cpp , LINE : 3844
+[ 14:51:42 | INFO    ] : (Vulkan) Number of Queues: 1 , FILE : VulkanRender.cpp , LINE : 3845
+[ 14:51:43 | INFO    ] : Found aiTextureType_DIFFUSE: default.png , FILE : Mesh.cpp , LINE : 214
+[ 14:51:43 | FATAL   ] : (Vulkan) Destructing after Device. , FILE : VulkanRender.cpp , LINE : 985
+********************************************************************************************************
+Mon Aug  3 14:51:58 2020
+Log Started.
+********************************************************************************************************
+[ 14:51:58 | INFO    ] : Successfully initialized platform! , FILE : Application.cpp , LINE : 131
+[ 14:51:58 | ERROR   ] : (Vulkan) Validation Layer: loader_get_json: Failed to open JSON file C:\ProgramData\FPSMonitor\hooks\tools\fpsmonvk64.json , FILE : VulkanRender.cpp , LINE : 282
+[ 14:51:58 | ERROR   ] : (Vulkan) Validation Layer: loaderAddLayerNameToList: Failed to find layer name VK_MIRILLIS_LAYER to activate , FILE : VulkanRender.cpp , LINE : 282
+[ 14:51:58 | ERROR   ] : (Vulkan) Validation Layer: loaderAddLayerNameToList: Failed to find layer name VK_MIRILLIS_LAYER to activate , FILE : VulkanRender.cpp , LINE : 282

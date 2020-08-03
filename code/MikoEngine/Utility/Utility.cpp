@@ -20,7 +20,7 @@ namespace utility
 {
     static std::string g_exe_path = "";
 
-    // -----------------------------------------------------------------------------------------------------------------------------------
+    
 
     std::string path_for_resource(const std::string& resource)
     {
@@ -32,7 +32,7 @@ namespace utility
 #endif
     }
 
-    // -----------------------------------------------------------------------------------------------------------------------------------
+    
 
 #ifdef WIN32
     std::string executable_path()
@@ -80,7 +80,7 @@ namespace utility
     }
 #endif
 
-    // -----------------------------------------------------------------------------------------------------------------------------------
+    
 
     std::string current_working_directory()
     {
@@ -93,14 +93,14 @@ namespace utility
         return std::string(buffer);
     }
 
-    // -----------------------------------------------------------------------------------------------------------------------------------
+    
 
     void change_current_working_directory(std::string path)
     {
         ChangeWorkingDir(path.c_str());
     }
 
-    // -----------------------------------------------------------------------------------------------------------------------------------
+    
 
     std::string path_without_file(std::string filepath)
     {
@@ -112,7 +112,7 @@ namespace utility
         return path;
     }
 
-    // -----------------------------------------------------------------------------------------------------------------------------------
+    
 
     std::string file_extension(std::string filepath)
     {
@@ -121,7 +121,7 @@ namespace utility
         return ext;
     }
 
-    // -----------------------------------------------------------------------------------------------------------------------------------
+    
 
     std::string file_name_from_path(std::string filepath)
     {
@@ -138,7 +138,7 @@ namespace utility
         return filename;
     }
 
-    // -----------------------------------------------------------------------------------------------------------------------------------
+    
 
     bool read_text(std::string path, std::string& out)
     {
@@ -159,7 +159,7 @@ namespace utility
             return false;
     }
 
-    // -----------------------------------------------------------------------------------------------------------------------------------
+    
 
     template <typename T>
     bool contains(const std::vector<T>& vec, const T& obj)
@@ -173,7 +173,7 @@ namespace utility
         return false;
     }
 
-    // -----------------------------------------------------------------------------------------------------------------------------------
+    
 
     bool read_shader(const std::string& path, std::string& out, std::vector<std::string> defines)
     {
@@ -193,7 +193,7 @@ namespace utility
         return preprocess_shader(path, og_source, out);
     }
 
-    // -----------------------------------------------------------------------------------------------------------------------------------
+    
 
     std::string header_guard_from_path(const std::string& path)
     {
@@ -203,7 +203,7 @@ namespace utility
         return out + "_H";
     }
 
-    // -----------------------------------------------------------------------------------------------------------------------------------
+    
 
     bool preprocess_shader(const std::string& path, const std::string& src, std::string& out)
     {
