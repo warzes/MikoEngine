@@ -938,5 +938,403 @@ namespace vkWrapper
 	}
 #pragma endregion
 
+#pragma region SwapChain
+	//-------------------------------------------------------------------------
+	// SwapChain
+	//-------------------------------------------------------------------------
+	VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats)
+	{
+		VkFormat expectedFormat = VK_FORMAT_R8G8B8A8_UNORM;
+		VkColorSpaceKHR expectedColorSpace = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
+
+		for ( const auto& candidate : availableFormats )
+		{
+			if ( candidate.format == expectedFormat &&
+				candidate.colorSpace == expectedColorSpace )
+				return candidate;
+		}
+
+		// default
+		return availableFormats[0];
+	}
+
+	VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes)
+	{
+		VkPresentModeKHR expected = VK_PRESENT_MODE_MAILBOX_KHR;
+
+		for ( const auto& candidate : availablePresentModes )
+		{
+			if ( candidate == expected ) return candidate;
+		}
+
+		return VK_PRESENT_MODE_FIFO_KHR;
+	}
+
+	uint32_t clamp(uint32_t v, uint32_t mn, uint32_t mx)
+	{
+		return std::max(mn, std::min(mx, v));
+	}
+
+	VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities, uint32_t width, uint32_t height)
+	{
+		VkExtent2D actualExtent = { width,height };
+
+		if ( capabilities.currentExtent.width != UINT32_MAX )
+		{
+			actualExtent = capabilities.currentExtent;
+		}
+		else
+		{
+			const VkExtent2D& minExtent = capabilities.minImageExtent;
+			const VkExtent2D& maxExtent = capabilities.maxImageExtent;
+			actualExtent.width = clamp(actualExtent.width, minExtent.width, maxExtent.width);
+			actualExtent.height = clamp(actualExtent.height, minExtent.height, maxExtent.height);
+		}
+
+		return actualExtent;
+	}
+
+	SwapChain::SwapChain(LogicalDevice* device, Surface* surface)
+		: VkDeviceObject(device)
+		, m_surface(surface)
+	{
+	}
+
+	SwapChain::~SwapChain()
+	{
+		Close();
+	}
+
+	void SwapChain::Init()
+	{
+		PhysicalDevice* physical = m_parent->GetPhysical();
+		SwapChainSupportDetails swapChainSupport = physical->m_swapChainSupport;
+
+		VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
+		VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
+
+		uint32_t width, height;
+		m_surface->GetSize(width, height);
+		m_extent = chooseSwapExtent(swapChainSupport.capabilities, width, height);
+
+		uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
+
+		if ( swapChainSupport.capabilities.maxImageCount > 0
+			&& imageCount > swapChainSupport.capabilities.maxImageCount )
+		{
+			imageCount = swapChainSupport.capabilities.maxImageCount;
+		}
+
+		VkSwapchainCreateInfoKHR createInfo = {};
+		createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
+		createInfo.surface = m_surface->Get();
+
+		createInfo.minImageCount = imageCount;
+		createInfo.imageFormat = surfaceFormat.format;
+		createInfo.imageColorSpace = surfaceFormat.colorSpace;
+		createInfo.imageExtent = m_extent;
+		createInfo.imageArrayLayers = 1;
+		createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+
+		QueueFamilyIndices indices = physical->m_indices;
+		uint32_t queueFamilyIndices[] = { indices.graphicsFamily.value(), indices.presentFamily.value() };
+
+		if ( indices.graphicsFamily != indices.presentFamily )
+		{
+			createInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
+			createInfo.queueFamilyIndexCount = 2;
+			createInfo.pQueueFamilyIndices = queueFamilyIndices;
+		}
+		else
+		{
+			createInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
+			createInfo.queueFamilyIndexCount = 0; // Optional
+			createInfo.pQueueFamilyIndices = nullptr; // Optional
+		}
+
+		createInfo.preTransform = swapChainSupport.capabilities.currentTransform;
+		createInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
+		createInfo.presentMode = presentMode;
+		createInfo.clipped = VK_TRUE;
+		createInfo.oldSwapchain = VK_NULL_HANDLE;
+
+		if ( vkCreateSwapchainKHR(m_parent->Get(), &createInfo, nullptr, &m_swapChain) != VK_SUCCESS )
+		{
+			throw std::runtime_error("failed to create swap chain!");
+		}
+
+		// retrieve handles to the swap chain vkImage(s)
+		vkGetSwapchainImagesKHR(m_parent->Get(), m_swapChain, &imageCount, nullptr);
+		m_images.resize(imageCount);
+		vkGetSwapchainImagesKHR(m_parent->Get(), m_swapChain, &imageCount, m_images.data());
+		m_imageFormat = surfaceFormat.format;
+
+		std::cout << "swapchain image count = " << imageCount << std::endl;
+
+	}
+
+	void SwapChain::Close()
+	{
+		vkDestroySwapchainKHR(m_parent->Get(), m_swapChain, nullptr);
+	}
+
+	uint32_t SwapChain::AcquireNextImage(VkSemaphore semaphore)
+	{
+		uint32_t imageIndex;
+		VkResult result = vkAcquireNextImageKHR(m_parent->Get(), m_swapChain, UINT64_MAX, semaphore, VK_NULL_HANDLE, &imageIndex);
+		if ( result == VK_ERROR_OUT_OF_DATE_KHR )
+		{
+			throw std::runtime_error("need to recreate swapchain");
+		}
+		else if ( result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR )
+		{
+			throw std::runtime_error("failed to acquire swap chain image!");
+		}
+
+		return imageIndex;
+	}
+
+#pragma endregion
+
+#pragma region Queue
+	//-------------------------------------------------------------------------
+	// Queue
+	//-------------------------------------------------------------------------
+	Queue::Queue(LogicalDevice* device, uint32_t familyIndex)
+		: VkDeviceObject(device)
+		, m_familyIndex(familyIndex)
+	{
+	}
+
+	Queue::~Queue()
+	{
+		Close();
+	}
+
+	void Queue::Init()
+	{
+		vkGetDeviceQueue(m_parent->Get(), m_familyIndex, 0, &m_queue);
+	}
+
+	void Queue::Close()
+	{
+		m_queue = VK_NULL_HANDLE;
+	}
+	void Queue::Wait()
+	{
+		vkQueueWaitIdle(m_queue);
+	}
+
+	void Queue::Present(VkSemaphore semaphore, SwapChain* swapchain, uint32_t imageIndex)
+	{
+		VkSemaphore signalSemaphores[] = { semaphore };
+
+		VkPresentInfoKHR presentInfo = {};
+		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+
+		presentInfo.waitSemaphoreCount = 1;
+		presentInfo.pWaitSemaphores = signalSemaphores;
+
+		VkSwapchainKHR swapChains[] = { swapchain->Get() };
+		presentInfo.swapchainCount = 1;
+		presentInfo.pSwapchains = swapChains;
+		presentInfo.pImageIndices = &imageIndex;
+
+		presentInfo.pResults = nullptr; // Optional
+
+		VkResult result = vkQueuePresentKHR(m_queue, &presentInfo);
+
+		if ( result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR )
+		{
+			throw std::runtime_error("framebuffer need to be resized");
+		}
+		else if ( result != VK_SUCCESS )
+		{
+			throw std::runtime_error("failed to present swap chain image!");
+		}
+	}
+#pragma endregion
+
+#pragma region LogicalDevice
+	//-------------------------------------------------------------------------
+	// LogicalDevice
+	//-------------------------------------------------------------------------
+
+	LogicalDevice::LogicalDevice(PhysicalDevice* physical)
+		: m_device(VK_NULL_HANDLE)
+		, m_physicalDevice(physical)
+		, m_msaaEnabled(true)
+	{
+	}
+
+	LogicalDevice::~LogicalDevice()
+	{
+		Close();
+	}
+
+	void LogicalDevice::Init()
+	{
+		QueueFamilyIndices indices = m_physicalDevice->m_indices;
+
+		float queuePriority = 1.0f;
+		std::set<uint32_t> queueFamilies = indices.GetQueueFamilySet();
+		std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
+		for ( uint32_t queueFamily : queueFamilies )
+		{
+			VkDeviceQueueCreateInfo queueCreateInfo = {};
+			queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+			queueCreateInfo.queueFamilyIndex = queueFamily;
+			queueCreateInfo.queueCount = 1;
+			queueCreateInfo.pQueuePriorities = &queuePriority;
+			queueCreateInfos.push_back(queueCreateInfo);
+		}
+
+		// enable features
+		VkPhysicalDeviceFeatures deviceFeatures = {};
+		deviceFeatures.samplerAnisotropy = VK_TRUE;
+		deviceFeatures.sampleRateShading = m_msaaEnabled ? VK_TRUE : VK_FALSE;
+
+
+		VkDeviceCreateInfo createInfo = {};
+		createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+
+		createInfo.queueCreateInfoCount = queueCreateInfos.size();
+		createInfo.pQueueCreateInfos = queueCreateInfos.data();
+
+		createInfo.pEnabledFeatures = &deviceFeatures;
+
+
+		m_extensions = PhysicalDevice::DefaultExtensions();
+		createInfo.enabledExtensionCount = m_extensions.Count();
+		createInfo.ppEnabledExtensionNames = m_extensions.Data();
+
+		if ( enableValidationLayers )
+		{
+			m_validationLayers = ValidationLayers::Default();
+			createInfo.enabledLayerCount = m_validationLayers.Count();
+			createInfo.ppEnabledLayerNames = m_validationLayers.Data();
+		}
+		else
+		{
+			createInfo.enabledLayerCount = 0;
+		}
+
+		if ( vkCreateDevice(m_physicalDevice->Get(), &createInfo, nullptr, &m_device) != VK_SUCCESS )
+		{
+			throw std::runtime_error("failed to create logical device!");
+		}
+
+		// get device queues
+		m_graphicsQueue = new Queue(this, indices.graphicsFamily.value());
+		m_presentQueue = new Queue(this, indices.presentFamily.value());
+		m_transferQueue = new Queue(this, indices.transferFamily.value());
+		m_graphicsQueue->Init();
+		m_presentQueue->Init();
+		m_transferQueue->Init();
+	}
+
+	void LogicalDevice::Close()
+	{
+		vkDestroyDevice(m_device, nullptr);
+	}
+
+	VkDevice& LogicalDevice::Get()
+	{
+		return m_device;
+	}
+
+	PhysicalDevice* LogicalDevice::GetPhysical()
+	{
+		return m_physicalDevice;
+	}
+
+#pragma endregion
+
+#pragma region Synchronization
+	//-------------------------------------------------------------------------
+	// Synchronization
+	//-------------------------------------------------------------------------
+	Synchronization::Synchronization(LogicalDevice* device, uint32_t framesInFlight)
+		: VkDeviceObject(device)
+		, m_framesInFlight(framesInFlight)
+		, m_currentFrame(0)
+	{
+	}
+
+	Synchronization::~Synchronization()
+	{
+		Close();
+	}
+
+	void Synchronization::Init()
+	{
+		m_imgAvailableSemaphores.resize(m_framesInFlight);
+		m_renderFinishedSemaphores.resize(m_framesInFlight);
+		m_inFlightFences.resize(m_framesInFlight);
+
+		VkSemaphoreCreateInfo semaphoreInfo = {};
+		semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+
+		VkFenceCreateInfo fenceInfo = {};
+		fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+		fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+
+		for ( size_t i = 0; i < m_framesInFlight; i++ )
+		{
+			if ( vkCreateSemaphore(m_parent->Get(), &semaphoreInfo, nullptr, &m_imgAvailableSemaphores[i]) != VK_SUCCESS ||
+				vkCreateSemaphore(m_parent->Get(), &semaphoreInfo, nullptr, &m_renderFinishedSemaphores[i]) != VK_SUCCESS ||
+				vkCreateFence(m_parent->Get(), &fenceInfo, nullptr, &m_inFlightFences[i]) != VK_SUCCESS )
+			{
+				throw std::runtime_error("failed to create synchronization objects for a frame!");
+			}
+		}
+	}
+
+	void Synchronization::Close()
+	{
+		for ( size_t i = 0; i < m_framesInFlight; i++ )
+		{
+			vkDestroySemaphore(m_parent->Get(), m_imgAvailableSemaphores[i], nullptr);
+			vkDestroySemaphore(m_parent->Get(), m_renderFinishedSemaphores[i], nullptr);
+			vkDestroyFence(m_parent->Get(), m_inFlightFences[i], nullptr);
+		}
+		m_imgAvailableSemaphores.clear();
+		m_renderFinishedSemaphores.clear();
+		m_inFlightFences.clear();
+	}
+
+	void Synchronization::WaitForFence()
+	{
+		vkWaitForFences(m_parent->Get(), 1, &m_inFlightFences[m_currentFrame], VK_TRUE, UINT64_MAX);
+	}
+
+	void Synchronization::ResetFence()
+	{
+		vkResetFences(m_parent->Get(), 1, &m_inFlightFences[m_currentFrame]);
+	}
+
+	void Synchronization::NextFrame()
+	{
+		m_currentFrame = (m_currentFrame + 1) % m_framesInFlight;
+	}
+
+	VkSemaphore& Synchronization::GetImgAvailableSemaphore()
+	{
+		return m_imgAvailableSemaphores[m_currentFrame];
+	}
+
+	VkSemaphore& Synchronization::GetRenderFinishedSemaphore()
+	{
+		return m_renderFinishedSemaphores[m_currentFrame];
+	}
+
+	VkFence& Synchronization::GetFence()
+	{
+		return m_inFlightFences[m_currentFrame];
+	}
+#pragma endregion
+
+
+
 } // namespace vkWrapper
 #endif // SE_VULKAN

@@ -59,6 +59,8 @@ namespace vkWrapper
 	const bool enableValidationLayers = false;
 #endif
 
+	static const int MAX_FRAMES_IN_FLIGHT = 2; // TODO:
+
 	struct QueueFamilyIndices
 	{
 		bool IsComplete()
@@ -168,6 +170,7 @@ namespace vkWrapper
 	// TODO: почистить класс от лишнего
 	class PhysicalDevice
 	{
+		friend class SwapChain;
 	public:
 		PhysicalDevice() = default;
 		PhysicalDevice(VkPhysicalDevice &physical);
@@ -263,7 +266,7 @@ namespace vkWrapper
 	using VkInstanceObject = VkObject<Instance>;
 	using VkDeviceObject = VkObject<LogicalDevice>;
 		
-	class DebugMessenger : public VkInstanceObject
+	class DebugMessenger : VkInstanceObject
 	{
 	public:
 		DebugMessenger(Instance *vkinstance);
@@ -284,7 +287,7 @@ namespace vkWrapper
 		VkDebugUtilsMessengerEXT m_messenger;
 	};
 
-	class Surface : public VkInstanceObject
+	class Surface : VkInstanceObject
 	{
 	public:
 		Surface(Instance *vkinstance, GLFWwindow* window);
@@ -301,6 +304,152 @@ namespace vkWrapper
 		GLFWwindow* m_window;
 		VkSurfaceKHR m_surface;
 	};	
+
+	class SwapChain : VkDeviceObject
+	{
+	public:
+		SwapChain(LogicalDevice* device, Surface* surface);
+		~SwapChain();
+
+		void Init() override;
+		void Close() override;
+
+		uint32_t AcquireNextImage(VkSemaphore semaphore);
+
+		VkSwapchainKHR& Get()
+		{
+			return m_swapChain;
+		}
+
+		VkImage GetImage(uint32_t index)
+		{
+			return m_images[index];
+		}
+		VkFormat GetFormat()
+		{
+			return m_imageFormat;
+		}
+		uint32_t Count()
+		{
+			return m_images.size();
+		}
+
+		VkExtent2D GetExtent()
+		{
+			return m_extent;
+		}
+
+	private:
+		VkSwapchainKHR m_swapChain;
+		Surface* m_surface;
+
+		std::vector<VkImage> m_images;
+
+		VkFormat m_imageFormat;
+		VkExtent2D m_extent;
+
+		float aspectRatio;
+	};
+
+	class Queue : VkDeviceObject
+	{
+	public:
+		Queue(LogicalDevice* device, uint32_t familyIndex);
+		~Queue();
+
+		void Init() override;
+		void Close() override;
+
+		void Wait();
+		void Present(VkSemaphore semaphore, SwapChain* swapchain, uint32_t imageIndex);
+
+		VkQueue& Get()
+		{
+			return m_queue;
+		}
+		uint32_t GetFamilyIndex()
+		{
+			return m_familyIndex;
+		}
+
+	private:
+		VkQueue m_queue;
+		uint32_t m_familyIndex;
+	};
+
+	class LogicalDevice
+	{
+	public:
+		LogicalDevice(PhysicalDevice* phyDevice);
+		virtual ~LogicalDevice();
+
+		void Init();
+		void Close();
+
+		VkDevice& Get();
+		PhysicalDevice* GetPhysical();
+		Queue* GetGraphicQueue()
+		{
+			return m_graphicsQueue;
+		}
+		Queue* GetPresentQueue()
+		{
+			return m_presentQueue;
+		}
+		Queue* GetTransferQueue()
+		{
+			return m_transferQueue;
+		}
+
+		bool MsaaEnabled()
+		{
+			return m_msaaEnabled;
+		}
+
+	private:
+		VkDevice m_device;
+
+		// associated queue to this device.
+		Queue* m_graphicsQueue;
+		Queue* m_presentQueue;
+		Queue* m_transferQueue;
+
+		// physical device from which this object has been create.
+		PhysicalDevice* m_physicalDevice;
+
+		// options
+		bool m_msaaEnabled;
+
+		ValidationLayers m_validationLayers;
+		Extensions m_extensions;
+	};
+
+	class Synchronization : VkDeviceObject
+	{
+	public:
+		Synchronization(LogicalDevice* device, uint32_t framesInFlight = MAX_FRAMES_IN_FLIGHT);
+		~Synchronization();
+
+		void Init() override;
+		void Close() override;
+
+		void WaitForFence();
+		void ResetFence();
+		void NextFrame();
+
+		VkSemaphore& GetImgAvailableSemaphore();
+		VkSemaphore& GetRenderFinishedSemaphore();
+		VkFence& GetFence();
+
+	private:
+		std::vector<VkSemaphore> m_imgAvailableSemaphores;
+		std::vector<VkSemaphore> m_renderFinishedSemaphores;
+		std::vector<VkFence> m_inFlightFences;
+
+		uint32_t m_framesInFlight;
+		uint32_t m_currentFrame;
+	};
+
 
 } // namespace vkWrapper
 #endif // SE_VULKAN

@@ -41,6 +41,9 @@
     <ClCompile Include="Render\VulkanWrapper.cpp">
       <Filter>4_Render</Filter>
     </ClCompile>
+    <ClCompile Include="Render\VulkanWrapper_Resource.cpp">
+      <Filter>4_Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -122,6 +125,9 @@
       <Filter>4_Render</Filter>
     </ClInclude>
     <ClInclude Include="Render\VulkanWrapper.h">
+      <Filter>4_Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\VulkanWrapper_Resource.h">
       <Filter>4_Render</Filter>
     </ClInclude>
   </ItemGroup>
