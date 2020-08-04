@@ -1,5 +1,54 @@
 ﻿#pragma once
 
+/*=============================================================================
+Документация
+===============================================================================
+TODO: возможно вынести в отдельный заголовок VulkanWrapper_doc.h
+
+	---------------------------------------------------------------------------
+	Глобальные переменные
+	---------------------------------------------------------------------------
+		enableValidationLayers - включается слоя проверок
+			TODO: возможно удалить. включать в создании рендера
+
+	---------------------------------------------------------------------------
+	Классы
+	---------------------------------------------------------------------------
+	Extensions - класс позволяющий включать и проверять расширения в вулкане
+		Используется в Instance
+		Методы:
+		TODO:
+			убрать в cpp, пользователю недоступен
+
+	ValidationLayers - класс позволяющий включать и проверять слои в вулкане
+		Используется в Instance
+		Методы:
+		TODO:
+			убрать в cpp, пользователю недоступен
+
+	PhysicalDevice
+
+	Instance - класс обертка над VkInstance
+		Включает расширения и слои. 
+		Создает VkInstance
+		Создает Surface
+		Возвращает список физических устройств и может выбрать оптимальный
+		TODO:
+			убрать метод CreateDebugMessenger (создавать при инициализации)
+			включить возможность установки расширений и слоев
+
+	VkObject / VkInstanceObject / VkDeviceObject - базовый класс от которого наследуются все ресурсы в данном пространстве имен
+		VkInstanceObject хранит указатель на Instance 
+		VkDeviceObject хранит указатель на Virtual Device
+
+	DebugMessenger - класс включающий сообщения от слоя проверок.
+		Используется в Instance
+
+	Surface
+
+
+*/
+
 #if SE_VULKAN
 
 namespace vkWrapper
@@ -10,9 +59,35 @@ namespace vkWrapper
 	const bool enableValidationLayers = false;
 #endif
 
+	struct QueueFamilyIndices
+	{
+		bool IsComplete()
+		{
+			return graphicsFamily.has_value() && presentFamily.has_value() && transferFamily.has_value();
+		}
+
+		std::set<uint32_t> GetQueueFamilySet()
+		{
+			std::set<uint32_t> res = { graphicsFamily.value(), presentFamily.value(), transferFamily.value() };
+			return res;
+		}
+
+		std::optional<uint32_t> graphicsFamily;
+		std::optional<uint32_t> presentFamily;
+		std::optional<uint32_t> transferFamily;
+	};
+
+	struct SwapChainSupportDetails
+	{
+		VkSurfaceCapabilitiesKHR capabilities;
+		std::vector<VkSurfaceFormatKHR> formats;
+		std::vector<VkPresentModeKHR> presentModes;
+	};
+
+
 	class Surface;
 	class DebugMessenger;
-	class PhysicalDevice;
+	class LogicalDevice;
 
 	class Extensions
 	{
@@ -59,6 +134,45 @@ namespace vkWrapper
 		std::vector<std::string> m_layers;
 	};
 
+	class PhysicalDevice
+	{
+	public:
+		PhysicalDevice() = default;
+		PhysicalDevice(VkPhysicalDevice &physical);
+
+		void FindSupportDetails(VkSurfaceKHR &surface);
+
+		VkSampleCountFlagBits GetMaxUsableSampleCount();
+
+		VkFormat FindSupportedFormat(const std::vector<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
+
+		VkFormat FindDepthFormat();
+
+		bool HasStencilComponent(VkFormat format);
+
+		QueueFamilyIndices FindQueueFamilies(VkSurfaceKHR &surface);
+
+		SwapChainSupportDetails QuerySwapChainSupport(VkSurfaceKHR &surface);
+
+		bool IsDeviceSuitable(VkSurfaceKHR& surface);
+
+		bool CheckDeviceExtensionSupport();
+
+		int RateDeviceSuitability();
+
+		uint32_t FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
+
+		static Extensions DefaultExtensions();
+
+		VkPhysicalDevice Get();
+
+	private:
+		VkPhysicalDevice m_physical = VK_NULL_HANDLE; // implicitly destroyed with instance
+		VkSampleCountFlagBits m_msaaSamples = VK_SAMPLE_COUNT_1_BIT;
+		QueueFamilyIndices m_indices;
+		SwapChainSupportDetails m_swapChainSupport;
+	};
+
 	class Instance
 	{
 	public:
@@ -81,40 +195,28 @@ namespace vkWrapper
 		Extensions m_extensions;
 	};
 
-	template <typename Self>
-	class VkInstanceObject
+	template<typename T>
+	class VkObject
 	{
 	public:
-		using Ptr = std::shared_ptr<Self>;
-
-		VkInstanceObject(std::shared_ptr<Instance> parent) : m_parent(parent) {}
-
-		virtual void Init() = 0; // TODO: возможно удалить
+		VkObject(T* parent) : m_parent(parent) {}
+		//VkObject(std::shared_ptr<T> parent) : m_parent(parent) {}
+		virtual ~VkObject() = default;// TODO: возможно удалить
+		virtual void Init() = 0;// TODO: возможно удалить
 		virtual void Close() = 0;// TODO: возможно удалить
 
 	protected:
-		std::weak_ptr<Instance> m_parent; // TODO: я не делаю проверку на реальное существование Instance
+		T* m_parent;
+		//std::weak_ptr<T> m_parent; // T наследовать от enable_shared_from_this
 	};
 
-	//template <typename Self>
-	//class VkDeviceObject
-	//{
-	//public:
-	//	using Ptr = std::shared_ptr<Self>;
-
-	//	VkDeviceObject(std::shared_ptr<LogicalDevice> parent) : m_parent(parent) {}
-
-	//	virtual void Init() = 0;// TODO: возможно удалить
-	//	virtual void Close() = 0;// TODO: возможно удалить
-
-	//protected:
-	//	std::weak_ptr<LogicalDevice> m_parent;
-	//};
-	
-	class DebugMessenger : public VkInstanceObject<DebugMessenger>
+	using VkInstanceObject = VkObject<Instance>;
+	using VkDeviceObject = VkObject<LogicalDevice>;
+		
+	class DebugMessenger : public VkInstanceObject
 	{
 	public:
-		DebugMessenger(std::shared_ptr<Instance> vkinstance);
+		DebugMessenger(Instance *vkinstance);
 		~DebugMessenger();
 
 		void Init() override;
@@ -132,10 +234,11 @@ namespace vkWrapper
 		VkDebugUtilsMessengerEXT m_messenger;
 	};
 
-	class Surface : public VkInstanceObject<Surface>
+	class Surface : public VkInstanceObject
 	{
 	public:
-		Surface(std::shared_ptr<Instance> vkinstance, GLFWwindow* window);
+		Surface(Instance *vkinstance, GLFWwindow* window);
+		~Surface();
 
 		void Init() override;
 		void Close() override;
@@ -147,9 +250,7 @@ namespace vkWrapper
 	private:
 		GLFWwindow* m_window;
 		VkSurfaceKHR m_surface;
-	};
-
-	
+	};	
 
 } // namespace vkWrapper
 #endif // SE_VULKAN
