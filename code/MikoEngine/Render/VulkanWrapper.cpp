@@ -427,42 +427,45 @@ namespace vkWrapper
 			throw std::runtime_error("validation layers requested, but not available!");
 		}
 
+		auto extensions = Extensions::Default();
+		//extensions.Enable(VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME); // устарело в 1.1??
+		extensions.CheckSupport();
+
 		VkApplicationInfo appInfo = {};
-		appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-		appInfo.pApplicationName = "Game";
+		appInfo.sType              = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+		appInfo.pApplicationName   = "Game";
 		appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-		appInfo.pEngineName = "Miko Engine";
-		appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-		appInfo.apiVersion = VK_API_VERSION_1_0;
-		appInfo.pNext = nullptr;
+		appInfo.pEngineName        = "Miko Engine";
+		appInfo.engineVersion      = VK_MAKE_VERSION(1, 0, 0);
+		appInfo.apiVersion         = VK_API_VERSION_1_1;
+		appInfo.pNext              = nullptr;
 
 		VkInstanceCreateInfo createInfo = {};
 		createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 		createInfo.pApplicationInfo = &appInfo;
-
-		auto extensions = Extensions::Default();
-		extensions.CheckSupport();
 		createInfo.enabledExtensionCount = extensions.Count();
 		createInfo.ppEnabledExtensionNames = extensions.Data();
 
 		VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo;
 		if (enableValidationLayers)
 		{
-			std::cout << "validationLayers is enabled" << std::endl;
+			SE_LOG_INFO("validationLayers is enabled");
 			createInfo.enabledLayerCount = m_validationLayers.Count();
 			createInfo.ppEnabledLayerNames = m_validationLayers.Data();
 
 			DebugMessenger::PopulateCreateInfo(debugCreateInfo);
-			createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
+			createInfo.pNext = &debugCreateInfo;
 		}
-		else {
+		else
+		{
 			createInfo.enabledLayerCount = 0;
 			createInfo.pNext = nullptr;
 		}
 
 		if (vkCreateInstance(&createInfo, nullptr, &m_instance) != VK_SUCCESS) 
 		{
-			throw std::runtime_error("failed to create instance!");
+			SE_LOG_FATAL("(Vulkan) Failed to create Vulkan instance.");
+			throw std::runtime_error("(Vulkan) Failed to create Vulkan instance.");
 		}
 	}
 
@@ -482,28 +485,26 @@ namespace vkWrapper
 	{
 		uint32_t deviceCount = 0;
 		vkEnumeratePhysicalDevices(m_instance, &deviceCount, nullptr);
+		if ( deviceCount == 0 )
+		{
+			SE_LOG_FATAL("(Vulkan) Failed to find GPUs with Vulkan support!");
+			throw std::runtime_error("(Vulkan) Failed to find GPUs with Vulkan support!");
+		}
 
 		physicals.resize(deviceCount);
 
-		if (deviceCount > 0)
-		{
-			std::vector<VkPhysicalDevice> devices(deviceCount);
-			vkEnumeratePhysicalDevices(m_instance, &deviceCount, devices.data());
+		std::vector<VkPhysicalDevice> devices(deviceCount);
+		vkEnumeratePhysicalDevices(m_instance, &deviceCount, devices.data());
 
-			for (uint32_t i = 0; i < deviceCount; ++i)
-				physicals[i] = PhysicalDevice(devices[i]);
-		}
-		else
-		{
-			throw std::runtime_error("failed to find GPUs with Vulkan support!");
-		}
+		for (uint32_t i = 0; i < deviceCount; ++i)
+			physicals[i] = PhysicalDevice(devices[i]);
 	}
 
 	PhysicalDevice Instance::PickPhysicalDevice(Surface* surface)
 	{
 		std::vector<PhysicalDevice> devices;
 		GetPhysicalDevices(devices);
-
+				
 		// Use an ordered map to automatically sort candidates by increasing score
 		std::multimap<int, PhysicalDevice> candidates;
 		for (auto& device : devices)
@@ -583,7 +584,7 @@ namespace vkWrapper
 		PopulateCreateInfo(createInfo);
 		if (CreateDebugUtilsMessengerEXT(m_parent->Get(), &createInfo, nullptr, &m_messenger) != VK_SUCCESS)
 		{
-			throw std::runtime_error("failed to set up debug messenger!");
+			SE_LOG_FATAL("(Vulkan) Failed to create Vulkan debug messenger.");
 		}
 	}
 
@@ -621,7 +622,8 @@ namespace vkWrapper
 	{
 		if (glfwCreateWindowSurface(m_parent->Get(), m_window, nullptr, &m_surface) != VK_SUCCESS)
 		{
-			throw std::runtime_error("failed to create window surface!");
+			SE_LOG_FATAL("(Vulkan) Failed to create Vulkan surface.");
+			throw std::runtime_error("(Vulkan) Failed to create Vulkan surface.");
 		}
 	}
 

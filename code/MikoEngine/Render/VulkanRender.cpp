@@ -277,11 +277,11 @@ namespace vk
 
     // -----------------------------------------------------------------------------------------------------------------------------------
 
-    VKAPI_ATTR VkBool32 VKAPI_CALL debug_callback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData)
-    {
-        SE_LOG_ERROR("(Vulkan) Validation Layer: " + std::string(pCallbackData->pMessage));
-        return VK_FALSE;
-    }
+    //VKAPI_ATTR VkBool32 VKAPI_CALL debug_callback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData)
+    //{
+    //    SE_LOG_ERROR("(Vulkan) Validation Layer: " + std::string(pCallbackData->pMessage));
+    //    return VK_FALSE;
+    //}
 
     // -----------------------------------------------------------------------------------------------------------------------------------
 
@@ -2975,67 +2975,14 @@ namespace vk
     {
         m_ray_tracing_enabled = require_ray_tracing;
 
-        VkApplicationInfo appInfo;
-        SE_ZERO_MEMORY(appInfo);
-
-        appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-        appInfo.pApplicationName = "Inferno Runtime";
-        appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-        appInfo.pEngineName = "Inferno";
-        appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-        appInfo.apiVersion = VK_API_VERSION_1_1;
-
-        std::vector<const char*> extensions = required_extensions(enable_validation_layers);
-
-        extensions.push_back(VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME);
-
-        VkInstanceCreateInfo create_info;
-        SE_ZERO_MEMORY(create_info);
-
-        create_info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-        create_info.pApplicationInfo = &appInfo;
-        create_info.enabledExtensionCount = extensions.size();
-        create_info.ppEnabledExtensionNames = extensions.data();
-
-        VkDebugUtilsMessengerCreateInfoEXT debug_create_info;
-
-        if ( enable_validation_layers )
-        {
-            SE_ZERO_MEMORY(debug_create_info);
-            create_info.enabledLayerCount = static_cast<uint32_t>(kValidationLayers.size());
-            create_info.ppEnabledLayerNames = kValidationLayers.data();
-
-            debug_create_info.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
-            debug_create_info.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
-            debug_create_info.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
-            debug_create_info.pfnUserCallback = debug_callback;
-
-            create_info.pNext = &debug_create_info;
-        }
-        else
-        {
-            create_info.enabledLayerCount = 0;
-            create_info.pNext = nullptr;
-        }
-
-        if ( vkCreateInstance(&create_info, nullptr, &m_vk_instance) != VK_SUCCESS )
-        {
-            SE_LOG_FATAL("(Vulkan) Failed to create Vulkan instance.");
-            throw std::runtime_error("(Vulkan) Failed to create Vulkan instance.");
-        }
-
-        if ( enable_validation_layers && create_debug_utils_messenger(m_vk_instance, &debug_create_info, nullptr, &m_vk_debug_messenger) != VK_SUCCESS )
-            SE_LOG_FATAL("(Vulkan) Failed to create Vulkan debug messenger.");
-
-        if ( !create_surface(window) )
-        {
-            SE_LOG_FATAL("(Vulkan) Failed to create Vulkan surface.");
-            throw std::runtime_error("(Vulkan) Failed to create Vulkan surface.");
-        }
+        m_instance = new vkWrapper::Instance();
+        m_instance->Init();
+        m_debugMessenger = m_instance->CreateDebugMessenger();
+        m_surface = m_instance->CreateSurface(window);
 
         std::vector<const char*> device_extensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 
-        if ( require_ray_tracing )
+        if ( m_ray_tracing_enabled )
         {
             device_extensions.push_back(VK_NV_RAY_TRACING_EXTENSION_NAME);
             device_extensions.push_back(VK_KHR_GET_MEMORY_REQUIREMENTS_2_EXTENSION_NAME);
@@ -3107,22 +3054,13 @@ namespace vk
         m_swap_chain_depth_view.reset();
         m_swap_chain_depth.reset();
 
-        if ( m_vk_debug_messenger )
-        {
-            destroy_debug_utils_messenger(m_vk_instance, m_vk_debug_messenger, nullptr);
-            m_vk_debug_messenger = nullptr;
-        }
+        delete m_debugMessenger; m_debugMessenger = nullptr;
+        delete m_surface; m_surface = nullptr;
 
         if ( m_vk_swap_chain )
         {
             vkDestroySwapchainKHR(m_vk_device, m_vk_swap_chain, nullptr);
             m_vk_swap_chain = nullptr;
-        }
-
-        if ( m_vk_surface )
-        {
-            vkDestroySurfaceKHR(m_vk_instance, m_vk_surface, nullptr);
-            m_vk_surface = nullptr;
         }
 
         if ( m_vma_allocator )
@@ -3137,11 +3075,7 @@ namespace vk
             m_vk_device = nullptr;
         }
 
-        if ( m_vk_instance )
-        {
-            vkDestroyInstance(m_vk_instance, nullptr);
-            m_vk_instance = nullptr;
-        }
+        delete m_instance; m_instance = nullptr;
     }
 
     // -----------------------------------------------------------------------------------------------------------------------------------
@@ -3494,9 +3428,9 @@ namespace vk
 
     // -----------------------------------------------------------------------------------------------------------------------------------
 
-    VkInstance Backend::instance()
+    VkInstance& Backend::instance()
     {
-        return m_vk_instance;
+        return m_instance->Get();
     }
 
     // -----------------------------------------------------------------------------------------------------------------------------------
@@ -3616,27 +3550,27 @@ namespace vk
 
     // -----------------------------------------------------------------------------------------------------------------------------------
 
-    void Backend::query_swap_chain_support(VkPhysicalDevice device, SwapChainSupportDetails& details)
+    void Backend::query_swap_chain_support(VkPhysicalDevice device, vkWrapper::SwapChainSupportDetails& details)
     {
         // Get surface capabilities
-        vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, m_vk_surface, &details.capabilities);
+        vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, m_surface->Get(), &details.capabilities);
 
         uint32_t present_mode_count;
-        vkGetPhysicalDeviceSurfacePresentModesKHR(device, m_vk_surface, &present_mode_count, nullptr);
+        vkGetPhysicalDeviceSurfacePresentModesKHR(device, m_surface->Get(), &present_mode_count, nullptr);
 
         if ( present_mode_count != 0 )
         {
-            details.present_modes.resize(present_mode_count);
-            vkGetPhysicalDeviceSurfacePresentModesKHR(device, m_vk_surface, &present_mode_count, &details.present_modes[0]);
+            details.presentModes.resize(present_mode_count);
+            vkGetPhysicalDeviceSurfacePresentModesKHR(device, m_surface->Get(), &present_mode_count, &details.presentModes[0]);
         }
 
         uint32_t format_count;
-        vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_vk_surface, &format_count, nullptr);
+        vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_surface->Get(), &format_count, nullptr);
 
         if ( format_count != 0 )
         {
-            details.format.resize(format_count);
-            vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_vk_surface, &format_count, &details.format[0]);
+            details.formats.resize(format_count);
+            vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_surface->Get(), &format_count, &details.formats[0]);
         }
     }
 
@@ -3675,54 +3609,54 @@ namespace vk
 
     // -----------------------------------------------------------------------------------------------------------------------------------
 
-    std::vector<const char*> Backend::required_extensions(bool enable_validation_layers)
-    {
-        uint32_t     glfw_extension_count = 0;
-        const char** glfw_extensions;
-        glfw_extensions = glfwGetRequiredInstanceExtensions(&glfw_extension_count);
+    //std::vector<const char*> Backend::required_extensions(bool enable_validation_layers)
+    //{
+    //    uint32_t     glfwExtensionCount = 0;
+    //    const char** glfw_extensions;
+    //    glfw_extensions = glfwGetRequiredInstanceExtensions(&glfw_extension_count);
 
-        std::vector<const char*> extensions(glfw_extensions, glfw_extensions + glfw_extension_count);
+    //    std::vector<const char*> extensions(glfw_extensions, glfw_extensions + glfw_extension_count);
 
-        if ( enable_validation_layers )
-            extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+    //    if ( enable_validation_layers )
+    //        extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
 
-        return extensions;
-    }
+    //    return extensions;
+    //}
     // -----------------------------------------------------------------------------------------------------------------------------------
 
-    VkResult Backend::create_debug_utils_messenger(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger)
-    {
-        auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+    //VkResult Backend::create_debug_utils_messenger(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger)
+    //{
+    //    auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
 
-        if ( func != nullptr )
-            return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
-        else
-            return VK_ERROR_EXTENSION_NOT_PRESENT;
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------------------------
-
-    void Backend::destroy_debug_utils_messenger(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks* pAllocator)
-    {
-        auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
-
-        if ( func != nullptr )
-            func(instance, debugMessenger, pAllocator);
-    }
+    //    if ( func != nullptr )
+    //        return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
+    //    else
+    //        return VK_ERROR_EXTENSION_NOT_PRESENT;
+    //}
 
     // -----------------------------------------------------------------------------------------------------------------------------------
 
-    bool Backend::create_surface(GLFWwindow* window)
+    //void Backend::destroy_debug_utils_messenger(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks* pAllocator)
+    //{
+    //    auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
+
+    //    if ( func != nullptr )
+    //        func(instance, debugMessenger, pAllocator);
+    //}
+
+    // -----------------------------------------------------------------------------------------------------------------------------------
+
+ /*   bool Backend::create_surface(GLFWwindow* window)
     {
         return glfwCreateWindowSurface(m_vk_instance, window, nullptr, &m_vk_surface) == VK_SUCCESS;
-    }
+    }*/
 
     // -----------------------------------------------------------------------------------------------------------------------------------
 
     bool Backend::find_physical_device(std::vector<const char*> extensions)
     {
         uint32_t device_count = 0;
-        vkEnumeratePhysicalDevices(m_vk_instance, &device_count, nullptr);
+        vkEnumeratePhysicalDevices(m_instance->Get(), &device_count, nullptr);
 
         if ( device_count == 0 )
         {
@@ -3732,13 +3666,13 @@ namespace vk
 
         std::vector<VkPhysicalDevice> devices(device_count);
 
-        vkEnumeratePhysicalDevices(m_vk_instance, &device_count, devices.data());
+        vkEnumeratePhysicalDevices(m_instance->Get(), &device_count, devices.data());
 
         // Try to find a discrete GPU...
         for ( const auto& device : devices )
         {
             QueueInfos              infos;
-            SwapChainSupportDetails details;
+            vkWrapper::SwapChainSupportDetails details;
 
             if ( is_device_suitable(device, VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU, infos, details, extensions) )
             {
@@ -3753,7 +3687,7 @@ namespace vk
         for ( const auto& device : devices )
         {
             QueueInfos              infos;
-            SwapChainSupportDetails details;
+            vkWrapper::SwapChainSupportDetails details;
 
             if ( is_device_suitable(device, VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU, infos, details, extensions) )
             {
@@ -3769,7 +3703,7 @@ namespace vk
 
     // -----------------------------------------------------------------------------------------------------------------------------------
 
-    bool Backend::is_device_suitable(VkPhysicalDevice device, VkPhysicalDeviceType type, QueueInfos& infos, SwapChainSupportDetails& details, std::vector<const char*> extensions)
+    bool Backend::is_device_suitable(VkPhysicalDevice device, VkPhysicalDeviceType type, QueueInfos& infos, vkWrapper::SwapChainSupportDetails& details, std::vector<const char*> extensions)
     {
         vkGetPhysicalDeviceProperties(device, &m_device_properties);
 
@@ -3791,7 +3725,7 @@ namespace vk
             bool extensions_supported = check_device_extension_support(device, extensions);
             query_swap_chain_support(device, details);
 
-            if ( details.format.size() > 0 && details.present_modes.size() > 0 && extensions_supported )
+            if ( details.formats.size() > 0 && details.presentModes.size() > 0 && extensions_supported )
             {
                 SE_LOG_INFO("(Vulkan) Vendor : " + std::string(get_vendor_name(m_device_properties.vendorID)));
                 SE_LOG_INFO("(Vulkan) Name   : " + std::string(m_device_properties.deviceName));
@@ -3845,7 +3779,7 @@ namespace vk
             SE_LOG_INFO("(Vulkan) Number of Queues: " + std::to_string(families[i].queueCount));
 
             VkBool32 present_support = false;
-            vkGetPhysicalDeviceSurfaceSupportKHR(device, i, m_vk_surface, &present_support);
+            vkGetPhysicalDeviceSurfaceSupportKHR(device, i, m_surface->Get(), &present_support);
 
             // Look for Presentation Queue
             if ( present_support && infos.presentation_queue_index == -1 )
@@ -4062,7 +3996,7 @@ namespace vk
             device_info.pNext = &physical_device_features_2;
         }
 
-        if ( m_vk_debug_messenger )
+        if ( m_debugMessenger )
         {
             device_info.enabledLayerCount = kValidationLayers.size();
             device_info.ppEnabledLayerNames = &kValidationLayers[0];
@@ -4113,8 +4047,8 @@ namespace vk
     bool Backend::create_swapchain()
     {
         m_current_frame = 0;
-        VkSurfaceFormatKHR surface_format = choose_swap_surface_format(m_swapchain_details.format);
-        VkPresentModeKHR   present_mode = choose_swap_present_mode(m_swapchain_details.present_modes);
+        VkSurfaceFormatKHR surface_format = choose_swap_surface_format(m_swapchain_details.formats);
+        VkPresentModeKHR   present_mode = choose_swap_present_mode(m_swapchain_details.presentModes);
         VkExtent2D         extent = choose_swap_extent(m_swapchain_details.capabilities);
 
         uint32_t image_count = m_swapchain_details.capabilities.minImageCount + 1;
@@ -4126,7 +4060,7 @@ namespace vk
         SE_ZERO_MEMORY(create_info);
 
         create_info.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-        create_info.surface = m_vk_surface;
+        create_info.surface = m_surface->Get();
         create_info.minImageCount = image_count;
         create_info.imageFormat = surface_format.format;
         create_info.imageColorSpace = surface_format.colorSpace;
@@ -4340,19 +4274,8 @@ namespace vk
 
     VkExtent2D Backend::choose_swap_extent(const VkSurfaceCapabilitiesKHR& capabilities)
     {
-        // Causes macro issue on windows.
-#    ifdef max
-#        undef max
-#    endif
-
-#    ifdef min
-#        undef min
-#    endif
-
-        VkSurfaceCapabilitiesKHR caps;
-
-        vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_vk_physical_device, m_vk_surface, &caps);
-
+       VkSurfaceCapabilitiesKHR caps;
+        vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_vk_physical_device, m_surface->Get(), &caps);
         return caps.maxImageExtent;
     }
 

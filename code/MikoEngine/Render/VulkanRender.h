@@ -2,6 +2,8 @@
 
 #if SE_VULKAN
 
+#include "VulkanWrapper.h"
+
 namespace vk
 {
 	class Image;
@@ -17,13 +19,6 @@ namespace vk
 	class DescriptorSetLayout;
 	class DescriptorPool;
 	class PipelineLayout;
-
-	struct SwapChainSupportDetails
-	{
-		VkSurfaceCapabilitiesKHR        capabilities;
-		std::vector<VkSurfaceFormatKHR> format;
-		std::vector<VkPresentModeKHR>   present_modes;
-	};
 
 	struct QueueInfos
 	{
@@ -45,6 +40,8 @@ namespace vk
 		bool asynchronous_compute();
 		bool transfer();
 	};
+
+#pragma region State Desc
 
 	struct VertexInputStateDesc
 	{
@@ -186,8 +183,20 @@ namespace vk
 			uint32_t h);
 	};
 
+#pragma endregion
+
 	class Backend : public std::enable_shared_from_this<Backend>
 	{
+	public:
+
+	private:
+		vkWrapper::Instance *m_instance = nullptr;
+		vkWrapper::DebugMessenger *m_debugMessenger = nullptr;
+		vkWrapper::Surface *m_surface = nullptr;
+		vkWrapper::PhysicalDevice m_physicalDevice;
+
+
+		/* OLD =========>>*/
 	public:
 		using Ptr = std::shared_ptr<Backend>;
 
@@ -230,7 +239,7 @@ namespace vk
 
 		void             wait_idle();
 		uint32_t         swap_image_count();
-		VkInstance       instance();
+		VkInstance&      instance();
 		VkQueue          graphics_queue();
 		VkQueue          transfer_queue();
 		VkQueue          compute_queue();
@@ -269,13 +278,9 @@ namespace vk
 		VkFormat                 find_depth_format();
 		bool                     check_validation_layer_support(std::vector<const char*> layers);
 		bool                     check_device_extension_support(VkPhysicalDevice device, std::vector<const char*> extensions);
-		void                     query_swap_chain_support(VkPhysicalDevice device, SwapChainSupportDetails& details);
-		std::vector<const char*> required_extensions(bool enable_validation_layers);
-		VkResult                 create_debug_utils_messenger(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger);
-		void                     destroy_debug_utils_messenger(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks* pAllocator);
-		bool                     create_surface(GLFWwindow* window);
+		void                     query_swap_chain_support(VkPhysicalDevice device, vkWrapper::SwapChainSupportDetails& details);
 		bool                     find_physical_device(std::vector<const char*> extensions);
-		bool                     is_device_suitable(VkPhysicalDevice device, VkPhysicalDeviceType type, QueueInfos& infos, SwapChainSupportDetails& details, std::vector<const char*> extensions);
+		bool                     is_device_suitable(VkPhysicalDevice device, VkPhysicalDeviceType type, QueueInfos& infos, vkWrapper::SwapChainSupportDetails& details, std::vector<const char*> extensions);
 		bool                     find_queues(VkPhysicalDevice device, QueueInfos& infos);
 		bool                     is_queue_compatible(VkQueueFlags current_queue_flags, int32_t graphics, int32_t compute, int32_t transfer);
 		bool                     create_logical_device(std::vector<const char*> extensions, void* pnext);
@@ -292,18 +297,18 @@ namespace vk
 		void                     flush(VkQueue queue, const std::vector<std::shared_ptr<CommandBuffer>>& cmd_bufs);
 
 		GLFWwindow*                                   m_window = nullptr;
-		VkInstance                                    m_vk_instance = nullptr;
+		//VkInstance                                    m_vk_instance = nullptr;
 		VkDevice                                      m_vk_device = nullptr;
 		VkQueue                                       m_vk_graphics_queue = nullptr;
 		VkQueue                                       m_vk_compute_queue = nullptr;
 		VkQueue                                       m_vk_transfer_queue = nullptr;
 		VkQueue                                       m_vk_presentation_queue = nullptr;
 		VkPhysicalDevice                              m_vk_physical_device = nullptr;
-		VkSurfaceKHR                                  m_vk_surface = nullptr;
+		//VkSurfaceKHR                                  m_vk_surface = nullptr;
 		VkSwapchainKHR                                m_vk_swap_chain = nullptr;
-		VkDebugUtilsMessengerEXT                      m_vk_debug_messenger = nullptr;
+		//VkDebugUtilsMessengerEXT                      m_vk_debug_messenger = nullptr;
 		VmaAllocator_T*                               m_vma_allocator = nullptr;
-		SwapChainSupportDetails                       m_swapchain_details;
+		vkWrapper::SwapChainSupportDetails            m_swapchain_details;
 		QueueInfos                                    m_selected_queues;
 		VkFormat                                      m_swap_chain_image_format;
 		VkFormat                                      m_swap_chain_depth_format;
