@@ -170,7 +170,7 @@ namespace vk
 	{
 	public:
 
-	private:
+	//private:
 		vkWrapper::Instance *m_instance = nullptr;
 		vkWrapper::DebugMessenger *m_debugMessenger = nullptr;
 		vkWrapper::Surface *m_surface = nullptr;
@@ -183,7 +183,7 @@ namespace vk
 
 		static const uint32_t kMaxFramesInFlight = 3;// TODO:
 
-		static Backend::Ptr create(GLFWwindow* window, bool enable_validation_layers = false, bool require_ray_tracing = false, std::vector<const char*> additional_device_extensions = std::vector<const char*>(), void* pnext = nullptr);
+		static Backend::Ptr create(GLFWwindow* window, bool enable_validation_layers = false, bool require_ray_tracing = false);
 
 		~Backend();
 
@@ -231,10 +231,10 @@ namespace vk
 		size_t           aligned_dynamic_ubo_size(size_t size);
 		VkFormat         find_supported_format(const std::vector<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
 
-		inline VkPhysicalDeviceRayTracingPropertiesNV& ray_tracing_properties()
+		/*inline VkPhysicalDeviceRayTracingPropertiesNV& ray_tracing_properties()
 		{
 			return m_ray_tracing_properties;
-		}
+		}*/
 		inline VkFormat                               swap_chain_image_format()
 		{
 			return m_swap_chain_image_format;
@@ -249,11 +249,11 @@ namespace vk
 		}
 		inline const vkWrapper::QueueInfos& queue_infos()
 		{
-			return m_instance->queue_infos();
+			return m_physicalDevice.queue_infos();
 		}
 
 	private:
-		Backend(GLFWwindow* window, bool enable_validation_layers, bool require_ray_tracing, std::vector<const char*> additional_device_extensions, void* pnext);
+		Backend(GLFWwindow* window, bool enable_validation_layers, bool require_ray_tracing);
 		void                     initialize();
 		void                     load_ray_tracing_funcs();
 		VkFormat                 find_depth_format();
@@ -283,7 +283,7 @@ namespace vk
 		VkFormat                                      m_swap_chain_image_format;
 		VkFormat                                      m_swap_chain_depth_format;
 		VkExtent2D                                    m_swap_chain_extent;
-		VkPhysicalDeviceRayTracingPropertiesNV        m_ray_tracing_properties;
+		/*VkPhysicalDeviceRayTracingPropertiesNV        m_ray_tracing_properties;*/
 		VkPhysicalDeviceDescriptorIndexingFeaturesEXT m_indexing_features;
 		std::shared_ptr<RenderPass>                   m_swap_chain_render_pass;
 		std::vector<std::shared_ptr<Image>>           m_swap_chain_images;

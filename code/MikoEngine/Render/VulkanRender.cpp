@@ -2119,7 +2119,7 @@ namespace vk
 	{
 		m_entry_point_names.reserve(32);
 
-		auto& rt_props = backend->ray_tracing_properties();
+		auto& rt_props = backend->m_physicalDevice.ray_tracing_properties();
 
 		// Ray gen shaders
 		for (auto& stage : desc.ray_gen_stages)
@@ -2316,7 +2316,7 @@ namespace vk
 			throw std::runtime_error("(Vulkan) Failed to create Ray Tracing Pipeline.");
 		}
 
-		const auto& rt_props = backend->ray_tracing_properties();
+		const auto& rt_props = backend->m_physicalDevice.ray_tracing_properties();
 
 		size_t sbt_size = m_sbt->groups().size() * rt_props.shaderGroupHandleSize;
 
@@ -2891,9 +2891,9 @@ namespace vk
 
 
 
-	Backend::Ptr Backend::create(GLFWwindow* window, bool enable_validation_layers, bool require_ray_tracing, std::vector<const char*> additional_device_extensions, void* pnext)
+	Backend::Ptr Backend::create(GLFWwindow* window, bool enable_validation_layers, bool require_ray_tracing)
 	{
-		std::shared_ptr<Backend> backend = std::shared_ptr<Backend>(new Backend(window, enable_validation_layers, require_ray_tracing, additional_device_extensions, pnext));
+		std::shared_ptr<Backend> backend = std::shared_ptr<Backend>(new Backend(window, enable_validation_layers, require_ray_tracing));
 		backend->initialize();
 
 		return backend;
@@ -2901,40 +2901,34 @@ namespace vk
 
 
 
-	Backend::Backend(GLFWwindow* window, bool enable_validation_layers, bool require_ray_tracing, std::vector<const char*> additional_device_extensions, void* pnext) :
+	Backend::Backend(GLFWwindow* window, bool enable_validation_layers, bool require_ray_tracing) :
 		m_window(window)
 	{
-		m_ray_tracing_enabled = require_ray_tracing;
-
-		m_instance = new vkWrapper::Instance();
-		m_instance->Init();
-		m_debugMessenger = m_instance->CreateDebugMessenger();
-		m_surface = m_instance->CreateSurface(window);
-
-		std::vector<const char*> device_extensions;
+		m_ray_tracing_enabled = require_ray_tracing; 
 		if (m_ray_tracing_enabled)
 		{
-			device_extensions.push_back(VK_NV_RAY_TRACING_EXTENSION_NAME);
-			device_extensions.push_back(VK_KHR_GET_MEMORY_REQUIREMENTS_2_EXTENSION_NAME);
-			device_extensions.push_back(VK_KHR_MAINTENANCE3_EXTENSION_NAME);
-			device_extensions.push_back(VK_EXT_DESCRIPTOR_INDEXING_EXTENSION_NAME);
-
 			SE_ZERO_MEMORY(m_indexing_features);
-
 			m_indexing_features.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT;
 			m_indexing_features.shaderSampledImageArrayNonUniformIndexing = VK_TRUE;
 			m_indexing_features.runtimeDescriptorArray = VK_TRUE;
 			m_indexing_features.descriptorBindingVariableDescriptorCount = VK_TRUE;
 			m_indexing_features.shaderStorageBufferArrayNonUniformIndexing = VK_TRUE;
 		}
-		for (auto ext : additional_device_extensions)
-			device_extensions.push_back(ext);
 
-		m_physicalDevice = m_instance->PickPhysicalDevice(m_surface, device_extensions);
+		m_instance = new vkWrapper::Instance();
+		m_instance->Init();
+		m_debugMessenger = m_instance->CreateDebugMessenger();
+		m_surface = m_instance->CreateSurface(window);
+		m_physicalDevice = m_instance->PickPhysicalDevice(m_surface, m_ray_tracing_enabled);
 
+
+
+
+
+		std::vector<const char*> device_extensions; // TODO: берется из пфизик девайс
 		// TODO: временный костыль - надо избавиться от device_extensions (хранить также в физ устройстве)
 		device_extensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
-		if (!create_logical_device(device_extensions, pnext))
+		if (!create_logical_device(device_extensions, nullptr))
 		{
 			SE_LOG_FATAL("(Vulkan) Failed to create logical device.");
 			throw std::runtime_error("(Vulkan) Failed to create logical device.");
@@ -3028,9 +3022,9 @@ namespace vk
 
 		for (int i = 0; i < MAX_COMMAND_THREADS; i++)
 		{
-			g_graphics_command_buffers[i] = std::make_shared<ThreadLocalCommandBuffers>(shared_from_this(), m_instance->queue_infos().graphics_queue_index);
-			g_compute_command_buffers[i] = std::make_shared<ThreadLocalCommandBuffers>(shared_from_this(), m_instance->queue_infos().compute_queue_index);
-			g_transfer_command_buffers[i] = std::make_shared<ThreadLocalCommandBuffers>(shared_from_this(), m_instance->queue_infos().transfer_queue_index);
+			g_graphics_command_buffers[i] = std::make_shared<ThreadLocalCommandBuffers>(shared_from_this(), m_physicalDevice.queue_infos().graphics_queue_index);
+			g_compute_command_buffers[i] = std::make_shared<ThreadLocalCommandBuffers>(shared_from_this(), m_physicalDevice.queue_infos().compute_queue_index);
+			g_transfer_command_buffers[i] = std::make_shared<ThreadLocalCommandBuffers>(shared_from_this(), m_physicalDevice.queue_infos().transfer_queue_index);
 		}
 	}
 
@@ -3521,8 +3515,8 @@ namespace vk
 		SE_ZERO_MEMORY(device_info);
 
 		device_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-		device_info.pQueueCreateInfos = &m_instance->queue_infos().infos[0];
-		device_info.queueCreateInfoCount = static_cast<uint32_t>(m_instance->queue_infos().queue_count);
+		device_info.pQueueCreateInfos = &m_physicalDevice.queue_infos().infos[0];
+		device_info.queueCreateInfoCount = static_cast<uint32_t>(m_physicalDevice.queue_infos().queue_count);
 		device_info.enabledExtensionCount = extensions.size();
 		device_info.ppEnabledExtensionNames = extensions.data();
 		device_info.pEnabledFeatures = &supported_features;
@@ -3560,38 +3554,38 @@ namespace vk
 
 		float priority = 1.0f;
 
-		for (int i = 0; i < m_instance->queue_infos().queue_count; i++)
-			m_instance->queue_infos().infos[i].pQueuePriorities = &priority;
+		for (int i = 0; i < m_physicalDevice.queue_infos().queue_count; i++)
+			m_physicalDevice.queue_infos().infos[i].pQueuePriorities = &priority;
 
 		if (vkCreateDevice(m_physicalDevice.Get(), &device_info, nullptr, &m_vk_device) != VK_SUCCESS)
 			return false;
 
 		// Get presentation queue
-		vkGetDeviceQueue(m_vk_device, m_instance->queue_infos().presentation_queue_index, 0, &m_vk_presentation_queue);
+		vkGetDeviceQueue(m_vk_device, m_physicalDevice.queue_infos().presentation_queue_index, 0, &m_vk_presentation_queue);
 
 		// Get graphics queue
-		if (m_instance->queue_infos().graphics_queue_index == m_instance->queue_infos().presentation_queue_index)
+		if (m_physicalDevice.queue_infos().graphics_queue_index == m_physicalDevice.queue_infos().presentation_queue_index)
 			m_vk_graphics_queue = m_vk_presentation_queue;
 		else
-			vkGetDeviceQueue(m_vk_device, m_instance->queue_infos().graphics_queue_index, 0, &m_vk_graphics_queue);
+			vkGetDeviceQueue(m_vk_device, m_physicalDevice.queue_infos().graphics_queue_index, 0, &m_vk_graphics_queue);
 
 		// Get compute queue
-		if (m_instance->queue_infos().compute_queue_index == m_instance->queue_infos().presentation_queue_index)
+		if (m_physicalDevice.queue_infos().compute_queue_index == m_physicalDevice.queue_infos().presentation_queue_index)
 			m_vk_compute_queue = m_vk_presentation_queue;
-		else if (m_instance->queue_infos().compute_queue_index == m_instance->queue_infos().graphics_queue_index)
+		else if (m_physicalDevice.queue_infos().compute_queue_index == m_physicalDevice.queue_infos().graphics_queue_index)
 			m_vk_compute_queue = m_vk_graphics_queue;
 		else
-			vkGetDeviceQueue(m_vk_device, m_instance->queue_infos().compute_queue_index, 0, &m_vk_compute_queue);
+			vkGetDeviceQueue(m_vk_device, m_physicalDevice.queue_infos().compute_queue_index, 0, &m_vk_compute_queue);
 
 		// Get transfer queue
-		if (m_instance->queue_infos().transfer_queue_index == m_instance->queue_infos().presentation_queue_index)
+		if (m_physicalDevice.queue_infos().transfer_queue_index == m_physicalDevice.queue_infos().presentation_queue_index)
 			m_vk_transfer_queue = m_vk_presentation_queue;
-		else if (m_instance->queue_infos().transfer_queue_index == m_instance->queue_infos().graphics_queue_index)
+		else if (m_physicalDevice.queue_infos().transfer_queue_index == m_physicalDevice.queue_infos().graphics_queue_index)
 			m_vk_transfer_queue = m_vk_graphics_queue;
-		else if (m_instance->queue_infos().transfer_queue_index == m_instance->queue_infos().compute_queue_index)
+		else if (m_physicalDevice.queue_infos().transfer_queue_index == m_physicalDevice.queue_infos().compute_queue_index)
 			m_vk_transfer_queue = m_vk_transfer_queue;
 		else
-			vkGetDeviceQueue(m_vk_device, m_instance->queue_infos().transfer_queue_index, 0, &m_vk_transfer_queue);
+			vkGetDeviceQueue(m_vk_device, m_physicalDevice.queue_infos().transfer_queue_index, 0, &m_vk_transfer_queue);
 
 		return true;
 	}
@@ -3601,14 +3595,14 @@ namespace vk
 	bool Backend::create_swapchain()
 	{
 		m_current_frame = 0;
-		VkSurfaceFormatKHR surface_format = choose_swap_surface_format(m_instance->GetSwapChainDetails().formats);
-		VkPresentModeKHR   present_mode = choose_swap_present_mode(m_instance->GetSwapChainDetails().presentModes);
-		VkExtent2D         extent = choose_swap_extent(m_instance->GetSwapChainDetails().capabilities);
+		VkSurfaceFormatKHR surface_format = choose_swap_surface_format(m_physicalDevice.GetSwapChainDetails().formats);
+		VkPresentModeKHR   present_mode = choose_swap_present_mode(m_physicalDevice.GetSwapChainDetails().presentModes);
+		VkExtent2D         extent = choose_swap_extent(m_physicalDevice.GetSwapChainDetails().capabilities);
 
-		uint32_t image_count = m_instance->GetSwapChainDetails().capabilities.minImageCount + 1;
+		uint32_t image_count = m_physicalDevice.GetSwapChainDetails().capabilities.minImageCount + 1;
 
-		if (m_instance->GetSwapChainDetails().capabilities.maxImageCount > 0 && image_count > m_instance->GetSwapChainDetails().capabilities.maxImageCount)
-			image_count = m_instance->GetSwapChainDetails().capabilities.maxImageCount;
+		if (m_physicalDevice.GetSwapChainDetails().capabilities.maxImageCount > 0 && image_count > m_physicalDevice.GetSwapChainDetails().capabilities.maxImageCount)
+			image_count = m_physicalDevice.GetSwapChainDetails().capabilities.maxImageCount;
 
 		VkSwapchainCreateInfoKHR create_info;
 		SE_ZERO_MEMORY(create_info);
@@ -3625,9 +3619,9 @@ namespace vk
 		m_swap_chain_image_format = surface_format.format;
 		m_swap_chain_extent = extent;
 
-		uint32_t queue_family_indices[] = { (uint32_t)m_instance->queue_infos().graphics_queue_index, (uint32_t)m_instance->queue_infos().presentation_queue_index };
+		uint32_t queue_family_indices[] = { (uint32_t)m_physicalDevice.queue_infos().graphics_queue_index, (uint32_t)m_physicalDevice.queue_infos().presentation_queue_index };
 
-		if (m_instance->queue_infos().presentation_queue_index != m_instance->queue_infos().graphics_queue_index)
+		if (m_physicalDevice.queue_infos().presentation_queue_index != m_physicalDevice.queue_infos().graphics_queue_index)
 		{
 			create_info.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
 			create_info.queueFamilyIndexCount = 2;
@@ -3640,7 +3634,7 @@ namespace vk
 			create_info.pQueueFamilyIndices = nullptr;
 		}
 
-		create_info.preTransform = m_instance->GetSwapChainDetails().capabilities.currentTransform;
+		create_info.preTransform = m_physicalDevice.GetSwapChainDetails().capabilities.currentTransform;
 		create_info.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
 		create_info.presentMode = present_mode;
 		create_info.clipped = VK_TRUE;

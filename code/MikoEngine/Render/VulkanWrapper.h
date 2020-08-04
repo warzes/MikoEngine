@@ -79,7 +79,7 @@ namespace vkWrapper
 		std::optional<uint32_t> transferFamily;
 	};
 
-	struct QueueInfos // TODO: объединить с QueueFamilyIndices???
+	struct QueueInfos // TODO: переименовать в QueueFamilyIndices???
 	{
 		// Most ideal queue = 3
 		// Second most ideal queue = 2
@@ -114,9 +114,6 @@ namespace vkWrapper
 		std::vector<VkPresentModeKHR>   presentModes;
 	};
 
-
-
-
 	class Surface;
 	class DebugMessenger;
 	class LogicalDevice;
@@ -141,7 +138,7 @@ namespace vkWrapper
 	private:
 		void updateBuf();
 
-		std::vector<const char*> m_extBuf;
+		std::vector<const char*> m_extBuf; // TODO: убрать, можно все таки по строке
 		std::vector<std::string> m_exts;
 	};
 
@@ -162,10 +159,9 @@ namespace vkWrapper
 	private:
 		void updateBuf();
 
-		std::vector<const char*> m_layersBuf;
+		std::vector<const char*> m_layersBuf; // TODO: убрать, можно все таки по строке
 		std::vector<std::string> m_layers;
 	};
-
 
 	// TODO: почистить класс от лишнего
 	class PhysicalDevice
@@ -175,6 +171,44 @@ namespace vkWrapper
 	public:
 		PhysicalDevice() = default;
 		PhysicalDevice(VkPhysicalDevice &physical);
+
+		bool IsDeviceSuitable(VkSurfaceKHR& surface, VkPhysicalDeviceType type, bool require_ray_tracing);
+
+		SwapChainSupportDetails QuerySwapChainSupport(VkSurfaceKHR& surface); // TODO: private???
+		bool FindQueueFamilies(VkSurfaceKHR& surface, QueueInfos& infos);// TODO: private???
+
+		inline QueueInfos& queue_infos() 
+		{
+			return m_selected_queues;
+		}
+
+		inline SwapChainSupportDetails& GetSwapChainDetails() 
+		{
+			return m_swapChainSupportDetails;
+		}
+
+		inline Extensions& DeviceExtensions()
+		{
+			return m_deviceExtensions;
+		}
+
+		inline VkPhysicalDeviceRayTracingPropertiesNV& ray_tracing_properties()
+		{
+			return m_ray_tracing_properties;
+		}
+
+	private:	
+
+
+		VkPhysicalDevice m_physical = VK_NULL_HANDLE; // implicitly destroyed with instance
+		Extensions m_deviceExtensions;
+		VkPhysicalDeviceRayTracingPropertiesNV m_ray_tracing_properties;
+		SwapChainSupportDetails m_swapChainSupportDetails; 
+		QueueInfos m_selected_queues;
+
+	public:
+
+		// ======>>>> OLD
 
 		//void FindSupportDetails(VkSurfaceKHR &surface);
 
@@ -187,12 +221,12 @@ namespace vkWrapper
 		bool HasStencilComponent(VkFormat format);
 
 		//QueueFamilyIndices FindQueueFamilies(VkSurfaceKHR &surface);
-		bool FindQueueFamilies(VkSurfaceKHR &surface, QueueInfos &infos);
+		
 
 
-		SwapChainSupportDetails QuerySwapChainSupport(VkSurfaceKHR &surface);
+		
 
-		bool IsDeviceSuitable(VkSurfaceKHR& surface, VkPhysicalDeviceType type, QueueInfos& infos, vkWrapper::SwapChainSupportDetails& details, std::vector<const char*> &extensions);
+		
 
 		//bool CheckDeviceExtensionSupport();
 
@@ -207,11 +241,9 @@ namespace vkWrapper
 		VkPhysicalDeviceProperties& GetProperties() {return m_device_properties; }
 
 	private:
-		VkPhysicalDevice m_physical = VK_NULL_HANDLE; // implicitly destroyed with instance
+		
 		VkSampleCountFlagBits m_msaaSamples = VK_SAMPLE_COUNT_1_BIT;
 		QueueFamilyIndices m_indices;
-		SwapChainSupportDetails m_swapChainSupport;
-		QueueInfos m_selected_queues;
 		VkPhysicalDeviceProperties m_device_properties;
 	};
 
@@ -227,26 +259,18 @@ namespace vkWrapper
 
 		void GetPhysicalDevices(std::vector<PhysicalDevice>& physicals);
 
-		PhysicalDevice PickPhysicalDevice(Surface* surface, std::vector<const char*> &device_extensions);
+		PhysicalDevice PickPhysicalDevice(Surface* surface, bool require_ray_tracing);
 
 		VkInstance& Get();
 
-		inline QueueInfos& queue_infos() // TODO: обратно в физ устройство
-		{
-			return m_selected_queues;
-		}
 
-		inline SwapChainSupportDetails& GetSwapChainDetails() // TODO: обратно в физ устройство
-		{
-			return m_swapChainSupport;
-		}
 
 	private:
 		VkInstance m_instance;
 		ValidationLayers m_validationLayers;
 		Extensions m_extensions;
-		SwapChainSupportDetails m_swapChainSupport; // TODO: обратно в физ устройство
-		QueueInfos m_selected_queues; // TODO: обратно в физ устройство
+		//SwapChainSupportDetails m_swapChainSupport; // TODO: обратно в физ устройство
+		//QueueInfos m_selected_queues; // TODO: обратно в физ устройство
 	};
 
 	template<typename T>

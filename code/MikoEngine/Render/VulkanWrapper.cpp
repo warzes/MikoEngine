@@ -296,6 +296,237 @@ namespace vkWrapper
 	{
 	}
 
+	bool PhysicalDevice::IsDeviceSuitable(VkSurfaceKHR& surface, VkPhysicalDeviceType type, bool requireRayRracing)
+	{
+		vkGetPhysicalDeviceProperties(m_physical, &m_device_properties);
+		if (m_device_properties.deviceType == type)
+		{
+			m_deviceExtensions = DefaultExtensions();
+			if (requireRayRracing)
+			{
+				m_deviceExtensions.Enable(VK_NV_RAY_TRACING_EXTENSION_NAME);
+				m_deviceExtensions.Enable(VK_KHR_GET_MEMORY_REQUIREMENTS_2_EXTENSION_NAME);
+				m_deviceExtensions.Enable(VK_KHR_MAINTENANCE3_EXTENSION_NAME);
+				m_deviceExtensions.Enable(VK_EXT_DESCRIPTOR_INDEXING_EXTENSION_NAME);
+			}
+
+			bool requires_ray_tracing = false;
+			if (m_deviceExtensions.IsEnabled(VK_NV_RAY_TRACING_EXTENSION_NAME))
+				requires_ray_tracing = true;
+
+			bool extensionsSupported = m_deviceExtensions.CheckDeviceSupport(m_physical);
+
+			m_swapChainSupportDetails = QuerySwapChainSupport(surface);
+			if (m_swapChainSupportDetails.formats.size() > 0 && m_swapChainSupportDetails.presentModes.size() > 0 && extensionsSupported)
+			{
+				SE_LOG_INFO("(Vulkan) Vendor : " + std::string(get_vendor_name(m_device_properties.vendorID)));
+				SE_LOG_INFO("(Vulkan) Name   : " + std::string(m_device_properties.deviceName));
+				SE_LOG_INFO("(Vulkan) Type   : " + std::string(kDeviceTypes[m_device_properties.deviceType]));
+				SE_LOG_INFO("(Vulkan) Driver : " + std::to_string(m_device_properties.driverVersion));
+
+				if (requires_ray_tracing)
+				{
+					m_ray_tracing_properties.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RAY_TRACING_PROPERTIES_NV;
+					m_ray_tracing_properties.pNext = nullptr;
+					m_ray_tracing_properties.maxRecursionDepth = 0;
+					m_ray_tracing_properties.shaderGroupHandleSize = 0;
+
+					VkPhysicalDeviceProperties2 properties;
+					properties.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2;
+					properties.pNext = &m_ray_tracing_properties;
+					SE_ZERO_MEMORY(properties.properties);
+					vkGetPhysicalDeviceProperties2(m_physical, &properties);
+				}
+
+				return FindQueueFamilies(surface, m_selected_queues);
+			}
+		}
+
+		return false;
+	}
+
+	SwapChainSupportDetails PhysicalDevice::QuerySwapChainSupport(VkSurfaceKHR& surface)
+	{
+		SwapChainSupportDetails details;
+
+		// Get surface capabilities
+		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physical, surface, &details.capabilities);
+
+		uint32_t presentModeCount;
+		vkGetPhysicalDeviceSurfacePresentModesKHR(m_physical, surface, &presentModeCount, nullptr);
+
+		if (presentModeCount != 0)
+		{
+			details.presentModes.resize(presentModeCount);
+			vkGetPhysicalDeviceSurfacePresentModesKHR(m_physical, surface, &presentModeCount, details.presentModes.data());
+		}
+
+		uint32_t formatCount;
+		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physical, surface, &formatCount, nullptr);
+
+		if (formatCount != 0)
+		{
+			details.formats.resize(formatCount);
+			vkGetPhysicalDeviceSurfaceFormatsKHR(m_physical, surface, &formatCount, details.formats.data());
+		}
+		return details;
+	}
+
+	bool vkWrapper::PhysicalDevice::FindQueueFamilies(VkSurfaceKHR& surface, QueueInfos& infos)
+	{
+		uint32_t queueFamilyCount = 0;
+		vkGetPhysicalDeviceQueueFamilyProperties(m_physical, &queueFamilyCount, nullptr);
+		SE_LOG_INFO("(Vulkan) Number of Queue families: " + std::to_string(queueFamilyCount));
+
+		std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+		vkGetPhysicalDeviceQueueFamilyProperties(m_physical, &queueFamilyCount, queueFamilies.data());
+
+		for (uint32_t i = 0; i < queueFamilyCount; i++)
+		{
+			VkQueueFlags bits = queueFamilies[i].queueFlags;
+
+			SE_LOG_INFO("(Vulkan) Family " + std::to_string(i));
+			SE_LOG_INFO("(Vulkan) Supported Bits: ");
+			SE_LOG_INFO("(Vulkan) VK_QUEUE_GRAPHICS_BIT: " + std::to_string((queueFamilies[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) > 0));
+			SE_LOG_INFO("(Vulkan) VK_QUEUE_COMPUTE_BIT: " + std::to_string((queueFamilies[i].queueFlags & VK_QUEUE_COMPUTE_BIT) > 0));
+			SE_LOG_INFO("(Vulkan) VK_QUEUE_TRANSFER_BIT: " + std::to_string((queueFamilies[i].queueFlags & VK_QUEUE_TRANSFER_BIT) > 0));
+			SE_LOG_INFO("(Vulkan) Number of Queues: " + std::to_string(queueFamilies[i].queueCount));
+
+			VkBool32 present_support = false;
+			vkGetPhysicalDeviceSurfaceSupportKHR(m_physical, i, surface, &present_support);
+
+			// Look for Presentation Queue
+			if (present_support && infos.presentation_queue_index == -1)
+				infos.presentation_queue_index = i;
+
+			// Look for a graphics queue if the ideal one isn't found yet.
+			if (infos.graphics_queue_quality != 3)
+			{
+				if (is_queue_compatible(bits, 1, 1, 1))
+				{
+					// Ideally, a queue that supports everything.
+					infos.graphics_queue_index = i;
+					infos.graphics_queue_quality = 3;
+				}
+				else if (is_queue_compatible(bits, 1, -1, -1))
+				{
+					// If not, a queue that supports at least graphics.
+					infos.graphics_queue_index = i;
+					infos.graphics_queue_quality = 1;
+				}
+			}
+
+			// Look for a compute queue if the ideal one isn't found yet.
+			if (infos.compute_queue_quality != 3)
+			{
+				if (is_queue_compatible(bits, 0, 1, 0))
+				{
+					// Ideally, a queue that only supports compute (for asynchronous compute).
+					infos.compute_queue_index = i;
+					infos.compute_queue_quality = 3;
+				}
+				else if (is_queue_compatible(bits, 0, 1, 1))
+				{
+					// Else, a queue that supports compute and transfer only (might allow asynchronous compute. Have to check).
+					infos.compute_queue_index = i;
+					infos.compute_queue_quality = 2;
+				}
+				else if (is_queue_compatible(bits, -1, 1, -1) && infos.compute_queue_quality == 0)
+				{
+					// If not, a queue that supports at least compute
+					infos.compute_queue_index = i;
+					infos.compute_queue_quality = 1;
+				}
+			}
+
+			// Look for a Transfer queue if the ideal one isn't found yet.
+			if (infos.transfer_queue_quality != 3)
+			{
+				if (is_queue_compatible(bits, 0, 0, 1))
+				{
+					// Ideally, a queue that only supports transfer (for DMA).
+					infos.transfer_queue_index = i;
+					infos.transfer_queue_quality = 3;
+				}
+				else if (is_queue_compatible(bits, 0, 1, 1))
+				{
+					// Else, a queue that supports compute and transfer only.
+					infos.transfer_queue_index = i;
+					infos.transfer_queue_quality = 2;
+				}
+				else if (is_queue_compatible(bits, -1, -1, 1) && infos.transfer_queue_quality == 0)
+				{
+					// If not, a queue that supports at least graphics
+					infos.transfer_queue_index = i;
+					infos.transfer_queue_quality = 1;
+				}
+			}
+		}
+
+		if (infos.presentation_queue_index == -1)
+		{
+			SE_LOG_INFO("(Vulkan) No Presentation Queue Found");
+			return false;
+		}
+
+		if (infos.graphics_queue_quality == 0)
+
+		{
+			SE_LOG_INFO("(Vulkan) No Graphics Queue Found");
+			return false;
+		}
+
+		if (infos.compute_queue_quality == 0 || infos.transfer_queue_quality == 0)
+		{
+			SE_LOG_INFO("(Vulkan) No Queues supporting Compute or Transfer found");
+			return false;
+		}
+
+		VkDeviceQueueCreateInfo presentation_queue_info;
+		SE_ZERO_MEMORY(presentation_queue_info);
+
+		presentation_queue_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+		presentation_queue_info.queueFamilyIndex = infos.presentation_queue_index;
+		presentation_queue_info.queueCount = 1;
+
+		VkDeviceQueueCreateInfo graphics_queue_info;
+		SE_ZERO_MEMORY(graphics_queue_info);
+
+		graphics_queue_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+		graphics_queue_info.queueFamilyIndex = infos.graphics_queue_index;
+		graphics_queue_info.queueCount = 1;
+
+		VkDeviceQueueCreateInfo compute_queue_info;
+		SE_ZERO_MEMORY(compute_queue_info);
+
+		compute_queue_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+		compute_queue_info.queueFamilyIndex = infos.compute_queue_index;
+		compute_queue_info.queueCount = 1;
+
+		VkDeviceQueueCreateInfo transfer_queue_info;
+		SE_ZERO_MEMORY(transfer_queue_info);
+
+		transfer_queue_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+		transfer_queue_info.queueFamilyIndex = infos.transfer_queue_index;
+		transfer_queue_info.queueCount = 1;
+
+		infos.infos[infos.queue_count++] = presentation_queue_info;
+
+		if (infos.graphics_queue_index != infos.presentation_queue_index)
+			infos.infos[infos.queue_count++] = graphics_queue_info;
+
+		if (infos.compute_queue_index != infos.presentation_queue_index && infos.compute_queue_index != infos.graphics_queue_index)
+			infos.infos[infos.queue_count++] = compute_queue_info;
+
+		if (infos.transfer_queue_index != infos.presentation_queue_index && infos.transfer_queue_index != infos.graphics_queue_index && infos.transfer_queue_index != infos.compute_queue_index)
+			infos.infos[infos.queue_count++] = transfer_queue_info;
+
+		return true;
+	}
+
+
+
+
 	//void PhysicalDevice::FindSupportDetails(VkSurfaceKHR& surface)
 	//{
 	//	m_indices = FindQueueFamilies(surface);
@@ -356,252 +587,11 @@ namespace vkWrapper
 		return format == VK_FORMAT_D32_SFLOAT_S8_UINT || format == VK_FORMAT_D24_UNORM_S8_UINT;
 	}
 
-	bool vkWrapper::PhysicalDevice::FindQueueFamilies(VkSurfaceKHR & surface, QueueInfos & infos)
-	{
-		uint32_t queueFamilyCount = 0;
-		vkGetPhysicalDeviceQueueFamilyProperties(m_physical, &queueFamilyCount, nullptr);
-		SE_LOG_INFO("(Vulkan) Number of Queue families: " + std::to_string(queueFamilyCount));
+	
 
-		std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
-		vkGetPhysicalDeviceQueueFamilyProperties(m_physical, &queueFamilyCount, queueFamilies.data());
+	
 
-		for ( uint32_t i = 0; i < queueFamilyCount; i++ )
-		{
-			VkQueueFlags bits = queueFamilies[i].queueFlags;
-
-			SE_LOG_INFO("(Vulkan) Family " + std::to_string(i));
-			SE_LOG_INFO("(Vulkan) Supported Bits: ");
-			SE_LOG_INFO("(Vulkan) VK_QUEUE_GRAPHICS_BIT: " + std::to_string((queueFamilies[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) > 0));
-			SE_LOG_INFO("(Vulkan) VK_QUEUE_COMPUTE_BIT: " + std::to_string((queueFamilies[i].queueFlags & VK_QUEUE_COMPUTE_BIT) > 0));
-			SE_LOG_INFO("(Vulkan) VK_QUEUE_TRANSFER_BIT: " + std::to_string((queueFamilies[i].queueFlags & VK_QUEUE_TRANSFER_BIT) > 0));
-			SE_LOG_INFO("(Vulkan) Number of Queues: " + std::to_string(queueFamilies[i].queueCount));
-
-			VkBool32 present_support = false;
-			vkGetPhysicalDeviceSurfaceSupportKHR(m_physical, i, surface, &present_support);
-
-			// Look for Presentation Queue
-			if ( present_support && infos.presentation_queue_index == -1 )
-				infos.presentation_queue_index = i;
-
-			// Look for a graphics queue if the ideal one isn't found yet.
-			if ( infos.graphics_queue_quality != 3 )
-			{
-				if ( is_queue_compatible(bits, 1, 1, 1) )
-				{
-					// Ideally, a queue that supports everything.
-					infos.graphics_queue_index = i;
-					infos.graphics_queue_quality = 3;
-				}
-				else if ( is_queue_compatible(bits, 1, -1, -1) )
-				{
-					// If not, a queue that supports at least graphics.
-					infos.graphics_queue_index = i;
-					infos.graphics_queue_quality = 1;
-				}
-			}
-
-			// Look for a compute queue if the ideal one isn't found yet.
-			if ( infos.compute_queue_quality != 3 )
-			{
-				if ( is_queue_compatible(bits, 0, 1, 0) )
-				{
-					// Ideally, a queue that only supports compute (for asynchronous compute).
-					infos.compute_queue_index = i;
-					infos.compute_queue_quality = 3;
-				}
-				else if ( is_queue_compatible(bits, 0, 1, 1) )
-				{
-					// Else, a queue that supports compute and transfer only (might allow asynchronous compute. Have to check).
-					infos.compute_queue_index = i;
-					infos.compute_queue_quality = 2;
-				}
-				else if ( is_queue_compatible(bits, -1, 1, -1) && infos.compute_queue_quality == 0 )
-				{
-					// If not, a queue that supports at least compute
-					infos.compute_queue_index = i;
-					infos.compute_queue_quality = 1;
-				}
-			}
-
-			// Look for a Transfer queue if the ideal one isn't found yet.
-			if ( infos.transfer_queue_quality != 3 )
-			{
-				if ( is_queue_compatible(bits, 0, 0, 1) )
-				{
-					// Ideally, a queue that only supports transfer (for DMA).
-					infos.transfer_queue_index = i;
-					infos.transfer_queue_quality = 3;
-				}
-				else if ( is_queue_compatible(bits, 0, 1, 1) )
-				{
-					// Else, a queue that supports compute and transfer only.
-					infos.transfer_queue_index = i;
-					infos.transfer_queue_quality = 2;
-				}
-				else if ( is_queue_compatible(bits, -1, -1, 1) && infos.transfer_queue_quality == 0 )
-				{
-					// If not, a queue that supports at least graphics
-					infos.transfer_queue_index = i;
-					infos.transfer_queue_quality = 1;
-				}
-			}
-		}
-
-		if ( infos.presentation_queue_index == -1 )
-		{
-			SE_LOG_INFO("(Vulkan) No Presentation Queue Found");
-			return false;
-		}
-
-		if ( infos.graphics_queue_quality == 0 )
-
-		{
-			SE_LOG_INFO("(Vulkan) No Graphics Queue Found");
-			return false;
-		}
-
-		if ( infos.compute_queue_quality == 0 || infos.transfer_queue_quality == 0 )
-		{
-			SE_LOG_INFO("(Vulkan) No Queues supporting Compute or Transfer found");
-			return false;
-		}
-
-		VkDeviceQueueCreateInfo presentation_queue_info;
-		SE_ZERO_MEMORY(presentation_queue_info);
-
-		presentation_queue_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-		presentation_queue_info.queueFamilyIndex = infos.presentation_queue_index;
-		presentation_queue_info.queueCount = 1;
-
-		VkDeviceQueueCreateInfo graphics_queue_info;
-		SE_ZERO_MEMORY(graphics_queue_info);
-
-		graphics_queue_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-		graphics_queue_info.queueFamilyIndex = infos.graphics_queue_index;
-		graphics_queue_info.queueCount = 1;
-
-		VkDeviceQueueCreateInfo compute_queue_info;
-		SE_ZERO_MEMORY(compute_queue_info);
-
-		compute_queue_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-		compute_queue_info.queueFamilyIndex = infos.compute_queue_index;
-		compute_queue_info.queueCount = 1;
-
-		VkDeviceQueueCreateInfo transfer_queue_info;
-		SE_ZERO_MEMORY(transfer_queue_info);
-
-		transfer_queue_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-		transfer_queue_info.queueFamilyIndex = infos.transfer_queue_index;
-		transfer_queue_info.queueCount = 1;
-
-		infos.infos[infos.queue_count++] = presentation_queue_info;
-
-		if ( infos.graphics_queue_index != infos.presentation_queue_index )
-			infos.infos[infos.queue_count++] = graphics_queue_info;
-
-		if ( infos.compute_queue_index != infos.presentation_queue_index && infos.compute_queue_index != infos.graphics_queue_index )
-			infos.infos[infos.queue_count++] = compute_queue_info;
-
-		if ( infos.transfer_queue_index != infos.presentation_queue_index && infos.transfer_queue_index != infos.graphics_queue_index && infos.transfer_queue_index != infos.compute_queue_index )
-			infos.infos[infos.queue_count++] = transfer_queue_info;
-
-		return true;
-	}
-
-	SwapChainSupportDetails PhysicalDevice::QuerySwapChainSupport(VkSurfaceKHR& surface)
-	{
-		SwapChainSupportDetails details;
-
-		// Get surface capabilities
-		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physical, surface, &details.capabilities);
-
-		uint32_t presentModeCount;
-		vkGetPhysicalDeviceSurfacePresentModesKHR(m_physical, surface, &presentModeCount, nullptr);
-
-		if ( presentModeCount != 0 )
-		{
-			details.presentModes.resize(presentModeCount);
-			vkGetPhysicalDeviceSurfacePresentModesKHR(m_physical, surface, &presentModeCount, details.presentModes.data());
-		}
-
-		uint32_t formatCount;
-		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physical, surface, &formatCount, nullptr);
-
-		if ( formatCount != 0 )
-		{
-			details.formats.resize(formatCount);
-			vkGetPhysicalDeviceSurfaceFormatsKHR(m_physical, surface, &formatCount, details.formats.data());
-		}
-		return details;
-	}
-
-	bool PhysicalDevice::IsDeviceSuitable(VkSurfaceKHR& surface, VkPhysicalDeviceType type, QueueInfos& infos, vkWrapper::SwapChainSupportDetails& details, std::vector<const char*> &extensions)
-	{
-		vkGetPhysicalDeviceProperties(m_physical, &m_device_properties);
-		uint32_t vendorId = m_device_properties.vendorID;
-		bool requires_ray_tracing = false;
-		for ( auto& ext : extensions )
-		{
-			if ( strcmp(ext, VK_NV_RAY_TRACING_EXTENSION_NAME) == 0 )
-			{
-				requires_ray_tracing = true;
-				break;
-			}
-		}
-
-		if ( m_device_properties.deviceType == type )
-		{
-			Extensions deviceExtensions = DefaultExtensions();
-			for ( auto& ext : extensions )
-				deviceExtensions.Enable(ext);
-			bool extensionsSupported = deviceExtensions.CheckDeviceSupport(m_physical);
-
-			details = QuerySwapChainSupport(surface);
-			if ( details.formats.size() > 0 && details.presentModes.size() > 0 && extensionsSupported )
-			{
-				SE_LOG_INFO("(Vulkan) Vendor : " + std::string(get_vendor_name(m_device_properties.vendorID)));
-				SE_LOG_INFO("(Vulkan) Name   : " + std::string(m_device_properties.deviceName));
-				SE_LOG_INFO("(Vulkan) Type   : " + std::string(kDeviceTypes[m_device_properties.deviceType]));
-				SE_LOG_INFO("(Vulkan) Driver : " + std::to_string(m_device_properties.driverVersion));
-
-				//if ( requires_ray_tracing )
-				//{
-				//	m_ray_tracing_properties.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RAY_TRACING_PROPERTIES_NV;
-				//	m_ray_tracing_properties.pNext = nullptr;
-				//	m_ray_tracing_properties.maxRecursionDepth = 0;
-				//	m_ray_tracing_properties.shaderGroupHandleSize = 0;
-
-				//	VkPhysicalDeviceProperties2 properties;
-				//	properties.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2;
-				//	properties.pNext = &m_ray_tracing_properties;
-
-				//	SE_ZERO_MEMORY(properties.properties);
-
-				//	vkGetPhysicalDeviceProperties2(m_physical, &properties);
-				//}
-
-				return FindQueueFamilies(surface, infos);
-			}
-		}
-
-		return false;
-#if 0
-		bool extensionsSupported = CheckDeviceExtensionSupport();
-		QueueFamilyIndices indices = FindQueueFamilies(surface);
-
-		bool swapChainAdequate = false;
-		if ( extensionsSupported )
-		{
-			SwapChainSupportDetails swapChainSupport = QuerySwapChainSupport(surface);
-			swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
-		}
-
-		VkPhysicalDeviceFeatures supportedFeatures;
-		vkGetPhysicalDeviceFeatures(m_physical, &supportedFeatures);
-
-		return indices.IsComplete() && extensionsSupported && swapChainAdequate && supportedFeatures.samplerAnisotropy;
-#endif
-	}
+	
 
 	//bool PhysicalDevice::CheckDeviceExtensionSupport()
 	//{
@@ -675,15 +665,14 @@ namespace vkWrapper
 	void Instance::Init()
 	{
 		m_validationLayers = ValidationLayers::Default();
-
 		if (enableValidationLayers && !m_validationLayers.CheckSupport())
 		{
 			throw std::runtime_error("validation layers requested, but not available!");
 		}
 
-		auto extensions = Extensions::Default();
+		m_extensions = Extensions::Default();
 		//extensions.Enable(VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME); // устарело в 1.1??
-		extensions.CheckSupport();
+		m_extensions.CheckSupport();
 
 		VkApplicationInfo appInfo = {};
 		appInfo.sType              = VK_STRUCTURE_TYPE_APPLICATION_INFO;
@@ -697,8 +686,8 @@ namespace vkWrapper
 		VkInstanceCreateInfo createInfo = {};
 		createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 		createInfo.pApplicationInfo = &appInfo;
-		createInfo.enabledExtensionCount = extensions.Count();
-		createInfo.ppEnabledExtensionNames = extensions.Data();
+		createInfo.enabledExtensionCount = m_extensions.Count();
+		createInfo.ppEnabledExtensionNames = m_extensions.Data();
 
 		VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo;
 		if (enableValidationLayers)
@@ -730,7 +719,7 @@ namespace vkWrapper
 
 	Surface* Instance::CreateSurface(GLFWwindow* window)
 	{
-		Surface* s = new Surface(this, window);
+		Surface *s = new Surface(this, window);
 		s->Init();
 		return s;
 	}
@@ -754,7 +743,7 @@ namespace vkWrapper
 			physicals[i] = PhysicalDevice(devices[i]);
 	}
 
-	PhysicalDevice Instance::PickPhysicalDevice(Surface* surface, std::vector<const char*> &device_extensions)
+	PhysicalDevice Instance::PickPhysicalDevice(Surface* surface, bool require_ray_tracing)
 	{
 		std::vector<PhysicalDevice> devices;
 		GetPhysicalDevices(devices);
@@ -762,13 +751,8 @@ namespace vkWrapper
 		// Try to find a discrete GPU...
 		for ( auto& device : devices )
 		{
-			QueueInfos              infos;
-			SwapChainSupportDetails details;
-
-			if ( device.IsDeviceSuitable(surface->Get(), VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU, infos, details, device_extensions) )
+			if ( device.IsDeviceSuitable(surface->Get(), VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU, require_ray_tracing) )
 			{
-				m_selected_queues = infos;
-				m_swapChainSupport = details;
 				return device;
 			}
 		}
@@ -776,13 +760,8 @@ namespace vkWrapper
 		// ...If not, try to find an integrated GPU...
 		for ( auto& device : devices )
 		{
-			QueueInfos              infos;
-			SwapChainSupportDetails details;
-
-			if ( device.IsDeviceSuitable(surface->Get(), VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU, infos, details, device_extensions) )
+			if ( device.IsDeviceSuitable(surface->Get(), VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU, require_ray_tracing) )
 			{
-				m_selected_queues = infos;
-				m_swapChainSupport = details;
 				return device;
 			}
 		}
@@ -1008,7 +987,7 @@ namespace vkWrapper
 	void SwapChain::Init()
 	{
 		PhysicalDevice* physical = m_parent->GetPhysical();
-		SwapChainSupportDetails swapChainSupport = physical->m_swapChainSupport;
+		SwapChainSupportDetails swapChainSupport = physical->m_swapChainSupportDetails;
 
 		VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
 		VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);

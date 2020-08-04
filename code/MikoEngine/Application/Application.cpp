@@ -202,7 +202,7 @@ bool Application::init_base(int argc, const char * argv[])
 #	if SE_DEBUG
 	enableValidationLayers = true;
 #	endif
-	m_vk_backend = vk::Backend::create(m_window, enableValidationLayers, settings.ray_tracing, settings.device_extensions, settings.device_pnext);
+	m_vk_backend = vk::Backend::create(m_window, enableValidationLayers, settings.ray_tracing);
 
 	m_image_available_semaphores.resize(vk::Backend::kMaxFramesInFlight);
 	m_render_finished_semaphores.resize(vk::Backend::kMaxFramesInFlight);
