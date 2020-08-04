@@ -231,10 +231,6 @@ namespace vk
 		size_t           aligned_dynamic_ubo_size(size_t size);
 		VkFormat         find_supported_format(const std::vector<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
 
-		/*inline VkPhysicalDeviceRayTracingPropertiesNV& ray_tracing_properties()
-		{
-			return m_ray_tracing_properties;
-		}*/
 		inline VkFormat                               swap_chain_image_format()
 		{
 			return m_swap_chain_image_format;
@@ -283,7 +279,6 @@ namespace vk
 		VkFormat                                      m_swap_chain_image_format;
 		VkFormat                                      m_swap_chain_depth_format;
 		VkExtent2D                                    m_swap_chain_extent;
-		/*VkPhysicalDeviceRayTracingPropertiesNV        m_ray_tracing_properties;*/
 		VkPhysicalDeviceDescriptorIndexingFeaturesEXT m_indexing_features;
 		std::shared_ptr<RenderPass>                   m_swap_chain_render_pass;
 		std::vector<std::shared_ptr<Image>>           m_swap_chain_images;

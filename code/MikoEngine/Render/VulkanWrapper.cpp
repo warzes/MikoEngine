@@ -301,7 +301,7 @@ namespace vkWrapper
 		vkGetPhysicalDeviceProperties(m_physical, &m_device_properties);
 		if (m_device_properties.deviceType == type)
 		{
-			m_deviceExtensions = DefaultExtensions();
+			m_deviceExtensions = defaultExtensions();
 			if (requireRayRracing)
 			{
 				m_deviceExtensions.Enable(VK_NV_RAY_TRACING_EXTENSION_NAME);
@@ -525,14 +525,13 @@ namespace vkWrapper
 	}
 
 
+	Extensions PhysicalDevice::defaultExtensions()
+	{
+		Extensions deviceExtensions;
+		deviceExtensions.Enable(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+		return deviceExtensions;
+	}
 
-
-	//void PhysicalDevice::FindSupportDetails(VkSurfaceKHR& surface)
-	//{
-	//	m_indices = FindQueueFamilies(surface);
-	//	m_swapChainSupport = QuerySwapChainSupport(surface);
-	//	m_msaaSamples = GetMaxUsableSampleCount();
-	//}
 
 	VkSampleCountFlagBits PhysicalDevice::GetMaxUsableSampleCount()
 	{
@@ -587,46 +586,6 @@ namespace vkWrapper
 		return format == VK_FORMAT_D32_SFLOAT_S8_UINT || format == VK_FORMAT_D24_UNORM_S8_UINT;
 	}
 
-	
-
-	
-
-	
-
-	//bool PhysicalDevice::CheckDeviceExtensionSupport()
-	//{
-	//	Extensions deviceExtensions = DefaultExtensions();
-	//	return deviceExtensions.CheckDeviceSupport(m_physical);
-	//}
-
-	//int PhysicalDevice::RateDeviceSuitability()
-	//{
-	//	VkPhysicalDeviceProperties deviceProperties;
-	//	vkGetPhysicalDeviceProperties(m_physical, &deviceProperties);
-
-	//	VkPhysicalDeviceFeatures deviceFeatures;
-	//	vkGetPhysicalDeviceFeatures(m_physical, &deviceFeatures);
-
-	//	int score = 0;
-
-	//	 Discrete GPUs have a significant performance advantage
-	//	if ( deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU )
-	//	{
-	//		score += 1000;
-	//	}
-
-	//	 Maximum possible size of textures affects graphics quality
-	//	score += deviceProperties.limits.maxImageDimension2D;
-
-	//	 Application can't function without geometry shaders
-	//	if ( !deviceFeatures.geometryShader )
-	//	{
-	//		return 0;
-	//	}
-
-	//	return score;
-	//}
-
 	uint32_t PhysicalDevice::FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties)
 	{
 		VkPhysicalDeviceMemoryProperties memProperties;
@@ -644,12 +603,7 @@ namespace vkWrapper
 		throw std::runtime_error("failed to find suitable memory type!");
 	}
 
-	Extensions PhysicalDevice::DefaultExtensions()
-	{
-		Extensions deviceExtensions;
-		deviceExtensions.Enable(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
-		return deviceExtensions;
-	}
+	
 
 	VkPhysicalDevice PhysicalDevice::Get()
 	{
@@ -768,27 +722,6 @@ namespace vkWrapper
 
 		SE_LOG_FATAL("(Vulkan) Failed to find a suitable GPU.");
 		throw std::runtime_error("(Vulkan) Failed to find a suitable GPU.");
-#if 0
-				
-		// Use an ordered map to automatically sort candidates by increasing score
-		std::multimap<int, PhysicalDevice> candidates;
-		for (auto& device : devices)
-		{
-			device.FindSupportDetails(surface->Get());
-			int score = device.RateDeviceSuitability();
-			candidates.insert(std::make_pair(score, device));
-		}
-
-		// Check if the best candidate is suitable at all
-		if (candidates.rbegin()->first > 0)
-		{
-			return candidates.rbegin()->second;
-		}
-		else
-		{
-			throw std::runtime_error("failed to find a suitable GPU!");
-		}
-#endif
 	}
 
 	VkInstance& Instance::Get()
@@ -1183,7 +1116,7 @@ namespace vkWrapper
 		createInfo.pEnabledFeatures = &deviceFeatures;
 
 
-		m_extensions = PhysicalDevice::DefaultExtensions();
+		m_extensions = PhysicalDevice::defaultExtensions();
 		createInfo.enabledExtensionCount = m_extensions.Count();
 		createInfo.ppEnabledExtensionNames = m_extensions.Data();
 

@@ -177,40 +177,27 @@ namespace vkWrapper
 		SwapChainSupportDetails QuerySwapChainSupport(VkSurfaceKHR& surface); // TODO: private???
 		bool FindQueueFamilies(VkSurfaceKHR& surface, QueueInfos& infos);// TODO: private???
 
-		inline QueueInfos& queue_infos() 
-		{
-			return m_selected_queues;
-		}
+		VkPhysicalDevice Get();
 
-		inline SwapChainSupportDetails& GetSwapChainDetails() 
-		{
-			return m_swapChainSupportDetails;
-		}
+		VkPhysicalDeviceProperties& GetProperties() { return m_device_properties; }
+		QueueInfos& queue_infos() { return m_selected_queues; }
+		SwapChainSupportDetails& GetSwapChainDetails() { return m_swapChainSupportDetails; }
+		Extensions& DeviceExtensions(){ return m_deviceExtensions; }
+		VkPhysicalDeviceRayTracingPropertiesNV& ray_tracing_properties(){ return m_ray_tracing_properties; }
 
-		inline Extensions& DeviceExtensions()
-		{
-			return m_deviceExtensions;
-		}
-
-		inline VkPhysicalDeviceRayTracingPropertiesNV& ray_tracing_properties()
-		{
-			return m_ray_tracing_properties;
-		}
-
-	private:	
-
+	private:
+		static Extensions defaultExtensions();
 
 		VkPhysicalDevice m_physical = VK_NULL_HANDLE; // implicitly destroyed with instance
-		Extensions m_deviceExtensions;
+		VkPhysicalDeviceProperties m_device_properties;
 		VkPhysicalDeviceRayTracingPropertiesNV m_ray_tracing_properties;
+		Extensions m_deviceExtensions;		
 		SwapChainSupportDetails m_swapChainSupportDetails; 
 		QueueInfos m_selected_queues;
 
 	public:
 
 		// ======>>>> OLD
-
-		//void FindSupportDetails(VkSurfaceKHR &surface);
 
 		VkSampleCountFlagBits GetMaxUsableSampleCount();
 
@@ -220,31 +207,11 @@ namespace vkWrapper
 
 		bool HasStencilComponent(VkFormat format);
 
-		//QueueFamilyIndices FindQueueFamilies(VkSurfaceKHR &surface);
-		
-
-
-		
-
-		
-
-		//bool CheckDeviceExtensionSupport();
-
-		//int RateDeviceSuitability();
-
-		uint32_t FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
-
-		static Extensions DefaultExtensions();
-
-		VkPhysicalDevice Get();
-
-		VkPhysicalDeviceProperties& GetProperties() {return m_device_properties; }
-
-	private:
-		
+		uint32_t FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);	
+	private:		
 		VkSampleCountFlagBits m_msaaSamples = VK_SAMPLE_COUNT_1_BIT;
 		QueueFamilyIndices m_indices;
-		VkPhysicalDeviceProperties m_device_properties;
+		
 	};
 
 	class Instance
