@@ -156,5 +156,8 @@
     <Filter Include="6_Scene">
       <UniqueIdentifier>{e611321d-1fe1-4774-bec1-9f09faadc156}</UniqueIdentifier>
     </Filter>
+    <Filter Include="4_Render\temp">
+      <UniqueIdentifier>{95d55803-6418-42ea-bf6c-cf20cd002d0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

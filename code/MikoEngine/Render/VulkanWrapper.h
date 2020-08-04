@@ -171,6 +171,7 @@ namespace vkWrapper
 	class PhysicalDevice
 	{
 		friend class SwapChain;
+		friend class LogicalDevice;
 	public:
 		PhysicalDevice() = default;
 		PhysicalDevice(VkPhysicalDevice &physical);

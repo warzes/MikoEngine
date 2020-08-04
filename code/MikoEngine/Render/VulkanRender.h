@@ -4,6 +4,8 @@
 
 #include "VulkanWrapper.h"
 
+struct VmaAllocator_T;
+
 namespace vk
 {
 	class Image;

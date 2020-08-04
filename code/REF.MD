@@ -9,6 +9,7 @@ Intrinsic
 aether3d
 https://github.com/DKGL/DKGL
 https://github.com/ScrappyCocco/ScrapEngine             - простая сцена
+https://github.com/GPUOpen-LibrariesAndSDKs/V-EZ
 
 ===================================================================================================
 для вдохновения
@@ -30,6 +31,8 @@ http://www.pbr-book.org
 ===================================================================================================
 https://www.youtube.com/watch?v=Nlr7m4rq37A
 https://www.youtube.com/watch?v=ADsWzvp3V7M
+https://aikoncwd.itch.io/cursed-gem
+https://www.youtube.com/watch?v=HPj2jd6JIgA&feature=youtu.be
 
 ===================================================================================================
 3д модели и другой контент
