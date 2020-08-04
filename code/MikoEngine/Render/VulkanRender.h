@@ -20,27 +20,6 @@ namespace vk
 	class DescriptorPool;
 	class PipelineLayout;
 
-	struct QueueInfos
-	{
-		// Most ideal queue = 3
-		// Second most ideal queue = 2
-		// Queue for minimum functionality = 1
-		// Not found = 0
-
-		int32_t                 graphics_queue_index = -1;
-		int32_t                 graphics_queue_quality = 0;
-		int32_t                 compute_queue_index = -1;
-		int32_t                 compute_queue_quality = 0;
-		int32_t                 transfer_queue_index = -1;
-		int32_t                 transfer_queue_quality = 0;
-		int32_t                 presentation_queue_index = -1;
-		int32_t                 queue_count = 0;
-		VkDeviceQueueCreateInfo infos[32];
-
-		bool asynchronous_compute();
-		bool transfer();
-	};
-
 #pragma region State Desc
 
 	struct VertexInputStateDesc
@@ -266,9 +245,9 @@ namespace vk
 		{
 			return m_current_frame;
 		}
-		inline const QueueInfos&                      queue_infos()
+		inline const vkWrapper::QueueInfos& queue_infos()
 		{
-			return m_selected_queues;
+			return m_instance->queue_infos();
 		}
 
 	private:
@@ -277,12 +256,7 @@ namespace vk
 		void                     load_ray_tracing_funcs();
 		VkFormat                 find_depth_format();
 		bool                     check_validation_layer_support(std::vector<const char*> layers);
-		bool                     check_device_extension_support(VkPhysicalDevice device, std::vector<const char*> extensions);
 		void                     query_swap_chain_support(VkPhysicalDevice device, vkWrapper::SwapChainSupportDetails& details);
-		bool                     find_physical_device(std::vector<const char*> extensions);
-		bool                     is_device_suitable(VkPhysicalDevice device, VkPhysicalDeviceType type, QueueInfos& infos, vkWrapper::SwapChainSupportDetails& details, std::vector<const char*> extensions);
-		bool                     find_queues(VkPhysicalDevice device, QueueInfos& infos);
-		bool                     is_queue_compatible(VkQueueFlags current_queue_flags, int32_t graphics, int32_t compute, int32_t transfer);
 		bool                     create_logical_device(std::vector<const char*> extensions, void* pnext);
 		bool                     create_swapchain();
 		void                     create_render_pass();
@@ -297,19 +271,13 @@ namespace vk
 		void                     flush(VkQueue queue, const std::vector<std::shared_ptr<CommandBuffer>>& cmd_bufs);
 
 		GLFWwindow*                                   m_window = nullptr;
-		//VkInstance                                    m_vk_instance = nullptr;
 		VkDevice                                      m_vk_device = nullptr;
 		VkQueue                                       m_vk_graphics_queue = nullptr;
 		VkQueue                                       m_vk_compute_queue = nullptr;
 		VkQueue                                       m_vk_transfer_queue = nullptr;
 		VkQueue                                       m_vk_presentation_queue = nullptr;
-		VkPhysicalDevice                              m_vk_physical_device = nullptr;
-		//VkSurfaceKHR                                  m_vk_surface = nullptr;
 		VkSwapchainKHR                                m_vk_swap_chain = nullptr;
-		//VkDebugUtilsMessengerEXT                      m_vk_debug_messenger = nullptr;
 		VmaAllocator_T*                               m_vma_allocator = nullptr;
-		vkWrapper::SwapChainSupportDetails            m_swapchain_details;
-		QueueInfos                                    m_selected_queues;
 		VkFormat                                      m_swap_chain_image_format;
 		VkFormat                                      m_swap_chain_depth_format;
 		VkExtent2D                                    m_swap_chain_extent;
@@ -324,7 +292,6 @@ namespace vk
 		std::vector<std::shared_ptr<Fence>>           m_in_flight_fences;
 		std::shared_ptr<Image>                        m_swap_chain_depth = nullptr;
 		std::shared_ptr<ImageView>                    m_swap_chain_depth_view = nullptr;
-		VkPhysicalDeviceProperties                    m_device_properties;
 		bool                                          m_ray_tracing_enabled = false;
 	};
 

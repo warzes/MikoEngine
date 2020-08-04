@@ -77,12 +77,42 @@ namespace vkWrapper
 		std::optional<uint32_t> transferFamily;
 	};
 
+	struct QueueInfos // TODO: объединить с QueueFamilyIndices???
+	{
+		// Most ideal queue = 3
+		// Second most ideal queue = 2
+		// Queue for minimum functionality = 1
+		// Not found = 0
+
+		int32_t                 graphics_queue_index = -1;
+		int32_t                 graphics_queue_quality = 0;
+		int32_t                 compute_queue_index = -1;
+		int32_t                 compute_queue_quality = 0;
+		int32_t                 transfer_queue_index = -1;
+		int32_t                 transfer_queue_quality = 0;
+		int32_t                 presentation_queue_index = -1;
+		int32_t                 queue_count = 0;
+		VkDeviceQueueCreateInfo infos[32];
+
+		bool asynchronous_compute()
+		{
+			return compute_queue_index != graphics_queue_index;
+		}
+
+		bool transfer()
+		{
+			return transfer_queue_index != compute_queue_index && transfer_queue_index != graphics_queue_index;
+		}
+	};
+
 	struct SwapChainSupportDetails
 	{
 		VkSurfaceCapabilitiesKHR        capabilities;
 		std::vector<VkSurfaceFormatKHR> formats;
 		std::vector<VkPresentModeKHR>   presentModes;
 	};
+
+
 
 
 	class Surface;
@@ -134,13 +164,15 @@ namespace vkWrapper
 		std::vector<std::string> m_layers;
 	};
 
+
+	// TODO: почистить класс от лишнего
 	class PhysicalDevice
 	{
 	public:
 		PhysicalDevice() = default;
 		PhysicalDevice(VkPhysicalDevice &physical);
 
-		void FindSupportDetails(VkSurfaceKHR &surface);
+		//void FindSupportDetails(VkSurfaceKHR &surface);
 
 		VkSampleCountFlagBits GetMaxUsableSampleCount();
 
@@ -150,15 +182,17 @@ namespace vkWrapper
 
 		bool HasStencilComponent(VkFormat format);
 
-		QueueFamilyIndices FindQueueFamilies(VkSurfaceKHR &surface);
+		//QueueFamilyIndices FindQueueFamilies(VkSurfaceKHR &surface);
+		bool FindQueueFamilies(VkSurfaceKHR &surface, QueueInfos &infos);
+
 
 		SwapChainSupportDetails QuerySwapChainSupport(VkSurfaceKHR &surface);
 
-		bool IsDeviceSuitable(VkSurfaceKHR& surface);
+		bool IsDeviceSuitable(VkSurfaceKHR& surface, VkPhysicalDeviceType type, QueueInfos& infos, vkWrapper::SwapChainSupportDetails& details, std::vector<const char*> &extensions);
 
-		bool CheckDeviceExtensionSupport();
+		//bool CheckDeviceExtensionSupport();
 
-		int RateDeviceSuitability();
+		//int RateDeviceSuitability();
 
 		uint32_t FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
 
@@ -166,11 +200,15 @@ namespace vkWrapper
 
 		VkPhysicalDevice Get();
 
+		VkPhysicalDeviceProperties& GetProperties() {return m_device_properties; }
+
 	private:
 		VkPhysicalDevice m_physical = VK_NULL_HANDLE; // implicitly destroyed with instance
 		VkSampleCountFlagBits m_msaaSamples = VK_SAMPLE_COUNT_1_BIT;
 		QueueFamilyIndices m_indices;
 		SwapChainSupportDetails m_swapChainSupport;
+		QueueInfos m_selected_queues;
+		VkPhysicalDeviceProperties m_device_properties;
 	};
 
 	class Instance
@@ -185,14 +223,26 @@ namespace vkWrapper
 
 		void GetPhysicalDevices(std::vector<PhysicalDevice>& physicals);
 
-		PhysicalDevice PickPhysicalDevice(Surface* surface);
+		PhysicalDevice PickPhysicalDevice(Surface* surface, std::vector<const char*> &device_extensions);
 
 		VkInstance& Get();
+
+		inline QueueInfos& queue_infos() // TODO: обратно в физ устройство
+		{
+			return m_selected_queues;
+		}
+
+		inline SwapChainSupportDetails& GetSwapChainDetails() // TODO: обратно в физ устройство
+		{
+			return m_swapChainSupport;
+		}
 
 	private:
 		VkInstance m_instance;
 		ValidationLayers m_validationLayers;
 		Extensions m_extensions;
+		SwapChainSupportDetails m_swapChainSupport; // TODO: обратно в физ устройство
+		QueueInfos m_selected_queues; // TODO: обратно в физ устройство
 	};
 
 	template<typename T>
