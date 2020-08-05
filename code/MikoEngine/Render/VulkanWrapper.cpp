@@ -1084,65 +1084,106 @@ namespace vkWrapper
 		Close();
 	}
 
-	void LogicalDevice::Init()
+	const std::vector<const char*> kkValidationLayers = {
+"VK_LAYER_KHRONOS_validation"
+	};
+
+	void LogicalDevice::Init(bool require_ray_tracing)
 	{
-		QueueFamilyIndices indices = m_physicalDevice->m_indices;
-
-		float queuePriority = 1.0f;
-		std::set<uint32_t> queueFamilies = indices.GetQueueFamilySet();
-		std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
-		for ( uint32_t queueFamily : queueFamilies )
-		{
-			VkDeviceQueueCreateInfo queueCreateInfo = {};
-			queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-			queueCreateInfo.queueFamilyIndex = queueFamily;
-			queueCreateInfo.queueCount = 1;
-			queueCreateInfo.pQueuePriorities = &queuePriority;
-			queueCreateInfos.push_back(queueCreateInfo);
-		}
-
 		// enable features
-		VkPhysicalDeviceFeatures deviceFeatures = {};
-		deviceFeatures.samplerAnisotropy = VK_TRUE;
-		deviceFeatures.sampleRateShading = m_msaaEnabled ? VK_TRUE : VK_FALSE;
+		VkPhysicalDeviceFeatures supported_features;
+		SE_ZERO_MEMORY(supported_features); // todo VkPhysicalDeviceFeatures supported_features = {} ????
+		//supported_features.samplerAnisotropy = VK_TRUE;
+		//supported_features.sampleRateShading = m_msaaEnabled ? VK_TRUE : VK_FALSE;
 
+		std::vector<const char*> device_extensions;
+		device_extensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 
-		VkDeviceCreateInfo createInfo = {};
-		createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+		VkDeviceCreateInfo device_info;
+		SE_ZERO_MEMORY(device_info); // todo VkDeviceCreateInfo device_info = {} ????
+		device_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+		device_info.pQueueCreateInfos = &m_physicalDevice->queue_infos().infos[0];
+		device_info.queueCreateInfoCount = static_cast<uint32_t>(m_physicalDevice->queue_infos().queue_count);
+		device_info.pEnabledFeatures = &supported_features;
+		device_info.enabledExtensionCount = m_physicalDevice->DeviceExtensions().Count(); // TODO:
+		device_info.ppEnabledExtensionNames = m_physicalDevice->DeviceExtensions().Data();	 // TODO:
+		device_info.enabledExtensionCount = device_extensions.size();
+		device_info.ppEnabledExtensionNames = device_extensions.data();
+		device_info.pNext = nullptr;
 
-		createInfo.queueCreateInfoCount = queueCreateInfos.size();
-		createInfo.pQueueCreateInfos = queueCreateInfos.data();
+		if (require_ray_tracing)
+		{
+			SE_ZERO_MEMORY(m_indexing_features);
+			m_indexing_features.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT;
+			m_indexing_features.shaderSampledImageArrayNonUniformIndexing = VK_TRUE;
+			m_indexing_features.runtimeDescriptorArray = VK_TRUE;
+			m_indexing_features.descriptorBindingVariableDescriptorCount = VK_TRUE;
+			m_indexing_features.shaderStorageBufferArrayNonUniformIndexing = VK_TRUE;
 
-		createInfo.pEnabledFeatures = &deviceFeatures;
+			void *pnext = &m_indexing_features;
 
-
-		m_extensions = PhysicalDevice::defaultExtensions();
-		createInfo.enabledExtensionCount = m_extensions.Count();
-		createInfo.ppEnabledExtensionNames = m_extensions.Data();
+			VkPhysicalDeviceFeatures2 physical_device_features_2;
+			SE_ZERO_MEMORY(physical_device_features_2);
+			physical_device_features_2.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2;
+			physical_device_features_2.features = supported_features;
+			physical_device_features_2.pNext = pnext;
+			device_info.pEnabledFeatures = nullptr;
+			device_info.pNext = &physical_device_features_2;
+		}
 
 		if ( enableValidationLayers )
 		{
 			m_validationLayers = ValidationLayers::Default();
-			createInfo.enabledLayerCount = m_validationLayers.Count();
-			createInfo.ppEnabledLayerNames = m_validationLayers.Data();
+			device_info.enabledLayerCount = m_validationLayers.Count();
+			device_info.ppEnabledLayerNames = m_validationLayers.Data();
 		}
 		else
 		{
-			createInfo.enabledLayerCount = 0;
+			device_info.enabledLayerCount = 0;
 		}
 
-		if ( vkCreateDevice(m_physicalDevice->Get(), &createInfo, nullptr, &m_device) != VK_SUCCESS )
+		float priority = 1.0f;
+		for (int i = 0; i < m_physicalDevice->queue_infos().queue_count; i++)
+			m_physicalDevice->queue_infos().infos[i].pQueuePriorities = &priority;
+
+		if (vkCreateDevice(m_physicalDevice->Get(), &device_info, nullptr, &m_device) != VK_SUCCESS)
 		{
-			throw std::runtime_error("failed to create logical device!");
+			SE_LOG_FATAL("(Vulkan) Failed to create logical device.");
+			throw std::runtime_error("(Vulkan) Failed to create logical device.");
 		}
 
-		// get device queues
-		m_graphicsQueue = new Queue(this, indices.graphicsFamily.value());
-		m_presentQueue = new Queue(this, indices.presentFamily.value());
-		m_transferQueue = new Queue(this, indices.transferFamily.value());
-		m_graphicsQueue->Init();
-		m_presentQueue->Init();
-		m_transferQueue->Init();
+		// Get presentation queue
+		vkGetDeviceQueue(m_device, m_physicalDevice->queue_infos().presentation_queue_index, 0, &m_vk_presentation_queue);
+		//m_presentQueue = new Queue(this, indices.presentFamily.value());
+		//m_presentQueue->Init();
+
+		// Get graphics queue
+		if (m_physicalDevice->queue_infos().graphics_queue_index == m_physicalDevice->queue_infos().presentation_queue_index)
+			m_vk_graphics_queue = m_vk_presentation_queue;
+		else
+			vkGetDeviceQueue(m_device, m_physicalDevice->queue_infos().graphics_queue_index, 0, &m_vk_graphics_queue);
+		//m_graphicsQueue = new Queue(this, indices.graphicsFamily.value());
+		//m_graphicsQueue->Init();
+
+		// Get compute queue
+		if (m_physicalDevice->queue_infos().compute_queue_index == m_physicalDevice->queue_infos().presentation_queue_index)
+			m_vk_compute_queue = m_vk_presentation_queue;
+		else if (m_physicalDevice->queue_infos().compute_queue_index == m_physicalDevice->queue_infos().graphics_queue_index)
+			m_vk_compute_queue = m_vk_graphics_queue;
+		else
+			vkGetDeviceQueue(m_device, m_physicalDevice->queue_infos().compute_queue_index, 0, &m_vk_compute_queue);
+
+		// Get transfer queue
+		if (m_physicalDevice->queue_infos().transfer_queue_index == m_physicalDevice->queue_infos().presentation_queue_index)
+			m_vk_transfer_queue = m_vk_presentation_queue;
+		else if (m_physicalDevice->queue_infos().transfer_queue_index == m_physicalDevice->queue_infos().graphics_queue_index)
+			m_vk_transfer_queue = m_vk_graphics_queue;
+		else if (m_physicalDevice->queue_infos().transfer_queue_index == m_physicalDevice->queue_infos().compute_queue_index)
+			m_vk_transfer_queue = m_vk_transfer_queue;
+		else
+			vkGetDeviceQueue(m_device, m_physicalDevice->queue_infos().transfer_queue_index, 0, &m_vk_transfer_queue);
+		//m_transferQueue = new Queue(this, indices.transferFamily.value());		
+		//m_transferQueue->Init();
 	}
 
 	void LogicalDevice::Close()

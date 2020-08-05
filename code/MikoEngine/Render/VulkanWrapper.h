@@ -59,7 +59,7 @@ namespace vkWrapper
 	const bool enableValidationLayers = false;
 #endif
 
-	static const int MAX_FRAMES_IN_FLIGHT = 2; // TODO:
+	static const int MAX_FRAMES_IN_FLIGHT = 3; // TODO:
 
 	struct QueueFamilyIndices
 	{
@@ -230,14 +230,10 @@ namespace vkWrapper
 
 		VkInstance& Get();
 
-
-
 	private:
 		VkInstance m_instance;
 		ValidationLayers m_validationLayers;
 		Extensions m_extensions;
-		//SwapChainSupportDetails m_swapChainSupport; // TODO: обратно в физ устройство
-		//QueueInfos m_selected_queues; // TODO: обратно в физ устройство
 	};
 
 	template<typename T>
@@ -373,9 +369,9 @@ namespace vkWrapper
 	{
 	public:
 		LogicalDevice(PhysicalDevice* phyDevice);
-		virtual ~LogicalDevice();
+		~LogicalDevice();
 
-		void Init();
+		void Init(bool require_ray_tracing);
 		void Close();
 
 		VkDevice& Get();
@@ -398,10 +394,14 @@ namespace vkWrapper
 			return m_msaaEnabled;
 		}
 
-	private:
+	//private:
 		VkDevice m_device;
-
+		VkPhysicalDeviceDescriptorIndexingFeaturesEXT m_indexing_features;
 		// associated queue to this device.
+		VkQueue                                       m_vk_graphics_queue = nullptr;  // TODO: заменить на Queue
+		VkQueue                                       m_vk_compute_queue = nullptr;  // TODO: заменить на Queue
+		VkQueue                                       m_vk_transfer_queue = nullptr;  // TODO: заменить на Queue
+		VkQueue                                       m_vk_presentation_queue = nullptr;  // TODO: заменить на Queue
 		Queue* m_graphicsQueue;
 		Queue* m_presentQueue;
 		Queue* m_transferQueue;

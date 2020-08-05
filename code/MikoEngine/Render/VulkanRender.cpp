@@ -2905,38 +2905,18 @@ namespace vk
 		m_window(window)
 	{
 		m_ray_tracing_enabled = require_ray_tracing; 
-		if (m_ray_tracing_enabled)
-		{
-			SE_ZERO_MEMORY(m_indexing_features);
-			m_indexing_features.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT;
-			m_indexing_features.shaderSampledImageArrayNonUniformIndexing = VK_TRUE;
-			m_indexing_features.runtimeDescriptorArray = VK_TRUE;
-			m_indexing_features.descriptorBindingVariableDescriptorCount = VK_TRUE;
-			m_indexing_features.shaderStorageBufferArrayNonUniformIndexing = VK_TRUE;
-		}
 
 		m_instance = new vkWrapper::Instance();
 		m_instance->Init();
 		m_debugMessenger = m_instance->CreateDebugMessenger();
 		m_surface = m_instance->CreateSurface(window);
 		m_physicalDevice = m_instance->PickPhysicalDevice(m_surface, m_ray_tracing_enabled);
-
-
-
-
-
-		std::vector<const char*> device_extensions; // TODO: берется из пфизик девайс
-		// TODO: временный костыль - надо избавиться от device_extensions (хранить также в физ устройстве)
-		device_extensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
-		if (!create_logical_device(device_extensions, nullptr))
-		{
-			SE_LOG_FATAL("(Vulkan) Failed to create logical device.");
-			throw std::runtime_error("(Vulkan) Failed to create logical device.");
-		}
+		m_device = new vkWrapper::LogicalDevice(&m_physicalDevice);
+		m_device->Init(m_ray_tracing_enabled);
 
 		VmaAllocatorCreateInfo allocator_info = {};
 		allocator_info.physicalDevice = m_physicalDevice.Get();
-		allocator_info.device = m_vk_device;
+		allocator_info.device = m_device->Get();
 
 		if (vmaCreateAllocator(&allocator_info, &m_vma_allocator) != VK_SUCCESS)
 		{
@@ -2947,8 +2927,6 @@ namespace vk
 		if (require_ray_tracing)
 			load_ray_tracing_funcs();
 	}
-
-
 
 	Backend::~Backend()
 	{
@@ -2980,7 +2958,7 @@ namespace vk
 
 		if (m_vk_swap_chain)
 		{
-			vkDestroySwapchainKHR(m_vk_device, m_vk_swap_chain, nullptr);
+			vkDestroySwapchainKHR(m_device->Get(), m_vk_swap_chain, nullptr);
 			m_vk_swap_chain = nullptr;
 		}
 
@@ -2990,16 +2968,9 @@ namespace vk
 			m_vma_allocator = nullptr;
 		}
 
-		if (m_vk_device)
-		{
-			vkDestroyDevice(m_vk_device, nullptr);
-			m_vk_device = nullptr;
-		}
-
+		delete m_device; m_device = nullptr;
 		delete m_instance; m_instance = nullptr;
 	}
-
-
 
 	void Backend::initialize()
 	{
@@ -3028,22 +2999,20 @@ namespace vk
 		}
 	}
 
-
-
 	void Backend::load_ray_tracing_funcs()
 	{
-		g_ray_tracing_func_table._vkCreateAccelerationStructureNV = reinterpret_cast<PFN_vkCreateAccelerationStructureNV>(vkGetDeviceProcAddr(m_vk_device, "vkCreateAccelerationStructureNV"));
-		g_ray_tracing_func_table._vkDestroyAccelerationStructureNV = reinterpret_cast<PFN_vkDestroyAccelerationStructureNV>(vkGetDeviceProcAddr(m_vk_device, "vkDestroyAccelerationStructureNV"));
-		g_ray_tracing_func_table._vkGetAccelerationStructureMemoryRequirementsNV = reinterpret_cast<PFN_vkGetAccelerationStructureMemoryRequirementsNV>(vkGetDeviceProcAddr(m_vk_device, "vkGetAccelerationStructureMemoryRequirementsNV"));
-		g_ray_tracing_func_table._vkBindAccelerationStructureMemoryNV = reinterpret_cast<PFN_vkBindAccelerationStructureMemoryNV>(vkGetDeviceProcAddr(m_vk_device, "vkBindAccelerationStructureMemoryNV"));
-		g_ray_tracing_func_table._vkCmdBuildAccelerationStructureNV = reinterpret_cast<PFN_vkCmdBuildAccelerationStructureNV>(vkGetDeviceProcAddr(m_vk_device, "vkCmdBuildAccelerationStructureNV"));
-		g_ray_tracing_func_table._vkCmdCopyAccelerationStructureNV = reinterpret_cast<PFN_vkCmdCopyAccelerationStructureNV>(vkGetDeviceProcAddr(m_vk_device, "vkCmdCopyAccelerationStructureNV"));
-		g_ray_tracing_func_table._vkCmdTraceRaysNV = reinterpret_cast<PFN_vkCmdTraceRaysNV>(vkGetDeviceProcAddr(m_vk_device, "vkCmdTraceRaysNV"));
-		g_ray_tracing_func_table._vkCreateRayTracingPipelinesNV = reinterpret_cast<PFN_vkCreateRayTracingPipelinesNV>(vkGetDeviceProcAddr(m_vk_device, "vkCreateRayTracingPipelinesNV"));
-		g_ray_tracing_func_table._vkGetRayTracingShaderGroupHandlesNV = reinterpret_cast<PFN_vkGetRayTracingShaderGroupHandlesNV>(vkGetDeviceProcAddr(m_vk_device, "vkGetRayTracingShaderGroupHandlesNV"));
-		g_ray_tracing_func_table._vkGetAccelerationStructureHandleNV = reinterpret_cast<PFN_vkGetAccelerationStructureHandleNV>(vkGetDeviceProcAddr(m_vk_device, "vkGetAccelerationStructureHandleNV"));
-		g_ray_tracing_func_table._vkCmdWriteAccelerationStructuresPropertiesNV = reinterpret_cast<PFN_vkCmdWriteAccelerationStructuresPropertiesNV>(vkGetDeviceProcAddr(m_vk_device, "vkCmdWriteAccelerationStructuresPropertiesNV"));
-		g_ray_tracing_func_table._vkCompileDeferredNV = reinterpret_cast<PFN_vkCompileDeferredNV>(vkGetDeviceProcAddr(m_vk_device, "vkCompileDeferredNV"));
+		g_ray_tracing_func_table._vkCreateAccelerationStructureNV = reinterpret_cast<PFN_vkCreateAccelerationStructureNV>(vkGetDeviceProcAddr(m_device->Get(), "vkCreateAccelerationStructureNV"));
+		g_ray_tracing_func_table._vkDestroyAccelerationStructureNV = reinterpret_cast<PFN_vkDestroyAccelerationStructureNV>(vkGetDeviceProcAddr(m_device->Get(), "vkDestroyAccelerationStructureNV"));
+		g_ray_tracing_func_table._vkGetAccelerationStructureMemoryRequirementsNV = reinterpret_cast<PFN_vkGetAccelerationStructureMemoryRequirementsNV>(vkGetDeviceProcAddr(m_device->Get(), "vkGetAccelerationStructureMemoryRequirementsNV"));
+		g_ray_tracing_func_table._vkBindAccelerationStructureMemoryNV = reinterpret_cast<PFN_vkBindAccelerationStructureMemoryNV>(vkGetDeviceProcAddr(m_device->Get(), "vkBindAccelerationStructureMemoryNV"));
+		g_ray_tracing_func_table._vkCmdBuildAccelerationStructureNV = reinterpret_cast<PFN_vkCmdBuildAccelerationStructureNV>(vkGetDeviceProcAddr(m_device->Get(), "vkCmdBuildAccelerationStructureNV"));
+		g_ray_tracing_func_table._vkCmdCopyAccelerationStructureNV = reinterpret_cast<PFN_vkCmdCopyAccelerationStructureNV>(vkGetDeviceProcAddr(m_device->Get(), "vkCmdCopyAccelerationStructureNV"));
+		g_ray_tracing_func_table._vkCmdTraceRaysNV = reinterpret_cast<PFN_vkCmdTraceRaysNV>(vkGetDeviceProcAddr(m_device->Get(), "vkCmdTraceRaysNV"));
+		g_ray_tracing_func_table._vkCreateRayTracingPipelinesNV = reinterpret_cast<PFN_vkCreateRayTracingPipelinesNV>(vkGetDeviceProcAddr(m_device->Get(), "vkCreateRayTracingPipelinesNV"));
+		g_ray_tracing_func_table._vkGetRayTracingShaderGroupHandlesNV = reinterpret_cast<PFN_vkGetRayTracingShaderGroupHandlesNV>(vkGetDeviceProcAddr(m_device->Get(), "vkGetRayTracingShaderGroupHandlesNV"));
+		g_ray_tracing_func_table._vkGetAccelerationStructureHandleNV = reinterpret_cast<PFN_vkGetAccelerationStructureHandleNV>(vkGetDeviceProcAddr(m_device->Get(), "vkGetAccelerationStructureHandleNV"));
+		g_ray_tracing_func_table._vkCmdWriteAccelerationStructuresPropertiesNV = reinterpret_cast<PFN_vkCmdWriteAccelerationStructuresPropertiesNV>(vkGetDeviceProcAddr(m_device->Get(), "vkCmdWriteAccelerationStructuresPropertiesNV"));
+		g_ray_tracing_func_table._vkCompileDeferredNV = reinterpret_cast<PFN_vkCompileDeferredNV>(vkGetDeviceProcAddr(m_device->Get(), "vkCompileDeferredNV"));
 	}
 
 
@@ -3109,7 +3078,7 @@ namespace vk
 		const std::vector<VkPipelineStageFlags>& wait_stages,
 		const std::vector<std::shared_ptr<Semaphore>>& signal_semaphores)
 	{
-		submit(m_vk_graphics_queue, cmd_bufs, wait_semaphores, wait_stages, signal_semaphores);
+		submit(m_device->m_vk_graphics_queue, cmd_bufs, wait_semaphores, wait_stages, signal_semaphores);
 	}
 
 
@@ -3119,7 +3088,7 @@ namespace vk
 		const std::vector<VkPipelineStageFlags>& wait_stages,
 		const std::vector<std::shared_ptr<Semaphore>>& signal_semaphores)
 	{
-		submit(m_vk_compute_queue, cmd_bufs, wait_semaphores, wait_stages, signal_semaphores);
+		submit(m_device->m_vk_compute_queue, cmd_bufs, wait_semaphores, wait_stages, signal_semaphores);
 	}
 
 
@@ -3129,14 +3098,14 @@ namespace vk
 		const std::vector<VkPipelineStageFlags>& wait_stages,
 		const std::vector<std::shared_ptr<Semaphore>>& signal_semaphores)
 	{
-		submit(m_vk_transfer_queue, cmd_bufs, wait_semaphores, wait_stages, signal_semaphores);
+		submit(m_device->m_vk_transfer_queue, cmd_bufs, wait_semaphores, wait_stages, signal_semaphores);
 	}
 
 
 
 	void Backend::flush_graphics(const std::vector<std::shared_ptr<CommandBuffer>>& cmd_bufs)
 	{
-		flush(m_vk_graphics_queue, cmd_bufs);
+		flush(m_device->m_vk_graphics_queue, cmd_bufs);
 
 		for (int i = 0; i < MAX_COMMAND_THREADS; i++)
 			g_graphics_command_buffers[i]->reset(m_current_frame);
@@ -3146,7 +3115,7 @@ namespace vk
 
 	void Backend::flush_compute(const std::vector<std::shared_ptr<CommandBuffer>>& cmd_bufs)
 	{
-		flush(m_vk_compute_queue, cmd_bufs);
+		flush(m_device->m_vk_compute_queue, cmd_bufs);
 
 		for (int i = 0; i < MAX_COMMAND_THREADS; i++)
 			g_compute_command_buffers[i]->reset(m_current_frame);
@@ -3156,7 +3125,7 @@ namespace vk
 
 	void Backend::flush_transfer(const std::vector<std::shared_ptr<CommandBuffer>>& cmd_bufs)
 	{
-		flush(m_vk_transfer_queue, cmd_bufs);
+		flush(m_device->m_vk_transfer_queue, cmd_bufs);
 
 		for (int i = 0; i < MAX_COMMAND_THREADS; i++)
 			g_transfer_command_buffers[i]->reset(m_current_frame);
@@ -3205,7 +3174,7 @@ namespace vk
 		submit_info.signalSemaphoreCount = signal_semaphores.size();
 		submit_info.pSignalSemaphores = vk_signal_semaphores;
 
-		vkResetFences(m_vk_device, 1, &m_in_flight_fences[m_current_frame]->handle());
+		vkResetFences(m_device->Get(), 1, &m_in_flight_fences[m_current_frame]->handle());
 
 		if (vkQueueSubmit(queue, 1, &submit_info, m_in_flight_fences[m_current_frame]->handle()) != VK_SUCCESS)
 		{
@@ -3237,22 +3206,22 @@ namespace vk
 		fence_info.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 
 		VkFence fence;
-		vkCreateFence(m_vk_device, &fence_info, nullptr, &fence);
+		vkCreateFence(m_device->Get(), &fence_info, nullptr, &fence);
 
 		// Submit to the queue
 		vkQueueSubmit(queue, 1, &submit_info, fence);
 
 		// Wait for the fence to signal that command buffer has finished executing
-		vkWaitForFences(m_vk_device, 1, &fence, VK_TRUE, 100000000000);
+		vkWaitForFences(m_device->Get(), 1, &fence, VK_TRUE, 100000000000);
 
-		vkDestroyFence(m_vk_device, fence, nullptr);
+		vkDestroyFence(m_device->Get(), fence, nullptr);
 	}
 
 
 
 	void Backend::acquire_next_swap_chain_image(const std::shared_ptr<Semaphore>& semaphore)
 	{
-		vkWaitForFences(m_vk_device, 1, &m_in_flight_fences[m_current_frame]->handle(), VK_TRUE, UINT64_MAX);
+		vkWaitForFences(m_device->Get(), 1, &m_in_flight_fences[m_current_frame]->handle(), VK_TRUE, UINT64_MAX);
 
 		for (int i = 0; i < MAX_COMMAND_THREADS; i++)
 		{
@@ -3261,7 +3230,7 @@ namespace vk
 			g_transfer_command_buffers[i]->reset(m_current_frame);
 		}
 
-		VkResult result = vkAcquireNextImageKHR(m_vk_device, m_vk_swap_chain, UINT64_MAX, semaphore->handle(), VK_NULL_HANDLE, &m_image_index);
+		VkResult result = vkAcquireNextImageKHR(m_device->Get(), m_vk_swap_chain, UINT64_MAX, semaphore->handle(), VK_NULL_HANDLE, &m_image_index);
 
 		if (result == VK_ERROR_OUT_OF_DATE_KHR)
 		{
@@ -3296,7 +3265,7 @@ namespace vk
 		present_info.pSwapchains = swap_chains;
 		present_info.pImageIndices = &m_image_index;
 
-		if (vkQueuePresentKHR(m_vk_presentation_queue, &present_info) != VK_SUCCESS)
+		if (vkQueuePresentKHR(m_device->m_vk_presentation_queue, &present_info) != VK_SUCCESS)
 		{
 			SE_LOG_FATAL("(Vulkan) Failed to submit draw command buffer!");
 			throw std::runtime_error("failed to present swap chain image!");
@@ -3337,7 +3306,7 @@ namespace vk
 
 	void Backend::wait_idle()
 	{
-		vkDeviceWaitIdle(m_vk_device);
+		vkDeviceWaitIdle(m_device->Get());
 	}
 
 
@@ -3358,28 +3327,28 @@ namespace vk
 
 	VkQueue Backend::graphics_queue()
 	{
-		return m_vk_graphics_queue;
+		return m_device->m_vk_graphics_queue;
 	}
 
 
 
 	VkQueue Backend::transfer_queue()
 	{
-		return m_vk_transfer_queue;
+		return m_device->m_vk_transfer_queue;
 	}
 
 
 
 	VkQueue Backend::compute_queue()
 	{
-		return m_vk_compute_queue;
+		return m_device->m_vk_compute_queue;
 	}
 
 
 
 	VkDevice Backend::device()
 	{
-		return m_vk_device;
+		return m_device->Get();
 	}
 
 
@@ -3504,94 +3473,6 @@ namespace vk
 		return true;
 	}
 
-
-
-	bool Backend::create_logical_device(std::vector<const char*> extensions, void* pnext)
-	{
-		VkPhysicalDeviceFeatures supported_features;
-		SE_ZERO_MEMORY(supported_features);
-
-		VkDeviceCreateInfo device_info;
-		SE_ZERO_MEMORY(device_info);
-
-		device_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-		device_info.pQueueCreateInfos = &m_physicalDevice.queue_infos().infos[0];
-		device_info.queueCreateInfoCount = static_cast<uint32_t>(m_physicalDevice.queue_infos().queue_count);
-		device_info.enabledExtensionCount = extensions.size();
-		device_info.ppEnabledExtensionNames = extensions.data();
-		device_info.pEnabledFeatures = &supported_features;
-		device_info.pNext = nullptr;
-
-		VkPhysicalDeviceFeatures2 physical_device_features_2;
-		SE_ZERO_MEMORY(physical_device_features_2);
-
-		if (pnext)
-		{
-			physical_device_features_2.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2;
-			physical_device_features_2.features = supported_features;
-			physical_device_features_2.pNext = pnext;
-			device_info.pEnabledFeatures = nullptr;
-			device_info.pNext = &physical_device_features_2;
-		}
-		else if (m_ray_tracing_enabled)
-		{
-			pnext = &m_indexing_features;
-
-			physical_device_features_2.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2;
-			physical_device_features_2.features = supported_features;
-			physical_device_features_2.pNext = pnext;
-			device_info.pEnabledFeatures = nullptr;
-			device_info.pNext = &physical_device_features_2;
-		}
-
-		if (m_debugMessenger)
-		{
-			device_info.enabledLayerCount = kValidationLayers.size();
-			device_info.ppEnabledLayerNames = &kValidationLayers[0];
-		}
-		else
-			device_info.enabledLayerCount = 0;
-
-		float priority = 1.0f;
-
-		for (int i = 0; i < m_physicalDevice.queue_infos().queue_count; i++)
-			m_physicalDevice.queue_infos().infos[i].pQueuePriorities = &priority;
-
-		if (vkCreateDevice(m_physicalDevice.Get(), &device_info, nullptr, &m_vk_device) != VK_SUCCESS)
-			return false;
-
-		// Get presentation queue
-		vkGetDeviceQueue(m_vk_device, m_physicalDevice.queue_infos().presentation_queue_index, 0, &m_vk_presentation_queue);
-
-		// Get graphics queue
-		if (m_physicalDevice.queue_infos().graphics_queue_index == m_physicalDevice.queue_infos().presentation_queue_index)
-			m_vk_graphics_queue = m_vk_presentation_queue;
-		else
-			vkGetDeviceQueue(m_vk_device, m_physicalDevice.queue_infos().graphics_queue_index, 0, &m_vk_graphics_queue);
-
-		// Get compute queue
-		if (m_physicalDevice.queue_infos().compute_queue_index == m_physicalDevice.queue_infos().presentation_queue_index)
-			m_vk_compute_queue = m_vk_presentation_queue;
-		else if (m_physicalDevice.queue_infos().compute_queue_index == m_physicalDevice.queue_infos().graphics_queue_index)
-			m_vk_compute_queue = m_vk_graphics_queue;
-		else
-			vkGetDeviceQueue(m_vk_device, m_physicalDevice.queue_infos().compute_queue_index, 0, &m_vk_compute_queue);
-
-		// Get transfer queue
-		if (m_physicalDevice.queue_infos().transfer_queue_index == m_physicalDevice.queue_infos().presentation_queue_index)
-			m_vk_transfer_queue = m_vk_presentation_queue;
-		else if (m_physicalDevice.queue_infos().transfer_queue_index == m_physicalDevice.queue_infos().graphics_queue_index)
-			m_vk_transfer_queue = m_vk_graphics_queue;
-		else if (m_physicalDevice.queue_infos().transfer_queue_index == m_physicalDevice.queue_infos().compute_queue_index)
-			m_vk_transfer_queue = m_vk_transfer_queue;
-		else
-			vkGetDeviceQueue(m_vk_device, m_physicalDevice.queue_infos().transfer_queue_index, 0, &m_vk_transfer_queue);
-
-		return true;
-	}
-
-
-
 	bool Backend::create_swapchain()
 	{
 		m_current_frame = 0;
@@ -3640,18 +3521,18 @@ namespace vk
 		create_info.clipped = VK_TRUE;
 		create_info.oldSwapchain = VK_NULL_HANDLE;
 
-		if (vkCreateSwapchainKHR(m_vk_device, &create_info, nullptr, &m_vk_swap_chain) != VK_SUCCESS)
+		if (vkCreateSwapchainKHR(m_device->Get(), &create_info, nullptr, &m_vk_swap_chain) != VK_SUCCESS)
 			return false;
 
 		uint32_t swap_image_count = 0;
-		vkGetSwapchainImagesKHR(m_vk_device, m_vk_swap_chain, &swap_image_count, nullptr);
+		vkGetSwapchainImagesKHR(m_device->Get(), m_vk_swap_chain, &swap_image_count, nullptr);
 		m_swap_chain_images.resize(swap_image_count);
 		m_swap_chain_image_views.resize(swap_image_count);
 		m_swap_chain_framebuffers.resize(swap_image_count);
 
 		VkImage images[32];
 
-		if (vkGetSwapchainImagesKHR(m_vk_device, m_vk_swap_chain, &swap_image_count, &images[0]) != VK_SUCCESS)
+		if (vkGetSwapchainImagesKHR(m_device->Get(), m_vk_swap_chain, &swap_image_count, &images[0]) != VK_SUCCESS)
 			return false;
 
 		m_swap_chain_depth_format = find_depth_format();
@@ -3698,7 +3579,7 @@ namespace vk
 
 	void Backend::recreate_swapchain()
 	{
-		vkDeviceWaitIdle(m_vk_device);
+		vkDeviceWaitIdle(m_device->Get());
 
 		// Destroy existing swap chain resources
 		for (int i = 0; i < m_swap_chain_images.size(); i++)
@@ -3708,7 +3589,7 @@ namespace vk
 			m_swap_chain_image_views[i].reset();
 		}
 
-		vkDestroySwapchainKHR(m_vk_device, m_vk_swap_chain, nullptr);
+		vkDestroySwapchainKHR(m_device->Get(), m_vk_swap_chain, nullptr);
 
 		if (!create_swapchain())
 		{

@@ -175,6 +175,7 @@ namespace vk
 		vkWrapper::DebugMessenger *m_debugMessenger = nullptr;
 		vkWrapper::Surface *m_surface = nullptr;
 		vkWrapper::PhysicalDevice m_physicalDevice;
+		vkWrapper::LogicalDevice *m_device = nullptr;
 
 
 		/* OLD =========>>*/
@@ -255,7 +256,6 @@ namespace vk
 		VkFormat                 find_depth_format();
 		bool                     check_validation_layer_support(std::vector<const char*> layers);
 		void                     query_swap_chain_support(VkPhysicalDevice device, vkWrapper::SwapChainSupportDetails& details);
-		bool                     create_logical_device(std::vector<const char*> extensions, void* pnext);
 		bool                     create_swapchain();
 		void                     create_render_pass();
 		VkSurfaceFormatKHR       choose_swap_surface_format(const std::vector<VkSurfaceFormatKHR>& available_formats);
@@ -269,11 +269,6 @@ namespace vk
 		void                     flush(VkQueue queue, const std::vector<std::shared_ptr<CommandBuffer>>& cmd_bufs);
 
 		GLFWwindow*                                   m_window = nullptr;
-		VkDevice                                      m_vk_device = nullptr;
-		VkQueue                                       m_vk_graphics_queue = nullptr;
-		VkQueue                                       m_vk_compute_queue = nullptr;
-		VkQueue                                       m_vk_transfer_queue = nullptr;
-		VkQueue                                       m_vk_presentation_queue = nullptr;
 		VkSwapchainKHR                                m_vk_swap_chain = nullptr;
 		VmaAllocator_T*                               m_vma_allocator = nullptr;
 		VkFormat                                      m_swap_chain_image_format;
