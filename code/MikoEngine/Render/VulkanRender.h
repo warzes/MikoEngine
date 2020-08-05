@@ -274,7 +274,6 @@ namespace vk
 		VkFormat                                      m_swap_chain_image_format;
 		VkFormat                                      m_swap_chain_depth_format;
 		VkExtent2D                                    m_swap_chain_extent;
-		VkPhysicalDeviceDescriptorIndexingFeaturesEXT m_indexing_features;
 		std::shared_ptr<RenderPass>                   m_swap_chain_render_pass;
 		std::vector<std::shared_ptr<Image>>           m_swap_chain_images;
 		std::vector<std::shared_ptr<ImageView>>       m_swap_chain_image_views;

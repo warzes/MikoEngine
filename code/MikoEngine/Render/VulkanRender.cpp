@@ -2917,7 +2917,6 @@ namespace vk
 		VmaAllocatorCreateInfo allocator_info = {};
 		allocator_info.physicalDevice = m_physicalDevice.Get();
 		allocator_info.device = m_device->Get();
-
 		if (vmaCreateAllocator(&allocator_info, &m_vma_allocator) != VK_SUCCESS)
 		{
 			SE_LOG_FATAL("(Vulkan) Failed to create Allocator.");
@@ -3182,8 +3181,6 @@ namespace vk
 			throw std::runtime_error("(Vulkan) Failed to submit command buffer!");
 		}
 	}
-
-
 
 	void Backend::flush(VkQueue queue, const std::vector<std::shared_ptr<CommandBuffer>>& cmd_bufs)
 	{
