@@ -3,6 +3,8 @@
 #if SE_VULKAN
 
 #include "VulkanWrapper.h"
+#include "VulkanWrapper_Resource.h"
+#include "VulkanWrapper_SwapChain.h"
 
 struct VmaAllocator_T;
 
@@ -176,6 +178,7 @@ namespace vk
 		vkWrapper::Surface *m_surface = nullptr;
 		vkWrapper::PhysicalDevice m_physicalDevice;
 		vkWrapper::LogicalDevice *m_device = nullptr;
+		vkWrapper::SwapChainResources* m_swapchain = nullptr;
 
 
 		/* OLD =========>>*/
@@ -271,11 +274,11 @@ namespace vk
 		GLFWwindow*                                   m_window = nullptr;
 		VkSwapchainKHR                                m_vk_swap_chain = nullptr;
 		VmaAllocator_T*                               m_vma_allocator = nullptr;
-		VkFormat                                      m_swap_chain_image_format;
+		//VkFormat                                      m_swap_chain_image_format;
 		VkFormat                                      m_swap_chain_depth_format;
-		VkExtent2D                                    m_swap_chain_extent;
+		//VkExtent2D                                    m_swap_chain_extent;
 		std::shared_ptr<RenderPass>                   m_swap_chain_render_pass;
-		std::vector<std::shared_ptr<Image>>           m_swap_chain_images;
+		//std::vector<std::shared_ptr<Image>>           m_swap_chain_images;
 		std::vector<std::shared_ptr<ImageView>>       m_swap_chain_image_views;
 		std::vector<std::shared_ptr<Framebuffer>>     m_swap_chain_framebuffers;
 		uint32_t                                      m_image_index = 0;

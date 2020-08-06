@@ -311,7 +311,7 @@ namespace vkWrapper
 
 		VkImage GetImage(uint32_t index)
 		{
-			return m_images[index];
+			return m_swap_chain_images[index];
 		}
 		VkFormat GetFormat()
 		{
@@ -319,7 +319,7 @@ namespace vkWrapper
 		}
 		uint32_t Count()
 		{
-			return m_images.size();
+			return m_swap_chain_images.size();
 		}
 
 		VkExtent2D GetExtent()
@@ -331,10 +331,14 @@ namespace vkWrapper
 		VkSwapchainKHR m_swapChain;
 		Surface* m_surface;
 
-		std::vector<VkImage> m_images;
+		std::vector<VkImage> m_swap_chain_images;
 
+		VkFormat m_swap_chain_image_format; // TODO:
+		VkFormat m_swap_chain_depth_format;
+		VkExtent2D m_swap_chain_extent; // TODO:
 		VkFormat m_imageFormat;
 		VkExtent2D m_extent;
+
 
 		float aspectRatio;
 	};
