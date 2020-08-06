@@ -206,6 +206,7 @@
     <ClCompile Include="Math\Camera.cpp" />
     <ClCompile Include="Render\OpenGLRender.cpp" />
     <ClCompile Include="Render\VulkanRender.cpp" />
+    <ClCompile Include="Render\VulkanRender_Backed.cpp" />
     <ClCompile Include="Render\VulkanWrapper.cpp" />
     <ClCompile Include="Render\VulkanWrapper_Resource.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />

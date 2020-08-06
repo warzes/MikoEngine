@@ -44,6 +44,9 @@
     <ClCompile Include="Render\VulkanWrapper_Resource.cpp">
       <Filter>4_Render</Filter>
     </ClCompile>
+    <ClCompile Include="Render\VulkanRender_Backed.cpp">
+      <Filter>4_Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />

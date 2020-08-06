@@ -97,7 +97,9 @@ SE_PRAGMA_WARNING_LEVEL(0);
 #include <stack>
 #include <unordered_map>
 
+#include <atomic>
 #include <mutex>
+#include <thread>
 
 SE_PRAGMA_WARNING_POP
 
