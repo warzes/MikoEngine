@@ -188,6 +188,7 @@
     <ClInclude Include="Render\VulkanRender.h" />
     <ClInclude Include="Render\VulkanWrapper.h" />
     <ClInclude Include="Render\VulkanWrapper_Resource.h" />
+    <ClInclude Include="Render\VulkanWrapper_SwapChain.h" />
     <ClInclude Include="SceneHeader.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="stdafx.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="Render\VulkanRender_Backed.cpp" />
     <ClCompile Include="Render\VulkanWrapper.cpp" />
     <ClCompile Include="Render\VulkanWrapper_Resource.cpp" />
+    <ClCompile Include="Render\VulkanWrapper_SwapChain.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

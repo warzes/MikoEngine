@@ -443,5 +443,7 @@ namespace vkWrapper
 	};
 
 
+
+
 } // namespace vkWrapper
 #endif // SE_VULKAN

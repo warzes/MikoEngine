@@ -170,7 +170,6 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCompileDeferredNV(VkDevice   device,
 
 namespace vk
 {
-
 	struct ThreadLocalCommandBuffers
 	{
 		CommandPool::Ptr   command_pool[Backend::kMaxFramesInFlight];
@@ -222,7 +221,6 @@ namespace vk
 		}
 	};
 
-
 	thread_local std::shared_ptr<ThreadLocalCommandBuffers> g_graphics_command_buffers[MAX_COMMAND_THREADS];
 	thread_local std::shared_ptr<ThreadLocalCommandBuffers> g_compute_command_buffers[MAX_COMMAND_THREADS];
 	thread_local std::shared_ptr<ThreadLocalCommandBuffers> g_transfer_command_buffers[MAX_COMMAND_THREADS];
@@ -230,7 +228,6 @@ namespace vk
 
 	std::atomic<uint32_t>                                   g_thread_counter = 0;
 	thread_local uint32_t                                   g_thread_idx = g_thread_counter++;
-
 
 	Backend::Ptr Backend::create(GLFWwindow* window, bool enable_validation_layers, bool require_ray_tracing)
 	{
@@ -244,9 +241,10 @@ namespace vk
 	{
 		m_ray_tracing_enabled = require_ray_tracing;
 
+		SE_LOG_INFO("start init vulkan");
 		m_instance = new vkWrapper::Instance();
 		m_instance->Init();
-		m_debugMessenger = m_instance->CreateDebugMessenger();
+		m_debugMessenger = m_instance->CreateDebugMessenger(); // TODO: in Instance
 		m_surface = m_instance->CreateSurface(window);
 		m_physicalDevice = m_instance->PickPhysicalDevice(m_surface, m_ray_tracing_enabled);
 		m_device = new vkWrapper::LogicalDevice(&m_physicalDevice);
@@ -290,9 +288,6 @@ namespace vk
 		m_swap_chain_depth_view.reset();
 		m_swap_chain_depth.reset();
 
-		delete m_debugMessenger; m_debugMessenger = nullptr;
-		delete m_surface; m_surface = nullptr;
-
 		if ( m_vk_swap_chain )
 		{
 			vkDestroySwapchainKHR(m_device->Get(), m_vk_swap_chain, nullptr);
@@ -305,6 +300,8 @@ namespace vk
 			m_vma_allocator = nullptr;
 		}
 
+		delete m_debugMessenger; m_debugMessenger = nullptr;
+		delete m_surface; m_surface = nullptr;
 		delete m_device; m_device = nullptr;
 		delete m_instance; m_instance = nullptr;
 	}
