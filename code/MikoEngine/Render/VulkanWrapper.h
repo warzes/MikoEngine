@@ -208,7 +208,7 @@ namespace vkWrapper
 		bool HasStencilComponent(VkFormat format);
 
 		uint32_t FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);	
-	private:		
+	//private:		
 		VkSampleCountFlagBits m_msaaSamples = VK_SAMPLE_COUNT_1_BIT;
 		QueueFamilyIndices m_indices;
 		
@@ -315,7 +315,7 @@ namespace vkWrapper
 		}
 		VkFormat GetFormat()
 		{
-			return m_imageFormat;
+			return m_swap_chain_image_format;
 		}
 		uint32_t Count()
 		{
@@ -324,7 +324,7 @@ namespace vkWrapper
 
 		VkExtent2D GetExtent()
 		{
-			return m_extent;
+			return m_swap_chain_extent;
 		}
 
 	private:
@@ -333,12 +333,8 @@ namespace vkWrapper
 
 		std::vector<VkImage> m_swap_chain_images;
 
-		VkFormat m_swap_chain_image_format; // TODO:
-		VkFormat m_swap_chain_depth_format;
-		VkExtent2D m_swap_chain_extent; // TODO:
-		VkFormat m_imageFormat;
-		VkExtent2D m_extent;
-
+		VkFormat m_swap_chain_image_format;
+		VkExtent2D m_swap_chain_extent;
 
 		float aspectRatio;
 	};

@@ -25,6 +25,7 @@ http://themaister.net/blog/2017/08/15/render-graphs-and-vulkan-a-deep-dive/
 https://developer.nvidia.com/blog/vulkan-dos-donts/
 https://zeux.io/2020/02/27/writing-an-efficient-vulkan-renderer/
 http://www.pbr-book.org
+https://developer.nvidia.com/gpugems/gpugems/foreword
 
 ===================================================================================================
 для игр и демо

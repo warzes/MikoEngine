@@ -7,6 +7,7 @@
 namespace vkWrapper
 {
 	class GraphicCmdPool;
+	class CommandPool;
 
 	class CommandBuffer : VkDeviceObject
 	{
@@ -157,7 +158,7 @@ namespace vkWrapper
 
 		void TransitionLayout(VkImageLayout newLayout);
 		void Copy(Buffer* buffer);
-		void GenerateMipmaps();
+		void GenerateMipmaps(VkImageLayout src_layout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, VkImageLayout dst_layout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 
 		VkImage& Get()
 		{
@@ -172,17 +173,69 @@ namespace vkWrapper
 			return m_format;
 		}
 
+		/*new*/inline VkImageType        type()
+		{
+			return m_type;
+		}
+
+		/*new*/inline uint32_t           width()
+		{
+			return m_width;
+		}
+		/*new*/inline uint32_t           height()
+		{
+			return m_height;
+		}
+		/*new*/inline uint32_t           depth()
+		{
+			return m_depth;
+		}
+		/*new*/inline uint32_t           mip_levels()
+		{
+			return m_mipLevels;
+		}
+
+		/*new*/inline uint32_t           array_size()
+		{
+			return m_array_size;
+		}
+		/*new*/inline VkFormat           format()
+		{
+			return m_format;
+		}
+		/*new*/inline VkImageUsageFlags  usage()
+		{
+			return m_usage;
+		}
+		/*new*/inline VmaMemoryUsage     memory_usage()
+		{
+			return m_memory_usage;
+		}
+		/*new*/inline VkSampleCountFlags sample_count()
+		{
+			return m_sample_count;
+		}
+
 	private:
-		VkImage m_image;
+		VkImage m_image = nullptr;
 		VkImageLayout m_layout;
-		VkDeviceMemory m_memory;
+		VkDeviceMemory m_vk_device_memory;
 
 		uint32_t m_width;
 		uint32_t m_height;
+		/*new*/uint32_t              m_depth;
 		uint32_t m_mipLevels;
+		/*new*/uint32_t              m_array_size;
 		bool m_msaaEnabled;
 		VkFormat m_format;
 		VkImageUsageFlags m_usage;
+
+		/*new*/VmaMemoryUsage        m_memory_usage;
+		/*new*/VkSampleCountFlagBits m_sample_count;
+		/*new*/VkImageType           m_type;
+
+		VmaAllocator_T*       m_vma_allocator = nullptr;
+		VmaAllocation_T*      m_vma_allocation = nullptr;
 	};
 
 	class ImageView : VkDeviceObject

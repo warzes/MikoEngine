@@ -309,8 +309,8 @@ namespace vk
 	void Backend::initialize()
 	{
 		m_current_frame = 0;
-		m_swapchain = new vkWrapper::SwapChainResources(m_device, m_surface);
-		m_swapchain->initialize();
+		//m_swapchain = new vkWrapper::SwapChainResources(m_device, m_surface);
+		//m_swapchain->Init();
 		create_swapchain();
 
 		// Create Descriptor Pools
@@ -792,7 +792,7 @@ namespace vk
 
 	bool Backend::create_swapchain()
 	{
-		/*m_current_frame = 0;
+		m_current_frame = 0;
 		VkSurfaceFormatKHR surface_format = choose_swap_surface_format(m_physicalDevice.GetSwapChainDetails().formats);
 		VkPresentModeKHR   present_mode = choose_swap_present_mode(m_physicalDevice.GetSwapChainDetails().presentModes);
 		VkExtent2D         extent = choose_swap_extent(m_physicalDevice.GetSwapChainDetails().capabilities);
@@ -847,9 +847,11 @@ namespace vk
 		m_swap_chain_image_views.resize(swap_image_count);
 		m_swap_chain_framebuffers.resize(swap_image_count);
 
-		VkImage images[32];*/
+		VkImage images[32];
 
-#error "тут" (я перепутал свапчаин рес с свапчаином)
+		if ( vkGetSwapchainImagesKHR(m_device->Get(), m_vk_swap_chain, &swap_image_count, &images[0]) != VK_SUCCESS )
+			return false;
+
 		m_swap_chain_depth_format = find_depth_format();
 
 		m_swap_chain_depth = Image::create(shared_from_this(),
@@ -981,44 +983,44 @@ namespace vk
 
 
 
-	//VkSurfaceFormatKHR Backend::choose_swap_surface_format(const std::vector<VkSurfaceFormatKHR>& available_formats)
-	//{
-	//	if ( available_formats.size() == 1 && available_formats[0].format == VK_FORMAT_UNDEFINED )
-	//		return { VK_FORMAT_B8G8R8A8_UNORM, VK_COLOR_SPACE_SRGB_NONLINEAR_KHR };
+	VkSurfaceFormatKHR Backend::choose_swap_surface_format(const std::vector<VkSurfaceFormatKHR>& available_formats)
+	{
+		if ( available_formats.size() == 1 && available_formats[0].format == VK_FORMAT_UNDEFINED )
+			return { VK_FORMAT_B8G8R8A8_UNORM, VK_COLOR_SPACE_SRGB_NONLINEAR_KHR };
 
-	//	for ( const auto& available_format : available_formats )
-	//	{
-	//		if ( available_format.format == VK_FORMAT_B8G8R8A8_SNORM && available_format.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR )
-	//			return available_format;
-	//	}
+		for ( const auto& available_format : available_formats )
+		{
+			if ( available_format.format == VK_FORMAT_B8G8R8A8_SNORM && available_format.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR )
+				return available_format;
+		}
 
-	//	return available_formats[0];
-	//}
-
-
-
-	//VkPresentModeKHR Backend::choose_swap_present_mode(const std::vector<VkPresentModeKHR>& available_modes)
-	//{
-	//	VkPresentModeKHR best_mode = VK_PRESENT_MODE_FIFO_KHR;
-
-	//	for ( const auto& available_mode : available_modes )
-	//	{
-	//		if ( available_mode == VK_PRESENT_MODE_MAILBOX_KHR )
-	//			best_mode = available_mode;
-	//		else if ( available_mode == VK_PRESENT_MODE_IMMEDIATE_KHR )
-	//			best_mode = available_mode;
-	//	}
-
-	//	return best_mode;
-	//}
+		return available_formats[0];
+	}
 
 
 
-	/*VkExtent2D Backend::choose_swap_extent(const VkSurfaceCapabilitiesKHR& capabilities)
+	VkPresentModeKHR Backend::choose_swap_present_mode(const std::vector<VkPresentModeKHR>& available_modes)
+	{
+		VkPresentModeKHR best_mode = VK_PRESENT_MODE_FIFO_KHR;
+
+		for ( const auto& available_mode : available_modes )
+		{
+			if ( available_mode == VK_PRESENT_MODE_MAILBOX_KHR )
+				best_mode = available_mode;
+			else if ( available_mode == VK_PRESENT_MODE_IMMEDIATE_KHR )
+				best_mode = available_mode;
+		}
+
+		return best_mode;
+	}
+
+
+
+	VkExtent2D Backend::choose_swap_extent(const VkSurfaceCapabilitiesKHR& capabilities)
 	{
 		VkSurfaceCapabilitiesKHR caps;
 		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice.Get(), m_surface->Get(), &caps);
 		return caps.maxImageExtent;
-	}*/
+	}
 } // namespace vk
 #endif // SE_VULKAN

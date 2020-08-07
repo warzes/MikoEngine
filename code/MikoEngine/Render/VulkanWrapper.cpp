@@ -941,7 +941,7 @@ namespace vkWrapper
 
 		uint32_t width, height;
 		m_surface->GetSize(width, height);
-		m_extent = chooseSwapExtent(swapChainSupport.capabilities, width, height);
+		m_swap_chain_extent = chooseSwapExtent(swapChainSupport.capabilities, width, height);
 
 		uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
 		if ( swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount )
@@ -954,18 +954,14 @@ namespace vkWrapper
 		createInfo.minImageCount = imageCount;
 		createInfo.imageFormat = surfaceFormat.format;
 		createInfo.imageColorSpace = surfaceFormat.colorSpace;
-		createInfo.imageExtent = m_extent;
+		createInfo.imageExtent = m_swap_chain_extent;
 		createInfo.imageArrayLayers = 1;
 		//createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 		createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
 
 		m_swap_chain_image_format = surfaceFormat.format;
-		m_swap_chain_extent = m_extent;
 
 		uint32_t queue_family_indices[] = { (uint32_t)physical->queue_infos().graphics_queue_index, (uint32_t)physical->queue_infos().presentation_queue_index };
-		//QueueFamilyIndices indices = physical->m_indices;
-		//uint32_t queueFamilyIndices[] = { indices.graphicsFamily.value(), indices.presentFamily.value() };
-
 
 		if ( physical->queue_infos().presentation_queue_index != physical->queue_infos().graphics_queue_index )
 		{
@@ -995,16 +991,13 @@ namespace vkWrapper
 		uint32_t swap_image_count = 0;
 		vkGetSwapchainImagesKHR(m_parent->Get(), m_swapChain, &swap_image_count, nullptr);
 		m_swap_chain_images.resize(swap_image_count);
-#error ""		m_swap_chain_image_views.resize(swap_image_count);
-#error ""		m_swap_chain_framebuffers.resize(swap_image_count);		
 
 		VkImage images[32];
 		if ( vkGetSwapchainImagesKHR(m_parent->Get(), m_swapChain, &swap_image_count, &images[0]) != VK_SUCCESS )
 		{
 			throw std::runtime_error("failed to create swap chain!");
-		}
+		}		
 		
-		m_imageFormat = surfaceFormat.format;
 		std::cout << "swapchain image count = " << swap_image_count << std::endl;
 	}
 

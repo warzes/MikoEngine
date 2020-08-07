@@ -34,7 +34,7 @@ namespace vkWrapper
 		}
 		FrameBuffer* GetFrameBuffer(uint32_t index)
 		{
-			return m_framebuffers[index];
+			return m_swap_chain_framebuffers[index];
 		}
 		uint32_t Count()
 		{
@@ -46,7 +46,11 @@ namespace vkWrapper
 		Surface* m_surface;
 
 		SwapChain* m_swapchain;
-		std::vector<ImageView*> m_views;
+		std::vector<ImageView*> m_swap_chain_image_views;
+
+		VkFormat m_swap_chain_depth_format;
+		std::shared_ptr<Image>                        m_swap_chain_depth = nullptr;
+		std::shared_ptr<ImageView>                    m_swap_chain_depth_view = nullptr;
 
 		RenderPass* m_renderpass;
 		Image* m_msaaImage;
@@ -54,7 +58,7 @@ namespace vkWrapper
 		ImageView* m_msaaView;
 		ImageView* m_depthView;
 
-		std::vector<FrameBuffer*> m_framebuffers;
+		std::vector<FrameBuffer*> m_swap_chain_framebuffers;
 		std::vector<DrawCmdPool*> m_drawCmdPool;
 	};
 

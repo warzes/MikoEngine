@@ -27,22 +27,34 @@ namespace vkWrapper
 		m_swapchain->Init();
 
 		uint32_t size = m_swapchain->Count();
-		m_views.resize(size);
-		m_framebuffers.resize(size);
+		m_swap_chain_image_views.resize(size);
+		m_swap_chain_framebuffers.resize(size);
+
+		PhysicalDevice* physical = m_device->GetPhysical();
+
+
+		m_swap_chain_depth_format = physical->FindDepthFormat();
+		//VkFormat depthformat = physical->FindDepthFormat();
+
+
+
+
+
+
 
 		for ( uint32_t i = 0; i < size; ++i )
 		{
-			m_views[i] = new ImageView(m_device, m_swapchain, i, VK_IMAGE_ASPECT_COLOR_BIT);
-			m_views[i]->Init();
+			m_swap_chain_image_views[i] = new ImageView(m_device, m_swapchain, i, VK_IMAGE_ASPECT_COLOR_BIT);
+			m_swap_chain_image_views[i]->Init();
 		}
 
 		m_renderpass = new RenderPass(m_device, m_swapchain->GetFormat());
 		m_renderpass->Init();
 
-		PhysicalDevice* physical = m_device->GetPhysical();
+		
 		VkExtent2D extent = m_swapchain->GetExtent();
 		VkFormat colorformat = m_swapchain->GetFormat();
-		VkFormat depthformat = physical->FindDepthFormat();
+		
 		// VkSampleCountFlagBits samples = m_device->msaaEnabled() ? physical->m_msaaSamples : VK_SAMPLE_COUNT_1_BIT;
 
 		// create color ressource for msaa
@@ -57,7 +69,7 @@ namespace vkWrapper
 
 		// create depth ressource
 		VkImageUsageFlags usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
-		m_depthImage = new Image(m_device, extent.width, extent.height, 1, m_device->MsaaEnabled(), depthformat, usage);
+		m_depthImage = new Image(m_device, extent.width, extent.height, 1, m_device->MsaaEnabled(), m_swap_chain_depth_format, usage);
 		m_depthImage->Init();
 		m_depthImage->TransitionLayout(VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL);
 
@@ -67,11 +79,11 @@ namespace vkWrapper
 		for ( uint32_t i = 0; i < size; ++i )
 		{
 			std::vector<ImageView*> attachments;
-			if ( m_device->MsaaEnabled() ) attachments = { m_msaaView, m_depthView, m_views[i] };
-			else attachments = { m_views[i], m_depthView };
+			if ( m_device->MsaaEnabled() ) attachments = { m_msaaView, m_depthView, m_swap_chain_image_views[i] };
+			else attachments = { m_swap_chain_image_views[i], m_depthView };
 
-			m_framebuffers[i] = new FrameBuffer(m_device, attachments, m_renderpass, extent.width, extent.height);
-			m_framebuffers[i]->Init();
+			m_swap_chain_framebuffers[i] = new FrameBuffer(m_device, attachments, m_renderpass, extent.width, extent.height);
+			m_swap_chain_framebuffers[i]->Init();
 		}
 
 		// draw cmd pools (one per frame)
@@ -94,13 +106,13 @@ namespace vkWrapper
 		if ( m_depthView ) delete m_depthView;
 		if ( m_depthImage ) delete m_depthImage;
 
-		for ( auto fb : m_framebuffers ) delete fb;
-		m_framebuffers.clear();
+		for ( auto fb : m_swap_chain_framebuffers ) delete fb;
+		m_swap_chain_framebuffers.clear();
 
 		if ( m_renderpass ) delete m_renderpass;
 
-		for ( auto iv : m_views ) delete iv;
-		m_views.clear();
+		for ( auto iv : m_swap_chain_image_views ) delete iv;
+		m_swap_chain_image_views.clear();
 
 		if ( m_swapchain ) delete m_swapchain;
 	}
