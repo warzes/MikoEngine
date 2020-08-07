@@ -9,11 +9,5 @@ struct ApplicationSetting
     int         width        = 800;
     int         height       = 600;
     std::string title        = "Miko Engine";
-
-#if SE_VULKAN
-    bool ray_tracing = false;
-#else
-    bool enable_debug_callback = false;
-#endif
 };
 

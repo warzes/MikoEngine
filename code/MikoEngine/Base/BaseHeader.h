@@ -1,4 +1,4 @@
-п»ї#pragma once
+#pragma once
 
 //-----------------------------------------------------------------------------
 // Base Header
@@ -14,7 +14,7 @@
 //-----------------------------------------------------------------------------
 // Header config
 //-----------------------------------------------------------------------------
-//#define _CRT_SECURE_NO_WARNINGS // TODO: СѓРґР°Р»РёС‚СЊ
+//#define _CRT_SECURE_NO_WARNINGS // TODO: удалить
 
 //-----------------------------------------------------------------------------
 // 3rd-party Header
@@ -24,7 +24,6 @@ SE_PRAGMA_WARNING_LEVEL(0);
 #if SE_OPENGL
 #	include <glad.h>
 #endif
-
 #if SE_VULKAN
 #	define GLFW_INCLUDE_NONE
 #	define GLFW_INCLUDE_VULKAN

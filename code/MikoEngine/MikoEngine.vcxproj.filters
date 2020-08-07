@@ -5,55 +5,15 @@
     <ClCompile Include="Application\Application.cpp">
       <Filter>x_Application</Filter>
     </ClCompile>
-    <ClCompile Include="Utility\Timer.cpp">
-      <Filter>2_Utility</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Logger.cpp">
       <Filter>1_Core</Filter>
     </ClCompile>
-    <ClCompile Include="Utility\Utility.cpp">
+    <ClCompile Include="Utility\Timer.cpp">
       <Filter>2_Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Camera.cpp">
-      <Filter>3_Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\VulkanRender.cpp">
-      <Filter>4_Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\DebugDraw.cpp">
-      <Filter>5_Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Profiler.cpp">
-      <Filter>1_Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Material.cpp">
-      <Filter>5_Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Mesh.cpp">
-      <Filter>5_Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\Scene.cpp">
-      <Filter>6_Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\OpenGLRender.cpp">
-      <Filter>4_Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\VulkanWrapper.cpp">
-      <Filter>4_Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\VulkanWrapper_Resource.cpp">
-      <Filter>4_Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\VulkanRender_Backed.cpp">
-      <Filter>4_Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\VulkanWrapper_SwapChain.cpp">
-      <Filter>4_Render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="BaseHeader.h" />
     <ClInclude Include="Base\DetectOS.h">
       <Filter>0_Base</Filter>
     </ClInclude>
@@ -75,16 +35,11 @@
     <ClInclude Include="Utility\Version.h">
       <Filter>2_Utility</Filter>
     </ClInclude>
-    <ClInclude Include="UtilityHeader.h" />
     <ClInclude Include="Application\Application.h">
       <Filter>x_Application</Filter>
     </ClInclude>
     <ClInclude Include="Application\ApplicationSettings.h">
       <Filter>x_Application</Filter>
-    </ClInclude>
-    <ClInclude Include="ApplicationHeader.h" />
-    <ClInclude Include="Utility\Timer.h">
-      <Filter>2_Utility</Filter>
     </ClInclude>
     <ClInclude Include="Base\InlineFunc.h">
       <Filter>0_Base</Filter>
@@ -92,52 +47,15 @@
     <ClInclude Include="Base\Win32PlatformDefinitions.h">
       <Filter>0_Base</Filter>
     </ClInclude>
-    <ClInclude Include="CoreHeader.h" />
     <ClInclude Include="Core\Logger.h">
       <Filter>1_Core</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\Utility.h">
+    <ClInclude Include="Utility\Timer.h">
       <Filter>2_Utility</Filter>
     </ClInclude>
-    <ClInclude Include="RenderHeader.h" />
-    <ClInclude Include="Math\Geometry.h">
-      <Filter>3_Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\Camera.h">
-      <Filter>3_Math</Filter>
-    </ClInclude>
-    <ClInclude Include="MathHeader.h" />
-    <ClInclude Include="Render\VulkanRender.h">
-      <Filter>4_Render</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicsHeader.h" />
-    <ClInclude Include="Graphics\DebugDraw.h">
-      <Filter>5_Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Profiler.h">
-      <Filter>1_Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Material.h">
-      <Filter>5_Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Mesh.h">
-      <Filter>5_Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\Scene.h">
-      <Filter>6_Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneHeader.h" />
-    <ClInclude Include="Render\OpenGLRender.h">
-      <Filter>4_Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\VulkanWrapper.h">
-      <Filter>4_Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\VulkanWrapper_Resource.h">
-      <Filter>4_Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\VulkanWrapper_SwapChain.h">
-      <Filter>4_Render</Filter>
+    <ClInclude Include="MikoHeader.h" />
+    <ClInclude Include="Base\BaseHeader.h">
+      <Filter>0_Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -164,9 +82,6 @@
     </Filter>
     <Filter Include="6_Scene">
       <UniqueIdentifier>{e611321d-1fe1-4774-bec1-9f09faadc156}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="4_Render\temp">
-      <UniqueIdentifier>{95d55803-6418-42ea-bf6c-cf20cd002d0f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

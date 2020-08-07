@@ -10,4 +10,6 @@ Thumbs.db
 
 #Ignore bin file
 /bin/x64/Game_*.*
+/bin/x64/log.txt
 /bin/x86/Game_*.*
+/bin/x86/log.txt

@@ -161,10 +161,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ApplicationHeader.h" />
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="Application\ApplicationSettings.h" />
-    <ClInclude Include="BaseHeader.h" />
+    <ClInclude Include="Base\BaseHeader.h" />
     <ClInclude Include="Base\BaseMacros.h" />
     <ClInclude Include="Base\ConfigEngine.h" />
     <ClInclude Include="Base\DetectCompiler.h" />
@@ -173,45 +172,15 @@
     <ClInclude Include="Base\InlineFunc.h" />
     <ClInclude Include="Base\VersionOSConst.h" />
     <ClInclude Include="Base\Win32PlatformDefinitions.h" />
-    <ClInclude Include="CoreHeader.h" />
     <ClInclude Include="Core\Logger.h" />
-    <ClInclude Include="Core\Profiler.h" />
-    <ClInclude Include="GraphicsHeader.h" />
-    <ClInclude Include="Graphics\DebugDraw.h" />
-    <ClInclude Include="Graphics\Material.h" />
-    <ClInclude Include="Graphics\Mesh.h" />
-    <ClInclude Include="MathHeader.h" />
-    <ClInclude Include="Math\Camera.h" />
-    <ClInclude Include="Math\Geometry.h" />
-    <ClInclude Include="RenderHeader.h" />
-    <ClInclude Include="Render\OpenGLRender.h" />
-    <ClInclude Include="Render\VulkanRender.h" />
-    <ClInclude Include="Render\VulkanWrapper.h" />
-    <ClInclude Include="Render\VulkanWrapper_Resource.h" />
-    <ClInclude Include="Render\VulkanWrapper_SwapChain.h" />
-    <ClInclude Include="SceneHeader.h" />
-    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="MikoHeader.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="UtilityHeader.h" />
     <ClInclude Include="Utility\Timer.h" />
-    <ClInclude Include="Utility\Utility.h" />
     <ClInclude Include="Utility\Version.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Core\Logger.cpp" />
-    <ClCompile Include="Core\Profiler.cpp" />
-    <ClCompile Include="Graphics\DebugDraw.cpp" />
-    <ClCompile Include="Graphics\Material.cpp" />
-    <ClCompile Include="Graphics\Mesh.cpp" />
-    <ClCompile Include="Math\Camera.cpp" />
-    <ClCompile Include="Render\OpenGLRender.cpp" />
-    <ClCompile Include="Render\VulkanRender.cpp" />
-    <ClCompile Include="Render\VulkanRender_Backed.cpp" />
-    <ClCompile Include="Render\VulkanWrapper.cpp" />
-    <ClCompile Include="Render\VulkanWrapper_Resource.cpp" />
-    <ClCompile Include="Render\VulkanWrapper_SwapChain.cpp" />
-    <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -219,7 +188,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Utility\Timer.cpp" />
-    <ClCompile Include="Utility\Utility.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

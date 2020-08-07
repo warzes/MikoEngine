@@ -26,6 +26,10 @@ https://developer.nvidia.com/blog/vulkan-dos-donts/
 https://zeux.io/2020/02/27/writing-an-efficient-vulkan-renderer/
 http://www.pbr-book.org
 https://developer.nvidia.com/gpugems/gpugems/foreword
+https://developer.nvidia.com/blog/vulkan-dos-donts/
+http://media.steampowered.com/apps/valve/2016/Dan_Ginsburg_Source2_Vulkan_Perf_Lessons.pdf
+https://armkeil.blob.core.windows.net/developer/Files/pdf/graphics-and-multimedia/Google_9_tips_for_Vulkan_development.pdf
+https://www.youtube.com/watch?v=qx1c190aGhs
 
 ===================================================================================================
 для игр и демо
