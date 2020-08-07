@@ -172,8 +172,13 @@
     <ClInclude Include="Base\InlineFunc.h" />
     <ClInclude Include="Base\VersionOSConst.h" />
     <ClInclude Include="Base\Win32PlatformDefinitions.h" />
+    <ClInclude Include="Core\Assert.h" />
     <ClInclude Include="Core\Logger.h" />
+    <ClInclude Include="Core\MemoryPtr.h" />
     <ClInclude Include="MikoHeader.h" />
+    <ClInclude Include="Render\IRenderer.h" />
+    <ClInclude Include="Render\OpenGL\OpenGLRenderer.h" />
+    <ClInclude Include="Render\WindowHandle.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Utility\Timer.h" />
     <ClInclude Include="Utility\Version.h" />
@@ -181,6 +186,7 @@
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Core\Logger.cpp" />
+    <ClCompile Include="Render\OpenGL\OpenGLRenderer.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

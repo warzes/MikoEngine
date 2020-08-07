@@ -5,7 +5,9 @@
 //-----------------------------------------------------------------------------
 #include "Base/BaseHeader.h"
 
+#include "Core/Assert.h"
 #include "Core/Logger.h"
+#include "Core/MemoryPtr.h"
 
 #include "Utility/Version.h"
 #include "Utility/Timer.h"

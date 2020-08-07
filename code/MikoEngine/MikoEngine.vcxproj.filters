@@ -11,6 +11,9 @@
     <ClCompile Include="Utility\Timer.cpp">
       <Filter>2_Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Render\OpenGL\OpenGLRenderer.cpp">
+      <Filter>4_Render\OpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -57,6 +60,21 @@
     <ClInclude Include="Base\BaseHeader.h">
       <Filter>0_Base</Filter>
     </ClInclude>
+    <ClInclude Include="Render\WindowHandle.h">
+      <Filter>4_Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Assert.h">
+      <Filter>1_Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IRenderer.h">
+      <Filter>4_Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\MemoryPtr.h">
+      <Filter>1_Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\OpenGL\OpenGLRenderer.h">
+      <Filter>4_Render\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
@@ -82,6 +100,9 @@
     </Filter>
     <Filter Include="6_Scene">
       <UniqueIdentifier>{e611321d-1fe1-4774-bec1-9f09faadc156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_Render\OpenGL">
+      <UniqueIdentifier>{9c126701-c64a-47ad-a830-43898f5726e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

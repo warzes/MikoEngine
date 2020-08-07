@@ -2,6 +2,7 @@
 
 #include "ApplicationSettings.h"
 #include "Utility/Timer.h"
+#include "Render/IRenderer.h"
 
 // Key and Mouse button limits.
 #define MAX_KEYS 1024
@@ -71,6 +72,12 @@ protected:
 	std::array<bool, MAX_MOUSE_BUTTONS> m_mouse_buttons;
 	GLFWwindow*                         m_window = nullptr;
 	Timer                               m_timer;
+
+#if SE_DEBUG && SE_PLATFORM_WINDOWS
+	_CrtMemState m_crtMemState = { };
+#endif
+
+	IRenderer *m_renderer = nullptr;
 
 private:
 	// Pre, Post frame methods for ImGUI updates, presentations etc.

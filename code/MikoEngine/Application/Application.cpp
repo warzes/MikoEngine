@@ -1,6 +1,44 @@
 #include "stdafx.h"
 #include "Application.h"
 #include "Core/Logger.h"
+#include "Render/WindowHandle.h"
+//-----------------------------------------------------------------------------
+extern "C"
+{
+	// NVIDIA: Force usage of NVidia GPU in case there is an integrated graphics unit as well, if we don't do this we risk getting the integrated graphics unit and hence a horrible performance
+	// -> See "Enabling High Performance Graphics Rendering on Optimus Systems" http://developer.download.nvidia.com/devzone/devcenter/gamegraphics/files/OptimusRenderingPolicies.pdf
+	_declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
+
+	// AMD: Force usage of AMD GPU in case there is an integrated graphics unit as well, if we don't do this we risk getting the integrated graphics unit and hence a horrible performance
+	// -> Named "Dynamic Switchable Graphics", found no official documentation, only https://community.amd.com/message/1307599#comment-1307599 - "Can an OpenGL app default to the discrete GPU on an Enduro system?"
+	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
+//-----------------------------------------------------------------------------
+void* glfwNativeWindowHandle(GLFWwindow* _window)
+{
+#	if SE_PLATFORM_LINUX || SE_PLATFORM_BSD
+# 		if ENTRY_CONFIG_USE_WAYLAND
+	wl_egl_window *win_impl = (wl_egl_window*)glfwGetWindowUserPointer(_window);
+	if ( !win_impl )
+	{
+		int width, height;
+		glfwGetWindowSize(_window, &width, &height);
+		struct wl_surface* surface = (struct wl_surface*)glfwGetWaylandWindow(_window);
+		if ( !surface )
+			return nullptr;
+		win_impl = wl_egl_window_create(surface, width, height);
+		glfwSetWindowUserPointer(_window, (void*)(uintptr_t)win_impl);
+	}
+	return (void*)(uintptr_t)win_impl;
+#		else
+	return (void*)(uintptr_t)glfwGetX11Window(_window);
+#		endif
+#	elif SE_PLATFORM_OSX
+	return glfwGetCocoaWindow(_window);
+#	elif SE_PLATFORM_WINDOWS
+	return glfwGetWin32Window(_window);
+#	endif // SE_PLATFORM_
+}
 //-----------------------------------------------------------------------------
 int Application::Run(int argc, const char *argv[])
 {
@@ -40,6 +78,11 @@ void Application::shutdown()
 //-----------------------------------------------------------------------------
 bool Application::init_base(int argc, const char * argv[])
 {
+#if SE_DEBUG && SE_PLATFORM_WINDOWS
+	// "_CrtDumpMemoryLeaks()" reports false positive memory leak with static variables, so use a memory difference instead
+	_CrtMemCheckpoint(&m_crtMemState);
+#endif
+
 	logger::Init();
 
 	std::string config;
@@ -48,23 +91,10 @@ bool Application::init_base(int argc, const char * argv[])
 	ApplicationSetting settings = intial_app_settings();
 	bool resizable = settings.resizable;
 	bool maximized = settings.maximized;
-	int  refresh_rate = settings.refresh_rate;
+	int refresh_rate = settings.refresh_rate;
 	m_width = settings.width;
 	m_height = settings.height;
 	m_title = settings.title;
-
-	int major_ver = 4;
-#if SE_PLATFORM_OSX
-	int         minor_ver = 1;
-	const char* imgui_glsl_version = "#version 150";
-#elif SE_PLATFORM_EMSCRIPTEN
-	major_ver = 3;
-	int         minor_ver = 0;
-	const char* imgui_glsl_version = "#version 150";
-#else
-	int         minor_ver = 5;
-	const char* imgui_glsl_version = "#version 130";
-#endif
 
 	if ( glfwInit() != GLFW_TRUE )
 	{
@@ -72,24 +102,7 @@ bool Application::init_base(int argc, const char * argv[])
 		return false;
 	}
 
-#if SE_VULKAN
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-#else
-	glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
-
-#	if !SE_PLATFORM_EMSCRIPTEN
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_SAMPLES, 8);
-#	endif
-
-#	if SE_PLATFORM_OSX
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#	endif
-
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major_ver);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor_ver);
-
-#endif
 
 	glfwWindowHint(GLFW_RESIZABLE, resizable);
 	glfwWindowHint(GLFW_MAXIMIZED, maximized);
@@ -101,6 +114,8 @@ bool Application::init_base(int argc, const char * argv[])
 		SE_LOG_FATAL("Failed to create GLFW window!");
 		return false;
 	}
+
+	WindowHandle = glfwNativeWindowHandle(m_window);
 
 	glfwSetKeyCallback(m_window, key_callback_glfw);
 	glfwSetCursorPosCallback(m_window, mouse_callback_glfw);
@@ -132,12 +147,19 @@ void Application::shutdown_base()
 	// Execute user-side shutdown method.
 	shutdown();
 
+	SafeDelete(m_renderer);
+
 	// Shutdown GLFW.
 	glfwDestroyWindow(m_window);
 	glfwTerminate();
 
 	// Close logger.
 	logger::Close();
+
+	// For memory leak detection
+#if SE_DEBUG && SE_PLATFORM_WINDOWS
+	_CrtMemDumpAllObjectsSince(&m_crtMemState);
+#endif
 }
 //-----------------------------------------------------------------------------
 void Application::begin_frame()

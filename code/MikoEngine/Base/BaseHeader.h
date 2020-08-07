@@ -24,11 +24,28 @@ SE_PRAGMA_WARNING_LEVEL(0);
 #if SE_OPENGL
 #	include <glad.h>
 #endif
+
+#define GLFW_INCLUDE_NONE
 #if SE_VULKAN
-#	define GLFW_INCLUDE_NONE
 #	define GLFW_INCLUDE_VULKAN
 #endif
 #include <GLFW/glfw3.h>
+#if SE_PLATFORM_LINUX || SE_PLATFORM_BSD
+#	if ENTRY_CONFIG_USE_WAYLAND
+#		include <wayland-egl.h>
+#		define GLFW_EXPOSE_NATIVE_WAYLAND
+#	else
+#		define GLFW_EXPOSE_NATIVE_X11
+#		define GLFW_EXPOSE_NATIVE_GLX
+#	endif
+#elif SE_PLATFORM_OSX
+#	define GLFW_EXPOSE_NATIVE_COCOA
+#	define GLFW_EXPOSE_NATIVE_NSGL
+#elif SE_PLATFORM_WINDOWS
+#	define GLFW_EXPOSE_NATIVE_WIN32
+#	define GLFW_EXPOSE_NATIVE_WGL
+#endif //
+#include <GLFW/glfw3native.h>
 
 #define GLM_FORCE_RADIANS
 // GLM use the OpenGL depth range of -1.0 to 1.0 by default.

@@ -30,6 +30,8 @@ https://developer.nvidia.com/blog/vulkan-dos-donts/
 http://media.steampowered.com/apps/valve/2016/Dan_Ginsburg_Source2_Vulkan_Perf_Lessons.pdf
 https://armkeil.blob.core.windows.net/developer/Files/pdf/graphics-and-multimedia/Google_9_tips_for_Vulkan_development.pdf
 https://www.youtube.com/watch?v=qx1c190aGhs
+http://nfrechette.github.io/2015/05/11/memory_allocator_interface/ (unrimp example Allocator)
+http://cnicholson.net/2009/02/stupid-c-tricks-adventures-in-assert/
 
 ===================================================================================================
 для игр и демо
