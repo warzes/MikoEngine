@@ -11,8 +11,23 @@
     <ClCompile Include="Utility\Timer.cpp">
       <Filter>2_Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Render\OpenGL\OpenGLRenderer.cpp">
-      <Filter>4_Render\OpenGL</Filter>
+    <ClCompile Include="Render\Direct3D11Rhi.cpp">
+      <Filter>4_Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Direct3D12Rhi.cpp">
+      <Filter>4_Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\OpenGLRhi.cpp">
+      <Filter>4_Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\OpenGLES3Rhi.cpp">
+      <Filter>4_Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\VulkanRhi.cpp">
+      <Filter>4_Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\NullRhi.cpp">
+      <Filter>4_Render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,20 +75,38 @@
     <ClInclude Include="Base\BaseHeader.h">
       <Filter>0_Base</Filter>
     </ClInclude>
-    <ClInclude Include="Render\WindowHandle.h">
-      <Filter>4_Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Assert.h">
-      <Filter>1_Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\IRenderer.h">
-      <Filter>4_Render</Filter>
-    </ClInclude>
     <ClInclude Include="Core\MemoryPtr.h">
       <Filter>1_Core</Filter>
     </ClInclude>
-    <ClInclude Include="Render\OpenGL\OpenGLRenderer.h">
-      <Filter>4_Render\OpenGL</Filter>
+    <ClInclude Include="Render\DefaultAllocator.h">
+      <Filter>4_Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DefaultAssert.h">
+      <Filter>4_Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DefaultLog.h">
+      <Filter>4_Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Rhi.h">
+      <Filter>4_Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RhiInstance.h">
+      <Filter>4_Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Example_GLSL_410.h">
+      <Filter>x_Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Example_GLSL_450.h">
+      <Filter>x_Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Example_GLSL_ES3.h">
+      <Filter>x_Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Example_HLSL_D3D9_D3D10_D3D11_D3D12.h">
+      <Filter>x_Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Example_Null.h">
+      <Filter>x_Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -100,9 +133,6 @@
     </Filter>
     <Filter Include="6_Scene">
       <UniqueIdentifier>{e611321d-1fe1-4774-bec1-9f09faadc156}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="4_Render\OpenGL">
-      <UniqueIdentifier>{9c126701-c64a-47ad-a830-43898f5726e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

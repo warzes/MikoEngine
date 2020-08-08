@@ -93,7 +93,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;$(SolutionDir)3rdparty\glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
@@ -110,7 +110,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;$(SolutionDir)3rdparty\glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
@@ -129,7 +129,7 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;$(SolutionDir)3rdparty\glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
     </ClCompile>
@@ -149,7 +149,7 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;$(SolutionDir)3rdparty\glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
     </ClCompile>
@@ -163,6 +163,11 @@
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="Application\ApplicationSettings.h" />
+    <ClInclude Include="Application\Example_GLSL_410.h" />
+    <ClInclude Include="Application\Example_GLSL_450.h" />
+    <ClInclude Include="Application\Example_GLSL_ES3.h" />
+    <ClInclude Include="Application\Example_HLSL_D3D9_D3D10_D3D11_D3D12.h" />
+    <ClInclude Include="Application\Example_Null.h" />
     <ClInclude Include="Base\BaseHeader.h" />
     <ClInclude Include="Base\BaseMacros.h" />
     <ClInclude Include="Base\ConfigEngine.h" />
@@ -172,13 +177,14 @@
     <ClInclude Include="Base\InlineFunc.h" />
     <ClInclude Include="Base\VersionOSConst.h" />
     <ClInclude Include="Base\Win32PlatformDefinitions.h" />
-    <ClInclude Include="Core\Assert.h" />
     <ClInclude Include="Core\Logger.h" />
     <ClInclude Include="Core\MemoryPtr.h" />
     <ClInclude Include="MikoHeader.h" />
-    <ClInclude Include="Render\IRenderer.h" />
-    <ClInclude Include="Render\OpenGL\OpenGLRenderer.h" />
-    <ClInclude Include="Render\WindowHandle.h" />
+    <ClInclude Include="Render\DefaultAllocator.h" />
+    <ClInclude Include="Render\DefaultAssert.h" />
+    <ClInclude Include="Render\DefaultLog.h" />
+    <ClInclude Include="Render\Rhi.h" />
+    <ClInclude Include="Render\RhiInstance.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Utility\Timer.h" />
     <ClInclude Include="Utility\Version.h" />
@@ -186,7 +192,12 @@
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Core\Logger.cpp" />
-    <ClCompile Include="Render\OpenGL\OpenGLRenderer.cpp" />
+    <ClCompile Include="Render\Direct3D11Rhi.cpp" />
+    <ClCompile Include="Render\Direct3D12Rhi.cpp" />
+    <ClCompile Include="Render\NullRhi.cpp" />
+    <ClCompile Include="Render\OpenGLES3Rhi.cpp" />
+    <ClCompile Include="Render\OpenGLRhi.cpp" />
+    <ClCompile Include="Render\VulkanRhi.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

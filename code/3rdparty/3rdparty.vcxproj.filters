@@ -718,6 +718,16 @@
     <ClCompile Include="glad.c">
       <Filter>glad</Filter>
     </ClCompile>
+    <ClCompile Include="smol-v\smolv.cpp" />
+    <ClCompile Include="glslang\glslangUnityBuild3.cpp">
+      <Filter>glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="glslang\glslangUnityBuild1.cpp">
+      <Filter>glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="glslang\glslangUnityBuild2.cpp">
+      <Filter>glslang</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h" />
@@ -1673,6 +1683,9 @@
     </Filter>
     <Filter Include="glad">
       <UniqueIdentifier>{c270c2e4-7845-4cf4-ba6e-d2c668108bc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="glslang">
+      <UniqueIdentifier>{476633dc-2b2e-4342-bac0-0dd511f60a80}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

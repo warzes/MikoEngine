@@ -16,15 +16,6 @@
 #endif
 
 //=============================================================================
-// Assert Macros
-//=============================================================================
-#if SE_DEBUG
-#	define SE_ASSERT(b) __assume(b)
-#else
-#	define SE_ASSERT(b)
-#endif
-
-//=============================================================================
 // Platform Macros
 //=============================================================================
 #if SE_COMPILER_MSVC
@@ -40,6 +31,24 @@
 #	define SE_FORCEINLINE __attribute__((always_inline))
 #	define SE_ALIGNED(x)  __attribute__((aligned(x)))
 #endif // SE_COMPILER_*
+
+#if SE_PLATFORM_WINDOWS
+#	define SE_DEBUG_BREAK __debugbreak()
+#elif SE_PLATFORM_LINUX
+#	define SE_DEBUG_BREAK __builtin_trap()
+#endif
+
+
+// TODO: http://cnicholson.net/2009/02/stupid-c-tricks-adventures-in-assert/
+//=============================================================================
+// Assert Macros
+//=============================================================================
+#if SE_DEBUG
+#	define SE_ASSERT(expression, message) SE_DEBUG_BREAK; assert((expression) && message);
+#else
+#	define SE_ASSERT(expression, message)
+#endif
+
 
 //=============================================================================
 // Utility Macros

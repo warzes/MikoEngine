@@ -21,15 +21,36 @@
 //-----------------------------------------------------------------------------
 SE_PRAGMA_WARNING_LEVEL(0);
 
-#if SE_OPENGL
-#	include <glad.h>
-#endif
+//#if SE_OPENGL
+//#	include <glad.h>
+//#endif
 
-#define GLFW_INCLUDE_NONE
+//#if SE_OPENGL_GLSLTOSPIRV
+//#	include <SPIRV/GlslangToSpv.h>
+//#	include <glslang/MachineIndependent/localintermediate.h>
+//#endif
+//#include <smol-v/smolv.h>
+
+//#if SE_OPENGL
+//#	if SE_PLATFORM_WINDOWS
+//#		include <GL/gl.h>
+//#		include <GL/glext.h>	// Requires definitions from "gl.h"
+//#		include <GL/wglext.h>	// Requires definitions from "gl.h"
+//#	elif SE_PLATFORM_LINUX
+//#		include <GL/glx.h>
+//#		include <GL/glxext.h>
+//#		include <GL/gl.h>
+//#		include <GL/glext.h>	// Requires definitions from "gl.h"
+//#		include <X11/Xlib.h>// TODO(co) Review which of the following headers can be removed
+//#	endif
+//#endif
+
+#	define GLFW_INCLUDE_NONE
 #if SE_VULKAN
 #	define GLFW_INCLUDE_VULKAN
 #endif
 #include <GLFW/glfw3.h>
+
 #if SE_PLATFORM_LINUX || SE_PLATFORM_BSD
 #	if ENTRY_CONFIG_USE_WAYLAND
 #		include <wayland-egl.h>
@@ -122,4 +143,5 @@ SE_PRAGMA_WARNING_POP
 //-----------------------------------------------------------------------------
 // Disable warning
 //-----------------------------------------------------------------------------
+SE_PRAGMA_WARNING_DISABLE_MSVC(4514); //
 SE_PRAGMA_WARNING_DISABLE_MSVC(4820); //'4' bytes padding added after data member

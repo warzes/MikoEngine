@@ -252,6 +252,9 @@
     <ClCompile Include="assimp\contrib\zlib\zutil.c" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="glfw.c" />
+    <ClCompile Include="glslang\glslangUnityBuild1.cpp" />
+    <ClCompile Include="glslang\glslangUnityBuild2.cpp" />
+    <ClCompile Include="glslang\glslangUnityBuild3.cpp" />
     <ClCompile Include="imgui\examples\imgui_impl_dx11.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -271,6 +274,7 @@
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
+    <ClCompile Include="smol-v\smolv.cpp" />
     <ClCompile Include="stb_image.c" />
     <ClCompile Include="tiny_obj_loader.cpp" />
   </ItemGroup>
@@ -609,7 +613,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(ProjectDir)assimp\include\;$(ProjectDir)assimp\;$(ProjectDir)assimp\contrib\;$(ProjectDir)assimp\contrib\irrXML\;$(ProjectDir)assimp\contrib\zlib\;$(ProjectDir)assimp\contrib\rapidjson\include\;$(ProjectDir)assimp\contrib\unzip\;$(ProjectDir)assimp\contrib\openddlparser\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(ProjectDir)assimp\include\;$(ProjectDir)assimp\;$(ProjectDir)assimp\contrib\;$(ProjectDir)assimp\contrib\irrXML\;$(ProjectDir)assimp\contrib\zlib\;$(ProjectDir)assimp\contrib\rapidjson\include\;$(ProjectDir)assimp\contrib\unzip\;$(ProjectDir)assimp\contrib\openddlparser\include\;$(ProjectDir)glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableSpecificWarnings>
@@ -629,7 +633,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(ProjectDir)assimp\include\;$(ProjectDir)assimp\;$(ProjectDir)assimp\contrib\;$(ProjectDir)assimp\contrib\irrXML\;$(ProjectDir)assimp\contrib\zlib\;$(ProjectDir)assimp\contrib\rapidjson\include\;$(ProjectDir)assimp\contrib\unzip\;$(ProjectDir)assimp\contrib\openddlparser\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(ProjectDir)assimp\include\;$(ProjectDir)assimp\;$(ProjectDir)assimp\contrib\;$(ProjectDir)assimp\contrib\irrXML\;$(ProjectDir)assimp\contrib\zlib\;$(ProjectDir)assimp\contrib\rapidjson\include\;$(ProjectDir)assimp\contrib\unzip\;$(ProjectDir)assimp\contrib\openddlparser\include\;$(ProjectDir)glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableSpecificWarnings>
@@ -651,7 +655,7 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(ProjectDir)assimp\include\;$(ProjectDir)assimp\;$(ProjectDir)assimp\contrib\;$(ProjectDir)assimp\contrib\irrXML\;$(ProjectDir)assimp\contrib\zlib\;$(ProjectDir)assimp\contrib\rapidjson\include\;$(ProjectDir)assimp\contrib\unzip\;$(ProjectDir)assimp\contrib\openddlparser\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(ProjectDir)assimp\include\;$(ProjectDir)assimp\;$(ProjectDir)assimp\contrib\;$(ProjectDir)assimp\contrib\irrXML\;$(ProjectDir)assimp\contrib\zlib\;$(ProjectDir)assimp\contrib\rapidjson\include\;$(ProjectDir)assimp\contrib\unzip\;$(ProjectDir)assimp\contrib\openddlparser\include\;$(ProjectDir)glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
@@ -675,7 +679,7 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(ProjectDir)assimp\include\;$(ProjectDir)assimp\;$(ProjectDir)assimp\contrib\;$(ProjectDir)assimp\contrib\irrXML\;$(ProjectDir)assimp\contrib\zlib\;$(ProjectDir)assimp\contrib\rapidjson\include\;$(ProjectDir)assimp\contrib\unzip\;$(ProjectDir)assimp\contrib\openddlparser\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(ProjectDir)assimp\include\;$(ProjectDir)assimp\;$(ProjectDir)assimp\contrib\;$(ProjectDir)assimp\contrib\irrXML\;$(ProjectDir)assimp\contrib\zlib\;$(ProjectDir)assimp\contrib\rapidjson\include\;$(ProjectDir)assimp\contrib\unzip\;$(ProjectDir)assimp\contrib\openddlparser\include\;$(ProjectDir)glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
