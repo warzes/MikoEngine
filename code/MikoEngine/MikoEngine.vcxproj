@@ -180,9 +180,11 @@
     <ClInclude Include="Core\Logger.h" />
     <ClInclude Include="Core\MemoryPtr.h" />
     <ClInclude Include="MikoHeader.h" />
+    <ClInclude Include="Render\D3D11Header.h" />
     <ClInclude Include="Render\DefaultAllocator.h" />
     <ClInclude Include="Render\DefaultAssert.h" />
     <ClInclude Include="Render\DefaultLog.h" />
+    <ClInclude Include="Render\MakeID.h" />
     <ClInclude Include="Render\Rhi.h" />
     <ClInclude Include="Render\RhiInstance.h" />
     <ClInclude Include="stdafx.h" />

@@ -9,7 +9,10 @@
 
 // TODO:
 #define SE_OPENGL 1
-#define SE_VULKAN 0
+#define SE_OPENGLES 1
+#define SE_VULKAN 1
+#define SE_DIRECT3D11 1
+#define SE_DIRECT3D12 1
 
 // Set "SE_OPENGL_GLSLTOSPIRV" as preprocessor definition when building this library to add support for compiling GLSL into SPIR-V
 #define SE_OPENGL_GLSLTOSPIRV 1

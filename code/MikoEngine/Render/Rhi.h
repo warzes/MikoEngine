@@ -16,14 +16,14 @@
 *    - Set "ARCHITECTURE_X64" as preprocessor definition when building for x64 instead of x86
 *    - Set "RHI_STATISTICS" as preprocessor definition in order to enable the gathering of statistics (tiny binary size and tiny negative performance impact)
 *    - Set "RHI_DEBUG" as preprocessor definition in order to enable e.g. Direct3D 9 PIX functions (D3DPERF_* functions, also works directly within VisualStudio 2017 out-of-the-box) debug features (disabling support just reduces the binary size slightly but makes debugging more difficult)
-*    - Set 0-n of the following to tell the system which RHI implementations should be available during runtime: "RHI_NULL", "RHI_VULKAN", "RHI_OPENGL", "RHI_OPENGLES3", "RHI_DIRECT3D9", "RHI_DIRECT3D10", "RHI_DIRECT3D11", "RHI_DIRECT3D12"
+*    - Set 0-n of the following to tell the system which RHI implementations should be available during runtime: "RHI_NULL", "RHI_VULKAN", "RHI_OPENGL", "RHI_OPENGLES3", "RHI_DIRECT3D11", "RHI_DIRECT3D12"
 */
 
-//#define RHI_DIRECT3D11 1
-//#define RHI_DIRECT3D12 1
-//#define RHI_OPENGL 1
-//#define RHI_OPENGLES3 1
-//#define RHI_VULKAN 1
+#define RHI_DIRECT3D11 1
+#define RHI_DIRECT3D12 1
+#define RHI_OPENGL 1
+#define RHI_OPENGLES3 1
+#define RHI_VULKAN 1
 #define RHI_NULL 1
 
 #define RHI_STATISTICS
@@ -4204,8 +4204,6 @@ namespace Rhi
 		VULKAN		= 1646768219,	///< Vulkan RHI implementation, same value as renderer STRING_ID("Vulkan")
 		DIRECT3D12	= 2152506057,	///< Direct3D 12 RHI implementation, same value as renderer STRING_ID("Direct3D12")
 		DIRECT3D11	= 2102173200,	///< Direct3D 11 RHI implementation, same value as renderer STRING_ID("Direct3D11")
-		DIRECT3D10	= 2118950819,	///< Direct3D 10 RHI implementation, same value as renderer STRING_ID("Direct3D10")
-		DIRECT3D9	= 3508528873,	///< Direct3D 9 RHI implementation, same value as renderer STRING_ID("Direct3D9")
 		OPENGL		= 1149085807,	///< OpenGL RHI implementation, same value as renderer STRING_ID("OpenGL")
 		OPENGLES3	= 4137012044,	///< OpenGL ES 3 RHI implementation, same value as renderer STRING_ID("OpenGLES3")
 		NULL_DUMMY	= 3816175889	///< Null RHI implementation, same value as renderer STRING_ID("Null")
@@ -4215,10 +4213,6 @@ namespace Rhi
 		static constexpr const char* DEFAULT_RHI_NAME = "Direct3D11";
 	#elif defined(RHI_OPENGL)
 		static constexpr const char* DEFAULT_RHI_NAME = "OpenGL";
-	#elif defined(RHI_DIRECT3D10)
-		static constexpr const char* DEFAULT_RHI_NAME = "Direct3D10";
-	#elif defined(RHI_DIRECT3D9)
-		static constexpr const char* DEFAULT_RHI_NAME = "Direct3D9";
 	#elif defined(RHI_OPENGLES3)
 		static constexpr const char* DEFAULT_RHI_NAME = "OpenGLES3";
 	#elif defined(RHI_VULKAN)

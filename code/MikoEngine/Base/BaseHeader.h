@@ -47,7 +47,7 @@ SE_PRAGMA_WARNING_LEVEL(0);
 
 #	define GLFW_INCLUDE_NONE
 #if SE_VULKAN
-#	define GLFW_INCLUDE_VULKAN
+//#	define GLFW_INCLUDE_VULKAN
 #endif
 #include <GLFW/glfw3.h>
 
@@ -84,11 +84,11 @@ SE_PRAGMA_WARNING_LEVEL(0);
 
 #include <imgui/imgui.h>
 
-#if SE_VULKAN
-#	include <vulkan/vulkan.h>
-#	define VMA_USE_STL_SHARED_MUTEX 0 // TODO
-#	include <vk_mem_alloc.h>
-#endif // SE_VULKAN
+//#if SE_VULKAN
+//#	include <vulkan/vulkan.h>
+//#	define VMA_USE_STL_SHARED_MUTEX 0 // TODO
+//#	include <vk_mem_alloc.h>
+//#endif // SE_VULKAN
 
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
@@ -103,6 +103,7 @@ SE_PRAGMA_WARNING_LEVEL(0);
 #if SE_PLATFORM_WINDOWS
 #	include "Base/Win32PlatformDefinitions.h"
 #	include <Windows.h>
+#	include <VersionHelpers.h>
 #	undef near
 #	undef far
 #else
