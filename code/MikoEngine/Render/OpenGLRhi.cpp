@@ -678,7 +678,7 @@ FNDEF_GL(void,	glCreateQueries,	(GLenum, GLsizei, GLuint*));
 				wchar_t moduleFilename[MAX_PATH];																															\
 				moduleFilename[0] = '\0';																																	\
 				::GetModuleFileNameW(static_cast<HMODULE>(mOpenGLSharedLibrary), moduleFilename, MAX_PATH);																	\
-				RHI_LOG(mOpenGLRhi.getContext(), CRITICAL, "Failed to locate the entry point \"%s\" within the OpenGL shared library \"%s\"", #funcName, moduleFilename)	\
+				RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the OpenGL shared library \"%s\"", #funcName, moduleFilename)	\
 				result = false;																																				\
 			}																																								\
 		}
@@ -699,7 +699,7 @@ FNDEF_GL(void,	glCreateQueries,	(GLenum, GLsizei, GLuint*));
 				{																																						\
 					libraryName = linkMap->l_name;																														\
 				}																																						\
-				RHI_LOG(mOpenGLRhi.getContext(), CRITICAL, "Failed to locate the entry point \"%s\" within the OpenGL shared library \"%s\"", #funcName, libraryName)	\
+				RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the OpenGL shared library \"%s\"", #funcName, libraryName)	\
 				result = false;																																			\
 			}																																							\
 		}
@@ -1164,7 +1164,7 @@ namespace
 				glGetShaderInfoLog(openGLShader, informationLength, nullptr, informationLog);
 
 				// Output the debug string
-				RHI_LOG(context, CRITICAL, informationLog)
+				RHI_LOG( CRITICAL, informationLog)
 
 				// Cleanup information memory
 				RHI_FREE(context, informationLog);
@@ -1185,7 +1185,7 @@ namespace
 				glGetShaderInfoLog(openGLShader, informationLength, nullptr, informationLog);
 
 				// Output the debug string
-				if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
+				if (GetLog().print(DefaultLog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
 				{
 					SE_DEBUG_BREAK;
 				}
@@ -1209,7 +1209,7 @@ namespace
 				glGetProgramInfoLog(openGLProgram, informationLength, nullptr, informationLog);
 
 				// Output the debug string
-				RHI_LOG(context, CRITICAL, informationLog)
+				RHI_LOG( CRITICAL, informationLog)
 
 				// Cleanup information memory
 				RHI_FREE(context, informationLog);
@@ -1230,7 +1230,7 @@ namespace
 				glGetProgramInfoLog(openGLProgram, informationLength, nullptr, informationLog);
 
 				// Output the debug string
-				if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
+				if (GetLog().print(DefaultLog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
 				{
 					SE_DEBUG_BREAK;
 				}
@@ -1515,7 +1515,7 @@ namespace
 						glGetShaderInfoLog(openGLShader, informationLength, nullptr, informationLog);
 
 						// Output the debug string
-						if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
+						if (GetLog().print(DefaultLog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
 						{
 							SE_DEBUG_BREAK;
 						}
@@ -1633,7 +1633,7 @@ namespace
 					else
 					{
 						// Failed to link the program
-						if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to link the GLSL program: %s", program.getInfoLog()))
+						if (GetLog().print(DefaultLog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to link the GLSL program: %s", program.getInfoLog()))
 						{
 							SE_DEBUG_BREAK;
 						}
@@ -1642,7 +1642,7 @@ namespace
 				else
 				{
 					// Failed to parse the shader source code
-					if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to parse the GLSL shader source code: %s", shader.getInfoLog()))
+					if (GetLog().print(DefaultLog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to parse the GLSL shader source code: %s", shader.getInfoLog()))
 					{
 						SE_DEBUG_BREAK;
 					}
@@ -2159,13 +2159,13 @@ namespace OpenGLRhi
 					mOpenGLSharedLibrary = ::LoadLibraryExA("opengl32.dll", nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
 					if (nullptr == mOpenGLSharedLibrary)
 					{
-						RHI_LOG(mOpenGLRhi.getContext(), CRITICAL, "Failed to load in the shared OpenGL library \"opengl32.dll\"")
+						RHI_LOG(CRITICAL, "Failed to load in the shared OpenGL library \"opengl32.dll\"")
 					}
 				#elif LINUX
 					mOpenGLSharedLibrary = ::dlopen("libGL.so", RTLD_NOW | RTLD_GLOBAL);
 					if (nullptr == mOpenGLSharedLibrary)
 					{
-						RHI_LOG(mOpenGLRhi.getContext(), CRITICAL, "Failed to load in the shared OpenGL library \"libGL.so\"")
+						RHI_LOG(CRITICAL, "Failed to load in the shared OpenGL library \"libGL.so\"")
 					}
 				#else
 					#error "Unsupported platform"
@@ -2919,7 +2919,7 @@ namespace OpenGLRhi
 						}																																		\
 						else																																	\
 						{																																		\
-							RHI_LOG(mOpenGLRhi.getContext(), CRITICAL, "Failed to locate the entry point \"%s\" within the OpenGL shared library", #funcName)	\
+							RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the OpenGL shared library", #funcName)	\
 							result = false;																														\
 						}																																		\
 					}
@@ -2940,7 +2940,7 @@ namespace OpenGLRhi
 						}																																		\
 						else																																	\
 						{																																		\
-							RHI_LOG(mOpenGLRhi.getContext(), CRITICAL, "Failed to locate the entry point \"%s\" within the OpenGL shared library", #funcName)	\
+							RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the OpenGL shared library", #funcName)	\
 							result = false;																														\
 						}																																		\
 					}
@@ -2956,7 +2956,7 @@ namespace OpenGLRhi
 						}																																		\
 						else																																	\
 						{																																		\
-							RHI_LOG(mOpenGLRhi.getContext(), CRITICAL, "Failed to locate the entry point \"%s\" within the OpenGL shared library", #funcName)	\
+							RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the OpenGL shared library", #funcName)	\
 							result = false;																														\
 						}																																		\
 					}
@@ -4289,7 +4289,7 @@ namespace OpenGLRhi
 							{
 								// Make the OpenGL context to the current one, native window handle can be zero -> thus only offscreen rendering is supported/wanted
 								const int result = glXMakeCurrent(mDisplay, mNativeWindowHandle, mWindowRenderContext);
-								RHI_LOG(mOpenGLRhi.getContext(), DEBUG, "Make new OpenGL context current: %d", result)
+								RHI_LOG(DEBUG, "Make new OpenGL context current: %d", result)
 								{
 									int major = 0;
 									glGetIntegerv(GL_MAJOR_VERSION, &major);
@@ -4300,13 +4300,13 @@ namespace OpenGLRhi
 									GLint profile = 0;
 									glGetIntegerv(GL_CONTEXT_PROFILE_MASK, &profile);
 
-									RHI_LOG(mOpenGLRhi.getContext(), DEBUG, "OpenGL context version: %d.%d %s", major, minor, ((profile & GL_CONTEXT_CORE_PROFILE_BIT) ? "core" : "noncore"))
+									RHI_LOG(DEBUG, "OpenGL context version: %d.%d %s", major, minor, ((profile & GL_CONTEXT_CORE_PROFILE_BIT) ? "core" : "noncore"))
 									int numberOfExtensions = 0;
 									glGetIntegerv(GL_NUM_EXTENSIONS, &numberOfExtensions);
-									RHI_LOG(mOpenGLRhi.getContext(), DEBUG, "Number of supported OpenGL extensions: %d", numberOfExtensions)
+									RHI_LOG(DEBUG, "Number of supported OpenGL extensions: %d", numberOfExtensions)
 									for (GLuint extensionIndex = 0; extensionIndex < static_cast<GLuint>(numberOfExtensions); ++extensionIndex)
 									{
-										RHI_LOG(mOpenGLRhi.getContext(), DEBUG, "%s", glGetStringi(GL_EXTENSIONS, extensionIndex))
+										RHI_LOG(DEBUG, "%s", glGetStringi(GL_EXTENSIONS, extensionIndex))
 									}
 								}
 							}
@@ -4390,7 +4390,7 @@ namespace OpenGLRhi
 							None
 						};
 						GLXFBConfig* fbc = glXChooseFBConfig(mDisplay, DefaultScreen(mDisplay), visualAttributes, &numberOfElements);
-						RHI_LOG(mOpenGLRhi.getContext(), DEBUG, "Got %d of OpenGL GLXFBConfig", numberOfElements)
+						RHI_LOG(DEBUG, "Got %d of OpenGL GLXFBConfig", numberOfElements)
 						GLXContext glxContext = glXCreateContextAttribsARB(mDisplay, *fbc, 0, true, ATTRIBUTES);
 
 						XSync(mDisplay, False);
@@ -4398,7 +4398,7 @@ namespace OpenGLRhi
 						// TODO(sw) make this fallback optional (via an option)
 						if (ctxErrorOccurred)
 						{
-							RHI_LOG(mOpenGLRhi.getContext(), DEBUG, "Could not create OpenGL 3+ context try creating pre 3+ context")
+							RHI_LOG(DEBUG, "Could not create OpenGL 3+ context try creating pre 3+ context")
 							ctxErrorOccurred = false;
 
 							// GLX_CONTEXT_MAJOR_VERSION_ARB = 1
@@ -4417,27 +4417,27 @@ namespace OpenGLRhi
 						if (nullptr != glxContext)
 						{
 							// Done
-							RHI_LOG(mOpenGLRhi.getContext(), DEBUG, "OpenGL context with glXCreateContextAttribsARB created")
+							RHI_LOG(DEBUG, "OpenGL context with glXCreateContextAttribsARB created")
 							return glxContext;
 						}
 						else
 						{
 							// Error, context creation failed!
-							RHI_LOG(mOpenGLRhi.getContext(), CRITICAL, "Could not create OpenGL context with glXCreateContextAttribsARB")
+							RHI_LOG(CRITICAL, "Could not create OpenGL context with glXCreateContextAttribsARB")
 							return SE_NULL_HANDLE;
 						}
 					}
 					else
 					{
 						// Error, failed to obtain the "GLX_ARB_create_context" function pointer (wow, something went terrible wrong!)
-						RHI_LOG(mOpenGLRhi.getContext(), CRITICAL, "Could not find OpenGL glXCreateContextAttribsARB")
+						RHI_LOG(CRITICAL, "Could not find OpenGL glXCreateContextAttribsARB")
 						return SE_NULL_HANDLE;
 					}
 				}
 				else
 				{
 					// Error, the OpenGL extension "GLX_ARB_create_context" is not supported... as a result we can't create an OpenGL context!
-					RHI_LOG(mOpenGLRhi.getContext(), CRITICAL, "OpenGL GLX_ARB_create_context not supported")
+					RHI_LOG(CRITICAL, "OpenGL GLX_ARB_create_context not supported")
 					return SE_NULL_HANDLE;
 				}
 
@@ -13736,7 +13736,7 @@ namespace OpenGLRhi
 					if (&openGLRhi != &texture->getRhi())
 					{
 						// Output an error message and keep on going in order to keep a reasonable behaviour even in case on an error
-						RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: The given color texture at index %u is owned by another RHI instance", colorFramebufferAttachment - colorFramebufferAttachments)
+						RHI_LOG(CRITICAL, "OpenGL error: The given color texture at index %u is owned by another RHI instance", colorFramebufferAttachment - colorFramebufferAttachments)
 
 						// Continue, there's no point in trying to do any error handling in here
 						continue;
@@ -13801,7 +13801,7 @@ namespace OpenGLRhi
 					case Rhi::ResourceType::MESH_SHADER:
 					case Rhi::ResourceType::COMPUTE_SHADER:
 					default:
-						RHI_LOG(openGLRhi.getContext(), CRITICAL, "The type of the given color texture at index %ld is not supported by the OpenGL RHI implementation", colorFramebufferAttachment - colorFramebufferAttachments)
+						RHI_LOG(CRITICAL, "The type of the given color texture at index %ld is not supported by the OpenGL RHI implementation", colorFramebufferAttachment - colorFramebufferAttachments)
 						break;
 				}
 			}
@@ -13814,7 +13814,7 @@ namespace OpenGLRhi
 					if (&openGLRhi != &mDepthStencilTexture->getRhi())
 					{
 						// Output an error message and keep on going in order to keep a reasonable behaviour even in case on an error
-						RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: The given depth stencil texture is owned by another RHI instance")
+						RHI_LOG(CRITICAL, "OpenGL error: The given depth stencil texture is owned by another RHI instance")
 					}
 				#endif
 
@@ -13881,7 +13881,7 @@ namespace OpenGLRhi
 					case Rhi::ResourceType::MESH_SHADER:
 					case Rhi::ResourceType::COMPUTE_SHADER:
 					default:
-						RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: The type of the given depth stencil texture is not supported by the OpenGL RHI implementation")
+						RHI_LOG(CRITICAL, "OpenGL error: The type of the given depth stencil texture is not supported by the OpenGL RHI implementation")
 						break;
 				}
 			}
@@ -13891,41 +13891,41 @@ namespace OpenGLRhi
 			switch (openGLStatus)
 			{
 				case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: Not all framebuffer attachment points are framebuffer attachment complete (\"GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT\")")
+					RHI_LOG(CRITICAL, "OpenGL error: Not all framebuffer attachment points are framebuffer attachment complete (\"GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT\")")
 					break;
 
 				case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: No images are attached to the framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT\")")
+					RHI_LOG(CRITICAL, "OpenGL error: No images are attached to the framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT\")")
 					break;
 
 				case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: Incomplete draw buffer framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER\")")
+					RHI_LOG(CRITICAL, "OpenGL error: Incomplete draw buffer framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER\")")
 					break;
 
 				case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: Incomplete read buffer framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER\")")
+					RHI_LOG(CRITICAL, "OpenGL error: Incomplete read buffer framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER\")")
 					break;
 
 				case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: Incomplete multisample framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE\")")
+					RHI_LOG(CRITICAL, "OpenGL error: Incomplete multisample framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE\")")
 					break;
 
 				case GL_FRAMEBUFFER_UNDEFINED:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: Undefined framebuffer (\"GL_FRAMEBUFFER_UNDEFINED\")")
+					RHI_LOG(CRITICAL, "OpenGL error: Undefined framebuffer (\"GL_FRAMEBUFFER_UNDEFINED\")")
 					break;
 
 				case GL_FRAMEBUFFER_UNSUPPORTED:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions (\"GL_FRAMEBUFFER_UNSUPPORTED\")")
+					RHI_LOG(CRITICAL, "OpenGL error: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions (\"GL_FRAMEBUFFER_UNSUPPORTED\")")
 					break;
 
 				// From "GL_EXT_framebuffer_object" (should no longer matter, should)
 				case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: Not all attached images have the same width and height (\"GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT\")")
+					RHI_LOG(CRITICAL, "OpenGL error: Not all attached images have the same width and height (\"GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT\")")
 					break;
 
 				// From "GL_EXT_framebuffer_object" (should no longer matter, should)
 				case GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: Incomplete formats framebuffer object (\"GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT\")")
+					RHI_LOG(CRITICAL, "OpenGL error: Incomplete formats framebuffer object (\"GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT\")")
 					break;
 
 				default:
@@ -14031,7 +14031,7 @@ namespace OpenGLRhi
 					if (&openGLRhi != &texture->getRhi())
 					{
 						// Output an error message and keep on going in order to keep a reasonable behaviour even in case on an error
-						RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: The given color texture at index %u is owned by another RHI instance", colorFramebufferAttachment - colorFramebufferAttachments)
+						RHI_LOG(CRITICAL, "OpenGL error: The given color texture at index %u is owned by another RHI instance", colorFramebufferAttachment - colorFramebufferAttachments)
 
 						// Continue, there's no point in trying to do any error handling in here
 						continue;
@@ -14110,7 +14110,7 @@ namespace OpenGLRhi
 					case Rhi::ResourceType::MESH_SHADER:
 					case Rhi::ResourceType::COMPUTE_SHADER:
 					default:
-						RHI_LOG(openGLRhi.getContext(), CRITICAL, "The type of the given color texture at index %ld is not supported by the OpenGL RHI implementation", colorFramebufferAttachment - colorFramebufferAttachments)
+						RHI_LOG(CRITICAL, "The type of the given color texture at index %ld is not supported by the OpenGL RHI implementation", colorFramebufferAttachment - colorFramebufferAttachments)
 						break;
 				}
 			}
@@ -14123,7 +14123,7 @@ namespace OpenGLRhi
 					if (&openGLRhi != &mDepthStencilTexture->getRhi())
 					{
 						// Output an error message and keep on going in order to keep a reasonable behaviour even in case on an error
-						RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: The given depth stencil texture is owned by another RHI instance")
+						RHI_LOG(CRITICAL, "OpenGL error: The given depth stencil texture is owned by another RHI instance")
 					}
 				#endif
 
@@ -14204,7 +14204,7 @@ namespace OpenGLRhi
 					case Rhi::ResourceType::MESH_SHADER:
 					case Rhi::ResourceType::COMPUTE_SHADER:
 					default:
-						RHI_LOG(openGLRhi.getContext(), CRITICAL, "The type of the given depth stencil texture is not supported by the OpenGL RHI implementation")
+						RHI_LOG(CRITICAL, "The type of the given depth stencil texture is not supported by the OpenGL RHI implementation")
 						break;
 				}
 			}
@@ -14214,41 +14214,41 @@ namespace OpenGLRhi
 			switch (openGLStatus)
 			{
 				case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: Not all framebuffer attachment points are framebuffer attachment complete (\"GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT\")")
+					RHI_LOG(CRITICAL, "OpenGL error: Not all framebuffer attachment points are framebuffer attachment complete (\"GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT\")")
 					break;
 
 				case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: No images are attached to the framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT\")")
+					RHI_LOG(CRITICAL, "OpenGL error: No images are attached to the framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT\")")
 					break;
 
 				case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: Incomplete draw buffer framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER\")")
+					RHI_LOG(CRITICAL, "OpenGL error: Incomplete draw buffer framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER\")")
 					break;
 
 				case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: Incomplete read buffer framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER\")")
+					RHI_LOG(CRITICAL, "OpenGL error: Incomplete read buffer framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER\")")
 					break;
 
 				case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: Incomplete multisample framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE\")")
+					RHI_LOG(CRITICAL, "OpenGL error: Incomplete multisample framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE\")")
 					break;
 
 				case GL_FRAMEBUFFER_UNDEFINED:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: Undefined framebuffer (\"GL_FRAMEBUFFER_UNDEFINED\")")
+					RHI_LOG(CRITICAL, "OpenGL error: Undefined framebuffer (\"GL_FRAMEBUFFER_UNDEFINED\")")
 					break;
 
 				case GL_FRAMEBUFFER_UNSUPPORTED:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions (\"GL_FRAMEBUFFER_UNSUPPORTED\")")
+					RHI_LOG(CRITICAL, "OpenGL error: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions (\"GL_FRAMEBUFFER_UNSUPPORTED\")")
 					break;
 
 				// From "GL_EXT_framebuffer_object" (should no longer matter, should)
 				case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: Not all attached images have the same width and height (\"GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT\")")
+					RHI_LOG(CRITICAL, "OpenGL error: Not all attached images have the same width and height (\"GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT\")")
 					break;
 
 				// From "GL_EXT_framebuffer_object" (should no longer matter, should)
 				case GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT:
-					RHI_LOG(openGLRhi.getContext(), CRITICAL, "OpenGL error: Incomplete formats framebuffer object (\"GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT\")")
+					RHI_LOG(CRITICAL, "OpenGL error: Incomplete formats framebuffer object (\"GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT\")")
 					break;
 
 				default:
@@ -15699,7 +15699,7 @@ namespace OpenGLRhi
 					glGetProgramInfoLog(mOpenGLProgram, informationLength, nullptr, informationLog);
 
 					// Output the debug string
-					RHI_LOG(context, CRITICAL, informationLog)
+					RHI_LOG( CRITICAL, informationLog)
 
 					// Cleanup information memory
 					RHI_FREE(context, informationLog);
@@ -16090,7 +16090,7 @@ namespace OpenGLRhi
 					glGetProgramInfoLog(mOpenGLProgram, informationLength, nullptr, informationLog);
 
 					// Output the debug string
-					RHI_LOG(context, CRITICAL, informationLog)
+					RHI_LOG( CRITICAL, informationLog)
 
 					// Cleanup information memory
 					RHI_FREE(context, informationLog);
@@ -17701,7 +17701,7 @@ namespace OpenGLRhi
 									case Rhi::ShaderVisibility::TASK:
 									case Rhi::ShaderVisibility::MESH:
 									case Rhi::ShaderVisibility::COMPUTE:
-										RHI_LOG(openGLRhi.getContext(), CRITICAL, "Invalid OpenGL shader visibility")
+										RHI_LOG(CRITICAL, "Invalid OpenGL shader visibility")
 										break;
 								}
 								#undef BIND_UNIFORM_BLOCK
@@ -17744,7 +17744,7 @@ namespace OpenGLRhi
 									case Rhi::ShaderVisibility::TASK:
 									case Rhi::ShaderVisibility::MESH:
 									case Rhi::ShaderVisibility::COMPUTE:
-										RHI_LOG(openGLRhi.getContext(), CRITICAL, "Invalid OpenGL shader visibility")
+										RHI_LOG(CRITICAL, "Invalid OpenGL shader visibility")
 										break;
 								}
 								#undef BIND_UNIFORM_LOCATION
@@ -17770,7 +17770,7 @@ namespace OpenGLRhi
 					glGetProgramPipelineInfoLog(mOpenGLProgramPipeline, informationLength, nullptr, informationLog);
 
 					// Output the debug string
-					RHI_LOG(context, CRITICAL, informationLog)
+					RHI_LOG( CRITICAL, informationLog)
 
 					// Cleanup information memory
 					RHI_FREE(context, informationLog);
@@ -17909,7 +17909,7 @@ namespace OpenGLRhi
 									case Rhi::ShaderVisibility::TESSELLATION_EVALUATION:
 									case Rhi::ShaderVisibility::GEOMETRY:
 									case Rhi::ShaderVisibility::COMPUTE:
-										RHI_LOG(openGLRhi.getContext(), CRITICAL, "Invalid OpenGL shader visibility")
+										RHI_LOG(CRITICAL, "Invalid OpenGL shader visibility")
 										break;
 								}
 								#undef BIND_UNIFORM_BLOCK
@@ -17943,7 +17943,7 @@ namespace OpenGLRhi
 									case Rhi::ShaderVisibility::TESSELLATION_EVALUATION:
 									case Rhi::ShaderVisibility::GEOMETRY:
 									case Rhi::ShaderVisibility::COMPUTE:
-										RHI_LOG(openGLRhi.getContext(), CRITICAL, "Invalid OpenGL shader visibility")
+										RHI_LOG(CRITICAL, "Invalid OpenGL shader visibility")
 										break;
 								}
 								#undef BIND_UNIFORM_LOCATION
@@ -17969,7 +17969,7 @@ namespace OpenGLRhi
 					glGetProgramPipelineInfoLog(mOpenGLProgramPipeline, informationLength, nullptr, informationLog);
 
 					// Output the debug string
-					RHI_LOG(context, CRITICAL, informationLog)
+					RHI_LOG( CRITICAL, informationLog)
 
 					// Cleanup information memory
 					RHI_FREE(context, informationLog);
@@ -18534,7 +18534,7 @@ namespace OpenGLRhi
 									case Rhi::ShaderVisibility::FRAGMENT:
 									case Rhi::ShaderVisibility::TASK:
 									case Rhi::ShaderVisibility::MESH:
-										RHI_LOG(openGLRhi.getContext(), CRITICAL, "Invalid OpenGL shader visibility")
+										RHI_LOG(CRITICAL, "Invalid OpenGL shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::ALL:
@@ -18556,7 +18556,7 @@ namespace OpenGLRhi
 									case Rhi::ShaderVisibility::FRAGMENT:
 									case Rhi::ShaderVisibility::TASK:
 									case Rhi::ShaderVisibility::MESH:
-										RHI_LOG(openGLRhi.getContext(), CRITICAL, "Invalid OpenGL shader visibility")
+										RHI_LOG(CRITICAL, "Invalid OpenGL shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::ALL:
@@ -18586,7 +18586,7 @@ namespace OpenGLRhi
 					glGetProgramPipelineInfoLog(mOpenGLProgramPipeline, informationLength, nullptr, informationLog);
 
 					// Output the debug string
-					RHI_LOG(context, CRITICAL, informationLog)
+					RHI_LOG( CRITICAL, informationLog)
 
 					// Cleanup information memory
 					RHI_FREE(context, informationLog);
@@ -19626,7 +19626,7 @@ namespace
 				}
 				else
 				{
-					RHI_LOG(static_cast<OpenGLRhi::OpenGLRhi&>(rhi).getContext(), CRITICAL, "Unsupported OpenGL texture resource type")
+					RHI_LOG(CRITICAL, "Unsupported OpenGL texture resource type")
 				}
 			}
 
@@ -19941,11 +19941,11 @@ namespace OpenGLRhi
 				// Error!
 				if (numberOfCurrentResources > 1)
 				{
-					RHI_LOG(mContext, CRITICAL, "The OpenGL RHI implementation is going to be destroyed, but there are still %lu resource instances left (memory leak)", numberOfCurrentResources)
+					RHI_LOG(CRITICAL, "The OpenGL RHI implementation is going to be destroyed, but there are still %lu resource instances left (memory leak)", numberOfCurrentResources)
 				}
 				else
 				{
-					RHI_LOG(mContext, CRITICAL, "The OpenGL RHI implementation is going to be destroyed, but there is still one resource instance left (memory leak)")
+					RHI_LOG(CRITICAL, "The OpenGL RHI implementation is going to be destroyed, but there is still one resource instance left (memory leak)")
 				}
 
 				// Use debug output to show the current number of resource instances
@@ -20043,24 +20043,24 @@ namespace OpenGLRhi
 		{
 			if (nullptr == mGraphicsRootSignature)
 			{
-				RHI_LOG(mContext, CRITICAL, "No OpenGL RHI implementation graphics root signature set")
+				RHI_LOG(CRITICAL, "No OpenGL RHI implementation graphics root signature set")
 				return;
 			}
 			const Rhi::RootSignature& rootSignature = mGraphicsRootSignature->getRootSignature();
 			if (rootParameterIndex >= rootSignature.numberOfParameters)
 			{
-				RHI_LOG(mContext, CRITICAL, "The OpenGL RHI implementation root parameter index is out of bounds")
+				RHI_LOG(CRITICAL, "The OpenGL RHI implementation root parameter index is out of bounds")
 				return;
 			}
 			const Rhi::RootParameter& rootParameter = rootSignature.parameters[rootParameterIndex];
 			if (Rhi::RootParameterType::DESCRIPTOR_TABLE != rootParameter.parameterType)
 			{
-				RHI_LOG(mContext, CRITICAL, "The OpenGL RHI implementation root parameter index doesn't reference a descriptor table")
+				RHI_LOG(CRITICAL, "The OpenGL RHI implementation root parameter index doesn't reference a descriptor table")
 				return;
 			}
 			if (nullptr == reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges))
 			{
-				RHI_LOG(mContext, CRITICAL, "The OpenGL RHI implementation descriptor ranges is a null pointer")
+				RHI_LOG(CRITICAL, "The OpenGL RHI implementation descriptor ranges is a null pointer")
 				return;
 			}
 		}
@@ -20735,24 +20735,24 @@ namespace OpenGLRhi
 		{
 			if (nullptr == mComputeRootSignature)
 			{
-				RHI_LOG(mContext, CRITICAL, "No OpenGL RHI implementation compute root signature set")
+				RHI_LOG(CRITICAL, "No OpenGL RHI implementation compute root signature set")
 				return;
 			}
 			const Rhi::RootSignature& rootSignature = mComputeRootSignature->getRootSignature();
 			if (rootParameterIndex >= rootSignature.numberOfParameters)
 			{
-				RHI_LOG(mContext, CRITICAL, "The OpenGL RHI implementation root parameter index is out of bounds")
+				RHI_LOG(CRITICAL, "The OpenGL RHI implementation root parameter index is out of bounds")
 				return;
 			}
 			const Rhi::RootParameter& rootParameter = rootSignature.parameters[rootParameterIndex];
 			if (Rhi::RootParameterType::DESCRIPTOR_TABLE != rootParameter.parameterType)
 			{
-				RHI_LOG(mContext, CRITICAL, "The OpenGL RHI implementation root parameter index doesn't reference a descriptor table")
+				RHI_LOG(CRITICAL, "The OpenGL RHI implementation root parameter index doesn't reference a descriptor table")
 				return;
 			}
 			if (nullptr == reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges))
 			{
-				RHI_LOG(mContext, CRITICAL, "The OpenGL RHI implementation descriptor ranges is a null pointer")
+				RHI_LOG(CRITICAL, "The OpenGL RHI implementation descriptor ranges is a null pointer")
 				return;
 			}
 		}
@@ -21250,7 +21250,7 @@ namespace OpenGLRhi
 			case Rhi::QueryType::OCCLUSION:
 				if (!mExtensions->isGL_ARB_occlusion_query())
 				{
-					RHI_LOG(mContext, CRITICAL, "OpenGL extension \"GL_ARB_occlusion_query\" isn't supported")
+					RHI_LOG(CRITICAL, "OpenGL extension \"GL_ARB_occlusion_query\" isn't supported")
 					return nullptr;
 				}
 				return RHI_NEW(mContext, OcclusionTimestampQueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -21258,7 +21258,7 @@ namespace OpenGLRhi
 			case Rhi::QueryType::PIPELINE_STATISTICS:
 				if (!mExtensions->isGL_ARB_pipeline_statistics_query())
 				{
-					RHI_LOG(mContext, CRITICAL, "OpenGL extension \"GL_ARB_pipeline_statistics_query\" isn't supported")
+					RHI_LOG(CRITICAL, "OpenGL extension \"GL_ARB_pipeline_statistics_query\" isn't supported")
 					return nullptr;
 				}
 				return RHI_NEW(mContext, PipelineStatisticsQueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -21266,7 +21266,7 @@ namespace OpenGLRhi
 			case Rhi::QueryType::TIMESTAMP:
 				if (!mExtensions->isGL_ARB_timer_query())
 				{
-					RHI_LOG(mContext, CRITICAL, "OpenGL extension \"GL_ARB_timer_query\" isn't supported")
+					RHI_LOG(CRITICAL, "OpenGL extension \"GL_ARB_timer_query\" isn't supported")
 					return nullptr;
 				}
 				return RHI_NEW(mContext, OcclusionTimestampQueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -21893,7 +21893,7 @@ namespace OpenGLRhi
 			}
 
 			// Debug type to string
-			Rhi::ILog::Type logType = Rhi::ILog::Type::CRITICAL;
+			DefaultLog::Type logType = DefaultLog::Type::CRITICAL;
 			char debugType[25 + 1]{0};	// +1 for terminating zero
 			switch (type)
 			{
@@ -21902,7 +21902,7 @@ namespace OpenGLRhi
 					break;
 
 				case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR_ARB:
-					logType = Rhi::ILog::Type::COMPATIBILITY_WARNING;
+					logType = DefaultLog::Type::COMPATIBILITY_WARNING;
 					strncpy(debugType, "Deprecated behavior", 25);
 					break;
 
@@ -21911,12 +21911,12 @@ namespace OpenGLRhi
 					break;
 
 				case GL_DEBUG_TYPE_PORTABILITY_ARB:
-					logType = Rhi::ILog::Type::COMPATIBILITY_WARNING;
+					logType = DefaultLog::Type::COMPATIBILITY_WARNING;
 					strncpy(debugType, "Portability", 25);
 					break;
 
 				case GL_DEBUG_TYPE_PERFORMANCE_ARB:
-					logType = Rhi::ILog::Type::PERFORMANCE_WARNING;
+					logType = DefaultLog::Type::PERFORMANCE_WARNING;
 					strncpy(debugType, "Performance", 25);
 					break;
 
@@ -21967,7 +21967,7 @@ namespace OpenGLRhi
 			}
 
 			// Print into log
-			if (static_cast<const OpenGLRhi*>(userParam)->getContext().getLog().print(logType, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), "OpenGL debug message\tSource:\"%s\"\tType:\"%s\"\tID:\"%u\"\tSeverity:\"%s\"\tMessage:\"%s\"", debugSource, debugType, id, debugSeverity, message))
+			if (GetLog().print(logType, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), "OpenGL debug message\tSource:\"%s\"\tType:\"%s\"\tID:\"%u\"\tSeverity:\"%s\"\tMessage:\"%s\"", debugSource, debugType, id, debugSeverity, message))
 			{
 				SE_DEBUG_BREAK;
 			}
@@ -22364,7 +22364,7 @@ namespace OpenGLRhi
 										case Rhi::ResourceType::TASK_SHADER:
 										case Rhi::ResourceType::MESH_SHADER:
 										case Rhi::ResourceType::COMPUTE_SHADER:
-											RHI_LOG(mContext, CRITICAL, "Invalid OpenGL RHI implementation resource type")
+											RHI_LOG(CRITICAL, "Invalid OpenGL RHI implementation resource type")
 											break;
 									}
 
@@ -22496,7 +22496,7 @@ namespace OpenGLRhi
 											case Rhi::ResourceType::TASK_SHADER:
 											case Rhi::ResourceType::MESH_SHADER:
 											case Rhi::ResourceType::COMPUTE_SHADER:
-												RHI_LOG(mContext, CRITICAL, "Invalid OpenGL RHI implementation resource type")
+												RHI_LOG(CRITICAL, "Invalid OpenGL RHI implementation resource type")
 												break;
 										}
 
@@ -22629,7 +22629,7 @@ namespace OpenGLRhi
 										case Rhi::ResourceType::TASK_SHADER:
 										case Rhi::ResourceType::MESH_SHADER:
 										case Rhi::ResourceType::COMPUTE_SHADER:
-											RHI_LOG(mContext, CRITICAL, "Invalid OpenGL RHI implementation resource type")
+											RHI_LOG(CRITICAL, "Invalid OpenGL RHI implementation resource type")
 											break;
 									}
 								}
@@ -22639,7 +22639,7 @@ namespace OpenGLRhi
 							case Rhi::DescriptorRangeType::UBV:
 							case Rhi::DescriptorRangeType::SAMPLER:
 							case Rhi::DescriptorRangeType::NUMBER_OF_RANGE_TYPES:
-								RHI_LOG(mContext, CRITICAL, "Invalid OpenGL descriptor range type")
+								RHI_LOG(CRITICAL, "Invalid OpenGL descriptor range type")
 								break;
 						}
 						break;
@@ -22747,7 +22747,7 @@ namespace OpenGLRhi
 					case Rhi::ResourceType::TASK_SHADER:
 					case Rhi::ResourceType::MESH_SHADER:
 					case Rhi::ResourceType::COMPUTE_SHADER:
-						RHI_LOG(mContext, CRITICAL, "Invalid OpenGL RHI implementation resource type")
+						RHI_LOG(CRITICAL, "Invalid OpenGL RHI implementation resource type")
 						break;
 				}
 			}

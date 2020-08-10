@@ -1,344 +1,266 @@
 #pragma once
 
-#include <Render/Rhi.h>
-
-// Disable warnings in external headers, we can't fix them
-SE_PRAGMA_WARNING_PUSH
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: '=': conversion from 'int' to '::size_t', signed/unsigned mismatch
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4571)	// warning C4571: Informational: catch(...) semantics changed since Visual C++ 7.1; structured exceptions (SEH) are no longer caught
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4623)	// warning C4623: 'std::_UInt_is_zero': default constructor was implicitly defined as deleted
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4625)	// warning C4625: 'std::codecvt_base': copy constructor was implicitly defined as deleted
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4626)	// warning C4626: 'std::codecvt_base': assignment operator was implicitly defined as deleted
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4774)	// warning C4774: 'sprintf_s' : format string expected in argument 3 is not a string literal
-	SE_PRAGMA_WARNING_DISABLE_MSVC(5026)	// warning C5026: 'std::_Generic_error_category': move constructor was implicitly defined as deleted
-	SE_PRAGMA_WARNING_DISABLE_MSVC(5027)	// warning C5027: 'std::_Generic_error_category': move assignment operator was implicitly defined as deleted
-	SE_PRAGMA_WARNING_DISABLE_MSVC(5039)	// warning C5039: '_Thrd_start': pointer or reference to potentially throwing function passed to extern C function under -EHc. Undefined behavior may occur if this function throws an exception.
-	#include <string>
-	#include <mutex>
-SE_PRAGMA_WARNING_POP
-
-#if SE_PLATFORM_WINDOWS
-	// Disable warnings in external headers, we can't fix them
-	SE_PRAGMA_WARNING_PUSH
-		SE_PRAGMA_WARNING_DISABLE_MSVC(4571)	// warning C4571: Informational: catch(...) semantics changed since Visual C++ 7.1; structured exceptions (SEH) are no longer caught
-		SE_PRAGMA_WARNING_DISABLE_MSVC(4625)	// warning C4625: 'std::codecvt_base': copy constructor was implicitly defined as deleted
-		SE_PRAGMA_WARNING_DISABLE_MSVC(4626)	// warning C4626: 'std::codecvt_base': assignment operator was implicitly defined as deleted
-		SE_PRAGMA_WARNING_DISABLE_MSVC(4774)	// warning C4774: 'sprintf_s' : format string expected in argument 3 is not a string literal
-		#include <iostream>
-		#include <cstdarg>
-	SE_PRAGMA_WARNING_POP
-
-	// Disable warnings in external headers, we can't fix them
-	SE_PRAGMA_WARNING_PUSH
-		// Set Windows version to Windows Vista (0x0600), we don't support Windows XP (0x0501)
-		#ifdef WINVER
-			#undef WINVER
-		#endif
-		#define WINVER			0x0600
-		#ifdef _WIN32_WINNT
-			#undef _WIN32_WINNT
-		#endif
-		#define _WIN32_WINNT	0x0600
-
-		// Exclude some stuff from "windows.h" to speed up compilation a bit
-		#define WIN32_LEAN_AND_MEAN
-		#define NOGDICAPMASKS
-		#define NOMENUS
-		#define NOICONS
-		#define NOKEYSTATES
-		#define NOSYSCOMMANDS
-		#define NORASTEROPS
-		#define OEMRESOURCE
-		#define NOATOM
-		#define NOMEMMGR
-		#define NOMETAFILE
-		#define NOOPENFILE
-		#define NOSCROLL
-		#define NOSERVICE
-		#define NOSOUND
-		#define NOWH
-		#define NOCOMM
-		#define NOKANJI
-		#define NOHELP
-		#define NOPROFILER
-		#define NODEFERWINDOWPOS
-		#define NOMCX
-		#define NOCRYPT
-
-		// Disable warnings in external headers, we can't fix them
-		__pragma(warning(push))
-			__pragma(warning(disable: 5039))	// warning C5039: 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function passed to extern C function under -EHc. Undefined behavior may occur if this function throws an exception. (compiling source file src\CommandLineArguments.cpp)
-			#include <Windows.h>
-		__pragma(warning(pop))
-
-		// Get rid of some nasty OS macros
-		#undef min
-		#undef max
-	SE_PRAGMA_WARNING_POP
-#elif __ANDROID__
-	#include <android/log.h>
-#elif LINUX
-	#include <iostream>
-	#include <cstdarg>
-#else
-	#error "Unsupported platform"
-#endif
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-namespace Rhi
+/**
+*  @brief
+*    Abstract log interface
+*
+*  @note
+*    - The implementation must be multithreading safe since the RHI is allowed to internally use multiple threads
+*/
+/**
+*  @brief
+*    Default log implementation class one can use
+*
+*  @note
+*    - Example: RHI_LOG(DEBUG, "Direct3D 11 RHI implementation startup")
+*    - Designed to be instanced and used inside a single C++ file
+*    - On Microsoft Windows it will print to the Visual Studio output console, on critical message the debugger will break
+*    - On Linux it will print on the console
+*    - On Android it will print into the Android system log
+*/
+class DefaultLog
 {
+public:
+	enum class Type
+	{
+		TRACE,					///< Trace, also known as verbose logging
+		DEBUG,					///< Debug
+		INFORMATION,			///< Information
+		WARNING,				///< General warning
+		PERFORMANCE_WARNING,	///< Performance related warning
+		COMPATIBILITY_WARNING,	///< Compatibility related warning
+		CRITICAL				///< Critical
+	};
 
-
-	//[-------------------------------------------------------]
-	//[ Classes                                               ]
-	//[-------------------------------------------------------]
+	DefaultLog() = default;
+	~DefaultLog() = default;
 	/**
 	*  @brief
-	*    Default log implementation class one can use
+	*    Print a formatted log message
 	*
-	*  @note
-	*    - Example: RHI_LOG(mContext, DEBUG, "Direct3D 11 RHI implementation startup")
-	*    - Designed to be instanced and used inside a single C++ file
-	*    - On Microsoft Windows it will print to the Visual Studio output console, on critical message the debugger will break
-	*    - On Linux it will print on the console
-	*    - On Android it will print into the Android system log
+	*  @param[in] type
+	*    Log message type
+	*  @param[in] attachment
+	*    Optional attachment (for example build shader source code), can be a null pointer
+	*  @param[in] file
+	*    File as ASCII string
+	*  @param[in] line
+	*    Line number
+	*  @param[in] format
+	*    "snprintf"-style formatted UTF-8 log message
+	*
+	*  @return
+	*    "true" to request debug break, else "false"
 	*/
-	class DefaultLog : public ILog
+	[[nodiscard]] virtual bool print(Type type, const char* attachment, const char* file, uint32_t line, const char* format, ...)
 	{
+		bool requestDebugBreak = false;
 
-
-	//[-------------------------------------------------------]
-	//[ Public methods                                        ]
-	//[-------------------------------------------------------]
-	public:
-		inline DefaultLog()
+		// Get the required buffer length, does not include the terminating zero character
+		va_list vaList;
+		va_start(vaList, format);
+		const uint32_t textLength = static_cast<uint32_t>(vsnprintf(nullptr, 0, format, vaList));
+		va_end(vaList);
+		if ( 256 > textLength )
 		{
-			// Nothing here
-		}
+			// Fast path: C-runtime stack
 
-		inline virtual ~DefaultLog() override
-		{
-			// Nothing here
-		}
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual Rhi::ILog methods                      ]
-	//[-------------------------------------------------------]
-	public:
-		[[nodiscard]] inline virtual bool print(Type type, const char* attachment, const char* file, uint32_t line, const char* format, ...) override
-		{
-			bool requestDebugBreak = false;
-
-			// Get the required buffer length, does not include the terminating zero character
-			va_list vaList;
+			// Construct the formatted text
+			char formattedText[256];	// 255 +1 for the terminating zero character
 			va_start(vaList, format);
-			const uint32_t textLength = static_cast<uint32_t>(vsnprintf(nullptr, 0, format, vaList));
+			vsnprintf(formattedText, 256, format, vaList);
 			va_end(vaList);
-			if (256 > textLength)
+
+			// Internal processing
+			requestDebugBreak = printInternal(type, attachment, file, line, formattedText, textLength);
+		}
+		else
+		{
+			// Slow path: Heap
+			// -> No reused scratch buffer in order to reduce memory allocation/deallocations in here to not make things more complex and to reduce the mutex locked scope
+
+			// Construct the formatted text
+			char* formattedText = new char[textLength + 1];	// 1+ for the terminating zero character
+			va_start(vaList, format);
+			vsnprintf(formattedText, textLength + 1, format, vaList);
+			va_end(vaList);
+
+			// Internal processing
+			requestDebugBreak = printInternal(type, attachment, file, line, formattedText, textLength);
+
+			// Cleanup
+			delete[] formattedText;
+		}
+
+		// Done
+		return requestDebugBreak;
+	}
+
+private:
+	explicit DefaultLog(const DefaultLog&) = delete;
+	DefaultLog& operator=(const DefaultLog&) = delete;
+
+	/*
+	*  @brief
+	*    Receives an already formatted message for further processing
+	*
+	*  @param[in] type
+	*    Log message type
+	*  @param[in] attachment
+	*    Optional attachment (for example build shader source code), can be a null pointer
+	*  @param[in] file
+	*    File as ASCII string
+	*  @param[in] line
+	*    Line number
+	*  @param[in] message
+	*    UTF-8 message
+	*  @param[in] numberOfCharacters
+	*    Number of characters inside the message, does not include the terminating zero character
+	*
+	*  @return
+	*    "true" to request debug break, else "false"
+	*/
+	[[nodiscard]] inline virtual bool printInternal(Type type, const char*, [[maybe_unused]] const char* file, [[maybe_unused]] uint32_t line, const char* message, uint32_t)
+	{
+		std::lock_guard<std::mutex> mutexLock(mMutex);
+		bool requestDebugBreak = false;
+
+		// Construct the full UTF-8 message text
+#if SE_DEBUG
+		std::string fullMessage = "File \"" + std::string(file) + "\" | Line " + std::to_string(line) + " | " + std::string(typeToString(type)) + message;
+#else
+		std::string fullMessage = std::string(typeToString(type)) + message;
+#endif
+		if ( '\n' != fullMessage.back() )
+		{
+			fullMessage += '\n';
+		}
+
+		// Platform specific handling
+#if SE_PLATFORM_WINDOWS
+		{
+			// Convert UTF-8 string to UTF-16
+			std::wstring utf16Line;
+			utf16Line.resize(static_cast<std::wstring::size_type>(::MultiByteToWideChar(CP_UTF8, 0, fullMessage.c_str(), static_cast<int>(fullMessage.size()), nullptr, 0)));
+			::MultiByteToWideChar(CP_UTF8, 0, fullMessage.c_str(), static_cast<int>(fullMessage.size()), utf16Line.data(), static_cast<int>(utf16Line.size()));
+
+			// Write into standard output stream
+			if ( Type::CRITICAL == type )
 			{
-				// Fast path: C-runtime stack
-
-				// Construct the formatted text
-				char formattedText[256];	// 255 +1 for the terminating zero character
-				va_start(vaList, format);
-				vsnprintf(formattedText, 256, format, vaList);
-				va_end(vaList);
-
-				// Internal processing
-				requestDebugBreak = printInternal(type, attachment, file, line, formattedText, textLength);
+				std::wcerr << utf16Line.c_str();
 			}
 			else
 			{
-				// Slow path: Heap
-				// -> No reused scratch buffer in order to reduce memory allocation/deallocations in here to not make things more complex and to reduce the mutex locked scope
-
-				// Construct the formatted text
-				char* formattedText = new char[textLength + 1];	// 1+ for the terminating zero character
-				va_start(vaList, format);
-				vsnprintf(formattedText, textLength + 1, format, vaList);
-				va_end(vaList);
-
-				// Internal processing
-				requestDebugBreak = printInternal(type, attachment, file, line, formattedText, textLength);
-
-				// Cleanup
-				delete [] formattedText;
+				std::wcout << utf16Line.c_str();
 			}
 
-			// Done
-			return requestDebugBreak;
+			// On Microsoft Windows, ensure the output can be seen inside the Visual Studio output window as well
+			::OutputDebugStringW(utf16Line.c_str());
+			if ( Type::CRITICAL == type && ::IsDebuggerPresent() )
+			{
+				requestDebugBreak = true;
+			}
 		}
-
-
-	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::DefaultLog methods             ]
-	//[-------------------------------------------------------]
-	protected:
-		/*
-		*  @brief
-		*    Receives an already formatted message for further processing
-		*
-		*  @param[in] type
-		*    Log message type
-		*  @param[in] attachment
-		*    Optional attachment (for example build shader source code), can be a null pointer
-		*  @param[in] file
-		*    File as ASCII string
-		*  @param[in] line
-		*    Line number
-		*  @param[in] message
-		*    UTF-8 message
-		*  @param[in] numberOfCharacters
-		*    Number of characters inside the message, does not include the terminating zero character
-		*
-		*  @return
-		*    "true" to request debug break, else "false"
-		*/
-		[[nodiscard]] inline virtual bool printInternal(Type type, const char*, [[maybe_unused]] const char* file, [[maybe_unused]] uint32_t line, const char* message, uint32_t)
+#elif __ANDROID__
+		int prio = ANDROID_LOG_DEFAULT;
+		switch ( type )
 		{
-			std::lock_guard<std::mutex> mutexLock(mMutex);
-			bool requestDebugBreak = false;
+		case Type::TRACE:
+			prio = ANDROID_LOG_VERBOSE;
+			break;
 
-			// Construct the full UTF-8 message text
-			#if SE_DEBUG
-				std::string fullMessage = "File \"" + std::string(file) + "\" | Line " + std::to_string(line) + " | " + std::string(typeToString(type)) + message;
-			#else
-				std::string fullMessage = std::string(typeToString(type)) + message;
-			#endif
-			if ('\n' != fullMessage.back())
-			{
-				fullMessage += '\n';
-			}
+		case Type::DEBUG:
+			prio = ANDROID_LOG_DEBUG;
+			break;
 
-			// Platform specific handling
-#if SE_PLATFORM_WINDOWS
-			{
-				// Convert UTF-8 string to UTF-16
-				std::wstring utf16Line;
-				utf16Line.resize(static_cast<std::wstring::size_type>(::MultiByteToWideChar(CP_UTF8, 0, fullMessage.c_str(), static_cast<int>(fullMessage.size()), nullptr , 0)));
-				::MultiByteToWideChar(CP_UTF8, 0, fullMessage.c_str(), static_cast<int>(fullMessage.size()), utf16Line.data(), static_cast<int>(utf16Line.size()));
+		case Type::INFORMATION:
+			prio = ANDROID_LOG_INFO;
+			break;
 
-				// Write into standard output stream
-				if (Type::CRITICAL == type)
-				{
-					std::wcerr << utf16Line.c_str();
-				}
-				else
-				{
-					std::wcout << utf16Line.c_str();
-				}
+		case Type::WARNING:
+		case Type::PERFORMANCE_WARNING:
+		case Type::COMPATIBILITY_WARNING:
+			prio = ANDROID_LOG_WARN;
+			break;
 
-				// On Microsoft Windows, ensure the output can be seen inside the Visual Studio output window as well
-				::OutputDebugStringW(utf16Line.c_str());
-				if (Type::CRITICAL == type && ::IsDebuggerPresent())
-				{
-					requestDebugBreak = true;
-				}
-			}
-			#elif __ANDROID__
-				int prio = ANDROID_LOG_DEFAULT;
-				switch (type)
-				{
-					case Type::TRACE:
-						prio = ANDROID_LOG_VERBOSE;
-						break;
-
-					case Type::DEBUG:
-						prio = ANDROID_LOG_DEBUG;
-						break;
-
-					case Type::INFORMATION:
-						prio = ANDROID_LOG_INFO;
-						break;
-
-					case Type::WARNING:
-					case Type::PERFORMANCE_WARNING:
-					case Type::COMPATIBILITY_WARNING:
-						prio = ANDROID_LOG_WARN;
-						break;
-
-					case Type::CRITICAL:
-						prio = ANDROID_LOG_ERROR;
-						break;
-				}
-				__android_log_write(prio, "Unrimp", fullMessage.c_str());	// TODO(co) Might make sense to make the app-name customizable
-			#elif LINUX
-				// Write into standard output stream
-				if (Type::CRITICAL == type)
-				{
-					std::cerr << fullMessage.c_str();
-				}
-				else
-				{
-					std::cout << fullMessage.c_str();
-				}
-			#else
-				#error "Unsupported platform"
-			#endif
-
-			// Done
-			return requestDebugBreak;
+		case Type::CRITICAL:
+			prio = ANDROID_LOG_ERROR;
+			break;
 		}
-
-
-	//[-------------------------------------------------------]
-	//[ Protected methods                                     ]
-	//[-------------------------------------------------------]
-	protected:
-		[[nodiscard]] inline const char* typeToString(Type type) const
+		__android_log_write(prio, "Unrimp", fullMessage.c_str());	// TODO(co) Might make sense to make the app-name customizable
+#elif LINUX
+	// Write into standard output stream
+		if ( Type::CRITICAL == type )
 		{
-			switch (type)
-			{
-				case Type::TRACE:
-					return "Trace: ";
-
-				case Type::DEBUG:
-					return "Debug: ";
-
-				case Type::INFORMATION:
-					return "Information: ";
-
-				case Type::WARNING:
-					return "Warning: ";
-
-				case Type::PERFORMANCE_WARNING:
-					return "Performance warning: ";
-
-				case Type::COMPATIBILITY_WARNING:
-					return "Compatibility warning: ";
-
-				case Type::CRITICAL:
-					return "Critical: ";
-
-				default:
-					return "Unknown: ";
-			}
+			std::cerr << fullMessage.c_str();
 		}
+		else
+		{
+			std::cout << fullMessage.c_str();
+		}
+#else
+#error "Unsupported platform"
+#endif
+
+// Done
+		return requestDebugBreak;
+	}
+
+	[[nodiscard]] inline const char* typeToString(Type type) const
+	{
+		switch ( type )
+		{
+		case Type::TRACE:
+			return "Trace: ";
+
+		case Type::DEBUG:
+			return "Debug: ";
+
+		case Type::INFORMATION:
+			return "Information: ";
+
+		case Type::WARNING:
+			return "Warning: ";
+
+		case Type::PERFORMANCE_WARNING:
+			return "Performance warning: ";
+
+		case Type::COMPATIBILITY_WARNING:
+			return "Compatibility warning: ";
+
+		case Type::CRITICAL:
+			return "Critical: ";
+
+		default:
+			return "Unknown: ";
+		}
+	}
 
 
-	//[-------------------------------------------------------]
-	//[ Protected data                                        ]
-	//[-------------------------------------------------------]
-	protected:
-		std::mutex mMutex;
+	std::mutex mMutex;
+};
 
+DefaultLog& GetLog();
 
-	//[-------------------------------------------------------]
-	//[ Private methods                                       ]
-	//[-------------------------------------------------------]
-	private:
-		explicit DefaultLog(const DefaultLog&) = delete;
-		DefaultLog& operator=(const DefaultLog&) = delete;
-
-
-	};
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-} // Rhi
+// Macros & definitions
+/**
+*  @brief
+*    Ease-of-use log macro
+*
+*  @param[in] type
+*    Log message type
+*  @param[in] format
+*    "snprintf"-style formatted UTF-8 log message
+*
+*  @note
+*    - Example: RHI_LOG(DEBUG, "Direct3D 11 RHI implementation startup")
+*    - See http://cnicholson.net/2009/02/stupid-c-tricks-adventures-in-assert/ - "2.  Wrap your macros in do { … } while(0)." for background information about the do-while wrap
+*/
+#define RHI_LOG(type, format, ...) \
+		do \
+		{ \
+			if (GetLog().print(DefaultLog::Type::type, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), format, ##__VA_ARGS__)) \
+			{ \
+				SE_DEBUG_BREAK; \
+			} \
+		} while (0);

@@ -3907,11 +3907,11 @@ namespace NullRhi
 				// Error!
 				if (numberOfCurrentResources > 1)
 				{
-					RHI_LOG(mContext, CRITICAL, "The null RHI implementation is going to be destroyed, but there are still %u resource instances left (memory leak)", numberOfCurrentResources)
+					RHI_LOG(CRITICAL, "The null RHI implementation is going to be destroyed, but there are still %u resource instances left (memory leak)", numberOfCurrentResources)
 				}
 				else
 				{
-					RHI_LOG(mContext, CRITICAL, "The null RHI implementation is going to be destroyed, but there is still one resource instance left (memory leak)")
+					RHI_LOG(CRITICAL, "The null RHI implementation is going to be destroyed, but there is still one resource instance left (memory leak)")
 				}
 
 				// Use debug output to show the current number of resource instances
@@ -3967,24 +3967,24 @@ namespace NullRhi
 		{
 			if (nullptr == mGraphicsRootSignature)
 			{
-				RHI_LOG(mContext, CRITICAL, "No null RHI implementation graphics root signature set")
+				RHI_LOG(CRITICAL, "No null RHI implementation graphics root signature set")
 				return;
 			}
 			const Rhi::RootSignature& rootSignature = mGraphicsRootSignature->getRootSignature();
 			if (rootParameterIndex >= rootSignature.numberOfParameters)
 			{
-				RHI_LOG(mContext, CRITICAL, "The null RHI implementation root parameter index is out of bounds")
+				RHI_LOG(CRITICAL, "The null RHI implementation root parameter index is out of bounds")
 				return;
 			}
 			const Rhi::RootParameter& rootParameter = rootSignature.parameters[rootParameterIndex];
 			if (Rhi::RootParameterType::DESCRIPTOR_TABLE != rootParameter.parameterType)
 			{
-				RHI_LOG(mContext, CRITICAL, "The null RHI implementation root parameter index doesn't reference a descriptor table")
+				RHI_LOG(CRITICAL, "The null RHI implementation root parameter index doesn't reference a descriptor table")
 				return;
 			}
 			if (nullptr == reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges))
 			{
-				RHI_LOG(mContext, CRITICAL, "The null RHI implementation descriptor ranges is a null pointer")
+				RHI_LOG(CRITICAL, "The null RHI implementation descriptor ranges is a null pointer")
 				return;
 			}
 		}
@@ -4137,24 +4137,24 @@ namespace NullRhi
 		{
 			if (nullptr == mComputeRootSignature)
 			{
-				RHI_LOG(mContext, CRITICAL, "No null RHI implementation compute root signature set")
+				RHI_LOG(CRITICAL, "No null RHI implementation compute root signature set")
 				return;
 			}
 			const Rhi::RootSignature& rootSignature = mComputeRootSignature->getRootSignature();
 			if (rootParameterIndex >= rootSignature.numberOfParameters)
 			{
-				RHI_LOG(mContext, CRITICAL, "The null RHI implementation root parameter index is out of bounds")
+				RHI_LOG(CRITICAL, "The null RHI implementation root parameter index is out of bounds")
 				return;
 			}
 			const Rhi::RootParameter& rootParameter = rootSignature.parameters[rootParameterIndex];
 			if (Rhi::RootParameterType::DESCRIPTOR_TABLE != rootParameter.parameterType)
 			{
-				RHI_LOG(mContext, CRITICAL, "The null RHI implementation root parameter index doesn't reference a descriptor table")
+				RHI_LOG(CRITICAL, "The null RHI implementation root parameter index doesn't reference a descriptor table")
 				return;
 			}
 			if (nullptr == reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges))
 			{
-				RHI_LOG(mContext, CRITICAL, "The null RHI implementation descriptor ranges is a null pointer")
+				RHI_LOG(CRITICAL, "The null RHI implementation descriptor ranges is a null pointer")
 				return;
 			}
 		}

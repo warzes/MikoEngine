@@ -7,5 +7,5 @@
 #endif
 {
 	// Error! (unsupported RHI)
-	RHI_LOG(rhi->getContext(), CRITICAL, "Error: Unsupported RHI")
+	RHI_LOG(CRITICAL, "Error: Unsupported RHI")
 }

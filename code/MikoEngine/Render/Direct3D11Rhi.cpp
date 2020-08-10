@@ -658,21 +658,21 @@ namespace Direct3D11Rhi
 				{
 					if (nullptr != agsDeInit && AGS_SUCCESS != agsDeInit(mAgsContext))
 					{
-						RHI_LOG(mDirect3D11Rhi.getContext(), CRITICAL, "Direct3D 11: Failed to unload AMG AGS")
+						RHI_LOG(CRITICAL, "Direct3D 11: Failed to unload AMG AGS")
 					}
 					::FreeLibrary(static_cast<HMODULE>(mAmdAgsSharedLibrary));
 				}
 			#else
 				if (AGS_SUCCESS != agsDeInit(mAgsContext))
 				{
-					RHI_LOG(mDirect3D11Rhi.getContext(), CRITICAL, "Direct3D 11: Failed to unload AMG AGS")
+					RHI_LOG(CRITICAL, "Direct3D 11: Failed to unload AMG AGS")
 				}
 			#endif
 			if (nullptr != mNvAPISharedLibrary)
 			{
 				if (nullptr != NvAPI_Unload && 0 != NvAPI_Unload())
 				{
-					RHI_LOG(mDirect3D11Rhi.getContext(), CRITICAL, "Direct3D 11: Failed to unload NvAPI")
+					RHI_LOG(CRITICAL, "Direct3D 11: Failed to unload NvAPI")
 				}
 				::FreeLibrary(static_cast<HMODULE>(mNvAPISharedLibrary));
 			}
@@ -720,7 +720,7 @@ namespace Direct3D11Rhi
 							FAILED_DEBUG_BREAK(dxgiAdapter->GetDesc(&dxgiAdapterDesc))
 							if (0x1414 == dxgiAdapterDesc.VendorId)	// 0x1414 = "Capture Adapter" when using Visual Studio graphics debugger
 							{
-								RHI_LOG(mDirect3D11Rhi.getContext(), COMPATIBILITY_WARNING, "Direct3D 11 capture adapter used (e.g. Visual Studio graphics debugger), AMD AGS and NvAPI support disabled")
+								RHI_LOG(COMPATIBILITY_WARNING, "Direct3D 11 capture adapter used (e.g. Visual Studio graphics debugger), AMD AGS and NvAPI support disabled")
 							}
 							else
 							{
@@ -746,7 +746,7 @@ namespace Direct3D11Rhi
 								{
 									if (!loadAmdAgsEntryPoints())
 									{
-										RHI_LOG(mDirect3D11Rhi.getContext(), CRITICAL, "Direct3D 11: Failed to load AMD AGS function entry points")
+										RHI_LOG(CRITICAL, "Direct3D 11: Failed to load AMD AGS function entry points")
 										::FreeLibrary(static_cast<HMODULE>(mAmdAgsSharedLibrary));
 										mAmdAgsSharedLibrary									  = nullptr;
 										agsInit													  = nullptr;
@@ -759,7 +759,7 @@ namespace Direct3D11Rhi
 								}
 								else
 								{
-									RHI_LOG(mDirect3D11Rhi.getContext(), PERFORMANCE_WARNING, "Direct3D 11: Failed to load the AMD AGS shared library \"%s\"", AMD_AGS_SHARED_LIBRARY_NAME)
+									RHI_LOG(PERFORMANCE_WARNING, "Direct3D 11: Failed to load the AMD AGS shared library \"%s\"", AMD_AGS_SHARED_LIBRARY_NAME)
 								}
 							#else
 							{
@@ -767,11 +767,11 @@ namespace Direct3D11Rhi
 								const AGSConfiguration agsConfiguration = { &AmdAgsAllocCallback, &AmdAgsFreeCallback };
 								if (AGS_SUCCESS == agsInit(&mAgsContext, &agsConfiguration, nullptr))
 								{
-									RHI_LOG(mDirect3D11Rhi.getContext(), TRACE, "Direct3D 11: Successfully initialized AMD AGS")
+									RHI_LOG(TRACE, "Direct3D 11: Successfully initialized AMD AGS")
 								}
 								else
 								{
-									RHI_LOG(mDirect3D11Rhi.getContext(), CRITICAL, "Direct3D 11: Failed to initialize AMD AGS")
+									RHI_LOG(CRITICAL, "Direct3D 11: Failed to initialize AMD AGS")
 								}
 							}
 							#endif
@@ -790,7 +790,7 @@ namespace Direct3D11Rhi
 							{
 								if (!loadNvAPIEntryPoints())
 								{
-									RHI_LOG(mDirect3D11Rhi.getContext(), PERFORMANCE_WARNING, "Direct3D 11: Failed to load NvAPI function entry points, maybe a graphics debugger like RenderDoc disabled NvAPI")
+									RHI_LOG(PERFORMANCE_WARNING, "Direct3D 11: Failed to load NvAPI function entry points, maybe a graphics debugger like RenderDoc disabled NvAPI")
 									::FreeLibrary(static_cast<HMODULE>(mNvAPISharedLibrary));
 									mNvAPISharedLibrary							  = nullptr;
 									NvAPI_Initialize							  = nullptr;
@@ -801,7 +801,7 @@ namespace Direct3D11Rhi
 							}
 							else
 							{
-								RHI_LOG(mDirect3D11Rhi.getContext(), PERFORMANCE_WARNING, "Direct3D 11: Failed to load the NvAPI shared library \"%s\"", NVAPI_SHARED_LIBRARY_NAME)
+								RHI_LOG(PERFORMANCE_WARNING, "Direct3D 11: Failed to load the NvAPI shared library \"%s\"", NVAPI_SHARED_LIBRARY_NAME)
 							}
 						}
 					}
@@ -851,17 +851,17 @@ namespace Direct3D11Rhi
 					mD3DCompilerSharedLibrary = ::LoadLibraryExA("D3DCompiler_47.dll", nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
 					if (nullptr == mD3DCompilerSharedLibrary)
 					{
-						RHI_LOG(mDirect3D11Rhi.getContext(), CRITICAL, "Failed to load in the shared Direct3D 11 library \"D3DCompiler_47.dll\"")
+						RHI_LOG(CRITICAL, "Failed to load in the shared Direct3D 11 library \"D3DCompiler_47.dll\"")
 					}
 				}
 				else
 				{
-					RHI_LOG(mDirect3D11Rhi.getContext(), CRITICAL, "Failed to load in the shared Direct3D 11 library \"d3d11.dll\"")
+					RHI_LOG(CRITICAL, "Failed to load in the shared Direct3D 11 library \"d3d11.dll\"")
 				}
 			}
 			else
 			{
-				RHI_LOG(mDirect3D11Rhi.getContext(), CRITICAL, "Failed to load in the shared Direct3D 11 library \"dxgi.dll\"")
+				RHI_LOG(CRITICAL, "Failed to load in the shared Direct3D 11 library \"dxgi.dll\"")
 			}
 
 			// Done
@@ -893,7 +893,7 @@ namespace Direct3D11Rhi
 						wchar_t moduleFilename[MAX_PATH];																																		\
 						moduleFilename[0] = '\0';																																				\
 						::GetModuleFileNameW(static_cast<HMODULE>(mDxgiSharedLibrary), moduleFilename, MAX_PATH);																				\
-						RHI_LOG(mDirect3D11Rhi.getContext(), CRITICAL, "Failed to locate the entry point \"%s\" within the Direct3D 11 DXGI shared library \"%s\"", #funcName, moduleFilename)	\
+						RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the Direct3D 11 DXGI shared library \"%s\"", #funcName, moduleFilename)	\
 						result = false;																																							\
 					}																																											\
 				}
@@ -933,7 +933,7 @@ namespace Direct3D11Rhi
 						wchar_t moduleFilename[MAX_PATH];																																	\
 						moduleFilename[0] = '\0';																																			\
 						::GetModuleFileNameW(static_cast<HMODULE>(mD3D11SharedLibrary), moduleFilename, MAX_PATH);																			\
-						RHI_LOG(mDirect3D11Rhi.getContext(), CRITICAL, "Failed to locate the entry point \"%s\" within the Direct3D 11 shared library \"%s\"", #funcName, moduleFilename)	\
+						RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the Direct3D 11 shared library \"%s\"", #funcName, moduleFilename)	\
 						result = false;																																						\
 					}																																										\
 				}
@@ -973,7 +973,7 @@ namespace Direct3D11Rhi
 						wchar_t moduleFilename[MAX_PATH];																																	\
 						moduleFilename[0] = '\0';																																			\
 						::GetModuleFileNameW(static_cast<HMODULE>(mD3DCompilerSharedLibrary), moduleFilename, MAX_PATH);																	\
-						RHI_LOG(mDirect3D11Rhi.getContext(), CRITICAL, "Failed to locate the entry point \"%s\" within the Direct3D 11 shared library \"%s\"", #funcName, moduleFilename)	\
+						RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the Direct3D 11 shared library \"%s\"", #funcName, moduleFilename)	\
 						result = false;																																						\
 					}																																										\
 				}
@@ -1015,7 +1015,7 @@ namespace Direct3D11Rhi
 							wchar_t moduleFilename[MAX_PATH];																																\
 							moduleFilename[0] = '\0';																																		\
 							::GetModuleFileNameW(static_cast<HMODULE>(mAmdAgsSharedLibrary), moduleFilename, MAX_PATH);																		\
-							RHI_LOG(mDirect3D11Rhi.getContext(), CRITICAL, "Failed to locate the entry point \"%s\" within the AMD AGS shared library \"%s\"", #funcName, moduleFilename)	\
+							RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the AMD AGS shared library \"%s\"", #funcName, moduleFilename)	\
 							result = false;																																					\
 						}																																									\
 					}
@@ -1037,11 +1037,11 @@ namespace Direct3D11Rhi
 					const AGSConfiguration agsConfiguration = { &AmdAgsAllocCallback, &AmdAgsFreeCallback };
 					if (AGS_SUCCESS == agsInit(&mAgsContext, &agsConfiguration, nullptr))
 					{
-						RHI_LOG(mDirect3D11Rhi.getContext(), TRACE, "Direct3D 11: Successfully initialized AMD AGS")
+						RHI_LOG(TRACE, "Direct3D 11: Successfully initialized AMD AGS")
 					}
 					else
 					{
-						RHI_LOG(mDirect3D11Rhi.getContext(), CRITICAL, "Direct3D 11: Failed to initialize AMD AGS")
+						RHI_LOG(CRITICAL, "Direct3D 11: Failed to initialize AMD AGS")
 						result = false;
 					}
 				}
@@ -1074,7 +1074,7 @@ namespace Direct3D11Rhi
 					wchar_t moduleFilename[MAX_PATH];																															\
 					moduleFilename[0] = '\0';																																	\
 					::GetModuleFileNameW(static_cast<HMODULE>(mNvAPISharedLibrary), moduleFilename, MAX_PATH);																	\
-					RHI_LOG(mDirect3D11Rhi.getContext(), CRITICAL, "Failed to locate the entry point \"%s\" within the NvAPI shared library \"%s\"", #funcName, moduleFilename)	\
+					RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the NvAPI shared library \"%s\"", #funcName, moduleFilename)	\
 					result = false;																																				\
 				}
 			FNDEF_NvAPI(void*,	nvapi_QueryInterface,	(unsigned int offset));
@@ -1109,11 +1109,11 @@ namespace Direct3D11Rhi
 			{
 				if (nullptr != NvAPI_Initialize && 0 == NvAPI_Initialize())
 				{
-					RHI_LOG(mDirect3D11Rhi.getContext(), TRACE, "Direct3D 11: Successfully initialized NvAPI")
+					RHI_LOG(TRACE, "Direct3D 11: Successfully initialized NvAPI")
 				}
 				else
 				{
-					RHI_LOG(mDirect3D11Rhi.getContext(), CRITICAL, "Direct3D 11: Failed to initialize NvAPI")
+					RHI_LOG(CRITICAL, "Direct3D 11: Failed to initialize NvAPI")
 					result = false;
 				}
 			}
@@ -1255,7 +1255,7 @@ namespace Direct3D11Rhi
 		{
 			if (nullptr != errorD3dBlob)
 			{
-				if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), static_cast<char*>(errorD3dBlob->GetBufferPointer())))
+				if (GetLog().print(DefaultLog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), static_cast<char*>(errorD3dBlob->GetBufferPointer())))
 				{
 					SE_DEBUG_BREAK;
 				}
@@ -1281,7 +1281,7 @@ namespace Direct3D11Rhi
 			{
 				result = direct3D11Rhi.getD3D11Device()->GetDeviceRemovedReason();
 			}
-			RHI_LOG(direct3D11Rhi.getContext(), CRITICAL, "Direct3D 11 device lost on present: Reason code 0x%08X", static_cast<unsigned int>(result))
+			RHI_LOG(CRITICAL, "Direct3D 11 device lost on present: Reason code 0x%08X", static_cast<unsigned int>(result))
 
 			// TODO(co) Add device lost handling if needed. Probably more complex to recreate all device resources.
 		}
@@ -2079,7 +2079,7 @@ namespace Direct3D11Rhi
 			// -> See "Input assembler index buffer resources" ("D3D11_FORMAT_SUPPORT_IA_INDEX_BUFFER"): https://msdn.microsoft.com/en-us/library/windows/desktop/ff471325%28v=vs.85%29.aspx
 			if (Rhi::IndexBufferFormat::UNSIGNED_CHAR == indexBufferFormat)
 			{
-				RHI_LOG(direct3D11Rhi.getContext(), CRITICAL, "\"Rhi::IndexBufferFormat::UNSIGNED_CHAR\" is not supported by Direct3D 11")
+				RHI_LOG(CRITICAL, "\"Rhi::IndexBufferFormat::UNSIGNED_CHAR\" is not supported by Direct3D 11")
 			}
 			else
 			{
@@ -7426,7 +7426,7 @@ namespace Direct3D11Rhi
 						case Rhi::ResourceType::MESH_SHADER:
 						case Rhi::ResourceType::COMPUTE_SHADER:
 						default:
-							RHI_LOG(direct3D11Rhi.getContext(), CRITICAL, "The type of the given color texture at index %u is not supported by the Direct3D 11 RHI implementation", colorTexture - mColorTextures)
+							RHI_LOG(CRITICAL, "The type of the given color texture at index %u is not supported by the Direct3D 11 RHI implementation", colorTexture - mColorTextures)
 							*d3d11RenderTargetView = nullptr;
 							break;
 					}
@@ -7511,7 +7511,7 @@ namespace Direct3D11Rhi
 					case Rhi::ResourceType::MESH_SHADER:
 					case Rhi::ResourceType::COMPUTE_SHADER:
 					default:
-						RHI_LOG(direct3D11Rhi.getContext(), CRITICAL, "The type of the given depth stencil texture is not supported by the Direct3D 11 RHI implementation")
+						RHI_LOG(CRITICAL, "The type of the given depth stencil texture is not supported by the Direct3D 11 RHI implementation")
 						break;
 				}
 			}
@@ -9141,7 +9141,7 @@ namespace Direct3D11Rhi
 				}
 				else
 				{
-					RHI_LOG(direct3D11Rhi.getContext(), CRITICAL, "Failed to create the Direct3D 11 graphics pipeline stage input layout because there's no vertex shader")
+					RHI_LOG(CRITICAL, "Failed to create the Direct3D 11 graphics pipeline stage input layout because there's no vertex shader")
 				}
 			}
 		}
@@ -9618,7 +9618,7 @@ namespace
 
 			void DrawMeshTasks(const void*, Rhi::IRhi& rhi)
 			{
-				RHI_LOG(static_cast<Direct3D11Rhi::Direct3D11Rhi&>(rhi).getContext(), CRITICAL, "Direct3D 11 doesn't support mesh shaders")
+				RHI_LOG(CRITICAL, "Direct3D 11 doesn't support mesh shaders")
 			}
 
 			//[-------------------------------------------------------]
@@ -9660,7 +9660,7 @@ namespace
 				}
 				else
 				{
-					RHI_LOG(static_cast<Direct3D11Rhi::Direct3D11Rhi&>(rhi).getContext(), CRITICAL, "Unsupported Direct3D 11 texture resource type")
+					RHI_LOG(CRITICAL, "Unsupported Direct3D 11 texture resource type")
 				}
 			}
 
@@ -9845,7 +9845,7 @@ namespace Direct3D11Rhi
 			AGSContext* agsContext = mDirect3D11RuntimeLinking->getAgsContext();
 			if (!detail::createDevice(agsContext, flags, &mD3D11Device, &mD3D11DeviceContext, mD3DFeatureLevel) && (flags & D3D11_CREATE_DEVICE_DEBUG))
 			{
-				RHI_LOG(mContext, CRITICAL, "Failed to create the Direct3D 11 device instance, retrying without debug flag (maybe no Windows SDK is installed)")
+				RHI_LOG(CRITICAL, "Failed to create the Direct3D 11 device instance, retrying without debug flag (maybe no Windows SDK is installed)")
 				flags &= ~D3D11_CREATE_DEVICE_DEBUG;
 				detail::createDevice(agsContext, flags, &mD3D11Device, &mD3D11DeviceContext, mD3DFeatureLevel);
 			}
@@ -9928,7 +9928,7 @@ namespace Direct3D11Rhi
 			}
 			else
 			{
-				RHI_LOG(mContext, CRITICAL, "Failed to create the Direct3D 11 device and device context instance")
+				RHI_LOG(CRITICAL, "Failed to create the Direct3D 11 device and device context instance")
 			}
 		}
 	}
@@ -9965,11 +9965,11 @@ namespace Direct3D11Rhi
 				// Error!
 				if (numberOfCurrentResources > 1)
 				{
-					RHI_LOG(mContext, CRITICAL, "The Direct3D 11 RHI implementation is going to be destroyed, but there are still %u resource instances left (memory leak)", numberOfCurrentResources)
+					RHI_LOG(CRITICAL, "The Direct3D 11 RHI implementation is going to be destroyed, but there are still %u resource instances left (memory leak)", numberOfCurrentResources)
 				}
 				else
 				{
-					RHI_LOG(mContext, CRITICAL, "The Direct3D 11 RHI implementation is going to be destroyed, but there is still one resource instance left (memory leak)")
+					RHI_LOG(CRITICAL, "The Direct3D 11 RHI implementation is going to be destroyed, but there is still one resource instance left (memory leak)")
 				}
 
 				// Use debug output to show the current number of resource instances
@@ -10083,24 +10083,24 @@ namespace Direct3D11Rhi
 		{
 			if (nullptr == mGraphicsRootSignature)
 			{
-				RHI_LOG(mContext, CRITICAL, "No Direct3D 11 RHI implementation graphics root signature set")
+				RHI_LOG(CRITICAL, "No Direct3D 11 RHI implementation graphics root signature set")
 				return;
 			}
 			const Rhi::RootSignature& rootSignature = mGraphicsRootSignature->getRootSignature();
 			if (rootParameterIndex >= rootSignature.numberOfParameters)
 			{
-				RHI_LOG(mContext, CRITICAL, "The Direct3D 11 RHI implementation root parameter index is out of bounds")
+				RHI_LOG(CRITICAL, "The Direct3D 11 RHI implementation root parameter index is out of bounds")
 				return;
 			}
 			const Rhi::RootParameter& rootParameter = rootSignature.parameters[rootParameterIndex];
 			if (Rhi::RootParameterType::DESCRIPTOR_TABLE != rootParameter.parameterType)
 			{
-				RHI_LOG(mContext, CRITICAL, "The Direct3D 11 RHI implementation root parameter index doesn't reference a descriptor table")
+				RHI_LOG(CRITICAL, "The Direct3D 11 RHI implementation root parameter index doesn't reference a descriptor table")
 				return;
 			}
 			if (nullptr == reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges))
 			{
-				RHI_LOG(mContext, CRITICAL, "The Direct3D 11 RHI implementation descriptor ranges is a null pointer")
+				RHI_LOG(CRITICAL, "The Direct3D 11 RHI implementation descriptor ranges is a null pointer")
 				return;
 			}
 		}
@@ -10165,15 +10165,15 @@ namespace Direct3D11Rhi
 								break;
 
 							case Rhi::ShaderVisibility::TASK:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 task shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 task shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::MESH:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 mesh shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 mesh shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::COMPUTE:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 compute shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 compute shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::ALL_GRAPHICS:
@@ -10259,7 +10259,7 @@ namespace Direct3D11Rhi
 							case Rhi::ResourceType::TASK_SHADER:
 							case Rhi::ResourceType::MESH_SHADER:
 							case Rhi::ResourceType::COMPUTE_SHADER:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 RHI implementation resource type")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 RHI implementation resource type")
 								break;
 						}
 						const UINT startSlot = descriptorRange.baseShaderRegister;
@@ -10297,15 +10297,15 @@ namespace Direct3D11Rhi
 								break;
 
 							case Rhi::ShaderVisibility::TASK:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 task shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 task shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::MESH:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 mesh shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 mesh shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::COMPUTE:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 compute shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 compute shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::ALL_GRAPHICS:
@@ -10357,15 +10357,15 @@ namespace Direct3D11Rhi
 								break;
 
 							case Rhi::ShaderVisibility::TASK:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 task shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 task shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::MESH:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 mesh shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 mesh shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::COMPUTE:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 compute shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 compute shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::ALL_GRAPHICS:
@@ -10400,7 +10400,7 @@ namespace Direct3D11Rhi
 					case Rhi::ResourceType::TASK_SHADER:
 					case Rhi::ResourceType::MESH_SHADER:
 					case Rhi::ResourceType::COMPUTE_SHADER:
-						RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 RHI implementation resource type")
+						RHI_LOG(CRITICAL, "Invalid Direct3D 11 RHI implementation resource type")
 						break;
 				}
 			}
@@ -10978,24 +10978,24 @@ namespace Direct3D11Rhi
 		{
 			if (nullptr == mComputeRootSignature)
 			{
-				RHI_LOG(mContext, CRITICAL, "No Direct3D 11 RHI implementation compute root signature set")
+				RHI_LOG(CRITICAL, "No Direct3D 11 RHI implementation compute root signature set")
 				return;
 			}
 			const Rhi::RootSignature& rootSignature = mComputeRootSignature->getRootSignature();
 			if (rootParameterIndex >= rootSignature.numberOfParameters)
 			{
-				RHI_LOG(mContext, CRITICAL, "The Direct3D 11 RHI implementation root parameter index is out of bounds")
+				RHI_LOG(CRITICAL, "The Direct3D 11 RHI implementation root parameter index is out of bounds")
 				return;
 			}
 			const Rhi::RootParameter& rootParameter = rootSignature.parameters[rootParameterIndex];
 			if (Rhi::RootParameterType::DESCRIPTOR_TABLE != rootParameter.parameterType)
 			{
-				RHI_LOG(mContext, CRITICAL, "The Direct3D 11 RHI implementation root parameter index doesn't reference a descriptor table")
+				RHI_LOG(CRITICAL, "The Direct3D 11 RHI implementation root parameter index doesn't reference a descriptor table")
 				return;
 			}
 			if (nullptr == reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges))
 			{
-				RHI_LOG(mContext, CRITICAL, "The Direct3D 11 RHI implementation descriptor ranges is a null pointer")
+				RHI_LOG(CRITICAL, "The Direct3D 11 RHI implementation descriptor ranges is a null pointer")
 				return;
 			}
 		}
@@ -11029,31 +11029,31 @@ namespace Direct3D11Rhi
 						switch (descriptorRange.shaderVisibility)
 						{
 							case Rhi::ShaderVisibility::VERTEX:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 vertex shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 vertex shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::TESSELLATION_CONTROL:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 tessellation control shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 tessellation control shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::TESSELLATION_EVALUATION:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 tessellation evaluation shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 tessellation evaluation shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::GEOMETRY:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 geometry shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 geometry shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::FRAGMENT:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 fragment shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 fragment shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::TASK:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 task shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 task shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::MESH:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 mesh shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 mesh shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::ALL:
@@ -11062,7 +11062,7 @@ namespace Direct3D11Rhi
 								break;
 
 							case Rhi::ShaderVisibility::ALL_GRAPHICS:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 all graphics shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 all graphics shader visibility")
 								break;
 						}
 						break;
@@ -11144,38 +11144,38 @@ namespace Direct3D11Rhi
 									case Rhi::ResourceType::TASK_SHADER:
 									case Rhi::ResourceType::MESH_SHADER:
 									case Rhi::ResourceType::COMPUTE_SHADER:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 RHI implementation resource type")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 RHI implementation resource type")
 										break;
 								}
 								const UINT startSlot = descriptorRange.baseShaderRegister;
 								switch (descriptorRange.shaderVisibility)
 								{
 									case Rhi::ShaderVisibility::VERTEX:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 vertex shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 vertex shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::TESSELLATION_CONTROL:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 tessellation control shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 tessellation control shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::TESSELLATION_EVALUATION:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 tessellation evaluation shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 tessellation evaluation shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::GEOMETRY:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 geometry shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 geometry shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::FRAGMENT:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 fragment shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 fragment shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::TASK:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 task shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 task shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::MESH:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 mesh shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 mesh shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::ALL:
@@ -11184,7 +11184,7 @@ namespace Direct3D11Rhi
 										break;
 
 									case Rhi::ShaderVisibility::ALL_GRAPHICS:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 all graphics shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 all graphics shader visibility")
 										break;
 								}
 								break;
@@ -11254,38 +11254,38 @@ namespace Direct3D11Rhi
 									case Rhi::ResourceType::TASK_SHADER:
 									case Rhi::ResourceType::MESH_SHADER:
 									case Rhi::ResourceType::COMPUTE_SHADER:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 RHI implementation resource type")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 RHI implementation resource type")
 										break;
 								}
 								const UINT startSlot = descriptorRange.baseShaderRegister;
 								switch (descriptorRange.shaderVisibility)
 								{
 									case Rhi::ShaderVisibility::VERTEX:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 vertex shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 vertex shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::TESSELLATION_CONTROL:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 tessellation control shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 tessellation control shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::TESSELLATION_EVALUATION:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 tessellation evaluation shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 tessellation evaluation shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::GEOMETRY:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 geometry shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 geometry shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::FRAGMENT:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 fragment shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 fragment shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::TASK:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 task shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 task shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::MESH:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 mesh shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 mesh shader visibility")
 										break;
 
 									case Rhi::ShaderVisibility::ALL:
@@ -11294,7 +11294,7 @@ namespace Direct3D11Rhi
 										break;
 
 									case Rhi::ShaderVisibility::ALL_GRAPHICS:
-										RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 all graphics shader visibility")
+										RHI_LOG(CRITICAL, "Invalid Direct3D 11 all graphics shader visibility")
 										break;
 								}
 								break;
@@ -11303,7 +11303,7 @@ namespace Direct3D11Rhi
 							case Rhi::DescriptorRangeType::UBV:
 							case Rhi::DescriptorRangeType::SAMPLER:
 							case Rhi::DescriptorRangeType::NUMBER_OF_RANGE_TYPES:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 descriptor range type")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 descriptor range type")
 								break;
 						}
 						break;
@@ -11368,31 +11368,31 @@ namespace Direct3D11Rhi
 						switch (descriptorRange.shaderVisibility)
 						{
 							case Rhi::ShaderVisibility::VERTEX:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 vertex shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 vertex shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::TESSELLATION_CONTROL:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 tessellation control shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 tessellation control shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::TESSELLATION_EVALUATION:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 tessellation evaluation shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 tessellation evaluation shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::GEOMETRY:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 geometry shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 geometry shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::FRAGMENT:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 fragment shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 fragment shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::TASK:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 task shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 task shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::MESH:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 mesh shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 mesh shader visibility")
 								break;
 
 							case Rhi::ShaderVisibility::ALL:
@@ -11401,7 +11401,7 @@ namespace Direct3D11Rhi
 								break;
 
 							case Rhi::ShaderVisibility::ALL_GRAPHICS:
-								RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 all graphics shader visibility")
+								RHI_LOG(CRITICAL, "Invalid Direct3D 11 all graphics shader visibility")
 								break;
 						}
 						break;
@@ -11425,7 +11425,7 @@ namespace Direct3D11Rhi
 					case Rhi::ResourceType::TASK_SHADER:
 					case Rhi::ResourceType::MESH_SHADER:
 					case Rhi::ResourceType::COMPUTE_SHADER:
-						RHI_LOG(mContext, CRITICAL, "Invalid Direct3D 11 RHI implementation resource type")
+						RHI_LOG(CRITICAL, "Invalid Direct3D 11 RHI implementation resource type")
 						break;
 				}
 			}

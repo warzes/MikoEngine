@@ -2,6 +2,7 @@
 #pragma once
 
 #include "DefaultAssert.h"
+#include "DefaultLog.h"
 
 #if SE_DEBUG
 	#include <cassert>
@@ -134,8 +135,7 @@ namespace Rhi
 		*  @param[in] contextType
 		*    The type of the context
 		*/
-		inline Context(ILog& log, IAllocator& allocator, handle nativeWindowHandle = 0, bool useExternalContext = false, ContextType contextType = Context::ContextType::WINDOWS) :
-			mLog(log),
+		inline Context(IAllocator& allocator, handle nativeWindowHandle = 0, bool useExternalContext = false, ContextType contextType = Context::ContextType::WINDOWS) :
 			mAllocator(allocator),
 			mNativeWindowHandle(nativeWindowHandle),
 			mUseExternalContext(useExternalContext),
@@ -149,18 +149,6 @@ namespace Rhi
 		*/
 		inline virtual ~Context()
 		{}
-
-		/**
-		*  @brief
-		*    Return the log instance
-		*
-		*  @return
-		*    The log instance
-		*/
-		[[nodiscard]] inline ILog& getLog() const
-		{
-			return mLog;
-		}
 
 		/**
 		*  @brief
@@ -241,7 +229,6 @@ namespace Rhi
 
 	// Private data
 	private:
-		ILog&		mLog;
 		IAllocator&	mAllocator;
 		handle		mNativeWindowHandle;
 		bool		mUseExternalContext;
@@ -251,227 +238,45 @@ namespace Rhi
 	};
 
 	#ifdef LINUX
-		/**
-		*  @brief
-		*    X11 version of the context class
-		*/
 		class X11Context final : public Context
 		{
-
-		// Public methods
 		public:
-			/**
-			*  @brief
-			*    Constructor
-			*
-			*  @param[in] log
-			*    Log instance to use, the log instance must stay valid as long as the RHI instance exists
-			*  @param[in] assert
-			*    Assert instance to use, the assert instance must stay valid as long as the RHI instance exists
-			*  @param[in] allocator
-			*    Allocator instance to use, the allocator instance must stay valid as long as the RHI instance exists
-			*  @param[in] display
-			*    The X11 display connection
-			*  @param[in] nativeWindowHandle
-			*    Native window handle
-			*  @param[in] useExternalContext
-			*    Indicates if an external RHI context is used; in this case the RHI itself has nothing to do with the creation/managing of an RHI context
-			*/
-			inline X11Context(ILog& log, IAssert& assert, IAllocator& allocator, _XDisplay* display, handle nativeWindowHandle = 0, bool useExternalContext = false) :
+			inline X11Context(IAllocator& allocator, _XDisplay* display, handle nativeWindowHandle = 0, bool useExternalContext = false) :
 				Context(log, assert, allocator, nativeWindowHandle, useExternalContext, Context::ContextType::X11),
 				mDisplay(display)
 			{}
 
-			/**
-			*  @brief
-			*    Return the x11 display connection
-			*
-			*  @return
-			*    The x11 display connection
-			*/
 			[[nodiscard]] inline _XDisplay* getDisplay() const
 			{
 				return mDisplay;
 			}
-
-		// Private data
 		private:
 			_XDisplay* mDisplay;
-
 		};
 
-		/**
-		*  @brief
-		*    Wayland version of the context class
-		*/
 		class WaylandContext final : public Context
 		{
-
-		// Public methods
-		public:
-			/**
-			*  @brief
-			*    Constructor
-			*
-			*  @param[in] log
-			*    Log instance to use, the log instance must stay valid as long as the RHI instance exists
-			*  @param[in] assert
-			*    Assert instance to use, the assert instance must stay valid as long as the RHI instance exists
-			*  @param[in] allocator
-			*    Allocator instance to use, the allocator instance must stay valid as long as the RHI instance exists
-			*  @param[in] display
-			*    The Wayland display connection
-			*  @param[in] surface
-			*    The Wayland surface
-			*  @param[in] useExternalContext
-			*    Indicates if an external RHI context is used; in this case the RHI itself has nothing to do with the creation/managing of an RHI context
-			*/
-			inline WaylandContext(ILog& log, IAssert& assert, IAllocator& allocator, wl_display* display, wl_surface* surface = 0, bool useExternalContext = false) :
+		public:			
+			inline WaylandContext(IAllocator& allocator, wl_display* display, wl_surface* surface = 0, bool useExternalContext = false) :
 				Context(log, assert, allocator, 1, useExternalContext, Context::ContextType::WAYLAND),	// Under Wayland the surface (aka window) handle is not an integer, but the RHI implementation expects an integer as window handle so we give here an value != 0 so that a swap chain is created
 				mDisplay(display),
 				mSurface(surface)
 			{}
 
-			/**
-			*  @brief
-			*    Return the Wayland display connection
-			*
-			*  @return
-			*    The Wayland display connection
-			*/
 			[[nodiscard]] inline wl_display* getDisplay() const
 			{
 				return mDisplay;
 			}
 
-			/**
-			*  @brief
-			*    Return the Wayland surface
-			*
-			*  @return
-			*    The Wayland surface
-			*/
 			[[nodiscard]] inline wl_surface* getSurface() const
 			{
 				return mSurface;
 			}
-
-		// Private data
 		private:
 			wl_display* mDisplay;
 			wl_surface* mSurface;
-
 		};
 	#endif
-
-	//[-------------------------------------------------------]
-	//[ Rhi/ILog.h                                            ]
-	//[-------------------------------------------------------]
-	/**
-	*  @brief
-	*    Abstract log interface
-	*
-	*  @note
-	*    - The implementation must be multithreading safe since the RHI is allowed to internally use multiple threads
-	*/
-	class ILog
-	{
-
-	// Public definitions
-	public:
-		/**
-		*  @brief
-		*    Log message type
-		*/
-		enum class Type
-		{
-			TRACE,					///< Trace, also known as verbose logging
-			DEBUG,					///< Debug
-			INFORMATION,			///< Information
-			WARNING,				///< General warning
-			PERFORMANCE_WARNING,	///< Performance related warning
-			COMPATIBILITY_WARNING,	///< Compatibility related warning
-			CRITICAL				///< Critical
-		};
-
-	// Public virtual Rhi::ILog methods
-	public:
-		/**
-		*  @brief
-		*    Print a formatted log message
-		*
-		*  @param[in] type
-		*    Log message type
-		*  @param[in] attachment
-		*    Optional attachment (for example build shader source code), can be a null pointer
-		*  @param[in] file
-		*    File as ASCII string
-		*  @param[in] line
-		*    Line number
-		*  @param[in] format
-		*    "snprintf"-style formatted UTF-8 log message
-		*
-		*  @return
-		*    "true" to request debug break, else "false"
-		*/
-		[[nodiscard]] virtual bool print(Type type, const char* attachment, const char* file, uint32_t line, const char* format, ...) = 0;
-
-	// Protected methods
-	protected:
-		inline ILog()
-		{}
-
-		inline virtual ~ILog()
-		{}
-
-		explicit ILog(const ILog&) = delete;
-		ILog& operator=(const ILog&) = delete;
-
-	};
-
-	// Macros & definitions
-	/**
-	*  @brief
-	*    Ease-of-use log macro
-	*
-	*  @param[in] context
-	*    RHI context to ask for the log interface
-	*  @param[in] type
-	*    Log message type
-	*  @param[in] format
-	*    "snprintf"-style formatted UTF-8 log message
-	*
-	*  @note
-	*    - Example: RHI_LOG(mContext, DEBUG, "Direct3D 11 RHI implementation startup")
-	*    - See http://cnicholson.net/2009/02/stupid-c-tricks-adventures-in-assert/ - "2.  Wrap your macros in do { … } while(0)." for background information about the do-while wrap
-	*/
-	#define RHI_LOG(context, type, format, ...) \
-		do \
-		{ \
-			if ((context).getLog().print(Rhi::ILog::Type::type, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), format, ##__VA_ARGS__)) \
-			{ \
-				SE_DEBUG_BREAK; \
-			} \
-		} while (0);
-	#define RHI_LOG_ONCE(context, type, format, ...) \
-		do \
-		{ \
-			static bool loggedOnce = false; \
-			if (!loggedOnce) \
-			{ \
-				loggedOnce = true; \
-				if ((context).getLog().print(Rhi::ILog::Type::type, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), format, ##__VA_ARGS__)) \
-				{ \
-					SE_DEBUG_BREAK; \
-				} \
-			} \
-		} while (0);
-
-	// Macros & definitions
-	
-
-
-
 
 	//[-------------------------------------------------------]
 	//[ Rhi/IAllocator.h                                      ]
@@ -3719,54 +3524,54 @@ namespace Rhi
 			inline void debugOutputCurrentResouces(const Context& context) const
 			{
 				// Start
-				RHI_LOG(context, INFORMATION, "** Number of current RHI resource instances **")
+				RHI_LOG(INFORMATION, "** Number of current RHI resource instances **")
 
 				// Misc
-				RHI_LOG(context, INFORMATION, "Root signatures: %u", currentNumberOfRootSignatures.load())
-				RHI_LOG(context, INFORMATION, "Resource groups: %u", currentNumberOfResourceGroups.load())
-				RHI_LOG(context, INFORMATION, "Graphics programs: %u", currentNumberOfGraphicsPrograms.load())
-				RHI_LOG(context, INFORMATION, "Vertex arrays: %u", currentNumberOfVertexArrays.load())
-				RHI_LOG(context, INFORMATION, "Render passes: %u", currentNumberOfRenderPasses.load())
-				RHI_LOG(context, INFORMATION, "Query pools: %u", currentNumberOfQueryPools.load())
+				RHI_LOG(INFORMATION, "Root signatures: %u", currentNumberOfRootSignatures.load())
+				RHI_LOG(INFORMATION, "Resource groups: %u", currentNumberOfResourceGroups.load())
+				RHI_LOG(INFORMATION, "Graphics programs: %u", currentNumberOfGraphicsPrograms.load())
+				RHI_LOG(INFORMATION, "Vertex arrays: %u", currentNumberOfVertexArrays.load())
+				RHI_LOG(INFORMATION, "Render passes: %u", currentNumberOfRenderPasses.load())
+				RHI_LOG(INFORMATION, "Query pools: %u", currentNumberOfQueryPools.load())
 
 				// IRenderTarget
-				RHI_LOG(context, INFORMATION, "Swap chains: %u", currentNumberOfSwapChains.load())
-				RHI_LOG(context, INFORMATION, "Framebuffers: %u", currentNumberOfFramebuffers.load())
+				RHI_LOG( INFORMATION, "Swap chains: %u", currentNumberOfSwapChains.load())
+				RHI_LOG( INFORMATION, "Framebuffers: %u", currentNumberOfFramebuffers.load())
 
 				// IBuffer
-				RHI_LOG(context, INFORMATION, "Vertex buffers: %u", currentNumberOfVertexBuffers.load())
-				RHI_LOG(context, INFORMATION, "Index buffers: %u", currentNumberOfIndexBuffers.load())
-				RHI_LOG(context, INFORMATION, "Texture buffers: %u", currentNumberOfTextureBuffers.load())
-				RHI_LOG(context, INFORMATION, "Structured buffers: %u", currentNumberOfStructuredBuffers.load())
-				RHI_LOG(context, INFORMATION, "Indirect buffers: %u", currentNumberOfIndirectBuffers.load())
-				RHI_LOG(context, INFORMATION, "Uniform buffers: %u", currentNumberOfUniformBuffers.load())
+				RHI_LOG( INFORMATION, "Vertex buffers: %u", currentNumberOfVertexBuffers.load())
+				RHI_LOG( INFORMATION, "Index buffers: %u", currentNumberOfIndexBuffers.load())
+				RHI_LOG( INFORMATION, "Texture buffers: %u", currentNumberOfTextureBuffers.load())
+				RHI_LOG( INFORMATION, "Structured buffers: %u", currentNumberOfStructuredBuffers.load())
+				RHI_LOG( INFORMATION, "Indirect buffers: %u", currentNumberOfIndirectBuffers.load())
+				RHI_LOG( INFORMATION, "Uniform buffers: %u", currentNumberOfUniformBuffers.load())
 
 				// ITexture
-				RHI_LOG(context, INFORMATION, "1D textures: %u", currentNumberOfTexture1Ds.load())
-				RHI_LOG(context, INFORMATION, "1D texture arrays: %u", currentNumberOfTexture1DArrays.load())
-				RHI_LOG(context, INFORMATION, "2D textures: %u", currentNumberOfTexture2Ds.load())
-				RHI_LOG(context, INFORMATION, "2D texture arrays: %u", currentNumberOfTexture2DArrays.load())
-				RHI_LOG(context, INFORMATION, "3D textures: %u", currentNumberOfTexture3Ds.load())
-				RHI_LOG(context, INFORMATION, "Cube textures: %u", currentNumberOfTextureCubes.load())
-				RHI_LOG(context, INFORMATION, "Cube texture arrays: %u", currentNumberOfTextureCubeArrays.load())
+				RHI_LOG(INFORMATION, "1D textures: %u", currentNumberOfTexture1Ds.load())
+				RHI_LOG( INFORMATION, "1D texture arrays: %u", currentNumberOfTexture1DArrays.load())
+				RHI_LOG( INFORMATION, "2D textures: %u", currentNumberOfTexture2Ds.load())
+				RHI_LOG( INFORMATION, "2D texture arrays: %u", currentNumberOfTexture2DArrays.load())
+				RHI_LOG( INFORMATION, "3D textures: %u", currentNumberOfTexture3Ds.load())
+				RHI_LOG( INFORMATION, "Cube textures: %u", currentNumberOfTextureCubes.load())
+				RHI_LOG( INFORMATION, "Cube texture arrays: %u", currentNumberOfTextureCubeArrays.load())
 
 				// IState
-				RHI_LOG(context, INFORMATION, "Graphics pipeline states: %u", currentNumberOfGraphicsPipelineStates.load())
-				RHI_LOG(context, INFORMATION, "Compute pipeline states: %u", currentNumberOfComputePipelineStates.load())
-				RHI_LOG(context, INFORMATION, "Sampler states: %u", currentNumberOfSamplerStates.load())
+				RHI_LOG( INFORMATION, "Graphics pipeline states: %u", currentNumberOfGraphicsPipelineStates.load())
+				RHI_LOG( INFORMATION, "Compute pipeline states: %u", currentNumberOfComputePipelineStates.load())
+				RHI_LOG( INFORMATION, "Sampler states: %u", currentNumberOfSamplerStates.load())
 
 				// IShader
-				RHI_LOG(context, INFORMATION, "Vertex shaders: %u", currentNumberOfVertexShaders.load())
-				RHI_LOG(context, INFORMATION, "Tessellation control shaders: %u", currentNumberOfTessellationControlShaders.load())
-				RHI_LOG(context, INFORMATION, "Tessellation evaluation shaders: %u", currentNumberOfTessellationEvaluationShaders.load())
-				RHI_LOG(context, INFORMATION, "Geometry shaders: %u", currentNumberOfGeometryShaders.load())
-				RHI_LOG(context, INFORMATION, "Fragment shaders: %u", currentNumberOfFragmentShaders.load())
-				RHI_LOG(context, INFORMATION, "Task shaders: %u", currentNumberOfTaskShaders.load())
-				RHI_LOG(context, INFORMATION, "Mesh shaders: %u", currentNumberOfMeshShaders.load())
-				RHI_LOG(context, INFORMATION, "Compute shaders: %u", currentNumberOfComputeShaders.load())
+				RHI_LOG( INFORMATION, "Vertex shaders: %u", currentNumberOfVertexShaders.load())
+				RHI_LOG( INFORMATION, "Tessellation control shaders: %u", currentNumberOfTessellationControlShaders.load())
+				RHI_LOG( INFORMATION, "Tessellation evaluation shaders: %u", currentNumberOfTessellationEvaluationShaders.load())
+				RHI_LOG( INFORMATION, "Geometry shaders: %u", currentNumberOfGeometryShaders.load())
+				RHI_LOG( INFORMATION, "Fragment shaders: %u", currentNumberOfFragmentShaders.load())
+				RHI_LOG( INFORMATION, "Task shaders: %u", currentNumberOfTaskShaders.load())
+				RHI_LOG( INFORMATION, "Mesh shaders: %u", currentNumberOfMeshShaders.load())
+				RHI_LOG( INFORMATION, "Compute shaders: %u", currentNumberOfComputeShaders.load())
 
 				// End
-				RHI_LOG(context, INFORMATION, "***************************************************")
+				RHI_LOG( INFORMATION, "***************************************************")
 			}
 
 		// Private methods

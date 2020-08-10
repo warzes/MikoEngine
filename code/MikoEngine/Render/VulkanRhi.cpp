@@ -826,19 +826,19 @@ namespace
 					if (VK_SUCCESS != vkResult)
 					{
 						// Error!
-						RHI_LOG(context, CRITICAL, "Failed to enumerate physical Vulkan devices")
+						RHI_LOG( CRITICAL, "Failed to enumerate physical Vulkan devices")
 					}
 				}
 				else
 				{
 					// Error!
-					RHI_LOG(context, CRITICAL, "There are no physical Vulkan devices")
+					RHI_LOG( CRITICAL, "There are no physical Vulkan devices")
 				}
 			}
 			else
 			{
 				// Error!
-				RHI_LOG(context, CRITICAL, "Failed to get the number of physical Vulkan devices")
+				RHI_LOG( CRITICAL, "Failed to get the number of physical Vulkan devices")
 			}
 		}
 
@@ -942,7 +942,7 @@ namespace
 								if (validationEnabled)
 								{
 									enableDebugMarker = false;
-									RHI_LOG(context, WARNING, "Vulkan validation layers are enabled: If you want to use debug markers (\"VK_EXT_debug_marker\"-extension) please disable the validation layers")
+									RHI_LOG( WARNING, "Vulkan validation layers are enabled: If you want to use debug markers (\"VK_EXT_debug_marker\"-extension) please disable the validation layers")
 								}
 							}
 							else
@@ -959,7 +959,7 @@ namespace
 			}
 
 			// Error!
-			RHI_LOG(context, CRITICAL, "Failed to select a physical Vulkan device")
+			RHI_LOG( CRITICAL, "Failed to select a physical Vulkan device")
 			return VK_NULL_HANDLE;
 		}
 
@@ -1061,7 +1061,7 @@ namespace
 					funcName = reinterpret_cast<PFN_##funcName>(vkGetDeviceProcAddr(vkDevice, #funcName));						\
 					if (nullptr == funcName)																					\
 					{																											\
-						RHI_LOG(context, CRITICAL, "Failed to load instance based Vulkan function pointer \"%s\"", #funcName)	\
+						RHI_LOG( CRITICAL, "Failed to load instance based Vulkan function pointer \"%s\"", #funcName)	\
 					}																											\
 
 				// "VK_EXT_debug_marker"-extension
@@ -1114,7 +1114,7 @@ namespace
 						if (VK_ERROR_LAYER_NOT_PRESENT == vkResult && enableValidation)
 						{
 							// Error! Since the show must go on, try creating a Vulkan device instance without validation enabled...
-							RHI_LOG(context, WARNING, "Failed to create the Vulkan device instance with validation enabled, layer is not present")
+							RHI_LOG( WARNING, "Failed to create the Vulkan device instance with validation enabled, layer is not present")
 							vkResult = createVkDevice(context, vkAllocationCallbacks, vkPhysicalDevice, vkDeviceQueueCreateInfo, false, enableDebugMarker, vkDevice);
 						}
 						// TODO(co) Error handling: Evaluate "vkResult"?
@@ -1129,7 +1129,7 @@ namespace
 			else
 			{
 				// Error!
-				RHI_LOG(context, CRITICAL, "Failed to get physical Vulkan device queue family properties")
+				RHI_LOG( CRITICAL, "Failed to get physical Vulkan device queue family properties")
 			}
 
 			// Done
@@ -1152,7 +1152,7 @@ namespace
 			if (VK_SUCCESS != vkResult)
 			{
 				// Error!
-				RHI_LOG(context, CRITICAL, "Failed to create Vulkan command pool instance")
+				RHI_LOG( CRITICAL, "Failed to create Vulkan command pool instance")
 			}
 
 			// Done
@@ -1176,7 +1176,7 @@ namespace
 			if (VK_SUCCESS != vkResult)
 			{
 				// Error!
-				RHI_LOG(context, CRITICAL, "Failed to create Vulkan command buffer instance")
+				RHI_LOG( CRITICAL, "Failed to create Vulkan command buffer instance")
 			}
 
 			// Done
@@ -1269,26 +1269,26 @@ namespace
 
 			// Get log message type
 			// -> Vulkan is using a flags combination, map it to our log message type enumeration
-			Rhi::ILog::Type type = Rhi::ILog::Type::TRACE;
+			DefaultLog::Type type = DefaultLog::Type::TRACE;
 			if ((flags & VK_DEBUG_REPORT_ERROR_BIT_EXT) != 0)
 			{
-				type = Rhi::ILog::Type::CRITICAL;
+				type = DefaultLog::Type::CRITICAL;
 			}
 			else if ((flags & VK_DEBUG_REPORT_WARNING_BIT_EXT) != 0)
 			{
-				type = Rhi::ILog::Type::WARNING;
+				type = DefaultLog::Type::WARNING;
 			}
 			else if ((flags & VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT) != 0)
 			{
-				type = Rhi::ILog::Type::PERFORMANCE_WARNING;
+				type = DefaultLog::Type::PERFORMANCE_WARNING;
 			}
 			else if ((flags & VK_DEBUG_REPORT_INFORMATION_BIT_EXT) != 0)
 			{
-				type = Rhi::ILog::Type::INFORMATION;
+				type = DefaultLog::Type::INFORMATION;
 			}
 			else if ((flags & VK_DEBUG_REPORT_DEBUG_BIT_EXT) != 0)
 			{
-				type = Rhi::ILog::Type::DEBUG;
+				type = DefaultLog::Type::DEBUG;
 			}
 
 			// Construct the log message
@@ -1302,7 +1302,7 @@ namespace
 			message << "Message: \"" << pMessage << "\" ";
 
 			// Print log message
-			if (context->getLog().print(type, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), message.str().c_str()))
+			if (GetLog().print(type, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), message.str().c_str()))
 			{
 				SE_DEBUG_BREAK;
 			}
@@ -1407,7 +1407,7 @@ namespace
 				vkGetPhysicalDeviceSurfaceSupportKHR(vkPhysicalDevice, graphicsQueueFamilyIndex, vkSurfaceKHR, &queuePresentSupport);
 				if (VK_FALSE == queuePresentSupport)
 				{
-					RHI_LOG(context, CRITICAL, "The created Vulkan presentation surface has no queue present support")
+					RHI_LOG( CRITICAL, "The created Vulkan presentation surface has no queue present support")
 				}
 			}
 
@@ -1433,14 +1433,14 @@ namespace
 			uint32_t surfaceFormatCount = 0;
 			if ((vkGetPhysicalDeviceSurfaceFormatsKHR(vkPhysicalDevice, vkSurfaceKHR, &surfaceFormatCount, nullptr) != VK_SUCCESS) || (0 == surfaceFormatCount))
 			{
-				RHI_LOG(context, CRITICAL, "Failed to get physical Vulkan device surface formats")
+				RHI_LOG( CRITICAL, "Failed to get physical Vulkan device surface formats")
 				return { VK_FORMAT_UNDEFINED, VK_COLOR_SPACE_MAX_ENUM_KHR };
 			}
 
 			std::vector<VkSurfaceFormatKHR> surfaceFormats(surfaceFormatCount);
 			if (vkGetPhysicalDeviceSurfaceFormatsKHR(vkPhysicalDevice, vkSurfaceKHR, &surfaceFormatCount, surfaceFormats.data()) != VK_SUCCESS)
 			{
-				RHI_LOG(context, CRITICAL, "Failed to get physical Vulkan device surface formats")
+				RHI_LOG( CRITICAL, "Failed to get physical Vulkan device surface formats")
 				return { VK_FORMAT_UNDEFINED, VK_COLOR_SPACE_MAX_ENUM_KHR };
 			}
 
@@ -1515,7 +1515,7 @@ namespace
 			message << ((vkSurfaceCapabilitiesKHR.supportedUsageFlags & VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT)			? "  VK_IMAGE_USAGE_INPUT_ATTACHMENT" : "");
 
 			// Print log message
-			RHI_LOG(context, CRITICAL, message.str().c_str())
+			RHI_LOG( CRITICAL, message.str().c_str())
 
 			// Error!
 			return static_cast<VkImageUsageFlags>(-1);
@@ -1534,14 +1534,14 @@ namespace
 			uint32_t presentModeCount = 0;
 			if ((vkGetPhysicalDeviceSurfacePresentModesKHR(vkPhysicalDevice, vkSurfaceKHR, &presentModeCount, nullptr) != VK_SUCCESS) || (0 == presentModeCount))
 			{
-				RHI_LOG(context, CRITICAL, "Failed to get physical Vulkan device surface present modes")
+				RHI_LOG( CRITICAL, "Failed to get physical Vulkan device surface present modes")
 				return VK_PRESENT_MODE_MAX_ENUM_KHR;
 			}
 
 			std::vector<VkPresentModeKHR> presentModes(presentModeCount);
 			if (vkGetPhysicalDeviceSurfacePresentModesKHR(vkPhysicalDevice, vkSurfaceKHR, &presentModeCount, presentModes.data()) != VK_SUCCESS)
 			{
-				RHI_LOG(context, CRITICAL, "Failed to get physical Vulkan device surface present modes")
+				RHI_LOG( CRITICAL, "Failed to get physical Vulkan device surface present modes")
 				return VK_PRESENT_MODE_MAX_ENUM_KHR;
 			}
 
@@ -1563,7 +1563,7 @@ namespace
 			}
 
 			// Error!
-			RHI_LOG(context, CRITICAL, "FIFO present mode is not supported by the Vulkan swap chain")
+			RHI_LOG( CRITICAL, "FIFO present mode is not supported by the Vulkan swap chain")
 			return VK_PRESENT_MODE_MAX_ENUM_KHR;
 		}
 
@@ -1647,7 +1647,7 @@ namespace
 			VkRenderPass vkRenderPass = VK_NULL_HANDLE;
 			if (vkCreateRenderPass(vkDevice, &vkRenderPassCreateInfo, vkAllocationCallbacks, &vkRenderPass) != VK_SUCCESS)
 			{
-				RHI_LOG(context, CRITICAL, "Failed to create Vulkan render pass")
+				RHI_LOG( CRITICAL, "Failed to create Vulkan render pass")
 			}
 
 			// Done
@@ -1712,7 +1712,7 @@ namespace
 			VkShaderModule vkShaderModule = VK_NULL_HANDLE;
 			if (vkCreateShaderModule(vkDevice, &vkShaderModuleCreateInfo, vkAllocationCallbacks, &vkShaderModule) != VK_SUCCESS)
 			{
-				RHI_LOG(context, CRITICAL, "Failed to create the Vulkan shader module")
+				RHI_LOG( CRITICAL, "Failed to create the Vulkan shader module")
 			}
 
 			// Done
@@ -1837,7 +1837,7 @@ namespace
 							VkShaderModule vkShaderModule = VK_NULL_HANDLE;
 							if (vkCreateShaderModule(vkDevice, &vkShaderModuleCreateInfo, vkAllocationCallbacks, &vkShaderModule) != VK_SUCCESS)
 							{
-								RHI_LOG(context, CRITICAL, "Failed to create the Vulkan shader module")
+								RHI_LOG( CRITICAL, "Failed to create the Vulkan shader module")
 							}
 							return vkShaderModule;
 						}
@@ -1845,7 +1845,7 @@ namespace
 					else
 					{
 						// Failed to link the program
-						if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to link the GLSL program: %s", program.getInfoLog()))
+						if (GetLog().print(DefaultLog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to link the GLSL program: %s", program.getInfoLog()))
 						{
 							SE_DEBUG_BREAK;
 						}
@@ -1854,7 +1854,7 @@ namespace
 				else
 				{
 					// Failed to parse the shader source code
-					if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to parse the GLSL shader source code: %s", shader.getInfoLog()))
+					if (GetLog().print(DefaultLog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to parse the GLSL shader source code: %s", shader.getInfoLog()))
 					{
 						SE_DEBUG_BREAK;
 					}
@@ -2261,7 +2261,7 @@ namespace VulkanRhi
 						else
 						{
 							// Error!
-							RHI_LOG(mVulkanRhi.getContext(), CRITICAL, "Failed to create the Vulkan instance")
+							RHI_LOG(CRITICAL, "Failed to create the Vulkan instance")
 						}
 					}
 				}
@@ -2306,7 +2306,7 @@ namespace VulkanRhi
 					funcName = reinterpret_cast<PFN_##funcName>(vkGetDeviceProcAddr(vkDevice, #funcName));										\
 					if (nullptr == funcName)																									\
 					{																															\
-						RHI_LOG(mVulkanRhi.getContext(), CRITICAL, "Failed to load instance based Vulkan function pointer \"%s\"", #funcName)	\
+						RHI_LOG(CRITICAL, "Failed to load instance based Vulkan function pointer \"%s\"", #funcName)	\
 						result = false;																											\
 					}																															\
 				}
@@ -2439,13 +2439,13 @@ namespace VulkanRhi
 				mVulkanSharedLibrary = ::LoadLibraryExA("vulkan-1.dll", nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
 				if (nullptr == mVulkanSharedLibrary)
 				{
-					RHI_LOG(mVulkanRhi.getContext(), CRITICAL, "Failed to load in the shared Vulkan library \"vulkan-1.dll\"")
+					RHI_LOG(CRITICAL, "Failed to load in the shared Vulkan library \"vulkan-1.dll\"")
 				}
 			#elif defined LINUX
 				mVulkanSharedLibrary = ::dlopen("libvulkan.so", RTLD_NOW);
 				if (nullptr == mVulkanSharedLibrary)
 				{
-					RHI_LOG(mVulkanRhi.getContext(), CRITICAL, "Failed to load in the shared Vulkan library \"libvulkan-1.so\"")
+					RHI_LOG(CRITICAL, "Failed to load in the shared Vulkan library \"libvulkan-1.so\"")
 				}
 			#else
 				#error "Unsupported platform"
@@ -2481,7 +2481,7 @@ namespace VulkanRhi
 							wchar_t moduleFilename[MAX_PATH];																															\
 							moduleFilename[0] = '\0';																																	\
 							::GetModuleFileNameW(static_cast<HMODULE>(mVulkanSharedLibrary), moduleFilename, MAX_PATH);																	\
-							RHI_LOG(mVulkanRhi.getContext(), CRITICAL, "Failed to locate the entry point \"%s\" within the shared Vulkan library \"%s\"", #funcName, moduleFilename)	\
+							RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the shared Vulkan library \"%s\"", #funcName, moduleFilename)	\
 							result = false;																																				\
 						}																																								\
 					}
@@ -2497,7 +2497,7 @@ namespace VulkanRhi
 						else																																								\
 						{																																									\
 							const char* libraryName = "unknown";																															\
-							RHI_LOG(mVulkanRhi.getContext(), CRITICAL, "Failed to locate the Vulkan entry point \"%s\" within the Vulkan shared library \"%s\"", #funcName, libraryName)	\
+							RHI_LOG(CRITICAL, "Failed to locate the Vulkan entry point \"%s\" within the Vulkan shared library \"%s\"", #funcName, libraryName)	\
 							result = false;																																					\
 						}																																									\
 					}
@@ -2518,7 +2518,7 @@ namespace VulkanRhi
 							{																																						\
 								libraryName = linkMap->l_name;																														\
 							}																																						\
-							RHI_LOG(mVulkanRhi.getContext(), CRITICAL, "Failed to locate the entry point \"%s\" within the shared Vulkan library \"%s\"", #funcName, libraryName)	\
+							RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the shared Vulkan library \"%s\"", #funcName, libraryName)	\
 							result = false;																																			\
 						}																																							\
 					}
@@ -2581,20 +2581,20 @@ namespace VulkanRhi
 				uint32_t propertyCount = 0;
 				if ((vkEnumerateInstanceExtensionProperties(nullptr, &propertyCount, nullptr) != VK_SUCCESS) || (0 == propertyCount))
 				{
-					RHI_LOG(mVulkanRhi.getContext(), CRITICAL, "Failed to enumerate Vulkan instance extension properties")
+					RHI_LOG(CRITICAL, "Failed to enumerate Vulkan instance extension properties")
 					return VK_ERROR_EXTENSION_NOT_PRESENT;
 				}
 				::detail::VkExtensionPropertiesVector vkExtensionPropertiesVector(propertyCount);
 				if (vkEnumerateInstanceExtensionProperties(nullptr, &propertyCount, &vkExtensionPropertiesVector[0]) != VK_SUCCESS)
 				{
-					RHI_LOG(mVulkanRhi.getContext(), CRITICAL, "Failed to enumerate Vulkan instance extension properties")
+					RHI_LOG(CRITICAL, "Failed to enumerate Vulkan instance extension properties")
 					return VK_ERROR_EXTENSION_NOT_PRESENT;
 				}
 				for (const char* enabledExtension : enabledExtensions)
 				{
 					if (!::detail::isExtensionAvailable(enabledExtension, vkExtensionPropertiesVector))
 					{
-						RHI_LOG(mVulkanRhi.getContext(), CRITICAL, "Couldn't find Vulkan instance extension named \"%s\"", enabledExtension)
+						RHI_LOG(CRITICAL, "Couldn't find Vulkan instance extension named \"%s\"", enabledExtension)
 						return VK_ERROR_EXTENSION_NOT_PRESENT;
 					}
 				}
@@ -2627,7 +2627,7 @@ namespace VulkanRhi
 			if (VK_ERROR_LAYER_NOT_PRESENT == vkResult && enableValidation)
 			{
 				// Error! Since the show must go on, try creating a Vulkan instance without validation enabled...
-				RHI_LOG(mVulkanRhi.getContext(), WARNING, "Failed to create the Vulkan instance with validation enabled, layer is not present. Install e.g. the LunarG Vulkan SDK and see e.g. https://vulkan.lunarg.com/doc/view/1.0.51.0/windows/layers.html .")
+				RHI_LOG(WARNING, "Failed to create the Vulkan instance with validation enabled, layer is not present. Install e.g. the LunarG Vulkan SDK and see e.g. https://vulkan.lunarg.com/doc/view/1.0.51.0/windows/layers.html .")
 				mValidationEnabled = false;
 				vkResult = createVulkanInstance(mValidationEnabled);
 			}
@@ -2656,7 +2656,7 @@ namespace VulkanRhi
 					funcName = reinterpret_cast<PFN_##funcName>(vkGetInstanceProcAddr(mVkInstance, #funcName));									\
 					if (nullptr == funcName)																									\
 					{																															\
-						RHI_LOG(mVulkanRhi.getContext(), CRITICAL, "Failed to load instance based Vulkan function pointer \"%s\"", #funcName)	\
+						RHI_LOG(CRITICAL, "Failed to load instance based Vulkan function pointer \"%s\"", #funcName)	\
 						result = false;																											\
 					}																															\
 				}
@@ -2740,7 +2740,7 @@ namespace VulkanRhi
 			};
 			if (vkCreateDebugReportCallbackEXT(mVkInstance, &vkDebugReportCallbackCreateInfoEXT, mVulkanRhi.getVkAllocationCallbacks(), &mVkDebugReportCallbackEXT) != VK_SUCCESS)
 			{
-				RHI_LOG(mVulkanRhi.getContext(), WARNING, "Failed to create the Vulkan debug report callback")
+				RHI_LOG(WARNING, "Failed to create the Vulkan debug report callback")
 			}
 		}
 
@@ -2837,14 +2837,14 @@ namespace VulkanRhi
 								else
 								{
 									// Error!
-									RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to create Vulkan command pool instance")
+									RHI_LOG(CRITICAL, "Failed to create Vulkan command pool instance")
 								}
 							}
 						}
 						else
 						{
 							// Error!
-							RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to get the Vulkan device graphics queue that command buffers are submitted to")
+							RHI_LOG(CRITICAL, "Failed to get the Vulkan device graphics queue that command buffers are submitted to")
 						}
 					}
 				}
@@ -3006,7 +3006,7 @@ namespace VulkanRhi
 			}
 
 			// Error!
-			RHI_LOG(mVulkanRhi.getContext(), CRITICAL, "Failed to find suitable Vulkan memory type")
+			RHI_LOG(CRITICAL, "Failed to find suitable Vulkan memory type")
 			return ~0u;
 		}
 
@@ -3630,7 +3630,7 @@ namespace VulkanRhi
 			else
 			{
 				// Error!
-				RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to begin Vulkan command buffer instance")
+				RHI_LOG(CRITICAL, "Failed to begin Vulkan command buffer instance")
 				return VK_NULL_HANDLE;
 			}
 		}
@@ -3659,13 +3659,13 @@ namespace VulkanRhi
 			if (vkQueueSubmit(vkQueue, 1, &vkSubmitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
 			{
 				// Error!
-				RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Vulkan queue submit failed")
+				RHI_LOG(CRITICAL, "Vulkan queue submit failed")
 				return;
 			}
 			if (vkQueueWaitIdle(vkQueue) != VK_SUCCESS)
 			{
 				// Error!
-				RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Vulkan Queue wait idle failed")
+				RHI_LOG(CRITICAL, "Vulkan Queue wait idle failed")
 				return;
 			}
 
@@ -3739,7 +3739,7 @@ namespace VulkanRhi
 			}
 			else
 			{
-				RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Unsupported Vulkan image layout transition")
+				RHI_LOG(CRITICAL, "Unsupported Vulkan image layout transition")
 			}
 
 			// Create Vulkan pipeline barrier command
@@ -3830,7 +3830,7 @@ namespace VulkanRhi
 				case VK_IMAGE_LAYOUT_MAX_ENUM:
 				default:
 					// Other source layouts aren't handled (yet)
-					RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Unsupported Vulkan image old layout transition")
+					RHI_LOG(CRITICAL, "Unsupported Vulkan image old layout transition")
 					break;
 			}
 
@@ -3891,7 +3891,7 @@ namespace VulkanRhi
 				case VK_IMAGE_LAYOUT_MAX_ENUM:
 				default:
 					// Other source layouts aren't handled (yet)
-					RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Unsupported Vulkan image new layout transition")
+					RHI_LOG(CRITICAL, "Unsupported Vulkan image new layout transition")
 					break;
 			}
 
@@ -3923,7 +3923,7 @@ namespace VulkanRhi
 			};
 			if (vkCreateBuffer(vkDevice, &vkBufferCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &vkBuffer) != VK_SUCCESS)
 			{
-				RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to create the Vulkan buffer")
+				RHI_LOG(CRITICAL, "Failed to create the Vulkan buffer")
 			}
 
 			// Allocate memory for the Vulkan buffer
@@ -3938,7 +3938,7 @@ namespace VulkanRhi
 			};
 			if (vkAllocateMemory(vkDevice, &vkMemoryAllocateInfo, vulkanRhi.getVkAllocationCallbacks(), &vkDeviceMemory) != VK_SUCCESS)
 			{
-				RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to allocate the Vulkan buffer memory")
+				RHI_LOG(CRITICAL, "Failed to allocate the Vulkan buffer memory")
 			}
 
 			// Bind and fill memory
@@ -3953,7 +3953,7 @@ namespace VulkanRhi
 				}
 				else
 				{
-					RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to map the Vulkan memory")
+					RHI_LOG(CRITICAL, "Failed to map the Vulkan memory")
 				}
 			}
 		}
@@ -4253,7 +4253,7 @@ namespace VulkanRhi
 				};
 				if (vkCreateImage(vkDevice, &vkImageCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &vkImage) != VK_SUCCESS)
 				{
-					RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to create the Vulkan image")
+					RHI_LOG(CRITICAL, "Failed to create the Vulkan image")
 				}
 			}
 
@@ -4269,11 +4269,11 @@ namespace VulkanRhi
 				};
 				if (vkAllocateMemory(vkDevice, &vkMemoryAllocateInfo, vulkanRhi.getVkAllocationCallbacks(), &vkDeviceMemory) != VK_SUCCESS)
 				{
-					RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to allocate the Vulkan memory")
+					RHI_LOG(CRITICAL, "Failed to allocate the Vulkan memory")
 				}
 				if (vkBindImageMemory(vkDevice, vkImage, vkDeviceMemory, 0) != VK_SUCCESS)
 				{
-					RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to bind the Vulkan image memory")
+					RHI_LOG(CRITICAL, "Failed to bind the Vulkan image memory")
 				}
 			}
 		}
@@ -4329,7 +4329,7 @@ namespace VulkanRhi
 			};
 			if (vkCreateImageView(vulkanRhi.getVulkanContext().getVkDevice(), &vkImageViewCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &vkImageView) != VK_SUCCESS)
 			{
-				RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to create Vulkan image view")
+				RHI_LOG(CRITICAL, "Failed to create Vulkan image view")
 			}
 		}
 
@@ -4608,7 +4608,7 @@ namespace VulkanRhi
 						};
 						if (vkCreateDescriptorSetLayout(vkDevice, &vkDescriptorSetLayoutCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &mVkDescriptorSetLayouts[rootParameterIndex]) != VK_SUCCESS)
 						{
-							RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to create the Vulkan descriptor set layout")
+							RHI_LOG(CRITICAL, "Failed to create the Vulkan descriptor set layout")
 						}
 						vkDescriptorSetLayouts.push_back(mVkDescriptorSetLayouts[rootParameterIndex]);
 					}
@@ -4628,7 +4628,7 @@ namespace VulkanRhi
 				};
 				if (vkCreatePipelineLayout(vkDevice, &vkPipelineLayoutCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &mVkPipelineLayout) != VK_SUCCESS)
 				{
-					RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to create the Vulkan pipeline layout")
+					RHI_LOG(CRITICAL, "Failed to create the Vulkan pipeline layout")
 				}
 			}
 
@@ -4705,7 +4705,7 @@ namespace VulkanRhi
 					};
 					if (vkCreateDescriptorPool(vkDevice, &VkDescriptorPoolCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &mVkDescriptorPool) != VK_SUCCESS)
 					{
-						RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to create the Vulkan descriptor pool")
+						RHI_LOG(CRITICAL, "Failed to create the Vulkan descriptor pool")
 					}
 				}
 			}
@@ -5377,7 +5377,7 @@ namespace VulkanRhi
 				};
 				if (vkCreateBufferView(vulkanRhi.getVulkanContext().getVkDevice(), &vkBufferViewCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &mVkBufferView) != VK_SUCCESS)
 				{
-					RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to create the Vulkan buffer view")
+					RHI_LOG(CRITICAL, "Failed to create the Vulkan buffer view")
 				}
 			}
 
@@ -7146,7 +7146,7 @@ namespace VulkanRhi
 			}
 			else
 			{
-				RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to create Vulkan sampler instance")
+				RHI_LOG(CRITICAL, "Failed to create Vulkan sampler instance")
 			}
 		}
 
@@ -7365,7 +7365,7 @@ namespace VulkanRhi
 			}
 			else
 			{
-				RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to create Vulkan render pass")
+				RHI_LOG(CRITICAL, "Failed to create Vulkan render pass")
 			}
 		}
 
@@ -7579,7 +7579,7 @@ namespace VulkanRhi
 			}
 			else
 			{
-				RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to create Vulkan query pool")
+				RHI_LOG(CRITICAL, "Failed to create Vulkan query pool")
 			}
 		}
 
@@ -7732,7 +7732,7 @@ namespace VulkanRhi
 			else
 			{
 				// Error!
-				RHI_LOG(vulkanRhi.getContext(), CRITICAL, "The swap chain failed to create the Vulkan presentation surface")
+				RHI_LOG(CRITICAL, "The swap chain failed to create the Vulkan presentation surface")
 			}
 		}
 
@@ -7952,7 +7952,7 @@ namespace VulkanRhi
 				if (vkQueueSubmit(vulkanContext.getGraphicsVkQueue(), 1, &vkSubmitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
 				{
 					// Error!
-					RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Vulkan queue submit failed")
+					RHI_LOG(CRITICAL, "Vulkan queue submit failed")
 					return;
 				}
 			}
@@ -7981,7 +7981,7 @@ namespace VulkanRhi
 					else
 					{
 						// Error!
-						RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to present Vulkan queue")
+						RHI_LOG(CRITICAL, "Failed to present Vulkan queue")
 						return;
 					}
 				}
@@ -8052,7 +8052,7 @@ namespace VulkanRhi
 			VkSurfaceCapabilitiesKHR vkSurfaceCapabilitiesKHR;
 			if (vkGetPhysicalDeviceSurfaceCapabilitiesKHR(vkPhysicalDevice, mVkSurfaceKHR, &vkSurfaceCapabilitiesKHR) != VK_SUCCESS)
 			{
-				RHI_LOG(context, CRITICAL, "Failed to get physical Vulkan device surface capabilities")
+				RHI_LOG( CRITICAL, "Failed to get physical Vulkan device surface capabilities")
 				return;
 			}
 
@@ -8067,12 +8067,12 @@ namespace VulkanRhi
 			// Validate Vulkan swap chain settings
 			if (-1 == static_cast<int>(desiredVkImageUsageFlags))
 			{
-				RHI_LOG(context, CRITICAL, "Invalid desired Vulkan image usage flags")
+				RHI_LOG( CRITICAL, "Invalid desired Vulkan image usage flags")
 				return;
 			}
 			if (VK_PRESENT_MODE_MAX_ENUM_KHR == desiredVkPresentModeKHR)
 			{
-				RHI_LOG(context, CRITICAL, "Invalid desired Vulkan presentation mode")
+				RHI_LOG( CRITICAL, "Invalid desired Vulkan presentation mode")
 				return;
 			}
 			if ((0 == desiredVkExtent2D.width) || (0 == desiredVkExtent2D.height))
@@ -8108,7 +8108,7 @@ namespace VulkanRhi
 				};
 				if (vkCreateSwapchainKHR(vkDevice, &vkSwapchainCreateInfoKHR, vulkanRhi.getVkAllocationCallbacks(), &newVkSwapchainKHR) != VK_SUCCESS)
 				{
-					RHI_LOG(context, CRITICAL, "Failed to create Vulkan swap chain")
+					RHI_LOG( CRITICAL, "Failed to create Vulkan swap chain")
 					return;
 				}
 				destroyVulkanSwapChain();
@@ -8128,13 +8128,13 @@ namespace VulkanRhi
 				uint32_t swapchainImageCount = 0;
 				if (vkGetSwapchainImagesKHR(vkDevice, mVkSwapchainKHR, &swapchainImageCount, nullptr) != VK_SUCCESS)
 				{
-					RHI_LOG(context, CRITICAL, "Failed to get Vulkan swap chain images")
+					RHI_LOG( CRITICAL, "Failed to get Vulkan swap chain images")
 					return;
 				}
 				std::vector<VkImage> vkImages(swapchainImageCount);
 				if (vkGetSwapchainImagesKHR(vkDevice, mVkSwapchainKHR, &swapchainImageCount, vkImages.data()) != VK_SUCCESS)
 				{
-					RHI_LOG(context, CRITICAL, "Failed to get Vulkan swap chain images")
+					RHI_LOG( CRITICAL, "Failed to get Vulkan swap chain images")
 					return;
 				}
 
@@ -8169,7 +8169,7 @@ namespace VulkanRhi
 						};
 						if (vkCreateFramebuffer(vkDevice, &vkFramebufferCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &swapChainBuffer.vkFramebuffer) != VK_SUCCESS)
 						{
-							RHI_LOG(context, CRITICAL, "Failed to create Vulkan framebuffer")
+							RHI_LOG( CRITICAL, "Failed to create Vulkan framebuffer")
 						}
 					}
 				}
@@ -8185,7 +8185,7 @@ namespace VulkanRhi
 				if ((vkCreateSemaphore(vkDevice, &vkSemaphoreCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &mImageAvailableVkSemaphore) != VK_SUCCESS) ||
 					(vkCreateSemaphore(vkDevice, &vkSemaphoreCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &mRenderingFinishedVkSemaphore) != VK_SUCCESS))
 				{
-					RHI_LOG(context, CRITICAL, "Failed to create Vulkan semaphore")
+					RHI_LOG( CRITICAL, "Failed to create Vulkan semaphore")
 				}
 			}
 
@@ -8253,7 +8253,7 @@ namespace VulkanRhi
 				else
 				{
 					// Error!
-					RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to acquire next Vulkan image from swap chain")
+					RHI_LOG(CRITICAL, "Failed to acquire next Vulkan image from swap chain")
 				}
 			}
 		}
@@ -8568,7 +8568,7 @@ namespace VulkanRhi
 			}
 			else
 			{
-				RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to create Vulkan framebuffer")
+				RHI_LOG(CRITICAL, "Failed to create Vulkan framebuffer")
 			}
 		}
 
@@ -10525,7 +10525,7 @@ namespace VulkanRhi
 			}
 			else
 			{
-				RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to create the Vulkan graphics pipeline")
+				RHI_LOG(CRITICAL, "Failed to create the Vulkan graphics pipeline")
 			}
 		}
 
@@ -10667,7 +10667,7 @@ namespace VulkanRhi
 			}
 			else
 			{
-				RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Failed to create the Vulkan compute pipeline")
+				RHI_LOG(CRITICAL, "Failed to create the Vulkan compute pipeline")
 			}
 		}
 
@@ -11049,7 +11049,7 @@ namespace VulkanRhi
 							case Rhi::ResourceType::TASK_SHADER:
 							case Rhi::ResourceType::MESH_SHADER:
 							case Rhi::ResourceType::COMPUTE_SHADER:
-								RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Invalid Vulkan RHI implementation resource type")
+								RHI_LOG(CRITICAL, "Invalid Vulkan RHI implementation resource type")
 								break;
 						}
 
@@ -11102,7 +11102,7 @@ namespace VulkanRhi
 					case Rhi::ResourceType::TASK_SHADER:
 					case Rhi::ResourceType::MESH_SHADER:
 					case Rhi::ResourceType::COMPUTE_SHADER:
-						RHI_LOG(vulkanRhi.getContext(), CRITICAL, "Invalid Vulkan RHI implementation resource type")
+						RHI_LOG(CRITICAL, "Invalid Vulkan RHI implementation resource type")
 						break;
 				}
 			}
@@ -11221,7 +11221,7 @@ namespace VulkanRhi
 			};
 			if (vkAllocateDescriptorSets(vulkanRhi.getVulkanContext().getVkDevice(), &vkDescriptorSetAllocateInfo, &vkDescriptorSet) != VK_SUCCESS)
 			{
-				RHI_LOG(context, CRITICAL, "Failed to allocate the Vulkan descriptor set")
+				RHI_LOG( CRITICAL, "Failed to allocate the Vulkan descriptor set")
 			}
 		}
 
@@ -11421,7 +11421,7 @@ namespace
 				}
 				else
 				{
-					RHI_LOG(static_cast<VulkanRhi::VulkanRhi&>(rhi).getContext(), CRITICAL, "Unsupported Vulkan texture resource type")
+					RHI_LOG(CRITICAL, "Unsupported Vulkan texture resource type")
 				}
 			}
 
@@ -11682,11 +11682,11 @@ namespace VulkanRhi
 				// Error!
 				if (numberOfCurrentResources > 1)
 				{
-					RHI_LOG(mContext, CRITICAL, "The Vulkan RHI implementation is going to be destroyed, but there are still %u resource instances left (memory leak)", numberOfCurrentResources)
+					RHI_LOG(CRITICAL, "The Vulkan RHI implementation is going to be destroyed, but there are still %u resource instances left (memory leak)", numberOfCurrentResources)
 				}
 				else
 				{
-					RHI_LOG(mContext, CRITICAL, "The Vulkan RHI implementation is going to be destroyed, but there is still one resource instance left (memory leak)")
+					RHI_LOG(CRITICAL, "The Vulkan RHI implementation is going to be destroyed, but there is still one resource instance left (memory leak)")
 				}
 
 				// Use debug output to show the current number of resource instances
@@ -11751,24 +11751,24 @@ namespace VulkanRhi
 		{
 			if (nullptr == mGraphicsRootSignature)
 			{
-				RHI_LOG(mContext, CRITICAL, "No Vulkan RHI implementation graphics root signature set")
+				RHI_LOG(CRITICAL, "No Vulkan RHI implementation graphics root signature set")
 				return;
 			}
 			const Rhi::RootSignature& rootSignature = mGraphicsRootSignature->getRootSignature();
 			if (rootParameterIndex >= rootSignature.numberOfParameters)
 			{
-				RHI_LOG(mContext, CRITICAL, "The Vulkan RHI implementation root parameter index is out of bounds")
+				RHI_LOG(CRITICAL, "The Vulkan RHI implementation root parameter index is out of bounds")
 				return;
 			}
 			const Rhi::RootParameter& rootParameter = rootSignature.parameters[rootParameterIndex];
 			if (Rhi::RootParameterType::DESCRIPTOR_TABLE != rootParameter.parameterType)
 			{
-				RHI_LOG(mContext, CRITICAL, "The Vulkan RHI implementation root parameter index doesn't reference a descriptor table")
+				RHI_LOG(CRITICAL, "The Vulkan RHI implementation root parameter index doesn't reference a descriptor table")
 				return;
 			}
 			if (nullptr == reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges))
 			{
-				RHI_LOG(mContext, CRITICAL, "The Vulkan RHI implementation descriptor ranges is a null pointer")
+				RHI_LOG(CRITICAL, "The Vulkan RHI implementation descriptor ranges is a null pointer")
 				return;
 			}
 		}
@@ -12133,24 +12133,24 @@ namespace VulkanRhi
 		{
 			if (nullptr == mComputeRootSignature)
 			{
-				RHI_LOG(mContext, CRITICAL, "No Vulkan RHI implementation compute root signature set")
+				RHI_LOG(CRITICAL, "No Vulkan RHI implementation compute root signature set")
 				return;
 			}
 			const Rhi::RootSignature& rootSignature = mComputeRootSignature->getRootSignature();
 			if (rootParameterIndex >= rootSignature.numberOfParameters)
 			{
-				RHI_LOG(mContext, CRITICAL, "The Vulkan RHI implementation root parameter index is out of bounds")
+				RHI_LOG(CRITICAL, "The Vulkan RHI implementation root parameter index is out of bounds")
 				return;
 			}
 			const Rhi::RootParameter& rootParameter = rootSignature.parameters[rootParameterIndex];
 			if (Rhi::RootParameterType::DESCRIPTOR_TABLE != rootParameter.parameterType)
 			{
-				RHI_LOG(mContext, CRITICAL, "The Vulkan RHI implementation root parameter index doesn't reference a descriptor table")
+				RHI_LOG(CRITICAL, "The Vulkan RHI implementation root parameter index doesn't reference a descriptor table")
 				return;
 			}
 			if (nullptr == reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges))
 			{
-				RHI_LOG(mContext, CRITICAL, "The Vulkan RHI implementation descriptor ranges is a null pointer")
+				RHI_LOG(CRITICAL, "The Vulkan RHI implementation descriptor ranges is a null pointer")
 				return;
 			}
 		}
@@ -12770,7 +12770,7 @@ namespace VulkanRhi
 		else
 		{
 			// Error!
-			RHI_LOG(getContext(), CRITICAL, "Failed to begin Vulkan command buffer instance")
+			RHI_LOG(CRITICAL, "Failed to begin Vulkan command buffer instance")
 			return false;
 		}
 	}
@@ -12816,7 +12816,7 @@ namespace VulkanRhi
 		if (vkEndCommandBuffer(getVulkanContext().getVkCommandBuffer()) != VK_SUCCESS)
 		{
 			// Error!
-			RHI_LOG(getContext(), CRITICAL, "Failed to end Vulkan command buffer instance")
+			RHI_LOG(CRITICAL, "Failed to end Vulkan command buffer instance")
 		}
 	}
 

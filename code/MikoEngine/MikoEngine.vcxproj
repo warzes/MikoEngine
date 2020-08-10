@@ -196,6 +196,7 @@
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Core\Logger.cpp" />
     <ClCompile Include="Render\DefaultAssert.cpp" />
+    <ClCompile Include="Render\DefaultLog.cpp" />
     <ClCompile Include="Render\Direct3D11Rhi.cpp" />
     <ClCompile Include="Render\Direct3D12Rhi.cpp" />
     <ClCompile Include="Render\NullRhi.cpp" />

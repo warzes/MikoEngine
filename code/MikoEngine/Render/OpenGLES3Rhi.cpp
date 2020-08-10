@@ -2008,7 +2008,7 @@ namespace OpenGLES3Rhi
 					}																																				\
 					else																																			\
 					{																																				\
-						RHI_LOG(mOpenGLES3Rhi.getContext(), CRITICAL, "Failed to locate the entry point \"%s\" within the OpenGL ES 3 shared library", #funcName)	\
+						RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the OpenGL ES 3 shared library", #funcName)	\
 						result = false;																																\
 					}																																				\
 				}
@@ -2295,17 +2295,17 @@ namespace OpenGLES3Rhi
 					}
 					else
 					{
-						RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, "Failed to load in the OpenGL ES 3 entry points")
+						RHI_LOG(CRITICAL, "Failed to load in the OpenGL ES 3 entry points")
 					}
 				}
 				else
 				{
-					RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, "Failed to load in the OpenGL ES 3 EGL entry points")
+					RHI_LOG(CRITICAL, "Failed to load in the OpenGL ES 3 EGL entry points")
 				}
 			}
 			else
 			{
-				RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, "Failed to load in the OpenGL ES 3 shared libraries")
+				RHI_LOG(CRITICAL, "Failed to load in the OpenGL ES 3 shared libraries")
 			}
 		}
 
@@ -2573,7 +2573,7 @@ namespace OpenGLES3Rhi
 							wchar_t moduleFilename[MAX_PATH];																																		\
 							moduleFilename[0] = '\0';																																				\
 							::GetModuleFileNameW(static_cast<HMODULE>(mEGLSharedLibrary), moduleFilename, MAX_PATH);																				\
-							RHI_LOG(mOpenGLES3Rhi.getContext(), CRITICAL, "Failed to locate the OpenGL ES 3 entry point \"%s\" within the EGL shared library \"%s\"", #funcName, moduleFilename)	\
+							RHI_LOG(CRITICAL, "Failed to locate the OpenGL ES 3 entry point \"%s\" within the EGL shared library \"%s\"", #funcName, moduleFilename)	\
 							result = false;																																							\
 						}																																											\
 					}
@@ -2598,7 +2598,7 @@ namespace OpenGLES3Rhi
 						else																																									\
 						{																																										\
 							const char* libraryName = "unknown";																																\
-							RHI_LOG(mOpenGLES3Rhi.getContext(), CRITICAL, "Failed to locate the OpenGL ES 3 entry point \"%s\" within the EGL shared library \"%s\"", #funcName, libraryName)	\
+							RHI_LOG(CRITICAL, "Failed to locate the OpenGL ES 3 entry point \"%s\" within the EGL shared library \"%s\"", #funcName, libraryName)	\
 							result = false;																																						\
 						}																																										\
 					}
@@ -2629,7 +2629,7 @@ namespace OpenGLES3Rhi
 								libraryName = linkMap->l_name;																																	\
 							}																																									\
 							libraryName = libraryName; /* To avoid -Wunused-but-set-variable warning when RHI_LOG is defined empty */															\
-							RHI_LOG(mOpenGLES3Rhi.getContext(), CRITICAL, "Failed to locate the OpenGL ES 3 entry point \"%s\" within the EGL shared library \"%s\"", #funcName, libraryName)	\
+							RHI_LOG(CRITICAL, "Failed to locate the OpenGL ES 3 entry point \"%s\" within the EGL shared library \"%s\"", #funcName, libraryName)	\
 							result = false;																																						\
 						}																																										\
 					}
@@ -2721,7 +2721,7 @@ namespace OpenGLES3Rhi
 						}																																					\
 						else																																				\
 						{																																					\
-							RHI_LOG(mOpenGLES3Rhi.getContext(), CRITICAL, "Failed to locate the OpenGL ES 3 entry point \"%s\" within the GLES shared library", #funcName)	\
+							RHI_LOG(CRITICAL, "Failed to locate the OpenGL ES 3 entry point \"%s\" within the GLES shared library", #funcName)	\
 							result = false;																																	\
 						}																																					\
 					}
@@ -2971,7 +2971,7 @@ namespace OpenGLES3Rhi
 					glGetShaderInfoLog(openGLES3Shader, informationLength, nullptr, informationLog);
 
 					// Output the debug string
-					if (openGLES3Rhi.getContext().getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
+					if (GetLog().print(DefaultLog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
 					{
 						SE_DEBUG_BREAK;
 					}
@@ -7583,7 +7583,7 @@ namespace OpenGLES3Rhi
 						if (&openGLES3Rhi != &(*colorTexture)->getRhi())
 						{
 							// Output an error message and keep on going in order to keep a reasonable behaviour even in case on an error
-							RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, "OpenGL ES 3 error: The given color texture at index %u is owned by another RHI instance", colorTexture - mColorTextures)
+							RHI_LOG(CRITICAL, "OpenGL ES 3 error: The given color texture at index %u is owned by another RHI instance", colorTexture - mColorTextures)
 
 							// Continue, there's no point in trying to do any error handling in here
 							continue;
@@ -7651,7 +7651,7 @@ namespace OpenGLES3Rhi
 						case Rhi::ResourceType::MESH_SHADER:
 						case Rhi::ResourceType::COMPUTE_SHADER:
 						default:
-							RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, "The type of the given color texture at index %ld is not supported by the OpenGL ES 3 RHI implementation", colorTexture - mColorTextures)
+							RHI_LOG(CRITICAL, "The type of the given color texture at index %ld is not supported by the OpenGL ES 3 RHI implementation", colorTexture - mColorTextures)
 							break;
 					}
 				}
@@ -7725,7 +7725,7 @@ namespace OpenGLES3Rhi
 					case Rhi::ResourceType::MESH_SHADER:
 					case Rhi::ResourceType::COMPUTE_SHADER:
 					default:
-						RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, "The type of the given depth stencil texture is not supported by the OpenGL ES 3 RHI implementation")
+						RHI_LOG(CRITICAL, "The type of the given depth stencil texture is not supported by the OpenGL ES 3 RHI implementation")
 						break;
 				}
 			}
@@ -7735,44 +7735,44 @@ namespace OpenGLES3Rhi
 			switch (openGLES3Status)
 			{
 				case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
-					RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, "OpenGL ES 3 error: Not all framebuffer attachment points are framebuffer attachment complete (\"GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT\")")
+					RHI_LOG(CRITICAL, "OpenGL ES 3 error: Not all framebuffer attachment points are framebuffer attachment complete (\"GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT\")")
 					break;
 
 				case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
-					RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, "OpenGL ES 3 error: No images are attached to the framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT\")")
+					RHI_LOG(CRITICAL, "OpenGL ES 3 error: No images are attached to the framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT\")")
 					break;
 
 			// Not supported by OpenGL ES 3
 			//	case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
-			//		RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, "OpenGL ES 3 error: Incomplete draw buffer framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER\")")
+			//		RHI_LOG(CRITICAL, "OpenGL ES 3 error: Incomplete draw buffer framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER\")")
 			//		break;
 
 			// Not supported by OpenGL ES 3
 			//	case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
-			//		RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, "OpenGL ES 3 error: Incomplete read buffer framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER\")")
+			//		RHI_LOG(CRITICAL, "OpenGL ES 3 error: Incomplete read buffer framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER\")")
 			//		break;
 
 				case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
-					RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, "OpenGL ES 3 error: Incomplete multisample framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE\")")
+					RHI_LOG(CRITICAL, "OpenGL ES 3 error: Incomplete multisample framebuffer (\"GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE\")")
 					break;
 
 				case GL_FRAMEBUFFER_UNDEFINED:
-					RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, "OpenGL ES 3 error: Undefined framebuffer (\"GL_FRAMEBUFFER_UNDEFINED\")")
+					RHI_LOG(CRITICAL, "OpenGL ES 3 error: Undefined framebuffer (\"GL_FRAMEBUFFER_UNDEFINED\")")
 					break;
 
 				case GL_FRAMEBUFFER_UNSUPPORTED:
-					RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, "OpenGL ES 3 error: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions (\"GL_FRAMEBUFFER_UNSUPPORTED\")")
+					RHI_LOG(CRITICAL, "OpenGL ES 3 error: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions (\"GL_FRAMEBUFFER_UNSUPPORTED\")")
 					break;
 
 				// Not supported by OpenGL ES 3
 				case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS:
-					RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, "OpenGL ES 3 error: Not all attached images have the same width and height (\"GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS\")")
+					RHI_LOG(CRITICAL, "OpenGL ES 3 error: Not all attached images have the same width and height (\"GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS\")")
 					break;
 
 				// Not supported by OpenGL ES 3
 				// OpenGL: From "GL_EXT_framebuffer_object" (should no longer matter, should)
 			//	case GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT:
-			//		RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, "OpenGL ES 3 error: Incomplete formats framebuffer object (\"GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT\")")
+			//		RHI_LOG(CRITICAL, "OpenGL ES 3 error: Incomplete formats framebuffer object (\"GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT\")")
 			//		break;
 
 				default:
@@ -8312,7 +8312,7 @@ namespace OpenGLES3Rhi
 					glGetProgramInfoLog(mOpenGLES3Program, informationLength, nullptr, informationLog);
 
 					// Output the debug string
-					RHI_LOG(openGLES3Rhi.getContext(), CRITICAL, informationLog)
+					RHI_LOG(CRITICAL, informationLog)
 
 					// Cleanup information memory
 					RHI_FREE(context, informationLog);
@@ -9110,7 +9110,7 @@ namespace
 
 			void DrawMeshTasks(const void*, Rhi::IRhi& rhi)
 			{
-				RHI_LOG(static_cast<OpenGLES3Rhi::OpenGLES3Rhi&>(rhi).getContext(), CRITICAL, "OpenGL ES 3 doesn't support mesh shaders")
+				RHI_LOG(CRITICAL, "OpenGL ES 3 doesn't support mesh shaders")
 			}
 
 			//[-------------------------------------------------------]
@@ -9118,22 +9118,22 @@ namespace
 			//[-------------------------------------------------------]
 			void SetComputeRootSignature(const void*, Rhi::IRhi& rhi)
 			{
-				RHI_LOG(static_cast<OpenGLES3Rhi::OpenGLES3Rhi&>(rhi).getContext(), CRITICAL, "OpenGL ES 3 doesn't support compute root signature")
+				RHI_LOG(CRITICAL, "OpenGL ES 3 doesn't support compute root signature")
 			}
 
 			void SetComputePipelineState(const void*, Rhi::IRhi& rhi)
 			{
-				RHI_LOG(static_cast<OpenGLES3Rhi::OpenGLES3Rhi&>(rhi).getContext(), CRITICAL, "OpenGL ES 3 doesn't support compute pipeline state")
+				RHI_LOG(CRITICAL, "OpenGL ES 3 doesn't support compute pipeline state")
 			}
 
 			void SetComputeResourceGroup(const void*, Rhi::IRhi& rhi)
 			{
-				RHI_LOG(static_cast<OpenGLES3Rhi::OpenGLES3Rhi&>(rhi).getContext(), CRITICAL, "OpenGL ES 3 doesn't support compute resource group")
+				RHI_LOG(CRITICAL, "OpenGL ES 3 doesn't support compute resource group")
 			}
 
 			void DispatchCompute(const void*, Rhi::IRhi& rhi)
 			{
-				RHI_LOG(static_cast<OpenGLES3Rhi::OpenGLES3Rhi&>(rhi).getContext(), CRITICAL, "OpenGL ES 3 doesn't support compute dispatch")
+				RHI_LOG(CRITICAL, "OpenGL ES 3 doesn't support compute dispatch")
 			}
 
 			//[-------------------------------------------------------]
@@ -9148,7 +9148,7 @@ namespace
 				}
 				else
 				{
-					RHI_LOG(static_cast<OpenGLES3Rhi::OpenGLES3Rhi&>(rhi).getContext(), CRITICAL, "Unsupported OpenGL ES 3 texture resource type")
+					RHI_LOG(CRITICAL, "Unsupported OpenGL ES 3 texture resource type")
 				}
 			}
 
@@ -9415,11 +9415,11 @@ namespace OpenGLES3Rhi
 				// Error!
 				if (numberOfCurrentResources > 1)
 				{
-					RHI_LOG(mContext, CRITICAL, "The OpenGL ES 3 RHI implementation is going to be destroyed, but there are still %lu resource instances left (memory leak)", numberOfCurrentResources)
+					RHI_LOG(CRITICAL, "The OpenGL ES 3 RHI implementation is going to be destroyed, but there are still %lu resource instances left (memory leak)", numberOfCurrentResources)
 				}
 				else
 				{
-					RHI_LOG(mContext, CRITICAL, "The OpenGL ES 3 RHI implementation is going to be destroyed, but there is still one resource instance left (memory leak)")
+					RHI_LOG(CRITICAL, "The OpenGL ES 3 RHI implementation is going to be destroyed, but there is still one resource instance left (memory leak)")
 				}
 
 				// Use debug output to show the current number of resource instances
@@ -9495,24 +9495,24 @@ namespace OpenGLES3Rhi
 		{
 			if (nullptr == mGraphicsRootSignature)
 			{
-				RHI_LOG(mContext, CRITICAL, "No OpenGL ES 3 RHI implementation graphics root signature set")
+				RHI_LOG(CRITICAL, "No OpenGL ES 3 RHI implementation graphics root signature set")
 				return;
 			}
 			const Rhi::RootSignature& rootSignature = mGraphicsRootSignature->getRootSignature();
 			if (rootParameterIndex >= rootSignature.numberOfParameters)
 			{
-				RHI_LOG(mContext, CRITICAL, "The OpenGL ES 3 RHI implementation root parameter index is out of bounds")
+				RHI_LOG(CRITICAL, "The OpenGL ES 3 RHI implementation root parameter index is out of bounds")
 				return;
 			}
 			const Rhi::RootParameter& rootParameter = rootSignature.parameters[rootParameterIndex];
 			if (Rhi::RootParameterType::DESCRIPTOR_TABLE != rootParameter.parameterType)
 			{
-				RHI_LOG(mContext, CRITICAL, "The OpenGL ES 3 RHI implementation root parameter index doesn't reference a descriptor table")
+				RHI_LOG(CRITICAL, "The OpenGL ES 3 RHI implementation root parameter index doesn't reference a descriptor table")
 				return;
 			}
 			if (nullptr == reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges))
 			{
-				RHI_LOG(mContext, CRITICAL, "The OpenGL ES 3 RHI implementation descriptor ranges is a null pointer")
+				RHI_LOG(CRITICAL, "The OpenGL ES 3 RHI implementation descriptor ranges is a null pointer")
 				return;
 			}
 		}
@@ -9655,27 +9655,27 @@ namespace OpenGLES3Rhi
 							}
 
 							case Rhi::ShaderVisibility::TESSELLATION_CONTROL:
-								RHI_LOG(mContext, CRITICAL, "OpenGL ES 3 has no tessellation control shader support (hull shader in Direct3D terminology)")
+								RHI_LOG(CRITICAL, "OpenGL ES 3 has no tessellation control shader support (hull shader in Direct3D terminology)")
 								break;
 
 							case Rhi::ShaderVisibility::TESSELLATION_EVALUATION:
-								RHI_LOG(mContext, CRITICAL, "OpenGL ES 3 has no tessellation evaluation shader support (domain shader in Direct3D terminology)")
+								RHI_LOG(CRITICAL, "OpenGL ES 3 has no tessellation evaluation shader support (domain shader in Direct3D terminology)")
 								break;
 
 							case Rhi::ShaderVisibility::GEOMETRY:
-								RHI_LOG(mContext, CRITICAL, "OpenGL ES 3 has no geometry shader support")
+								RHI_LOG(CRITICAL, "OpenGL ES 3 has no geometry shader support")
 								break;
 
 							case Rhi::ShaderVisibility::TASK:
-								RHI_LOG(mContext, CRITICAL, "OpenGL ES 3 has no task shader support")
+								RHI_LOG(CRITICAL, "OpenGL ES 3 has no task shader support")
 								break;
 
 							case Rhi::ShaderVisibility::MESH:
-								RHI_LOG(mContext, CRITICAL, "OpenGL ES 3 has no mesh shader support")
+								RHI_LOG(CRITICAL, "OpenGL ES 3 has no mesh shader support")
 								break;
 
 							case Rhi::ShaderVisibility::COMPUTE:
-								RHI_LOG(mContext, CRITICAL, "OpenGL ES 3 has no compute shader support")
+								RHI_LOG(CRITICAL, "OpenGL ES 3 has no compute shader support")
 								break;
 						}
 						break;
@@ -9706,7 +9706,7 @@ namespace OpenGLES3Rhi
 					case Rhi::ResourceType::TASK_SHADER:
 					case Rhi::ResourceType::MESH_SHADER:
 					case Rhi::ResourceType::COMPUTE_SHADER:
-						RHI_LOG(mContext, CRITICAL, "Invalid OpenGL ES 3 RHI implementation resource type")
+						RHI_LOG(CRITICAL, "Invalid OpenGL ES 3 RHI implementation resource type")
 						break;
 				}
 			}
@@ -10902,7 +10902,7 @@ namespace OpenGLES3Rhi
 			}
 
 			// Debug type to string
-			Rhi::ILog::Type logType = Rhi::ILog::Type::CRITICAL;
+			DefaultLog::Type logType = DefaultLog::Type::CRITICAL;
 			char debugType[25 + 1]{0};	// +1 for terminating zero
 			switch (type)
 			{
@@ -10911,7 +10911,7 @@ namespace OpenGLES3Rhi
 					break;
 
 				case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR_KHR:
-					logType = Rhi::ILog::Type::COMPATIBILITY_WARNING;
+					logType = DefaultLog::Type::COMPATIBILITY_WARNING;
 					strncpy(debugType, "Deprecated behavior", 25);
 					break;
 
@@ -10920,12 +10920,12 @@ namespace OpenGLES3Rhi
 					break;
 
 				case GL_DEBUG_TYPE_PORTABILITY_KHR:
-					logType = Rhi::ILog::Type::COMPATIBILITY_WARNING;
+					logType = DefaultLog::Type::COMPATIBILITY_WARNING;
 					strncpy(debugType, "Portability", 25);
 					break;
 
 				case GL_DEBUG_TYPE_PERFORMANCE_KHR:
-					logType = Rhi::ILog::Type::PERFORMANCE_WARNING;
+					logType = DefaultLog::Type::PERFORMANCE_WARNING;
 					strncpy(debugType, "Performance", 25);
 					break;
 
@@ -10980,7 +10980,7 @@ namespace OpenGLES3Rhi
 			}
 
 			// Print into log
-			if (static_cast<const OpenGLES3Rhi*>(userParam)->getContext().getLog().print(logType, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), "OpenGL ES 3 debug message\tSource:\"%s\"\tType:\"%s\"\tID:\"%u\"\tSeverity:\"%s\"\tMessage:\"%s\"", debugSource, debugType, id, debugSeverity, message))
+			if (GetLog().print(logType, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), "OpenGL ES 3 debug message\tSource:\"%s\"\tType:\"%s\"\tID:\"%u\"\tSeverity:\"%s\"\tMessage:\"%s\"", debugSource, debugType, id, debugSeverity, message))
 			{
 				SE_DEBUG_BREAK;
 			}

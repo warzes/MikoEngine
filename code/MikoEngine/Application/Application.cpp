@@ -48,10 +48,9 @@ int Application::Run(int argc, const char *argv[])
 	if ( !init_base(argc, argv) )
 		return 1;
 
-	Rhi::DefaultLog defaultLog;
 	Rhi::DefaultAllocator defaultAllocator;
 #if SE_PLATFORM_WINDOWS
-	Rhi::Context rhiContext(defaultLog, defaultAllocator, (handle)glfwNativeWindowHandle(m_window));
+	Rhi::Context rhiContext(defaultAllocator, (handle)glfwNativeWindowHandle(m_window));
 	const bool loadRhiApiSharedLibrary = false;
 #elif LINUX
 	// Under Linux the OpenGL library interacts with the library from X11 so we need to load the library ourself instead letting it be loaded by the RHI instance
