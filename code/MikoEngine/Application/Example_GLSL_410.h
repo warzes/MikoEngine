@@ -1,7 +1,7 @@
 //[-------------------------------------------------------]
 //[ Shader start                                          ]
 //[-------------------------------------------------------]
-#ifdef RHI_OPENGL
+#ifdef SE_OPENGL
 if (rhi->getNameId() == Rhi::NameId::OPENGL)
 {
 

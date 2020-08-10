@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Rhi.h"
 
-#if RHI_DIRECT3D12
+#if SE_DIRECT3D12
 
 // Set Windows version to Windows Vista (0x0600), we don't support Windows XP (0x0501)
 #ifdef WINVER
@@ -3610,7 +3610,7 @@ namespace Direct3D12Rhi
 	*  @brief
 	*    Debug break on execution failure
 	*/
-	#define FAILED_DEBUG_BREAK(toExecute) if (FAILED(toExecute)) { DEBUG_BREAK; }
+	#define FAILED_DEBUG_BREAK(toExecute) if (FAILED(toExecute)) { SE_DEBUG_BREAK; }
 #else
 	/*
 	*  @brief
@@ -4752,7 +4752,7 @@ namespace Direct3D12Rhi
 			{
 				if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), static_cast<char*>(errorD3dBlob->GetBufferPointer())))
 				{
-					DEBUG_BREAK;
+					SE_DEBUG_BREAK;
 				}
 				errorD3dBlob->Release();
 			}
@@ -8748,7 +8748,7 @@ namespace Direct3D12Rhi
 			}
 
 			// Error!
-			return NULL_HANDLE;
+			return SE_NULL_HANDLE;
 		}
 
 		inline virtual void setVerticalSynchronizationInterval(uint32_t synchronizationInterval) override
@@ -12490,7 +12490,7 @@ namespace Direct3D12Rhi
 			mRenderTarget = nullptr;
 		}
 
-		#ifdef RHI_STATISTICS
+		#ifdef SE_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
 			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
@@ -13495,7 +13495,7 @@ namespace Direct3D12Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, renderPass)
-		RHI_ASSERT(mContext, NULL_HANDLE != windowHandle.nativeWindowHandle, "Direct3D 12: The provided native window handle must not be a null handle")
+		RHI_ASSERT(mContext, SE_NULL_HANDLE != windowHandle.nativeWindowHandle, "Direct3D 12: The provided native window handle must not be a null handle")
 
 		// Create the swap chain
 		return RHI_NEW(mContext, SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -14324,4 +14324,4 @@ DIRECT3D12RHI_FUNCTION_EXPORT Rhi::IRhi* createDirect3D12RhiInstance(const Rhi::
 }
 #undef DIRECT3D12RHI_FUNCTION_EXPORT
 
-#endif // RHI_DIRECT3D12
+#endif // SE_DIRECT3D12

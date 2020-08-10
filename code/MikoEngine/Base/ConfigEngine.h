@@ -8,6 +8,7 @@
 #endif
 
 // TODO:
+#define SE_RHINULL 1
 #define SE_OPENGL 1
 #define SE_OPENGLES 1
 #define SE_VULKAN 1
@@ -17,4 +18,5 @@
 // Set "SE_OPENGL_GLSLTOSPIRV" as preprocessor definition when building this library to add support for compiling GLSL into SPIR-V
 #define SE_OPENGL_GLSLTOSPIRV 1
 
+// Set "SE_STATISTICS" as preprocessor definition in order to enable the gathering of statistics (tiny binary size and tiny negative performance impact)
 #define SE_STATISTICS 1

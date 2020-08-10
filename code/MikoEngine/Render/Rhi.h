@@ -1,19 +1,4 @@
 /** Amalgamated/unity build rendering hardware interface (RHI)*/
-
-#define RHI_DIRECT3D11 1
-#define RHI_DIRECT3D12 1
-#define RHI_OPENGL 1
-#define RHI_OPENGLES3 1
-#define RHI_VULKAN 1
-#define RHI_NULL 1
-
-// Set "RHI_STATISTICS" as preprocessor definition in order to enable the gathering of statistics (tiny binary size and tiny negative performance impact)
-#define RHI_STATISTICS
-
-#if SE_PLATFORM_WINDOWS && !defined(_WIN32)
-#	define _WIN32
-#endif
-
 #if SE_ARCH_64BIT
 #	define ARCHITECTURE_X64
 #endif
@@ -25,43 +10,8 @@
 #pragma once
 
 //[-------------------------------------------------------]
-//[ C++ compiler keywords                                 ]
-//[-------------------------------------------------------]
-#ifndef NULL_HANDLE
-#define NULL_HANDLE 0
-#endif
-#ifdef _WIN32
-	#define FORCEINLINE __forceinline
-	#define RESTRICT __restrict
-	#define RESTRICT_RETURN __restrict
-	// No operation macro ("_asm nop"/"__nop()")
-	#define NOP __nop()
-	#define DEBUG_BREAK __debugbreak()
-#elif LINUX
-	#define FORCEINLINE __attribute__((always_inline))
-	#define RESTRICT __restrict__
-	#define RESTRICT_RETURN
-// No operation macro ("_asm nop"/"__nop()")
-	#define NOP asm ("nop");
-	#define DEBUG_BREAK __builtin_trap()
-#endif
-
-//[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-// Disable warnings in external headers, we can't fix them
-SE_PRAGMA_WARNING_PUSH
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'return': conversion from 'int' to 'std::char_traits<wchar_t>::int_type', signed/unsigned mismatch
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4574)	// warning C4574: '_HAS_ITERATOR_DEBUGGING' is defined to be '0': did you mean to use '#if _HAS_ITERATOR_DEBUGGING'?
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4625)	// warning C4625: 'std::codecvt_base': copy constructor was implicitly defined as deleted
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4626)	// warning C4626: 'std::codecvt_base': assignment operator was implicitly defined as deleted
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668: '_M_HYBRID_X86_ARM64' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4987)	// warning C4987: nonstandard extension used: 'throw (...)'
-	#include <new>			// For placement new
-	#include <cmath>
-	#include <string.h>		// For "strcpy()"
-	#include <inttypes.h>	// For uint32_t, uint64_t etc.
-SE_PRAGMA_WARNING_POP
 #ifdef RHI_DEBUG
 	#include <cassert>
 	#define ASSERT(expression, message) assert((expression) && message);	// TODO(co) "RHI_ASSERT()" should be used everywhere
@@ -100,7 +50,7 @@ SE_PRAGMA_WARNING_POP
 	*/
 	#define RHI_RESOURCE_DEBUG_PASS_PARAMETER
 #endif
-#ifdef RHI_STATISTICS
+#ifdef SE_STATISTICS
 	// Disable warnings in external headers, we can't fix them
 	SE_PRAGMA_WARNING_PUSH
 		SE_PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'return': conversion from 'int' to 'std::char_traits<wchar_t>::int_type', signed/unsigned mismatch
@@ -113,24 +63,7 @@ SE_PRAGMA_WARNING_POP
 		#include <atomic>	// For "std::atomic<>"
 	SE_PRAGMA_WARNING_POP
 #endif
-#ifdef _WIN32
-	#include <intrin.h>	// For "__nop()"
-#endif
-#ifdef LINUX
-	// Copied from "Xlib.h"
-	struct _XDisplay;
 
-	// Copied from "wayland-client.h"
-	struct wl_display;
-	struct wl_surface;
-#endif
-
-
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
 namespace Rhi
 {
 	class ILog;
@@ -198,7 +131,7 @@ namespace Rhi
 	//[-------------------------------------------------------]
 	//[ Rhi/PlatformTypes.h                                   ]
 	//[-------------------------------------------------------]
-	#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 		#ifdef ARCHITECTURE_X64
 			typedef unsigned __int64 handle;	// Replacement for nasty Microsoft Windows stuff leading to header chaos
 		#else
@@ -588,7 +521,7 @@ namespace Rhi
 		{ \
 			if ((context).getLog().print(Rhi::ILog::Type::type, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), format, ##__VA_ARGS__)) \
 			{ \
-				DEBUG_BREAK; \
+				SE_DEBUG_BREAK; \
 			} \
 		} while (0);
 	#define RHI_LOG_ONCE(context, type, format, ...) \
@@ -600,7 +533,7 @@ namespace Rhi
 				loggedOnce = true; \
 				if ((context).getLog().print(Rhi::ILog::Type::type, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), format, ##__VA_ARGS__)) \
 				{ \
-					DEBUG_BREAK; \
+					SE_DEBUG_BREAK; \
 				} \
 			} \
 		} while (0);
@@ -676,7 +609,7 @@ namespace Rhi
 			{ \
 				if (!(expression) && (context).getAssert().handleAssert(#expression, __FILE__, static_cast<uint32_t>(__LINE__), format, ##__VA_ARGS__)) \
 				{ \
-					DEBUG_BREAK; \
+					SE_DEBUG_BREAK; \
 				} \
 			} while (0);
 		#define RHI_ASSERT_ONCE(context, expression, format, ...) \
@@ -688,7 +621,7 @@ namespace Rhi
 					loggedOnce = true; \
 					if ((context).getAssert().handleAssert(#expression, __FILE__, static_cast<uint32_t>(__LINE__), format, ##__VA_ARGS__)) \
 					{ \
-						DEBUG_BREAK; \
+						SE_DEBUG_BREAK; \
 					} \
 				} \
 			} while (0);
@@ -3243,7 +3176,7 @@ namespace Rhi
 		*  @brief
 		*    Default constructor
 		*/
-		FORCEINLINE RefCount() :
+		SE_FORCEINLINE RefCount() :
 			mRefCount(0)
 		{}
 
@@ -3261,7 +3194,7 @@ namespace Rhi
 		*  @return
 		*    Pointer to the reference counter's object, never a null pointer!
 		*/
-		[[nodiscard]] FORCEINLINE const AType* getPointer() const
+		[[nodiscard]] SE_FORCEINLINE const AType* getPointer() const
 		{
 			return static_cast<const AType*>(this);
 		}
@@ -3273,7 +3206,7 @@ namespace Rhi
 		*  @return
 		*    Pointer to the reference counter's object, never a null pointer!
 		*/
-		[[nodiscard]] FORCEINLINE AType* getPointer()
+		[[nodiscard]] SE_FORCEINLINE AType* getPointer()
 		{
 			return static_cast<AType*>(this);
 		}
@@ -3285,7 +3218,7 @@ namespace Rhi
 		*  @return
 		*    Current reference count
 		*/
-		FORCEINLINE uint32_t addReference()
+		SE_FORCEINLINE uint32_t addReference()
 		{
 			// Increment reference count
 			++mRefCount;
@@ -3304,7 +3237,7 @@ namespace Rhi
 		*  @note
 		*    - When the last reference was released, the instance is destroyed automatically
 		*/
-		FORCEINLINE uint32_t releaseReference()
+		SE_FORCEINLINE uint32_t releaseReference()
 		{
 			// Decrement reference count
 			if (mRefCount > 1)
@@ -3332,7 +3265,7 @@ namespace Rhi
 		*  @return
 		*    Current reference count
 		*/
-		[[nodiscard]] FORCEINLINE uint32_t getRefCount() const
+		[[nodiscard]] SE_FORCEINLINE uint32_t getRefCount() const
 		{
 			// Return current reference count
 			return mRefCount;
@@ -3372,7 +3305,7 @@ namespace Rhi
 		*  @brief
 		*    Default constructor
 		*/
-		FORCEINLINE SmartRefCount() :
+		SE_FORCEINLINE SmartRefCount() :
 			mPtr(nullptr)
 		{}
 
@@ -3383,7 +3316,7 @@ namespace Rhi
 		*  @param[in] ptr
 		*    Direct pointer to initialize with, can be a null pointer
 		*/
-		FORCEINLINE SmartRefCount(AType* ptr) :
+		SE_FORCEINLINE SmartRefCount(AType* ptr) :
 			mPtr(nullptr)
 		{
 			setPtr(ptr);
@@ -3396,7 +3329,7 @@ namespace Rhi
 		*  @param[in] ptr
 		*    Smart pointer to initialize with
 		*/
-		FORCEINLINE SmartRefCount(const SmartRefCount<AType>& ptr) :
+		SE_FORCEINLINE SmartRefCount(const SmartRefCount<AType>& ptr) :
 			mPtr(nullptr)
 		{
 			setPtr(ptr.getPtr());
@@ -3421,7 +3354,7 @@ namespace Rhi
 		*  @return
 		*    Reference to the smart pointer
 		*/
-		FORCEINLINE SmartRefCount<AType>& operator =(AType* ptr)
+		SE_FORCEINLINE SmartRefCount<AType>& operator =(AType* ptr)
 		{
 			if (getPointer() != ptr)
 			{
@@ -3440,7 +3373,7 @@ namespace Rhi
 		*  @return
 		*    Reference to the smart pointer
 		*/
-		FORCEINLINE SmartRefCount<AType>& operator =(const SmartRefCount<AType>& ptr)
+		SE_FORCEINLINE SmartRefCount<AType>& operator =(const SmartRefCount<AType>& ptr)
 		{
 			if (getPointer() != ptr.getPointer())
 			{
@@ -3456,7 +3389,7 @@ namespace Rhi
 		*  @return
 		*    Pointer to the object, can be a null pointer
 		*/
-		[[nodiscard]] FORCEINLINE AType* getPointer() const
+		[[nodiscard]] SE_FORCEINLINE AType* getPointer() const
 		{
 			return (nullptr != mPtr) ? static_cast<AType*>(mPtr->getPointer()) : nullptr;
 		}
@@ -3468,7 +3401,7 @@ namespace Rhi
 		*  @return
 		*    Pointer to the object, can be a null pointer
 		*/
-		[[nodiscard]] FORCEINLINE AType* operator ->() const
+		[[nodiscard]] SE_FORCEINLINE AType* operator ->() const
 		{
 			return getPointer();
 		}
@@ -3480,7 +3413,7 @@ namespace Rhi
 		*  @return
 		*    Pointer to the object, can be a null pointer
 		*/
-		[[nodiscard]] FORCEINLINE operator AType*() const
+		[[nodiscard]] SE_FORCEINLINE operator AType*() const
 		{
 			return getPointer();
 		}
@@ -3492,7 +3425,7 @@ namespace Rhi
 		*  @return
 		*    "true" if the pointer is not a null pointer
 		*/
-		[[nodiscard]] FORCEINLINE bool operator !() const
+		[[nodiscard]] SE_FORCEINLINE bool operator !() const
 		{
 			return (nullptr == getPointer());
 		}
@@ -3507,7 +3440,7 @@ namespace Rhi
 		*  @return
 		*    "true" if the two pointers are equal
 		*/
-		[[nodiscard]] FORCEINLINE bool operator ==(AType* ptr) const
+		[[nodiscard]] SE_FORCEINLINE bool operator ==(AType* ptr) const
 		{
 			return (getPointer() == ptr);
 		}
@@ -3522,7 +3455,7 @@ namespace Rhi
 		*  @return
 		*    "true" if the two pointers are equal
 		*/
-		[[nodiscard]] FORCEINLINE bool operator ==(const SmartRefCount<AType>& ptr) const
+		[[nodiscard]] SE_FORCEINLINE bool operator ==(const SmartRefCount<AType>& ptr) const
 		{
 			return (getPointer() == ptr.getPointer());
 		}
@@ -3537,7 +3470,7 @@ namespace Rhi
 		*  @return
 		*    "true" if the two pointers are not equal
 		*/
-		[[nodiscard]] FORCEINLINE bool operator !=(AType* ptr) const
+		[[nodiscard]] SE_FORCEINLINE bool operator !=(AType* ptr) const
 		{
 			return (getPointer() != ptr);
 		}
@@ -3552,7 +3485,7 @@ namespace Rhi
 		*  @return
 		*    "true" if the two pointers are not equal
 		*/
-		[[nodiscard]] FORCEINLINE bool operator !=(const SmartRefCount<AType>& ptr) const
+		[[nodiscard]] SE_FORCEINLINE bool operator !=(const SmartRefCount<AType>& ptr) const
 		{
 			return (getPointer() != ptr.getPointer());
 		}
@@ -3566,7 +3499,7 @@ namespace Rhi
 		*  @param[in] ptr
 		*    Pointer to assign, can be a null pointer
 		*/
-		FORCEINLINE void setPtr(AType* ptr)
+		SE_FORCEINLINE void setPtr(AType* ptr)
 		{
 			// Release old pointer
 			if (nullptr != mPtr)
@@ -3589,7 +3522,7 @@ namespace Rhi
 		*  @return
 		*    Pointer to the RefCount object, can be a null pointer
 		*/
-		[[nodiscard]] FORCEINLINE AType* getPtr() const
+		[[nodiscard]] SE_FORCEINLINE AType* getPtr() const
 		{
 			// Return pointer
 			return mPtr;
@@ -3710,7 +3643,7 @@ namespace Rhi
 	//[-------------------------------------------------------]
 	//[ Rhi/Statistics.h                                      ]
 	//[-------------------------------------------------------]
-	#ifdef RHI_STATISTICS
+	#ifdef SE_STATISTICS
 		/**
 		*  @brief
 		*    Statistics class
@@ -4024,17 +3957,17 @@ namespace Rhi
 		NULL_DUMMY	= 3816175889	///< Null RHI implementation, same value as renderer STRING_ID("Null")
 	};
 
-	#ifdef RHI_DIRECT3D11
+	#ifdef SE_DIRECT3D11
 		static constexpr const char* DEFAULT_RHI_NAME = "Direct3D11";
-	#elif defined(RHI_OPENGL)
+	#elif defined(SE_OPENGL)
 		static constexpr const char* DEFAULT_RHI_NAME = "OpenGL";
-	#elif defined(RHI_OPENGLES3)
+	#elif defined(SE_OPENGLES3)
 		static constexpr const char* DEFAULT_RHI_NAME = "OpenGLES3";
-	#elif defined(RHI_VULKAN)
+	#elif defined(SE_VULKAN)
 		static constexpr const char* DEFAULT_RHI_NAME = "Vulkan";
-	#elif defined(RHI_DIRECT3D12)
+	#elif defined(SE_DIRECT3D12)
 		static constexpr const char* DEFAULT_RHI_NAME = "Direct3D12";
-	#elif defined(RHI_NULL)
+	#elif defined(SE_RHINULL)
 		static constexpr const char* DEFAULT_RHI_NAME = "Null";
 	#endif
 
@@ -4138,7 +4071,7 @@ namespace Rhi
 			return *shaderLanguage;
 		}
 
-		#ifdef RHI_STATISTICS
+		#ifdef SE_STATISTICS
 			/**
 			*  @brief
 			*    Return the statistics of the RHI instance
@@ -4534,7 +4467,7 @@ namespace Rhi
 		explicit IRhi(const IRhi& source) = delete;
 		IRhi& operator =(const IRhi& source) = delete;
 
-		#ifdef RHI_STATISTICS
+		#ifdef SE_STATISTICS
 			/**
 			*  @brief
 			*    Return the statistics of the RHI instance
@@ -4558,7 +4491,7 @@ namespace Rhi
 		const Context& mContext;		///< Context
 		Capabilities   mCapabilities;	///< Capabilities
 
-	#ifdef RHI_STATISTICS
+	#ifdef SE_STATISTICS
 		// Private data
 		private:
 			Statistics mStatistics;	///< Statistics
@@ -5380,7 +5313,7 @@ namespace Rhi
 		*/
 		inline virtual ~IRootSignature() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfRootSignatures;
 			#endif
@@ -5418,7 +5351,7 @@ namespace Rhi
 		inline explicit IRootSignature(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IResource(ResourceType::ROOT_SIGNATURE, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedRootSignatures;
 				++rhi.getStatistics().currentNumberOfRootSignatures;
@@ -5464,7 +5397,7 @@ namespace Rhi
 		*/
 		inline virtual ~IResourceGroup() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfResourceGroups;
 			#endif
@@ -5482,7 +5415,7 @@ namespace Rhi
 		inline explicit IResourceGroup(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IResource(ResourceType::RESOURCE_GROUP, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedResourceGroups;
 				++rhi.getStatistics().currentNumberOfResourceGroups;
@@ -5517,7 +5450,7 @@ namespace Rhi
 		*/
 		inline virtual ~IGraphicsProgram() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfGraphicsPrograms;
 			#endif
@@ -5528,7 +5461,7 @@ namespace Rhi
 		// TODO(co) Cleanup
 		[[nodiscard]] inline virtual handle getUniformHandle([[maybe_unused]] const char* uniformName)
 		{
-			return NULL_HANDLE;
+			return SE_NULL_HANDLE;
 		}
 
 		inline virtual void setUniform1i([[maybe_unused]] handle uniformHandle, [[maybe_unused]] int value)
@@ -5564,7 +5497,7 @@ namespace Rhi
 		inline explicit IGraphicsProgram(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IResource(ResourceType::GRAPHICS_PROGRAM, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedGraphicsPrograms;
 				++rhi.getStatistics().currentNumberOfGraphicsPrograms;
@@ -5599,7 +5532,7 @@ namespace Rhi
 		*/
 		inline virtual ~IRenderPass() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfRenderPasses;
 			#endif
@@ -5617,7 +5550,7 @@ namespace Rhi
 		inline explicit IRenderPass(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IResource(ResourceType::RENDER_PASS, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedRenderPasses;
 				++rhi.getStatistics().currentNumberOfRenderPasses;
@@ -5652,7 +5585,7 @@ namespace Rhi
 		*/
 		inline virtual ~IQueryPool() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfQueryPools;
 			#endif
@@ -5670,7 +5603,7 @@ namespace Rhi
 		inline explicit IQueryPool(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IResource(ResourceType::QUERY_POOL, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedQueryPools;
 				++rhi.getStatistics().currentNumberOfQueryPools;
@@ -5836,7 +5769,7 @@ namespace Rhi
 		*/
 		inline virtual ~ISwapChain() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfSwapChains;
 			#endif
@@ -5922,7 +5855,7 @@ namespace Rhi
 		inline explicit ISwapChain(IRenderPass& renderPass RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IRenderTarget(ResourceType::SWAP_CHAIN, renderPass RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++getRhi().getStatistics().numberOfCreatedSwapChains;
 				++getRhi().getStatistics().currentNumberOfSwapChains;
@@ -5974,7 +5907,7 @@ namespace Rhi
 		*/
 		inline virtual ~IFramebuffer() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfFramebuffers;
 			#endif
@@ -5992,7 +5925,7 @@ namespace Rhi
 		inline explicit IFramebuffer(IRenderPass& renderPass RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IRenderTarget(ResourceType::FRAMEBUFFER, renderPass RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++getRhi().getStatistics().numberOfCreatedFramebuffers;
 				++getRhi().getStatistics().currentNumberOfFramebuffers;
@@ -6262,7 +6195,7 @@ namespace Rhi
 		*/
 		inline virtual ~IVertexArray() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfVertexArrays;
 			#endif
@@ -6295,7 +6228,7 @@ namespace Rhi
 			IResource(ResourceType::VERTEX_ARRAY, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mId(id)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedVertexArrays;
 				++rhi.getStatistics().currentNumberOfVertexArrays;
@@ -6391,7 +6324,7 @@ namespace Rhi
 		*/
 		inline virtual ~IVertexBuffer() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfVertexBuffers;
 			#endif
@@ -6409,7 +6342,7 @@ namespace Rhi
 		inline explicit IVertexBuffer(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IBuffer(ResourceType::VERTEX_BUFFER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedVertexBuffers;
 				++rhi.getStatistics().currentNumberOfVertexBuffers;
@@ -6444,7 +6377,7 @@ namespace Rhi
 		*/
 		inline virtual ~IIndexBuffer() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfIndexBuffers;
 			#endif
@@ -6462,7 +6395,7 @@ namespace Rhi
 		inline explicit IIndexBuffer(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IBuffer(ResourceType::INDEX_BUFFER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedIndexBuffers;
 				++rhi.getStatistics().currentNumberOfIndexBuffers;
@@ -6511,7 +6444,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITextureBuffer() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfTextureBuffers;
 			#endif
@@ -6529,7 +6462,7 @@ namespace Rhi
 		inline explicit ITextureBuffer(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IBuffer(ResourceType::TEXTURE_BUFFER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedTextureBuffers;
 				++rhi.getStatistics().currentNumberOfTextureBuffers;
@@ -6583,7 +6516,7 @@ namespace Rhi
 		*/
 		inline virtual ~IStructuredBuffer() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfStructuredBuffers;
 			#endif
@@ -6601,7 +6534,7 @@ namespace Rhi
 		inline explicit IStructuredBuffer(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IBuffer(ResourceType::STRUCTURED_BUFFER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedStructuredBuffers;
 				++rhi.getStatistics().currentNumberOfStructuredBuffers;
@@ -6641,7 +6574,7 @@ namespace Rhi
 		*/
 		inline virtual ~IIndirectBuffer() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfIndirectBuffers;
 			#endif
@@ -6694,7 +6627,7 @@ namespace Rhi
 		inline explicit IIndirectBuffer(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IBuffer(ResourceType::INDIRECT_BUFFER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedIndirectBuffers;
 				++rhi.getStatistics().currentNumberOfIndirectBuffers;
@@ -6745,7 +6678,7 @@ namespace Rhi
 		*/
 		inline virtual ~IUniformBuffer() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfUniformBuffers;
 			#endif
@@ -6763,7 +6696,7 @@ namespace Rhi
 		inline explicit IUniformBuffer(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IBuffer(ResourceType::UNIFORM_BUFFER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedUniformBuffers;
 				++rhi.getStatistics().currentNumberOfUniformBuffers;
@@ -7257,7 +7190,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITexture1D() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfTexture1Ds;
 			#endif
@@ -7290,7 +7223,7 @@ namespace Rhi
 			ITexture(ResourceType::TEXTURE_1D, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mWidth(width)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedTexture1Ds;
 				++rhi.getStatistics().currentNumberOfTexture1Ds;
@@ -7332,7 +7265,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITexture1DArray() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfTexture1DArrays;
 			#endif
@@ -7380,7 +7313,7 @@ namespace Rhi
 			mWidth(width),
 			mNumberOfSlices(numberOfSlices)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedTexture1DArrays;
 				++rhi.getStatistics().currentNumberOfTexture1DArrays;
@@ -7423,7 +7356,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITexture2D() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfTexture2Ds;
 			#endif
@@ -7471,7 +7404,7 @@ namespace Rhi
 			mWidth(width),
 			mHeight(height)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedTexture2Ds;
 				++rhi.getStatistics().currentNumberOfTexture2Ds;
@@ -7517,7 +7450,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITexture2DArray() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfTexture2DArrays;
 			#endif
@@ -7580,7 +7513,7 @@ namespace Rhi
 			mHeight(height),
 			mNumberOfSlices(numberOfSlices)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedTexture2DArrays;
 				++rhi.getStatistics().currentNumberOfTexture2DArrays;
@@ -7627,7 +7560,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITexture3D() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfTexture3Ds;
 			#endif
@@ -7690,7 +7623,7 @@ namespace Rhi
 			mHeight(height),
 			mDepth(depth)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedTexture3Ds;
 				++rhi.getStatistics().currentNumberOfTexture3Ds;
@@ -7734,7 +7667,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITextureCube() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfTextureCubes;
 			#endif
@@ -7767,7 +7700,7 @@ namespace Rhi
 			ITexture(ResourceType::TEXTURE_CUBE, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mWidth(width)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedTextureCubes;
 				++rhi.getStatistics().currentNumberOfTextureCubes;
@@ -7809,7 +7742,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITextureCubeArray() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfTextureCubeArrays;
 			#endif
@@ -7857,7 +7790,7 @@ namespace Rhi
 			mWidth(width),
 			mNumberOfSlices(numberOfSlices)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedTextureCubeArrays;
 				++rhi.getStatistics().currentNumberOfTextureCubeArrays;
@@ -8003,7 +7936,7 @@ namespace Rhi
 		*/
 		inline virtual ~IGraphicsPipelineState() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfGraphicsPipelineStates;
 			#endif
@@ -8023,7 +7956,7 @@ namespace Rhi
 		inline IGraphicsPipelineState(IRhi& rhi, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IPipelineState(ResourceType::GRAPHICS_PIPELINE_STATE, rhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedGraphicsPipelineStates;
 				++rhi.getStatistics().currentNumberOfGraphicsPipelineStates;
@@ -8058,7 +7991,7 @@ namespace Rhi
 		*/
 		inline virtual ~IComputePipelineState() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfComputePipelineStates;
 			#endif
@@ -8078,7 +8011,7 @@ namespace Rhi
 		inline IComputePipelineState(IRhi& rhi, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IPipelineState(ResourceType::COMPUTE_PIPELINE_STATE, rhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedComputePipelineStates;
 				++rhi.getStatistics().currentNumberOfComputePipelineStates;
@@ -8162,7 +8095,7 @@ namespace Rhi
 		*/
 		inline virtual ~ISamplerState() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfSamplerStates;
 			#endif
@@ -8180,7 +8113,7 @@ namespace Rhi
 		inline explicit ISamplerState(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IState(ResourceType::SAMPLER_STATE, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedSamplerStates;
 				++rhi.getStatistics().currentNumberOfSamplerStates;
@@ -8273,7 +8206,7 @@ namespace Rhi
 		*/
 		inline virtual ~IVertexShader() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfVertexShaders;
 			#endif
@@ -8291,7 +8224,7 @@ namespace Rhi
 		inline explicit IVertexShader(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IShader(ResourceType::VERTEX_SHADER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedVertexShaders;
 				++rhi.getStatistics().currentNumberOfVertexShaders;
@@ -8326,7 +8259,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITessellationControlShader() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfTessellationControlShaders;
 			#endif
@@ -8344,7 +8277,7 @@ namespace Rhi
 		inline explicit ITessellationControlShader(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IShader(ResourceType::TESSELLATION_CONTROL_SHADER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedTessellationControlShaders;
 				++rhi.getStatistics().currentNumberOfTessellationControlShaders;
@@ -8379,7 +8312,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITessellationEvaluationShader() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfTessellationEvaluationShaders;
 			#endif
@@ -8397,7 +8330,7 @@ namespace Rhi
 		inline explicit ITessellationEvaluationShader(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IShader(ResourceType::TESSELLATION_EVALUATION_SHADER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedTessellationEvaluationShaders;
 				++rhi.getStatistics().currentNumberOfTessellationEvaluationShaders;
@@ -8432,7 +8365,7 @@ namespace Rhi
 		*/
 		inline virtual ~IGeometryShader() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfGeometryShaders;
 			#endif
@@ -8450,7 +8383,7 @@ namespace Rhi
 		inline explicit IGeometryShader(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IShader(ResourceType::GEOMETRY_SHADER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedGeometryShaders;
 				++rhi.getStatistics().currentNumberOfGeometryShaders;
@@ -8485,7 +8418,7 @@ namespace Rhi
 		*/
 		inline virtual ~IFragmentShader() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfFragmentShaders;
 			#endif
@@ -8503,7 +8436,7 @@ namespace Rhi
 		inline explicit IFragmentShader(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IShader(ResourceType::FRAGMENT_SHADER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedFragmentShaders;
 				++rhi.getStatistics().currentNumberOfFragmentShaders;
@@ -8538,7 +8471,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITaskShader() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfTaskShaders;
 			#endif
@@ -8556,7 +8489,7 @@ namespace Rhi
 		inline explicit ITaskShader(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IShader(ResourceType::TASK_SHADER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedTaskShaders;
 				++rhi.getStatistics().currentNumberOfTaskShaders;
@@ -8591,7 +8524,7 @@ namespace Rhi
 		*/
 		inline virtual ~IMeshShader() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfMeshShaders;
 			#endif
@@ -8609,7 +8542,7 @@ namespace Rhi
 		inline explicit IMeshShader(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IShader(ResourceType::MESH_SHADER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedMeshShaders;
 				++rhi.getStatistics().currentNumberOfMeshShaders;
@@ -8644,7 +8577,7 @@ namespace Rhi
 		*/
 		inline virtual ~IComputeShader() override
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				--getRhi().getStatistics().currentNumberOfComputeShaders;
 			#endif
@@ -8662,7 +8595,7 @@ namespace Rhi
 		inline explicit IComputeShader(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IShader(ResourceType::COMPUTE_SHADER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				// Update the statistics
 				++rhi.getStatistics().numberOfCreatedComputeShaders;
 				++rhi.getStatistics().currentNumberOfComputeShaders;
@@ -8848,7 +8781,7 @@ namespace Rhi
 			mCommandPacketBuffer(nullptr),
 			mPreviousCommandPacketByteIndex(~0u),
 			mCurrentCommandPacketByteIndex(0)
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				, mNumberOfCommands(0)
 			#endif
 		{}
@@ -8874,7 +8807,7 @@ namespace Rhi
 			return (~0u == mPreviousCommandPacketByteIndex);
 		}
 
-		#ifdef RHI_STATISTICS
+		#ifdef SE_STATISTICS
 			/**
 			*  @brief
 			*    Return the number of commands inside the command buffer
@@ -8914,7 +8847,7 @@ namespace Rhi
 		{
 			mPreviousCommandPacketByteIndex = ~0u;
 			mCurrentCommandPacketByteIndex = 0;
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				mNumberOfCommands = 0;
 			#endif
 		}
@@ -8972,7 +8905,7 @@ namespace Rhi
 			mCurrentCommandPacketByteIndex += numberOfCommandBytes;
 
 			// Done
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				++mNumberOfCommands;
 			#endif
 			return CommandPacketHelper::getCommand<U>(commandPacket);
@@ -9065,7 +8998,7 @@ namespace Rhi
 			// Finalize
 			commandBuffer.mPreviousCommandPacketByteIndex = commandBuffer.mCurrentCommandPacketByteIndex + mPreviousCommandPacketByteIndex;
 			commandBuffer.mCurrentCommandPacketByteIndex += mCurrentCommandPacketByteIndex;
-			#ifdef RHI_STATISTICS
+			#ifdef SE_STATISTICS
 				commandBuffer.mNumberOfCommands += mNumberOfCommands;
 			#endif
 		}
@@ -9095,7 +9028,7 @@ namespace Rhi
 		// Current state
 		uint32_t mPreviousCommandPacketByteIndex;
 		uint32_t mCurrentCommandPacketByteIndex;
-		#ifdef RHI_STATISTICS
+		#ifdef SE_STATISTICS
 			uint32_t mNumberOfCommands;
 		#endif
 

@@ -17,7 +17,7 @@ SE_PRAGMA_WARNING_PUSH
 	#include <mutex>
 SE_PRAGMA_WARNING_POP
 
-#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 	#include <iostream>
 	#include <cstdarg>
 
@@ -196,7 +196,7 @@ namespace Rhi
 			}
 
 			// Platform specific handling
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 			{
 				// Convert UTF-8 string to UTF-16
 				std::wstring utf16Line;

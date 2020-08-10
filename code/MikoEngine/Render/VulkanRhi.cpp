@@ -4,7 +4,7 @@
 
 // Set "RHI_VULKAN_GLSLTOSPIRV" as preprocessor definition when building this library to add support for compiling GLSL into SPIR-V, increases the binary size around one MiB
 #include "Rhi.h"
-#if RHI_VULKAN
+#if SE_VULKAN
 #ifdef RHI_VULKAN_GLSLTOSPIRV
 	// Disable warnings in external headers, we can't fix them
 	SE_PRAGMA_WARNING_PUSH
@@ -34,7 +34,7 @@ SE_PRAGMA_WARNING_POP
 SE_PRAGMA_WARNING_PUSH
 	SE_PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668 '<x>' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
 	SE_PRAGMA_WARNING_DISABLE_MSVC(5039)	// warning C5039: 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function passed to extern C function under -EHc. Undefined behavior may occur if this function throws an exception.
-	#if defined(_WIN32)
+#if SE_PLATFORM_WINDOWS
 		#define VK_USE_PLATFORM_WIN32_KHR
 	#elif defined(__ANDROID__)
 		#define VK_USE_PLATFORM_ANDROID_KHR
@@ -1304,7 +1304,7 @@ namespace
 			// Print log message
 			if (context->getLog().print(type, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), message.str().c_str()))
 			{
-				DEBUG_BREAK;
+				SE_DEBUG_BREAK;
 			}
 
 			// The Vulkan call should not be aborted to have the same behavior with and without validation layers enabled
@@ -1847,7 +1847,7 @@ namespace
 						// Failed to link the program
 						if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to link the GLSL program: %s", program.getInfoLog()))
 						{
-							DEBUG_BREAK;
+							SE_DEBUG_BREAK;
 						}
 					}
 				}
@@ -1856,7 +1856,7 @@ namespace
 					// Failed to parse the shader source code
 					if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to parse the GLSL shader source code: %s", shader.getInfoLog()))
 					{
-						DEBUG_BREAK;
+						SE_DEBUG_BREAK;
 					}
 				}
 			#endif
@@ -2196,7 +2196,7 @@ namespace VulkanRhi
 			}
 
 			// Destroy the shared library instances
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				if (nullptr != mVulkanSharedLibrary)
 				{
 					::FreeLibrary(static_cast<HMODULE>(mVulkanSharedLibrary));
@@ -2435,7 +2435,7 @@ namespace VulkanRhi
 		[[nodiscard]] bool loadSharedLibraries()
 		{
 			// Load the shared library
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				mVulkanSharedLibrary = ::LoadLibraryExA("vulkan-1.dll", nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
 				if (nullptr == mVulkanSharedLibrary)
 				{
@@ -2467,7 +2467,7 @@ namespace VulkanRhi
 			bool result = true;	// Success by default
 
 			// Define a helper macro
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				#define IMPORT_FUNC(funcName)																																			\
 					if (result)																																							\
 					{																																									\
@@ -7815,9 +7815,9 @@ namespace VulkanRhi
 				mRenderWindow->getWidthAndHeight(width, height);
 				return;
 			}
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				// Is there a valid native OS window?
-				if (NULL_HANDLE != mNativeWindowHandle)
+				if (SE_NULL_HANDLE != mNativeWindowHandle)
 				{
 					// Get the width and height
 					long swapChainWidth  = 1;
@@ -7850,14 +7850,14 @@ namespace VulkanRhi
 				}
 				else
 			#elif defined(__ANDROID__)
-				if (NULL_HANDLE != mNativeWindowHandle)
+				if (SE_NULL_HANDLE != mNativeWindowHandle)
 				{
 					// TODO(co) Get size on Android
 					width = height = 1;
 				}
 				else
 			#elif defined LINUX
-				if (NULL_HANDLE != mNativeWindowHandle)
+				if (SE_NULL_HANDLE != mNativeWindowHandle)
 				{
 					VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 					const Rhi::Context& context = vulkanRhi.getContext();
@@ -11673,7 +11673,7 @@ namespace VulkanRhi
 			mComputeRootSignature->releaseReference();
 		}
 
-		#ifdef RHI_STATISTICS
+		#ifdef SE_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
 			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
@@ -12373,7 +12373,7 @@ namespace VulkanRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, renderPass)
-		RHI_ASSERT(mContext, NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "Vulkan: The provided native window handle or render window must not be a null handle / null pointer")
+		RHI_ASSERT(mContext, SE_NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "Vulkan: The provided native window handle or render window must not be a null handle / null pointer")
 
 		// Create the swap chain
 		return RHI_NEW(mContext, SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -13045,4 +13045,4 @@ VULKANRHI_FUNCTION_EXPORT Rhi::IRhi* createVulkanRhiInstance(const Rhi::Context&
 }
 #undef VULKANRHI_FUNCTION_EXPORT
 
-#endif // RHI_VULKAN
+#endif // SE_VULKAN

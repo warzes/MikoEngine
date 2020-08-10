@@ -17,7 +17,7 @@ SE_PRAGMA_WARNING_PUSH
 	#include <mutex>
 SE_PRAGMA_WARNING_POP
 
-#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 	// Disable warnings in external headers, we can't fix them
 	SE_PRAGMA_WARNING_PUSH
 		SE_PRAGMA_WARNING_DISABLE_MSVC(4571)	// warning C4571: Informational: catch(...) semantics changed since Visual C++ 7.1; structured exceptions (SEH) are no longer caught
@@ -215,7 +215,7 @@ namespace Rhi
 			}
 
 			// Platform specific handling
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 			{
 				// Convert UTF-8 string to UTF-16
 				std::wstring utf16Line;

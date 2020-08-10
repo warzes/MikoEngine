@@ -1,7 +1,7 @@
 //[-------------------------------------------------------]
 //[ Shader start                                          ]
 //[-------------------------------------------------------]
-#if defined(RHI_DIRECT3D11) || defined(RHI_DIRECT3D12)
+#if defined(SE_DIRECT3D11) || defined(SE_DIRECT3D12)
 if (rhi->getNameId() == Rhi::NameId::DIRECT3D11 || rhi->getNameId() == Rhi::NameId::DIRECT3D12)
 {
 

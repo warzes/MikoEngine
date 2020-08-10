@@ -51,7 +51,7 @@ int Application::Run(int argc, const char *argv[])
 	Rhi::DefaultLog defaultLog;
 	Rhi::DefaultAssert defaultAssert;
 	Rhi::DefaultAllocator defaultAllocator;
-#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 	Rhi::Context rhiContext(defaultLog, defaultAssert, defaultAllocator, (Rhi::handle)glfwNativeWindowHandle(m_window));
 	const bool loadRhiApiSharedLibrary = false;
 #elif LINUX

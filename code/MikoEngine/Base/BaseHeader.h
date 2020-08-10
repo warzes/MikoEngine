@@ -146,3 +146,13 @@ SE_PRAGMA_WARNING_POP
 //-----------------------------------------------------------------------------
 SE_PRAGMA_WARNING_DISABLE_MSVC(4514); //
 SE_PRAGMA_WARNING_DISABLE_MSVC(4820); //'4' bytes padding added after data member
+
+// TEMP WARN DISABLE
+SE_PRAGMA_WARNING_DISABLE_MSVC(4100); // unreferenced formal parameter
+SE_PRAGMA_WARNING_DISABLE_MSVC(4625); // copy constructor was implicitly defined as deleted
+SE_PRAGMA_WARNING_DISABLE_MSVC(4626); // assignment operator was implicitly defined as deleted
+SE_PRAGMA_WARNING_DISABLE_MSVC(4996); // This function or variable may be unsafe.To disable deprecation, use _CRT_SECURE_NO_WARNINGS.
+SE_PRAGMA_WARNING_DISABLE_MSVC(5026); // move constructor was implicitly defined as deleted
+SE_PRAGMA_WARNING_DISABLE_MSVC(5027); // move assignment operator was implicitly defined as deleted
+SE_PRAGMA_WARNING_DISABLE_MSVC(5039); // pointer or reference to potentially throwing function passed to 'extern "C"' function under -EHc. Undefined behavior may occur if this function throws an exception.
+SE_PRAGMA_WARNING_DISABLE_MSVC(5045); // Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified

@@ -1,7 +1,7 @@
 //[-------------------------------------------------------]
 //[ Shader start                                          ]
 //[-------------------------------------------------------]
-#ifdef RHI_VULKAN
+#ifdef SE_VULKAN
 if (rhi->getNameId() == Rhi::NameId::VULKAN)
 {
 

@@ -36,7 +36,7 @@
 #	define SE_DEBUG_BREAK __debugbreak()
 #elif SE_PLATFORM_LINUX
 #	define SE_DEBUG_BREAK __builtin_trap()
-#endif
+#endif // SE_PLATFORM_*
 
 
 // TODO: http://cnicholson.net/2009/02/stupid-c-tricks-adventures-in-assert/
@@ -53,6 +53,9 @@
 //=============================================================================
 // Utility Macros
 //=============================================================================
+#ifndef SE_NULL_HANDLE
+#	define SE_NULL_HANDLE 0
+#endif
 
 //=============================================================================
 // Pragma Warning

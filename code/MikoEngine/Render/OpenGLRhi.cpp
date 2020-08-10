@@ -3,7 +3,7 @@
 //If this RHI was compiled with "RHI_OPENGL_STATE_CLEANUP" set as preprocessor definition, the previous OpenGL state will be restored after performing an operation (worse performance, increases the binary size slightly, might avoid unexpected behaviour when using OpenGL directly beside this RHI)
 // Set "RHI_OPENGL_GLSLTOSPIRV" as preprocessor definition when building this library to add support for compiling GLSL into SPIR-V, increases the binary size around one MiB
 #include "Rhi.h"
-#if RHI_OPENGL
+#if SE_OPENGL
 
 #ifdef RHI_OPENGL_GLSLTOSPIRV
 	// Disable warnings in external headers, we can't fix them
@@ -26,7 +26,7 @@
 
 #include <smol-v/smolv.h>
 
-#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 	// Set Windows version to Windows Vista (0x0600), we don't support Windows XP (0x0501)
 	#ifdef WINVER
 		#undef WINVER
@@ -572,7 +572,7 @@ FNDEF_GL(GLubyte *,	glGetStringi,	(GLenum, GLuint));
 FNDEF_GL(void,	glCreateQueries,	(GLenum, GLsizei, GLuint*));
 
 // Platform specific
-#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 	FNDEF_GL(HDC,	wglGetCurrentDC,	(VOID));
 	FNDEF_GL(PROC,	wglGetProcAddress,	(LPCSTR));
 	FNDEF_GL(HGLRC,	wglCreateContext,	(HDC));
@@ -637,7 +637,7 @@ FNDEF_GL(void,	glCreateQueries,	(GLenum, GLsizei, GLuint*));
 #define glCreateQueries FNPTR(glCreateQueries)
 
 // Platform specific
-#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 	#define wglGetCurrentDC		FNPTR(wglGetCurrentDC)
 	#define wglGetProcAddress	FNPTR(wglGetProcAddress)
 	#define wglCreateContext	FNPTR(wglCreateContext)
@@ -660,7 +660,7 @@ FNDEF_GL(void,	glCreateQueries,	(GLenum, GLsizei, GLuint*));
 #endif
 
 // Define a helper macro
-#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 	#define IMPORT_FUNC(funcName)																																			\
 		if (result)																																							\
 		{																																									\
@@ -716,7 +716,7 @@ FNDEF_GL(void,	glCreateQueries,	(GLenum, GLsizei, GLuint*));
 //[-------------------------------------------------------]
 //[ WGL (Windows only) definitions                        ]
 //[-------------------------------------------------------]
-#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 	// WGL_ARB_extensions_string
 	FNDEF_EX(wglGetExtensionsStringARB,	PFNWGLGETEXTENSIONSSTRINGARBPROC);
 
@@ -1187,7 +1187,7 @@ namespace
 				// Output the debug string
 				if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
 				{
-					DEBUG_BREAK;
+					SE_DEBUG_BREAK;
 				}
 
 				// Cleanup information memory
@@ -1232,7 +1232,7 @@ namespace
 				// Output the debug string
 				if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
 				{
-					DEBUG_BREAK;
+					SE_DEBUG_BREAK;
 				}
 
 				// Cleanup information memory
@@ -1517,7 +1517,7 @@ namespace
 						// Output the debug string
 						if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
 						{
-							DEBUG_BREAK;
+							SE_DEBUG_BREAK;
 						}
 
 						// Cleanup information memory
@@ -1635,7 +1635,7 @@ namespace
 						// Failed to link the program
 						if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to link the GLSL program: %s", program.getInfoLog()))
 						{
-							DEBUG_BREAK;
+							SE_DEBUG_BREAK;
 						}
 					}
 				}
@@ -1644,7 +1644,7 @@ namespace
 					// Failed to parse the shader source code
 					if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to parse the GLSL shader source code: %s", shader.getInfoLog()))
 					{
-						DEBUG_BREAK;
+						SE_DEBUG_BREAK;
 					}
 				}
 			#endif
@@ -2092,7 +2092,7 @@ namespace OpenGLRhi
 			if (mOwnsOpenGLSharedLibrary)
 			{
 				// Destroy the shared library instances
-				#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 					if (nullptr != mOpenGLSharedLibrary)
 					{
 						::FreeLibrary(static_cast<HMODULE>(mOpenGLSharedLibrary));
@@ -2155,7 +2155,7 @@ namespace OpenGLRhi
 			if (mOwnsOpenGLSharedLibrary)
 			{
 				// Load the shared library
-				#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 					mOpenGLSharedLibrary = ::LoadLibraryExA("opengl32.dll", nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
 					if (nullptr == mOpenGLSharedLibrary)
 					{
@@ -2217,7 +2217,7 @@ namespace OpenGLRhi
 			IMPORT_FUNC(glScissor)
 			IMPORT_FUNC(glFlush)
 			IMPORT_FUNC(glFinish)
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				IMPORT_FUNC(wglGetCurrentDC)
 				IMPORT_FUNC(wglGetProcAddress)
 				IMPORT_FUNC(wglCreateContext)
@@ -2647,7 +2647,7 @@ namespace OpenGLRhi
 			{
 				// Under Windows all available extensions can be received via one additional function
 				// but under Linux there are two additional functions for this
-				#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 					// "glGetString()" & "wglGetExtensionsStringARB()"
 					const int numberOfLoops = 2;
 				#elif APPLE
@@ -2673,7 +2673,7 @@ namespace OpenGLRhi
 					// TODO(sw) Move the query for advanced extensions (via platform specific methods) to the context?
 					if (loopIndex > 0)
 					{
-						#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 							// WGL extensions
 							if (!mWGL_ARB_extensions_string)
 							{
@@ -2823,7 +2823,7 @@ namespace OpenGLRhi
 		*  @note
 		*    - Platform dependent implementation
 		*/
-		#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 			[[nodiscard]] bool initialize(bool useExtensions = true)
 			{
 				// Disable the following warning, we can't do anything to resolve this warning
@@ -2908,7 +2908,7 @@ namespace OpenGLRhi
 		[[nodiscard]] bool initializeUniversal()
 		{
 			// Define a platform dependent helper macro
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				#define IMPORT_FUNC(funcName)																													\
 					if (result)																																	\
 					{																																			\
@@ -3710,10 +3710,7 @@ namespace OpenGLRhi
 
 	};
 
-
-
-
-	#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 		//[-------------------------------------------------------]
 		//[ OpenGLRhi/OpenGLContextWindows.h                      ]
 		//[-------------------------------------------------------]
@@ -3757,7 +3754,7 @@ namespace OpenGLRhi
 			virtual ~OpenGLContextWindows() override
 			{
 				// Release the device context of the OpenGL window
-				if (NULL_HANDLE != mWindowDeviceContext)
+				if (SE_NULL_HANDLE != mWindowDeviceContext)
 				{
 					// Is the device context of the OpenGL window is the currently active OpenGL device context?
 					if (wglGetCurrentDC() == mWindowDeviceContext)
@@ -3766,20 +3763,20 @@ namespace OpenGLRhi
 					}
 
 					// Destroy the render context of the OpenGL window
-					if (NULL_HANDLE != mWindowRenderContext && mOwnsRenderContext)
+					if (SE_NULL_HANDLE != mWindowRenderContext && mOwnsRenderContext)
 					{
 						wglDeleteContext(mWindowRenderContext);
 					}
 
 					// Release the device context of the OpenGL window
-					if (NULL_HANDLE != mNativeWindowHandle)
+					if (SE_NULL_HANDLE != mNativeWindowHandle)
 					{
 						::ReleaseDC(reinterpret_cast<HWND>(mNativeWindowHandle), mWindowDeviceContext);
 					}
 				}
 
 				// Destroy the OpenGL dummy window, in case there's one
-				if (NULL_HANDLE != mDummyWindow)
+				if (SE_NULL_HANDLE != mDummyWindow)
 				{
 					// Destroy the OpenGL dummy window
 					::DestroyWindow(reinterpret_cast<HWND>(mDummyWindow));
@@ -3852,14 +3849,14 @@ namespace OpenGLRhi
 			OpenGLContextWindows(OpenGLRuntimeLinking* openGLRuntimeLinking, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, Rhi::handle nativeWindowHandle, const OpenGLContextWindows* shareContextWindows = nullptr) :
 				IOpenGLContext(openGLRuntimeLinking),
 				mNativeWindowHandle(nativeWindowHandle),
-				mDummyWindow(NULL_HANDLE),
-				mWindowDeviceContext(NULL_HANDLE),
-				mWindowRenderContext(NULL_HANDLE),
+				mDummyWindow(SE_NULL_HANDLE),
+				mWindowDeviceContext(SE_NULL_HANDLE),
+				mWindowRenderContext(SE_NULL_HANDLE),
 				mOwnsRenderContext(true)
 			{
 				// Create a OpenGL dummy window?
 				// -> Under Microsoft Windows, a OpenGL context is always coupled to a window... even if we're not going to render into a window at all...
-				if (NULL_HANDLE == mNativeWindowHandle)
+				if (SE_NULL_HANDLE == mNativeWindowHandle)
 				{
 					// Setup and register the window class for the OpenGL dummy window
 					WNDCLASS windowDummyClass;
@@ -3880,11 +3877,11 @@ namespace OpenGLRhi
 				}
 
 				// Is there a valid window handle?
-				if (NULL_HANDLE != mNativeWindowHandle)
+				if (SE_NULL_HANDLE != mNativeWindowHandle)
 				{
 					// Get the device context of the OpenGL window
 					mWindowDeviceContext = ::GetDC(reinterpret_cast<HWND>(mNativeWindowHandle));
-					if (NULL_HANDLE != mWindowDeviceContext)
+					if (SE_NULL_HANDLE != mWindowDeviceContext)
 					{
 						// Get the color depth of the desktop
 						int bits = 32;
@@ -3938,7 +3935,7 @@ namespace OpenGLRhi
 							{
 								// Create a legacy OpenGL render context
 								HGLRC legacyRenderContext = wglCreateContext(mWindowDeviceContext);
-								if (NULL_HANDLE != legacyRenderContext)
+								if (SE_NULL_HANDLE != legacyRenderContext)
 								{
 									// Make the legacy OpenGL render context to the current one
 									wglMakeCurrent(mWindowDeviceContext, legacyRenderContext);
@@ -3954,7 +3951,7 @@ namespace OpenGLRhi
 										wglDeleteContext(legacyRenderContext);
 
 										// If there's an OpenGL context, do some final initialization steps
-										if (NULL_HANDLE != mWindowRenderContext)
+										if (SE_NULL_HANDLE != mWindowRenderContext)
 										{
 											// Make the OpenGL context to the current one
 											// TODO(co) Review this, might cause issues when creating a context while a program is running
@@ -4051,25 +4048,25 @@ namespace OpenGLRhi
 							else
 							{
 								// Error, context creation failed!
-								return NULL_HANDLE;
+								return SE_NULL_HANDLE;
 							}
 						}
 						else
 						{
 							// Error, failed to obtain the "wglCreateContextAttribsARB" function pointer (wow, something went terrible wrong!)
-							return NULL_HANDLE;
+							return SE_NULL_HANDLE;
 						}
 					}
 					else
 					{
 						// Error, the OpenGL extension "WGL_ARB_create_context" is not supported... as a result we can't create an OpenGL context!
-						return NULL_HANDLE;
+						return SE_NULL_HANDLE;
 					}
 				}
 				else
 				{
 					// Error, failed to obtain the "wglGetExtensionsStringARB" function pointer (wow, something went terrible wrong!)
-					return NULL_HANDLE;
+					return SE_NULL_HANDLE;
 				}
 
 				// Restore the previous warning configuration
@@ -4154,7 +4151,7 @@ namespace OpenGLRhi
 					}
 
 					// Destroy the render context of the OpenGL window
-					if (NULL_HANDLE != mWindowRenderContext && mOwnsRenderContext)
+					if (SE_NULL_HANDLE != mWindowRenderContext && mOwnsRenderContext)
 					{
 						glXDestroyContext(mDisplay, mWindowRenderContext);
 					}
@@ -4240,7 +4237,7 @@ namespace OpenGLRhi
 				mNativeWindowHandle(nativeWindowHandle),
 				mDisplay(nullptr),
 				mOwnsX11Display(true),
-				mWindowRenderContext(NULL_HANDLE),
+				mWindowRenderContext(SE_NULL_HANDLE),
 				mUseExternalContext(useExternalContext),
 				mOwnsRenderContext(true)
 			{
@@ -4288,7 +4285,7 @@ namespace OpenGLRhi
 							mWindowRenderContext = createOpenGLContext(depthStencilAttachmentTextureFormat);
 
 							// If there's an OpenGL context, do some final initialization steps
-							if (NULL_HANDLE != mWindowRenderContext)
+							if (SE_NULL_HANDLE != mWindowRenderContext)
 							{
 								// Make the OpenGL context to the current one, native window handle can be zero -> thus only offscreen rendering is supported/wanted
 								const int result = glXMakeCurrent(mDisplay, mNativeWindowHandle, mWindowRenderContext);
@@ -4427,21 +4424,21 @@ namespace OpenGLRhi
 						{
 							// Error, context creation failed!
 							RHI_LOG(mOpenGLRhi.getContext(), CRITICAL, "Could not create OpenGL context with glXCreateContextAttribsARB")
-							return NULL_HANDLE;
+							return SE_NULL_HANDLE;
 						}
 					}
 					else
 					{
 						// Error, failed to obtain the "GLX_ARB_create_context" function pointer (wow, something went terrible wrong!)
 						RHI_LOG(mOpenGLRhi.getContext(), CRITICAL, "Could not find OpenGL glXCreateContextAttribsARB")
-						return NULL_HANDLE;
+						return SE_NULL_HANDLE;
 					}
 				}
 				else
 				{
 					// Error, the OpenGL extension "GLX_ARB_create_context" is not supported... as a result we can't create an OpenGL context!
 					RHI_LOG(mOpenGLRhi.getContext(), CRITICAL, "OpenGL GLX_ARB_create_context not supported")
-					return NULL_HANDLE;
+					return SE_NULL_HANDLE;
 				}
 
 				#undef GLX_CONTEXT_MAJOR_VERSION_ARB
@@ -8988,7 +8985,7 @@ namespace OpenGLRhi
 			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
 
 			// Create the OpenGL texture instance
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				// TODO(co) It appears that DSA "glGenerateTextureMipmap()" is not working (one notices the noise) or we're using it wrong, tested with
 				//			- "InstancedCubes"-example -> "CubeRendereDrawInstanced"
 				//		    - AMD 290X Radeon software version 17.7.2 as well as with GeForce 980m 384.94
@@ -10135,7 +10132,7 @@ namespace OpenGLRhi
 			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height) : 1;
 
 			// Create the OpenGL texture instance
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				// TODO(co) It appears that DSA "glGenerateTextureMipmap()" is not working (one notices the noise) or we're using it wrong, tested with
 				//			- "InstancedCubes"-example -> "CubeRendereDrawInstanced"
 				//		    - AMD 290X Radeon software version 17.7.2 as well as with GeForce 980m 384.94
@@ -11305,7 +11302,7 @@ namespace OpenGLRhi
 			// TODO(co) "GL_ARB_direct_state_access" AMD graphics card driver bug ahead
 			// -> AMD graphics card: 13.02.2017 using Radeon software 17.1.1 on Microsoft Windows: Looks like "GL_ARB_direct_state_access" is broken when trying to use "glCompressedTextureSubImage3D()" for upload
 			// -> Describes the same problem: https://community.amd.com/thread/194748 - "Upload data to GL_TEXTURE_CUBE_MAP with glTextureSubImage3D (DSA) broken ?"
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				const bool isArbDsa = false;
 			#else
 				const bool isArbDsa = openGLRhi.getExtensions().isGL_ARB_direct_state_access();
@@ -13108,7 +13105,7 @@ namespace OpenGLRhi
 		SwapChain(Rhi::IRenderPass& renderPass, Rhi::WindowHandle windowHandle, [[maybe_unused]] bool useExternalContext RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			ISwapChain(renderPass RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mNativeWindowHandle(windowHandle.nativeWindowHandle),
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				mOpenGLContext(RHI_NEW(renderPass.getRhi().getContext(), OpenGLContextWindows)(static_cast<const RenderPass&>(renderPass).getDepthStencilAttachmentTextureFormat(), windowHandle.nativeWindowHandle, static_cast<const OpenGLContextWindows*>(&static_cast<OpenGLRhi&>(renderPass.getRhi()).getOpenGLContext()))),
 			#elif defined LINUX
 				mOpenGLContext(RHI_NEW(renderPass.getRhi().getContext(), OpenGLContextLinux)(static_cast<OpenGLRhi&>(renderPass.getRhi()), static_cast<const RenderPass&>(renderPass).getDepthStencilAttachmentTextureFormat(), windowHandle.nativeWindowHandle, useExternalContext, static_cast<const OpenGLContextLinux*>(&static_cast<OpenGLRhi&>(renderPass.getRhi()).getOpenGLContext()))),
@@ -13158,9 +13155,9 @@ namespace OpenGLRhi
 				mRenderWindow->getWidthAndHeight(width, height);
 				return;
 			}
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				// Is there a valid native OS window?
-				if (NULL_HANDLE != mNativeWindowHandle)
+				if (SE_NULL_HANDLE != mNativeWindowHandle)
 				{
 					// Get the width and height
 					long swapChainWidth  = 1;
@@ -13193,7 +13190,7 @@ namespace OpenGLRhi
 				}
 				else
 			#elif defined LINUX
-				if (NULL_HANDLE != mNativeWindowHandle)
+				if (SE_NULL_HANDLE != mNativeWindowHandle)
 				{
 					OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 					Display* display = static_cast<const OpenGLContextLinux&>(openGLRhi.getOpenGLContext()).getDisplay();
@@ -13254,7 +13251,7 @@ namespace OpenGLRhi
 				mRenderWindow->present();
 				return;
 			}
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 			{
 				// Set new vertical synchronization interval?
 				// -> We do this in here to avoid having to use "wglMakeCurrent()"/"glXMakeCurrent()" to often at multiple places
@@ -13279,7 +13276,7 @@ namespace OpenGLRhi
 			}
 			#elif defined LINUX
 				// TODO(co) Add support for vertical synchronization and adaptive vertical synchronization: "GLX_EXT_swap_control" and "GLX_EXT_swap_control_tear"
-				if (NULL_HANDLE != mNativeWindowHandle)
+				if (SE_NULL_HANDLE != mNativeWindowHandle)
 				{
 					glXSwapBuffers(static_cast<const OpenGLContextLinux&>(static_cast<OpenGLRhi&>(getRhi()).getOpenGLContext()).getDisplay(), mNativeWindowHandle);
 				}
@@ -19820,7 +19817,7 @@ namespace OpenGLRhi
 			const Rhi::handle nativeWindowHandle = mContext.getNativeWindowHandle();
 			const Rhi::TextureFormat::Enum textureFormat = Rhi::TextureFormat::Enum::R8G8B8A8;
 			const RenderPass renderPass(*this, 1, &textureFormat, Rhi::TextureFormat::Enum::UNKNOWN, 1 RHI_RESOURCE_DEBUG_NAME("OpenGL Unknown"));
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 			{
 				// TODO(co) Add external OpenGL context support
 				mOpenGLContext = RHI_NEW(mContext, OpenGLContextWindows)(mOpenGLRuntimeLinking, renderPass.getDepthStencilAttachmentTextureFormat(), nativeWindowHandle);
@@ -19935,7 +19932,7 @@ namespace OpenGLRhi
 			mComputeRootSignature->releaseReference();
 		}
 
-		#ifdef RHI_STATISTICS
+		#ifdef SE_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
 			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
@@ -21281,7 +21278,7 @@ namespace OpenGLRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, renderPass)
-		RHI_ASSERT(mContext, NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "OpenGL: The provided native window handle or render window must not be a null handle / null pointer")
+		RHI_ASSERT(mContext, SE_NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "OpenGL: The provided native window handle or render window must not be a null handle / null pointer")
 
 		// Create the swap chain
 		return RHI_NEW(mContext, SwapChain)(renderPass, windowHandle, useExternalContext RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -21972,7 +21969,7 @@ namespace OpenGLRhi
 			// Print into log
 			if (static_cast<const OpenGLRhi*>(userParam)->getContext().getLog().print(logType, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), "OpenGL debug message\tSource:\"%s\"\tType:\"%s\"\tID:\"%u\"\tSeverity:\"%s\"\tMessage:\"%s\"", debugSource, debugType, id, debugSeverity, message))
 			{
-				DEBUG_BREAK;
+				SE_DEBUG_BREAK;
 			}
 		}
 	#else

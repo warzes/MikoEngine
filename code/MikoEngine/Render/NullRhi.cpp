@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Rhi.h"
 
-#if RHI_NULL
+#if SE_RHINULL
 
-#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 	// Set Windows version to Windows Vista (0x0600), we don't support Windows XP (0x0501)
 	#ifdef WINVER
 		#undef WINVER
@@ -2302,9 +2302,9 @@ namespace NullRhi
 	public:
 		virtual void getWidthAndHeight(uint32_t& width, uint32_t& height) const override
 		{
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				// Is there a valid native OS window?
-				if (NULL_HANDLE != mNativeWindowHandle)
+				if (SE_NULL_HANDLE != mNativeWindowHandle)
 				{
 					// Get the width and height
 					long swapChainWidth  = 1;
@@ -3898,7 +3898,7 @@ namespace NullRhi
 			mComputeRootSignature = nullptr;
 		}
 
-		#ifdef RHI_STATISTICS
+		#ifdef SE_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
 			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
@@ -4304,7 +4304,7 @@ namespace NullRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, renderPass)
-		RHI_ASSERT(mContext, NULL_HANDLE != windowHandle.nativeWindowHandle, "Null: The provided native window handle must not be a null handle")
+		RHI_ASSERT(mContext, SE_NULL_HANDLE != windowHandle.nativeWindowHandle, "Null: The provided native window handle must not be a null handle")
 
 		// Create the swap chain
 		return RHI_NEW(mContext, SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -4613,4 +4613,4 @@ NULLRHI_FUNCTION_EXPORT Rhi::IRhi* createNullRhiInstance(const Rhi::Context& con
 }
 #undef NULLRHI_FUNCTION_EXPORT
 
-#endif // RHI_NULL
+#endif // SE_RHINULL

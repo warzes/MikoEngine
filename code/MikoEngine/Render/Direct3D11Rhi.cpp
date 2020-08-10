@@ -38,7 +38,7 @@ namespace Direct3D11Rhi
 	*  @brief
 	*    Debug break on execution failure, replacement for "ID3D11InfoQueue::SetBreakOnSeverity()" which is creating a confusing callstack
 	*/
-	#define FAILED_DEBUG_BREAK(toExecute) if (FAILED(toExecute)) { DEBUG_BREAK; }
+	#define FAILED_DEBUG_BREAK(toExecute) if (FAILED(toExecute)) { SE_DEBUG_BREAK; }
 #else
 	/*
 	*  @brief
@@ -1257,7 +1257,7 @@ namespace Direct3D11Rhi
 			{
 				if (context.getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), static_cast<char*>(errorD3dBlob->GetBufferPointer())))
 				{
-					DEBUG_BREAK;
+					SE_DEBUG_BREAK;
 				}
 				errorD3dBlob->Release();
 			}
@@ -7031,7 +7031,7 @@ namespace Direct3D11Rhi
 			}
 
 			// Error!
-			return NULL_HANDLE;
+			return SE_NULL_HANDLE;
 		}
 
 		inline virtual void setVerticalSynchronizationInterval(uint32_t synchronizationInterval) override
@@ -9956,7 +9956,7 @@ namespace Direct3D11Rhi
 			mComputeRootSignature = nullptr;
 		}
 
-		#ifdef RHI_STATISTICS
+		#ifdef SE_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
 			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
@@ -11823,7 +11823,7 @@ namespace Direct3D11Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, renderPass)
-		RHI_ASSERT(mContext, NULL_HANDLE != windowHandle.nativeWindowHandle, "Direct3D 11: The provided native window handle must not be a null handle")
+		RHI_ASSERT(mContext, SE_NULL_HANDLE != windowHandle.nativeWindowHandle, "Direct3D 11: The provided native window handle must not be a null handle")
 
 		// Create the swap chain
 		return RHI_NEW(mContext, SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);

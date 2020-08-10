@@ -1,4 +1,4 @@
-#ifdef RHI_NULL
+#ifdef SE_RHINULL
 	if (rhi->getNameId() == Rhi::NameId::NULL_DUMMY)
 	{
 		vertexShaderSourceCode = fragmentShaderSourceCode = "42";

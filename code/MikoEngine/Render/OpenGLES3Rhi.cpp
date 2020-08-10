@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Rhi.h"
-#if RHI_OPENGLES3
+#if SE_OPENGLES
 
 #define GL_GLES_PROTOTYPES 0
 #include <GLES3/gl3.h>
@@ -13,7 +13,7 @@ SE_PRAGMA_WARNING_PUSH
 	#include <EGL/eglext.h>
 SE_PRAGMA_WARNING_POP
 
-#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 	// Set Windows version to Windows Vista (0x0600), we don't support Windows XP (0x0501)
 	#ifdef WINVER
 		#undef WINVER
@@ -1383,7 +1383,7 @@ namespace OpenGLES3Rhi
 		*    Return the handle of a native OS window which is valid as long as the RHI instance exists
 		*
 		*  @return
-		*    The handle of a native OS window which is valid as long as the RHI instance exists, "NULL_HANDLE" if there's no such window
+		*    The handle of a native OS window which is valid as long as the RHI instance exists, "SE_NULL_HANDLE" if there's no such window
 		*/
 		[[nodiscard]] inline Rhi::handle getNativeWindowHandle() const
 		{
@@ -1524,7 +1524,7 @@ namespace OpenGLES3Rhi
 						if (EGL_NO_CONTEXT != mEGLContext)
 						{
 							// Create a dummy native window?
-							if (NULL_HANDLE != mNativeWindowHandle)
+							if (SE_NULL_HANDLE != mNativeWindowHandle)
 							{
 								// There's no need to create a dummy native window, we've got a real native window to work with :D
 								mDummyNativeWindow = (EGLNativeWindowType)mNativeWindowHandle;	// Interesting - in here, we have an OS dependent cast issue when using C++ casts: While we would need
@@ -1541,7 +1541,7 @@ namespace OpenGLES3Rhi
 							else
 							{
 								// Create the dummy native window
-								#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 									HINSTANCE moduleHandle = ::GetModuleHandle(nullptr);
 									WNDCLASS windowClass;
 									windowClass.hInstance	  = moduleHandle;
@@ -1626,7 +1626,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] openGLES3Rhi
 		*    Owner OpenGL ES 3 RHI instance
 		*  @param[in] nativeWindowHandle
-		*    Handle of a native OS window which is valid as long as the RHI instance exists, "NULL_HANDLE" if there's no such window
+		*    Handle of a native OS window which is valid as long as the RHI instance exists, "SE_NULL_HANDLE" if there's no such window
 		*  @param[in] useExternalContext
 		*    When true an own OpenGL ES context won't be created
 		*/
@@ -1639,7 +1639,7 @@ namespace OpenGLES3Rhi
 			mEGLDisplay(EGL_NO_DISPLAY),
 			mEGLConfig(nullptr),
 			mEGLContext(EGL_NO_CONTEXT),
-			mDummyNativeWindow(NULL_HANDLE),
+			mDummyNativeWindow(SE_NULL_HANDLE),
 			mDummySurface(EGL_NO_SURFACE),
 			mUseExternalContext(useExternalContext)
 		{
@@ -1717,15 +1717,15 @@ namespace OpenGLES3Rhi
 				mEGLConfig  = nullptr;
 
 				// Destroy the dummy native window, if required
-				#ifdef _WIN32
-					if (NULL_HANDLE == mNativeWindowHandle && NULL_HANDLE != mDummyNativeWindow)
+#if SE_PLATFORM_WINDOWS
+					if (SE_NULL_HANDLE == mNativeWindowHandle && SE_NULL_HANDLE != mDummyNativeWindow)
 					{
 						::DestroyWindow(mDummyNativeWindow);
 						::UnregisterClass(TEXT("OpenGLES3DummyNativeWindow"), ::GetModuleHandle(nullptr));
 					}
 				#elif (defined(LINUX) && !defined(__ANDROID__))
 					// Destroy the dummy native window
-					if (NULL_HANDLE == mNativeWindowHandle && NULL_HANDLE != mDummyNativeWindow)
+					if (SE_NULL_HANDLE == mNativeWindowHandle && SE_NULL_HANDLE != mDummyNativeWindow)
 					{
 						::XDestroyWindow(mX11Display, mDummyNativeWindow);
 					}
@@ -1737,7 +1737,7 @@ namespace OpenGLES3Rhi
 						mX11Display = nullptr;
 					}
 				#endif
-				mDummyNativeWindow = NULL_HANDLE;
+				mDummyNativeWindow = SE_NULL_HANDLE;
 			}
 		}
 
@@ -1837,7 +1837,7 @@ namespace OpenGLES3Rhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Rhi::handle	mNativeWindowHandle;	///< Handle of a native OS window which is valid as long as the RHI instance exists, "NULL_HANDLE" if there's no such window
+		Rhi::handle	mNativeWindowHandle;	///< Handle of a native OS window which is valid as long as the RHI instance exists, "SE_NULL_HANDLE" if there's no such window
 		// X11
 		#if (defined(LINUX) && !defined(__ANDROID__))
 			::Display	   *mX11Display;
@@ -1848,7 +1848,7 @@ namespace OpenGLES3Rhi
 		// EGL
 		EGLConfig			mEGLConfig;
 		EGLContext			mEGLContext;
-		EGLNativeWindowType	mDummyNativeWindow;	///< Native dummy window handle, can be identical to "mNativeWindowHandle" if it's in fact no dummy at all, can be "NULL_HANDLE"
+		EGLNativeWindowType	mDummyNativeWindow;	///< Native dummy window handle, can be identical to "mNativeWindowHandle" if it's in fact no dummy at all, can be "SE_NULL_HANDLE"
 		EGLSurface			mDummySurface;
 		bool				mUseExternalContext;
 
@@ -2269,7 +2269,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] openGLES3Rhi
 		*    Owner OpenGL ES 3 RHI instance
 		*  @param[in] nativeWindowHandle
-		*    Handle of a native OS window which is valid as long as the RHI instance exists, "NULL_HANDLE" if there's no such window
+		*    Handle of a native OS window which is valid as long as the RHI instance exists, "SE_NULL_HANDLE" if there's no such window
 		*  @param[in] useExternalContext
 		*    When true an own OpenGL ES context won't be created
 		*/
@@ -2322,7 +2322,7 @@ namespace OpenGLES3Rhi
 			RHI_DELETE(mOpenGLES3Rhi.getContext(), ExtensionsRuntimeLinking, mExtensions);
 
 			// Destroy the shared library instances
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				if (nullptr != mEGLSharedLibrary)
 				{
 					::FreeLibrary(static_cast<HMODULE>(mEGLSharedLibrary));
@@ -2465,7 +2465,7 @@ namespace OpenGLES3Rhi
 			// We don't need to check m_pEGLSharedLibrary and m_pGLESSharedLibrary at this point because we know they must contain a null pointer
 
 			// EGL and OpenGL ES 3 may be within a single shared library, or within two separate shared libraries
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				// First, try the OpenGL ES 3 emulator from ARM (it's possible to move around this dll without issues, so, this one first)
 				mEGLSharedLibrary = ::LoadLibraryExA("libEGL.dll", nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
 				if (nullptr != mEGLSharedLibrary)
@@ -2550,7 +2550,7 @@ namespace OpenGLES3Rhi
 			bool result = true;	// Success by default
 
 			// Define a helper macro
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				#define IMPORT_FUNC(funcName)																																						\
 					if (result)																																										\
 					{																																												\
@@ -2973,7 +2973,7 @@ namespace OpenGLES3Rhi
 					// Output the debug string
 					if (openGLES3Rhi.getContext().getLog().print(Rhi::ILog::Type::CRITICAL, sourceCode, __FILE__, static_cast<uint32_t>(__LINE__), informationLog))
 					{
-						DEBUG_BREAK;
+						SE_DEBUG_BREAK;
 					}
 
 					// Cleanup information memory
@@ -7332,9 +7332,9 @@ namespace OpenGLES3Rhi
 				mRenderWindow->getWidthAndHeight(width, height);
 				return;
 			}
-			#ifdef _WIN32
+#if SE_PLATFORM_WINDOWS
 				// Is there a valid native OS window?
-				if (NULL_HANDLE != mNativeWindowHandle)
+				if (SE_NULL_HANDLE != mNativeWindowHandle)
 				{
 					// Get the width and height
 					long swapChainWidth  = 1;
@@ -7367,14 +7367,14 @@ namespace OpenGLES3Rhi
 				}
 				else
 			#elif defined(__ANDROID__)
-				if (NULL_HANDLE != mNativeWindowHandle)
+				if (SE_NULL_HANDLE != mNativeWindowHandle)
 				{
 					//TODO(sw) get size on Android
 					width = height = 1;
 				}
 				else
 			#elif defined LINUX
-				if (NULL_HANDLE != mNativeWindowHandle)
+				if (SE_NULL_HANDLE != mNativeWindowHandle)
 				{
 					IOpenGLES3Context& openGLES3Context = static_cast<OpenGLES3Rhi&>(getRhi()).getOpenGLES3Context();
 
@@ -9406,7 +9406,7 @@ namespace OpenGLES3Rhi
 			mGraphicsRootSignature->releaseReference();
 		}
 
-		#ifdef RHI_STATISTICS
+		#ifdef SE_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
 			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
@@ -10283,36 +10283,24 @@ namespace OpenGLES3Rhi
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
-
-		// TODO(co) Implement me
-		NOP;
 	}
 
 	void OpenGLES3Rhi::beginQuery([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] uint32_t queryIndex, [[maybe_unused]] uint32_t queryControlFlags)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
-
-		// TODO(co) Implement me
-		NOP;
 	}
 
 	void OpenGLES3Rhi::endQuery([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] uint32_t queryIndex)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
-
-		// TODO(co) Implement me
-		NOP;
 	}
 
 	void OpenGLES3Rhi::writeTimestampQuery([[maybe_unused]] Rhi::IQueryPool& queryPool, [[maybe_unused]] uint32_t queryIndex)
 	{
 		// Sanity check
 		RHI_MATCH_CHECK(*this, queryPool)
-
-		// TODO(co) Implement me
-		NOP;
 	}
 
 
@@ -10434,7 +10422,7 @@ namespace OpenGLES3Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, renderPass)
-		RHI_ASSERT(mContext, NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "OpenGL ES 3: The provided native window handle or render window must not be a null handle / null pointer")
+		RHI_ASSERT(mContext, SE_NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "OpenGL ES 3: The provided native window handle or render window must not be a null handle / null pointer")
 
 		// Create the swap chain
 		return RHI_NEW(mContext, SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -10994,7 +10982,7 @@ namespace OpenGLES3Rhi
 			// Print into log
 			if (static_cast<const OpenGLES3Rhi*>(userParam)->getContext().getLog().print(logType, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), "OpenGL ES 3 debug message\tSource:\"%s\"\tType:\"%s\"\tID:\"%u\"\tSeverity:\"%s\"\tMessage:\"%s\"", debugSource, debugType, id, debugSeverity, message))
 			{
-				DEBUG_BREAK;
+				SE_DEBUG_BREAK;
 			}
 		}
 	#else
@@ -11189,4 +11177,4 @@ OPENGLES3RHI_FUNCTION_EXPORT Rhi::IRhi* createOpenGLES3RhiInstance(const Rhi::Co
 }
 #undef OPENGLES3RHI_FUNCTION_EXPORT
 
-#endif // RHI_OPENGLES3
+#endif // SE_OPENGLES3
