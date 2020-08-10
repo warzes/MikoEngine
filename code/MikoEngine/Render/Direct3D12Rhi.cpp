@@ -4,8 +4,12 @@
 #include "MakeID.h"
 
 #include <d3d12.h>
-#include <dxgi1_5.h>
+#include <dxgi1_6.h>
 #include <d3dcompiler.h>
+
+// Windows Runtime Library. Needed for Microsoft::WRL::ComPtr<> template class.
+#include <wrl.h>
+using namespace Microsoft::WRL;
 
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxguid.lib")
@@ -6857,15 +6861,15 @@ namespace Direct3D12Rhi
 	//[-------------------------------------------------------]
 	private:
 		// Traditional graphics program
-		VertexShaderHlsl*				  mVertexShaderHlsl;					///< Vertex shader the graphics program is using (we keep a reference to it), can be a null pointer
-		TessellationControlShaderHlsl*	  mTessellationControlShaderHlsl;		///< Tessellation control shader the graphics program is using (we keep a reference to it), can be a null pointer
-		TessellationEvaluationShaderHlsl* mTessellationEvaluationShaderHlsl;	///< Tessellation evaluation shader the graphics program is using (we keep a reference to it), can be a null pointer
-		GeometryShaderHlsl*				  mGeometryShaderHlsl;					///< Geometry shader the graphics program is using (we keep a reference to it), can be a null pointer
+		VertexShaderHlsl*				  mVertexShaderHlsl = nullptr;					///< Vertex shader the graphics program is using (we keep a reference to it), can be a null pointer
+		TessellationControlShaderHlsl*	  mTessellationControlShaderHlsl = nullptr;		///< Tessellation control shader the graphics program is using (we keep a reference to it), can be a null pointer
+		TessellationEvaluationShaderHlsl* mTessellationEvaluationShaderHlsl = nullptr;	///< Tessellation evaluation shader the graphics program is using (we keep a reference to it), can be a null pointer
+		GeometryShaderHlsl*				  mGeometryShaderHlsl = nullptr;					///< Geometry shader the graphics program is using (we keep a reference to it), can be a null pointer
 		// Both graphics programs
-		FragmentShaderHlsl* mFragmentShaderHlsl;	///< Fragment shader the graphics program is using (we keep a reference to it), can be a null pointer
+		FragmentShaderHlsl* mFragmentShaderHlsl = nullptr;	///< Fragment shader the graphics program is using (we keep a reference to it), can be a null pointer
 		// Task and mesh shader based graphics program
-		TaskShaderHlsl* mTaskShaderHlsl;	///< Task shader the graphics program is using (we keep a reference to it), can be a null pointer
-		MeshShaderHlsl* mMeshShaderHlsl;	///< Mesh shader the graphics program is using (we keep a reference to it), can be a null pointer
+		TaskShaderHlsl* mTaskShaderHlsl = nullptr;	///< Task shader the graphics program is using (we keep a reference to it), can be a null pointer
+		MeshShaderHlsl* mMeshShaderHlsl = nullptr;	///< Mesh shader the graphics program is using (we keep a reference to it), can be a null pointer
 
 
 	};
@@ -8422,13 +8426,19 @@ namespace Direct3D12Rhi
 			if ( SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&d3d12Debug))) )
 			{
 				d3d12Debug->EnableDebugLayer();
-				d3d12Debug->Release();
+				//d3d12Debug->Release();
 			}
 		}
 #endif
+		//ComPtr<IDXGIFactory4> dxgiFactory;
+		UINT createFactoryFlags = 0;
+#if SE_DEBUG
+		createFactoryFlags = DXGI_CREATE_FACTORY_DEBUG;
+#endif
+
 
 		// Create the DXGI factory instance
-		if (SUCCEEDED(CreateDXGIFactory1(IID_PPV_ARGS(&mDxgiFactory4))))
+		if (SUCCEEDED(CreateDXGIFactory2(createFactoryFlags, IID_PPV_ARGS(&mDxgiFactory4))))
 		{				
 
 			// Create the Direct3D 12 device

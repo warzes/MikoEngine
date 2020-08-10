@@ -37,7 +37,7 @@ SE_PRAGMA_WARNING_LEVEL(0);
 #if SE_DIRECT3D12
 #	include <d3d12.h>
 #	include <d3dx12.h>
-#	include <dxgi1_5.h>
+#	include <dxgi1_6.h>
 #	include <d3dcompiler.h>
 #	include <pix_win.h>
 #endif
