@@ -571,14 +571,13 @@ namespace Direct3D11Rhi
 			#endif
 		#endif
 	#endif
-	Rhi::IAllocator* g_AmdAgsAllocator = nullptr;	///< Evil global variable since AMD AGS doesn't allow to pass in user data to the allocator functions
 	[[nodiscard]] void* __stdcall AmdAgsAllocCallback(size_t allocationSize)
 	{
-		return g_AmdAgsAllocator->reallocate(nullptr, 0, allocationSize, 1);
+		return GetAllocator().reallocate(nullptr, 0, allocationSize, 1);
 	}
 	void __stdcall AmdAgsFreeCallback(void* allocationPtr)
 	{
-		g_AmdAgsAllocator->reallocate(allocationPtr, 0, 0, 1);
+		GetAllocator().reallocate(allocationPtr, 0, 0, 1);
 	}
 	}
 	namespace Direct3D11Rhi
@@ -734,7 +733,6 @@ namespace Direct3D11Rhi
 						// Optional vendor specific part: AMD AGS
 						if (amdDxgiAdapter)
 						{
-							g_AmdAgsAllocator = &mDirect3D11Rhi.getContext().getAllocator();
 							#ifdef DYNAMIC_AMD_AGS
 #if SE_ARCH_64BIT
 									static constexpr const char* AMD_AGS_SHARED_LIBRARY_NAME = "amd_ags_x64.dll";
@@ -9806,9 +9804,9 @@ namespace Direct3D11Rhi
 	//[-------------------------------------------------------]
 	Direct3D11Rhi::Direct3D11Rhi(const Rhi::Context& context) :
 		IRhi(Rhi::NameId::DIRECT3D11, context),
-		VertexArrayMakeId(context.getAllocator()),
-		GraphicsPipelineStateMakeId(context.getAllocator()),
-		ComputePipelineStateMakeId(context.getAllocator()),
+		VertexArrayMakeId(),
+		GraphicsPipelineStateMakeId(),
+		ComputePipelineStateMakeId(),
 		mDirect3D11RuntimeLinking(nullptr),
 		mD3D11Device(nullptr),
 		mD3D11DeviceContext(nullptr),

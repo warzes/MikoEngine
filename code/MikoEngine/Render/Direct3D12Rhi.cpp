@@ -124,7 +124,6 @@ private:
 		uint m_Last;
 	};
 
-	Rhi::IAllocator& m_Allocator;
 	Range *m_Ranges; // Sorted array of ranges of free IDs
 	uint m_Count;    // Number of ranges in list
 	uint m_Capacity; // Total capacity of range list
@@ -133,9 +132,8 @@ private:
 	MakeID(const MakeID &) = delete;
 
 public:
-	MakeID(Rhi::IAllocator& allocator, const uint max_id = std::numeric_limits<uint>::max()) :
-		m_Allocator(allocator),
-		m_Ranges(static_cast<Range*>(allocator.reallocate(nullptr, 0, sizeof(Range), 1))),
+	MakeID(const uint max_id = std::numeric_limits<uint>::max()) :
+		m_Ranges(static_cast<Range*>(GetAllocator().reallocate(nullptr, 0, sizeof(Range), 1))),
 		m_Count(1),
 		m_Capacity(1)
 	{
@@ -146,7 +144,7 @@ public:
 
 	~MakeID()
 	{
-		m_Allocator.reallocate(m_Ranges, 0, 0, 1);
+		GetAllocator().reallocate(m_Ranges, 0, 0, 1);
 	}
 
 	bool CreateID(uint &id)
@@ -400,7 +398,7 @@ private:
 	{
 		if (m_Count >= m_Capacity)
 		{
-			m_Ranges = static_cast<Range *>(m_Allocator.reallocate(m_Ranges, sizeof(Range) * m_Capacity, (m_Capacity + m_Capacity) * sizeof(Range), 1));
+			m_Ranges = static_cast<Range *>(GetAllocator().reallocate(m_Ranges, sizeof(Range) * m_Capacity, (m_Capacity + m_Capacity) * sizeof(Range), 1));
 			m_Capacity += m_Capacity;
 		}
  
@@ -3708,15 +3706,15 @@ namespace
 			{
 				mD3D12Device = &d3d12Device;
 				[[maybe_unused]] HRESULT result = d3d12Device.CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, __uuidof(ID3D12CommandAllocator), reinterpret_cast<void**>(&mD3D12CommandAllocator));
-				ASSERT(SUCCEEDED(result), "Direct3D 12 create command allocator failed")
+				RHI_ASSERT(SUCCEEDED(result), "Direct3D 12 create command allocator failed")
 
 				// Create the command list
 				result = d3d12Device.CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, mD3D12CommandAllocator, nullptr, IID_PPV_ARGS(&mD3D12GraphicsCommandList));
-				ASSERT(SUCCEEDED(result), "Direct3D 12 create command list failed")
+				RHI_ASSERT(SUCCEEDED(result), "Direct3D 12 create command list failed")
 
 				// Command lists are created in the recording state, but there is nothing to record yet. The main loop expects it to be closed, so close it now.
 				result = mD3D12GraphicsCommandList->Close();
-				ASSERT(SUCCEEDED(result), "Direct3D 12 close command list failed")
+				RHI_ASSERT(SUCCEEDED(result), "Direct3D 12 close command list failed")
 			}
 
 			void destroy()
@@ -3737,7 +3735,7 @@ namespace
 
 			void begin(uint32_t numberOfUploadBufferBytes)
 			{
-				ASSERT(nullptr != mD3D12Device, "Invalid Direct3D 12 device")
+				RHI_ASSERT(nullptr != mD3D12Device, "Invalid Direct3D 12 device")
 				mD3D12CommandAllocator->Reset();
 				mD3D12GraphicsCommandList->Reset(mD3D12CommandAllocator, nullptr);
 				if (numberOfUploadBufferBytes != mNumberOfUploadBufferBytes)
@@ -3761,7 +3759,7 @@ namespace
 					mD3D12ResourceUploadBuffer->Unmap(0, &d3d12Range);
 				}
 				[[maybe_unused]] HRESULT result = mD3D12GraphicsCommandList->Close();
-				ASSERT(SUCCEEDED(result), "Direct3D 12 close command list failed")
+				RHI_ASSERT(SUCCEEDED(result), "Direct3D 12 close command list failed")
 			}
 
 			uint32_t allocateUploadBuffer(uint32_t size, uint32_t alignment)
@@ -3770,14 +3768,14 @@ namespace
 				if (alignedOffset + size > mNumberOfUploadBufferBytes)
 				{
 					// TODO(co) Reallocate
-					ASSERT(false, "Direct3D 12 allocate upload buffer failed")
+					RHI_ASSERT(false, "Direct3D 12 allocate upload buffer failed")
 				}
 				if (nullptr == mData)
 				{
 					mD3D12GpuVirtualAddress = mD3D12ResourceUploadBuffer->GetGPUVirtualAddress();
 					const D3D12_RANGE d3d12Range = { 0, 0 };
 					[[maybe_unused]] HRESULT result = mD3D12ResourceUploadBuffer->Map(0, &d3d12Range, reinterpret_cast<void**>(&mData));
-					ASSERT(SUCCEEDED(result), "Direct3D 12 map buffer failed")
+					RHI_ASSERT(SUCCEEDED(result), "Direct3D 12 map buffer failed")
 				}
 				mOffset = alignedOffset + size;
 				return alignedOffset;
@@ -3805,7 +3803,7 @@ namespace
 				ID3D12Resource* d3d12Resource = nullptr;
 				const D3D12_RESOURCE_STATES d3d12ResourceStates = (d3dHeapType == D3D12_HEAP_TYPE_READBACK) ? D3D12_RESOURCE_STATE_COPY_DEST : D3D12_RESOURCE_STATE_GENERIC_READ;
 				[[maybe_unused]] HRESULT result = d3d12Device.CreateCommittedResource(&d3d12HeapProperties, D3D12_HEAP_FLAG_NONE, &d3d12ResourceDesc, d3d12ResourceStates, nullptr, __uuidof(ID3D12Resource), reinterpret_cast<void**>(&d3d12Resource));
-				ASSERT(SUCCEEDED(result), "Direct3D 12 create committed resource failed")
+				RHI_ASSERT(SUCCEEDED(result), "Direct3D 12 create committed resource failed")
 
 				return d3d12Resource;
 			}
@@ -3908,12 +3906,12 @@ namespace
 		//[ Public methods                                        ]
 		//[-------------------------------------------------------]
 		public:
-			inline DescriptorHeap(Rhi::IAllocator& allocator, ID3D12Device& d3d12Device, D3D12_DESCRIPTOR_HEAP_TYPE d3d12DescriptorHeapType, uint16_t size, bool shaderVisible) :
+			inline DescriptorHeap(ID3D12Device& d3d12Device, D3D12_DESCRIPTOR_HEAP_TYPE d3d12DescriptorHeapType, uint16_t size, bool shaderVisible) :
 				mD3D12DescriptorHeap(nullptr),
 				mD3D12CpuDescriptorHandleForHeapStart{},
 				mD3D12GpuDescriptorHandleForHeapStart{},
 				mDescriptorSize(0),
-				mMakeIDAllocator(allocator, size - 1u)
+				mMakeIDAllocator(size - 1u)
 			{
 				D3D12_DESCRIPTOR_HEAP_DESC d3d12DescriptorHeadDescription = {};
 				d3d12DescriptorHeadDescription.Type			  = d3d12DescriptorHeapType;
@@ -3934,14 +3932,14 @@ namespace
 			{
 				uint16_t index = 0;
 				[[maybe_unused]] const bool result = mMakeIDAllocator.CreateRangeID(index, count);
-				ASSERT(result, "Direct3D 12 create range ID failed")
+				RHI_ASSERT(result, "Direct3D 12 create range ID failed")
 				return index;
 			}
 
 			inline void release(uint16_t offset, uint16_t count)
 			{
 				[[maybe_unused]] const bool result = mMakeIDAllocator.DestroyRangeID(offset, count);
-				ASSERT(result, "Direct3D 12 destroy range ID failed")
+				RHI_ASSERT(result, "Direct3D 12 destroy range ID failed")
 			}
 
 			inline ID3D12DescriptorHeap* getD3D12DescriptorHeap() const
@@ -5084,7 +5082,7 @@ namespace Direct3D12Rhi
 				numberOfRows = (numberOfRows + 3) >> 2;
 			}
 			numberOfRows *= depth;
-			ASSERT(pitch * numberOfRows == size, "Direct3D 12: Invalid size")
+			RHI_ASSERT(pitch * numberOfRows == size, "Direct3D 12: Invalid size")
 
 			// Grab upload buffer space
 			static constexpr uint32_t D3D12_TEXTURE_DATA_PITCH_ALIGNMENT	 = 256;	// "Microsoft Windows 10 SDK" -> "10.0.10240.0" -> "D3D12.h"
@@ -12349,9 +12347,9 @@ namespace Direct3D12Rhi
 	//[-------------------------------------------------------]
 	Direct3D12Rhi::Direct3D12Rhi(const Rhi::Context& context) :
 		IRhi(Rhi::NameId::DIRECT3D12, context),
-		VertexArrayMakeId(context.getAllocator()),
-		GraphicsPipelineStateMakeId(context.getAllocator()),
-		ComputePipelineStateMakeId(context.getAllocator()),
+		VertexArrayMakeId(),
+		GraphicsPipelineStateMakeId(),
+		ComputePipelineStateMakeId(),
 		mDirect3D12RuntimeLinking(nullptr),
 		mDxgiFactory4(nullptr),
 		mD3D12Device(nullptr),
@@ -12450,10 +12448,10 @@ namespace Direct3D12Rhi
 
 								// Create descriptor heaps
 								// TODO(co) The initial descriptor heap sizes are probably too small, additionally the descriptor heap should be able to dynamically grow during runtime (in case it can't be avoided)
-								mShaderResourceViewDescriptorHeap = RHI_NEW(mContext, ::detail::DescriptorHeap)(mContext.getAllocator(), *mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,	64, true);
-								mRenderTargetViewDescriptorHeap   = RHI_NEW(mContext, ::detail::DescriptorHeap)(mContext.getAllocator(), *mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV,			16, false);
-								mDepthStencilViewDescriptorHeap	  = RHI_NEW(mContext, ::detail::DescriptorHeap)(mContext.getAllocator(), *mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_DSV,			16, false);
-								mSamplerDescriptorHeap			  = RHI_NEW(mContext, ::detail::DescriptorHeap)(mContext.getAllocator(), *mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER,		16, true);
+								mShaderResourceViewDescriptorHeap = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,	64, true);
+								mRenderTargetViewDescriptorHeap   = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV,			16, false);
+								mDepthStencilViewDescriptorHeap	  = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_DSV,			16, false);
+								mSamplerDescriptorHeap			  = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER,		16, true);
 							}
 							else
 							{

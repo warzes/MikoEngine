@@ -148,7 +148,6 @@ private:
 		uint m_Last;
 	};
 
-	Rhi::IAllocator& m_Allocator;
 	Range *m_Ranges; // Sorted array of ranges of free IDs
 	uint m_Count;    // Number of ranges in list
 	uint m_Capacity; // Total capacity of range list
@@ -157,9 +156,8 @@ private:
 	MakeID(const MakeID &) = delete;
 
 public:
-	MakeID(Rhi::IAllocator& allocator, const uint max_id = std::numeric_limits<uint>::max()) :
-		m_Allocator(allocator),
-		m_Ranges(static_cast<Range*>(allocator.reallocate(nullptr, 0, sizeof(Range), 1))),
+	MakeID(const uint max_id = std::numeric_limits<uint>::max()) :
+		m_Ranges(static_cast<Range*>(GetAllocator().reallocate(nullptr, 0, sizeof(Range), 1))),
 		m_Count(1),
 		m_Capacity(1)
 	{
@@ -170,7 +168,7 @@ public:
 
 	~MakeID()
 	{
-		m_Allocator.reallocate(m_Ranges, 0, 0, 1);
+		GetAllocator().reallocate(m_Ranges, 0, 0, 1);
 	}
 
 	bool CreateID(uint &id)
@@ -424,7 +422,7 @@ private:
 	{
 		if (m_Count >= m_Capacity)
 		{
-			m_Ranges = static_cast<Range *>(m_Allocator.reallocate(m_Ranges, sizeof(Range) * m_Capacity, (m_Capacity + m_Capacity) * sizeof(Range), 1));
+			m_Ranges = static_cast<Range *>(GetAllocator().reallocate(m_Ranges, sizeof(Range) * m_Capacity, (m_Capacity + m_Capacity) * sizeof(Range), 1));
 			m_Capacity += m_Capacity;
 		}
  
@@ -9298,8 +9296,8 @@ namespace OpenGLES3Rhi
 	//[-------------------------------------------------------]
 	OpenGLES3Rhi::OpenGLES3Rhi(const Rhi::Context& context) :
 		IRhi(Rhi::NameId::OPENGLES3, context),
-		VertexArrayMakeId(context.getAllocator()),
-		GraphicsPipelineStateMakeId(context.getAllocator()),
+		VertexArrayMakeId(),
+		GraphicsPipelineStateMakeId(),
 		mOpenGLES3Context(nullptr),
 		mShaderLanguageGlsl(nullptr),
 		mGraphicsRootSignature(nullptr),

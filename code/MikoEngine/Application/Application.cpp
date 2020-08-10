@@ -1,9 +1,6 @@
 #include "stdafx.h"
 #include "Application.h"
 #include "Core/Logger.h"
-#include <Render/DefaultLog.h>
-#include <Render/DefaultAssert.h>
-#include <Render/DefaultAllocator.h>
 #include <Render/RhiInstance.h>
 //-----------------------------------------------------------------------------
 extern "C"
@@ -48,15 +45,14 @@ int Application::Run(int argc, const char *argv[])
 	if ( !init_base(argc, argv) )
 		return 1;
 
-	Rhi::DefaultAllocator defaultAllocator;
 #if SE_PLATFORM_WINDOWS
-	Rhi::Context rhiContext(defaultAllocator, (handle)glfwNativeWindowHandle(m_window));
+	Rhi::Context rhiContext((handle)glfwNativeWindowHandle(m_window));
 	const bool loadRhiApiSharedLibrary = false;
 #elif LINUX
 	// Under Linux the OpenGL library interacts with the library from X11 so we need to load the library ourself instead letting it be loaded by the RHI instance
 	// -> See http://dri.sourceforge.net/doc/DRIuserguide.html "11.5 libGL.so and dlopen()"
 	const bool loadRhiApiSharedLibrary = true;
-	Rhi::X11Context rhiContext(defaultLog, defaultAssert, defaultAllocator, getX11Display(), getNativeWindowHandle(*sdlWindow));
+	Rhi::X11Context rhiContext(getX11Display(), getNativeWindowHandle(*sdlWindow));
 #endif
 	Rhi::RhiInstance rhiInstance((argc > 1) ? argv[1] : "Direct3D11", rhiContext, loadRhiApiSharedLibrary);
 	Rhi::IRhiPtr rhi = rhiInstance.getRhi();
