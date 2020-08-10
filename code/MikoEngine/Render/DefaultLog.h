@@ -52,7 +52,7 @@ public:
 	*  @return
 	*    "true" to request debug break, else "false"
 	*/
-	[[nodiscard]] virtual bool print(Type type, const char* attachment, const char* file, uint32_t line, const char* format, ...)
+	[[nodiscard]] bool print(Type type, const char* attachment, const char* file, uint32_t line, const char* format, ...)
 	{
 		bool requestDebugBreak = false;
 
@@ -120,7 +120,7 @@ private:
 	*  @return
 	*    "true" to request debug break, else "false"
 	*/
-	[[nodiscard]] inline virtual bool printInternal(Type type, const char*, [[maybe_unused]] const char* file, [[maybe_unused]] uint32_t line, const char* message, uint32_t)
+	[[nodiscard]] inline bool printInternal(Type type, const char*, [[maybe_unused]] const char* file, [[maybe_unused]] uint32_t line, const char* message, uint32_t)
 	{
 		std::lock_guard<std::mutex> mutexLock(mMutex);
 		bool requestDebugBreak = false;

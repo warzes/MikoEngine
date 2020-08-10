@@ -1130,8 +1130,10 @@ namespace Direct3D12Rhi
 			RHI_ASSERT(pitch * numberOfRows == size, "Direct3D 12: Invalid size")
 
 			// Grab upload buffer space
+#if 0
 			static constexpr uint32_t D3D12_TEXTURE_DATA_PITCH_ALIGNMENT	 = 256;	// "Microsoft Windows 10 SDK" -> "10.0.10240.0" -> "D3D12.h"
 			static constexpr uint32_t D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT = 512;	// "Microsoft Windows 10 SDK" -> "10.0.10240.0" -> "D3D12.h"
+#endif
 			const uint32_t destinationPitch = ::detail::align(pitch, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT);
 			const uint32_t destinationOffset = uploadContext.getUploadCommandListAllocator()->allocateUploadBuffer(destinationPitch * numberOfRows, D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
 
@@ -9439,7 +9441,7 @@ namespace Direct3D12Rhi
 			{
 				RHI_ASSERT(nullptr != name, "Direct3D 12 debug marker names must not be a null pointer")
 				const UINT size = static_cast<UINT>((strlen(name) + 1) * sizeof(name[0]));
-				mD3D12GraphicsCommandList->SetMarker(PIX_EVENT_ANSI_VERSION, name, size);
+				mD3D12GraphicsCommandList->SetMarker(DirectX::Detail::PIX_EVENT_ANSI_VERSION, name, size);
 			}
 		}
 
@@ -9449,7 +9451,7 @@ namespace Direct3D12Rhi
 			{
 				RHI_ASSERT(nullptr != name, "Direct3D 12 debug event names must not be a null pointer")
 				const UINT size = static_cast<UINT>((strlen(name) + 1) * sizeof(name[0]));
-				mD3D12GraphicsCommandList->BeginEvent(PIX_EVENT_ANSI_VERSION, name, size);
+				mD3D12GraphicsCommandList->BeginEvent(DirectX::Detail::PIX_EVENT_ANSI_VERSION, name, size);
 			}
 		}
 

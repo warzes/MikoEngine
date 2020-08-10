@@ -2,22 +2,22 @@
 
 #include "Render/Rhi.h"
 
-#ifdef SE_RHINULL
+#if SE_RHINULL
 [[nodiscard]] extern Rhi::IRhi* createNullRhiInstance(const Rhi::Context&);
 #endif
-#ifdef SE_VULKAN
+#if SE_VULKAN
 [[nodiscard]] extern Rhi::IRhi* createVulkanRhiInstance(const Rhi::Context&);
 #endif
-#ifdef SE_OPENGL
+#if SE_OPENGL
 [[nodiscard]] extern Rhi::IRhi* createOpenGLRhiInstance(const Rhi::Context&);
 #endif
-#ifdef SE_OPENGLES
+#if SE_OPENGLES
 [[nodiscard]] extern Rhi::IRhi* createOpenGLES3RhiInstance(const Rhi::Context&);
 #endif
-#ifdef SE_DIRECT3D11
+#if SE_DIRECT3D11
 [[nodiscard]] extern Rhi::IRhi* createDirect3D11RhiInstance(const Rhi::Context&);
 #endif
-#ifdef SE_DIRECT3D12
+#if SE_DIRECT3D12
 [[nodiscard]] extern Rhi::IRhi* createDirect3D12RhiInstance(const Rhi::Context&);
 #endif
 
@@ -49,27 +49,27 @@ namespace Rhi
 				context.setRhiApiSharedLibrary(mOpenGLSharedLibrary);
 			}
 
-#ifdef SE_RHINULL
+#if SE_RHINULL
 			if (0 == strcmp(rhiName, "Null"))
 				mRhi = createNullRhiInstance(context);
 #endif
-#ifdef SE_VULKAN
+#if SE_VULKAN
 			if (0 == strcmp(rhiName, "Vulkan"))
 				mRhi = createVulkanRhiInstance(context);
 #endif
-#ifdef SE_OPENGL
+#if SE_OPENGL
 			if (0 == strcmp(rhiName, "OpenGL"))
 				mRhi = createOpenGLRhiInstance(context);
 #endif
-#ifdef SE_OPENGLES
+#if SE_OPENGLES
 			if (0 == strcmp(rhiName, "OpenGLES3"))
 				mRhi = createOpenGLES3RhiInstance(context);
 #endif
-#ifdef SE_DIRECT3D11
+#if SE_DIRECT3D11
 			if (0 == strcmp(rhiName, "Direct3D11"))
 				mRhi = createDirect3D11RhiInstance(context);
 #endif
-#ifdef SE_DIRECT3D12
+#if SE_DIRECT3D12
 			if (0 == strcmp(rhiName, "Direct3D12"))
 				mRhi = createDirect3D12RhiInstance(context);
 #endif

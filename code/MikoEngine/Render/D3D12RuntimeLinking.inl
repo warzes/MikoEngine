@@ -4,6 +4,7 @@
 //[-------------------------------------------------------]
 //[ Macros & definitions                                  ]
 //[-------------------------------------------------------]
+#if 0
 // Redirect D3D12* function calls to funcPtr_D3D12*
 #ifndef FNPTR
 #define FNPTR(name) funcPtr_##name
@@ -40,6 +41,8 @@ FNDEF_D3DX12(HRESULT, D3DCreateBlob, (SIZE_T Size, ID3DBlob** ppBlob));
 #define D3DCompile		FNPTR(D3DCompile)
 #define D3DCreateBlob	FNPTR(D3DCreateBlob)
 
+#endif
+
 class Direct3D12RuntimeLinking final
 {
 	//[-------------------------------------------------------]
@@ -69,6 +72,7 @@ public:
 	*/
 	~Direct3D12RuntimeLinking()
 	{
+#if 0
 		// Destroy the shared library instances
 		if ( nullptr != mDxgiSharedLibrary )
 		{
@@ -82,6 +86,7 @@ public:
 		{
 			::FreeLibrary(static_cast<HMODULE>(mD3DCompilerSharedLibrary));
 		}
+#endif
 	}
 
 	/**
@@ -128,6 +133,7 @@ private:
 	*/
 	[[nodiscard]] bool loadSharedLibraries()
 	{
+#if 0
 		// Load the shared library
 		mDxgiSharedLibrary = ::LoadLibraryExA("dxgi.dll", nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
 		if ( nullptr != mDxgiSharedLibrary )
@@ -153,6 +159,8 @@ private:
 
 		// Done
 		return (nullptr != mDxgiSharedLibrary && nullptr != mD3D12SharedLibrary && nullptr != mD3DCompilerSharedLibrary);
+#endif
+		return true;
 	}
 
 	/**
@@ -165,7 +173,7 @@ private:
 	[[nodiscard]] bool loadDxgiEntryPoints()
 	{
 		bool result = true;	// Success by default
-
+#if 0
 		// Define a helper macro
 #define IMPORT_FUNC(funcName)																																						\
 				if (result)																																										\
@@ -190,7 +198,7 @@ private:
 
 			// Undefine the helper macro
 #undef IMPORT_FUNC
-
+#endif
 // Done
 return result;
 	}
@@ -205,7 +213,7 @@ return result;
 	[[nodiscard]] bool loadD3D12EntryPoints()
 	{
 		bool result = true;	// Success by default
-
+#if 0
 		// Define a helper macro
 #define IMPORT_FUNC(funcName)																																					\
 				if (result)																																									\
@@ -234,7 +242,7 @@ return result;
 
 			// Undefine the helper macro
 #undef IMPORT_FUNC
-
+#endif
 // Done
 return result;
 	}
@@ -249,7 +257,7 @@ return result;
 	[[nodiscard]] bool loadD3DCompilerEntryPoints()
 	{
 		bool result = true;	// Success by default
-
+#if 0
 		// Define a helper macro
 #define IMPORT_FUNC(funcName)																																					\
 				if (result)																																									\
@@ -275,7 +283,7 @@ return result;
 
 			// Undefine the helper macro
 #undef IMPORT_FUNC
-
+#endif
 // Done
 return result;
 	}

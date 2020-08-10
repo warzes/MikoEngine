@@ -1,5 +1,13 @@
 #pragma once
 
+#include <d3d12.h>
+#include <dxgi1_5.h>
+#include <d3dcompiler.h>
+
+#pragma comment(lib, "d3d12.lib")
+#pragma comment(lib, "dxguid.lib")
+#pragma comment(lib, "DXGI.lib")
+
 // TODO: возможно из-за этого ошибки?
 
 //[-------------------------------------------------------]
@@ -18,6 +26,7 @@
 	can use the Direct3D headers for features not covered by this RHI.
 */
 
+#if 0
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
@@ -3242,3 +3251,5 @@ inline void MemcpySubresource(
 //   } GUID;
 #define RHI_DEFINE_GUID(name, l, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8) constexpr GUID name = { l, w1, w2, { b1, b2,  b3,  b4,  b5,  b6,  b7,  b8 } }
 RHI_DEFINE_GUID(WKPDID_D3DDebugObjectName, 0x429b8c22, 0x9188, 0x4b0c, 0x87, 0x42, 0xac, 0xb0, 0xbf, 0x85, 0xc2, 0x00);
+
+#endif

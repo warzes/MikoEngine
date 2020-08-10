@@ -33,7 +33,10 @@ https://www.youtube.com/watch?v=qx1c190aGhs
 http://nfrechette.github.io/2015/05/11/memory_allocator_interface/ (unrimp example Allocator)
 http://cnicholson.net/2009/02/stupid-c-tricks-adventures-in-assert/
 https://milty.nl/grad_guide/index.html     !!!!!!!!!! терминология GAPI
+
+D3D12
 https://www.3dgep.com/learning-directx-12-1/
+https://github.com/vinjn/awesome-d3d12
 
 ===================================================================================================
 для игр и демо

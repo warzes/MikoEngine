@@ -34,6 +34,14 @@ SE_PRAGMA_WARNING_LEVEL(0);
 #	include <smol-v/smolv.h>
 #endif
 
+#if SE_DIRECT3D12
+#	include <d3d12.h>
+#	include <d3dx12.h>
+#	include <dxgi1_5.h>
+#	include <d3dcompiler.h>
+#	include <pix_win.h>
+#endif
+
 //#if SE_OPENGL
 //#	if SE_PLATFORM_WINDOWS
 //#		include <GL/gl.h>
