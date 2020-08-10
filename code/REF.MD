@@ -32,6 +32,7 @@ https://armkeil.blob.core.windows.net/developer/Files/pdf/graphics-and-multimedi
 https://www.youtube.com/watch?v=qx1c190aGhs
 http://nfrechette.github.io/2015/05/11/memory_allocator_interface/ (unrimp example Allocator)
 http://cnicholson.net/2009/02/stupid-c-tricks-adventures-in-assert/
+https://milty.nl/grad_guide/index.html     !!!!!!!!!! терминология GAPI
 
 ===================================================================================================
 для игр и демо
@@ -54,6 +55,13 @@ https://gpuopen-librariesandsdks.github.io/V-EZ/#_samplers
 https://paroj.github.io/gltut/
 https://www.khronos.org/files/vulkan10-reference-guide.pdf
 https://vulkan.lunarg.com/doc/view/1.2.135.0/windows/tutorial/html/index.html
+
+Поддержка feature level
+	Direct3D 11		Windows 7
+	Direct3D 11.1	Windows 8+
+	Direct3D 11.2	Windows 8.1+
+	Direct3D 11.3	Windows 10+
+	Direct3D 11.4	Windows 10+
 
 ===================================================================================================
 C++

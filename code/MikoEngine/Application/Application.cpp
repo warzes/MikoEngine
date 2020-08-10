@@ -135,7 +135,7 @@ bool Application::init_base(int argc, const char * argv[])
 	const bool loadRhiApiSharedLibrary = true;
 	rhiContext = std::make_unique<Rhi::X11Context>(getX11Display(), glfwNativeWindowHandle(m_window));
 #endif
-	rhiInstance = std::make_unique<Rhi::RhiInstance>("Direct3D11", *rhiContext.get(), loadRhiApiSharedLibrary);
+	rhiInstance = std::make_unique<Rhi::RhiInstance>("Direct3D12", *rhiContext.get(), loadRhiApiSharedLibrary);
 	rhi = rhiInstance->getRhi();
 	if ( nullptr == rhi && !rhi->isInitialized() )
 		return 0;

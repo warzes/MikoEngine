@@ -8420,20 +8420,21 @@ namespace Direct3D12Rhi
 		// Is Direct3D 12 available?
 		if (mDirect3D12RuntimeLinking->isDirect3D12Avaiable())
 		{
+			// Enable the Direct3D 12 debug layer
+#if SE_DEBUG
+			{
+				ID3D12Debug* d3d12Debug = nullptr;
+				if ( SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&d3d12Debug))) )
+				{
+					d3d12Debug->EnableDebugLayer();
+					d3d12Debug->Release();
+				}
+			}
+#endif
+
 			// Create the DXGI factory instance
 			if (SUCCEEDED(CreateDXGIFactory1(IID_PPV_ARGS(&mDxgiFactory4))))
-			{
-				// Enable the Direct3D 12 debug layer
-				#if SE_DEBUG
-				{
-					ID3D12Debug* d3d12Debug = nullptr;
-					if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&d3d12Debug))))
-					{
-						d3d12Debug->EnableDebugLayer();
-						d3d12Debug->Release();
-					}
-				}
-				#endif
+			{				
 
 				// Create the Direct3D 12 device
 				// -> In case of failure, create an emulated device instance so we can at least test the DirectX 12 API
