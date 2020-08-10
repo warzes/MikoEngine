@@ -129,6 +129,9 @@
     <ClInclude Include="Render\D3D11Header.h">
       <Filter>4_Render\D3D11</Filter>
     </ClInclude>
+    <ClInclude Include="Render\D3D12Header.h">
+      <Filter>4_Render\D3D12</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
@@ -161,5 +164,13 @@
     <Filter Include="4_Render\D3D11">
       <UniqueIdentifier>{44ea876d-907a-44ca-8aca-736d5092507e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="4_Render\D3D12">
+      <UniqueIdentifier>{5f3e1101-6089-43ee-baca-06f881ece6e1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Render\D3D12RuntimeLinking.inl">
+      <Filter>4_Render\D3D12</Filter>
+    </None>
   </ItemGroup>
 </Project>
