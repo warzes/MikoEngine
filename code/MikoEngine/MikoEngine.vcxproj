@@ -178,7 +178,6 @@
     <ClInclude Include="MikoHeader.h" />
     <ClInclude Include="Render\D3D11Header.h" />
     <ClInclude Include="Render\D3D11RuntimeLinking.inl" />
-    <ClInclude Include="Render\D3D12Header.h" />
     <ClInclude Include="Render\DefaultAllocator.h" />
     <ClInclude Include="Render\DefaultAssert.h" />
     <ClInclude Include="Render\DefaultLog.h" />
@@ -208,9 +207,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Utility\Timer.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Render\D3D12RuntimeLinking.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3447,17 +3447,17 @@ namespace Rhi
 		NULL_DUMMY	= 3816175889	///< Null RHI implementation, same value as renderer STRING_ID("Null")
 	};
 
-	#ifdef SE_DIRECT3D11
+	#if SE_DIRECT3D11
 		static constexpr const char* DEFAULT_RHI_NAME = "Direct3D11";
-	#elif defined(SE_OPENGL)
+	#elif SE_OPENGL
 		static constexpr const char* DEFAULT_RHI_NAME = "OpenGL";
-	#elif defined(SE_OPENGLES3)
+	#elif SE_OPENGLES
 		static constexpr const char* DEFAULT_RHI_NAME = "OpenGLES3";
-	#elif defined(SE_VULKAN)
+	#elif SE_VULKAN
 		static constexpr const char* DEFAULT_RHI_NAME = "Vulkan";
-	#elif defined(SE_DIRECT3D12)
+	#elif SE_DIRECT3D12
 		static constexpr const char* DEFAULT_RHI_NAME = "Direct3D12";
-	#elif defined(SE_RHINULL)
+	#elif SE_RHINULL
 		static constexpr const char* DEFAULT_RHI_NAME = "Null";
 	#endif
 

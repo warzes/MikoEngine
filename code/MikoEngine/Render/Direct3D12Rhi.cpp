@@ -2,7 +2,15 @@
 #if SE_DIRECT3D12
 #include "Rhi.h"
 #include "MakeID.h"
-#include "D3D12Header.h"
+
+#include <d3d12.h>
+#include <dxgi1_5.h>
+#include <d3dcompiler.h>
+
+#pragma comment(lib, "d3d12.lib")
+#pragma comment(lib, "dxguid.lib")
+#pragma comment(lib, "DXGI.lib")
+#pragma comment(lib, "d3dcompiler.lib")
 
 namespace Direct3D12Rhi
 {
@@ -690,12 +698,7 @@ namespace Direct3D12Rhi
 		void debugReportLiveDeviceObjects();
 #endif
 
-
-		//[-------------------------------------------------------]
-		//[ Private data                                          ]
-		//[-------------------------------------------------------]
 	private:
-		Direct3D12RuntimeLinking*  mDirect3D12RuntimeLinking;	///< Direct3D 12 runtime linking instance, always valid
 		IDXGIFactory4*			   mDxgiFactory4;				///< DXGI factors instance, always valid for a correctly initialized RHI
 		ID3D12Device*			   mD3D12Device;				///< The Direct3D 12 device, null pointer on error (we don't check because this would be a total overhead, the user has to use "Rhi::IRhi::isInitialized()" and is asked to never ever use a not properly initialized RHI)
 		ID3D12CommandQueue*		   mD3D12CommandQueue;			///< The Direct3D 12 command queue, null pointer on error (we don't check because this would be a total overhead, the user has to use "Rhi::IRhi::isInitialized()" and is asked to never ever use a not properly initialized RHI)
@@ -721,8 +724,6 @@ namespace Direct3D12Rhi
 
 
 	};
-
-#include "D3D12RuntimeLinking.inl"
 
 	//[-------------------------------------------------------]
 	//[ Global functions                                      ]
@@ -7355,9 +7356,7 @@ namespace Direct3D12Rhi
 			d3d12GraphicsPipelineState.DSVFormat = Mapping::getDirect3D12Format(graphicsPipelineState.depthStencilViewFormat);
 			d3d12GraphicsPipelineState.SampleDesc.Count = 1;
 
-			auto hr = direct3D12Rhi.getD3D12Device().CreateGraphicsPipelineState(&d3d12GraphicsPipelineState, IID_PPV_ARGS(&mD3D12GraphicsPipelineState));
-
-			if (SUCCEEDED(hr))
+			if (SUCCEEDED(direct3D12Rhi.getD3D12Device().CreateGraphicsPipelineState(&d3d12GraphicsPipelineState, IID_PPV_ARGS(&mD3D12GraphicsPipelineState))))
 			{
 				// Assign a default name to the resource for debugging purposes
 				#if SE_DEBUG
@@ -8397,7 +8396,6 @@ namespace Direct3D12Rhi
 		VertexArrayMakeId(),
 		GraphicsPipelineStateMakeId(),
 		ComputePipelineStateMakeId(),
-		mDirect3D12RuntimeLinking(nullptr),
 		mDxgiFactory4(nullptr),
 		mD3D12Device(nullptr),
 		mD3D12CommandQueue(nullptr),
@@ -8417,109 +8415,103 @@ namespace Direct3D12Rhi
 			, mDebugBetweenBeginEndScene(false)
 		#endif
 	{
-		mDirect3D12RuntimeLinking = RHI_NEW(mContext, Direct3D12RuntimeLinking)(*this);
-
-		// Is Direct3D 12 available?
-		if (mDirect3D12RuntimeLinking->isDirect3D12Avaiable())
-		{
-			// Enable the Direct3D 12 debug layer
+		// Enable the Direct3D 12 debug layer
 #if SE_DEBUG
+		{
+			ID3D12Debug* d3d12Debug = nullptr;
+			if ( SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&d3d12Debug))) )
 			{
-				ID3D12Debug* d3d12Debug = nullptr;
-				if ( SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&d3d12Debug))) )
-				{
-					d3d12Debug->EnableDebugLayer();
-					d3d12Debug->Release();
-				}
+				d3d12Debug->EnableDebugLayer();
+				d3d12Debug->Release();
 			}
+		}
 #endif
 
-			// Create the DXGI factory instance
-			if (SUCCEEDED(CreateDXGIFactory1(IID_PPV_ARGS(&mDxgiFactory4))))
-			{				
+		// Create the DXGI factory instance
+		if (SUCCEEDED(CreateDXGIFactory1(IID_PPV_ARGS(&mDxgiFactory4))))
+		{				
 
-				// Create the Direct3D 12 device
-				// -> In case of failure, create an emulated device instance so we can at least test the DirectX 12 API
-				if (FAILED(D3D12CreateDevice(nullptr, D3D_FEATURE_LEVEL_12_0, IID_PPV_ARGS(&mD3D12Device))))
+			// Create the Direct3D 12 device
+			// -> In case of failure, create an emulated device instance so we can at least test the DirectX 12 API
+			if (FAILED(D3D12CreateDevice(nullptr, D3D_FEATURE_LEVEL_12_0, IID_PPV_ARGS(&mD3D12Device))))
+			{
+				RHI_LOG(CRITICAL, "Failed to create Direct3D 12 device instance. Creating an emulated Direct3D 11 device instance instead.")
+
+				// Create the DXGI adapter instance
+				IDXGIAdapter* dxgiAdapter = nullptr;
+				if (SUCCEEDED(mDxgiFactory4->EnumWarpAdapter(IID_PPV_ARGS(&dxgiAdapter))))
 				{
-					RHI_LOG(CRITICAL, "Failed to create Direct3D 12 device instance. Creating an emulated Direct3D 11 device instance instead.")
-
-					// Create the DXGI adapter instance
-					IDXGIAdapter* dxgiAdapter = nullptr;
-					if (SUCCEEDED(mDxgiFactory4->EnumWarpAdapter(IID_PPV_ARGS(&dxgiAdapter))))
+					// Create the emulated Direct3D 12 device
+					if (FAILED(D3D12CreateDevice(dxgiAdapter, D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&mD3D12Device))))
 					{
-						// Create the emulated Direct3D 12 device
-						if (FAILED(D3D12CreateDevice(dxgiAdapter, D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&mD3D12Device))))
-						{
-							RHI_LOG(CRITICAL, "Failed to create the Direct3D 12 device instance")
-						}
+						RHI_LOG(CRITICAL, "Failed to create the Direct3D 12 device instance")
+					}
 
-						// Release the DXGI adapter instance
-						dxgiAdapter->Release();
-					}
-					else
-					{
-						RHI_LOG(CRITICAL, "Failed to create Direct3D 12 DXGI adapter instance")
-					}
+					// Release the DXGI adapter instance
+					dxgiAdapter->Release();
+				}
+				else
+				{
+					RHI_LOG(CRITICAL, "Failed to create Direct3D 12 DXGI adapter instance")
 				}
 			}
-			else
-			{
-				RHI_LOG(CRITICAL, "Failed to create Direct3D 12 DXGI factory instance")
-			}
+		}
+		else
+		{
+			RHI_LOG(CRITICAL, "Failed to create Direct3D 12 DXGI factory instance")
+		}
 
-			// Is there a valid Direct3D 12 device instance?
-			if (nullptr != mD3D12Device)
+		// Is there a valid Direct3D 12 device instance?
+		if (nullptr != mD3D12Device)
+		{
+			// Describe and create the command queue
+			D3D12_COMMAND_QUEUE_DESC d3d12CommandQueueDesc;
+			d3d12CommandQueueDesc.Type		= D3D12_COMMAND_LIST_TYPE_DIRECT;
+			d3d12CommandQueueDesc.Priority	= D3D12_COMMAND_QUEUE_PRIORITY_NORMAL;
+			d3d12CommandQueueDesc.Flags		= D3D12_COMMAND_QUEUE_FLAG_NONE;
+			d3d12CommandQueueDesc.NodeMask	= 0;
+			if (SUCCEEDED(mD3D12Device->CreateCommandQueue(&d3d12CommandQueueDesc, IID_PPV_ARGS(&mD3D12CommandQueue))))
 			{
-				// Describe and create the command queue
-				D3D12_COMMAND_QUEUE_DESC d3d12CommandQueueDesc;
-				d3d12CommandQueueDesc.Type		= D3D12_COMMAND_LIST_TYPE_DIRECT;
-				d3d12CommandQueueDesc.Priority	= D3D12_COMMAND_QUEUE_PRIORITY_NORMAL;
-				d3d12CommandQueueDesc.Flags		= D3D12_COMMAND_QUEUE_FLAG_NONE;
-				d3d12CommandQueueDesc.NodeMask	= 0;
-				if (SUCCEEDED(mD3D12Device->CreateCommandQueue(&d3d12CommandQueueDesc, IID_PPV_ARGS(&mD3D12CommandQueue))))
+				// Create the command allocator
+				if (SUCCEEDED(mD3D12Device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&mD3D12CommandAllocator))))
 				{
-					// Create the command allocator
-					if (SUCCEEDED(mD3D12Device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&mD3D12CommandAllocator))))
+					// Create the command list
+					if (SUCCEEDED(mD3D12Device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, mD3D12CommandAllocator, nullptr, IID_PPV_ARGS(&mD3D12GraphicsCommandList))))
 					{
-						// Create the command list
-						if (SUCCEEDED(mD3D12Device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, mD3D12CommandAllocator, nullptr, IID_PPV_ARGS(&mD3D12GraphicsCommandList))))
+						// Command lists are created in the recording state, but there is nothing to record yet. The main loop expects it to be closed, so close it now.
+						if (SUCCEEDED(mD3D12GraphicsCommandList->Close()))
 						{
-							// Command lists are created in the recording state, but there is nothing to record yet. The main loop expects it to be closed, so close it now.
-							if (SUCCEEDED(mD3D12GraphicsCommandList->Close()))
-							{
-								// Initialize the capabilities
-								initializeCapabilities();
+							// Initialize the capabilities
+							initializeCapabilities();
 
-								// Create and begin upload context
-								mUploadContext.create(*mD3D12Device);
+							// Create and begin upload context
+							mUploadContext.create(*mD3D12Device);
 
-								// Create descriptor heaps
-								// TODO(co) The initial descriptor heap sizes are probably too small, additionally the descriptor heap should be able to dynamically grow during runtime (in case it can't be avoided)
-								mShaderResourceViewDescriptorHeap = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,	64, true);
-								mRenderTargetViewDescriptorHeap   = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV,			16, false);
-								mDepthStencilViewDescriptorHeap	  = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_DSV,			16, false);
-								mSamplerDescriptorHeap			  = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER,		16, true);
-							}
-							else
-							{
-								RHI_LOG(CRITICAL, "Failed to close the Direct3D 12 command list instance")
-							}
+							// Create descriptor heaps
+							// TODO(co) The initial descriptor heap sizes are probably too small, additionally the descriptor heap should be able to dynamically grow during runtime (in case it can't be avoided)
+							mShaderResourceViewDescriptorHeap = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,	64, true);
+							mRenderTargetViewDescriptorHeap   = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV,			16, false);
+							mDepthStencilViewDescriptorHeap	  = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_DSV,			16, false);
+							mSamplerDescriptorHeap			  = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER,		16, true);
 						}
 						else
 						{
-							RHI_LOG(CRITICAL, "Failed to create the Direct3D 12 command list instance")
+							RHI_LOG(CRITICAL, "Failed to close the Direct3D 12 command list instance")
 						}
 					}
 					else
 					{
-						RHI_LOG(CRITICAL, "Failed to create the Direct3D 12 command allocator instance")
+						RHI_LOG(CRITICAL, "Failed to create the Direct3D 12 command list instance")
 					}
 				}
 				else
 				{
-					RHI_LOG(CRITICAL, "Failed to create the Direct3D 12 command queue instance")
+					RHI_LOG(CRITICAL, "Failed to create the Direct3D 12 command allocator instance")
 				}
+			}
+			else
+			{
+				RHI_LOG(CRITICAL, "Failed to create the Direct3D 12 command queue instance")
 			}
 		}
 	}
@@ -8613,9 +8605,6 @@ namespace Direct3D12Rhi
 			mDxgiFactory4->Release();
 			mDxgiFactory4 = nullptr;
 		}
-
-		// Destroy the Direct3D 12 runtime linking instance
-		RHI_DELETE(mContext, Direct3D12RuntimeLinking, mDirect3D12RuntimeLinking);
 	}
 
 
