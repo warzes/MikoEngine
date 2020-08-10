@@ -2,6 +2,7 @@
 
 #include "ApplicationSettings.h"
 #include "Utility/Timer.h"
+#include "Render/RhiInstance.h"
 
 // Key and Mouse button limits.
 #define MAX_KEYS 1024
@@ -76,6 +77,20 @@ protected:
 	_CrtMemState m_crtMemState = { };
 #endif
 
+#if SE_PLATFORM_WINDOWS
+	std::unique_ptr<Rhi::Context> rhiContext = nullptr;
+#elif SE_PLATFORM_LINUX
+	std::unique_ptr<Rhi::X11Context> rhiContext = nullptr;	
+#endif
+	std::unique_ptr<Rhi::RhiInstance> rhiInstance = nullptr;
+
+	Rhi::IRhiPtr rhi = nullptr;
+
+	Rhi::ISwapChainPtr mainSwapChain;	
+
+	bool m_window_resized = false;
+	bool m_endFrame = true;
+
 private:
 	// Pre, Post frame methods for ImGUI updates, presentations etc.
 	void begin_frame();
@@ -85,4 +100,6 @@ private:
 	bool init_base(int argc, const char* argv[]);
 	void update_base(double delta);
 	void shutdown_base();
+
+
 };

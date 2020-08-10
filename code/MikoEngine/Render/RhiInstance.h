@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Render/Rhi.h>
+#include "Render/Rhi.h"
 
 #ifdef SE_RHINULL
 [[nodiscard]] extern Rhi::IRhi* createNullRhiInstance(const Rhi::Context&);
