@@ -26,11 +26,13 @@ SE_PRAGMA_WARNING_LEVEL(0);
 //#	include <glad.h>
 //#endif
 
-//#if SE_OPENGL_GLSLTOSPIRV
-//#	include <SPIRV/GlslangToSpv.h>
-//#	include <glslang/MachineIndependent/localintermediate.h>
-//#endif
-//#include <smol-v/smolv.h>
+#if SE_OPENGL || SE_VULKAN
+#	if SE_GLSLTOSPIRV
+#		include <SPIRV/GlslangToSpv.h>
+#		include <glslang/MachineIndependent/localintermediate.h>
+#	endif
+#	include <smol-v/smolv.h>
+#endif
 
 //#if SE_OPENGL
 //#	if SE_PLATFORM_WINDOWS
