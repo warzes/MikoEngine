@@ -14,7 +14,7 @@ extern "C"
 	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
 //-----------------------------------------------------------------------------
-void* glfwNativeWindowHandle(GLFWwindow* _window)
+handle glfwNativeWindowHandle(GLFWwindow* _window)
 {
 #	if SE_PLATFORM_LINUX || SE_PLATFORM_BSD
 # 		if ENTRY_CONFIG_USE_WAYLAND
@@ -36,7 +36,7 @@ void* glfwNativeWindowHandle(GLFWwindow* _window)
 #	elif SE_PLATFORM_OSX
 	return glfwGetCocoaWindow(_window);
 #	elif SE_PLATFORM_WINDOWS
-	return glfwGetWin32Window(_window);
+	return reinterpret_cast<handle>(glfwGetWin32Window(_window));
 #	endif // SE_PLATFORM_
 }
 //-----------------------------------------------------------------------------
@@ -46,13 +46,13 @@ int Application::Run(int argc, const char *argv[])
 		return 1;
 
 #if SE_PLATFORM_WINDOWS
-	Rhi::Context rhiContext((handle)glfwNativeWindowHandle(m_window));
+	Rhi::Context rhiContext(glfwNativeWindowHandle(m_window));
 	const bool loadRhiApiSharedLibrary = false;
 #elif LINUX
 	// Under Linux the OpenGL library interacts with the library from X11 so we need to load the library ourself instead letting it be loaded by the RHI instance
 	// -> See http://dri.sourceforge.net/doc/DRIuserguide.html "11.5 libGL.so and dlopen()"
 	const bool loadRhiApiSharedLibrary = true;
-	Rhi::X11Context rhiContext(getX11Display(), getNativeWindowHandle(*sdlWindow));
+	Rhi::X11Context rhiContext(getX11Display(), glfwNativeWindowHandle(m_window));
 #endif
 	Rhi::RhiInstance rhiInstance((argc > 1) ? argv[1] : "Direct3D11", rhiContext, loadRhiApiSharedLibrary);
 	Rhi::IRhiPtr rhi = rhiInstance.getRhi();

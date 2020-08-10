@@ -11,7 +11,7 @@
 #ifdef SE_OPENGL
 [[nodiscard]] extern Rhi::IRhi* createOpenGLRhiInstance(const Rhi::Context&);
 #endif
-#ifdef SE_OPENGLES3
+#ifdef SE_OPENGLES
 [[nodiscard]] extern Rhi::IRhi* createOpenGLES3RhiInstance(const Rhi::Context&);
 #endif
 #ifdef SE_DIRECT3D11
@@ -61,7 +61,7 @@ namespace Rhi
 			if (0 == strcmp(rhiName, "OpenGL"))
 				mRhi = createOpenGLRhiInstance(context);
 #endif
-#ifdef SE_OPENGLES3
+#ifdef SE_OPENGLES
 			if (0 == strcmp(rhiName, "OpenGLES3"))
 				mRhi = createOpenGLES3RhiInstance(context);
 #endif

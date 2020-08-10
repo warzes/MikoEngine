@@ -3,7 +3,6 @@
 #include "DefaultAllocator.h"
 
 /*
-
 Author:
 	Emil Persson, A.K.A. Humus.
 	http://www.humus.name

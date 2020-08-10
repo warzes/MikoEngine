@@ -135,14 +135,6 @@ namespace Rhi
 
 		/**
 		*  @brief
-		*    Destructor
-		*/
-		inline virtual ~Context()
-		{}
-
-
-		/**
-		*  @brief
 		*    Return the native window handle
 		*
 		*  @return
@@ -212,7 +204,6 @@ namespace Rhi
 		bool		mUseExternalContext;
 		ContextType	mContextType;
 		void*		mRhiApiSharedLibrary;	///< A handle to the RHI API shared library (e.g. obtained via "dlopen()" and co), can be a null pointer
-
 	};
 
 	#ifdef LINUX
@@ -421,9 +412,6 @@ namespace Rhi
 		long bottomRightY;	///< Bottom right y-coordinate of the scissor rectangle
 	};
 
-
-
-
 	//[-------------------------------------------------------]
 	//[ Rhi/ResourceType.h                                    ]
 	//[-------------------------------------------------------]
@@ -566,9 +554,6 @@ namespace Rhi
 		float			   minLod;			///< Default: -3.402823466e+38f (-FLT_MAX)
 		float			   maxLod;			///< Default: 3.402823466e+38f (FLT_MAX)
 	};
-
-
-
 
 	//[-------------------------------------------------------]
 	//[ Rhi/RootSignatureTypes.h                              ]

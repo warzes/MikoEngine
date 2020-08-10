@@ -117,14 +117,17 @@
     <ClInclude Include="Render\MakeID.h">
       <Filter>4_Render\temp</Filter>
     </ClInclude>
-    <ClInclude Include="Render\D3D11Header.h">
-      <Filter>4_Render\temp</Filter>
-    </ClInclude>
     <ClInclude Include="Application\Example_HLSL_D3D11_D3D12.h">
       <Filter>x_Application</Filter>
     </ClInclude>
     <ClInclude Include="Base\PlatformTypes.h">
       <Filter>0_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\D3D11RuntimeLinking.inl">
+      <Filter>4_Render\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\D3D11Header.h">
+      <Filter>4_Render\D3D11</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +157,9 @@
     </Filter>
     <Filter Include="4_Render\temp">
       <UniqueIdentifier>{a62fb0f6-3995-4842-a79b-a8ad16b67a37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_Render\D3D11">
+      <UniqueIdentifier>{44ea876d-907a-44ca-8aca-736d5092507e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -182,6 +182,7 @@
     <ClInclude Include="Core\MemoryPtr.h" />
     <ClInclude Include="MikoHeader.h" />
     <ClInclude Include="Render\D3D11Header.h" />
+    <ClInclude Include="Render\D3D11RuntimeLinking.inl" />
     <ClInclude Include="Render\DefaultAllocator.h" />
     <ClInclude Include="Render\DefaultAssert.h" />
     <ClInclude Include="Render\DefaultLog.h" />
