@@ -5,35 +5,6 @@
 #include "Rhi.h"
 #include "MakeID.h"
 
-#if SE_PLATFORM_WINDOWS
-#undef GL_GLEXT_PROTOTYPES
-#include <GL/gl.h>
-#include <GL/glext.h>	// Requires definitions from "gl.h"
-#include <GL/wglext.h>	// Requires definitions from "gl.h"	
-#elif LINUX
-	#ifdef LINUX
-		#include <GL/glx.h>
-		#include <GL/glxext.h>
-	#endif
-	#include <GL/gl.h>
-	#include <GL/glext.h>	// Requires definitions from "gl.h"
-
-	// TODO(co) Review which of the following headers can be removed
-	#include <X11/Xlib.h>
-
-	#include <dlfcn.h>
-	#include <link.h>
-	#include <iostream>	// TODO(co) Can this include be removed?
-
-	// Need to redefine "None"-macro (which got undefined in "Extensions.h" due name clashes used in enums)
-	#ifndef None
-		#define None 0L	///< Universal null resource or null atom
-	#endif
-#else
-	#error "Unsupported platform"
-#endif
-
-
 namespace OpenGLRhi
 {
 	class Extensions;

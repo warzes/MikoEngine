@@ -3,12 +3,6 @@
 #include "Rhi.h"
 #include "MakeID.h"
 
-#define GL_GLES_PROTOTYPES 0
-#include <GLES3/gl3.h>
-#include <GLES3/gl2ext.h>
-#include <EGL/egl.h>
-#include <EGL/eglext.h>
-
 namespace OpenGLES3Rhi
 {
 	class VertexArray;

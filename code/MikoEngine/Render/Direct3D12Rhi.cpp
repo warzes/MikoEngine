@@ -3,12 +3,6 @@
 #include "Rhi.h"
 #include "MakeID.h"
 
-#include <d3d12.h>
-#include <dxgi1_6.h>
-#include <d3dcompiler.h>
-
-// Windows Runtime Library. Needed for Microsoft::WRL::ComPtr<> template class.
-#include <wrl.h>
 using namespace Microsoft::WRL;
 
 #pragma comment(lib, "d3d12.lib")
