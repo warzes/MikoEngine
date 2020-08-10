@@ -719,8 +719,6 @@ namespace Direct3D12Rhi
 #if SE_DEBUG
 		bool mDebugBetweenBeginEndScene;	///< Just here for state tracking in debug builds
 #endif
-
-
 	};
 
 	//[-------------------------------------------------------]
@@ -755,34 +753,34 @@ namespace Direct3D12Rhi
 		UINT compileFlags = (D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_WARNINGS_ARE_ERRORS | D3DCOMPILE_ALL_RESOURCES_BOUND);
 		switch (optimizationLevel)
 		{
-			case Rhi::IShaderLanguage::OptimizationLevel::DEBUG:
-				compileFlags |= D3DCOMPILE_DEBUG;
-				compileFlags |= D3DCOMPILE_SKIP_OPTIMIZATION;
-				break;
+		case Rhi::IShaderLanguage::OptimizationLevel::DEBUG:
+			compileFlags |= D3DCOMPILE_DEBUG;
+			compileFlags |= D3DCOMPILE_SKIP_OPTIMIZATION;
+			break;
 
-			case Rhi::IShaderLanguage::OptimizationLevel::NONE:
-				compileFlags |= D3DCOMPILE_SKIP_VALIDATION;
-				compileFlags |= D3DCOMPILE_SKIP_OPTIMIZATION;
-				break;
+		case Rhi::IShaderLanguage::OptimizationLevel::NONE:
+			compileFlags |= D3DCOMPILE_SKIP_VALIDATION;
+			compileFlags |= D3DCOMPILE_SKIP_OPTIMIZATION;
+			break;
 
-			case Rhi::IShaderLanguage::OptimizationLevel::LOW:
-				compileFlags |= D3DCOMPILE_SKIP_VALIDATION;
-				compileFlags |= D3DCOMPILE_OPTIMIZATION_LEVEL0;
-				break;
+		case Rhi::IShaderLanguage::OptimizationLevel::LOW:
+			compileFlags |= D3DCOMPILE_SKIP_VALIDATION;
+			compileFlags |= D3DCOMPILE_OPTIMIZATION_LEVEL0;
+			break;
 
-			case Rhi::IShaderLanguage::OptimizationLevel::MEDIUM:
-				compileFlags |= D3DCOMPILE_SKIP_VALIDATION;
-				compileFlags |= D3DCOMPILE_OPTIMIZATION_LEVEL1;
-				break;
+		case Rhi::IShaderLanguage::OptimizationLevel::MEDIUM:
+			compileFlags |= D3DCOMPILE_SKIP_VALIDATION;
+			compileFlags |= D3DCOMPILE_OPTIMIZATION_LEVEL1;
+			break;
 
-			case Rhi::IShaderLanguage::OptimizationLevel::HIGH:
-				compileFlags |= D3DCOMPILE_SKIP_VALIDATION;
-				compileFlags |= D3DCOMPILE_OPTIMIZATION_LEVEL2;
-				break;
+		case Rhi::IShaderLanguage::OptimizationLevel::HIGH:
+			compileFlags |= D3DCOMPILE_SKIP_VALIDATION;
+			compileFlags |= D3DCOMPILE_OPTIMIZATION_LEVEL2;
+			break;
 
-			case Rhi::IShaderLanguage::OptimizationLevel::ULTRA:
-				compileFlags |= D3DCOMPILE_OPTIMIZATION_LEVEL3;
-				break;
+		case Rhi::IShaderLanguage::OptimizationLevel::ULTRA:
+			compileFlags |= D3DCOMPILE_OPTIMIZATION_LEVEL3;
+			break;
 		}
 
 		// Compile
@@ -824,37 +822,12 @@ namespace Direct3D12Rhi
 		}
 	}
 
-
-
-
 	//[-------------------------------------------------------]
 	//[ Direct3D12Rhi/Mapping.h                               ]
 	//[-------------------------------------------------------]
-	/**
-	*  @brief
-	*    Direct3D 12 mapping
-	*/
 	class Mapping final
 	{
-
-
-	//[-------------------------------------------------------]
-	//[ Public static methods                                 ]
-	//[-------------------------------------------------------]
 	public:
-		//[-------------------------------------------------------]
-		//[ Rhi::VertexAttributeFormat and semantic               ]
-		//[-------------------------------------------------------]
-		/**
-		*  @brief
-		*    "Rhi::VertexAttributeFormat" to Direct3D 12 format
-		*
-		*  @param[in] vertexAttributeFormat
-		*    "Rhi::VertexAttributeFormat" to map
-		*
-		*  @return
-		*    Direct3D 12 format
-		*/
 		[[nodiscard]] static DXGI_FORMAT getDirect3D12Format(Rhi::VertexAttributeFormat vertexAttributeFormat)
 		{
 			static constexpr DXGI_FORMAT MAPPING[] =
@@ -924,16 +897,6 @@ namespace Direct3D12Rhi
 		//[-------------------------------------------------------]
 		//[ Rhi::IndexBufferFormat                                ]
 		//[-------------------------------------------------------]
-		/**
-		*  @brief
-		*    "Rhi::IndexBufferFormat" to Direct3D 12 format
-		*
-		*  @param[in] indexBufferFormat
-		*    "Rhi::IndexBufferFormat" to map
-		*
-		*  @return
-		*    Direct3D 12 format
-		*/
 		[[nodiscard]] static DXGI_FORMAT getDirect3D12Format(Rhi::IndexBufferFormat::Enum indexBufferFormat)
 		{
 			static constexpr DXGI_FORMAT MAPPING[] =
@@ -948,16 +911,6 @@ namespace Direct3D12Rhi
 		//[-------------------------------------------------------]
 		//[ Rhi::TextureFormat                                    ]
 		//[-------------------------------------------------------]
-		/**
-		*  @brief
-		*    "Rhi::TextureFormat" to Direct3D 12 format
-		*
-		*  @param[in] textureFormat
-		*    "Rhi::TextureFormat" to map
-		*
-		*  @return
-		*    Direct3D 12 format
-		*/
 		[[nodiscard]] static DXGI_FORMAT getDirect3D12Format(Rhi::TextureFormat::Enum textureFormat)
 		{
 			static constexpr DXGI_FORMAT MAPPING[] =
@@ -989,27 +942,13 @@ namespace Direct3D12Rhi
 			};
 			return MAPPING[textureFormat];
 		}
-
-
 	};
-
-
-
 
 	//[-------------------------------------------------------]
 	//[ Direct3D12Rhi/TextureHelper.h                         ]
 	//[-------------------------------------------------------]
-	/**
-	*  @brief
-	*    Direct3D 12 texture helper
-	*/
 	class TextureHelper final
 	{
-
-
-	//[-------------------------------------------------------]
-	//[ Public definitions                                    ]
-	//[-------------------------------------------------------]
 	public:
 		enum class TextureType
 		{
@@ -1022,10 +961,6 @@ namespace Direct3D12Rhi
 			TEXTURE_3D
 		};
 
-
-	//[-------------------------------------------------------]
-	//[ Public static methods                                 ]
-	//[-------------------------------------------------------]
 	public:
 		[[nodiscard]] static ID3D12Resource* CreateTexture(ID3D12Device& d3d12Device, TextureType textureType, uint32_t width, uint32_t height, uint32_t depth, uint32_t numberOfSlices, Rhi::TextureFormat::Enum textureFormat, uint8_t numberOfMultisamples, uint32_t numberOfMipmaps, uint32_t textureFlags, const Rhi::OptimizedTextureClearValue* optimizedTextureClearValue)
 		{
@@ -1129,10 +1064,6 @@ namespace Direct3D12Rhi
 			RHI_ASSERT(pitch * numberOfRows == size, "Direct3D 12: Invalid size")
 
 			// Grab upload buffer space
-#if 0
-			static constexpr uint32_t D3D12_TEXTURE_DATA_PITCH_ALIGNMENT	 = 256;	// "Microsoft Windows 10 SDK" -> "10.0.10240.0" -> "D3D12.h"
-			static constexpr uint32_t D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT = 512;	// "Microsoft Windows 10 SDK" -> "10.0.10240.0" -> "D3D12.h"
-#endif
 			const uint32_t destinationPitch = ::detail::align(pitch, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT);
 			const uint32_t destinationOffset = uploadContext.getUploadCommandListAllocator()->allocateUploadBuffer(destinationPitch * numberOfRows, D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
 
@@ -1173,12 +1104,7 @@ namespace Direct3D12Rhi
 			d3d12ResourceBarrier.Transition.StateAfter  = static_cast<D3D12_RESOURCE_STATES>(D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE | D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE);
 			uploadContext.getD3d12GraphicsCommandList()->ResourceBarrier(1, &d3d12ResourceBarrier);
 		}
-
-
 	};
-
-
-
 
 	//[-------------------------------------------------------]
 	//[ Direct3D12Rhi/RootSignature.h                         ]
@@ -1189,8 +1115,6 @@ namespace Direct3D12Rhi
 	*/
 	class RootSignature final : public Rhi::IRootSignature
 	{
-
-
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
