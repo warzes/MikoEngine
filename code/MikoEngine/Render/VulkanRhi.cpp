@@ -126,7 +126,7 @@ Notes:
 */
 
 
-#ifdef RHI_DEBUG
+#if SE_DEBUG
 	#include <cstdio>  // For printf(). Remove if you don't need the PrintRanges() function (mostly for debugging anyway).
 #endif
 
@@ -391,7 +391,7 @@ public:
 		return max_count;
 	}
 
-	#ifdef RHI_DEBUG
+	#if SE_DEBUG
 		void PrintRanges() const
 		{
 			uint i = 0;
@@ -455,7 +455,7 @@ namespace VulkanRhi
 //[-------------------------------------------------------]
 //[ Macros & definitions                                  ]
 //[-------------------------------------------------------]
-#ifdef RHI_DEBUG
+#if SE_DEBUG
 	/*
 	*  @brief
 	*    Check whether or not the given resource is owned by the given RHI
@@ -2023,7 +2023,7 @@ namespace VulkanRhi
 		//[-------------------------------------------------------]
 		//[ Debug                                                 ]
 		//[-------------------------------------------------------]
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			void setDebugMarker(const char* name);
 			void beginDebugEvent(const char* name);
 			void endDebugEvent();
@@ -2132,7 +2132,7 @@ namespace VulkanRhi
 		//[ Output-merger (OM) stage                              ]
 		//[-------------------------------------------------------]
 		Rhi::IRenderTarget* mRenderTarget;	///< Currently set render target (we keep a reference to it), can be a null pointer
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			bool mDebugBetweenBeginEndScene;	///< Just here for state tracking in debug builds
 		#endif
 
@@ -4146,7 +4146,7 @@ namespace VulkanRhi
 				// TODO(co) Some GPUs also offer "asynchronous transfer queues" (check for queue families with only the "VK_QUEUE_TRANSFER_BIT" set) that may be used to speed up such operations
 				if (generateMipmaps)
 				{
-					#ifdef RHI_DEBUG
+					#if SE_DEBUG
 					{
 						// Get device properties for the requested Vulkan texture format
 						VkFormatProperties vkFormatProperties;
@@ -4336,7 +4336,7 @@ namespace VulkanRhi
 		//[-------------------------------------------------------]
 		//[ Debug                                                 ]
 		//[-------------------------------------------------------]
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			static void setDebugObjectName(VkDevice vkDevice, VkDebugReportObjectTypeEXT vkDebugReportObjectTypeEXT, uint64_t object, const char* objectName)
 			{
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
@@ -4711,7 +4711,7 @@ namespace VulkanRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Root signature", 17)	// 17 = "Root signature: " including terminating zero
@@ -4899,7 +4899,7 @@ namespace VulkanRhi
 			Helper::createAndAllocateVkBuffer(vulkanRhi, static_cast<VkBufferUsageFlagBits>(vkBufferUsageFlagBits), VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, numberOfBytes, data, mVkBuffer, mVkDeviceMemory);
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "VBO", 6)	// 6 = "VBO: " including terminating zero
@@ -5021,7 +5021,7 @@ namespace VulkanRhi
 			Helper::createAndAllocateVkBuffer(vulkanRhi, static_cast<VkBufferUsageFlagBits>(vkBufferUsageFlagBits), VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, numberOfBytes, data, mVkBuffer, mVkDeviceMemory);
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "IBO", 6)	// 6 = "IBO: " including terminating zero
@@ -5382,7 +5382,7 @@ namespace VulkanRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TBO", 6)	// 6 = "TBO: " including terminating zero
@@ -5520,7 +5520,7 @@ namespace VulkanRhi
 			Helper::createAndAllocateVkBuffer(vulkanRhi, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, numberOfBytes, data, mVkBuffer, mVkDeviceMemory);
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "SBO", 6)	// 6 = "SBO: " including terminating zero
@@ -5646,7 +5646,7 @@ namespace VulkanRhi
 			Helper::createAndAllocateVkBuffer(vulkanRhi, static_cast<VkBufferUsageFlagBits>(vkBufferUsageFlagBits), VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, numberOfBytes, data, mVkBuffer, mVkDeviceMemory);
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "IndirectBufferObject", 23)	// 23 = "IndirectBufferObject: " including terminating zero
@@ -5768,7 +5768,7 @@ namespace VulkanRhi
 			Helper::createAndAllocateVkBuffer(vulkanRhi, static_cast<VkBufferUsageFlagBits>(VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT), VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, numberOfBytes, data, mVkBuffer, mVkDeviceMemory);
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "UBO", 6)	// 6 = "UBO: " including terminating zero
@@ -5899,7 +5899,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity checks
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 			{
 				const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = vertexBuffers + numberOfVertexBuffers;
 				for (const Rhi::VertexArrayVertexBuffer* vertexBuffer = vertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer)
@@ -6028,7 +6028,7 @@ namespace VulkanRhi
 			Helper::createAndFillVkImage(vulkanRhi, VK_IMAGE_TYPE_1D, VK_IMAGE_VIEW_TYPE_1D, { width, 1, 1 }, textureFormat, data, textureFlags, 1, mVkImage, mVkDeviceMemory, mVkImageView);
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "1D texture", 13)	// 13 = "1D texture: " including terminating zero
@@ -6148,7 +6148,7 @@ namespace VulkanRhi
 			mVkFormat(Helper::createAndFillVkImage(vulkanRhi, VK_IMAGE_TYPE_1D, VK_IMAGE_VIEW_TYPE_1D_ARRAY, { width, 1, numberOfSlices }, textureFormat, data, textureFlags, 1, mVkImage, mVkDeviceMemory, mVkImageView))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "1D texture array", 19)	// 19 = "1D texture array: " including terminating zero
@@ -6319,7 +6319,7 @@ namespace VulkanRhi
 			mVrVulkanTextureData.m_nSampleCount		 = numberOfMultisamples;						// m_nSampleCount (uint32_t)
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "2D texture", 13)	// 13 = "2D texture: " including terminating zero
@@ -6477,7 +6477,7 @@ namespace VulkanRhi
 			mVkFormat(Helper::createAndFillVkImage(vulkanRhi, VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_2D_ARRAY, { width, height, numberOfSlices }, textureFormat, data, textureFlags, 1, mVkImage, mVkDeviceMemory, mVkImageView))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "2D texture array", 19)	// 19 = "2D texture array: " including terminating zero
@@ -6613,7 +6613,7 @@ namespace VulkanRhi
 			Helper::createAndFillVkImage(vulkanRhi, VK_IMAGE_TYPE_3D, VK_IMAGE_VIEW_TYPE_3D, { width, height, depth }, textureFormat, data, textureFlags, 1, mVkImage, mVkDeviceMemory, mVkImageView);
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "3D texture", 13)	// 13 = "3D texture: " including terminating zero
@@ -6732,7 +6732,7 @@ namespace VulkanRhi
 			Helper::createAndFillVkImage(vulkanRhi, VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_CUBE, { width, width, 6 }, textureFormat, data, textureFlags, 1, mVkImage, mVkDeviceMemory, mVkImageView);
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Cube texture", 15)	// 15 = "Cube texture: " including terminating zero
@@ -6853,7 +6853,7 @@ namespace VulkanRhi
 			Helper::createAndFillVkImage(vulkanRhi, VK_IMAGE_TYPE_2D, VK_IMAGE_VIEW_TYPE_CUBE_ARRAY, { width, width, numberOfSlices * 6 }, textureFormat, data, textureFlags, 1, mVkImage, mVkDeviceMemory, mVkImageView);
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Cube texture array", 21)	// 21 = "Cube texture array: " including terminating zero
@@ -7136,7 +7136,7 @@ namespace VulkanRhi
 			if (vkCreateSampler(vulkanRhi.getVulkanContext().getVkDevice(), &vkSamplerCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &mVkSampler) == VK_SUCCESS)
 			{
 				// Assign a default name to the resource for debugging purposes
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (nullptr != vkDebugMarkerSetObjectNameEXT)
 					{
 						RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Sampler state", 16)	// 16 = "Sampler state: " including terminating zero
@@ -7355,7 +7355,7 @@ namespace VulkanRhi
 			if (vkCreateRenderPass(vulkanRhi.getVulkanContext().getVkDevice(), &vkRenderPassCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &mVkRenderPass) == VK_SUCCESS)
 			{
 				// Assign a default name to the resource for debugging purposes
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (nullptr != vkDebugMarkerSetObjectNameEXT)
 					{
 						RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Render pass", 14)	// 14 = "Render pass: " including terminating zero
@@ -7548,7 +7548,7 @@ namespace VulkanRhi
 			if (vkCreateQueryPool(vulkanRhi.getVulkanContext().getVkDevice(), &vkQueryPoolCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &mVkQueryPool) == VK_SUCCESS)
 			{
 				// Assign a default name to the resource for debugging purposes
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (nullptr != vkDebugMarkerSetObjectNameEXT)
 					{
 						switch (queryType)
@@ -8556,7 +8556,7 @@ namespace VulkanRhi
 			if (vkCreateFramebuffer(vulkanRhi.getVulkanContext().getVkDevice(), &vkFramebufferCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &mVkFramebuffer) == VK_SUCCESS)
 			{
 				// Assign a default name to the resource for debugging purposes
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (nullptr != vkDebugMarkerSetObjectNameEXT)
 					{
 						RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "FBO", 6)	// 6 = "FBO: " including terminating zero
@@ -8710,7 +8710,7 @@ namespace VulkanRhi
 			IVertexShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "VS", 5)	// 5 = "VS: " including terminating zero
@@ -8732,7 +8732,7 @@ namespace VulkanRhi
 			IVertexShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_VERTEX_BIT, sourceCode, shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "VS", 5)	// 5 = "VS: " including terminating zero
@@ -8835,7 +8835,7 @@ namespace VulkanRhi
 			ITessellationControlShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TCS", 6)	// 6 = "TCS: " including terminating zero
@@ -8857,7 +8857,7 @@ namespace VulkanRhi
 			ITessellationControlShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT, sourceCode, shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TCS", 6)	// 6 = "TCS: " including terminating zero
@@ -8960,7 +8960,7 @@ namespace VulkanRhi
 			ITessellationEvaluationShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TES", 6)	// 6 = "TES: " including terminating zero
@@ -8982,7 +8982,7 @@ namespace VulkanRhi
 			ITessellationEvaluationShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT, sourceCode, shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TES", 6)	// 6 = "TES: " including terminating zero
@@ -9092,7 +9092,7 @@ namespace VulkanRhi
 			IGeometryShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "GS", 5)	// 5 = "GS: " including terminating zero
@@ -9121,7 +9121,7 @@ namespace VulkanRhi
 			IGeometryShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_GEOMETRY_BIT, sourceCode, shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "GS", 5)	// 5 = "GS: " including terminating zero
@@ -9224,7 +9224,7 @@ namespace VulkanRhi
 			IFragmentShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "FS", 5)	// 5 = "FS: " including terminating zero
@@ -9246,7 +9246,7 @@ namespace VulkanRhi
 			IFragmentShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_FRAGMENT_BIT, sourceCode, shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "FS", 5)	// 5 = "FS: " including terminating zero
@@ -9349,7 +9349,7 @@ namespace VulkanRhi
 			ITaskShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TS", 5)	// 5 = "TS: " including terminating zero
@@ -9371,7 +9371,7 @@ namespace VulkanRhi
 			ITaskShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_TASK_BIT_NV, sourceCode, shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TS", 5)	// 5 = "TS: " including terminating zero
@@ -9474,7 +9474,7 @@ namespace VulkanRhi
 			IMeshShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "MS", 5)	// 5 = "MS: " including terminating zero
@@ -9496,7 +9496,7 @@ namespace VulkanRhi
 			IMeshShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_MESH_BIT_NV, sourceCode, shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "MS", 5)	// 5 = "MS: " including terminating zero
@@ -9599,7 +9599,7 @@ namespace VulkanRhi
 			IComputeShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "CS", 5)	// 5 = "CS: " including terminating zero
@@ -9621,7 +9621,7 @@ namespace VulkanRhi
 			IComputeShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_COMPUTE_BIT, sourceCode, shaderBytecode))
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "CS", 5)	// 5 = "CS: " including terminating zero
@@ -10515,7 +10515,7 @@ namespace VulkanRhi
 			if (vkCreateGraphicsPipelines(vulkanRhi.getVulkanContext().getVkDevice(), VK_NULL_HANDLE, 1, &vkGraphicsPipelineCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &mVkPipeline) == VK_SUCCESS)
 			{
 				// Assign a default name to the resource for debugging purposes
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (nullptr != vkDebugMarkerSetObjectNameEXT)
 					{
 						RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Graphics PSO", 15)	// 15 = "Graphics PSO: " including terminating zero
@@ -10657,7 +10657,7 @@ namespace VulkanRhi
 			if (vkCreateComputePipelines(vulkanRhi.getVulkanContext().getVkDevice(), VK_NULL_HANDLE, 1, &vkComputePipelineCreateInfo, vulkanRhi.getVkAllocationCallbacks(), &mVkPipeline) == VK_SUCCESS)
 			{
 				// Assign a default name to the resource for debugging purposes
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (nullptr != vkDebugMarkerSetObjectNameEXT)
 					{
 						RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Compute PSO", 14)	// 14 = "Compute PSO: " including terminating zero
@@ -11108,7 +11108,7 @@ namespace VulkanRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != vkDebugMarkerSetObjectNameEXT)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Resource group", 17)	// 17 = "Resource group: " including terminating zero
@@ -11473,7 +11473,7 @@ namespace
 			//[-------------------------------------------------------]
 			//[ Debug                                                 ]
 			//[-------------------------------------------------------]
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				void SetDebugMarker(const void* data, Rhi::IRhi& rhi)
 				{
 					const Rhi::Command::SetDebugMarker* realData = static_cast<const Rhi::Command::SetDebugMarker*>(data);
@@ -11609,12 +11609,12 @@ namespace VulkanRhi
 		mVkClearValues{},
 		mVertexArray(nullptr),
 		mRenderTarget(nullptr)
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			, mDebugBetweenBeginEndScene(false)
 		#endif
 	{
 		// TODO(co) Make it possible to enable/disable validation from the outside?
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			const bool enableValidation = true;
 		#else
 			const bool enableValidation = false;
@@ -11747,7 +11747,7 @@ namespace VulkanRhi
 	void VulkanRhi::setGraphicsResourceGroup(uint32_t rootParameterIndex, Rhi::IResourceGroup* resourceGroup)
 	{
 		// Security checks
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 		{
 			if (nullptr == mGraphicsRootSignature)
 			{
@@ -11967,7 +11967,7 @@ namespace VulkanRhi
 		}
 
 		// Emit the draw calls
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				beginDebugEvent("Multi-draw-indirect emulation");
@@ -11981,7 +11981,7 @@ namespace VulkanRhi
 			vkCmdDraw(vkCommandBuffer, drawArguments.vertexCountPerInstance, drawArguments.instanceCount, drawArguments.startVertexLocation, drawArguments.startInstanceLocation);
 			emulationData += sizeof(Rhi::DrawArguments);
 		}
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				endDebugEvent();
@@ -12025,7 +12025,7 @@ namespace VulkanRhi
 		}
 
 		// Emit the draw calls
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				beginDebugEvent("Multi-indexed-draw-indirect emulation");
@@ -12039,7 +12039,7 @@ namespace VulkanRhi
 			vkCmdDrawIndexed(vkCommandBuffer, drawIndexedArguments.indexCountPerInstance, drawIndexedArguments.instanceCount, drawIndexedArguments.startIndexLocation, drawIndexedArguments.baseVertexLocation, drawIndexedArguments.startInstanceLocation);
 			emulationData += sizeof(Rhi::DrawIndexedArguments);
 		}
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				endDebugEvent();
@@ -12067,7 +12067,7 @@ namespace VulkanRhi
 		emulationData += indirectBufferOffset;
 
 		// Emit the draw calls
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				beginDebugEvent("Multi-indexed-draw-indirect emulation");
@@ -12082,7 +12082,7 @@ namespace VulkanRhi
 			vkCmdDrawMeshTasksNV(vkCommandBuffer, drawMeshTasksArguments.numberOfTasks, drawMeshTasksArguments.firstTask);
 			emulationData += sizeof(Rhi::DrawMeshTasksArguments);
 		}
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				endDebugEvent();
@@ -12129,7 +12129,7 @@ namespace VulkanRhi
 	void VulkanRhi::setComputeResourceGroup(uint32_t rootParameterIndex, Rhi::IResourceGroup* resourceGroup)
 	{
 		// Security checks
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 		{
 			if (nullptr == mComputeRootSignature)
 			{
@@ -12237,7 +12237,7 @@ namespace VulkanRhi
 	//[-------------------------------------------------------]
 	//[ Debug                                                 ]
 	//[-------------------------------------------------------]
-	#ifdef RHI_DEBUG
+	#if SE_DEBUG
 		void VulkanRhi::setDebugMarker(const char* name)
 		{
 			if (nullptr != vkCmdDebugMarkerInsertEXT)
@@ -12748,7 +12748,7 @@ namespace VulkanRhi
 	bool VulkanRhi::beginScene()
 	{
 		// Sanity check
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			RHI_ASSERT(mContext, false == mDebugBetweenBeginEndScene, "Vulkan: Begin scene was called while scene rendering is already in progress, missing end scene call?")
 			mDebugBetweenBeginEndScene = true;
 		#endif
@@ -12801,7 +12801,7 @@ namespace VulkanRhi
 	void VulkanRhi::endScene()
 	{
 		// Sanity check
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			RHI_ASSERT(mContext, true == mDebugBetweenBeginEndScene, "Vulkan: End scene was called while scene rendering isn't in progress, missing start scene call?")
 			mDebugBetweenBeginEndScene = false;
 		#endif

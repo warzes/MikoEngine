@@ -162,7 +162,7 @@ Notes:
 */
 
 
-#ifdef RHI_DEBUG
+#if SE_DEBUG
 	#include <cstdio>  // For printf(). Remove if you don't need the PrintRanges() function (mostly for debugging anyway).
 #endif
 
@@ -427,7 +427,7 @@ public:
 		return max_count;
 	}
 
-	#ifdef RHI_DEBUG
+	#if SE_DEBUG
 		void PrintRanges() const
 		{
 			uint i = 0;
@@ -497,7 +497,7 @@ namespace OpenGLRhi
 //[-------------------------------------------------------]
 //[ Macros & definitions                                  ]
 //[-------------------------------------------------------]
-#ifdef RHI_DEBUG
+#if SE_DEBUG
 	/*
 	*  @brief
 	*    Check whether or not the given resource is owned by the given RHI
@@ -507,7 +507,7 @@ namespace OpenGLRhi
 
 	/**
 	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "RHI_DEBUG"
+	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
 	*
 	*  @param[in] debugName
 	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
@@ -522,7 +522,7 @@ namespace OpenGLRhi
 
 	/**
 	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "RHI_DEBUG"
+	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
 	*
 	*  @param[in] debugName
 	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
@@ -1858,7 +1858,7 @@ namespace OpenGLRhi
 		//[-------------------------------------------------------]
 		//[ Debug                                                 ]
 		//[-------------------------------------------------------]
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			void setDebugMarker(const char* name);
 			void beginDebugEvent(const char* name);
 			void endDebugEvent();
@@ -2037,7 +2037,7 @@ namespace OpenGLRhi
 		GLuint	 mOpenGLVertexProgram;			///< Currently set OpenGL vertex program, can be zero if no resource is set
 		GLint	 mDrawIdUniformLocation;		///< Draw ID uniform location
 		uint32_t mCurrentStartInstanceLocation;	///< Currently set start instance location
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			bool mDebugBetweenBeginEndScene;	///< Just here for state tracking in debug builds
 		#endif
 
@@ -4023,7 +4023,7 @@ namespace OpenGLRhi
 								WGL_CONTEXT_MAJOR_VERSION_ARB, 4,
 								WGL_CONTEXT_MINOR_VERSION_ARB, 1,
 								WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
-								#ifdef RHI_DEBUG
+								#if SE_DEBUG
 									// "WGL_CONTEXT_DEBUG_BIT_ARB" comes from the "GL_ARB_debug_output"-extension
 									WGL_CONTEXT_FLAGS_ARB, WGL_CONTEXT_DEBUG_BIT_ARB,
 								#else
@@ -4364,7 +4364,7 @@ namespace OpenGLRhi
 							// -> "GLX_CONTEXT_DEBUG_BIT_ARB" comes from the "GL_ARB_debug_output"-extension
 							GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_DEBUG_BIT_ARB,
 							// TODO(co) Make it possible to activate "GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB" from the outside
-							#ifdef RHI_DEBUG
+							#if SE_DEBUG
 							//	GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_DEBUG_BIT_ARB,
 							//	GLX_CONTEXT_FLAGS_ARB, GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,	// Error messages like "Implicit version number 110 not supported by GL3 forward compatible context" might occur
 							#else
@@ -5608,7 +5608,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "VBO", 6)	// 6 = "VBO: " including terminating zero
@@ -5689,7 +5689,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "VBO", 6)	// 6 = "VBO: " including terminating zero
@@ -5888,7 +5888,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "IBO", 6)	// 6 = "IBO: " including terminating zero
@@ -5971,7 +5971,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "IBO", 6)	// 6 = "IBO: " including terminating zero
@@ -6569,7 +6569,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "VAO", 6)	// 6 = "VAO: " including terminating zero
@@ -6772,7 +6772,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "VAO", 6)	// 6 = "VAO: " including terminating zero
@@ -7002,7 +7002,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TBO", 6)	// 6 = "TBO: " including terminating zero
@@ -7120,7 +7120,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TBO", 6)	// 6 = "TBO: " including terminating zero
@@ -7288,7 +7288,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "SBO", 6)	// 6 = "SBO: " including terminating zero
@@ -7370,7 +7370,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "SBO", 6)	// 6 = "SBO: " including terminating zero
@@ -7547,7 +7547,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "IndirectBufferObject", 23)	// 23 = "IndirectBufferObject: " including terminating zero
@@ -7628,7 +7628,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "IndirectBufferObject", 23)	// 23 = "IndirectBufferObject: " including terminating zero
@@ -7797,7 +7797,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "UBO", 6)	// 6 = "UBO: " including terminating zero
@@ -7880,7 +7880,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "UBO", 6)	// 6 = "UBO: " including terminating zero
@@ -8004,7 +8004,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity checks
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 			{
 				const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = vertexBuffers + numberOfVertexBuffers;
 				for (const Rhi::VertexArrayVertexBuffer* vertexBuffer = vertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer)
@@ -8460,7 +8460,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "1D texture", 13)	// 13 = "1D texture: " including terminating zero
@@ -8685,7 +8685,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "1D texture", 13)	// 13 = "1D texture: " including terminating zero
@@ -8905,7 +8905,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "1D texture array", 19)	// 19 = "1D texture array: " including terminating zero
@@ -9144,7 +9144,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "1D texture array", 19)	// 19 = "1D texture array: " including terminating zero
@@ -9490,7 +9490,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "2D texture", 13)	// 13 = "2D texture: " including terminating zero
@@ -9792,7 +9792,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "2D texture", 13)	// 13 = "2D texture: " including terminating zero
@@ -10050,7 +10050,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "2D texture array", 19)	// 19 = "2D texture array: " including terminating zero
@@ -10293,7 +10293,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "2D texture array", 19)	// 19 = "2D texture array: " including terminating zero
@@ -10651,7 +10651,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "3D texture", 13)	// 13 = "3D texture: " including terminating zero
@@ -10907,7 +10907,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "3D texture", 13)	// 13 = "3D texture: " including terminating zero
@@ -11217,7 +11217,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Cube texture", 15)	// 15 = "Cube texture: " including terminating zero
@@ -11487,7 +11487,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Cube texture", 15)	// 15 = "Cube texture: " including terminating zero
@@ -11702,7 +11702,7 @@ namespace OpenGLRhi
 		[[nodiscard]] virtual Rhi::ITextureCubeArray* createTextureCubeArray([[maybe_unused]] uint32_t width, [[maybe_unused]] uint32_t numberOfSlices, [[maybe_unused]] Rhi::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data = nullptr, [[maybe_unused]] uint32_t textureFlags = 0, [[maybe_unused]] Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			// TODO(co) Implement me
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				debugName = debugName;
 			#endif
 			return nullptr;
@@ -12076,7 +12076,7 @@ namespace OpenGLRhi
 			glSamplerParameterf(mOpenGLSampler, GL_TEXTURE_MAX_LOD, samplerState.maxLod);
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Sampler state", 16)	// 16 = "Sampler state: " including terminating zero
@@ -12768,7 +12768,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					switch (queryType)
@@ -12900,7 +12900,7 @@ namespace OpenGLRhi
 			glGenQueriesARB(static_cast<GLsizei>(numberOfQueries) * 11, mVerticesSubmittedOpenGLQueries);
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					switch (queryType)
@@ -13732,7 +13732,7 @@ namespace OpenGLRhi
 				Rhi::ITexture* texture = colorFramebufferAttachment->texture;
 
 				// Security check: Is the given resource owned by this RHI?
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (&openGLRhi != &texture->getRhi())
 					{
 						// Output an error message and keep on going in order to keep a reasonable behaviour even in case on an error
@@ -13810,7 +13810,7 @@ namespace OpenGLRhi
 			if (nullptr != mDepthStencilTexture)
 			{
 				// Security check: Is the given resource owned by this RHI?
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (&openGLRhi != &mDepthStencilTexture->getRhi())
 					{
 						// Output an error message and keep on going in order to keep a reasonable behaviour even in case on an error
@@ -13940,7 +13940,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "FBO", 6)	// 6 = "FBO: " including terminating zero
@@ -14027,7 +14027,7 @@ namespace OpenGLRhi
 				Rhi::ITexture* texture = colorFramebufferAttachment->texture;
 
 				// Security check: Is the given resource owned by this RHI?
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (&openGLRhi != &texture->getRhi())
 					{
 						// Output an error message and keep on going in order to keep a reasonable behaviour even in case on an error
@@ -14119,7 +14119,7 @@ namespace OpenGLRhi
 			if (nullptr != mDepthStencilTexture)
 			{
 				// Security check: Is the given resource owned by this RHI?
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (&openGLRhi != &mDepthStencilTexture->getRhi())
 					{
 						// Output an error message and keep on going in order to keep a reasonable behaviour even in case on an error
@@ -14258,7 +14258,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "FBO", 6)	// 6 = "FBO: " including terminating zero
@@ -14319,7 +14319,7 @@ namespace OpenGLRhi
 			mOpenGLShader(::detail::loadShaderFromSourcecode(openGLRhi.getContext(), GL_VERTEX_SHADER_ARB, sourceCode))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShader && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "VS", 5)	// 5 = "VS: " including terminating zero
@@ -14421,7 +14421,7 @@ namespace OpenGLRhi
 			mOpenGLShader(::detail::loadShaderFromSourcecode(openGLRhi.getContext(), GL_TESS_CONTROL_SHADER, sourceCode))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShader && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TCS", 6)	// 6 = "TCS: " including terminating zero
@@ -14523,7 +14523,7 @@ namespace OpenGLRhi
 			mOpenGLShader(::detail::loadShaderFromSourcecode(openGLRhi.getContext(), GL_TESS_EVALUATION_SHADER, sourceCode))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShader && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TES", 6)	// 6 = "TES: " including terminating zero
@@ -14634,7 +14634,7 @@ namespace OpenGLRhi
 			mNumberOfOutputVertices(numberOfOutputVertices)
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShader && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "GS", 5)	// 5 = "GS: " including terminating zero
@@ -14775,7 +14775,7 @@ namespace OpenGLRhi
 			mOpenGLShader(::detail::loadShaderFromSourcecode(openGLRhi.getContext(), GL_FRAGMENT_SHADER_ARB, sourceCode))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShader && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "FS", 5)	// 5 = "FS: " including terminating zero
@@ -14877,7 +14877,7 @@ namespace OpenGLRhi
 			mOpenGLShader(::detail::loadShaderFromSourcecode(openGLRhi.getContext(), GL_TASK_SHADER_NV, sourceCode))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShader && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TS", 5)	// 5 = "TS: " including terminating zero
@@ -14979,7 +14979,7 @@ namespace OpenGLRhi
 			mOpenGLShader(::detail::loadShaderFromSourcecode(openGLRhi.getContext(), GL_MESH_SHADER_NV, sourceCode))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShader && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "MS", 5)	// 5 = "MS: " including terminating zero
@@ -15081,7 +15081,7 @@ namespace OpenGLRhi
 			mOpenGLShader(::detail::loadShaderFromSourcecode(openGLRhi.getContext(), GL_COMPUTE_SHADER, sourceCode))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShader && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "CS", 5)	// 5 = "CS: " including terminating zero
@@ -15262,7 +15262,7 @@ namespace OpenGLRhi
 			linkProgram(openGLRhi, rootSignature);
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Graphics program", 19)	// 19 = "Graphics program: " including terminating zero
@@ -15316,7 +15316,7 @@ namespace OpenGLRhi
 			linkProgram(openGLRhi, rootSignature);
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Graphics program", 19)	// 19 = "Graphics program: " including terminating zero
@@ -16098,7 +16098,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Compute PSO", 14)	// 14 = "Compute PSO: " including terminating zero
@@ -16502,7 +16502,7 @@ namespace OpenGLRhi
 			mDrawIdUniformLocation(openGLRhi.getExtensions().isGL_ARB_base_instance() ? -1 : glGetUniformLocation(mOpenGLShaderProgram, "drawIdUniform"))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "VS", 5)	// 5 = "VS: " including terminating zero
@@ -16534,7 +16534,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "VS", 5)	// 5 = "VS: " including terminating zero
@@ -16649,7 +16649,7 @@ namespace OpenGLRhi
 			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(openGLRhi.getContext(), GL_TESS_CONTROL_SHADER, shaderBytecode))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TCS", 6)	// 6 = "TCS: " including terminating zero
@@ -16678,7 +16678,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TCS", 6)	// 6 = "TCS: " including terminating zero
@@ -16780,7 +16780,7 @@ namespace OpenGLRhi
 			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(openGLRhi.getContext(), GL_TESS_EVALUATION_SHADER, shaderBytecode))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TES", 6)	// 6 = "TES: " including terminating zero
@@ -16809,7 +16809,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TES", 6)	// 6 = "TES: " including terminating zero
@@ -16917,7 +16917,7 @@ namespace OpenGLRhi
 			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(openGLRhi.getContext(), GL_GEOMETRY_SHADER_ARB, shaderBytecode))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "GS", 5)	// 5 = "GS: " including terminating zero
@@ -16960,7 +16960,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "GS", 5)	// 5 = "GS: " including terminating zero
@@ -17062,7 +17062,7 @@ namespace OpenGLRhi
 			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(openGLRhi.getContext(), GL_FRAGMENT_SHADER_ARB, shaderBytecode))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "FS", 5)	// 5 = "FS: " including terminating zero
@@ -17091,7 +17091,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "FS", 5)	// 5 = "FS: " including terminating zero
@@ -17193,7 +17193,7 @@ namespace OpenGLRhi
 			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(openGLRhi.getContext(), GL_TASK_SHADER_NV, shaderBytecode))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TS", 5)	// 5 = "TS: " including terminating zero
@@ -17222,7 +17222,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TS", 5)	// 5 = "TS: " including terminating zero
@@ -17324,7 +17324,7 @@ namespace OpenGLRhi
 			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(openGLRhi.getContext(), GL_MESH_SHADER_NV, shaderBytecode))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "MS", 5)	// 5 = "MS: " including terminating zero
@@ -17353,7 +17353,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "MS", 5)	// 5 = "MS: " including terminating zero
@@ -17455,7 +17455,7 @@ namespace OpenGLRhi
 			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(openGLRhi.getContext(), GL_COMPUTE_SHADER, shaderBytecode))
 		{
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "CS", 5)	// 5 = "CS: " including terminating zero
@@ -17484,7 +17484,7 @@ namespace OpenGLRhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLShaderProgram && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "CS", 5)	// 5 = "CS: " including terminating zero
@@ -17786,7 +17786,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLProgramPipeline && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Graphics program", 19)	// 19 = "Graphics program: " including terminating zero
@@ -17985,7 +17985,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (0 != mOpenGLProgramPipeline && openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Graphics program", 19)	// 19 = "Graphics program: " including terminating zero
@@ -18602,7 +18602,7 @@ namespace OpenGLRhi
 			#endif
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (openGLRhi.getExtensions().isGL_KHR_debug())
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Compute PSO", 14)	// 14 = "Compute PSO: " including terminating zero
@@ -19678,7 +19678,7 @@ namespace
 			//[-------------------------------------------------------]
 			//[ Debug                                                 ]
 			//[-------------------------------------------------------]
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				void SetDebugMarker(const void* data, Rhi::IRhi& rhi)
 				{
 					const Rhi::Command::SetDebugMarker* realData = static_cast<const Rhi::Command::SetDebugMarker*>(data);
@@ -19806,7 +19806,7 @@ namespace OpenGLRhi
 		mOpenGLVertexProgram(0),
 		mDrawIdUniformLocation(-1),
 		mCurrentStartInstanceLocation(~0u)
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			, mDebugBetweenBeginEndScene(false)
 		#endif
 	{
@@ -19834,7 +19834,7 @@ namespace OpenGLRhi
 			// Is the OpenGL context and extensions initialized?
 			if (mOpenGLContext->isInitialized() && mExtensions->initialize())
 			{
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					// "GL_ARB_debug_output"-extension available?
 					if (mExtensions->isGL_ARB_debug_output())
 					{
@@ -20039,7 +20039,7 @@ namespace OpenGLRhi
 	void OpenGLRhi::setGraphicsResourceGroup(uint32_t rootParameterIndex, Rhi::IResourceGroup* resourceGroup)
 	{
 		// Security checks
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 		{
 			if (nullptr == mGraphicsRootSignature)
 			{
@@ -20409,7 +20409,7 @@ namespace OpenGLRhi
 			else
 			{
 				// Emulate multi-draw-indirect
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					beginDebugEvent("Multi-draw-indirect emulation");
 				#endif
 				for (uint32_t i = 0; i < numberOfDraws; ++i)
@@ -20417,7 +20417,7 @@ namespace OpenGLRhi
 					glDrawArraysIndirect(mOpenGLPrimitiveTopology, reinterpret_cast<void*>(static_cast<uintptr_t>(indirectBufferOffset)));
 					indirectBufferOffset += sizeof(Rhi::DrawArguments);
 				}
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					endDebugEvent();
 				#endif
 			}
@@ -20435,7 +20435,7 @@ namespace OpenGLRhi
 		emulationData += indirectBufferOffset;
 
 		// Emit the draw calls
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				beginDebugEvent("Multi-draw-indirect emulation");
@@ -20467,7 +20467,7 @@ namespace OpenGLRhi
 			}
 			emulationData += sizeof(Rhi::DrawArguments);
 		}
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				endDebugEvent();
@@ -20509,7 +20509,7 @@ namespace OpenGLRhi
 			else
 			{
 				// Emulate multi-indexed-draw-indirect
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					beginDebugEvent("Multi-indexed-draw-indirect emulation");
 				#endif
 				const uint32_t openGLType = mVertexArray->getIndexBuffer()->getOpenGLType();
@@ -20518,7 +20518,7 @@ namespace OpenGLRhi
 					glDrawElementsIndirect(mOpenGLPrimitiveTopology, openGLType, reinterpret_cast<void*>(static_cast<uintptr_t>(indirectBufferOffset)));
 					indirectBufferOffset += sizeof(Rhi::DrawIndexedArguments);
 				}
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					endDebugEvent();
 				#endif
 			}
@@ -20537,7 +20537,7 @@ namespace OpenGLRhi
 		emulationData += indirectBufferOffset;
 
 		// Emit the draw calls
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				beginDebugEvent("Multi-indexed-draw-indirect emulation");
@@ -20613,7 +20613,7 @@ namespace OpenGLRhi
 			}
 			emulationData += sizeof(Rhi::DrawIndexedArguments);
 		}
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				endDebugEvent();
@@ -20649,7 +20649,7 @@ namespace OpenGLRhi
 		emulationData += indirectBufferOffset;
 
 		// Emit the draw calls
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				beginDebugEvent("Multi-indexed-draw-indirect emulation");
@@ -20663,7 +20663,7 @@ namespace OpenGLRhi
 			glDrawMeshTasksNV(drawMeshTasksArguments.firstTask, drawMeshTasksArguments.numberOfTasks);
 			emulationData += sizeof(Rhi::DrawMeshTasksArguments);
 		}
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				endDebugEvent();
@@ -20731,7 +20731,7 @@ namespace OpenGLRhi
 	void OpenGLRhi::setComputeResourceGroup(uint32_t rootParameterIndex, Rhi::IResourceGroup* resourceGroup)
 	{
 		// Security checks
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 		{
 			if (nullptr == mComputeRootSignature)
 			{
@@ -21093,7 +21093,7 @@ namespace OpenGLRhi
 	//[-------------------------------------------------------]
 	//[ Debug                                                 ]
 	//[-------------------------------------------------------]
-	#ifdef RHI_DEBUG
+	#if SE_DEBUG
 		void OpenGLRhi::setDebugMarker(const char* name)
 		{
 			// "GL_KHR_debug"-extension required
@@ -21791,7 +21791,7 @@ namespace OpenGLRhi
 		// Not required when using OpenGL
 
 		// Sanity check
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			RHI_ASSERT(mContext, false == mDebugBetweenBeginEndScene, "OpenGL: Begin scene was called while scene rendering is already in progress, missing end scene call?")
 			mDebugBetweenBeginEndScene = true;
 		#endif
@@ -21826,7 +21826,7 @@ namespace OpenGLRhi
 	void OpenGLRhi::endScene()
 	{
 		// Sanity check
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			RHI_ASSERT(mContext, true == mDebugBetweenBeginEndScene, "OpenGL: End scene was called while scene rendering isn't in progress, missing start scene call?")
 			mDebugBetweenBeginEndScene = false;
 		#endif
@@ -21856,7 +21856,7 @@ namespace OpenGLRhi
 	//[-------------------------------------------------------]
 	//[ Private static methods                                ]
 	//[-------------------------------------------------------]
-	#ifdef RHI_DEBUG
+	#if SE_DEBUG
 		void OpenGLRhi::debugMessageCallback(uint32_t source, uint32_t type, uint32_t id, uint32_t severity, int, const char* message, const void* userParam)
 		{
 			// Source to string

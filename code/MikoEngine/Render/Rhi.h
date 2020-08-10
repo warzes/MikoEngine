@@ -1,24 +1,16 @@
 /** Amalgamated/unity build rendering hardware interface (RHI)*/
-#if SE_ARCH_64BIT
-#	define ARCHITECTURE_X64
-#endif
-
-#if SE_DEBUG
-#	define RHI_DEBUG
-#endif
-
 #pragma once
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#ifdef RHI_DEBUG
+#if SE_DEBUG
 	#include <cassert>
 	#define ASSERT(expression, message) assert((expression) && message);	// TODO(co) "RHI_ASSERT()" should be used everywhere
 
 	/**
 	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "RHI_DEBUG"
+	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
 	*
 	*  @param[in] debugName
 	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
@@ -28,7 +20,7 @@
 
 	/**
 	*  @brief
-	*    Pass resource name for debugging purposes, ignored when not using "RHI_DEBUG"
+	*    Pass resource name for debugging purposes, ignored when not using "SE_DEBUG"
 	*/
 	#define RHI_RESOURCE_DEBUG_PASS_PARAMETER , debugName
 #else
@@ -36,7 +28,7 @@
 
 	/**
 	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "RHI_DEBUG"
+	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
 	*
 	*  @param[in] debugName
 	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
@@ -46,7 +38,7 @@
 
 	/**
 	*  @brief
-	*    Pass resource name for debugging purposes, ignored when not using "RHI_DEBUG"
+	*    Pass resource name for debugging purposes, ignored when not using "SE_DEBUG"
 	*/
 	#define RHI_RESOURCE_DEBUG_PASS_PARAMETER
 #endif
@@ -132,13 +124,13 @@ namespace Rhi
 	//[ Rhi/PlatformTypes.h                                   ]
 	//[-------------------------------------------------------]
 #if SE_PLATFORM_WINDOWS
-		#ifdef ARCHITECTURE_X64
+#if SE_ARCH_64BIT
 			typedef unsigned __int64 handle;	// Replacement for nasty Microsoft Windows stuff leading to header chaos
 		#else
 			typedef unsigned __int32 handle;	// Replacement for nasty Microsoft Windows stuff leading to header chaos
 		#endif
 	#elif LINUX
-		#ifdef ARCHITECTURE_X64
+#if SE_ARCH_64BIT
 			typedef uint64_t handle;
 		#else
 			typedef uint32_t handle;
@@ -603,7 +595,7 @@ namespace Rhi
 	*    - Example: RHI_ASSERT(mContext, isInitialized, "Direct3D 11 RHI implementation assert failed")
 	*    - See http://cnicholson.net/2009/02/stupid-c-tricks-adventures-in-assert/ - "2.  Wrap your macros in do { … } while(0)." for background information about the do-while wrap
 	*/
-	#ifdef RHI_DEBUG
+	#if SE_DEBUG
 		#define RHI_ASSERT(context, expression, format, ...) \
 			do \
 			{ \
@@ -4599,7 +4591,7 @@ namespace Rhi
 		*/
 		[[nodiscard]] inline IGraphicsProgram* createGraphicsProgram(const IRootSignature& rootSignature, const VertexAttributes& vertexAttributes, IVertexShader* vertexShader, IFragmentShader* fragmentShader RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				return createGraphicsProgram(rootSignature, vertexAttributes, vertexShader, nullptr, nullptr, nullptr, fragmentShader, debugName);
 			#else
 				return createGraphicsProgram(rootSignature, vertexAttributes, vertexShader, nullptr, nullptr, nullptr, fragmentShader);
@@ -4632,7 +4624,7 @@ namespace Rhi
 		*/
 		[[nodiscard]] inline IGraphicsProgram* createGraphicsProgram(const IRootSignature& rootSignature, const VertexAttributes& vertexAttributes, IVertexShader* vertexShader, IGeometryShader* geometryShader, IFragmentShader* fragmentShader RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				return createGraphicsProgram(rootSignature, vertexAttributes, vertexShader, nullptr, nullptr, geometryShader, fragmentShader, debugName);
 			#else
 				return createGraphicsProgram(rootSignature, vertexAttributes, vertexShader, nullptr, nullptr, geometryShader, fragmentShader);
@@ -4667,7 +4659,7 @@ namespace Rhi
 		*/
 		[[nodiscard]] inline IGraphicsProgram* createGraphicsProgram(const IRootSignature& rootSignature, const VertexAttributes& vertexAttributes, IVertexShader* vertexShader, ITessellationControlShader* tessellationControlShader, ITessellationEvaluationShader* tessellationEvaluationShader, IFragmentShader* fragmentShader RHI_RESOURCE_DEBUG_NAME_PARAMETER)
 		{
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				return createGraphicsProgram(rootSignature, vertexAttributes, vertexShader, tessellationControlShader, tessellationEvaluationShader, nullptr, fragmentShader, debugName);
 			#else
 				return createGraphicsProgram(rootSignature, vertexAttributes, vertexShader, tessellationControlShader, tessellationEvaluationShader, nullptr, fragmentShader);
@@ -5146,7 +5138,7 @@ namespace Rhi
 		inline virtual ~IResource() override
 		{}
 
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			/**
 			*  @brief
 			*    Return the resource debug name
@@ -5206,7 +5198,7 @@ namespace Rhi
 
 	// Protected methods
 	protected:
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			/**
 			*  @brief
 			*    Constructor
@@ -5279,7 +5271,7 @@ namespace Rhi
 
 	// Private data
 	private:
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			char mDebugName[256];	///< Debug name for easier resource identification when debugging, contains terminating zero, first member variable by intent to see it at once during introspection (debug memory layout change is no problem here)
 		#endif
 		ResourceType mResourceType;	///< The resource type
@@ -6593,7 +6585,7 @@ namespace Rhi
 
 	// Protected methods
 	protected:
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			/**
 			*  @brief
 			*    Default constructor
@@ -9985,7 +9977,7 @@ namespace Rhi
 	}
 
 	// Debug macros
-	#ifdef RHI_DEBUG
+	#if SE_DEBUG
 		/**
 		*  @brief
 		*    Set a debug marker
@@ -10176,7 +10168,7 @@ namespace Rhi
 //[-------------------------------------------------------]
 //[ Debug macros                                          ]
 //[-------------------------------------------------------]
-#ifdef RHI_DEBUG
+#if SE_DEBUG
 	/**
 	*  @brief
 	*    Set a debug marker
@@ -10243,7 +10235,7 @@ namespace Rhi
 
 	/**
 	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "RHI_DEBUG"
+	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
 	*
 	*  @param[in] name
 	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
@@ -10340,7 +10332,7 @@ namespace Rhi
 
 	/**
 	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "RHI_DEBUG"
+	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
 	*
 	*  @param[in] name
 	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)

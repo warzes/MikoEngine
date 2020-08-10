@@ -17,7 +17,7 @@ namespace Direct3D11Rhi
 //[-------------------------------------------------------]
 //[ Macros & definitions                                  ]
 //[-------------------------------------------------------]
-#ifdef RHI_DEBUG
+#if SE_DEBUG
 	/*
 	*  @brief
 	*    Check whether or not the given resource is owned by the given RHI
@@ -27,7 +27,7 @@ namespace Direct3D11Rhi
 
 	/**
 	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "RHI_DEBUG"
+	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
 	*
 	*  @param[in] debugName
 	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
@@ -48,7 +48,7 @@ namespace Direct3D11Rhi
 
 	/**
 	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "RHI_DEBUG"
+	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
 	*
 	*  @param[in] debugName
 	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
@@ -286,7 +286,7 @@ namespace Direct3D11Rhi
 		//[-------------------------------------------------------]
 		//[ Debug                                                 ]
 		//[-------------------------------------------------------]
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			void setDebugMarker(const char* name);
 			void beginDebugEvent(const char* name);
 			void endDebugEvent();
@@ -419,7 +419,7 @@ namespace Direct3D11Rhi
 		// Generate asynchronous mipmaps for textures
 		std::mutex					mGenerateAsynchronousMipmapsForTexturesMutex;
 		std::vector<Rhi::ITexture*> mGenerateAsynchronousMipmapsForTextures;
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			bool mDebugBetweenBeginEndScene;	///< Just here for state tracking in debug builds
 		#endif
 
@@ -474,7 +474,7 @@ namespace Direct3D11Rhi
 	// -> From https://github.com/GPUOpen-LibrariesAndSDKs/AGS_SDK and https://raw.githubusercontent.com/GPUOpen-LibrariesAndSDKs/Barycentrics12/master/ags_lib/inc/amd_ags.h
 	// -> We're using the static linked version of AMD AGS in order to reduce the number of individual shipped files
 	// -> For debug builds there are no static AMD AGS libraries available
-	#ifdef RHI_DEBUG
+	#if SE_DEBUG
 		#define DYNAMIC_AMD_AGS
 	#endif
 	struct AGSGPUInfo;
@@ -553,7 +553,7 @@ namespace Direct3D11Rhi
 		#define agsDriverExtensionsDX11_MultiDrawInstancedIndirect			FNPTR(agsDriverExtensionsDX11_MultiDrawInstancedIndirect)
 		#define agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirect	FNPTR(agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirect)
 	#else
-		#ifdef ARCHITECTURE_X64
+#if SE_ARCH_64BIT
 			#ifdef RHI_DIRECT3D11_EXPORTS
 				// Dynamic library is using "Multi-threaded DLL (/MD)"
 				#pragma comment(lib, "amd_ags_x64_2017_MD.lib")
@@ -736,7 +736,7 @@ namespace Direct3D11Rhi
 						{
 							g_AmdAgsAllocator = &mDirect3D11Rhi.getContext().getAllocator();
 							#ifdef DYNAMIC_AMD_AGS
-								#ifdef ARCHITECTURE_X64
+#if SE_ARCH_64BIT
 									static constexpr const char* AMD_AGS_SHARED_LIBRARY_NAME = "amd_ags_x64.dll";
 								#else
 									static constexpr const char* AMD_AGS_SHARED_LIBRARY_NAME = "amd_ags_x86.dll";
@@ -780,7 +780,7 @@ namespace Direct3D11Rhi
 						// Optional vendor specific part: NvAPI
 						if (nvidiaDxgiAdapter)
 						{
-							#ifdef ARCHITECTURE_X64
+#if SE_ARCH_64BIT
 								static constexpr const char* NVAPI_SHARED_LIBRARY_NAME = "nvapi64.dll";
 							#else
 								static constexpr const char* NVAPI_SHARED_LIBRARY_NAME = "nvapi.dll";
@@ -1924,7 +1924,7 @@ namespace Direct3D11Rhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "VBO", 6)	// 6 = "VBO: " including terminating zero
 				if (nullptr != mD3D11Buffer)
 				{
@@ -2152,7 +2152,7 @@ namespace Direct3D11Rhi
 				}
 
 				// Assign a default name to the resource for debugging purposes
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "IBO", 6)	// 6 = "IBO: " including terminating zero
 					if (nullptr != mD3D11Buffer)
 					{
@@ -2586,7 +2586,7 @@ namespace Direct3D11Rhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TBO", 6)	// 6 = "TBO: " including terminating zero
 				if (nullptr != mD3D11Buffer)
 				{
@@ -2811,7 +2811,7 @@ namespace Direct3D11Rhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "SBO", 6)	// 6 = "SBO: " including terminating zero
 				if (nullptr != mD3D11Buffer)
 				{
@@ -3069,7 +3069,7 @@ namespace Direct3D11Rhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "IndirectBufferObject", 23)	// 23 = "IndirectBufferObject: " including terminating zero
 				if (nullptr != mD3D11Buffer)
 				{
@@ -3280,7 +3280,7 @@ namespace Direct3D11Rhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != mD3D11Buffer)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "UBO", 6)	// 6 = "UBO: " including terminating zero
@@ -3400,7 +3400,7 @@ namespace Direct3D11Rhi
 			Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(getRhi());
 
 			// Sanity checks
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 			{
 				const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = vertexBuffers + numberOfVertexBuffers;
 				for (const Rhi::VertexArrayVertexBuffer* vertexBuffer = vertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer)
@@ -3655,7 +3655,7 @@ namespace Direct3D11Rhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "1D texture", 13)	// 13 = "1D texture: " including terminating zero
 				if (nullptr != mD3D11Texture1D)
 				{
@@ -3992,7 +3992,7 @@ namespace Direct3D11Rhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "1D texture array", 19)	// 19 = "1D texture array: " including terminating zero
 				if (nullptr != mD3D11Texture1D)
 				{
@@ -4300,7 +4300,7 @@ namespace Direct3D11Rhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "2D texture", 13)	// 13 = "2D texture: " including terminating zero
 				if (nullptr != mD3D11Texture2D)
 				{
@@ -4691,7 +4691,7 @@ namespace Direct3D11Rhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "2D texture array", 19)	// 19 = "2D texture array: " including terminating zero
 				if (nullptr != mD3D11Texture2D)
 				{
@@ -5012,7 +5012,7 @@ namespace Direct3D11Rhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "3D texture", 13)	// 13 = "3D texture: " including terminating zero
 				if (nullptr != mD3D11Texture3D)
 				{
@@ -5339,7 +5339,7 @@ namespace Direct3D11Rhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Cube texture", 15)	// 15 = "Cube texture: " including terminating zero
 				if (nullptr != mD3D11TextureCube)
 				{
@@ -5671,7 +5671,7 @@ namespace Direct3D11Rhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Cube texture array", 21)	// 21 = "Cube texture array: " including terminating zero
 				if (nullptr != mD3D11TextureCube)
 				{
@@ -5985,7 +5985,7 @@ namespace Direct3D11Rhi
 			FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateSamplerState(reinterpret_cast<const D3D11_SAMPLER_DESC*>(&samplerState), &mD3D11SamplerState))
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != mD3D11SamplerState)
 				{
 					// Avoid "D3D11 WARNING: ID3D11SamplerState::SetPrivateData: Existing private data of same name with different size found! [ STATE_SETTING WARNING #55: SETPRIVATEDATA_CHANGINGPARAMS]" messages by checking whether or not a debug name is already set (first wins)
@@ -6137,7 +6137,7 @@ namespace Direct3D11Rhi
 			FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateRasterizerState(&d3d11RasterizerDesc, &mD3D11RasterizerState))
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != mD3D11RasterizerState)
 				{
 					static const char* NAME = "Rasterizer state";
@@ -6217,7 +6217,7 @@ namespace Direct3D11Rhi
 			FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateDepthStencilState(reinterpret_cast<const D3D11_DEPTH_STENCIL_DESC*>(&depthStencilState), &mD3D11DepthStencilState))
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != mD3D11DepthStencilState)
 				{
 					static const char* NAME = "Depth stencil state";
@@ -6298,7 +6298,7 @@ namespace Direct3D11Rhi
 			FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateBlendState(reinterpret_cast<const D3D11_BLEND_DESC*>(&blendState), &mD3D11BlendState))
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != mD3D11BlendState)
 				{
 					static const char* NAME = "Blend state";
@@ -6549,7 +6549,7 @@ namespace Direct3D11Rhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				switch (queryType)
 				{
 					case Rhi::QueryType::OCCLUSION:
@@ -6867,7 +6867,7 @@ namespace Direct3D11Rhi
 				createDirect3D11Views();
 
 				// Assign a default name to the resource for debugging purposes
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Swap chain", 13)	// 13 = "Swap chain: " including terminating zero
 					FAILED_DEBUG_BREAK(mDxgiSwapChain->SetPrivateData(WKPDID_D3DDebugObjectName, static_cast<UINT>(strlen(detailedDebugName)), detailedDebugName))
 					if (nullptr != mD3D11RenderTargetView)
@@ -7529,7 +7529,7 @@ namespace Direct3D11Rhi
 			}
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "FBO", 6)	// 6 = "FBO: " including terminating zero
 				const size_t detailedDebugNameLength = strlen(detailedDebugName);
 
@@ -7747,7 +7747,7 @@ namespace Direct3D11Rhi
 			FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateVertexShader(shaderBytecode.getBytecode(), shaderBytecode.getNumberOfBytes(), nullptr, &mD3D11VertexShader))
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != mD3D11VertexShader)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "VS", 5)	// 5 = "VS: " including terminating zero
@@ -7784,7 +7784,7 @@ namespace Direct3D11Rhi
 				}
 
 				// Assign a default name to the resource for debugging purposes
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (nullptr != mD3D11VertexShader)
 					{
 						RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "VS", 5)	// 5 = "VS: " including terminating zero
@@ -7911,7 +7911,7 @@ namespace Direct3D11Rhi
 			FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateHullShader(shaderBytecode.getBytecode(), shaderBytecode.getNumberOfBytes(), nullptr, &mD3D11HullShader))
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != mD3D11HullShader)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TCS", 6)	// 6 = "TCS: " including terminating zero
@@ -7950,7 +7950,7 @@ namespace Direct3D11Rhi
 				d3dBlob->Release();
 
 				// Assign a default name to the resource for debugging purposes
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (nullptr != mD3D11HullShader)
 					{
 						RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TCS", 6)	// 6 = "TCS: " including terminating zero
@@ -8058,7 +8058,7 @@ namespace Direct3D11Rhi
 			FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateDomainShader(shaderBytecode.getBytecode(), shaderBytecode.getNumberOfBytes(), nullptr, &mD3D11DomainShader))
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != mD3D11DomainShader)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TES", 6)	// 6 = "TES: " including terminating zero
@@ -8097,7 +8097,7 @@ namespace Direct3D11Rhi
 				d3dBlob->Release();
 
 				// Assign a default name to the resource for debugging purposes
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (nullptr != mD3D11DomainShader)
 					{
 						RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "TES", 6)	// 6 = "TES: " including terminating zero
@@ -8205,7 +8205,7 @@ namespace Direct3D11Rhi
 			FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateGeometryShader(shaderBytecode.getBytecode(), shaderBytecode.getNumberOfBytes(), nullptr, &mD3D11GeometryShader))
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != mD3D11GeometryShader)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "GS", 5)	// 5 = "GS: " including terminating zero
@@ -8244,7 +8244,7 @@ namespace Direct3D11Rhi
 				d3dBlob->Release();
 
 				// Assign a default name to the resource for debugging purposes
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (nullptr != mD3D11GeometryShader)
 					{
 						RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "GS", 5)	// 5 = "GS: " including terminating zero
@@ -8352,7 +8352,7 @@ namespace Direct3D11Rhi
 			FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreatePixelShader(shaderBytecode.getBytecode(), shaderBytecode.getNumberOfBytes(), nullptr, &mD3D11PixelShader))
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != mD3D11PixelShader)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "FS", 5)	// 5 = "FS: " including terminating zero
@@ -8391,7 +8391,7 @@ namespace Direct3D11Rhi
 				d3dBlob->Release();
 
 				// Assign a default name to the resource for debugging purposes
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (nullptr != mD3D11PixelShader)
 					{
 						RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "FS", 5)	// 5 = "FS: " including terminating zero
@@ -8499,7 +8499,7 @@ namespace Direct3D11Rhi
 			FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateComputeShader(shaderBytecode.getBytecode(), shaderBytecode.getNumberOfBytes(), nullptr, &mD3D11ComputeShader))
 
 			// Assign a default name to the resource for debugging purposes
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				if (nullptr != mD3D11ComputeShader)
 				{
 					RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "CS", 5)	// 5 = "CS: " including terminating zero
@@ -8538,7 +8538,7 @@ namespace Direct3D11Rhi
 				d3dBlob->Release();
 
 				// Assign a default name to the resource for debugging purposes
-				#ifdef RHI_DEBUG
+				#if SE_DEBUG
 					if (nullptr != mD3D11ComputeShader)
 					{
 						RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "CS", 5)	// 5 = "CS: " including terminating zero
@@ -9130,7 +9130,7 @@ namespace Direct3D11Rhi
 						RHI_FREE(context, d3d11InputElementDescs);
 
 						// Assign a default name to the resource for debugging purposes
-						#ifdef RHI_DEBUG
+						#if SE_DEBUG
 							if (nullptr != mD3D11InputLayout)
 							{
 								RHI_DECORATED_DEBUG_NAME(debugName, detailedDebugName, "Graphics PSO", 15)	// 15 = "Graphics PSO: " including terminating zero
@@ -9712,7 +9712,7 @@ namespace
 			//[-------------------------------------------------------]
 			//[ Debug                                                 ]
 			//[-------------------------------------------------------]
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				void SetDebugMarker(const void* data, Rhi::IRhi& rhi)
 				{
 					const Rhi::Command::SetDebugMarker* realData = static_cast<const Rhi::Command::SetDebugMarker*>(data);
@@ -9826,7 +9826,7 @@ namespace Direct3D11Rhi
 		mD3d11GeometryShader(nullptr),
 		mD3d11PixelShader(nullptr),
 		mD3d11ComputeShader(nullptr)
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			, mDebugBetweenBeginEndScene(false)
 		#endif
 	{
@@ -9837,7 +9837,7 @@ namespace Direct3D11Rhi
 		{
 			// Flags
 			UINT flags = 0;
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				flags |= D3D11_CREATE_DEVICE_DEBUG;
 			#endif
 
@@ -9868,7 +9868,7 @@ namespace Direct3D11Rhi
 				// Direct3D 11 debug related stuff
 				if (flags & D3D11_CREATE_DEVICE_DEBUG)
 				{
-					#ifdef RHI_DEBUG
+					#if SE_DEBUG
 						// Try to get the Direct3D 11 user defined annotation interface, Direct3D 11.1 feature
 						FAILED_DEBUG_BREAK(mD3D11DeviceContext->QueryInterface(__uuidof(ID3DUserDefinedAnnotation), reinterpret_cast<LPVOID*>(&mD3DUserDefinedAnnotation)))
 					#endif
@@ -10079,7 +10079,7 @@ namespace Direct3D11Rhi
 	void Direct3D11Rhi::setGraphicsResourceGroup(uint32_t rootParameterIndex, Rhi::IResourceGroup* resourceGroup)
 	{
 		// Security checks
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 		{
 			if (nullptr == mGraphicsRootSignature)
 			{
@@ -10703,7 +10703,7 @@ namespace Direct3D11Rhi
 		else if (numberOfDraws > 1)
 		{
 			// Emulate multi-draw-indirect
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				beginDebugEvent("Multi-draw-indirect emulation");
 			#endif
 			for (uint32_t i = 0; i < numberOfDraws; ++i)
@@ -10711,7 +10711,7 @@ namespace Direct3D11Rhi
 				mD3D11DeviceContext->DrawInstancedIndirect(d3D11Buffer, indirectBufferOffset);
 				indirectBufferOffset += sizeof(Rhi::DrawArguments);
 			}
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				endDebugEvent();
 			#endif
 		}
@@ -10767,7 +10767,7 @@ namespace Direct3D11Rhi
 		emulationData += indirectBufferOffset;
 
 		// Emit the draw calls
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				beginDebugEvent("Multi-draw-indirect emulation");
@@ -10800,7 +10800,7 @@ namespace Direct3D11Rhi
 			// Advance
 			emulationData += sizeof(Rhi::DrawArguments);
 		}
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				endDebugEvent();
@@ -10823,7 +10823,7 @@ namespace Direct3D11Rhi
 		else if (numberOfDraws > 1)
 		{
 			// Emulate multi-draw-indirect
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				beginDebugEvent("Multi-indexed-draw-indirect emulation");
 			#endif
 			for (uint32_t i = 0; i < numberOfDraws; ++i)
@@ -10831,7 +10831,7 @@ namespace Direct3D11Rhi
 				mD3D11DeviceContext->DrawIndexedInstancedIndirect(d3D11Buffer, indirectBufferOffset);
 				indirectBufferOffset += sizeof(Rhi::DrawIndexedArguments);
 			}
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				endDebugEvent();
 			#endif
 		}
@@ -10887,7 +10887,7 @@ namespace Direct3D11Rhi
 		emulationData += indirectBufferOffset;
 
 		// Emit the draw calls
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				beginDebugEvent("Multi-indexed-draw-indirect emulation");
@@ -10922,7 +10922,7 @@ namespace Direct3D11Rhi
 			// Advance
 			emulationData += sizeof(Rhi::DrawIndexedArguments);
 		}
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			if (numberOfDraws > 1)
 			{
 				endDebugEvent();
@@ -10974,7 +10974,7 @@ namespace Direct3D11Rhi
 	void Direct3D11Rhi::setComputeResourceGroup(uint32_t rootParameterIndex, Rhi::IResourceGroup* resourceGroup)
 	{
 		// Security checks
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 		{
 			if (nullptr == mComputeRootSignature)
 			{
@@ -11711,7 +11711,7 @@ namespace Direct3D11Rhi
 	//[-------------------------------------------------------]
 	//[ Debug                                                 ]
 	//[-------------------------------------------------------]
-	#ifdef RHI_DEBUG
+	#if SE_DEBUG
 		void Direct3D11Rhi::setDebugMarker(const char* name)
 		{
 			if (nullptr != mD3DUserDefinedAnnotation)
@@ -11751,7 +11751,7 @@ namespace Direct3D11Rhi
 	//[-------------------------------------------------------]
 	bool Direct3D11Rhi::isDebugEnabled()
 	{
-		// Don't check for the "RHI_DEBUG" preprocessor definition, even if debug
+		// Don't check for the "SE_DEBUG" preprocessor definition, even if debug
 		// is disabled it has to be possible to use this function for an additional security check
 		// -> Maybe a debugger/profiler ignores the debug state
 		// -> Maybe someone manipulated the binary to enable the debug state, adding a second check
@@ -12159,7 +12159,7 @@ namespace Direct3D11Rhi
 		// Not required when using Direct3D 11
 
 		// Sanity check
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			RHI_ASSERT(mContext, false == mDebugBetweenBeginEndScene, "Direct3D 11: Begin scene was called while scene rendering is already in progress, missing end scene call?")
 			mDebugBetweenBeginEndScene = true;
 		#endif
@@ -12273,7 +12273,7 @@ namespace Direct3D11Rhi
 	void Direct3D11Rhi::endScene()
 	{
 		// Sanity check
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			RHI_ASSERT(mContext, true == mDebugBetweenBeginEndScene, "Direct3D 11: End scene was called while scene rendering isn't in progress, missing start scene call?")
 			mDebugBetweenBeginEndScene = false;
 		#endif
@@ -12301,7 +12301,7 @@ namespace Direct3D11Rhi
 			d3d11QueryDesc.MiscFlags = 0;
 			FAILED_DEBUG_BREAK(mD3D11Device->CreateQuery(&d3d11QueryDesc, &mD3D11QueryFlush))
 
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				// Set the debug name
 				if (nullptr != mD3D11QueryFlush)
 				{

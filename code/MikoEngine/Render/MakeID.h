@@ -311,7 +311,7 @@ public:
 		return max_count;
 	}
 
-#ifdef RHI_DEBUG
+#if SE_DEBUG
 	void PrintRanges() const
 	{
 		uint i = 0;

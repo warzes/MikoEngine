@@ -109,7 +109,7 @@ Notes:
 */
 
 
-#ifdef RHI_DEBUG
+#if SE_DEBUG
 	#include <cstdio>  // For printf(). Remove if you don't need the PrintRanges() function (mostly for debugging anyway).
 #endif
 
@@ -374,7 +374,7 @@ public:
 		return max_count;
 	}
 
-	#ifdef RHI_DEBUG
+	#if SE_DEBUG
 		void PrintRanges() const
 		{
 			uint i = 0;
@@ -438,7 +438,7 @@ namespace NullRhi
 //[-------------------------------------------------------]
 //[ Macros & definitions                                  ]
 //[-------------------------------------------------------]
-#ifdef RHI_DEBUG
+#if SE_DEBUG
 	/*
 	*  @brief
 	*    Check whether or not the given resource is owned by the given RHI
@@ -448,7 +448,7 @@ namespace NullRhi
 
 	/**
 	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "RHI_DEBUG"
+	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
 	*
 	*  @param[in] debugName
 	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
@@ -463,7 +463,7 @@ namespace NullRhi
 
 	/**
 	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "RHI_DEBUG"
+	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
 	*
 	*  @param[in] debugName
 	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
@@ -586,7 +586,7 @@ namespace NullRhi
 		//[-------------------------------------------------------]
 		//[ Debug                                                 ]
 		//[-------------------------------------------------------]
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			void setDebugMarker(const char* name);
 			void beginDebugEvent(const char* name);
 			void endDebugEvent();
@@ -667,7 +667,7 @@ namespace NullRhi
 		Rhi::IRenderTarget*   mRenderTarget;			///< Currently set render target (we keep a reference to it), can be a null pointer
 		RootSignature*		  mGraphicsRootSignature;	///< Currently set graphics root signature (we keep a reference to it), can be a null pointer
 		RootSignature*		  mComputeRootSignature;	///< Currently set compute root signature (we keep a reference to it), can be a null pointer
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			bool mDebugBetweenBeginEndScene;	///< Just here for state tracking in debug builds
 		#endif
 
@@ -1436,7 +1436,7 @@ namespace NullRhi
 			NullRhi& nullRhi = static_cast<NullRhi&>(getRhi());
 
 			// Sanity checks
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 			{
 				const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = vertexBuffers + numberOfVertexBuffers;
 				for (const Rhi::VertexArrayVertexBuffer* vertexBuffer = vertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer)
@@ -3770,7 +3770,7 @@ namespace
 			//[-------------------------------------------------------]
 			//[ Debug                                                 ]
 			//[-------------------------------------------------------]
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				void SetDebugMarker(const void* data, Rhi::IRhi& rhi)
 				{
 					const Rhi::Command::SetDebugMarker* realData = static_cast<const Rhi::Command::SetDebugMarker*>(data);
@@ -3871,7 +3871,7 @@ namespace NullRhi
 		mRenderTarget(nullptr),
 		mGraphicsRootSignature(nullptr),
 		mComputeRootSignature(nullptr)
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			, mDebugBetweenBeginEndScene(false)
 		#endif
 	{
@@ -3963,7 +3963,7 @@ namespace NullRhi
 	void NullRhi::setGraphicsResourceGroup([[maybe_unused]] uint32_t rootParameterIndex, Rhi::IResourceGroup* resourceGroup)
 	{
 		// Security checks
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 		{
 			if (nullptr == mGraphicsRootSignature)
 			{
@@ -4133,7 +4133,7 @@ namespace NullRhi
 	void NullRhi::setComputeResourceGroup([[maybe_unused]] uint32_t rootParameterIndex, Rhi::IResourceGroup* resourceGroup)
 	{
 		// Security checks
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 		{
 			if (nullptr == mComputeRootSignature)
 			{
@@ -4208,7 +4208,7 @@ namespace NullRhi
 	//[-------------------------------------------------------]
 	//[ Debug                                                 ]
 	//[-------------------------------------------------------]
-	#ifdef RHI_DEBUG
+	#if SE_DEBUG
 		void NullRhi::setDebugMarker(const char*)
 		{}
 
@@ -4439,7 +4439,7 @@ namespace NullRhi
 		// Nothing here
 
 		// Sanity check
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			RHI_ASSERT(mContext, false == mDebugBetweenBeginEndScene, "Null: Begin scene was called while scene rendering is already in progress, missing end scene call?")
 			mDebugBetweenBeginEndScene = true;
 		#endif
@@ -4474,7 +4474,7 @@ namespace NullRhi
 	void NullRhi::endScene()
 	{
 		// Sanity check
-		#ifdef RHI_DEBUG
+		#if SE_DEBUG
 			RHI_ASSERT(mContext, true == mDebugBetweenBeginEndScene, "Null: End scene was called while scene rendering isn't in progress, missing start scene call?")
 			mDebugBetweenBeginEndScene = false;
 		#endif

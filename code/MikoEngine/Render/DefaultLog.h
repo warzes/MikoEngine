@@ -204,7 +204,7 @@ namespace Rhi
 			bool requestDebugBreak = false;
 
 			// Construct the full UTF-8 message text
-			#ifdef RHI_DEBUG
+			#if SE_DEBUG
 				std::string fullMessage = "File \"" + std::string(file) + "\" | Line " + std::to_string(line) + " | " + std::string(typeToString(type)) + message;
 			#else
 				std::string fullMessage = std::string(typeToString(type)) + message;
