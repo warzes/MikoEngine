@@ -20,8 +20,8 @@
     can use the Direct3D headers for features not covered by this RHI.
 */
 
-PRAGMA_WARNING_PUSH
-PRAGMA_WARNING_DISABLE_MSVC(5204)	// warning C5204: class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
+SE_PRAGMA_WARNING_PUSH
+SE_PRAGMA_WARNING_DISABLE_MSVC(5204)	// warning C5204: class has virtual functions, but its trivial destructor is not virtual; instances of objects derived from this class may not be destructed correctly
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
@@ -1946,4 +1946,4 @@ ID3DUserDefinedAnnotation : public IUnknown
 	virtual BOOL STDMETHODCALLTYPE GetStatus(void) = 0;
 };
 
-PRAGMA_WARNING_POP
+SE_PRAGMA_WARNING_POP

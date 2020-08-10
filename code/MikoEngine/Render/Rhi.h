@@ -1,23 +1,4 @@
-/**
-*  @brief
-*    Amalgamated/unity build rendering hardware interface (RHI)
-*
-*  @remarks
-*    == Description ==
-*    Please note that this is a 100% interface project resulting in no binary at all. The one and only goal of this project is to offer an unified RHI for multiple graphics APIs like Vulkan, Direct3D 12 or OpenGL. Features like resource loading, font rendering or even rendering of complex scenes is out of the scope of this project.
-*
-*    In order to make it easier to use the RHI, the header "Rhi.h" puts everything together within a single header without any additional third party dependencies.
-*
-*    == Preprocessor Definitions ==
-*    - Set "_WIN32" as preprocessor definition when building for Microsoft Windows
-*    - Set "LINUX" as preprocessor definition when building for Linux or similar platforms
-*        - For Linux or similar platforms: Set "HAVE_VISIBILITY_ATTR" as preprocessor definition to use the visibility attribute (the used compiler must support it)
-*    - Set "__ANDROID__" as preprocessor definition when building for Android
-*    - Set "ARCHITECTURE_X64" as preprocessor definition when building for x64 instead of x86
-*    - Set "RHI_STATISTICS" as preprocessor definition in order to enable the gathering of statistics (tiny binary size and tiny negative performance impact)
-*    - Set "RHI_DEBUG" as preprocessor definition in order to enable e.g. Direct3D 9 PIX functions (D3DPERF_* functions, also works directly within VisualStudio 2017 out-of-the-box) debug features (disabling support just reduces the binary size slightly but makes debugging more difficult)
-*    - Set 0-n of the following to tell the system which RHI implementations should be available during runtime: "RHI_NULL", "RHI_VULKAN", "RHI_OPENGL", "RHI_OPENGLES3", "RHI_DIRECT3D11", "RHI_DIRECT3D12"
-*/
+/** Amalgamated/unity build rendering hardware interface (RHI)*/
 
 #define RHI_DIRECT3D11 1
 #define RHI_DIRECT3D12 1
@@ -26,6 +7,7 @@
 #define RHI_VULKAN 1
 #define RHI_NULL 1
 
+// Set "RHI_STATISTICS" as preprocessor definition in order to enable the gathering of statistics (tiny binary size and tiny negative performance impact)
 #define RHI_STATISTICS
 
 #if SE_PLATFORM_WINDOWS && !defined(_WIN32)
@@ -40,213 +22,46 @@
 #	define RHI_DEBUG
 #endif
 
-//[-------------------------------------------------------]
-//[ Header guard                                          ]
-//[-------------------------------------------------------]
 #pragma once
-
 
 //[-------------------------------------------------------]
 //[ C++ compiler keywords                                 ]
 //[-------------------------------------------------------]
+#ifndef NULL_HANDLE
+#define NULL_HANDLE 0
+#endif
 #ifdef _WIN32
-	#ifndef NULL_HANDLE
-		#define NULL_HANDLE 0
-	#endif
-
-	// To export functions
-	#define GENERIC_FUNCTION_EXPORT extern "C" __declspec(dllexport)
-
-	/**
-	*  @brief
-	*    Force the compiler to inline something
-	*
-	*  @note
-	*    - Do only use this when you really have to, usually it's best to let the compiler decide by using the standard keyword "inline"
-	*/
 	#define FORCEINLINE __forceinline
-
-	/**
-	*  @brief
-	*    Restrict alias
-	*/
 	#define RESTRICT __restrict
 	#define RESTRICT_RETURN __restrict
-
-	/**
-	*  @brief
-	*    No operation macro ("_asm nop"/"__nop()")
-	*/
+	// No operation macro ("_asm nop"/"__nop()")
 	#define NOP __nop()
-
-	/**
-	*  @brief
-	*    Debug break operation macro
-	*/
 	#define DEBUG_BREAK __debugbreak()
-
-	/**
-	*  @brief
-	*    Platform specific "#pragma warning(push)" (Microsoft Windows Visual Studio)
-	*/
-	#define PRAGMA_WARNING_PUSH __pragma(warning(push))
-
-	/**
-	*  @brief
-	*    Platform specific "#pragma warning(pop)" (Microsoft Windows Visual Studio)
-	*/
-	#define PRAGMA_WARNING_POP __pragma(warning(pop))
-
-	/**
-	*  @brief
-	*    Platform specific "#pragma warning(disable: <x>)" (Microsoft Windows Visual Studio)
-	*/
-	#define PRAGMA_WARNING_DISABLE_MSVC(id) __pragma(warning(disable: id))
-
-	/**
-	*  @brief
-	*    Platform specific "#pragma clang diagnostic ignored <x>" (Clang)
-	*/
-	#define PRAGMA_WARNING_DISABLE_CLANG(id)
-
-	/**
-	*  @brief
-	*    Platform specific "#pragma GCC diagnostic ignored <x>" (GCC)
-	*/
-	#define PRAGMA_WARNING_DISABLE_GCC(id)
 #elif LINUX
-	#ifndef NULL_HANDLE
-		#define NULL_HANDLE 0
-	#endif
-
-	// To export functions
-	#if defined(HAVE_VISIBILITY_ATTR)
-		#define GENERIC_FUNCTION_EXPORT extern "C" __attribute__ ((visibility("default")))
-	#else
-		#define GENERIC_FUNCTION_EXPORT extern "C"
-	#endif
-
-	/**
-	*  @brief
-	*    Force the compiler to inline something
-	*
-	*  @note
-	*    - Do only use this when you really have to, usually it's best to let the compiler decide by using the standard keyword "inline"
-	*/
 	#define FORCEINLINE __attribute__((always_inline))
-
-	/**
-	*  @brief
-	*    Restrict alias
-	*/
 	#define RESTRICT __restrict__
 	#define RESTRICT_RETURN
-
-	/**
-	*  @brief
-	*    No operation macro ("_asm nop"/__nop())
-	*/
+// No operation macro ("_asm nop"/"__nop()")
 	#define NOP asm ("nop");
-
-	/**
-	*  @brief
-	*    Debug break operation macro
-	*/
 	#define DEBUG_BREAK __builtin_trap()
-
-	#ifdef __clang__
-		/**
-		*  @brief
-		*    Platform specific "#pragma clang diagnostic push" (Clang)
-		*/
-		#define PRAGMA_WARNING_PUSH _Pragma("clang diagnostic push")
-
-		/**
-		*  @brief
-		*    Platform specific "#pragma clang diagnostic pop" (Clang)
-		*/
-		#define PRAGMA_WARNING_POP _Pragma("clang diagnostic pop")
-
-		/**
-		*  @brief
-		*    Platform specific "#pragma warning(disable: <x>)" (Microsoft Windows Visual Studio)
-		*/
-		#define PRAGMA_WARNING_DISABLE_MSVC(id)
-
-		/**
-		*  @brief
-		*    Platform specific "#pragma GCC diagnostic ignored <x>" (GCC)
-		*/
-		#define PRAGMA_WARNING_DISABLE_GCC(id)
-
-		/**
-		*  @brief
-		*    Platform specific "#pragma clang diagnostic ignored <x>" (Clang)
-		*/
-		// We need stringify because _Pragma expects an string literal
-		#define PRAGMA_STRINGIFY(a) #a
-		#define PRAGMA_WARNING_DISABLE_CLANG(id) _Pragma(PRAGMA_STRINGIFY(clang diagnostic ignored id) )
-	#elif __GNUC__
-		// gcc
-		/**
-		*  @brief
-		*    Platform specific "#pragma GCC diagnostic push" (GCC)
-		*/
-		#define PRAGMA_WARNING_PUSH _Pragma("GCC diagnostic push")
-
-		/**
-		*  @brief
-		*    Platform specific "#pragma warning(pop)" (GCC)
-		*/
-		#define PRAGMA_WARNING_POP _Pragma("GCC diagnostic pop")
-
-		/**
-		*  @brief
-		*    Platform specific "#pragma warning(disable: <x>)" (Microsoft Windows Visual Studio)
-		*/
-		#define PRAGMA_WARNING_DISABLE_MSVC(id)
-
-		/**
-		*  @brief
-		*    Platform specific "#pragma GCC diagnostic ignored <x>" (GCC)
-		*/
-		// We need stringify because _Pragma expects an string literal
-		#define PRAGMA_STRINGIFY(a) #a
-		#define PRAGMA_WARNING_DISABLE_GCC(id) _Pragma(PRAGMA_STRINGIFY(GCC diagnostic ignored id) )
-
-		/**
-		*  @brief
-		*    Platform specific "#pragma clang diagnostic ignored <x>" (Clang)
-		*/
-		#define PRAGMA_WARNING_DISABLE_CLANG(id)
-	#else
-		#error "Unsupported compiler"
-	#endif
-
-	#define stricmp(a, b)	strcasecmp(a, b)
-#else
-	#error "Unsupported platform"
 #endif
-
-
-
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 // Disable warnings in external headers, we can't fix them
-PRAGMA_WARNING_PUSH
-	PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'return': conversion from 'int' to 'std::char_traits<wchar_t>::int_type', signed/unsigned mismatch
-	PRAGMA_WARNING_DISABLE_MSVC(4574)	// warning C4574: '_HAS_ITERATOR_DEBUGGING' is defined to be '0': did you mean to use '#if _HAS_ITERATOR_DEBUGGING'?
-	PRAGMA_WARNING_DISABLE_MSVC(4625)	// warning C4625: 'std::codecvt_base': copy constructor was implicitly defined as deleted
-	PRAGMA_WARNING_DISABLE_MSVC(4626)	// warning C4626: 'std::codecvt_base': assignment operator was implicitly defined as deleted
-	PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668: '_M_HYBRID_X86_ARM64' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
-	PRAGMA_WARNING_DISABLE_MSVC(4987)	// warning C4987: nonstandard extension used: 'throw (...)'
+SE_PRAGMA_WARNING_PUSH
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'return': conversion from 'int' to 'std::char_traits<wchar_t>::int_type', signed/unsigned mismatch
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4574)	// warning C4574: '_HAS_ITERATOR_DEBUGGING' is defined to be '0': did you mean to use '#if _HAS_ITERATOR_DEBUGGING'?
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4625)	// warning C4625: 'std::codecvt_base': copy constructor was implicitly defined as deleted
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4626)	// warning C4626: 'std::codecvt_base': assignment operator was implicitly defined as deleted
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668: '_M_HYBRID_X86_ARM64' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4987)	// warning C4987: nonstandard extension used: 'throw (...)'
 	#include <new>			// For placement new
 	#include <cmath>
 	#include <string.h>		// For "strcpy()"
 	#include <inttypes.h>	// For uint32_t, uint64_t etc.
-PRAGMA_WARNING_POP
+SE_PRAGMA_WARNING_POP
 #ifdef RHI_DEBUG
 	#include <cassert>
 	#define ASSERT(expression, message) assert((expression) && message);	// TODO(co) "RHI_ASSERT()" should be used everywhere
@@ -287,16 +102,16 @@ PRAGMA_WARNING_POP
 #endif
 #ifdef RHI_STATISTICS
 	// Disable warnings in external headers, we can't fix them
-	PRAGMA_WARNING_PUSH
-		PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'return': conversion from 'int' to 'std::char_traits<wchar_t>::int_type', signed/unsigned mismatch
-		PRAGMA_WARNING_DISABLE_MSVC(4623)	// warning C4623: 'std::_List_node<_Ty,std::_Default_allocator_traits<_Alloc>::void_pointer>': default constructor was implicitly defined as deleted
-		PRAGMA_WARNING_DISABLE_MSVC(4625)	// warning C4625: 'std::_Ptr_base<_Ty>': copy constructor was implicitly defined as deleted
-		PRAGMA_WARNING_DISABLE_MSVC(4626)	// warning C4626: 'std::_Compressed_pair<glslang::pool_allocator<char>,std::_String_val<std::_Simple_types<_Ty>>,false>': assignment operator was implicitly defined as deleted
-		PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668: '_M_HYBRID_X86_ARM64' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
-		PRAGMA_WARNING_DISABLE_MSVC(5026)	// warning C5026: 'std::atomic_flag': move constructor was implicitly defined as deleted (compiling source file E:\private\unrimp\Source\Rhi\Private\Direct3D10Rhi\Direct3D10Rhi.cpp)
-		PRAGMA_WARNING_DISABLE_MSVC(5027)	// warning C5027: 'std::_Compressed_pair<glslang::pool_allocator<char>,std::_String_val<std::_Simple_types<_Ty>>,false>': move assignment operator was implicitly defined as deleted
+	SE_PRAGMA_WARNING_PUSH
+		SE_PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'return': conversion from 'int' to 'std::char_traits<wchar_t>::int_type', signed/unsigned mismatch
+		SE_PRAGMA_WARNING_DISABLE_MSVC(4623)	// warning C4623: 'std::_List_node<_Ty,std::_Default_allocator_traits<_Alloc>::void_pointer>': default constructor was implicitly defined as deleted
+		SE_PRAGMA_WARNING_DISABLE_MSVC(4625)	// warning C4625: 'std::_Ptr_base<_Ty>': copy constructor was implicitly defined as deleted
+		SE_PRAGMA_WARNING_DISABLE_MSVC(4626)	// warning C4626: 'std::_Compressed_pair<glslang::pool_allocator<char>,std::_String_val<std::_Simple_types<_Ty>>,false>': assignment operator was implicitly defined as deleted
+		SE_PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668: '_M_HYBRID_X86_ARM64' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
+		SE_PRAGMA_WARNING_DISABLE_MSVC(5026)	// warning C5026: 'std::atomic_flag': move constructor was implicitly defined as deleted (compiling source file E:\private\unrimp\Source\Rhi\Private\Direct3D10Rhi\Direct3D10Rhi.cpp)
+		SE_PRAGMA_WARNING_DISABLE_MSVC(5027)	// warning C5027: 'std::_Compressed_pair<glslang::pool_allocator<char>,std::_String_val<std::_Simple_types<_Ty>>,false>': move assignment operator was implicitly defined as deleted
 		#include <atomic>	// For "std::atomic<>"
-	PRAGMA_WARNING_POP
+	SE_PRAGMA_WARNING_POP
 #endif
 #ifdef _WIN32
 	#include <intrin.h>	// For "__nop()"
@@ -10325,10 +10140,10 @@ namespace Rhi
 		*/
 		#define COMMAND_SCOPED_DEBUG_EVENT(commandBuffer, name) \
 			Rhi::Command::BeginDebugEvent::create(commandBuffer, name); \
-			PRAGMA_WARNING_PUSH \
-				PRAGMA_WARNING_DISABLE_MSVC(4456) \
+			SE_PRAGMA_WARNING_PUSH \
+				SE_PRAGMA_WARNING_DISABLE_MSVC(4456) \
 				Rhi::CommandScopedDebugEventOnExit commandScopedDebugEventOnExit##__FUNCTION__(commandBuffer); \
-			PRAGMA_WARNING_POP
+			SE_PRAGMA_WARNING_POP
 
 		/**
 		*  @brief
@@ -10339,10 +10154,10 @@ namespace Rhi
 		*/
 		#define COMMAND_SCOPED_DEBUG_EVENT_FUNCTION(commandBuffer) \
 			Rhi::Command::BeginDebugEvent::create(commandBuffer, __FUNCTION__); \
-			PRAGMA_WARNING_PUSH \
-				PRAGMA_WARNING_DISABLE_MSVC(4456) \
+			SE_PRAGMA_WARNING_PUSH \
+				SE_PRAGMA_WARNING_DISABLE_MSVC(4456) \
 				Rhi::CommandScopedDebugEventOnExit commandScopedDebugEventOnExit##__FUNCTION__(commandBuffer); \
-			PRAGMA_WARNING_POP
+			SE_PRAGMA_WARNING_POP
 	#else
 		/**
 		*  @brief

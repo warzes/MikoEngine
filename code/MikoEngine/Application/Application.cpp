@@ -60,7 +60,7 @@ int Application::Run(int argc, const char *argv[])
 	const bool loadRhiApiSharedLibrary = true;
 	Rhi::X11Context rhiContext(defaultLog, defaultAssert, defaultAllocator, getX11Display(), getNativeWindowHandle(*sdlWindow));
 #endif
-	Rhi::RhiInstance rhiInstance((argc > 1) ? argv[1] : Rhi::DEFAULT_RHI_NAME, rhiContext, loadRhiApiSharedLibrary);
+	Rhi::RhiInstance rhiInstance((argc > 1) ? argv[1] : "Direct3D11", rhiContext, loadRhiApiSharedLibrary);
 	Rhi::IRhiPtr rhi = rhiInstance.getRhi();
 	if (nullptr == rhi && !rhi->isInitialized())
 		return 0;
@@ -142,7 +142,7 @@ int Application::Run(int argc, const char *argv[])
 #include "Example_GLSL_450.h"	// For Vulkan
 #include "Example_GLSL_410.h"	// macOS 10.11 only supports OpenGL 4.1 hence it's our OpenGL minimum
 #include "Example_GLSL_ES3.h"
-#include "Example_HLSL_D3D9_D3D10_D3D11_D3D12.h"
+#include "Example_HLSL_D3D11_D3D12.h"
 #include "Example_Null.h"
 
 				// Create the graphics program

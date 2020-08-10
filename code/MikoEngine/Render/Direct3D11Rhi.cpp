@@ -99,10 +99,10 @@ namespace
 			const HMODULE hModule = ::GetModuleHandleW(L"ntdll.dll");
 			if (hModule)
 			{
-				PRAGMA_WARNING_PUSH
-					PRAGMA_WARNING_DISABLE_MSVC(4191)	// warning C4191: 'reinterpret_cast': unsafe conversion from 'FARPROC' to '`anonymous-namespace'::detail::RtlGetVersionPtr'
+				SE_PRAGMA_WARNING_PUSH
+					SE_PRAGMA_WARNING_DISABLE_MSVC(4191)	// warning C4191: 'reinterpret_cast': unsafe conversion from 'FARPROC' to '`anonymous-namespace'::detail::RtlGetVersionPtr'
 					const RtlGetVersionPtr functionPointer = reinterpret_cast<RtlGetVersionPtr>(::GetProcAddress(hModule, "RtlGetVersion"));
-				PRAGMA_WARNING_POP
+				SE_PRAGMA_WARNING_POP
 				if (nullptr != functionPointer)
 				{
 					RTL_OSVERSIONINFOW rovi = { };

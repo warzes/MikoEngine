@@ -7,33 +7,33 @@
 #if RHI_VULKAN
 #ifdef RHI_VULKAN_GLSLTOSPIRV
 	// Disable warnings in external headers, we can't fix them
-	PRAGMA_WARNING_PUSH
-		PRAGMA_WARNING_DISABLE_MSVC(4061)	// warning C4061: enumerator '<x>' in switch of enum '<y>' is not explicitly handled by a case label
-		PRAGMA_WARNING_DISABLE_MSVC(4100)	// warning C4100: 's': unreferenced formal parameter
-		PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'argument': conversion from '<x>' to '<y>', signed/unsigned mismatch
-		PRAGMA_WARNING_DISABLE_MSVC(4530)	// warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
-		PRAGMA_WARNING_DISABLE_MSVC(4571)	// warning C4571: Informational: catch(...) semantics changed since Visual C++ 7.1; structured exceptions (SEH) are no longer caught
-		PRAGMA_WARNING_DISABLE_MSVC(4623)	// warning C4623: 'std::_List_node<_Ty,std::_Default_allocator_traits<_Alloc>::void_pointer>': default constructor was implicitly defined as deleted
-		PRAGMA_WARNING_DISABLE_MSVC(4625)	// warning C4625: '<x>': copy constructor was implicitly defined as deleted
-		PRAGMA_WARNING_DISABLE_MSVC(4626)	// warning C4626: 'std::codecvt_base': assignment operator was implicitly defined as deleted
-		PRAGMA_WARNING_DISABLE_MSVC(4774)	// warning C4774: 'sprintf_s' : format string expected in argument 3 is not a string literal
-		PRAGMA_WARNING_DISABLE_MSVC(5026)	// warning C5026: 'std::_Generic_error_category': move constructor was implicitly defined as deleted
-		PRAGMA_WARNING_DISABLE_MSVC(5027)	// warning C5027: 'std::_Generic_error_category': move assignment operator was implicitly defined as deleted
+	SE_PRAGMA_WARNING_PUSH
+		SE_PRAGMA_WARNING_DISABLE_MSVC(4061)	// warning C4061: enumerator '<x>' in switch of enum '<y>' is not explicitly handled by a case label
+		SE_PRAGMA_WARNING_DISABLE_MSVC(4100)	// warning C4100: 's': unreferenced formal parameter
+		SE_PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'argument': conversion from '<x>' to '<y>', signed/unsigned mismatch
+		SE_PRAGMA_WARNING_DISABLE_MSVC(4530)	// warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+		SE_PRAGMA_WARNING_DISABLE_MSVC(4571)	// warning C4571: Informational: catch(...) semantics changed since Visual C++ 7.1; structured exceptions (SEH) are no longer caught
+		SE_PRAGMA_WARNING_DISABLE_MSVC(4623)	// warning C4623: 'std::_List_node<_Ty,std::_Default_allocator_traits<_Alloc>::void_pointer>': default constructor was implicitly defined as deleted
+		SE_PRAGMA_WARNING_DISABLE_MSVC(4625)	// warning C4625: '<x>': copy constructor was implicitly defined as deleted
+		SE_PRAGMA_WARNING_DISABLE_MSVC(4626)	// warning C4626: 'std::codecvt_base': assignment operator was implicitly defined as deleted
+		SE_PRAGMA_WARNING_DISABLE_MSVC(4774)	// warning C4774: 'sprintf_s' : format string expected in argument 3 is not a string literal
+		SE_PRAGMA_WARNING_DISABLE_MSVC(5026)	// warning C5026: 'std::_Generic_error_category': move constructor was implicitly defined as deleted
+		SE_PRAGMA_WARNING_DISABLE_MSVC(5027)	// warning C5027: 'std::_Generic_error_category': move assignment operator was implicitly defined as deleted
 		#include <SPIRV/GlslangToSpv.h>
 		#include <glslang/MachineIndependent/localintermediate.h>
-	PRAGMA_WARNING_POP
+	SE_PRAGMA_WARNING_POP
 #endif
 
 // Disable warnings in external headers, we can't fix them
-PRAGMA_WARNING_PUSH
-	PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'argument': conversion from 'long' to 'unsigned int', signed/unsigned mismatch
+SE_PRAGMA_WARNING_PUSH
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'argument': conversion from 'long' to 'unsigned int', signed/unsigned mismatch
 	#include <smol-v/smolv.h>
-PRAGMA_WARNING_POP
+SE_PRAGMA_WARNING_POP
 
 // Disable warnings in external headers, we can't fix them
-PRAGMA_WARNING_PUSH
-	PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668 '<x>' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
-	PRAGMA_WARNING_DISABLE_MSVC(5039)	// warning C5039: 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function passed to extern C function under -EHc. Undefined behavior may occur if this function throws an exception.
+SE_PRAGMA_WARNING_PUSH
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668 '<x>' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
+	SE_PRAGMA_WARNING_DISABLE_MSVC(5039)	// warning C5039: 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function passed to extern C function under -EHc. Undefined behavior may occur if this function throws an exception.
 	#if defined(_WIN32)
 		#define VK_USE_PLATFORM_WIN32_KHR
 	#elif defined(__ANDROID__)
@@ -45,24 +45,24 @@ PRAGMA_WARNING_PUSH
 	#endif
 	#define VK_NO_PROTOTYPES
 	#include <vulkan/vulkan.h>
-PRAGMA_WARNING_POP
+SE_PRAGMA_WARNING_POP
 
 // Disable warnings in external headers, we can't fix them
-PRAGMA_WARNING_PUSH
-	PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'return': conversion from 'int' to 'std::char_traits<wchar_t>::int_type', signed/unsigned mismatch
-	PRAGMA_WARNING_DISABLE_MSVC(4530)	// warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
-	PRAGMA_WARNING_DISABLE_MSVC(4571)	// warning C4571: Informational: catch(...) semantics changed since Visual C++ 7.1; structured exceptions (SEH) are no longer caught
-	PRAGMA_WARNING_DISABLE_MSVC(4574)	// warning C4574: '_HAS_ITERATOR_DEBUGGING' is defined to be '0': did you mean to use '#if _HAS_ITERATOR_DEBUGGING'?
-	PRAGMA_WARNING_DISABLE_MSVC(4625)	// warning C4625: 'std::codecvt_base': copy constructor was implicitly defined as deleted
-	PRAGMA_WARNING_DISABLE_MSVC(4626)	// warning C4626: 'std::codecvt_base': assignment operator was implicitly defined as deleted
-	PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668: '_M_HYBRID_X86_ARM64' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
-	PRAGMA_WARNING_DISABLE_MSVC(4774)	// warning C4774: 'sprintf_s' : format string expected in argument 3 is not a string literal
-	PRAGMA_WARNING_DISABLE_MSVC(5026)	// warning C5026: 'std::_Generic_error_category': move constructor was implicitly defined as deleted
-	PRAGMA_WARNING_DISABLE_MSVC(5027)	// warning C5027: 'std::_Generic_error_category': move assignment operator was implicitly defined as deleted
+SE_PRAGMA_WARNING_PUSH
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'return': conversion from 'int' to 'std::char_traits<wchar_t>::int_type', signed/unsigned mismatch
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4530)	// warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4571)	// warning C4571: Informational: catch(...) semantics changed since Visual C++ 7.1; structured exceptions (SEH) are no longer caught
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4574)	// warning C4574: '_HAS_ITERATOR_DEBUGGING' is defined to be '0': did you mean to use '#if _HAS_ITERATOR_DEBUGGING'?
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4625)	// warning C4625: 'std::codecvt_base': copy constructor was implicitly defined as deleted
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4626)	// warning C4626: 'std::codecvt_base': assignment operator was implicitly defined as deleted
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668: '_M_HYBRID_X86_ARM64' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
+	SE_PRAGMA_WARNING_DISABLE_MSVC(4774)	// warning C4774: 'sprintf_s' : format string expected in argument 3 is not a string literal
+	SE_PRAGMA_WARNING_DISABLE_MSVC(5026)	// warning C5026: 'std::_Generic_error_category': move constructor was implicitly defined as deleted
+	SE_PRAGMA_WARNING_DISABLE_MSVC(5027)	// warning C5027: 'std::_Generic_error_category': move assignment operator was implicitly defined as deleted
 	#include <array>
 	#include <vector>
 	#include <sstream>
-PRAGMA_WARNING_POP
+SE_PRAGMA_WARNING_POP
 
 
 
@@ -1055,8 +1055,8 @@ namespace
 				// Get "VK_EXT_debug_marker"-extension function pointers
 
 				// Define a helper macro
-				PRAGMA_WARNING_PUSH
-				PRAGMA_WARNING_DISABLE_MSVC(4191)	// 'reinterpret_cast': unsafe conversion from 'PFN_vkVoidFunction' to '<x>'
+				SE_PRAGMA_WARNING_PUSH
+				SE_PRAGMA_WARNING_DISABLE_MSVC(4191)	// 'reinterpret_cast': unsafe conversion from 'PFN_vkVoidFunction' to '<x>'
 				#define IMPORT_FUNC(funcName)																					\
 					funcName = reinterpret_cast<PFN_##funcName>(vkGetDeviceProcAddr(vkDevice, #funcName));						\
 					if (nullptr == funcName)																					\
@@ -1073,7 +1073,7 @@ namespace
 
 				// Undefine the helper macro
 				#undef IMPORT_FUNC
-				PRAGMA_WARNING_POP
+				SE_PRAGMA_WARNING_POP
 			}
 
 			// Done
@@ -2298,8 +2298,8 @@ namespace VulkanRhi
 			bool result = true;	// Success by default
 
 			// Define a helper macro
-			PRAGMA_WARNING_PUSH
-			PRAGMA_WARNING_DISABLE_MSVC(4191)	// 'reinterpret_cast': unsafe conversion from 'PFN_vkVoidFunction' to '<x>'
+			SE_PRAGMA_WARNING_PUSH
+			SE_PRAGMA_WARNING_DISABLE_MSVC(4191)	// 'reinterpret_cast': unsafe conversion from 'PFN_vkVoidFunction' to '<x>'
 			#define IMPORT_FUNC(funcName)																										\
 				if (result)																														\
 				{																																\
@@ -2411,7 +2411,7 @@ namespace VulkanRhi
 
 			// Undefine the helper macro
 			#undef IMPORT_FUNC
-			PRAGMA_WARNING_POP
+			SE_PRAGMA_WARNING_POP
 
 			// Done
 			return result;
@@ -2648,8 +2648,8 @@ namespace VulkanRhi
 			bool result = true;	// Success by default
 
 			// Define a helper macro
-			PRAGMA_WARNING_PUSH
-			PRAGMA_WARNING_DISABLE_MSVC(4191)	// 'reinterpret_cast': unsafe conversion from 'PFN_vkVoidFunction' to '<x>'
+			SE_PRAGMA_WARNING_PUSH
+			SE_PRAGMA_WARNING_DISABLE_MSVC(4191)	// 'reinterpret_cast': unsafe conversion from 'PFN_vkVoidFunction' to '<x>'
 			#define IMPORT_FUNC(funcName)																										\
 				if (result)																														\
 				{																																\
@@ -2710,7 +2710,7 @@ namespace VulkanRhi
 
 			// Undefine the helper macro
 			#undef IMPORT_FUNC
-			PRAGMA_WARNING_POP
+			SE_PRAGMA_WARNING_POP
 
 			// Done
 			return result;

@@ -11309,7 +11309,10 @@ namespace Direct3D12Rhi
 			}
 			d3d12GraphicsPipelineState.DSVFormat = Mapping::getDirect3D12Format(graphicsPipelineState.depthStencilViewFormat);
 			d3d12GraphicsPipelineState.SampleDesc.Count = 1;
-			if (SUCCEEDED(direct3D12Rhi.getD3D12Device().CreateGraphicsPipelineState(&d3d12GraphicsPipelineState, IID_PPV_ARGS(&mD3D12GraphicsPipelineState))))
+
+			auto hr = direct3D12Rhi.getD3D12Device().CreateGraphicsPipelineState(&d3d12GraphicsPipelineState, IID_PPV_ARGS(&mD3D12GraphicsPipelineState));
+
+			if (SUCCEEDED(hr))
 			{
 				// Assign a default name to the resource for debugging purposes
 				#ifdef RHI_DEBUG

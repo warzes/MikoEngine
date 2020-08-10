@@ -1,26 +1,11 @@
 #pragma once
 
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
 #include <Render/Rhi.h>
 
-#include <stdlib.h>
-
-
-//[-------------------------------------------------------]
-//[ Anonymous detail namespace                            ]
-//[-------------------------------------------------------]
 namespace
 {
 	namespace detail
 	{
-
-
-		//[-------------------------------------------------------]
-		//[ Global functions                                      ]
-		//[-------------------------------------------------------]
 		[[nodiscard]] void* reallocate(Rhi::IAllocator&, void* oldPointer, size_t, size_t newNumberOfBytes, size_t alignment)
 		{
 			// Sanity check

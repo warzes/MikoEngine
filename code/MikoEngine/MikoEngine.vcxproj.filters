@@ -102,9 +102,6 @@
     <ClInclude Include="Application\Example_GLSL_ES3.h">
       <Filter>x_Application</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Example_HLSL_D3D9_D3D10_D3D11_D3D12.h">
-      <Filter>x_Application</Filter>
-    </ClInclude>
     <ClInclude Include="Application\Example_Null.h">
       <Filter>x_Application</Filter>
     </ClInclude>
@@ -113,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="Render\D3D11Header.h">
       <Filter>4_Render\temp</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Example_HLSL_D3D11_D3D12.h">
+      <Filter>x_Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

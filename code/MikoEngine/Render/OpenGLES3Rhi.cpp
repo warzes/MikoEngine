@@ -7,11 +7,11 @@
 #include <GLES3/gl2ext.h>
 
 // Disable warnings in external headers, we can't fix them
-PRAGMA_WARNING_PUSH
-	PRAGMA_WARNING_DISABLE_MSVC(5039)	// warning C5039: 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function passed to extern C function under -EHc. Undefined behavior may occur if this function throws an exception
+SE_PRAGMA_WARNING_PUSH
+	SE_PRAGMA_WARNING_DISABLE_MSVC(5039)	// warning C5039: 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function passed to extern C function under -EHc. Undefined behavior may occur if this function throws an exception
 	#include <EGL/egl.h>
 	#include <EGL/eglext.h>
-PRAGMA_WARNING_POP
+SE_PRAGMA_WARNING_POP
 
 #ifdef _WIN32
 	// Set Windows version to Windows Vista (0x0600), we don't support Windows XP (0x0501)

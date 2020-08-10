@@ -166,7 +166,7 @@
     <ClInclude Include="Application\Example_GLSL_410.h" />
     <ClInclude Include="Application\Example_GLSL_450.h" />
     <ClInclude Include="Application\Example_GLSL_ES3.h" />
-    <ClInclude Include="Application\Example_HLSL_D3D9_D3D10_D3D11_D3D12.h" />
+    <ClInclude Include="Application\Example_HLSL_D3D11_D3D12.h" />
     <ClInclude Include="Application\Example_Null.h" />
     <ClInclude Include="Base\BaseHeader.h" />
     <ClInclude Include="Base\BaseMacros.h" />
