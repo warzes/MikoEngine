@@ -1,9 +1,8 @@
 /** Amalgamated/unity build rendering hardware interface (RHI)*/
 #pragma once
 
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
+#include "DefaultAssert.h"
+
 #if SE_DEBUG
 	#include <cassert>
 	#define ASSERT(expression, message) assert((expression) && message);	// TODO(co) "RHI_ASSERT()" should be used everywhere
@@ -41,19 +40,6 @@
 	*    Pass resource name for debugging purposes, ignored when not using "SE_DEBUG"
 	*/
 	#define RHI_RESOURCE_DEBUG_PASS_PARAMETER
-#endif
-#ifdef SE_STATISTICS
-	// Disable warnings in external headers, we can't fix them
-	SE_PRAGMA_WARNING_PUSH
-		SE_PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'return': conversion from 'int' to 'std::char_traits<wchar_t>::int_type', signed/unsigned mismatch
-		SE_PRAGMA_WARNING_DISABLE_MSVC(4623)	// warning C4623: 'std::_List_node<_Ty,std::_Default_allocator_traits<_Alloc>::void_pointer>': default constructor was implicitly defined as deleted
-		SE_PRAGMA_WARNING_DISABLE_MSVC(4625)	// warning C4625: 'std::_Ptr_base<_Ty>': copy constructor was implicitly defined as deleted
-		SE_PRAGMA_WARNING_DISABLE_MSVC(4626)	// warning C4626: 'std::_Compressed_pair<glslang::pool_allocator<char>,std::_String_val<std::_Simple_types<_Ty>>,false>': assignment operator was implicitly defined as deleted
-		SE_PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668: '_M_HYBRID_X86_ARM64' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
-		SE_PRAGMA_WARNING_DISABLE_MSVC(5026)	// warning C5026: 'std::atomic_flag': move constructor was implicitly defined as deleted (compiling source file E:\private\unrimp\Source\Rhi\Private\Direct3D10Rhi\Direct3D10Rhi.cpp)
-		SE_PRAGMA_WARNING_DISABLE_MSVC(5027)	// warning C5027: 'std::_Compressed_pair<glslang::pool_allocator<char>,std::_String_val<std::_Simple_types<_Ty>>,false>': move assignment operator was implicitly defined as deleted
-		#include <atomic>	// For "std::atomic<>"
-	SE_PRAGMA_WARNING_POP
 #endif
 
 namespace Rhi
@@ -110,38 +96,8 @@ namespace Rhi
 			class IComputeShader;
 }
 
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 namespace Rhi
 {
-
-
-
-
-	//[-------------------------------------------------------]
-	//[ Rhi/PlatformTypes.h                                   ]
-	//[-------------------------------------------------------]
-#if SE_PLATFORM_WINDOWS
-#if SE_ARCH_64BIT
-			typedef unsigned __int64 handle;	// Replacement for nasty Microsoft Windows stuff leading to header chaos
-		#else
-			typedef unsigned __int32 handle;	// Replacement for nasty Microsoft Windows stuff leading to header chaos
-		#endif
-	#elif LINUX
-#if SE_ARCH_64BIT
-			typedef uint64_t handle;
-		#else
-			typedef uint32_t handle;
-		#endif
-	#else
-		#error "Unsupported platform"
-	#endif
-
-
-
-
 	//[-------------------------------------------------------]
 	//[ Rhi/Context.h                                         ]
 	//[-------------------------------------------------------]
@@ -169,8 +125,6 @@ namespace Rhi
 		*
 		*  @param[in] log
 		*    Log instance to use, the log instance must stay valid as long as the RHI instance exists
-		*  @param[in] assert
-		*    Assert instance to use, the assert instance must stay valid as long as the RHI instance exists
 		*  @param[in] allocator
 		*    Allocator instance to use, the allocator instance must stay valid as long as the RHI instance exists
 		*  @param[in] nativeWindowHandle
@@ -180,9 +134,8 @@ namespace Rhi
 		*  @param[in] contextType
 		*    The type of the context
 		*/
-		inline Context(ILog& log, IAssert& assert, IAllocator& allocator, handle nativeWindowHandle = 0, bool useExternalContext = false, ContextType contextType = Context::ContextType::WINDOWS) :
+		inline Context(ILog& log, IAllocator& allocator, handle nativeWindowHandle = 0, bool useExternalContext = false, ContextType contextType = Context::ContextType::WINDOWS) :
 			mLog(log),
-			mAssert(assert),
 			mAllocator(allocator),
 			mNativeWindowHandle(nativeWindowHandle),
 			mUseExternalContext(useExternalContext),
@@ -207,18 +160,6 @@ namespace Rhi
 		[[nodiscard]] inline ILog& getLog() const
 		{
 			return mLog;
-		}
-
-		/**
-		*  @brief
-		*    Return the assert instance
-		*
-		*  @return
-		*    The assert instance
-		*/
-		[[nodiscard]] inline IAssert& getAssert() const
-		{
-			return mAssert;
 		}
 
 		/**
@@ -301,7 +242,6 @@ namespace Rhi
 	// Private data
 	private:
 		ILog&		mLog;
-		IAssert&	mAssert;
 		IAllocator&	mAllocator;
 		handle		mNativeWindowHandle;
 		bool		mUseExternalContext;
@@ -424,9 +364,6 @@ namespace Rhi
 		};
 	#endif
 
-
-
-
 	//[-------------------------------------------------------]
 	//[ Rhi/ILog.h                                            ]
 	//[-------------------------------------------------------]
@@ -530,97 +467,8 @@ namespace Rhi
 			} \
 		} while (0);
 
-
-
-
-	//[-------------------------------------------------------]
-	//[ Rhi/IAssert.h                                         ]
-	//[-------------------------------------------------------]
-	/**
-	*  @brief
-	*    Abstract assert interface
-	*
-	*  @note
-	*    - The implementation must be multithreading safe since the RHI is allowed to internally use multiple threads
-	*/
-	class IAssert
-	{
-
-	// Public virtual Rhi::IAssert methods
-	public:
-		/**
-		*  @brief
-		*    Handle assert
-		*
-		*  @param[in] expression
-		*    Expression as ASCII string
-		*  @param[in] file
-		*    File as ASCII string
-		*  @param[in] line
-		*    Line number
-		*  @param[in] format
-		*    "snprintf"-style formatted UTF-8 assert message
-		*
-		*  @return
-		*    "true" to request debug break, else "false"
-		*/
-		[[nodiscard]] virtual bool handleAssert(const char* expression, const char* file, uint32_t line, const char* format, ...) = 0;
-
-	// Protected methods
-	protected:
-		inline IAssert()
-		{}
-
-		inline virtual ~IAssert()
-		{}
-
-		explicit IAssert(const IAssert&) = delete;
-		IAssert& operator=(const IAssert&) = delete;
-
-	};
-
 	// Macros & definitions
-	/**
-	*  @brief
-	*    Ease-of-use assert macro
-	*
-	*  @param[in] context
-	*    RHI context to ask for the assert interface
-	*  @param[in] expression
-	*    Expression which must be true, else the assert triggers
-	*  @param[in] format
-	*    "snprintf"-style formatted UTF-8 assert message
-	*
-	*  @note
-	*    - Example: RHI_ASSERT(mContext, isInitialized, "Direct3D 11 RHI implementation assert failed")
-	*    - See http://cnicholson.net/2009/02/stupid-c-tricks-adventures-in-assert/ - "2.  Wrap your macros in do { … } while(0)." for background information about the do-while wrap
-	*/
-	#if SE_DEBUG
-		#define RHI_ASSERT(context, expression, format, ...) \
-			do \
-			{ \
-				if (!(expression) && (context).getAssert().handleAssert(#expression, __FILE__, static_cast<uint32_t>(__LINE__), format, ##__VA_ARGS__)) \
-				{ \
-					SE_DEBUG_BREAK; \
-				} \
-			} while (0);
-		#define RHI_ASSERT_ONCE(context, expression, format, ...) \
-			do \
-			{ \
-				static bool loggedOnce = false; \
-				if (!loggedOnce && !(expression)) \
-				{ \
-					loggedOnce = true; \
-					if ((context).getAssert().handleAssert(#expression, __FILE__, static_cast<uint32_t>(__LINE__), format, ##__VA_ARGS__)) \
-					{ \
-						SE_DEBUG_BREAK; \
-					} \
-				} \
-			} while (0);
-	#else
-		#define RHI_ASSERT(context, expression, format, ...)
-		#define RHI_ASSERT_ONCE(context, expression, format, ...)
-	#endif
+	
 
 
 
@@ -4059,7 +3907,7 @@ namespace Rhi
 		[[nodiscard]] inline IShaderLanguage& getDefaultShaderLanguage()
 		{
 			IShaderLanguage* shaderLanguage = getShaderLanguage();
-			RHI_ASSERT(mContext, nullptr != shaderLanguage, "There's no default shader language")
+			RHI_ASSERT(nullptr != shaderLanguage, "There's no default shader language")
 			return *shaderLanguage;
 		}
 
@@ -5231,7 +5079,7 @@ namespace Rhi
 				mResourceType(resourceType),
 				mRhi(&rhi)
 			{
-				RHI_ASSERT(rhi.getContext(), strlen(debugName) < 256, "Resource debug name is not allowed to exceed 255 characters")
+				RHI_ASSERT(strlen(debugName) < 256, "Resource debug name is not allowed to exceed 255 characters")
 				strncpy(mDebugName, debugName, 256);
 				mDebugName[255] = '\0';
 			}
@@ -10258,7 +10106,7 @@ namespace Rhi
 	*    - Traditional C-string on the runtime stack used for efficiency reasons (just for debugging, but must still be some kind of usable)
 	*/
 	#define RHI_DECORATED_DEBUG_NAME(name, detailedName, decoration, numberOfDecorationCharacters) \
-		RHI_ASSERT(getRhi().getContext(), strlen(name) < 256, "Name is not allowed to exceed 255 characters") \
+		RHI_ASSERT(strlen(name) < 256, "Name is not allowed to exceed 255 characters") \
 		char detailedName[256 + numberOfDecorationCharacters] = decoration; \
 		if (name[0] != '\0') \
 		{ \

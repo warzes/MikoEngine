@@ -29,6 +29,9 @@
     <ClCompile Include="Render\NullRhi.cpp">
       <Filter>4_Render</Filter>
     </ClCompile>
+    <ClCompile Include="Render\DefaultAssert.cpp">
+      <Filter>4_Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -113,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="Application\Example_HLSL_D3D11_D3D12.h">
       <Filter>x_Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\PlatformTypes.h">
+      <Filter>0_Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

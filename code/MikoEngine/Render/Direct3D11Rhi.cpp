@@ -23,7 +23,7 @@ namespace Direct3D11Rhi
 	*    Check whether or not the given resource is owned by the given RHI
 	*/
 	#define RHI_MATCH_CHECK(rhiReference, resourceReference) \
-		RHI_ASSERT(mContext, &rhiReference == &(resourceReference).getRhi(), "Direct3D 11 error: The given resource is owned by another RHI instance")
+		RHI_ASSERT(&rhiReference == &(resourceReference).getRhi(), "Direct3D 11 error: The given resource is owned by another RHI instance")
 
 	/**
 	*  @brief
@@ -1210,8 +1210,8 @@ namespace Direct3D11Rhi
 	[[nodiscard]] ID3DBlob* loadShaderFromSourcecode(const Rhi::Context& context, const char* shaderModel, const char* sourceCode, const char* entryPoint, Rhi::IShaderLanguage::OptimizationLevel optimizationLevel)
 	{
 		// Sanity checks
-		RHI_ASSERT(context, nullptr != shaderModel, "Invalid Direct3D 11 shader model")
-		RHI_ASSERT(context, nullptr != sourceCode, "Invalid Direct3D 11 shader source code")
+		RHI_ASSERT(nullptr != shaderModel, "Invalid Direct3D 11 shader model")
+		RHI_ASSERT(nullptr != sourceCode, "Invalid Direct3D 11 shader source code")
 
 		// Get compile flags
 		// -> "DX12 Do's And Don'ts" ( https://developer.nvidia.com/dx12-dos-and-donts ) "Use the /all_resources_bound / D3DCOMPILE_ALL_RESOURCES_BOUND compile flag if possible"
@@ -1566,7 +1566,7 @@ namespace Direct3D11Rhi
 			for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
 			{
 				Rhi::IResource* resource = *resources;
-				RHI_ASSERT(rhi.getContext(), nullptr != resource, "Invalid Direct3D 11 resource")
+				RHI_ASSERT(nullptr != resource, "Invalid Direct3D 11 resource")
 				mResources[resourceIndex] = resource;
 				resource->addReference();
 			}
@@ -1775,9 +1775,9 @@ namespace Direct3D11Rhi
 			Rhi::IRhi& rhi = getRhi();
 
 			// Sanity checks
-			RHI_ASSERT(rhi.getContext(), rootParameterIndex < mRootSignature.numberOfParameters, "The Direct3D 11 root parameter index is out-of-bounds")
-			RHI_ASSERT(rhi.getContext(), numberOfResources > 0, "The number of Direct3D 11 resources must not be zero")
-			RHI_ASSERT(rhi.getContext(), nullptr != resources, "The Direct3D 11 resource pointers must be valid")
+			RHI_ASSERT(rootParameterIndex < mRootSignature.numberOfParameters, "The Direct3D 11 root parameter index is out-of-bounds")
+			RHI_ASSERT(numberOfResources > 0, "The number of Direct3D 11 resources must not be zero")
+			RHI_ASSERT(nullptr != resources, "The Direct3D 11 resource pointers must be valid")
 
 			// Create resource group
 			return RHI_NEW(rhi.getContext(), ResourceGroup)(rhi, numberOfResources, resources, samplerStates RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -2516,7 +2516,7 @@ namespace Direct3D11Rhi
 			mD3D11UnorderedAccessView(nullptr)
 		{
 			// Sanity check
-			RHI_ASSERT(direct3D11Rhi.getContext(), (numberOfBytes % Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat)) == 0, "The Direct3D 11 texture buffer size must be a multiple of the selected texture format bytes per texel")
+			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat)) == 0, "The Direct3D 11 texture buffer size must be a multiple of the selected texture format bytes per texel")
 
 			{ // Buffer part
 				// Direct3D 11 buffer description
@@ -2739,8 +2739,8 @@ namespace Direct3D11Rhi
 			mD3D11UnorderedAccessView(nullptr)
 		{
 			// Sanity checks
-			RHI_ASSERT(direct3D11Rhi.getContext(), (numberOfBytes % numberOfStructureBytes) == 0, "The Direct3D 11 structured buffer size must be a multiple of the given number of structure bytes")
-			RHI_ASSERT(direct3D11Rhi.getContext(), (numberOfBytes % (sizeof(float) * 4)) == 0, "Performance: The Direct3D 11 structured buffer should be aligned to a 128-bit stride, see \"Understanding Structured Buffer Performance\" by Evan Hart, posted Apr 17 2015 at 11:33AM - https://developer.nvidia.com/content/understanding-structured-buffer-performance")
+			RHI_ASSERT((numberOfBytes % numberOfStructureBytes) == 0, "The Direct3D 11 structured buffer size must be a multiple of the given number of structure bytes")
+			RHI_ASSERT((numberOfBytes % (sizeof(float) * 4)) == 0, "Performance: The Direct3D 11 structured buffer should be aligned to a 128-bit stride, see \"Understanding Structured Buffer Performance\" by Evan Hart, posted Apr 17 2015 at 11:33AM - https://developer.nvidia.com/content/understanding-structured-buffer-performance")
 
 			{ // Buffer part
 				// Direct3D 11 buffer description
@@ -2963,10 +2963,10 @@ namespace Direct3D11Rhi
 			mD3D11UnorderedAccessView(nullptr)
 		{
 			// Sanity checks
-			RHI_ASSERT(direct3D11Rhi.getContext(), (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 || (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0, "Invalid Direct3D 11 flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" is missing")
-			RHI_ASSERT(direct3D11Rhi.getContext(), !((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 && (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0), "Invalid Direct3D 11 flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" must be set, but not both at one and the same time")
-			RHI_ASSERT(direct3D11Rhi.getContext(), (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawArguments)) == 0, "Direct3D 11 indirect buffer element type flags specification is \"DRAW_ARGUMENTS\" but the given number of bytes don't align to this")
-			RHI_ASSERT(direct3D11Rhi.getContext(), (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawIndexedArguments)) == 0, "Direct3D 11 indirect buffer element type flags specification is \"DRAW_INDEXED_ARGUMENTS\" but the given number of bytes don't align to this")
+			RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 || (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0, "Invalid Direct3D 11 flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" is missing")
+			RHI_ASSERT(!((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 && (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0), "Invalid Direct3D 11 flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" must be set, but not both at one and the same time")
+			RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawArguments)) == 0, "Direct3D 11 indirect buffer element type flags specification is \"DRAW_ARGUMENTS\" but the given number of bytes don't align to this")
+			RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawIndexedArguments)) == 0, "Direct3D 11 indirect buffer element type flags specification is \"DRAW_INDEXED_ARGUMENTS\" but the given number of bytes don't align to this")
 
 			{ // Buffer part: Indirect buffers can't be mapped in Direct3D 11 since considered to be exclusively written by GPU
 				// Direct3D 11 buffer description
@@ -3405,11 +3405,11 @@ namespace Direct3D11Rhi
 				const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = vertexBuffers + numberOfVertexBuffers;
 				for (const Rhi::VertexArrayVertexBuffer* vertexBuffer = vertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer)
 				{
-					RHI_ASSERT(direct3D11Rhi.getContext(), &direct3D11Rhi == &vertexBuffer->vertexBuffer->getRhi(), "Direct3D 11 error: The given vertex buffer resource is owned by another RHI instance")
+					RHI_ASSERT(&direct3D11Rhi == &vertexBuffer->vertexBuffer->getRhi(), "Direct3D 11 error: The given vertex buffer resource is owned by another RHI instance")
 				}
 			}
 			#endif
-			RHI_ASSERT(direct3D11Rhi.getContext(), nullptr == indexBuffer || &direct3D11Rhi == &indexBuffer->getRhi(), "Direct3D 11 error: The given index buffer resource is owned by another RHI instance")
+			RHI_ASSERT(nullptr == indexBuffer || &direct3D11Rhi == &indexBuffer->getRhi(), "Direct3D 11 error: The given index buffer resource is owned by another RHI instance")
 
 			// Create vertex array
 			uint16_t id = 0;
@@ -3457,8 +3457,8 @@ namespace Direct3D11Rhi
 
 			// Don't remove this reminder comment block: There are no buffer flags by intent since an uniform buffer can't be used for unordered access and as a consequence an uniform buffer must always used as shader resource to not be pointless
 			// -> "Bind a buffer as a constant buffer to a shader stage; this flag may NOT be combined with any other bind flag." - https://docs.microsoft.com/en-us/windows/desktop/api/d3d11/ne-d3d11-d3d11_bind_flag
-			// RHI_ASSERT(direct3D11Rhi.getContext(), (bufferFlags & Rhi::BufferFlag::UNORDERED_ACCESS) == 0, "Invalid Direct3D 11 buffer flags, uniform buffer can't be used for unordered access")
-			// RHI_ASSERT(direct3D11Rhi.getContext(), (bufferFlags & Rhi::BufferFlag::SHADER_RESOURCE) != 0, "Invalid Direct3D 11 buffer flags, uniform buffer must be used as shader resource")
+			// RHI_ASSERT((bufferFlags & Rhi::BufferFlag::UNORDERED_ACCESS) == 0, "Invalid Direct3D 11 buffer flags, uniform buffer can't be used for unordered access")
+			// RHI_ASSERT((bufferFlags & Rhi::BufferFlag::SHADER_RESOURCE) != 0, "Invalid Direct3D 11 buffer flags, uniform buffer must be used as shader resource")
 
 			// Create the uniform buffer
 			return RHI_NEW(direct3D11Rhi.getContext(), UniformBuffer)(direct3D11Rhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -3528,13 +3528,13 @@ namespace Direct3D11Rhi
 			mD3D11UnorderedAccessView(nullptr)
 		{
 			// Sanity checks
-			RHI_ASSERT(direct3D11Rhi.getContext(), 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid Direct3D 11 texture parameters")
-			RHI_ASSERT(direct3D11Rhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 11 render target textures can't be filled using provided data")
+			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid Direct3D 11 texture parameters")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 11 render target textures can't be filled using provided data")
 
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
-			RHI_ASSERT(direct3D11Rhi.getContext(), Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 11 immutable texture usage can't be combined with automatic mipmap generation")
+			RHI_ASSERT(Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 11 immutable texture usage can't be combined with automatic mipmap generation")
 			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
 			const bool isDepthFormat = Rhi::TextureFormat::isDepth(textureFormat);
 
@@ -3575,7 +3575,7 @@ namespace Direct3D11Rhi
 			{
 				// We don't want dynamic allocations, so we limit the maximum number of mipmaps and hence are able to use the efficient C runtime stack
 				static constexpr uint32_t MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
-				RHI_ASSERT(direct3D11Rhi.getContext(), numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
+				RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
 				D3D11_SUBRESOURCE_DATA d3d11SubresourceData[MAXIMUM_NUMBER_OF_MIPMAPS];
 
 				// Did the user provided data containing mipmaps from 0-n down to 1x1 linearly in memory?
@@ -3834,12 +3834,12 @@ namespace Direct3D11Rhi
 			mD3D11UnorderedAccessView(nullptr)
 		{
 			// Sanity checks
-			RHI_ASSERT(direct3D11Rhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 11 render target textures can't be filled using provided data")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 11 render target textures can't be filled using provided data")
 
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
-			RHI_ASSERT(direct3D11Rhi.getContext(), Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 11 immutable texture usage can't be combined with automatic mipmap generation")
+			RHI_ASSERT(Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 11 immutable texture usage can't be combined with automatic mipmap generation")
 			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
 			const bool isDepthFormat = Rhi::TextureFormat::isDepth(textureFormat);
 
@@ -3882,7 +3882,7 @@ namespace Direct3D11Rhi
 				static constexpr uint32_t MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
 				static constexpr uint32_t MAXIMUM_NUMBER_OF_SLICES = 10;
 				const Rhi::Context& context = direct3D11Rhi.getContext();
-				RHI_ASSERT(context, numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
+				RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
 				D3D11_SUBRESOURCE_DATA d3d11SubresourceDataStack[MAXIMUM_NUMBER_OF_SLICES * MAXIMUM_NUMBER_OF_MIPMAPS];
 				D3D11_SUBRESOURCE_DATA* d3d11SubresourceData = (numberOfSlices <= MAXIMUM_NUMBER_OF_SLICES) ? d3d11SubresourceDataStack : RHI_MALLOC_TYPED(context, D3D11_SUBRESOURCE_DATA, numberOfSlices);
 
@@ -4164,18 +4164,18 @@ namespace Direct3D11Rhi
 			mD3D11UnorderedAccessView(nullptr)
 		{
 			// Sanity checks
-			RHI_ASSERT(direct3D11Rhi.getContext(), numberOfMultisamples == 1 || numberOfMultisamples == 2 || numberOfMultisamples == 4 || numberOfMultisamples == 8, "Invalid Direct3D 11 texture parameters")
-			RHI_ASSERT(direct3D11Rhi.getContext(), numberOfMultisamples == 1 || nullptr == data, "Invalid Direct3D 11 texture parameters")
-			RHI_ASSERT(direct3D11Rhi.getContext(), numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS), "Invalid Direct3D 11 texture parameters")
-			RHI_ASSERT(direct3D11Rhi.getContext(), numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS), "Invalid Direct3D 11 texture parameters")
-			RHI_ASSERT(direct3D11Rhi.getContext(), numberOfMultisamples == 1 || 0 != (textureFlags & Rhi::TextureFlag::RENDER_TARGET), "Invalid Direct3D 11 texture parameters")
-			RHI_ASSERT(direct3D11Rhi.getContext(), 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid Direct3D 11 texture parameters")
-			RHI_ASSERT(direct3D11Rhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 11 render target textures can't be filled using provided data")
+			RHI_ASSERT(numberOfMultisamples == 1 || numberOfMultisamples == 2 || numberOfMultisamples == 4 || numberOfMultisamples == 8, "Invalid Direct3D 11 texture parameters")
+			RHI_ASSERT(numberOfMultisamples == 1 || nullptr == data, "Invalid Direct3D 11 texture parameters")
+			RHI_ASSERT(numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS), "Invalid Direct3D 11 texture parameters")
+			RHI_ASSERT(numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS), "Invalid Direct3D 11 texture parameters")
+			RHI_ASSERT(numberOfMultisamples == 1 || 0 != (textureFlags & Rhi::TextureFlag::RENDER_TARGET), "Invalid Direct3D 11 texture parameters")
+			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid Direct3D 11 texture parameters")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 11 render target textures can't be filled using provided data")
 
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
-			RHI_ASSERT(direct3D11Rhi.getContext(), Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 11 immutable texture usage can't be combined with automatic mipmap generation")
+			RHI_ASSERT(Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 11 immutable texture usage can't be combined with automatic mipmap generation")
 			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height) : 1;
 			const bool isDepthFormat = Rhi::TextureFormat::isDepth(textureFormat);
 
@@ -4219,7 +4219,7 @@ namespace Direct3D11Rhi
 			{
 				// We don't want dynamic allocations, so we limit the maximum number of mipmaps and hence are able to use the efficient C runtime stack
 				static constexpr uint32_t MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
-				RHI_ASSERT(direct3D11Rhi.getContext(), numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
+				RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
 				D3D11_SUBRESOURCE_DATA d3d11SubresourceData[MAXIMUM_NUMBER_OF_MIPMAPS];
 
 				// Did the user provided data containing mipmaps from 0-n down to 1x1 linearly in memory?
@@ -4525,12 +4525,12 @@ namespace Direct3D11Rhi
 			mD3D11UnorderedAccessView(nullptr)
 		{
 			// Sanity checks
-			RHI_ASSERT(direct3D11Rhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 11 render target textures can't be filled using provided data")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 11 render target textures can't be filled using provided data")
 
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
-			RHI_ASSERT(direct3D11Rhi.getContext(), Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 11 immutable texture usage can't be combined with automatic mipmap generation")
+			RHI_ASSERT(Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 11 immutable texture usage can't be combined with automatic mipmap generation")
 			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height) : 1;
 			const bool isDepthFormat = Rhi::TextureFormat::isDepth(textureFormat);
 
@@ -4576,7 +4576,7 @@ namespace Direct3D11Rhi
 				static constexpr uint32_t MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
 				static constexpr uint32_t MAXIMUM_NUMBER_OF_SLICES = 10;
 				const Rhi::Context& context = direct3D11Rhi.getContext();
-				RHI_ASSERT(context, numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
+				RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
 				D3D11_SUBRESOURCE_DATA d3d11SubresourceDataStack[MAXIMUM_NUMBER_OF_SLICES * MAXIMUM_NUMBER_OF_MIPMAPS];
 				D3D11_SUBRESOURCE_DATA* d3d11SubresourceData = (numberOfSlices <= MAXIMUM_NUMBER_OF_SLICES) ? d3d11SubresourceDataStack : RHI_MALLOC_TYPED(context, D3D11_SUBRESOURCE_DATA, numberOfSlices);
 
@@ -4875,13 +4875,13 @@ namespace Direct3D11Rhi
 			mD3D11UnorderedAccessView(nullptr)
 		{
 			// Sanity checks
-			RHI_ASSERT(direct3D11Rhi.getContext(), 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid Direct3D 11 texture parameters")
-			RHI_ASSERT(direct3D11Rhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 11 render target textures can't be filled using provided data")
+			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid Direct3D 11 texture parameters")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 11 render target textures can't be filled using provided data")
 
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
-			RHI_ASSERT(direct3D11Rhi.getContext(), Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 11 immutable texture usage can't be combined with automatic mipmap generation")
+			RHI_ASSERT(Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 11 immutable texture usage can't be combined with automatic mipmap generation")
 			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height, depth) : 1;
 			const bool isDepthFormat = Rhi::TextureFormat::isDepth(textureFormat);
 
@@ -4923,7 +4923,7 @@ namespace Direct3D11Rhi
 			{
 				// We don't want dynamic allocations, so we limit the maximum number of mipmaps and hence are able to use the efficient C runtime stack
 				static constexpr uint32_t MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
-				RHI_ASSERT(direct3D11Rhi.getContext(), numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
+				RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
 				D3D11_SUBRESOURCE_DATA d3d11SubresourceData[MAXIMUM_NUMBER_OF_MIPMAPS];
 
 				// Did the user provided data containing mipmaps from 0-n down to 1x1 linearly in memory?
@@ -5191,12 +5191,12 @@ namespace Direct3D11Rhi
 			static constexpr uint32_t NUMBER_OF_SLICES = 6;	// In Direct3D 11, a cube map is a 2D array texture with six slices
 
 			// Sanity checks
-			RHI_ASSERT(direct3D11Rhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 11 render target textures can't be filled using provided data")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 11 render target textures can't be filled using provided data")
 
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
-			RHI_ASSERT(direct3D11Rhi.getContext(), Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 11 immutable texture usage can't be combined with automatic mipmap generation")
+			RHI_ASSERT(Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 11 immutable texture usage can't be combined with automatic mipmap generation")
 			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
 
 			// Direct3D 11 2D array texture description
@@ -5232,7 +5232,7 @@ namespace Direct3D11Rhi
 			{
 				// We don't want dynamic allocations, so we limit the maximum number of mipmaps and hence are able to use the efficient C runtime stack
 				static constexpr uint32_t MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
-				RHI_ASSERT(direct3D11Rhi.getContext(), numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
+				RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
 				D3D11_SUBRESOURCE_DATA d3d11SubresourceData[NUMBER_OF_SLICES * MAXIMUM_NUMBER_OF_MIPMAPS];
 
 				// Did the user provided data containing mipmaps from 0-n down to 1x1 linearly in memory?
@@ -5521,12 +5521,12 @@ namespace Direct3D11Rhi
 			const uint32_t arraySize = NUMBER_OF_SLICES * numberOfSlices;
 
 			// Sanity checks
-			RHI_ASSERT(direct3D11Rhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 11 render target textures can't be filled using provided data")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 11 render target textures can't be filled using provided data")
 
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
-			RHI_ASSERT(direct3D11Rhi.getContext(), Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 11 immutable texture usage can't be combined with automatic mipmap generation")
+			RHI_ASSERT(Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "Direct3D 11 immutable texture usage can't be combined with automatic mipmap generation")
 			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width) : 1;
 
 			// Direct3D 11 2D array texture description
@@ -5562,7 +5562,7 @@ namespace Direct3D11Rhi
 			{
 				// We don't want dynamic allocations, so we limit the maximum number of mipmaps and hence are able to use the efficient C runtime stack
 				static constexpr uint32_t MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
-				RHI_ASSERT(direct3D11Rhi.getContext(), numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
+				RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
 				D3D11_SUBRESOURCE_DATA* d3d11SubresourceData = RHI_MALLOC_TYPED(direct3D11Rhi.getContext(), D3D11_SUBRESOURCE_DATA, arraySize * MAXIMUM_NUMBER_OF_MIPMAPS);
 
 				// Did the user provided data containing mipmaps from 0-n down to 1x1 linearly in memory?
@@ -5851,7 +5851,7 @@ namespace Direct3D11Rhi
 			Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(direct3D11Rhi.getContext(), width > 0, "Direct3D 11 create texture 1D was called with invalid parameters")
+			RHI_ASSERT(width > 0, "Direct3D 11 create texture 1D was called with invalid parameters")
 
 			// Create 1D texture resource
 			return RHI_NEW(direct3D11Rhi.getContext(), Texture1D)(direct3D11Rhi, width, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -5862,7 +5862,7 @@ namespace Direct3D11Rhi
 			Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(direct3D11Rhi.getContext(), width > 0 && numberOfSlices > 0, "Direct3D 11 create texture 1D array was called with invalid parameters")
+			RHI_ASSERT(width > 0 && numberOfSlices > 0, "Direct3D 11 create texture 1D array was called with invalid parameters")
 
 			// Create 1D texture array resource
 			return RHI_NEW(direct3D11Rhi.getContext(), Texture1DArray)(direct3D11Rhi, width, numberOfSlices, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -5873,7 +5873,7 @@ namespace Direct3D11Rhi
 			Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(direct3D11Rhi.getContext(), width > 0 && height > 0, "Direct3D 11 create texture 2D was called with invalid parameters")
+			RHI_ASSERT(width > 0 && height > 0, "Direct3D 11 create texture 2D was called with invalid parameters")
 
 			// Create 2D texture resource
 			return RHI_NEW(direct3D11Rhi.getContext(), Texture2D)(direct3D11Rhi, width, height, textureFormat, data, textureFlags, textureUsage, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -5884,7 +5884,7 @@ namespace Direct3D11Rhi
 			Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(direct3D11Rhi.getContext(), width > 0 && height > 0 && numberOfSlices > 0, "Direct3D 11 create texture 2D array was called with invalid parameters")
+			RHI_ASSERT(width > 0 && height > 0 && numberOfSlices > 0, "Direct3D 11 create texture 2D array was called with invalid parameters")
 
 			// Create 2D texture array resource
 			return RHI_NEW(direct3D11Rhi.getContext(), Texture2DArray)(direct3D11Rhi, width, height, numberOfSlices, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -5895,7 +5895,7 @@ namespace Direct3D11Rhi
 			Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(direct3D11Rhi.getContext(), width > 0 && height > 0 && depth > 0, "Direct3D 11 create texture 3D was called with invalid parameters")
+			RHI_ASSERT(width > 0 && height > 0 && depth > 0, "Direct3D 11 create texture 3D was called with invalid parameters")
 
 			// Create 3D texture resource
 			return RHI_NEW(direct3D11Rhi.getContext(), Texture3D)(direct3D11Rhi, width, height, depth, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -5906,7 +5906,7 @@ namespace Direct3D11Rhi
 			Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(direct3D11Rhi.getContext(), width > 0, "Direct3D 11 create texture cube was called with invalid parameters")
+			RHI_ASSERT(width > 0, "Direct3D 11 create texture cube was called with invalid parameters")
 
 			// Create cube texture resource
 			return RHI_NEW(direct3D11Rhi.getContext(), TextureCube)(direct3D11Rhi, width, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -5917,7 +5917,7 @@ namespace Direct3D11Rhi
 			Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(direct3D11Rhi.getContext(), width > 0 && numberOfSlices > 0, "Direct3D 11 create texture cube array was called with invalid parameters")
+			RHI_ASSERT(width > 0 && numberOfSlices > 0, "Direct3D 11 create texture cube array was called with invalid parameters")
 
 			// Create cube texture resource
 			return RHI_NEW(direct3D11Rhi.getContext(), TextureCubeArray)(direct3D11Rhi, width, numberOfSlices, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -5976,8 +5976,8 @@ namespace Direct3D11Rhi
 			mD3D11SamplerState(nullptr)
 		{
 			// Sanity checks
-			RHI_ASSERT(direct3D11Rhi.getContext(), Rhi::FilterMode::UNKNOWN != samplerState.filter, "Direct3D 11 filter mode must not be unknown")
-			RHI_ASSERT(direct3D11Rhi.getContext(), samplerState.maxAnisotropy <= direct3D11Rhi.getCapabilities().maximumAnisotropy, "Maximum Direct3D 11 anisotropy value violated")
+			RHI_ASSERT(Rhi::FilterMode::UNKNOWN != samplerState.filter, "Direct3D 11 filter mode must not be unknown")
+			RHI_ASSERT(samplerState.maxAnisotropy <= direct3D11Rhi.getCapabilities().maximumAnisotropy, "Maximum Direct3D 11 anisotropy value violated")
 
 			// Create the Direct3D 11 sampler state
 			// -> "Rhi::SamplerState" maps directly to Direct3D 10 & 11, do not change it
@@ -6382,7 +6382,7 @@ namespace Direct3D11Rhi
 			mDepthStencilAttachmentTextureFormat(depthStencilAttachmentTextureFormat),
 			mNumberOfMultisamples(numberOfMultisamples)
 		{
-			RHI_ASSERT(rhi.getContext(), mNumberOfColorAttachments < 8, "Invalid number of Direct3D 11 color attachments")
+			RHI_ASSERT(mNumberOfColorAttachments < 8, "Invalid number of Direct3D 11 color attachments")
 			memcpy(mColorAttachmentTextureFormats, colorAttachmentTextureFormats, sizeof(Rhi::TextureFormat::Enum) * mNumberOfColorAttachments);
 		}
 
@@ -6429,7 +6429,7 @@ namespace Direct3D11Rhi
 		*/
 		[[nodiscard]] inline Rhi::TextureFormat::Enum getColorAttachmentTextureFormat(uint32_t colorAttachmentIndex) const
 		{
-			RHI_ASSERT(getRhi().getContext(), colorAttachmentIndex < mNumberOfColorAttachments, "Invalid Direct3D 11 color attachment index")
+			RHI_ASSERT(colorAttachmentIndex < mNumberOfColorAttachments, "Invalid Direct3D 11 color attachment index")
 			return mColorAttachmentTextureFormats[colorAttachmentIndex];
 		}
 
@@ -6720,7 +6720,7 @@ namespace Direct3D11Rhi
 			FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11DeviceContext()->QueryInterface(__uuidof(ID3D11DeviceContext1), reinterpret_cast<void**>(&mD3D11DeviceContext1)))
 
 			// Sanity check
-			RHI_ASSERT(direct3D11Rhi.getContext(), 1 == d3d11RenderPass.getNumberOfColorAttachments(), "There must be exactly one Direct3D 11 render pass color attachment")
+			RHI_ASSERT(1 == d3d11RenderPass.getNumberOfColorAttachments(), "There must be exactly one Direct3D 11 render pass color attachment")
 
 			// Get the Direct3D 11 device instance
 			ID3D11Device* d3d11Device = direct3D11Rhi.getD3D11Device();
@@ -6793,13 +6793,13 @@ namespace Direct3D11Rhi
 				const bool isWindows8OrGreater = ::IsWindows8OrGreater();
 				if (isWindows10OrGreater)
 				{
-					RHI_ASSERT(direct3D11Rhi.getContext(), d3d11RenderPass.getNumberOfMultisamples() == 1, "Direct3D 11 doesn't support multisampling if the flip model vertical synchronization is used")
+					RHI_ASSERT(d3d11RenderPass.getNumberOfMultisamples() == 1, "Direct3D 11 doesn't support multisampling if the flip model vertical synchronization is used")
 					bufferCount = 2;
 					swapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 				}
 				else if (isWindows8OrGreater)
 				{
-					RHI_ASSERT(direct3D11Rhi.getContext(), d3d11RenderPass.getNumberOfMultisamples() == 1, "Direct3D 11 doesn't support multisampling if the flip model vertical synchronization is used")
+					RHI_ASSERT(d3d11RenderPass.getNumberOfMultisamples() == 1, "Direct3D 11 doesn't support multisampling if the flip model vertical synchronization is used")
 					bufferCount = 2;
 					swapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
 				}
@@ -7017,7 +7017,7 @@ namespace Direct3D11Rhi
 	//[ Public virtual Rhi::ISwapChain methods                ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] virtual Rhi::handle getNativeWindowHandle() const override
+		[[nodiscard]] virtual handle getNativeWindowHandle() const override
 		{
 			// Is there a valid swap chain?
 			if (nullptr != mDxgiSwapChain)
@@ -7027,7 +7027,7 @@ namespace Direct3D11Rhi
 				FAILED_DEBUG_BREAK(mDxgiSwapChain->GetDesc(&dxgiSwapChainDesc))
 
 				// Return the native window handle
-				return reinterpret_cast<Rhi::handle>(dxgiSwapChainDesc.OutputWindow);
+				return reinterpret_cast<handle>(dxgiSwapChainDesc.OutputWindow);
 			}
 
 			// Error!
@@ -7349,7 +7349,7 @@ namespace Direct3D11Rhi
 				for (Rhi::ITexture** colorTexture = mColorTextures; colorTexture < colorTexturesEnd; ++colorTexture, ++colorFramebufferAttachments, ++d3d11RenderTargetView)
 				{
 					// Sanity check
-					RHI_ASSERT(context, nullptr != colorFramebufferAttachments->texture, "Invalid Direct3D 11 color framebuffer attachment texture")
+					RHI_ASSERT(nullptr != colorFramebufferAttachments->texture, "Invalid Direct3D 11 color framebuffer attachment texture")
 
 					// TODO(co) Add security check: Is the given resource one of the currently used RHI?
 					*colorTexture = colorFramebufferAttachments->texture;
@@ -7363,8 +7363,8 @@ namespace Direct3D11Rhi
 							const Texture2D* texture2D = static_cast<Texture2D*>(*colorTexture);
 
 							// Sanity checks
-							RHI_ASSERT(context, colorFramebufferAttachments->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid Direct3D 11 color framebuffer attachment mipmap index")
-							RHI_ASSERT(context, 0 == colorFramebufferAttachments->layerIndex, "Invalid Direct3D 11 color framebuffer attachment layer index")
+							RHI_ASSERT(colorFramebufferAttachments->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid Direct3D 11 color framebuffer attachment mipmap index")
+							RHI_ASSERT(0 == colorFramebufferAttachments->layerIndex, "Invalid Direct3D 11 color framebuffer attachment layer index")
 
 							// Update the framebuffer width and height if required
 							::detail::updateWidthHeight(colorFramebufferAttachments->mipmapIndex, texture2D->getWidth(), texture2D->getHeight(), mWidth, mHeight);
@@ -7437,7 +7437,7 @@ namespace Direct3D11Rhi
 			if (nullptr != depthStencilFramebufferAttachment)
 			{
 				mDepthStencilTexture = depthStencilFramebufferAttachment->texture;
-				RHI_ASSERT(context, nullptr != mDepthStencilTexture, "Invalid Direct3D 11 depth stencil framebuffer attachment texture")
+				RHI_ASSERT(nullptr != mDepthStencilTexture, "Invalid Direct3D 11 depth stencil framebuffer attachment texture")
 				mDepthStencilTexture->addReference();
 
 				// Evaluate the depth stencil texture type
@@ -7448,8 +7448,8 @@ namespace Direct3D11Rhi
 						const Texture2D* texture2D = static_cast<Texture2D*>(mDepthStencilTexture);
 
 						// Sanity checks
-						RHI_ASSERT(context, depthStencilFramebufferAttachment->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid Direct3D 11 depth stencil framebuffer attachment mipmap index")
-						RHI_ASSERT(context, 0 == depthStencilFramebufferAttachment->layerIndex, "Invalid Direct3D 11 depth stencil framebuffer attachment layer index")
+						RHI_ASSERT(depthStencilFramebufferAttachment->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid Direct3D 11 depth stencil framebuffer attachment mipmap index")
+						RHI_ASSERT(0 == depthStencilFramebufferAttachment->layerIndex, "Invalid Direct3D 11 depth stencil framebuffer attachment layer index")
 
 						// Update the framebuffer width and height if required
 						::detail::updateWidthHeight(depthStencilFramebufferAttachment->mipmapIndex, texture2D->getWidth(), texture2D->getHeight(), mWidth, mHeight);
@@ -7519,12 +7519,12 @@ namespace Direct3D11Rhi
 			// Validate the framebuffer width and height
 			if (0 == mWidth || UINT_MAX == mWidth)
 			{
-				RHI_ASSERT(context, false, "Invalid Direct3D 11 framebuffer width")
+				RHI_ASSERT(false, "Invalid Direct3D 11 framebuffer width")
 				mWidth = 1;
 			}
 			if (0 == mHeight || UINT_MAX == mHeight)
 			{
-				RHI_ASSERT(context, false, "Invalid Direct3D 11 framebuffer height")
+				RHI_ASSERT(false, "Invalid Direct3D 11 framebuffer height")
 				mHeight = 1;
 			}
 
@@ -8852,7 +8852,7 @@ namespace Direct3D11Rhi
 			Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(direct3D11Rhi.getContext(), shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 11 vertex shader bytecode is invalid")
+			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 11 vertex shader bytecode is invalid")
 
 			// There's no need to check for "Rhi::Capabilities::vertexShader", we know there's vertex shader support
 			return RHI_NEW(direct3D11Rhi.getContext(), VertexShaderHlsl)(direct3D11Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -8871,7 +8871,7 @@ namespace Direct3D11Rhi
 			Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(direct3D11Rhi.getContext(), shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 11 tessellation control shader bytecode is invalid")
+			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 11 tessellation control shader bytecode is invalid")
 
 			// There's no need to check for "Rhi::Capabilities::maximumNumberOfPatchVertices", we know there's tessellation control shader support
 			return RHI_NEW(direct3D11Rhi.getContext(), TessellationControlShaderHlsl)(direct3D11Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -8892,7 +8892,7 @@ namespace Direct3D11Rhi
 			Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(direct3D11Rhi.getContext(), shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 11 tessellation evaluation shader bytecode is invalid")
+			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 11 tessellation evaluation shader bytecode is invalid")
 
 			// There's no need to check for "Rhi::Capabilities::maximumNumberOfPatchVertices", we know there's tessellation evaluation shader support
 			return RHI_NEW(direct3D11Rhi.getContext(), TessellationEvaluationShaderHlsl)(direct3D11Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -8912,7 +8912,7 @@ namespace Direct3D11Rhi
 			Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(direct3D11Rhi.getContext(), shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 11 geometry shader bytecode is invalid")
+			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 11 geometry shader bytecode is invalid")
 
 			// There's no need to check for "Rhi::Capabilities::maximumNumberOfGsOutputVertices", we know there's geometry shader support
 			// Ignore "gsInputPrimitiveTopology", it's directly set within HLSL
@@ -8936,7 +8936,7 @@ namespace Direct3D11Rhi
 			Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(direct3D11Rhi.getContext(), shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 11 fragment shader bytecode is invalid")
+			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 11 fragment shader bytecode is invalid")
 
 			// There's no need to check for "Rhi::Capabilities::fragmentShader", we know there's fragment shader support
 			return RHI_NEW(direct3D11Rhi.getContext(), FragmentShaderHlsl)(direct3D11Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -8951,25 +8951,25 @@ namespace Direct3D11Rhi
 
 		[[nodiscard]] inline virtual Rhi::ITaskShader* createTaskShaderFromBytecode(const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
-			RHI_ASSERT(getRhi().getContext(), false, "Direct3D 11 has no task shader support")
+			RHI_ASSERT(false, "Direct3D 11 has no task shader support")
 			return nullptr;
 		}
 
 		[[nodiscard]] inline virtual Rhi::ITaskShader* createTaskShaderFromSourceCode(const Rhi::ShaderSourceCode&, Rhi::ShaderBytecode* = nullptr RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
-			RHI_ASSERT(getRhi().getContext(), false, "Direct3D 11 has no task shader support")
+			RHI_ASSERT(false, "Direct3D 11 has no task shader support")
 			return nullptr;
 		}
 
 		[[nodiscard]] inline virtual Rhi::IMeshShader* createMeshShaderFromBytecode(const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
-			RHI_ASSERT(getRhi().getContext(), false, "Direct3D 11 has no mesh shader support")
+			RHI_ASSERT(false, "Direct3D 11 has no mesh shader support")
 			return nullptr;
 		}
 
 		[[nodiscard]] inline virtual Rhi::IMeshShader* createMeshShaderFromSourceCode(const Rhi::ShaderSourceCode&, Rhi::ShaderBytecode* = nullptr RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
-			RHI_ASSERT(getRhi().getContext(), false, "Direct3D 11 has no mesh shader support")
+			RHI_ASSERT(false, "Direct3D 11 has no mesh shader support")
 			return nullptr;
 		}
 
@@ -8978,7 +8978,7 @@ namespace Direct3D11Rhi
 			Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(direct3D11Rhi.getContext(), shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 11 compute shader bytecode is invalid")
+			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 11 compute shader bytecode is invalid")
 
 			// There's no need to check for "Rhi::Capabilities::computeShader", we know there's compute shader support
 			return RHI_NEW(direct3D11Rhi.getContext(), ComputeShaderHlsl)(direct3D11Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -9000,11 +9000,11 @@ namespace Direct3D11Rhi
 			// -> Optimization: Comparing the shader language name by directly comparing the pointer address of
 			//    the name is safe because we know that we always reference to one and the same name address
 			// TODO(co) Add security check: Is the given resource one of the currently used RHI?
-			RHI_ASSERT(direct3D11Rhi.getContext(), nullptr == vertexShader || vertexShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 11 vertex shader language mismatch")
-			RHI_ASSERT(direct3D11Rhi.getContext(), nullptr == tessellationControlShader || tessellationControlShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 11 tessellation control shader language mismatch")
-			RHI_ASSERT(direct3D11Rhi.getContext(), nullptr == tessellationEvaluationShader || tessellationEvaluationShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 11 tessellation evaluation shader language mismatch")
-			RHI_ASSERT(direct3D11Rhi.getContext(), nullptr == geometryShader || geometryShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 11 geometry shader language mismatch")
-			RHI_ASSERT(direct3D11Rhi.getContext(), nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 11 fragment shader language mismatch")
+			RHI_ASSERT(nullptr == vertexShader || vertexShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 11 vertex shader language mismatch")
+			RHI_ASSERT(nullptr == tessellationControlShader || tessellationControlShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 11 tessellation control shader language mismatch")
+			RHI_ASSERT(nullptr == tessellationEvaluationShader || tessellationEvaluationShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 11 tessellation evaluation shader language mismatch")
+			RHI_ASSERT(nullptr == geometryShader || geometryShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 11 geometry shader language mismatch")
+			RHI_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 11 fragment shader language mismatch")
 
 			// Create the graphics program
 			return RHI_NEW(direct3D11Rhi.getContext(), GraphicsProgramHlsl)(direct3D11Rhi, static_cast<VertexShaderHlsl*>(vertexShader), static_cast<TessellationControlShaderHlsl*>(tessellationControlShader), static_cast<TessellationEvaluationShaderHlsl*>(tessellationEvaluationShader), static_cast<GeometryShaderHlsl*>(geometryShader), static_cast<FragmentShaderHlsl*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -9012,7 +9012,7 @@ namespace Direct3D11Rhi
 
 		[[nodiscard]] virtual Rhi::IGraphicsProgram* createGraphicsProgram([[maybe_unused]] const Rhi::IRootSignature& rootSignature, [[maybe_unused]] Rhi::ITaskShader* taskShader, [[maybe_unused]] Rhi::IMeshShader& meshShader, [[maybe_unused]] Rhi::IFragmentShader* fragmentShader RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER)
 		{
-			RHI_ASSERT(getRhi().getContext(), false, "Direct3D 11 has no mesh shader support")
+			RHI_ASSERT(false, "Direct3D 11 has no mesh shader support")
 			return nullptr;
 		}
 
@@ -9479,7 +9479,7 @@ namespace
 			void ExecuteCommandBuffer(const void* data, Rhi::IRhi& rhi)
 			{
 				const Rhi::Command::ExecuteCommandBuffer* realData = static_cast<const Rhi::Command::ExecuteCommandBuffer*>(data);
-				RHI_ASSERT(rhi.getContext(), nullptr != realData->commandBufferToExecute, "The Direct3D 11 command buffer to execute must be valid")
+				RHI_ASSERT(nullptr != realData->commandBufferToExecute, "The Direct3D 11 command buffer to execute must be valid")
 				rhi.submitCommandBuffer(*realData->commandBufferToExecute);
 			}
 
@@ -10119,7 +10119,7 @@ namespace Direct3D11Rhi
 			for (uint32_t resourceIndex = 0; resourceIndex < numberOfResources; ++resourceIndex, ++resources)
 			{
 				const Rhi::IResource* resource = *resources;
-				RHI_ASSERT(mContext, nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid Direct3D 11 descriptor ranges")
+				RHI_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid Direct3D 11 descriptor ranges")
 				const Rhi::DescriptorRange& descriptorRange = reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges)[resourceIndex];
 
 				// Check the type of resource to set
@@ -10440,7 +10440,7 @@ namespace Direct3D11Rhi
 		// Rasterizer (RS) stage
 
 		// Sanity check
-		RHI_ASSERT(mContext, numberOfViewports > 0 && nullptr != viewports, "Invalid Direct3D 11 rasterizer state viewports")
+		RHI_ASSERT(numberOfViewports > 0 && nullptr != viewports, "Invalid Direct3D 11 rasterizer state viewports")
 
 		// Set the Direct3D 11 viewports
 		// -> "Rhi::Viewport" directly maps to Direct3D 11, do not change it
@@ -10454,7 +10454,7 @@ namespace Direct3D11Rhi
 		// Rasterizer (RS) stage
 
 		// Sanity check
-		RHI_ASSERT(mContext, numberOfScissorRectangles > 0 && nullptr != scissorRectangles, "Invalid Direct3D 11 rasterizer state scissor rectangles")
+		RHI_ASSERT(numberOfScissorRectangles > 0 && nullptr != scissorRectangles, "Invalid Direct3D 11 rasterizer state scissor rectangles")
 
 		// Set the Direct3D 11 scissor rectangles
 		// -> "Rhi::ScissorRectangle" directly maps to Direct3D 9 & 10 & 11, do not change it
@@ -10566,7 +10566,7 @@ namespace Direct3D11Rhi
 		// Unlike Direct3D 9, OpenGL or OpenGL ES 3, Direct3D 11 clears a given render target view and not the currently bound
 
 		// Sanity check
-		RHI_ASSERT(mContext, z >= 0.0f && z <= 1.0f, "The Direct3D 11 clear graphics z value must be between [0, 1] (inclusive)")
+		RHI_ASSERT(z >= 0.0f && z <= 1.0f, "The Direct3D 11 clear graphics z value must be between [0, 1] (inclusive)")
 
 		// Begin debug event
 		RHI_BEGIN_DEBUG_EVENT_FUNCTION(this)
@@ -10692,7 +10692,7 @@ namespace Direct3D11Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, indirectBuffer)
-		RHI_ASSERT(mContext, numberOfDraws > 0, "Number of Direct3D 11 draws must not be zero")
+		RHI_ASSERT(numberOfDraws > 0, "Number of Direct3D 11 draws must not be zero")
 
 		// Draw indirect
 		ID3D11Buffer* d3D11Buffer = static_cast<const IndirectBuffer&>(indirectBuffer).getD3D11Buffer();
@@ -10721,8 +10721,8 @@ namespace Direct3D11Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, indirectBuffer)
-		RHI_ASSERT(mContext, numberOfDraws > 0, "Number of Direct3D 11 draws must not be zero")
-		RHI_ASSERT(mContext, nullptr != agsDriverExtensionsDX11_MultiDrawInstancedIndirect, "Direct3D 11: AMD AGS function \"agsDriverExtensionsDX11_MultiDrawInstancedIndirect()\" not found")
+		RHI_ASSERT(numberOfDraws > 0, "Number of Direct3D 11 draws must not be zero")
+		RHI_ASSERT(nullptr != agsDriverExtensionsDX11_MultiDrawInstancedIndirect, "Direct3D 11: AMD AGS function \"agsDriverExtensionsDX11_MultiDrawInstancedIndirect()\" not found")
 
 		// Draw indirect
 		ID3D11Buffer* d3D11Buffer = static_cast<const IndirectBuffer&>(indirectBuffer).getD3D11Buffer();
@@ -10741,8 +10741,8 @@ namespace Direct3D11Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, indirectBuffer)
-		RHI_ASSERT(mContext, numberOfDraws > 0, "Number of Direct3D 11 draws must not be zero")
-		RHI_ASSERT(mContext, nullptr != NvAPI_D3D11_MultiDrawInstancedIndirect, "Direct3D 11: NvAPI function \"NvAPI_D3D11_MultiDrawInstancedIndirect()\" not found")
+		RHI_ASSERT(numberOfDraws > 0, "Number of Direct3D 11 draws must not be zero")
+		RHI_ASSERT(nullptr != NvAPI_D3D11_MultiDrawInstancedIndirect, "Direct3D 11: NvAPI function \"NvAPI_D3D11_MultiDrawInstancedIndirect()\" not found")
 
 		// Draw indirect
 		ID3D11Buffer* d3D11Buffer = static_cast<const IndirectBuffer&>(indirectBuffer).getD3D11Buffer();
@@ -10760,8 +10760,8 @@ namespace Direct3D11Rhi
 	void Direct3D11Rhi::drawGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(mContext, nullptr != emulationData, "The Direct3D 11 emulation data must be valid")
-		RHI_ASSERT(mContext, numberOfDraws > 0, "The number of Direct3D 11 draws must not be zero")
+		RHI_ASSERT(nullptr != emulationData, "The Direct3D 11 emulation data must be valid")
+		RHI_ASSERT(numberOfDraws > 0, "The number of Direct3D 11 draws must not be zero")
 
 		// TODO(co) Currently no buffer overflow check due to lack of interface provided data
 		emulationData += indirectBufferOffset;
@@ -10812,7 +10812,7 @@ namespace Direct3D11Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, indirectBuffer)
-		RHI_ASSERT(mContext, numberOfDraws > 0, "Number of Direct3D 11 draws must not be zero")
+		RHI_ASSERT(numberOfDraws > 0, "Number of Direct3D 11 draws must not be zero")
 
 		// Draw indirect
 		ID3D11Buffer* d3D11Buffer = static_cast<const IndirectBuffer&>(indirectBuffer).getD3D11Buffer();
@@ -10841,8 +10841,8 @@ namespace Direct3D11Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, indirectBuffer)
-		RHI_ASSERT(mContext, numberOfDraws > 0, "Number of Direct3D 11 draws must not be zero")
-		RHI_ASSERT(mContext, nullptr != agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirect, "Direct3D 11: NvAPI function \"agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirect()\" not found")
+		RHI_ASSERT(numberOfDraws > 0, "Number of Direct3D 11 draws must not be zero")
+		RHI_ASSERT(nullptr != agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirect, "Direct3D 11: NvAPI function \"agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirect()\" not found")
 
 		// Draw indirect
 		ID3D11Buffer* d3D11Buffer = static_cast<const IndirectBuffer&>(indirectBuffer).getD3D11Buffer();
@@ -10861,8 +10861,8 @@ namespace Direct3D11Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, indirectBuffer)
-		RHI_ASSERT(mContext, numberOfDraws > 0, "Number of Direct3D 11 draws must not be zero")
-		RHI_ASSERT(mContext, nullptr != NvAPI_D3D11_MultiDrawIndexedInstancedIndirect, "Direct3D 11: NvAPI function \"NvAPI_D3D11_MultiDrawIndexedInstancedIndirect()\" not found")
+		RHI_ASSERT(numberOfDraws > 0, "Number of Direct3D 11 draws must not be zero")
+		RHI_ASSERT(nullptr != NvAPI_D3D11_MultiDrawIndexedInstancedIndirect, "Direct3D 11: NvAPI function \"NvAPI_D3D11_MultiDrawIndexedInstancedIndirect()\" not found")
 
 		// Draw indirect
 		ID3D11Buffer* d3D11Buffer = static_cast<const IndirectBuffer&>(indirectBuffer).getD3D11Buffer();
@@ -10880,8 +10880,8 @@ namespace Direct3D11Rhi
 	void Direct3D11Rhi::drawIndexedGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(mContext, nullptr != emulationData, "The Direct3D 11 emulation data must be valid")
-		RHI_ASSERT(mContext, numberOfDraws > 0, "The number of Direct3D 11 draws must not be zero")
+		RHI_ASSERT(nullptr != emulationData, "The Direct3D 11 emulation data must be valid")
+		RHI_ASSERT(numberOfDraws > 0, "The number of Direct3D 11 draws must not be zero")
 
 		// TODO(co) Currently no buffer overflow check due to lack of interface provided data
 		emulationData += indirectBufferOffset;
@@ -11014,7 +11014,7 @@ namespace Direct3D11Rhi
 			for (uint32_t resourceIndex = 0; resourceIndex < numberOfResources; ++resourceIndex, ++resources)
 			{
 				const Rhi::IResource* resource = *resources;
-				RHI_ASSERT(mContext, nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid Direct3D 11 descriptor ranges")
+				RHI_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid Direct3D 11 descriptor ranges")
 				const Rhi::DescriptorRange& descriptorRange = reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges)[resourceIndex];
 
 				// Check the type of resource to set
@@ -11311,8 +11311,8 @@ namespace Direct3D11Rhi
 
 					case Rhi::ResourceType::VERTEX_BUFFER:
 					{
-						RHI_ASSERT(mContext, Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "Direct3D 11 vertex buffer must bound at SRV or UAV descriptor range type")
-						RHI_ASSERT(mContext, Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "Direct3D 11 descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
+						RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "Direct3D 11 vertex buffer must bound at SRV or UAV descriptor range type")
+						RHI_ASSERT(Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "Direct3D 11 descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
 						if (Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType)
 						{
 							ID3D11ShaderResourceView* d3d11ShaderResourceView = static_cast<const VertexBuffer*>(resource)->getD3D11ShaderResourceView();
@@ -11329,8 +11329,8 @@ namespace Direct3D11Rhi
 
 					case Rhi::ResourceType::INDEX_BUFFER:
 					{
-						RHI_ASSERT(mContext, Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "Direct3D 11 index buffer must bound at SRV or UAV descriptor range type")
-						RHI_ASSERT(mContext, Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "Direct3D 11 descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
+						RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "Direct3D 11 index buffer must bound at SRV or UAV descriptor range type")
+						RHI_ASSERT(Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "Direct3D 11 descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
 						if (Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType)
 						{
 							ID3D11ShaderResourceView* d3d11ShaderResourceView = static_cast<const IndexBuffer*>(resource)->getD3D11ShaderResourceView();
@@ -11346,8 +11346,8 @@ namespace Direct3D11Rhi
 
 					case Rhi::ResourceType::INDIRECT_BUFFER:
 					{
-						RHI_ASSERT(mContext, Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "Direct3D 11 indirect buffer must bound at SRV or UAV descriptor range type")
-						RHI_ASSERT(mContext, Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "Direct3D 11 descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
+						RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "Direct3D 11 indirect buffer must bound at SRV or UAV descriptor range type")
+						RHI_ASSERT(Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "Direct3D 11 descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
 						if (Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType)
 						{
 							ID3D11ShaderResourceView* d3d11ShaderResourceView = static_cast<const IndirectBuffer*>(resource)->getD3D11ShaderResourceView();
@@ -11562,7 +11562,7 @@ namespace Direct3D11Rhi
 				else
 				{
 					// Error!
-					RHI_ASSERT(mContext, false, "Failed to copy Direct3D 11 resource")
+					RHI_ASSERT(false, "Failed to copy Direct3D 11 resource")
 				}
 				break;
 
@@ -11607,7 +11607,7 @@ namespace Direct3D11Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, resource)
-		RHI_ASSERT(mContext, resource.getResourceType() == Rhi::ResourceType::TEXTURE_2D, "TODO(co) Mipmaps can only be generated for Direct3D 11 2D texture resources")
+		RHI_ASSERT(resource.getResourceType() == Rhi::ResourceType::TEXTURE_2D, "TODO(co) Mipmaps can only be generated for Direct3D 11 2D texture resources")
 
 		// Generate mipmaps
 		mD3D11DeviceContext->GenerateMips(static_cast<Texture2D&>(resource).getD3D11ShaderResourceView());
@@ -11635,8 +11635,8 @@ namespace Direct3D11Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, queryPool)
-		RHI_ASSERT(mContext, firstQueryIndex < static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "Direct3D 11 out-of-bounds query index")
-		RHI_ASSERT(mContext, (firstQueryIndex + numberOfQueries) <= static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "Direct3D 11 out-of-bounds query index")
+		RHI_ASSERT(firstQueryIndex < static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "Direct3D 11 out-of-bounds query index")
+		RHI_ASSERT((firstQueryIndex + numberOfQueries) <= static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "Direct3D 11 out-of-bounds query index")
 
 		// Nothing to do in here for Direct3D 11
 	}
@@ -11648,7 +11648,7 @@ namespace Direct3D11Rhi
 
 		// Query pool type dependent processing
 		const QueryPool& d3d11QueryPool = static_cast<const QueryPool&>(queryPool);
-		RHI_ASSERT(mContext, queryIndex < d3d11QueryPool.getNumberOfQueries(), "Direct3D 11 out-of-bounds query index")
+		RHI_ASSERT(queryIndex < d3d11QueryPool.getNumberOfQueries(), "Direct3D 11 out-of-bounds query index")
 		switch (d3d11QueryPool.getQueryType())
 		{
 			case Rhi::QueryType::OCCLUSION:
@@ -11657,7 +11657,7 @@ namespace Direct3D11Rhi
 				break;
 
 			case Rhi::QueryType::TIMESTAMP:
-				RHI_ASSERT(mContext, false, "Direct3D 11 begin query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
+				RHI_ASSERT(false, "Direct3D 11 begin query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
 				break;
 		}
 	}
@@ -11669,7 +11669,7 @@ namespace Direct3D11Rhi
 
 		// Query pool type dependent processing
 		const QueryPool& d3d11QueryPool = static_cast<const QueryPool&>(queryPool);
-		RHI_ASSERT(mContext, queryIndex < d3d11QueryPool.getNumberOfQueries(), "Direct3D 11 out-of-bounds query index")
+		RHI_ASSERT(queryIndex < d3d11QueryPool.getNumberOfQueries(), "Direct3D 11 out-of-bounds query index")
 		switch (d3d11QueryPool.getQueryType())
 		{
 			case Rhi::QueryType::OCCLUSION:
@@ -11678,7 +11678,7 @@ namespace Direct3D11Rhi
 				break;
 
 			case Rhi::QueryType::TIMESTAMP:
-				RHI_ASSERT(mContext, false, "Direct3D 11 end query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
+				RHI_ASSERT(false, "Direct3D 11 end query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
 				break;
 		}
 	}
@@ -11690,15 +11690,15 @@ namespace Direct3D11Rhi
 
 		// Query pool type dependent processing
 		const QueryPool& d3d11QueryPool = static_cast<const QueryPool&>(queryPool);
-		RHI_ASSERT(mContext, queryIndex < d3d11QueryPool.getNumberOfQueries(), "Direct3D 11 out-of-bounds query index")
+		RHI_ASSERT(queryIndex < d3d11QueryPool.getNumberOfQueries(), "Direct3D 11 out-of-bounds query index")
 		switch (d3d11QueryPool.getQueryType())
 		{
 			case Rhi::QueryType::OCCLUSION:
-				RHI_ASSERT(mContext, false, "Direct3D 11 write timestamp query isn't allowed for occlusion queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
+				RHI_ASSERT(false, "Direct3D 11 write timestamp query isn't allowed for occlusion queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
 				break;
 
 			case Rhi::QueryType::PIPELINE_STATISTICS:
-				RHI_ASSERT(mContext, false, "Direct3D 11 write timestamp query isn't allowed for pipeline statistics queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
+				RHI_ASSERT(false, "Direct3D 11 write timestamp query isn't allowed for pipeline statistics queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
 				break;
 
 			case Rhi::QueryType::TIMESTAMP:
@@ -11716,8 +11716,8 @@ namespace Direct3D11Rhi
 		{
 			if (nullptr != mD3DUserDefinedAnnotation)
 			{
-				RHI_ASSERT(mContext, nullptr != name, "Direct3D 11 debug marker names must not be a null pointer")
-				RHI_ASSERT(mContext, strlen(name) < 256, "Direct3D 11 debug marker names must not have more than 255 characters")
+				RHI_ASSERT(nullptr != name, "Direct3D 11 debug marker names must not be a null pointer")
+				RHI_ASSERT(strlen(name) < 256, "Direct3D 11 debug marker names must not have more than 255 characters")
 				wchar_t unicodeName[256];
 				std::mbstowcs(unicodeName, name, 256);
 				mD3DUserDefinedAnnotation->SetMarker(unicodeName);
@@ -11728,8 +11728,8 @@ namespace Direct3D11Rhi
 		{
 			if (nullptr != mD3DUserDefinedAnnotation)
 			{
-				RHI_ASSERT(mContext, nullptr != name, "Direct3D 11 debug event names must not be a null pointer")
-				RHI_ASSERT(mContext, strlen(name) < 256, "Direct3D 11 debug event names must not have more than 255 characters")
+				RHI_ASSERT(nullptr != name, "Direct3D 11 debug event names must not be a null pointer")
+				RHI_ASSERT(strlen(name) < 256, "Direct3D 11 debug event names must not have more than 255 characters")
 				wchar_t unicodeName[256];
 				std::mbstowcs(unicodeName, name, 256);
 				mD3DUserDefinedAnnotation->BeginEvent(unicodeName);
@@ -11773,7 +11773,7 @@ namespace Direct3D11Rhi
 
 	const char* Direct3D11Rhi::getShaderLanguageName([[maybe_unused]] uint32_t index) const
 	{
-		RHI_ASSERT(mContext, index < getNumberOfShaderLanguages(), "Direct3D 11: Shader language index is out-of-bounds")
+		RHI_ASSERT(index < getNumberOfShaderLanguages(), "Direct3D 11: Shader language index is out-of-bounds")
 		return ::detail::HLSL_NAME;
 	}
 
@@ -11815,7 +11815,7 @@ namespace Direct3D11Rhi
 
 	Rhi::IQueryPool* Direct3D11Rhi::createQueryPool(Rhi::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		RHI_ASSERT(mContext, numberOfQueries > 0, "Direct3D 11: Number of queries mustn't be zero")
+		RHI_ASSERT(numberOfQueries > 0, "Direct3D 11: Number of queries mustn't be zero")
 		return RHI_NEW(mContext, QueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
@@ -11823,7 +11823,7 @@ namespace Direct3D11Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, renderPass)
-		RHI_ASSERT(mContext, SE_NULL_HANDLE != windowHandle.nativeWindowHandle, "Direct3D 11: The provided native window handle must not be a null handle")
+		RHI_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle, "Direct3D 11: The provided native window handle must not be a null handle")
 
 		// Create the swap chain
 		return RHI_NEW(mContext, SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -11856,9 +11856,9 @@ namespace Direct3D11Rhi
 	Rhi::IGraphicsPipelineState* Direct3D11Rhi::createGraphicsPipelineState(const Rhi::GraphicsPipelineState& graphicsPipelineState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		// Sanity checks
-		RHI_ASSERT(mContext, nullptr != graphicsPipelineState.rootSignature, "Direct3D 11: Invalid graphics pipeline state root signature")
-		RHI_ASSERT(mContext, nullptr != graphicsPipelineState.graphicsProgram, "Direct3D 11: Invalid graphics pipeline state graphics program")
-		RHI_ASSERT(mContext, nullptr != graphicsPipelineState.renderPass, "Direct3D 11: Invalid graphics pipeline state render pass")
+		RHI_ASSERT(nullptr != graphicsPipelineState.rootSignature, "Direct3D 11: Invalid graphics pipeline state root signature")
+		RHI_ASSERT(nullptr != graphicsPipelineState.graphicsProgram, "Direct3D 11: Invalid graphics pipeline state graphics program")
+		RHI_ASSERT(nullptr != graphicsPipelineState.renderPass, "Direct3D 11: Invalid graphics pipeline state render pass")
 
 		// Create graphics pipeline state
 		uint16_t id = 0;
@@ -12081,17 +12081,17 @@ namespace Direct3D11Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, queryPool)
-		RHI_ASSERT(mContext, numberOfDataBytes >= sizeof(UINT64), "Direct3D 11 out-of-memory query access")
-		RHI_ASSERT(mContext, 1 == numberOfQueries || strideInBytes > 0, "Direct3D 11 invalid stride in bytes")
-		RHI_ASSERT(mContext, numberOfDataBytes >= strideInBytes * numberOfQueries, "Direct3D 11 out-of-memory query access")
-		RHI_ASSERT(mContext, nullptr != data, "Direct3D 11 out-of-memory query access")
-		RHI_ASSERT(mContext, numberOfQueries > 0, "Direct3D 11 number of queries mustn't be zero")
+		RHI_ASSERT(numberOfDataBytes >= sizeof(UINT64), "Direct3D 11 out-of-memory query access")
+		RHI_ASSERT(1 == numberOfQueries || strideInBytes > 0, "Direct3D 11 invalid stride in bytes")
+		RHI_ASSERT(numberOfDataBytes >= strideInBytes * numberOfQueries, "Direct3D 11 out-of-memory query access")
+		RHI_ASSERT(nullptr != data, "Direct3D 11 out-of-memory query access")
+		RHI_ASSERT(numberOfQueries > 0, "Direct3D 11 number of queries mustn't be zero")
 
 		// Query pool type dependent processing
 		bool resultAvailable = true;
 		const QueryPool& d3d11QueryPool = static_cast<const QueryPool&>(queryPool);
-		RHI_ASSERT(mContext, firstQueryIndex < d3d11QueryPool.getNumberOfQueries(), "Direct3D 11 out-of-bounds query index")
-		RHI_ASSERT(mContext, (firstQueryIndex + numberOfQueries) <= d3d11QueryPool.getNumberOfQueries(), "Direct3D 11 out-of-bounds query index")
+		RHI_ASSERT(firstQueryIndex < d3d11QueryPool.getNumberOfQueries(), "Direct3D 11 out-of-bounds query index")
+		RHI_ASSERT((firstQueryIndex + numberOfQueries) <= d3d11QueryPool.getNumberOfQueries(), "Direct3D 11 out-of-bounds query index")
 		const bool waitForResult = ((queryResultFlags & Rhi::QueryResultFlags::WAIT) != 0);
 		switch (d3d11QueryPool.getQueryType())
 		{
@@ -12122,8 +12122,8 @@ namespace Direct3D11Rhi
 			case Rhi::QueryType::PIPELINE_STATISTICS:
 			{
 				static_assert(sizeof(Rhi::PipelineStatisticsQueryResult) == sizeof(D3D11_QUERY_DATA_PIPELINE_STATISTICS), "Direct3D 11 structure mismatch detected");
-				RHI_ASSERT(mContext, numberOfDataBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "Direct3D 11 out-of-memory query access")
-				RHI_ASSERT(mContext, 1 == numberOfQueries || strideInBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "Direct3D 11 out-of-memory query access")
+				RHI_ASSERT(numberOfDataBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "Direct3D 11 out-of-memory query access")
+				RHI_ASSERT(1 == numberOfQueries || strideInBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "Direct3D 11 out-of-memory query access")
 				uint8_t* currentData = data;
 				ID3D11Query** d3D11Queries = d3d11QueryPool.getD3D11Queries();
 				for (uint32_t i = 0; i  < numberOfQueries; ++i)
@@ -12160,7 +12160,7 @@ namespace Direct3D11Rhi
 
 		// Sanity check
 		#if SE_DEBUG
-			RHI_ASSERT(mContext, false == mDebugBetweenBeginEndScene, "Direct3D 11: Begin scene was called while scene rendering is already in progress, missing end scene call?")
+			RHI_ASSERT(false == mDebugBetweenBeginEndScene, "Direct3D 11: Begin scene was called while scene rendering is already in progress, missing end scene call?")
 			mDebugBetweenBeginEndScene = true;
 		#endif
 
@@ -12171,7 +12171,7 @@ namespace Direct3D11Rhi
 	void Direct3D11Rhi::submitCommandBuffer(const Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity check
-		RHI_ASSERT(mContext, !commandBuffer.isEmpty(), "The Direct3D 11 command buffer to execute mustn't be empty")
+		RHI_ASSERT(!commandBuffer.isEmpty(), "The Direct3D 11 command buffer to execute mustn't be empty")
 
 		// Generate asynchronous mipmaps for textures
 		// -> For multithreading we could also use a deferred context, but in first tests there were random "FinishCommandList()"/"ExecuteCommandList()" state glitches
@@ -12241,10 +12241,10 @@ namespace Direct3D11Rhi
 						case Rhi::ResourceType::MESH_SHADER:
 						case Rhi::ResourceType::COMPUTE_SHADER:
 						default:
-							RHI_ASSERT(mContext, false, "Direct3D 11: Invalid resource type")
+							RHI_ASSERT(false, "Direct3D 11: Invalid resource type")
 							break;
 					}
-					RHI_ASSERT(mContext, nullptr != d3d11ShaderResourceView, "Direct3D 11: Invalid shader resource view")
+					RHI_ASSERT(nullptr != d3d11ShaderResourceView, "Direct3D 11: Invalid shader resource view")
 					mD3D11DeviceContext->GenerateMips(d3d11ShaderResourceView);
 					texture->releaseReference();
 				}
@@ -12274,7 +12274,7 @@ namespace Direct3D11Rhi
 	{
 		// Sanity check
 		#if SE_DEBUG
-			RHI_ASSERT(mContext, true == mDebugBetweenBeginEndScene, "Direct3D 11: End scene was called while scene rendering isn't in progress, missing start scene call?")
+			RHI_ASSERT(true == mDebugBetweenBeginEndScene, "Direct3D 11: End scene was called while scene rendering isn't in progress, missing start scene call?")
 			mDebugBetweenBeginEndScene = false;
 		#endif
 

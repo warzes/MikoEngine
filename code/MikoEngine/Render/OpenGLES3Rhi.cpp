@@ -466,7 +466,7 @@ namespace OpenGLES3Rhi
 	*    Check whether or not the given resource is owned by the given RHI
 	*/
 	#define RHI_MATCH_CHECK(rhiReference, resourceReference) \
-		RHI_ASSERT(mContext, &rhiReference == &(resourceReference).getRhi(), "OpenGL ES 3 error: The given resource is owned by another RHI instance")
+		RHI_ASSERT(&rhiReference == &(resourceReference).getRhi(), "OpenGL ES 3 error: The given resource is owned by another RHI instance")
 
 	/**
 	*  @brief
@@ -1385,7 +1385,7 @@ namespace OpenGLES3Rhi
 		*  @return
 		*    The handle of a native OS window which is valid as long as the RHI instance exists, "SE_NULL_HANDLE" if there's no such window
 		*/
-		[[nodiscard]] inline Rhi::handle getNativeWindowHandle() const
+		[[nodiscard]] inline handle getNativeWindowHandle() const
 		{
 			return mNativeWindowHandle;
 		}
@@ -1630,7 +1630,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] useExternalContext
 		*    When true an own OpenGL ES context won't be created
 		*/
-		IOpenGLES3Context([[maybe_unused]] OpenGLES3Rhi& openGLES3Rhi, Rhi::handle nativeWindowHandle, bool useExternalContext) :
+		IOpenGLES3Context([[maybe_unused]] OpenGLES3Rhi& openGLES3Rhi, handle nativeWindowHandle, bool useExternalContext) :
 			mNativeWindowHandle(nativeWindowHandle),
 			#if (defined(LINUX) && !defined(__ANDROID__))
 				mX11Display(nullptr),
@@ -1837,7 +1837,7 @@ namespace OpenGLES3Rhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Rhi::handle	mNativeWindowHandle;	///< Handle of a native OS window which is valid as long as the RHI instance exists, "SE_NULL_HANDLE" if there's no such window
+		handle	mNativeWindowHandle;	///< Handle of a native OS window which is valid as long as the RHI instance exists, "SE_NULL_HANDLE" if there's no such window
 		// X11
 		#if (defined(LINUX) && !defined(__ANDROID__))
 			::Display	   *mX11Display;
@@ -2273,7 +2273,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] useExternalContext
 		*    When true an own OpenGL ES context won't be created
 		*/
-		OpenGLES3ContextRuntimeLinking(OpenGLES3Rhi& openGLES3Rhi, Rhi::handle nativeWindowHandle, bool useExternalContext) :
+		OpenGLES3ContextRuntimeLinking(OpenGLES3Rhi& openGLES3Rhi, handle nativeWindowHandle, bool useExternalContext) :
 			IOpenGLES3Context(openGLES3Rhi, nativeWindowHandle, useExternalContext),
 			mOpenGLES3Rhi(openGLES3Rhi),
 			mEGLSharedLibrary(nullptr),
@@ -3082,7 +3082,7 @@ namespace OpenGLES3Rhi
 					return GL_LINEAR;	// There's no special setting in OpenGL ES 3
 
 				case Rhi::FilterMode::UNKNOWN:
-					RHI_ASSERT(context, false, "OpenGL ES 3 filter mode must not be unknown")
+					RHI_ASSERT(false, "OpenGL ES 3 filter mode must not be unknown")
 					return GL_NEAREST;
 
 				default:
@@ -3163,7 +3163,7 @@ namespace OpenGLES3Rhi
 					return hasMipmaps ? GL_LINEAR_MIPMAP_LINEAR : GL_LINEAR;	// There's no special setting in OpenGL ES 3
 
 				case Rhi::FilterMode::UNKNOWN:
-					RHI_ASSERT(context, false, "OpenGL ES 3 filter mode must not be unknown")
+					RHI_ASSERT(false, "OpenGL ES 3 filter mode must not be unknown")
 					return GL_NEAREST;
 
 				default:
@@ -3701,7 +3701,7 @@ namespace OpenGLES3Rhi
 				const Rhi::RootParameter& rootParameter = rootSignature.parameters[currentRootParameterIndex];
 				if (Rhi::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
 				{
-					RHI_ASSERT(openGLES3Rhi.getContext(), nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL ES 3 descriptor ranges")
+					RHI_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL ES 3 descriptor ranges")
 					const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
 					for (uint32_t descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
 					{
@@ -3724,7 +3724,7 @@ namespace OpenGLES3Rhi
 			for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
 			{
 				Rhi::IResource* resource = *resources;
-				RHI_ASSERT(openGLES3Rhi.getContext(), nullptr != resource, "Invalid OpenGL ES 3 resource")
+				RHI_ASSERT(nullptr != resource, "Invalid OpenGL ES 3 resource")
 				mResources[resourceIndex] = resource;
 				resource->addReference();
 
@@ -3984,9 +3984,9 @@ namespace OpenGLES3Rhi
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
 			// Sanity checks
-			RHI_ASSERT(openGLES3Rhi.getContext(), rootParameterIndex < mRootSignature.numberOfParameters, "The OpenGL ES 3 root parameter index is out-of-bounds")
-			RHI_ASSERT(openGLES3Rhi.getContext(), numberOfResources > 0, "The number of OpenGL ES 3 resources must not be zero")
-			RHI_ASSERT(openGLES3Rhi.getContext(), nullptr != resources, "The OpenGL ES 3 resource pointers must be valid")
+			RHI_ASSERT(rootParameterIndex < mRootSignature.numberOfParameters, "The OpenGL ES 3 root parameter index is out-of-bounds")
+			RHI_ASSERT(numberOfResources > 0, "The number of OpenGL ES 3 resources must not be zero")
+			RHI_ASSERT(nullptr != resources, "The OpenGL ES 3 resource pointers must be valid")
 
 			// Create resource group
 			return RHI_NEW(openGLES3Rhi.getContext(), ResourceGroup)(openGLES3Rhi, getRootSignature(), rootParameterIndex, numberOfResources, resources, samplerStates RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -4217,7 +4217,7 @@ namespace OpenGLES3Rhi
 			else
 			{
 				// Error!
-				RHI_ASSERT(openGLES3Rhi.getContext(), false, "\"GL_UNSIGNED_INT\" is only allowed in case the \"GL_OES_element_index_uint\" extension is there")
+				RHI_ASSERT(false, "\"GL_UNSIGNED_INT\" is only allowed in case the \"GL_OES_element_index_uint\" extension is there")
 			}
 		}
 
@@ -4888,10 +4888,10 @@ namespace OpenGLES3Rhi
 			mData(nullptr)
 		{
 			// Sanity checks
-			RHI_ASSERT(openGLES3Rhi.getContext(), (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 || (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0, "Invalid OpenGL ES 3 flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" is missing")
-			RHI_ASSERT(openGLES3Rhi.getContext(), !((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 && (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0), "Invalid OpenGL ES 3 flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" must be set, but not both at one and the same time")
-			RHI_ASSERT(openGLES3Rhi.getContext(), (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawArguments)) == 0, "OpenGL ES 3 indirect buffer element type flags specification is \"DRAW_ARGUMENTS\" but the given number of bytes don't align to this")
-			RHI_ASSERT(openGLES3Rhi.getContext(), (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawIndexedArguments)) == 0, "OpenGL ES 3 indirect buffer element type flags specification is \"DRAW_INDEXED_ARGUMENTS\" but the given number of bytes don't align to this")
+			RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 || (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0, "Invalid OpenGL ES 3 flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" is missing")
+			RHI_ASSERT(!((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 && (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0), "Invalid OpenGL ES 3 flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" must be set, but not both at one and the same time")
+			RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawArguments)) == 0, "OpenGL ES 3 indirect buffer element type flags specification is \"DRAW_ARGUMENTS\" but the given number of bytes don't align to this")
+			RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawIndexedArguments)) == 0, "OpenGL ES 3 indirect buffer element type flags specification is \"DRAW_INDEXED_ARGUMENTS\" but the given number of bytes don't align to this")
 
 			// Copy data
 			if (mNumberOfBytes > 0)
@@ -4904,7 +4904,7 @@ namespace OpenGLES3Rhi
 			}
 			else
 			{
-				RHI_ASSERT(openGLES3Rhi.getContext(), nullptr == data, "Invalid OpenGL ES 3 indirect buffer data")
+				RHI_ASSERT(nullptr == data, "Invalid OpenGL ES 3 indirect buffer data")
 			}
 		}
 
@@ -5156,11 +5156,11 @@ namespace OpenGLES3Rhi
 				const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = vertexBuffers + numberOfVertexBuffers;
 				for (const Rhi::VertexArrayVertexBuffer* vertexBuffer = vertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer)
 				{
-					RHI_ASSERT(openGLES3Rhi.getContext(), &openGLES3Rhi == &vertexBuffer->vertexBuffer->getRhi(), "OpenGL ES 3 error: The given vertex buffer resource is owned by another RHI instance")
+					RHI_ASSERT(&openGLES3Rhi == &vertexBuffer->vertexBuffer->getRhi(), "OpenGL ES 3 error: The given vertex buffer resource is owned by another RHI instance")
 				}
 			}
 			#endif
-			RHI_ASSERT(openGLES3Rhi.getContext(), nullptr == indexBuffer || &openGLES3Rhi == &indexBuffer->getRhi(), "OpenGL ES 3 error: The given index buffer resource is owned by another RHI instance")
+			RHI_ASSERT(nullptr == indexBuffer || &openGLES3Rhi == &indexBuffer->getRhi(), "OpenGL ES 3 error: The given index buffer resource is owned by another RHI instance")
 
 			// Create vertex array
 			uint16_t id = 0;
@@ -5189,7 +5189,7 @@ namespace OpenGLES3Rhi
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLES3Rhi.getContext(), (numberOfBytes % Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat)) == 0, "The OpenGL ES 3 texture buffer size must be a multiple of the selected texture format bytes per texel")
+			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat)) == 0, "The OpenGL ES 3 texture buffer size must be a multiple of the selected texture format bytes per texel")
 
 			// Is "GL_EXT_texture_buffer" there?
 			if (mExtensions->isGL_EXT_texture_buffer())
@@ -5212,8 +5212,8 @@ namespace OpenGLES3Rhi
 		[[nodiscard]] virtual Rhi::IStructuredBuffer* createStructuredBuffer([[maybe_unused]] uint32_t numberOfBytes, [[maybe_unused]] const void* data, [[maybe_unused]] uint32_t bufferFlags, [[maybe_unused]] Rhi::BufferUsage bufferUsage, [[maybe_unused]] uint32_t numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Sanity checks
-			RHI_ASSERT(getRhi().getContext(), (numberOfBytes % numberOfStructureBytes) == 0, "The OpenGL ES 3 structured buffer size must be a multiple of the given number of structure bytes")
-			RHI_ASSERT(getRhi().getContext(), (numberOfBytes % (sizeof(float) * 4)) == 0, "Performance: The OpenGL ES 3 structured buffer should be aligned to a 128-bit stride, see \"Understanding Structured Buffer Performance\" by Evan Hart, posted Apr 17 2015 at 11:33AM - https://developer.nvidia.com/content/understanding-structured-buffer-performance")
+			RHI_ASSERT((numberOfBytes % numberOfStructureBytes) == 0, "The OpenGL ES 3 structured buffer size must be a multiple of the given number of structure bytes")
+			RHI_ASSERT((numberOfBytes % (sizeof(float) * 4)) == 0, "Performance: The OpenGL ES 3 structured buffer should be aligned to a 128-bit stride, see \"Understanding Structured Buffer Performance\" by Evan Hart, posted Apr 17 2015 at 11:33AM - https://developer.nvidia.com/content/understanding-structured-buffer-performance")
 
 			// TODO(co) Add OpenGL ES structured buffer support ("GL_EXT_buffer_storage"-extension)
 			return nullptr;
@@ -5232,8 +5232,8 @@ namespace OpenGLES3Rhi
 			// Don't remove this reminder comment block: There are no buffer flags by intent since an uniform buffer can't be used for unordered access and as a consequence an uniform buffer must always used as shader resource to not be pointless
 			// -> Inside GLSL "layout(binding = 0, std140) writeonly uniform OutputUniformBuffer" will result in the GLSL compiler error "Failed to parse the GLSL shader source code: ERROR: 0:85: 'assign' :  l-value required "anon@6" (can't modify a uniform)"
 			// -> Inside GLSL "layout(binding = 0, std430) writeonly buffer  OutputUniformBuffer" will work in OpenGL but will fail in Vulkan with "Vulkan debug report callback: Object type: "VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT" Object: "0" Location: "0" Message code: "13" Layer prefix: "Validation" Message: "Object: VK_NULL_HANDLE (Type = 0) | Type mismatch on descriptor slot 0.0 (used as type `ptr to uniform struct of (vec4 of float32)`) but descriptor of type VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER""
-			// RHI_ASSERT(openGLES3Rhi.getContext(), (bufferFlags & Rhi::BufferFlag::UNORDERED_ACCESS) == 0, "Invalid OpenGL ES 3 buffer flags, uniform buffer can't be used for unordered access")
-			// RHI_ASSERT(openGLES3Rhi.getContext(), (bufferFlags & Rhi::BufferFlag::SHADER_RESOURCE) != 0, "Invalid OpenGL ES 3 buffer flags, uniform buffer must be used as shader resource")
+			// RHI_ASSERT((bufferFlags & Rhi::BufferFlag::UNORDERED_ACCESS) == 0, "Invalid OpenGL ES 3 buffer flags, uniform buffer can't be used for unordered access")
+			// RHI_ASSERT((bufferFlags & Rhi::BufferFlag::SHADER_RESOURCE) != 0, "Invalid OpenGL ES 3 buffer flags, uniform buffer must be used as shader resource")
 
 			// Create the uniform buffer
 			return RHI_NEW(openGLES3Rhi.getContext(), UniformBuffer)(openGLES3Rhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -5307,8 +5307,8 @@ namespace OpenGLES3Rhi
 			// OpenGL ES 3 has no 1D textures, just use a 2D texture with a height of one
 
 			// Sanity checks
-			RHI_ASSERT(openGLES3Rhi.getContext(), 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL ES 3 texture parameters")
-			RHI_ASSERT(openGLES3Rhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL ES 3 render target textures can't be filled using provided data")
+			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL ES 3 texture parameters")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL ES 3 render target textures can't be filled using provided data")
 
 			// TODO(co) Check support formats
 
@@ -5669,8 +5669,8 @@ namespace OpenGLES3Rhi
 			mOpenGLES3Texture(0)
 		{
 			// Sanity checks
-			RHI_ASSERT(openGLES3Rhi.getContext(), 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL ES 3 texture parameters")
-			RHI_ASSERT(openGLES3Rhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL ES 3 render target textures can't be filled using provided data")
+			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL ES 3 texture parameters")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL ES 3 render target textures can't be filled using provided data")
 
 			// TODO(co) Check support formats
 
@@ -6072,8 +6072,8 @@ namespace OpenGLES3Rhi
 			mOpenGLES3Texture(0)
 		{
 			// Sanity checks
-			RHI_ASSERT(openGLES3Rhi.getContext(), 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL ES 3 texture parameters")
-			RHI_ASSERT(openGLES3Rhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL ES 3 render target textures can't be filled using provided data")
+			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL ES 3 texture parameters")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL ES 3 render target textures can't be filled using provided data")
 
 			// TODO(co) Check support formats
 
@@ -6297,8 +6297,8 @@ namespace OpenGLES3Rhi
 			mOpenGLES3Texture(0)
 		{
 			// Sanity checks
-			RHI_ASSERT(openGLES3Rhi.getContext(), 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL ES 3 texture parameters")
-			RHI_ASSERT(openGLES3Rhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL ES 3 render target textures can't be filled using provided data")
+			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL ES 3 texture parameters")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL ES 3 render target textures can't be filled using provided data")
 
 			// TODO(co) Check support formats
 
@@ -6550,7 +6550,7 @@ namespace OpenGLES3Rhi
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLES3Rhi.getContext(), width > 0, "OpenGL ES 3 create texture 1D was called with invalid parameters")
+			RHI_ASSERT(width > 0, "OpenGL ES 3 create texture 1D was called with invalid parameters")
 
 			// Create 1D texture resource
 			// -> The indication of the texture usage is only relevant for Direct3D, OpenGL ES 3 has no texture usage indication
@@ -6562,7 +6562,7 @@ namespace OpenGLES3Rhi
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLES3Rhi.getContext(), width > 0 && numberOfSlices > 0, "OpenGL ES 3 create texture 1D array was called with invalid parameters")
+			RHI_ASSERT(width > 0 && numberOfSlices > 0, "OpenGL ES 3 create texture 1D array was called with invalid parameters")
 
 			// Create 1D texture array resource
 			// -> The indication of the texture usage is only relevant for Direct3D, OpenGL ES 3 has no texture usage indication
@@ -6574,7 +6574,7 @@ namespace OpenGLES3Rhi
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLES3Rhi.getContext(), width > 0 && height > 0, "OpenGL ES 3 create texture 2D was called with invalid parameters")
+			RHI_ASSERT(width > 0 && height > 0, "OpenGL ES 3 create texture 2D was called with invalid parameters")
 
 			// Create 2D texture resource
 			// -> The indication of the texture usage is only relevant for Direct3D, OpenGL ES 3 has no texture usage indication
@@ -6586,7 +6586,7 @@ namespace OpenGLES3Rhi
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLES3Rhi.getContext(), width > 0 && height > 0 && numberOfSlices > 0, "OpenGL ES 3 create texture 2D array was called with invalid parameters")
+			RHI_ASSERT(width > 0 && height > 0 && numberOfSlices > 0, "OpenGL ES 3 create texture 2D array was called with invalid parameters")
 
 			// Create 2D texture array resource
 			// -> The indication of the texture usage is only relevant for Direct3D, OpenGL ES 3 has no texture usage indication
@@ -6598,7 +6598,7 @@ namespace OpenGLES3Rhi
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLES3Rhi.getContext(), width > 0 && height > 0 && depth > 0, "OpenGL ES 3 create texture 3D was called with invalid parameters")
+			RHI_ASSERT(width > 0 && height > 0 && depth > 0, "OpenGL ES 3 create texture 3D was called with invalid parameters")
 
 			// Create 3D texture resource
 			// -> The indication of the texture usage is only relevant for Direct3D, OpenGL ES 3 has no texture usage indication
@@ -6610,7 +6610,7 @@ namespace OpenGLES3Rhi
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLES3Rhi.getContext(), width > 0, "OpenGL ES 3 create texture cube was called with invalid parameters")
+			RHI_ASSERT(width > 0, "OpenGL ES 3 create texture cube was called with invalid parameters")
 
 			// Create cube texture resource
 			// -> The indication of the texture usage is only relevant for Direct3D, OpenGL ES 3 has no texture usage indication
@@ -6696,7 +6696,7 @@ namespace OpenGLES3Rhi
 			mMaxLod(samplerState.maxLod)
 		{
 			// Sanity check
-			RHI_ASSERT(openGLES3Rhi.getContext(), samplerState.maxAnisotropy <= openGLES3Rhi.getCapabilities().maximumAnisotropy, "Maximum OpenGL ES 3 anisotropy value violated")
+			RHI_ASSERT(samplerState.maxAnisotropy <= openGLES3Rhi.getCapabilities().maximumAnisotropy, "Maximum OpenGL ES 3 anisotropy value violated")
 
 			// Ignore "Rhi::SamplerState.borderColor", border color is not supported by OpenGL ES 3
 
@@ -7220,7 +7220,7 @@ namespace OpenGLES3Rhi
 			mDepthStencilAttachmentTextureFormat(depthStencilAttachmentTextureFormat),
 			mNumberOfMultisamples(numberOfMultisamples)
 		{
-			RHI_ASSERT(rhi.getContext(), mNumberOfColorAttachments < 8, "Invalid number of OpenGL ES 3 color attachments")
+			RHI_ASSERT(mNumberOfColorAttachments < 8, "Invalid number of OpenGL ES 3 color attachments")
 			memcpy(mColorAttachmentTextureFormats, colorAttachmentTextureFormats, sizeof(Rhi::TextureFormat::Enum) * mNumberOfColorAttachments);
 		}
 
@@ -7417,7 +7417,7 @@ namespace OpenGLES3Rhi
 	//[ Public virtual Rhi::ISwapChain methods                ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline virtual Rhi::handle getNativeWindowHandle() const override
+		[[nodiscard]] inline virtual handle getNativeWindowHandle() const override
 		{
 			return mNativeWindowHandle;
 		}
@@ -7493,7 +7493,7 @@ namespace OpenGLES3Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Rhi::handle			mNativeWindowHandle;	///< Native window handle window, can be a null handle
+		handle			mNativeWindowHandle;	///< Native window handle window, can be a null handle
 		Rhi::IRenderWindow* mRenderWindow;			///< Render window instance, can be a null pointer, don't destroy the instance since we don't own it
 		uint32_t			mNewVerticalSynchronizationInterval;
 
@@ -7572,7 +7572,7 @@ namespace OpenGLES3Rhi
 				for (GLenum openGLES3Attachment = GL_COLOR_ATTACHMENT0; colorFramebufferAttachment < colorFramebufferAttachmentEnd; ++colorFramebufferAttachment, ++openGLES3Attachment, ++colorTexture)
 				{
 					// Sanity check
-					RHI_ASSERT(openGLES3Rhi.getContext(), nullptr != colorFramebufferAttachments->texture, "Invalid OpenGL ES 3 color framebuffer attachment texture")
+					RHI_ASSERT(nullptr != colorFramebufferAttachments->texture, "Invalid OpenGL ES 3 color framebuffer attachment texture")
 
 					// TODO(co) Add security check: Is the given resource one of the currently used RHI?
 					*colorTexture = colorFramebufferAttachment->texture;
@@ -7598,8 +7598,8 @@ namespace OpenGLES3Rhi
 							const Texture2D* texture2D = static_cast<Texture2D*>(*colorTexture);
 
 							// Sanity checks
-							RHI_ASSERT(openGLES3Rhi.getContext(), colorFramebufferAttachments->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid OpenGL ES 3 color framebuffer attachment mipmap index")
-							RHI_ASSERT(openGLES3Rhi.getContext(), 0 == colorFramebufferAttachment->layerIndex, "Invalid OpenGL ES 3 color framebuffer attachment layer index")
+							RHI_ASSERT(colorFramebufferAttachments->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid OpenGL ES 3 color framebuffer attachment mipmap index")
+							RHI_ASSERT(0 == colorFramebufferAttachment->layerIndex, "Invalid OpenGL ES 3 color framebuffer attachment layer index")
 
 							// Set the OpenGL ES 3 framebuffer color attachment
 							glFramebufferTexture2D(GL_FRAMEBUFFER, openGLES3Attachment, GL_TEXTURE_2D, texture2D->getOpenGLES3Texture(), static_cast<GLint>(colorFramebufferAttachment->mipmapIndex));
@@ -7661,7 +7661,7 @@ namespace OpenGLES3Rhi
 			if (nullptr != depthStencilFramebufferAttachment)
 			{
 				mDepthStencilTexture = depthStencilFramebufferAttachment->texture;
-				RHI_ASSERT(openGLES3Rhi.getContext(), nullptr != mDepthStencilTexture, "Invalid OpenGL ES 3 depth stencil framebuffer attachment texture")
+				RHI_ASSERT(nullptr != mDepthStencilTexture, "Invalid OpenGL ES 3 depth stencil framebuffer attachment texture")
 				mDepthStencilTexture->addReference();
 
 				// Evaluate the color texture type
@@ -7672,8 +7672,8 @@ namespace OpenGLES3Rhi
 						const Texture2D* texture2D = static_cast<const Texture2D*>(mDepthStencilTexture);
 
 						// Sanity checks
-						RHI_ASSERT(openGLES3Rhi.getContext(), depthStencilFramebufferAttachment->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid OpenGL ES 3 depth stencil framebuffer attachment mipmap index")
-						RHI_ASSERT(openGLES3Rhi.getContext(), 0 == depthStencilFramebufferAttachment->layerIndex, "Invalid OpenGL ES 3 depth stencil framebuffer attachment layer index")
+						RHI_ASSERT(depthStencilFramebufferAttachment->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid OpenGL ES 3 depth stencil framebuffer attachment mipmap index")
+						RHI_ASSERT(0 == depthStencilFramebufferAttachment->layerIndex, "Invalid OpenGL ES 3 depth stencil framebuffer attachment layer index")
 
 						// Bind the depth stencil texture to framebuffer
 						glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, texture2D->getOpenGLES3Texture(), static_cast<GLint>(depthStencilFramebufferAttachment->mipmapIndex));
@@ -7789,12 +7789,12 @@ namespace OpenGLES3Rhi
 			// Validate the framebuffer width and height
 			if (0 == mWidth || UINT_MAX == mWidth)
 			{
-				RHI_ASSERT(openGLES3Rhi.getContext(), false, "Invalid OpenGL ES 3 framebuffer width")
+				RHI_ASSERT(false, "Invalid OpenGL ES 3 framebuffer width")
 				mWidth = 1;
 			}
 			if (0 == mHeight || UINT_MAX == mHeight)
 			{
-				RHI_ASSERT(openGLES3Rhi.getContext(), false, "Invalid OpenGL ES 3 framebuffer height")
+				RHI_ASSERT(false, "Invalid OpenGL ES 3 framebuffer height")
 				mHeight = 1;
 			}
 
@@ -8217,7 +8217,7 @@ namespace OpenGLES3Rhi
 						const Rhi::RootParameter& rootParameter = rootSignatureData.parameters[rootParameterIndex];
 						if (Rhi::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
 						{
-							RHI_ASSERT(openGLES3Rhi.getContext(), nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL ES 3 descriptor ranges")
+							RHI_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL ES 3 descriptor ranges")
 							const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
 							for (uint32_t descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
 							{
@@ -8369,12 +8369,12 @@ namespace OpenGLES3Rhi
 	//[ Public virtual Rhi::IGraphicsProgram methods          ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline virtual Rhi::handle getUniformHandle(const char* uniformName) override
+		[[nodiscard]] inline virtual handle getUniformHandle(const char* uniformName) override
 		{
-			return static_cast<Rhi::handle>(glGetUniformLocation(mOpenGLES3Program, uniformName));
+			return static_cast<handle>(glGetUniformLocation(mOpenGLES3Program, uniformName));
 		}
 
-		virtual void setUniform1i(Rhi::handle uniformHandle, int value) override
+		virtual void setUniform1i(handle uniformHandle, int value) override
 		{
 			#ifdef RHI_OPENGLES3_STATE_CLEANUP
 				// Backup the currently used OpenGL ES 3 program
@@ -8401,7 +8401,7 @@ namespace OpenGLES3Rhi
 			#endif
 		}
 
-		virtual void setUniform1f(Rhi::handle uniformHandle, float value) override
+		virtual void setUniform1f(handle uniformHandle, float value) override
 		{
 			#ifdef RHI_OPENGLES3_STATE_CLEANUP
 				// Backup the currently used OpenGL ES 3 program
@@ -8428,7 +8428,7 @@ namespace OpenGLES3Rhi
 			#endif
 		}
 
-		virtual void setUniform2fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniform2fv(handle uniformHandle, const float* value) override
 		{
 			#ifdef RHI_OPENGLES3_STATE_CLEANUP
 				// Backup the currently used OpenGL ES 3 program
@@ -8455,7 +8455,7 @@ namespace OpenGLES3Rhi
 			#endif
 		}
 
-		virtual void setUniform3fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniform3fv(handle uniformHandle, const float* value) override
 		{
 			#ifdef RHI_OPENGLES3_STATE_CLEANUP
 				// Backup the currently used OpenGL ES 3 program
@@ -8482,7 +8482,7 @@ namespace OpenGLES3Rhi
 			#endif
 		}
 
-		virtual void setUniform4fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniform4fv(handle uniformHandle, const float* value) override
 		{
 			#ifdef RHI_OPENGLES3_STATE_CLEANUP
 				// Backup the currently used OpenGL ES 3 program
@@ -8509,7 +8509,7 @@ namespace OpenGLES3Rhi
 			#endif
 		}
 
-		virtual void setUniformMatrix3fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniformMatrix3fv(handle uniformHandle, const float* value) override
 		{
 			#ifdef RHI_OPENGLES3_STATE_CLEANUP
 				// Backup the currently used OpenGL ES 3 program
@@ -8536,7 +8536,7 @@ namespace OpenGLES3Rhi
 			#endif
 		}
 
-		virtual void setUniformMatrix4fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniformMatrix4fv(handle uniformHandle, const float* value) override
 		{
 			#ifdef RHI_OPENGLES3_STATE_CLEANUP
 				// Backup the currently used OpenGL ES 3 program
@@ -8642,7 +8642,7 @@ namespace OpenGLES3Rhi
 		[[nodiscard]] inline virtual Rhi::IVertexShader* createVertexShaderFromBytecode(const Rhi::VertexAttributes&, const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Error!
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL ES 3 monolithic shaders have no shader bytecode, only a monolithic program bytecode")
+			RHI_ASSERT(false, "OpenGL ES 3 monolithic shaders have no shader bytecode, only a monolithic program bytecode")
 			return nullptr;
 		}
 
@@ -8657,46 +8657,46 @@ namespace OpenGLES3Rhi
 		[[nodiscard]] inline virtual Rhi::ITessellationControlShader* createTessellationControlShaderFromBytecode(const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Error!
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL ES 3 monolithic shaders have no shader bytecode, only a monolithic program bytecode")
+			RHI_ASSERT(false, "OpenGL ES 3 monolithic shaders have no shader bytecode, only a monolithic program bytecode")
 			return nullptr;
 		}
 
 		[[nodiscard]] inline virtual Rhi::ITessellationControlShader* createTessellationControlShaderFromSourceCode(const Rhi::ShaderSourceCode&, Rhi::ShaderBytecode* RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL ES 3 has no tessellation control shader support")
+			RHI_ASSERT(false, "OpenGL ES 3 has no tessellation control shader support")
 			return nullptr;
 		}
 
 		[[nodiscard]] inline virtual Rhi::ITessellationEvaluationShader* createTessellationEvaluationShaderFromBytecode(const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Error!
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL ES 3 monolithic shaders have no shader bytecode, only a monolithic program bytecode")
+			RHI_ASSERT(false, "OpenGL ES 3 monolithic shaders have no shader bytecode, only a monolithic program bytecode")
 			return nullptr;
 		}
 
 		[[nodiscard]] inline virtual Rhi::ITessellationEvaluationShader* createTessellationEvaluationShaderFromSourceCode(const Rhi::ShaderSourceCode&, Rhi::ShaderBytecode* RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL ES 3 has no tessellation evaluation shader support")
+			RHI_ASSERT(false, "OpenGL ES 3 has no tessellation evaluation shader support")
 			return nullptr;
 		}
 
 		[[nodiscard]] inline virtual Rhi::IGeometryShader* createGeometryShaderFromBytecode(const Rhi::ShaderBytecode&, Rhi::GsInputPrimitiveTopology, Rhi::GsOutputPrimitiveTopology, uint32_t RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Error!
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL ES 3 monolithic shaders have no shader bytecode, only a monolithic program bytecode")
+			RHI_ASSERT(false, "OpenGL ES 3 monolithic shaders have no shader bytecode, only a monolithic program bytecode")
 			return nullptr;
 		}
 
 		[[nodiscard]] inline virtual Rhi::IGeometryShader* createGeometryShaderFromSourceCode(const Rhi::ShaderSourceCode&, Rhi::GsInputPrimitiveTopology, Rhi::GsOutputPrimitiveTopology, uint32_t, Rhi::ShaderBytecode* RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL ES 3 has no geometry shader support")
+			RHI_ASSERT(false, "OpenGL ES 3 has no geometry shader support")
 			return nullptr;
 		}
 
 		[[nodiscard]] inline virtual Rhi::IFragmentShader* createFragmentShaderFromBytecode(const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Error!
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL ES 3 monolithic shaders have no shader bytecode, only a monolithic program bytecode")
+			RHI_ASSERT(false, "OpenGL ES 3 monolithic shaders have no shader bytecode, only a monolithic program bytecode")
 			return nullptr;
 		}
 
@@ -8710,38 +8710,38 @@ namespace OpenGLES3Rhi
 
 		[[nodiscard]] inline virtual Rhi::ITaskShader* createTaskShaderFromBytecode(const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL ES 3 monolithic shaders has no task shader support")
+			RHI_ASSERT(false, "OpenGL ES 3 monolithic shaders has no task shader support")
 			return nullptr;
 		}
 
 		[[nodiscard]] inline virtual Rhi::ITaskShader* createTaskShaderFromSourceCode(const Rhi::ShaderSourceCode&, Rhi::ShaderBytecode* = nullptr RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL ES 3 has no task shader support")
+			RHI_ASSERT(false, "OpenGL ES 3 has no task shader support")
 			return nullptr;
 		}
 
 		[[nodiscard]] inline virtual Rhi::IMeshShader* createMeshShaderFromBytecode(const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL ES 3 monolithic shaders has no mesh shader support")
+			RHI_ASSERT(false, "OpenGL ES 3 monolithic shaders has no mesh shader support")
 			return nullptr;
 		}
 
 		[[nodiscard]] inline virtual Rhi::IMeshShader* createMeshShaderFromSourceCode(const Rhi::ShaderSourceCode&, Rhi::ShaderBytecode* = nullptr RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL ES 3 has no mesh shader support")
+			RHI_ASSERT(false, "OpenGL ES 3 has no mesh shader support")
 			return nullptr;
 		}
 
 		[[nodiscard]] inline virtual Rhi::IComputeShader* createComputeShaderFromBytecode(const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Error!
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL ES 3 monolithic shaders have no shader bytecode, only a monolithic program bytecode")
+			RHI_ASSERT(false, "OpenGL ES 3 monolithic shaders have no shader bytecode, only a monolithic program bytecode")
 			return nullptr;
 		}
 
 		[[nodiscard]] inline virtual Rhi::IComputeShader* createComputeShaderFromSourceCode(const Rhi::ShaderSourceCode&, Rhi::ShaderBytecode* = nullptr RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL ES 3 has no compute shader support")
+			RHI_ASSERT(false, "OpenGL ES 3 has no compute shader support")
 			return nullptr;
 		}
 
@@ -8754,11 +8754,11 @@ namespace OpenGLES3Rhi
 			// -> Optimization: Comparing the shader language name by directly comparing the pointer address of
 			//    the name is safe because we know that we always reference to one and the same name address
 			// TODO(co) Add security check: Is the given resource one of the currently used RHI?
-			RHI_ASSERT(openGLES3Rhi.getContext(), nullptr == vertexShader || vertexShader->getShaderLanguageName() == ::detail::GLSLES_NAME, "OpenGL ES 3 vertex shader language mismatch")
-			RHI_ASSERT(openGLES3Rhi.getContext(), nullptr == tessellationControlShader, "OpenGL ES 3 has no tessellation control shader support")
-			RHI_ASSERT(openGLES3Rhi.getContext(), nullptr == tessellationEvaluationShader, "OpenGL ES 3 has no tessellation evaluation shader support")
-			RHI_ASSERT(openGLES3Rhi.getContext(), nullptr == geometryShader, "OpenGL ES 3 has no geometry shader support")
-			RHI_ASSERT(openGLES3Rhi.getContext(), nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::GLSLES_NAME, "OpenGL ES 3 fragment shader language mismatch")
+			RHI_ASSERT(nullptr == vertexShader || vertexShader->getShaderLanguageName() == ::detail::GLSLES_NAME, "OpenGL ES 3 vertex shader language mismatch")
+			RHI_ASSERT(nullptr == tessellationControlShader, "OpenGL ES 3 has no tessellation control shader support")
+			RHI_ASSERT(nullptr == tessellationEvaluationShader, "OpenGL ES 3 has no tessellation evaluation shader support")
+			RHI_ASSERT(nullptr == geometryShader, "OpenGL ES 3 has no geometry shader support")
+			RHI_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::GLSLES_NAME, "OpenGL ES 3 fragment shader language mismatch")
 
 			// Create the graphics program
 			return RHI_NEW(openGLES3Rhi.getContext(), GraphicsProgramGlsl)(openGLES3Rhi, rootSignature, vertexAttributes, static_cast<VertexShaderGlsl*>(vertexShader), static_cast<FragmentShaderGlsl*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -8766,7 +8766,7 @@ namespace OpenGLES3Rhi
 
 		[[nodiscard]] virtual Rhi::IGraphicsProgram* createGraphicsProgram([[maybe_unused]] const Rhi::IRootSignature& rootSignature, [[maybe_unused]] Rhi::ITaskShader* taskShader, [[maybe_unused]] Rhi::IMeshShader& meshShader, [[maybe_unused]] Rhi::IFragmentShader* fragmentShader RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER)
 		{
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL ES 3 has no mesh shader support")
+			RHI_ASSERT(false, "OpenGL ES 3 has no mesh shader support")
 			return nullptr;
 		}
 
@@ -8987,7 +8987,7 @@ namespace
 			#endif
 
 			// Done
-			RHI_ASSERT(context, nullptr != mappedSubresource.data, "Mapping of OpenGL ES 3 buffer failed")
+			RHI_ASSERT(nullptr != mappedSubresource.data, "Mapping of OpenGL ES 3 buffer failed")
 			return (nullptr != mappedSubresource.data);
 		}
 
@@ -9021,7 +9021,7 @@ namespace
 			void ExecuteCommandBuffer(const void* data, Rhi::IRhi& rhi)
 			{
 				const Rhi::Command::ExecuteCommandBuffer* realData = static_cast<const Rhi::Command::ExecuteCommandBuffer*>(data);
-				RHI_ASSERT(rhi.getContext(), nullptr != realData->commandBufferToExecute, "The OpenGL ES 3 command buffer to execute must be valid")
+				RHI_ASSERT(nullptr != realData->commandBufferToExecute, "The OpenGL ES 3 command buffer to execute must be valid")
 				rhi.submitCommandBuffer(*realData->commandBufferToExecute);
 			}
 
@@ -9531,7 +9531,7 @@ namespace OpenGLES3Rhi
 			for (uint32_t resourceIndex = 0; resourceIndex < numberOfResources; ++resourceIndex, ++resources)
 			{
 				Rhi::IResource* resource = *resources;
-				RHI_ASSERT(mContext, nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL ES 3 descriptor ranges")
+				RHI_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL ES 3 descriptor ranges")
 				const Rhi::DescriptorRange& descriptorRange = reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges)[resourceIndex];
 
 				// Check the type of resource to set
@@ -9551,7 +9551,7 @@ namespace OpenGLES3Rhi
 							// Attach the buffer to the given UBO binding point
 							// -> Explicit binding points ("layout(binding = 0)" in GLSL shader) requires OpenGL 4.2 or the "GL_ARB_explicit_uniform_location"-extension
 							// -> Direct3D 10 and Direct3D 11 have explicit binding points
-							RHI_ASSERT(mContext, nullptr != openGLES3ResourceGroup->getResourceIndexToUniformBlockBindingIndex(), "Invalid OpenGL ES 3 resource index to uniform block binding index")
+							RHI_ASSERT(nullptr != openGLES3ResourceGroup->getResourceIndexToUniformBlockBindingIndex(), "Invalid OpenGL ES 3 resource index to uniform block binding index")
 							glBindBufferBase(GL_UNIFORM_BUFFER, openGLES3ResourceGroup->getResourceIndexToUniformBlockBindingIndex()[resourceIndex], static_cast<TextureBuffer*>(resource)->getOpenGLES3TextureBuffer());
 							break;
 						}
@@ -9564,7 +9564,7 @@ namespace OpenGLES3Rhi
 						// Attach the buffer to the given UBO binding point
 						// -> Explicit binding points ("layout(binding = 0)" in GLSL shader) requires OpenGL 4.2 or the "GL_ARB_explicit_uniform_location"-extension
 						// -> Direct3D 10 and Direct3D 11 have explicit binding points
-						RHI_ASSERT(mContext, nullptr != openGLES3ResourceGroup->getResourceIndexToUniformBlockBindingIndex(), "Invalid OpenGL ES 3 resource index to uniform block binding index")
+						RHI_ASSERT(nullptr != openGLES3ResourceGroup->getResourceIndexToUniformBlockBindingIndex(), "Invalid OpenGL ES 3 resource index to uniform block binding index")
 						glBindBufferBase(GL_UNIFORM_BUFFER, openGLES3ResourceGroup->getResourceIndexToUniformBlockBindingIndex()[resourceIndex], static_cast<UniformBuffer*>(resource)->getOpenGLES3UniformBuffer());
 						break;
 
@@ -9638,7 +9638,7 @@ namespace OpenGLES3Rhi
 								// Set the OpenGL ES 3 sampler states, if required (texture buffer has no sampler state), it's valid that there's no sampler state (e.g. texel fetch instead of sampling might be used)
 								if (Rhi::ResourceType::TEXTURE_BUFFER != resourceType)
 								{
-									RHI_ASSERT(mContext, nullptr != openGLES3ResourceGroup->getSamplerState(), "Invalid OpenGL ES 3 sampler state")
+									RHI_ASSERT(nullptr != openGLES3ResourceGroup->getSamplerState(), "Invalid OpenGL ES 3 sampler state")
 									const SamplerState* samplerState = static_cast<const SamplerState*>(openGLES3ResourceGroup->getSamplerState()[resourceIndex]);
 									if (nullptr != samplerState)
 									{
@@ -9763,7 +9763,7 @@ namespace OpenGLES3Rhi
 		// Rasterizer (RS) stage
 
 		// Sanity check
-		RHI_ASSERT(mContext, numberOfViewports > 0 && nullptr != viewports, "Invalid OpenGL ES 3 rasterizer state viewports")
+		RHI_ASSERT(numberOfViewports > 0 && nullptr != viewports, "Invalid OpenGL ES 3 rasterizer state viewports")
 
 		// In OpenGL ES 3, the origin of the viewport is left bottom while Direct3D is using a left top origin. To make the
 		// Direct3D 11 implementation as efficient as possible the Direct3D convention is used and we have to convert in here.
@@ -9779,7 +9779,7 @@ namespace OpenGLES3Rhi
 
 		// Set the OpenGL ES 3 viewport
 		// -> OpenGL ES 3 supports only one viewport
-		RHI_ASSERT(mContext, numberOfViewports <= 1, "OpenGL ES 3 supports only one viewport")
+		RHI_ASSERT(numberOfViewports <= 1, "OpenGL ES 3 supports only one viewport")
 		glViewport(static_cast<GLint>(viewports->topLeftX), static_cast<GLint>(renderTargetHeight - viewports->topLeftY - viewports->height), static_cast<GLsizei>(viewports->width), static_cast<GLsizei>(viewports->height));
 		glDepthRangef(static_cast<GLclampf>(viewports->minDepth), static_cast<GLclampf>(viewports->maxDepth));
 	}
@@ -9789,7 +9789,7 @@ namespace OpenGLES3Rhi
 		// Rasterizer (RS) stage
 
 		// Sanity check
-		RHI_ASSERT(mContext, numberOfScissorRectangles > 0 && nullptr != scissorRectangles, "Invalid OpenGL ES 3 rasterizer state scissor rectangles")
+		RHI_ASSERT(numberOfScissorRectangles > 0 && nullptr != scissorRectangles, "Invalid OpenGL ES 3 rasterizer state scissor rectangles")
 
 		// In OpenGL ES 3, the origin of the scissor rectangle is left bottom while Direct3D is using a left top origin. To make the
 		// Direct3D 9 & 10 & 11 implementation as efficient as possible the Direct3D convention is used and we have to convert in here.
@@ -9804,7 +9804,7 @@ namespace OpenGLES3Rhi
 		}
 
 		// Set the OpenGL ES 3 scissor rectangle
-		RHI_ASSERT(mContext, numberOfScissorRectangles <= 1, "OpenGL ES 3 supports only one scissor rectangle")
+		RHI_ASSERT(numberOfScissorRectangles <= 1, "OpenGL ES 3 supports only one scissor rectangle")
 		const GLsizei width  = scissorRectangles->bottomRightX - scissorRectangles->topLeftX;
 		const GLsizei height = scissorRectangles->bottomRightY - scissorRectangles->topLeftY;
 		glScissor(static_cast<GLint>(scissorRectangles->topLeftX), static_cast<GLint>(renderTargetHeight - scissorRectangles->topLeftY - height), width, height);
@@ -9942,7 +9942,7 @@ namespace OpenGLES3Rhi
 	void OpenGLES3Rhi::clearGraphics(uint32_t clearFlags, const float color[4], float z, uint32_t stencil)
 	{
 		// Sanity check
-		RHI_ASSERT(mContext, z >= 0.0f && z <= 1.0f, "The OpenGL ES 3 clear graphics z value must be between [0, 1] (inclusive)")
+		RHI_ASSERT(z >= 0.0f && z <= 1.0f, "The OpenGL ES 3 clear graphics z value must be between [0, 1] (inclusive)")
 
 		// Get API flags
 		uint32_t flagsApi = 0;
@@ -10007,8 +10007,8 @@ namespace OpenGLES3Rhi
 	void OpenGLES3Rhi::drawGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(mContext, nullptr != emulationData, "The OpenGL ES 3 emulation data must be valid")
-		RHI_ASSERT(mContext, numberOfDraws > 0, "The number of OpenGL ES 3 draws must not be zero")
+		RHI_ASSERT(nullptr != emulationData, "The OpenGL ES 3 emulation data must be valid")
+		RHI_ASSERT(numberOfDraws > 0, "The number of OpenGL ES 3 draws must not be zero")
 		// It's possible to draw without "mVertexArray"
 
 		// TODO(co) Currently no buffer overflow check due to lack of interface provided data
@@ -10042,7 +10042,7 @@ namespace OpenGLES3Rhi
 			else
 			{
 				// Without instancing
-				RHI_ASSERT(mContext, drawArguments.instanceCount <= 1, "Invalid OpenGL ES 3 instance count")
+				RHI_ASSERT(drawArguments.instanceCount <= 1, "Invalid OpenGL ES 3 instance count")
 				glDrawArrays(mOpenGLES3PrimitiveTopology, static_cast<GLint>(drawArguments.startVertexLocation), static_cast<GLsizei>(drawArguments.vertexCountPerInstance));
 			}
 			emulationData += sizeof(Rhi::DrawArguments);
@@ -10058,10 +10058,10 @@ namespace OpenGLES3Rhi
 	void OpenGLES3Rhi::drawIndexedGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(mContext, nullptr != emulationData, "The OpenGL ES 3 emulation data must be valid")
-		RHI_ASSERT(mContext, numberOfDraws > 0, "The number of OpenGL ES 3 draws must not be zero")
-		RHI_ASSERT(mContext, nullptr != mVertexArray, "Draw OpenGL ES 3 indexed needs a set vertex array")
-		RHI_ASSERT(mContext, nullptr != mVertexArray->getIndexBuffer(), "Draw OpenGL ES 3 indexed needs a set vertex array which contains an index buffer")
+		RHI_ASSERT(nullptr != emulationData, "The OpenGL ES 3 emulation data must be valid")
+		RHI_ASSERT(numberOfDraws > 0, "The number of OpenGL ES 3 draws must not be zero")
+		RHI_ASSERT(nullptr != mVertexArray, "Draw OpenGL ES 3 indexed needs a set vertex array")
+		RHI_ASSERT(nullptr != mVertexArray->getIndexBuffer(), "Draw OpenGL ES 3 indexed needs a set vertex array which contains an index buffer")
 
 		// TODO(co) Currently no buffer overflow check due to lack of interface provided data
 		emulationData += indirectBufferOffset;
@@ -10101,7 +10101,7 @@ namespace OpenGLES3Rhi
 					else
 					{
 						// Error!
-						RHI_ASSERT(mContext, false, "Failed to OpenGL ES 3 draw indexed emulated")
+						RHI_ASSERT(false, "Failed to OpenGL ES 3 draw indexed emulated")
 					}
 				}
 				else if (drawIndexedArguments.startInstanceLocation > 0 && mOpenGLES3Context->getExtensions().isGL_EXT_base_instance())
@@ -10131,7 +10131,7 @@ namespace OpenGLES3Rhi
 					else
 					{
 						// Error!
-						RHI_ASSERT(mContext, false, "Failed to OpenGL ES 3 draw indexed emulated")
+						RHI_ASSERT(false, "Failed to OpenGL ES 3 draw indexed emulated")
 					}
 				}
 				else
@@ -10174,8 +10174,8 @@ namespace OpenGLES3Rhi
 					// Get the OpenGL ES 3 texture 2D instances
 					const Texture2D& openGlEs3DestinationTexture2D = static_cast<const Texture2D&>(destinationResource);
 					const Texture2D& openGlEs3SourceTexture2D = static_cast<const Texture2D&>(sourceResource);
-					RHI_ASSERT(mContext, openGlEs3DestinationTexture2D.getWidth() == openGlEs3SourceTexture2D.getWidth(), "OpenGL source and destination width must be identical for resource copy")
-					RHI_ASSERT(mContext, openGlEs3DestinationTexture2D.getHeight() == openGlEs3SourceTexture2D.getHeight(), "OpenGL source and destination height must be identical for resource copy")
+					RHI_ASSERT(openGlEs3DestinationTexture2D.getWidth() == openGlEs3SourceTexture2D.getWidth(), "OpenGL source and destination width must be identical for resource copy")
+					RHI_ASSERT(openGlEs3DestinationTexture2D.getHeight() == openGlEs3SourceTexture2D.getHeight(), "OpenGL source and destination height must be identical for resource copy")
 
 					#ifdef RHI_OPENGLES3_STATE_CLEANUP
 						// Backup the currently bound OpenGL ES 3 framebuffer
@@ -10208,7 +10208,7 @@ namespace OpenGLES3Rhi
 				else
 				{
 					// Error!
-					RHI_ASSERT(mContext, false, "Failed to copy OpenGL ES 3 resource")
+					RHI_ASSERT(false, "Failed to copy OpenGL ES 3 resource")
 				}
 				break;
 
@@ -10253,7 +10253,7 @@ namespace OpenGLES3Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, resource)
-		RHI_ASSERT(mContext, resource.getResourceType() == Rhi::ResourceType::TEXTURE_2D, "TODO(co) Mipmaps can only be generated for OpenGL ES 3 2D texture resources")
+		RHI_ASSERT(resource.getResourceType() == Rhi::ResourceType::TEXTURE_2D, "TODO(co) Mipmaps can only be generated for OpenGL ES 3 2D texture resources")
 
 		Texture2D& texture2D = static_cast<Texture2D&>(resource);
 
@@ -10313,7 +10313,7 @@ namespace OpenGLES3Rhi
 			// "GL_KHR_debug"-extension required
 			if (mOpenGLES3Context->getExtensions().isGL_KHR_debug())
 			{
-				RHI_ASSERT(mContext, nullptr != name, "OpenGL ES 3 debug marker names must not be a null pointer")
+				RHI_ASSERT(nullptr != name, "OpenGL ES 3 debug marker names must not be a null pointer")
 				glDebugMessageInsertKHR(GL_DEBUG_SOURCE_APPLICATION_KHR, GL_DEBUG_TYPE_MARKER_KHR, 1, GL_DEBUG_SEVERITY_NOTIFICATION_KHR, -1, name);
 			}
 		}
@@ -10323,7 +10323,7 @@ namespace OpenGLES3Rhi
 			// "GL_KHR_debug"-extension required
 			if (mOpenGLES3Context->getExtensions().isGL_KHR_debug())
 			{
-				RHI_ASSERT(mContext, nullptr != name, "OpenGL ES 3 debug event names must not be a null pointer")
+				RHI_ASSERT(nullptr != name, "OpenGL ES 3 debug event names must not be a null pointer")
 				glPushDebugGroupKHR(GL_DEBUG_SOURCE_APPLICATION_KHR, 1, -1, name);
 			}
 		}
@@ -10372,7 +10372,7 @@ namespace OpenGLES3Rhi
 
 	const char* OpenGLES3Rhi::getShaderLanguageName([[maybe_unused]] uint32_t index) const
 	{
-		RHI_ASSERT(mContext, index < getNumberOfShaderLanguages(), "OpenGL ES 3: Shader language index is out-of-bounds")
+		RHI_ASSERT(index < getNumberOfShaderLanguages(), "OpenGL ES 3: Shader language index is out-of-bounds")
 		return ::detail::GLSLES_NAME;
 	}
 
@@ -10422,7 +10422,7 @@ namespace OpenGLES3Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, renderPass)
-		RHI_ASSERT(mContext, SE_NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "OpenGL ES 3: The provided native window handle or render window must not be a null handle / null pointer")
+		RHI_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "OpenGL ES 3: The provided native window handle or render window must not be a null handle / null pointer")
 
 		// Create the swap chain
 		return RHI_NEW(mContext, SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -10455,9 +10455,9 @@ namespace OpenGLES3Rhi
 	Rhi::IGraphicsPipelineState* OpenGLES3Rhi::createGraphicsPipelineState(const Rhi::GraphicsPipelineState& graphicsPipelineState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		// Sanity checks
-		RHI_ASSERT(mContext, nullptr != graphicsPipelineState.rootSignature, "OpenGL ES 3: Invalid graphics pipeline state root signature")
-		RHI_ASSERT(mContext, nullptr != graphicsPipelineState.graphicsProgram, "OpenGL ES 3: Invalid graphics pipeline state graphics program")
-		RHI_ASSERT(mContext, nullptr != graphicsPipelineState.renderPass, "OpenGL ES 3: Invalid graphics pipeline state render pass")
+		RHI_ASSERT(nullptr != graphicsPipelineState.rootSignature, "OpenGL ES 3: Invalid graphics pipeline state root signature")
+		RHI_ASSERT(nullptr != graphicsPipelineState.graphicsProgram, "OpenGL ES 3: Invalid graphics pipeline state graphics program")
+		RHI_ASSERT(nullptr != graphicsPipelineState.renderPass, "OpenGL ES 3: Invalid graphics pipeline state render pass")
 
 		// Create graphics pipeline state
 		uint16_t id = 0;
@@ -10801,7 +10801,7 @@ namespace OpenGLES3Rhi
 
 		// Sanity check
 		#if SE_DEBUG
-			RHI_ASSERT(mContext, false == mDebugBetweenBeginEndScene, "OpenGL ES 3: Begin scene was called while scene rendering is already in progress, missing end scene call?")
+			RHI_ASSERT(false == mDebugBetweenBeginEndScene, "OpenGL ES 3: Begin scene was called while scene rendering is already in progress, missing end scene call?")
 			mDebugBetweenBeginEndScene = true;
 		#endif
 
@@ -10812,7 +10812,7 @@ namespace OpenGLES3Rhi
 	void OpenGLES3Rhi::submitCommandBuffer(const Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity check
-		RHI_ASSERT(mContext, !commandBuffer.isEmpty(), "The OpenGL ES 3 command buffer to execute mustn't be empty")
+		RHI_ASSERT(!commandBuffer.isEmpty(), "The OpenGL ES 3 command buffer to execute mustn't be empty")
 
 		// Loop through all commands
 		const uint8_t* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
@@ -10836,7 +10836,7 @@ namespace OpenGLES3Rhi
 	{
 		// Sanity check
 		#if SE_DEBUG
-			RHI_ASSERT(mContext, true == mDebugBetweenBeginEndScene, "OpenGL ES 3: End scene was called while scene rendering isn't in progress, missing start scene call?")
+			RHI_ASSERT(true == mDebugBetweenBeginEndScene, "OpenGL ES 3: End scene was called while scene rendering isn't in progress, missing start scene call?")
 			mDebugBetweenBeginEndScene = false;
 		#endif
 

@@ -503,7 +503,7 @@ namespace OpenGLRhi
 	*    Check whether or not the given resource is owned by the given RHI
 	*/
 	#define RHI_MATCH_CHECK(rhiReference, resourceReference) \
-		RHI_ASSERT(mContext, &rhiReference == &(resourceReference).getRhi(), "OpenGL error: The given resource is owned by another RHI instance")
+		RHI_ASSERT(&rhiReference == &(resourceReference).getRhi(), "OpenGL error: The given resource is owned by another RHI instance")
 
 	/**
 	*  @brief
@@ -3743,7 +3743,7 @@ namespace OpenGLRhi
 			*  @param[in] shareContextWindows
 			*    Optional share context, can be a null pointer
 			*/
-			inline OpenGLContextWindows(Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, Rhi::handle nativeWindowHandle, const OpenGLContextWindows* shareContextWindows = nullptr) :
+			inline OpenGLContextWindows(Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, handle nativeWindowHandle, const OpenGLContextWindows* shareContextWindows = nullptr) :
 				OpenGLContextWindows(nullptr, depthStencilAttachmentTextureFormat, nativeWindowHandle, shareContextWindows)
 			{}
 
@@ -3846,7 +3846,7 @@ namespace OpenGLRhi
 			*  @param[in] shareContextWindows
 			*    Optional share context, can be a null pointer
 			*/
-			OpenGLContextWindows(OpenGLRuntimeLinking* openGLRuntimeLinking, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, Rhi::handle nativeWindowHandle, const OpenGLContextWindows* shareContextWindows = nullptr) :
+			OpenGLContextWindows(OpenGLRuntimeLinking* openGLRuntimeLinking, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, handle nativeWindowHandle, const OpenGLContextWindows* shareContextWindows = nullptr) :
 				IOpenGLContext(openGLRuntimeLinking),
 				mNativeWindowHandle(nativeWindowHandle),
 				mDummyWindow(SE_NULL_HANDLE),
@@ -3873,7 +3873,7 @@ namespace OpenGLRhi
 					::RegisterClass(&windowDummyClass);
 
 					// Create the OpenGL dummy window
-					mNativeWindowHandle = mDummyWindow = reinterpret_cast<Rhi::handle>(::CreateWindow(TEXT("OpenGLDummyWindow"), TEXT("PFormat"), WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 0, 0, 8, 8, HWND_DESKTOP, nullptr, ::GetModuleHandle(nullptr), nullptr));
+					mNativeWindowHandle = mDummyWindow = reinterpret_cast<handle>(::CreateWindow(TEXT("OpenGLDummyWindow"), TEXT("PFormat"), WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 0, 0, 8, 8, HWND_DESKTOP, nullptr, ::GetModuleHandle(nullptr), nullptr));
 				}
 
 				// Is there a valid window handle?
@@ -4078,8 +4078,8 @@ namespace OpenGLRhi
 		//[ Private data                                          ]
 		//[-------------------------------------------------------]
 		private:
-			Rhi::handle mNativeWindowHandle;	///< OpenGL window, can be a null pointer (HWND)
-			Rhi::handle mDummyWindow;			///< OpenGL dummy window, can be a null pointer (HWND)
+			handle mNativeWindowHandle;	///< OpenGL window, can be a null pointer (HWND)
+			handle mDummyWindow;			///< OpenGL dummy window, can be a null pointer (HWND)
 			HDC			mWindowDeviceContext;	///< The device context of the OpenGL dummy window, can be a null pointer
 			HGLRC		mWindowRenderContext;	///< The render context of the OpenGL dummy window, can be a null pointer
 			bool		mOwnsRenderContext;		///< Does this context owns the OpenGL render context?
@@ -4131,7 +4131,7 @@ namespace OpenGLRhi
 			*  @param[in] shareContextLinux
 			*    Optional share context, can be a null pointer
 			*/
-			inline OpenGLContextLinux(OpenGLRhi& openGLRhi, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, Rhi::handle nativeWindowHandle, bool useExternalContext, const OpenGLContextLinux* shareContextLinux = nullptr) :
+			inline OpenGLContextLinux(OpenGLRhi& openGLRhi, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, handle nativeWindowHandle, bool useExternalContext, const OpenGLContextLinux* shareContextLinux = nullptr) :
 				OpenGLContextLinux(openGLRhi, nullptr, depthStencilAttachmentTextureFormat, nativeWindowHandle, useExternalContext, shareContextLinux)
 			{}
 
@@ -4231,7 +4231,7 @@ namespace OpenGLRhi
 			*  @param[in] shareContextLinux
 			*    Optional share context, can be a null pointer
 			*/
-			OpenGLContextLinux(OpenGLRhi& openGLRhi, OpenGLRuntimeLinking* openGLRuntimeLinking, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, Rhi::handle nativeWindowHandle, bool useExternalContext, const OpenGLContextLinux* shareContextLinux = nullptr) :
+			OpenGLContextLinux(OpenGLRhi& openGLRhi, OpenGLRuntimeLinking* openGLRuntimeLinking, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, handle nativeWindowHandle, bool useExternalContext, const OpenGLContextLinux* shareContextLinux = nullptr) :
 				IOpenGLContext(openGLRuntimeLinking),
 				mOpenGLRhi(openGLRhi),
 				mNativeWindowHandle(nativeWindowHandle),
@@ -4249,7 +4249,7 @@ namespace OpenGLRhi
 				else
 				{
 					const Rhi::Context& context = openGLRhi.getContext();
-					RHI_ASSERT(context, context.getType() == Rhi::Context::ContextType::X11, "Invalid OpenGL context type")
+					RHI_ASSERT(context.getType() == Rhi::Context::ContextType::X11, "Invalid OpenGL context type")
 
 					// If the given RHI context is an X11 context use the display connection object provided by the context
 					if (context.getType() == Rhi::Context::ContextType::X11)
@@ -4451,7 +4451,7 @@ namespace OpenGLRhi
 		//[-------------------------------------------------------]
 		private:
 			OpenGLRhi&	mOpenGLRhi;				///< Owner OpenGL RHI instance
-			Rhi::handle mNativeWindowHandle;	///< OpenGL window, can be a null pointer (Window)
+			handle mNativeWindowHandle;	///< OpenGL window, can be a null pointer (Window)
 			Display*	mDisplay;				///< The X11 display connection, can be a null pointer
 			bool		mOwnsX11Display;		///< Indicates if this instance owns the X11 display
 			GLXContext	mWindowRenderContext;	///< The render context of the OpenGL dummy window, can be a null pointer
@@ -4556,7 +4556,7 @@ namespace OpenGLRhi
 					return GL_LINEAR;	// There's no special setting in OpenGL
 
 				case Rhi::FilterMode::UNKNOWN:
-					RHI_ASSERT(context, false, "OpenGL filter mode must not be unknown")
+					RHI_ASSERT(false, "OpenGL filter mode must not be unknown")
 					return GL_NEAREST;
 
 				default:
@@ -4637,7 +4637,7 @@ namespace OpenGLRhi
 					return hasMipmaps ? GL_LINEAR_MIPMAP_LINEAR : GL_LINEAR;	// There's no special setting in OpenGL
 
 				case Rhi::FilterMode::UNKNOWN:
-					RHI_ASSERT(context, false, "OpenGL filter mode must not be unknown")
+					RHI_ASSERT(false, "OpenGL filter mode must not be unknown")
 					return GL_NEAREST;
 
 				default:
@@ -4684,7 +4684,7 @@ namespace OpenGLRhi
 					return GL_COMPARE_REF_TO_TEXTURE;
 
 				case Rhi::FilterMode::UNKNOWN:
-					RHI_ASSERT(context, false, "OpenGL filter mode must not be unknown")
+					RHI_ASSERT(false, "OpenGL filter mode must not be unknown")
 					return GL_NEAREST;
 
 				default:
@@ -5165,7 +5165,7 @@ namespace OpenGLRhi
 				const Rhi::RootParameter& rootParameter = rootSignature.parameters[currentRootParameterIndex];
 				if (Rhi::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
 				{
-					RHI_ASSERT(rhi.getContext(), nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
+					RHI_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
 					const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
 					for (uint32_t descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
 					{
@@ -5182,7 +5182,7 @@ namespace OpenGLRhi
 			for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
 			{
 				Rhi::IResource* resource = *resources;
-				RHI_ASSERT(rhi.getContext(), nullptr != resource, "Invalid OpenGL resource")
+				RHI_ASSERT(nullptr != resource, "Invalid OpenGL resource")
 				mResources[resourceIndex] = resource;
 				resource->addReference();
 
@@ -5432,9 +5432,9 @@ namespace OpenGLRhi
 			Rhi::IRhi& rhi = getRhi();
 
 			// Sanity checks
-			RHI_ASSERT(rhi.getContext(), rootParameterIndex < mRootSignature.numberOfParameters, "The OpenGL root parameter index is out-of-bounds")
-			RHI_ASSERT(rhi.getContext(), numberOfResources > 0, "The number of OpenGL resources must not be zero")
-			RHI_ASSERT(rhi.getContext(), nullptr != resources, "The OpenGL resource pointers must be valid")
+			RHI_ASSERT(rootParameterIndex < mRootSignature.numberOfParameters, "The OpenGL root parameter index is out-of-bounds")
+			RHI_ASSERT(numberOfResources > 0, "The number of OpenGL resources must not be zero")
+			RHI_ASSERT(nullptr != resources, "The OpenGL resource pointers must be valid")
 
 			// Create resource group
 			return RHI_NEW(rhi.getContext(), ResourceGroup)(rhi, mRootSignature, rootParameterIndex, numberOfResources, resources, samplerStates RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -8009,11 +8009,11 @@ namespace OpenGLRhi
 				const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = vertexBuffers + numberOfVertexBuffers;
 				for (const Rhi::VertexArrayVertexBuffer* vertexBuffer = vertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer)
 				{
-					RHI_ASSERT(openGLRhi.getContext(), &openGLRhi == &vertexBuffer->vertexBuffer->getRhi(), "OpenGL error: The given vertex buffer resource is owned by another RHI instance")
+					RHI_ASSERT(&openGLRhi == &vertexBuffer->vertexBuffer->getRhi(), "OpenGL error: The given vertex buffer resource is owned by another RHI instance")
 				}
 			}
 			#endif
-			RHI_ASSERT(openGLRhi.getContext(), nullptr == indexBuffer || &openGLRhi == &indexBuffer->getRhi(), "OpenGL error: The given index buffer resource is owned by another RHI instance")
+			RHI_ASSERT(nullptr == indexBuffer || &openGLRhi == &indexBuffer->getRhi(), "OpenGL error: The given index buffer resource is owned by another RHI instance")
 
 			// Create vertex array
 			uint16_t id = 0;
@@ -8063,7 +8063,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), (numberOfBytes % Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat)) == 0, "The OpenGL texture buffer size must be a multiple of the selected texture format bytes per texel")
+			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat)) == 0, "The OpenGL texture buffer size must be a multiple of the selected texture format bytes per texel")
 
 			// "GL_ARB_texture_buffer_object" required
 			if (mExtensions->isGL_ARB_texture_buffer_object())
@@ -8092,8 +8092,8 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity checks
-			RHI_ASSERT(openGLRhi.getContext(), (numberOfBytes % numberOfStructureBytes) == 0, "The OpenGL structured buffer size must be a multiple of the given number of structure bytes")
-			RHI_ASSERT(openGLRhi.getContext(), (numberOfBytes % (sizeof(float) * 4)) == 0, "Performance: The OpenGL structured buffer should be aligned to a 128-bit stride, see \"Understanding Structured Buffer Performance\" by Evan Hart, posted Apr 17 2015 at 11:33AM - https://developer.nvidia.com/content/understanding-structured-buffer-performance")
+			RHI_ASSERT((numberOfBytes % numberOfStructureBytes) == 0, "The OpenGL structured buffer size must be a multiple of the given number of structure bytes")
+			RHI_ASSERT((numberOfBytes % (sizeof(float) * 4)) == 0, "Performance: The OpenGL structured buffer should be aligned to a 128-bit stride, see \"Understanding Structured Buffer Performance\" by Evan Hart, posted Apr 17 2015 at 11:33AM - https://developer.nvidia.com/content/understanding-structured-buffer-performance")
 
 			// "GL_ARB_shader_storage_buffer_object" required
 			if (mExtensions->isGL_ARB_shader_storage_buffer_object())
@@ -8122,10 +8122,10 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity checks
-			RHI_ASSERT(openGLRhi.getContext(), (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 || (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0, "Invalid OpenGL flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" is missing")
-			RHI_ASSERT(openGLRhi.getContext(), !((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 && (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0), "Invalid OpenGL flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" must be set, but not both at one and the same time")
-			RHI_ASSERT(openGLRhi.getContext(), (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawArguments)) == 0, "OpenGL indirect buffer element type flags specification is \"DRAW_ARGUMENTS\" but the given number of bytes don't align to this")
-			RHI_ASSERT(openGLRhi.getContext(), (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawIndexedArguments)) == 0, "OpenGL indirect buffer element type flags specification is \"DRAW_INDEXED_ARGUMENTS\" but the given number of bytes don't align to this")
+			RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 || (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0, "Invalid OpenGL flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" is missing")
+			RHI_ASSERT(!((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 && (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0), "Invalid OpenGL flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" must be set, but not both at one and the same time")
+			RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawArguments)) == 0, "OpenGL indirect buffer element type flags specification is \"DRAW_ARGUMENTS\" but the given number of bytes don't align to this")
+			RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawIndexedArguments)) == 0, "OpenGL indirect buffer element type flags specification is \"DRAW_INDEXED_ARGUMENTS\" but the given number of bytes don't align to this")
 
 			// "GL_ARB_draw_indirect" required
 			if (mExtensions->isGL_ARB_draw_indirect())
@@ -8159,8 +8159,8 @@ namespace OpenGLRhi
 				// Don't remove this reminder comment block: There are no buffer flags by intent since an uniform buffer can't be used for unordered access and as a consequence an uniform buffer must always used as shader resource to not be pointless
 				// -> Inside GLSL "layout(binding = 0, std140) writeonly uniform OutputUniformBuffer" will result in the GLSL compiler error "Failed to parse the GLSL shader source code: ERROR: 0:85: 'assign' :  l-value required "anon@6" (can't modify a uniform)"
 				// -> Inside GLSL "layout(binding = 0, std430) writeonly buffer  OutputUniformBuffer" will work in OpenGL but will fail in Vulkan with "Vulkan debug report callback: Object type: "VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT" Object: "0" Location: "0" Message code: "13" Layer prefix: "Validation" Message: "Object: VK_NULL_HANDLE (Type = 0) | Type mismatch on descriptor slot 0.0 (used as type `ptr to uniform struct of (vec4 of float32)`) but descriptor of type VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER""
-				// RHI_ASSERT(openGLRhi.getContext(), (bufferFlags & Rhi::BufferFlag::UNORDERED_ACCESS) == 0, "Invalid OpenGL buffer flags, uniform buffer can't be used for unordered access")
-				// RHI_ASSERT(openGLRhi.getContext(), (bufferFlags & Rhi::BufferFlag::SHADER_RESOURCE) != 0, "Invalid OpenGL buffer flags, uniform buffer must be used as shader resource")
+				// RHI_ASSERT((bufferFlags & Rhi::BufferFlag::UNORDERED_ACCESS) == 0, "Invalid OpenGL buffer flags, uniform buffer can't be used for unordered access")
+				// RHI_ASSERT((bufferFlags & Rhi::BufferFlag::SHADER_RESOURCE) != 0, "Invalid OpenGL buffer flags, uniform buffer must be used as shader resource")
 
 				// Is "GL_EXT_direct_state_access" there?
 				if (mExtensions->isGL_EXT_direct_state_access() || mExtensions->isGL_ARB_direct_state_access())
@@ -8360,8 +8360,8 @@ namespace OpenGLRhi
 			Texture1D(openGLRhi, width, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
 			// Sanity checks
-			RHI_ASSERT(openGLRhi.getContext(), 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
+			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
 
 			// Create the OpenGL texture instance
 			glGenTextures(1, &mOpenGLTexture);
@@ -8524,8 +8524,8 @@ namespace OpenGLRhi
 			Texture1D(openGLRhi, width, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
 			// Sanity checks
-			RHI_ASSERT(openGLRhi.getContext(), 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
+			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
 
 			// Multisample texture?
 			const bool isArbDsa = openGLRhi.getExtensions().isGL_ARB_direct_state_access();
@@ -9360,13 +9360,13 @@ namespace OpenGLRhi
 			Texture2D(openGLRhi, width, height, textureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
 			// Sanity checks
-			RHI_ASSERT(openGLRhi.getContext(), numberOfMultisamples == 1 || numberOfMultisamples == 2 || numberOfMultisamples == 4 || numberOfMultisamples == 8, "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), numberOfMultisamples == 1 || nullptr == data, "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS), "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS), "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), numberOfMultisamples == 1 || 0 != (textureFlags & Rhi::TextureFlag::RENDER_TARGET), "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
+			RHI_ASSERT(numberOfMultisamples == 1 || numberOfMultisamples == 2 || numberOfMultisamples == 4 || numberOfMultisamples == 8, "Invalid OpenGL texture parameters")
+			RHI_ASSERT(numberOfMultisamples == 1 || nullptr == data, "Invalid OpenGL texture parameters")
+			RHI_ASSERT(numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS), "Invalid OpenGL texture parameters")
+			RHI_ASSERT(numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS), "Invalid OpenGL texture parameters")
+			RHI_ASSERT(numberOfMultisamples == 1 || 0 != (textureFlags & Rhi::TextureFlag::RENDER_TARGET), "Invalid OpenGL texture parameters")
+			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
 
 			// Create the OpenGL texture instance
 			glGenTextures(1, &mOpenGLTexture);
@@ -9590,13 +9590,13 @@ namespace OpenGLRhi
 			Texture2D(openGLRhi, width, height, textureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
 			// Sanity checks
-			RHI_ASSERT(openGLRhi.getContext(), numberOfMultisamples == 1 || numberOfMultisamples == 2 || numberOfMultisamples == 4 || numberOfMultisamples == 8, "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), numberOfMultisamples == 1 || nullptr == data, "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS), "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS), "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), numberOfMultisamples == 1 || 0 != (textureFlags & Rhi::TextureFlag::RENDER_TARGET), "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
+			RHI_ASSERT(numberOfMultisamples == 1 || numberOfMultisamples == 2 || numberOfMultisamples == 4 || numberOfMultisamples == 8, "Invalid OpenGL texture parameters")
+			RHI_ASSERT(numberOfMultisamples == 1 || nullptr == data, "Invalid OpenGL texture parameters")
+			RHI_ASSERT(numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS), "Invalid OpenGL texture parameters")
+			RHI_ASSERT(numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS), "Invalid OpenGL texture parameters")
+			RHI_ASSERT(numberOfMultisamples == 1 || 0 != (textureFlags & Rhi::TextureFlag::RENDER_TARGET), "Invalid OpenGL texture parameters")
+			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
 
 			// Multisample texture?
 			const bool isArbDsa = openGLRhi.getExtensions().isGL_ARB_direct_state_access();
@@ -10510,8 +10510,8 @@ namespace OpenGLRhi
 			Texture3D(openGLRhi, width, height, depth, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
 			// Sanity checks
-			RHI_ASSERT(openGLRhi.getContext(), 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
+			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
 
 			// Create the OpenGL texture instance
 			glGenTextures(1, &mOpenGLTexture);
@@ -10558,7 +10558,7 @@ namespace OpenGLRhi
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
-			RHI_ASSERT(openGLRhi.getContext(), Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "OpenGL immutable texture usage can't be combined with automatic mipmap generation")
+			RHI_ASSERT(Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "OpenGL immutable texture usage can't be combined with automatic mipmap generation")
 			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height, depth) : 1;
 
 			// Make this OpenGL texture instance to the currently used one
@@ -10721,8 +10721,8 @@ namespace OpenGLRhi
 			Texture3D(openGLRhi, width, height, depth, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
 			// Sanity checks
-			RHI_ASSERT(openGLRhi.getContext(), 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
+			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
 
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently set alignment
@@ -10748,7 +10748,7 @@ namespace OpenGLRhi
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
-			RHI_ASSERT(openGLRhi.getContext(), Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "OpenGL immutable texture usage can't be combined with automatic mipmap generation")
+			RHI_ASSERT(Rhi::TextureUsage::IMMUTABLE != textureUsage || !generateMipmaps, "OpenGL immutable texture usage can't be combined with automatic mipmap generation")
 			const uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? getNumberOfMipmaps(width, height, depth) : 1;
 
 			// Create the OpenGL texture instance
@@ -11085,8 +11085,8 @@ namespace OpenGLRhi
 			TextureCube(openGLRhi, width, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
 			// Sanity checks
-			RHI_ASSERT(openGLRhi.getContext(), 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
+			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
 
 			// Create the OpenGL texture instance
 			glGenTextures(1, &mOpenGLTexture);
@@ -11281,8 +11281,8 @@ namespace OpenGLRhi
 			TextureCube(openGLRhi, width, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
 			// Sanity checks
-			RHI_ASSERT(openGLRhi.getContext(), 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
-			RHI_ASSERT(openGLRhi.getContext(), (textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
+			RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid OpenGL texture parameters")
+			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "OpenGL render target textures can't be filled using provided data")
 
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently set alignment
@@ -11561,7 +11561,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), width > 0, "OpenGL create texture 1D was called with invalid parameters")
+			RHI_ASSERT(width > 0, "OpenGL create texture 1D was called with invalid parameters")
 
 			// Create 1D texture resource: Is "GL_EXT_direct_state_access" there?
 			// -> The indication of the texture usage is only relevant for Direct3D, OpenGL has no texture usage indication
@@ -11582,7 +11582,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), width > 0 && numberOfSlices > 0, "OpenGL create texture 1D array was called with invalid parameters")
+			RHI_ASSERT(width > 0 && numberOfSlices > 0, "OpenGL create texture 1D array was called with invalid parameters")
 
 			// Create 1D texture array resource, "GL_EXT_texture_array"-extension required
 			// -> The indication of the texture usage is only relevant for Direct3D, OpenGL has no texture usage indication
@@ -11611,7 +11611,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), width > 0 && height > 0, "OpenGL create texture 2D was called with invalid parameters")
+			RHI_ASSERT(width > 0 && height > 0, "OpenGL create texture 2D was called with invalid parameters")
 
 			// Create 2D texture resource: Is "GL_EXT_direct_state_access" there?
 			// -> The indication of the texture usage is only relevant for Direct3D, OpenGL has no texture usage indication
@@ -11632,7 +11632,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), width > 0 && height > 0 && numberOfSlices > 0, "OpenGL create texture 2D array was called with invalid parameters")
+			RHI_ASSERT(width > 0 && height > 0 && numberOfSlices > 0, "OpenGL create texture 2D array was called with invalid parameters")
 
 			// Create 2D texture array resource, "GL_EXT_texture_array"-extension required
 			// -> The indication of the texture usage is only relevant for Direct3D, OpenGL has no texture usage indication
@@ -11661,7 +11661,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), width > 0 && height > 0 && depth > 0, "OpenGL create texture 3D was called with invalid parameters")
+			RHI_ASSERT(width > 0 && height > 0 && depth > 0, "OpenGL create texture 3D was called with invalid parameters")
 
 			// Create 3D texture resource: Is "GL_EXT_direct_state_access" there?
 			// -> The indication of the texture usage is only relevant for Direct3D, OpenGL has no texture usage indication
@@ -11682,7 +11682,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), width > 0, "OpenGL create texture cube was called with invalid parameters")
+			RHI_ASSERT(width > 0, "OpenGL create texture cube was called with invalid parameters")
 
 			// Create cube texture resource
 			// -> The indication of the texture usage is only relevant for Direct3D, OpenGL has no texture usage indication
@@ -11840,7 +11840,7 @@ namespace OpenGLRhi
 			mMaxLod(samplerState.maxLod)
 		{
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), samplerState.maxAnisotropy <= openGLRhi.getCapabilities().maximumAnisotropy, "Maximum OpenGL anisotropy value violated")
+			RHI_ASSERT(samplerState.maxAnisotropy <= openGLRhi.getCapabilities().maximumAnisotropy, "Maximum OpenGL anisotropy value violated")
 
 			// Rhi::SamplerState::borderColor[4]
 			mBorderColor[0] = samplerState.borderColor[0];
@@ -11964,7 +11964,7 @@ namespace OpenGLRhi
 			mSamplerState(samplerState)
 		{
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), samplerState.maxAnisotropy <= openGLRhi.getCapabilities().maximumAnisotropy, "Maximum OpenGL anisotropy value violated")
+			RHI_ASSERT(samplerState.maxAnisotropy <= openGLRhi.getCapabilities().maximumAnisotropy, "Maximum OpenGL anisotropy value violated")
 		}
 
 		/**
@@ -12035,7 +12035,7 @@ namespace OpenGLRhi
 			mOpenGLSampler(0)
 		{
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), samplerState.maxAnisotropy <= openGLRhi.getCapabilities().maximumAnisotropy, "Maximum OpenGL anisotropy value violated")
+			RHI_ASSERT(samplerState.maxAnisotropy <= openGLRhi.getCapabilities().maximumAnisotropy, "Maximum OpenGL anisotropy value violated")
 
 			// Create the OpenGL sampler
 			glGenSamplers(1, &mOpenGLSampler);
@@ -12532,7 +12532,7 @@ namespace OpenGLRhi
 			mDepthStencilAttachmentTextureFormat(depthStencilAttachmentTextureFormat),
 			mNumberOfMultisamples(numberOfMultisamples)
 		{
-			RHI_ASSERT(rhi.getContext(), mNumberOfColorAttachments < 8, "Invalid number of OpenGL color attachments")
+			RHI_ASSERT(mNumberOfColorAttachments < 8, "Invalid number of OpenGL color attachments")
 			memcpy(mColorAttachmentTextureFormats, colorAttachmentTextureFormats, sizeof(Rhi::TextureFormat::Enum) * mNumberOfColorAttachments);
 		}
 
@@ -12579,7 +12579,7 @@ namespace OpenGLRhi
 		*/
 		[[nodiscard]] inline Rhi::TextureFormat::Enum getColorAttachmentTextureFormat(uint32_t colorAttachmentIndex) const
 		{
-			RHI_ASSERT(getRhi().getContext(), colorAttachmentIndex < mNumberOfColorAttachments, "Invalid OpenGL color attachment index")
+			RHI_ASSERT(colorAttachmentIndex < mNumberOfColorAttachments, "Invalid OpenGL color attachment index")
 			return mColorAttachmentTextureFormats[colorAttachmentIndex];
 		}
 
@@ -12754,7 +12754,7 @@ namespace OpenGLRhi
 						break;
 
 					case Rhi::QueryType::PIPELINE_STATISTICS:
-						RHI_ASSERT(openGLRhi.getContext(), false, "Use \"OpenGLRhi::PipelineStatisticsQueryPool\"")
+						RHI_ASSERT(false, "Use \"OpenGLRhi::PipelineStatisticsQueryPool\"")
 						break;
 
 					case Rhi::QueryType::TIMESTAMP:
@@ -12784,7 +12784,7 @@ namespace OpenGLRhi
 						}
 
 						case Rhi::QueryType::PIPELINE_STATISTICS:
-							RHI_ASSERT(openGLRhi.getContext(), false, "Use \"OpenGLRhi::PipelineStatisticsQueryPool\"")
+							RHI_ASSERT(false, "Use \"OpenGLRhi::PipelineStatisticsQueryPool\"")
 							break;
 
 						case Rhi::QueryType::TIMESTAMP:
@@ -12907,7 +12907,7 @@ namespace OpenGLRhi
 					{
 						case Rhi::QueryType::OCCLUSION:
 						case Rhi::QueryType::TIMESTAMP:
-							RHI_ASSERT(openGLRhi.getContext(), false, "Use \"OpenGLRhi::OcclusionTimestampQueryPool\"")
+							RHI_ASSERT(false, "Use \"OpenGLRhi::OcclusionTimestampQueryPool\"")
 							break;
 
 						case Rhi::QueryType::PIPELINE_STATISTICS:
@@ -13234,7 +13234,7 @@ namespace OpenGLRhi
 	//[ Public virtual Rhi::ISwapChain methods                ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] inline virtual Rhi::handle getNativeWindowHandle() const override
+		[[nodiscard]] inline virtual handle getNativeWindowHandle() const override
 		{
 			return mNativeWindowHandle;
 		}
@@ -13329,7 +13329,7 @@ namespace OpenGLRhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Rhi::handle			mNativeWindowHandle;	///< Native window handle window, can be a null handle
+		handle			mNativeWindowHandle;	///< Native window handle window, can be a null handle
 		IOpenGLContext*		mOpenGLContext;			///< OpenGL context, must be valid
 		bool				mOwnsOpenGLContext;		///< Does this swap chain own the OpenGL context?
 		Rhi::IRenderWindow* mRenderWindow;			///< Render window instance, can be a null pointer, don't destroy the instance since we don't own it
@@ -13502,7 +13502,7 @@ namespace OpenGLRhi
 				for (Rhi::ITexture** colorTexture = mColorTextures; colorTexture < colorTexturesEnd; ++colorTexture, ++colorFramebufferAttachments)
 				{
 					// Sanity check
-					RHI_ASSERT(renderPass.getRhi().getContext(), nullptr != colorFramebufferAttachments->texture, "Invalid OpenGL color framebuffer attachment texture")
+					RHI_ASSERT(nullptr != colorFramebufferAttachments->texture, "Invalid OpenGL color framebuffer attachment texture")
 
 					// TODO(co) Add security check: Is the given resource one of the currently used RHI?
 					*colorTexture = colorFramebufferAttachments->texture;
@@ -13516,8 +13516,8 @@ namespace OpenGLRhi
 							const Texture2D* texture2D = static_cast<Texture2D*>(*colorTexture);
 
 							// Sanity checks
-							RHI_ASSERT(renderPass.getRhi().getContext(), colorFramebufferAttachments->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid OpenGL color framebuffer attachment mipmap index")
-							RHI_ASSERT(renderPass.getRhi().getContext(), 0 == colorFramebufferAttachments->layerIndex, "Invalid OpenGL color framebuffer attachment layer index")
+							RHI_ASSERT(colorFramebufferAttachments->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid OpenGL color framebuffer attachment mipmap index")
+							RHI_ASSERT(0 == colorFramebufferAttachments->layerIndex, "Invalid OpenGL color framebuffer attachment layer index")
 
 							// Update the framebuffer width and height if required
 							::detail::updateWidthHeight(colorFramebufferAttachments->mipmapIndex, texture2D->getWidth(), texture2D->getHeight(), mWidth, mHeight);
@@ -13573,7 +13573,7 @@ namespace OpenGLRhi
 			if (nullptr != depthStencilFramebufferAttachment)
 			{
 				mDepthStencilTexture = depthStencilFramebufferAttachment->texture;
-				RHI_ASSERT(renderPass.getRhi().getContext(), nullptr != mDepthStencilTexture, "Invalid OpenGL depth stencil framebuffer attachment texture")
+				RHI_ASSERT(nullptr != mDepthStencilTexture, "Invalid OpenGL depth stencil framebuffer attachment texture")
 				mDepthStencilTexture->addReference();
 
 				// Evaluate the depth stencil texture type
@@ -13584,8 +13584,8 @@ namespace OpenGLRhi
 						const Texture2D* texture2D = static_cast<Texture2D*>(mDepthStencilTexture);
 
 						// Sanity checks
-						RHI_ASSERT(renderPass.getRhi().getContext(), depthStencilFramebufferAttachment->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid OpenGL depth stencil framebuffer attachment mipmap index")
-						RHI_ASSERT(renderPass.getRhi().getContext(), 0 == depthStencilFramebufferAttachment->layerIndex, "Invalid OpenGL depth stencil framebuffer attachment layer index")
+						RHI_ASSERT(depthStencilFramebufferAttachment->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid OpenGL depth stencil framebuffer attachment mipmap index")
+						RHI_ASSERT(0 == depthStencilFramebufferAttachment->layerIndex, "Invalid OpenGL depth stencil framebuffer attachment layer index")
 
 						// Update the framebuffer width and height if required
 						::detail::updateWidthHeight(depthStencilFramebufferAttachment->mipmapIndex, texture2D->getWidth(), texture2D->getHeight(), mWidth, mHeight);
@@ -13639,12 +13639,12 @@ namespace OpenGLRhi
 			// Validate the framebuffer width and height
 			if (0 == mWidth || UINT_MAX == mWidth)
 			{
-				RHI_ASSERT(renderPass.getRhi().getContext(), false, "Invalid OpenGL framebuffer width")
+				RHI_ASSERT(false, "Invalid OpenGL framebuffer width")
 				mWidth = 1;
 			}
 			if (0 == mHeight || UINT_MAX == mHeight)
 			{
-				RHI_ASSERT(renderPass.getRhi().getContext(), false, "Invalid OpenGL framebuffer height")
+				RHI_ASSERT(false, "Invalid OpenGL framebuffer height")
 				mHeight = 1;
 			}
 		}
@@ -13826,8 +13826,8 @@ namespace OpenGLRhi
 						const Texture2D* texture2D = static_cast<const Texture2D*>(mDepthStencilTexture);
 
 						// Sanity check
-						RHI_ASSERT(openGLRhi.getContext(), depthStencilFramebufferAttachment->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid OpenGL depth stencil framebuffer attachment mipmap index")
-						RHI_ASSERT(openGLRhi.getContext(), 0 == depthStencilFramebufferAttachment->layerIndex, "Invalid OpenGL depth stencil framebuffer attachment layer index")
+						RHI_ASSERT(depthStencilFramebufferAttachment->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid OpenGL depth stencil framebuffer attachment mipmap index")
+						RHI_ASSERT(0 == depthStencilFramebufferAttachment->layerIndex, "Invalid OpenGL depth stencil framebuffer attachment layer index")
 
 						// Bind the depth stencil texture to framebuffer
 						glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, static_cast<GLenum>((texture2D->getNumberOfMultisamples() > 1) ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D), texture2D->getOpenGLTexture(), static_cast<GLint>(depthStencilFramebufferAttachment->mipmapIndex));
@@ -14135,8 +14135,8 @@ namespace OpenGLRhi
 						const Texture2D* texture2D = static_cast<const Texture2D*>(mDepthStencilTexture);
 
 						// Sanity checks
-						RHI_ASSERT(openGLRhi.getContext(), depthStencilFramebufferAttachment->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid OpenGL depth stencil framebuffer attachment mipmap index")
-						RHI_ASSERT(openGLRhi.getContext(), 0 == depthStencilFramebufferAttachment->layerIndex, "Invalid OpenGL depth stencil framebuffer attachment layer index")
+						RHI_ASSERT(depthStencilFramebufferAttachment->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid OpenGL depth stencil framebuffer attachment mipmap index")
+						RHI_ASSERT(0 == depthStencilFramebufferAttachment->layerIndex, "Invalid OpenGL depth stencil framebuffer attachment layer index")
 
 						// Bind the depth stencil texture to framebuffer
 						if (isArbDsa)
@@ -15365,12 +15365,12 @@ namespace OpenGLRhi
 	//[ Public virtual Rhi::IGraphicsProgram methods          ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] virtual Rhi::handle getUniformHandle(const char* uniformName) override
+		[[nodiscard]] virtual handle getUniformHandle(const char* uniformName) override
 		{
-			return static_cast<Rhi::handle>(glGetUniformLocation(mOpenGLProgram, uniformName));
+			return static_cast<handle>(glGetUniformLocation(mOpenGLProgram, uniformName));
 		}
 
-		virtual void setUniform1i(Rhi::handle uniformHandle, int value) override
+		virtual void setUniform1i(handle uniformHandle, int value) override
 		{
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently used OpenGL program
@@ -15396,7 +15396,7 @@ namespace OpenGLRhi
 			#endif
 		}
 
-		virtual void setUniform1f(Rhi::handle uniformHandle, float value) override
+		virtual void setUniform1f(handle uniformHandle, float value) override
 		{
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently used OpenGL program
@@ -15422,7 +15422,7 @@ namespace OpenGLRhi
 			#endif
 		}
 
-		virtual void setUniform2fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniform2fv(handle uniformHandle, const float* value) override
 		{
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently used OpenGL program
@@ -15448,7 +15448,7 @@ namespace OpenGLRhi
 			#endif
 		}
 
-		virtual void setUniform3fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniform3fv(handle uniformHandle, const float* value) override
 		{
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently used OpenGL program
@@ -15474,7 +15474,7 @@ namespace OpenGLRhi
 			#endif
 		}
 
-		virtual void setUniform4fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniform4fv(handle uniformHandle, const float* value) override
 		{
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently used OpenGL program
@@ -15500,7 +15500,7 @@ namespace OpenGLRhi
 			#endif
 		}
 
-		virtual void setUniformMatrix3fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniformMatrix3fv(handle uniformHandle, const float* value) override
 		{
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently used OpenGL program
@@ -15526,7 +15526,7 @@ namespace OpenGLRhi
 			#endif
 		}
 
-		virtual void setUniformMatrix4fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniformMatrix4fv(handle uniformHandle, const float* value) override
 		{
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently used OpenGL program
@@ -15611,7 +15611,7 @@ namespace OpenGLRhi
 					const Rhi::RootParameter& rootParameter = rootSignatureData.parameters[rootParameterIndex];
 					if (Rhi::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
 					{
-						RHI_ASSERT(openGLRhi.getContext(), nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
+						RHI_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
 						const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
 						for (uint32_t descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
 						{
@@ -15797,7 +15797,7 @@ namespace OpenGLRhi
 	//[ Public virtual Rhi::IGraphicsProgram methods          ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void setUniform1f(Rhi::handle uniformHandle, float value) override
+		virtual void setUniform1f(handle uniformHandle, float value) override
 		{
 			if (static_cast<OpenGLRhi&>(getRhi()).getExtensions().isGL_ARB_direct_state_access())
 			{
@@ -15809,7 +15809,7 @@ namespace OpenGLRhi
 			}
 		}
 
-		virtual void setUniform2fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniform2fv(handle uniformHandle, const float* value) override
 		{
 			if (static_cast<OpenGLRhi&>(getRhi()).getExtensions().isGL_ARB_direct_state_access())
 			{
@@ -15821,7 +15821,7 @@ namespace OpenGLRhi
 			}
 		}
 
-		virtual void setUniform3fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniform3fv(handle uniformHandle, const float* value) override
 		{
 			if (static_cast<OpenGLRhi&>(getRhi()).getExtensions().isGL_ARB_direct_state_access())
 			{
@@ -15833,7 +15833,7 @@ namespace OpenGLRhi
 			}
 		}
 
-		virtual void setUniform4fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniform4fv(handle uniformHandle, const float* value) override
 		{
 			if (static_cast<OpenGLRhi&>(getRhi()).getExtensions().isGL_ARB_direct_state_access())
 			{
@@ -15845,7 +15845,7 @@ namespace OpenGLRhi
 			}
 		}
 
-		virtual void setUniformMatrix3fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniformMatrix3fv(handle uniformHandle, const float* value) override
 		{
 			if (static_cast<OpenGLRhi&>(getRhi()).getExtensions().isGL_ARB_direct_state_access())
 			{
@@ -15857,7 +15857,7 @@ namespace OpenGLRhi
 			}
 		}
 
-		virtual void setUniformMatrix4fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniformMatrix4fv(handle uniformHandle, const float* value) override
 		{
 			if (static_cast<OpenGLRhi&>(getRhi()).getExtensions().isGL_ARB_direct_state_access())
 			{
@@ -16002,7 +16002,7 @@ namespace OpenGLRhi
 					const Rhi::RootParameter& rootParameter = rootSignatureData.parameters[rootParameterIndex];
 					if (Rhi::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
 					{
-						RHI_ASSERT(openGLRhi.getContext(), nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
+						RHI_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
 						const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
 						for (uint32_t descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
 						{
@@ -16207,7 +16207,7 @@ namespace OpenGLRhi
 		[[nodiscard]] inline virtual Rhi::IVertexShader* createVertexShaderFromBytecode(const Rhi::VertexAttributes&, const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Error!
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
+			RHI_ASSERT(false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
 			return nullptr;
 		}
 
@@ -16230,7 +16230,7 @@ namespace OpenGLRhi
 		[[nodiscard]] inline virtual Rhi::ITessellationControlShader* createTessellationControlShaderFromBytecode(const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Error!
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
+			RHI_ASSERT(false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
 			return nullptr;
 		}
 
@@ -16253,7 +16253,7 @@ namespace OpenGLRhi
 		[[nodiscard]] inline virtual Rhi::ITessellationEvaluationShader* createTessellationEvaluationShaderFromBytecode(const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Error!
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
+			RHI_ASSERT(false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
 			return nullptr;
 		}
 
@@ -16276,7 +16276,7 @@ namespace OpenGLRhi
 		[[nodiscard]] inline virtual Rhi::IGeometryShader* createGeometryShaderFromBytecode(const Rhi::ShaderBytecode&, Rhi::GsInputPrimitiveTopology, Rhi::GsOutputPrimitiveTopology, uint32_t RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Error!
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
+			RHI_ASSERT(false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
 			return nullptr;
 		}
 
@@ -16303,7 +16303,7 @@ namespace OpenGLRhi
 		[[nodiscard]] inline virtual Rhi::IFragmentShader* createFragmentShaderFromBytecode(const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Error!
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
+			RHI_ASSERT(false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
 			return nullptr;
 		}
 
@@ -16326,7 +16326,7 @@ namespace OpenGLRhi
 		[[nodiscard]] inline virtual Rhi::ITaskShader* createTaskShaderFromBytecode(const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Error!
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
+			RHI_ASSERT(false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
 			return nullptr;
 		}
 
@@ -16349,7 +16349,7 @@ namespace OpenGLRhi
 		[[nodiscard]] inline virtual Rhi::IMeshShader* createMeshShaderFromBytecode(const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Error!
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
+			RHI_ASSERT(false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
 			return nullptr;
 		}
 
@@ -16372,7 +16372,7 @@ namespace OpenGLRhi
 		[[nodiscard]] inline virtual Rhi::IComputeShader* createComputeShaderFromBytecode(const Rhi::ShaderBytecode& RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER) override
 		{
 			// Error!
-			RHI_ASSERT(getRhi().getContext(), false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
+			RHI_ASSERT(false, "OpenGL monolithic shaders have no shader bytecode, only a monolithic program bytecode")
 			return nullptr;
 		}
 
@@ -16401,11 +16401,11 @@ namespace OpenGLRhi
 			// -> Optimization: Comparing the shader language name by directly comparing the pointer address of
 			//    the name is safe because we know that we always reference to one and the same name address
 			// TODO(co) Add security check: Is the given resource one of the currently used RHI?
-			RHI_ASSERT(openGLRhi.getContext(), nullptr == vertexShader || vertexShader->getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL vertex shader language mismatch")
-			RHI_ASSERT(openGLRhi.getContext(), nullptr == tessellationControlShader || tessellationControlShader->getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL tessellation control shader language mismatch")
-			RHI_ASSERT(openGLRhi.getContext(), nullptr == tessellationEvaluationShader || tessellationEvaluationShader->getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL tessellation evaluation shader language mismatch")
-			RHI_ASSERT(openGLRhi.getContext(), nullptr == geometryShader || geometryShader->getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL geometry shader language mismatch")
-			RHI_ASSERT(openGLRhi.getContext(), nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL fragment shader language mismatch")
+			RHI_ASSERT(nullptr == vertexShader || vertexShader->getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL vertex shader language mismatch")
+			RHI_ASSERT(nullptr == tessellationControlShader || tessellationControlShader->getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL tessellation control shader language mismatch")
+			RHI_ASSERT(nullptr == tessellationEvaluationShader || tessellationEvaluationShader->getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL tessellation evaluation shader language mismatch")
+			RHI_ASSERT(nullptr == geometryShader || geometryShader->getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL geometry shader language mismatch")
+			RHI_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL fragment shader language mismatch")
 
 			// Create the graphics program: Is "GL_EXT_direct_state_access" there?
 			if (openGLRhi.getExtensions().isGL_EXT_direct_state_access() || openGLRhi.getExtensions().isGL_ARB_direct_state_access())
@@ -16429,9 +16429,9 @@ namespace OpenGLRhi
 			// -> Optimization: Comparing the shader language name by directly comparing the pointer address of
 			//    the name is safe because we know that we always reference to one and the same name address
 			// TODO(co) Add security check: Is the given resource one of the currently used RHI?
-			RHI_ASSERT(openGLRhi.getContext(), nullptr == taskShader || taskShader->getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL task shader language mismatch")
-			RHI_ASSERT(openGLRhi.getContext(), meshShader.getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL mesh shader language mismatch")
-			RHI_ASSERT(openGLRhi.getContext(), nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL fragment shader language mismatch")
+			RHI_ASSERT(nullptr == taskShader || taskShader->getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL task shader language mismatch")
+			RHI_ASSERT(meshShader.getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL mesh shader language mismatch")
+			RHI_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::GLSL_NAME, "OpenGL fragment shader language mismatch")
 
 			// Create the graphics program: Is "GL_EXT_direct_state_access" there?
 			if (openGLRhi.getExtensions().isGL_EXT_direct_state_access() || openGLRhi.getExtensions().isGL_ARB_direct_state_access())
@@ -17657,7 +17657,7 @@ namespace OpenGLRhi
 					const Rhi::RootParameter& rootParameter = rootSignatureData.parameters[rootParameterIndex];
 					if (Rhi::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
 					{
-						RHI_ASSERT(openGLRhi.getContext(), nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
+						RHI_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
 						const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
 						for (uint32_t descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
 						{
@@ -17874,7 +17874,7 @@ namespace OpenGLRhi
 					const Rhi::RootParameter& rootParameter = rootSignatureData.parameters[rootParameterIndex];
 					if (Rhi::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
 					{
-						RHI_ASSERT(openGLRhi.getContext(), nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
+						RHI_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
 						const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
 						for (uint32_t descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
 						{
@@ -18063,7 +18063,7 @@ namespace OpenGLRhi
 	//[ Public virtual Rhi::IGraphicsProgram methods          ]
 	//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] virtual Rhi::handle getUniformHandle(const char* uniformName) override
+		[[nodiscard]] virtual handle getUniformHandle(const char* uniformName) override
 		{
 			GLint uniformLocation = -1;
 			#define GET_UNIFORM_LOCATION(ShaderSeparate) if (uniformLocation < 0 && nullptr != ShaderSeparate) uniformLocation = glGetUniformLocation(ShaderSeparate->getOpenGLShaderProgram(), uniformName);
@@ -18075,10 +18075,10 @@ namespace OpenGLRhi
 			GET_UNIFORM_LOCATION(mTaskShaderSeparate)
 			GET_UNIFORM_LOCATION(mMeshShaderSeparate)
 			#undef GET_UNIFORM_LOCATION
-			return static_cast<Rhi::handle>(uniformLocation);
+			return static_cast<handle>(uniformLocation);
 		}
 
-		virtual void setUniform1i(Rhi::handle uniformHandle, int value) override
+		virtual void setUniform1i(handle uniformHandle, int value) override
 		{
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently used OpenGL program pipeline
@@ -18100,7 +18100,7 @@ namespace OpenGLRhi
 			#endif
 		}
 
-		virtual void setUniform1f(Rhi::handle uniformHandle, float value) override
+		virtual void setUniform1f(handle uniformHandle, float value) override
 		{
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently used OpenGL program pipeline
@@ -18122,7 +18122,7 @@ namespace OpenGLRhi
 			#endif
 		}
 
-		virtual void setUniform2fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniform2fv(handle uniformHandle, const float* value) override
 		{
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently used OpenGL program pipeline
@@ -18144,7 +18144,7 @@ namespace OpenGLRhi
 			#endif
 		}
 
-		virtual void setUniform3fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniform3fv(handle uniformHandle, const float* value) override
 		{
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently used OpenGL program pipeline
@@ -18166,7 +18166,7 @@ namespace OpenGLRhi
 			#endif
 		}
 
-		virtual void setUniform4fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniform4fv(handle uniformHandle, const float* value) override
 		{
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently used OpenGL program pipeline
@@ -18188,7 +18188,7 @@ namespace OpenGLRhi
 			#endif
 		}
 
-		virtual void setUniformMatrix3fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniformMatrix3fv(handle uniformHandle, const float* value) override
 		{
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently used OpenGL program pipeline
@@ -18210,7 +18210,7 @@ namespace OpenGLRhi
 			#endif
 		}
 
-		virtual void setUniformMatrix4fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniformMatrix4fv(handle uniformHandle, const float* value) override
 		{
 			#ifdef RHI_OPENGL_STATE_CLEANUP
 				// Backup the currently used OpenGL program pipeline
@@ -18348,7 +18348,7 @@ namespace OpenGLRhi
 	//[ Public virtual Rhi::IGraphicsProgram methods          ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void setUniform1f(Rhi::handle uniformHandle, float value) override
+		virtual void setUniform1f(handle uniformHandle, float value) override
 		{
 			if (static_cast<OpenGLRhi&>(getRhi()).getExtensions().isGL_ARB_direct_state_access())
 			{
@@ -18360,7 +18360,7 @@ namespace OpenGLRhi
 			}
 		}
 
-		virtual void setUniform2fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniform2fv(handle uniformHandle, const float* value) override
 		{
 			if (static_cast<OpenGLRhi&>(getRhi()).getExtensions().isGL_ARB_direct_state_access())
 			{
@@ -18372,7 +18372,7 @@ namespace OpenGLRhi
 			}
 		}
 
-		virtual void setUniform3fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniform3fv(handle uniformHandle, const float* value) override
 		{
 			if (static_cast<OpenGLRhi&>(getRhi()).getExtensions().isGL_ARB_direct_state_access())
 			{
@@ -18384,7 +18384,7 @@ namespace OpenGLRhi
 			}
 		}
 
-		virtual void setUniform4fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniform4fv(handle uniformHandle, const float* value) override
 		{
 			if (static_cast<OpenGLRhi&>(getRhi()).getExtensions().isGL_ARB_direct_state_access())
 			{
@@ -18396,7 +18396,7 @@ namespace OpenGLRhi
 			}
 		}
 
-		virtual void setUniformMatrix3fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniformMatrix3fv(handle uniformHandle, const float* value) override
 		{
 			if (static_cast<OpenGLRhi&>(getRhi()).getExtensions().isGL_ARB_direct_state_access())
 			{
@@ -18408,7 +18408,7 @@ namespace OpenGLRhi
 			}
 		}
 
-		virtual void setUniformMatrix4fv(Rhi::handle uniformHandle, const float* value) override
+		virtual void setUniformMatrix4fv(handle uniformHandle, const float* value) override
 		{
 			if (static_cast<OpenGLRhi&>(getRhi()).getExtensions().isGL_ARB_direct_state_access())
 			{
@@ -18515,7 +18515,7 @@ namespace OpenGLRhi
 					const Rhi::RootParameter& rootParameter = rootSignatureData.parameters[rootParameterIndex];
 					if (Rhi::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
 					{
-						RHI_ASSERT(openGLRhi.getContext(), nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
+						RHI_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
 						const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
 						for (uint32_t descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex)
 						{
@@ -18728,7 +18728,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL vertex shader bytecode is invalid")
+			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL vertex shader bytecode is invalid")
 
 			// Check whether or not there's vertex shader support
 			const Extensions& extensions = openGLRhi.getExtensions();
@@ -18764,7 +18764,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL tessellation control shader bytecode is invalid")
+			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL tessellation control shader bytecode is invalid")
 
 			// Check whether or not there's tessellation support
 			const Extensions& extensions = openGLRhi.getExtensions();
@@ -18800,7 +18800,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL tessellation evaluation shader bytecode is invalid")
+			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL tessellation evaluation shader bytecode is invalid")
 
 			// Check whether or not there's tessellation support
 			const Extensions& extensions = openGLRhi.getExtensions();
@@ -18836,7 +18836,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL geometry shader bytecode is invalid")
+			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL geometry shader bytecode is invalid")
 
 			// Check whether or not there's geometry shader support
 			const Extensions& extensions = openGLRhi.getExtensions();
@@ -18880,7 +18880,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL fragment shader bytecode is invalid")
+			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL fragment shader bytecode is invalid")
 
 			// Check whether or not there's fragment shader support
 			const Extensions& extensions = openGLRhi.getExtensions();
@@ -18916,7 +18916,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL task shader bytecode is invalid")
+			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL task shader bytecode is invalid")
 
 			// Check whether or not there's task shader support
 			const Extensions& extensions = openGLRhi.getExtensions();
@@ -18952,7 +18952,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL mesh shader bytecode is invalid")
+			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL mesh shader bytecode is invalid")
 
 			// Check whether or not there's mesh shader support
 			const Extensions& extensions = openGLRhi.getExtensions();
@@ -18988,7 +18988,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(openGLRhi.getContext(), shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL compute shader bytecode is invalid")
+			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "OpenGL compute shader bytecode is invalid")
 
 			// Check whether or not there's compute shader support
 			const Extensions& extensions = openGLRhi.getExtensions();
@@ -19223,7 +19223,7 @@ namespace OpenGLRhi
 				else
 				{
 					// Error!
-					RHI_ASSERT(openGLRhi.getContext(), false, "Invalid number of OpenGL vertices per patch")
+					RHI_ASSERT(false, "Invalid number of OpenGL vertices per patch")
 				}
 			}
 			else
@@ -19438,7 +19438,7 @@ namespace
 			}
 
 			// Done
-			RHI_ASSERT(context, nullptr != mappedSubresource.data, "Mapping of OpenGL buffer failed")
+			RHI_ASSERT(nullptr != mappedSubresource.data, "Mapping of OpenGL buffer failed")
 			return (nullptr != mappedSubresource.data);
 		}
 
@@ -19489,7 +19489,7 @@ namespace
 			void ExecuteCommandBuffer(const void* data, Rhi::IRhi& rhi)
 			{
 				const Rhi::Command::ExecuteCommandBuffer* realData = static_cast<const Rhi::Command::ExecuteCommandBuffer*>(data);
-				RHI_ASSERT(rhi.getContext(), nullptr != realData->commandBufferToExecute, "The OpenGL command buffer to execute must be valid")
+				RHI_ASSERT(nullptr != realData->commandBufferToExecute, "The OpenGL command buffer to execute must be valid")
 				rhi.submitCommandBuffer(*realData->commandBufferToExecute);
 			}
 
@@ -19814,7 +19814,7 @@ namespace OpenGLRhi
 		mOpenGLRuntimeLinking = RHI_NEW(mContext, OpenGLRuntimeLinking)(*this);
 		if (mOpenGLRuntimeLinking->isOpenGLAvaiable())
 		{
-			const Rhi::handle nativeWindowHandle = mContext.getNativeWindowHandle();
+			const handle nativeWindowHandle = mContext.getNativeWindowHandle();
 			const Rhi::TextureFormat::Enum textureFormat = Rhi::TextureFormat::Enum::R8G8B8A8;
 			const RenderPass renderPass(*this, 1, &textureFormat, Rhi::TextureFormat::Enum::UNKNOWN, 1 RHI_RESOURCE_DEBUG_NAME("OpenGL Unknown"));
 #if SE_PLATFORM_WINDOWS
@@ -20117,7 +20117,7 @@ namespace OpenGLRhi
 		// Rasterizer (RS) stage
 
 		// Sanity check
-		RHI_ASSERT(mContext, numberOfViewports > 0 && nullptr != viewports, "Invalid OpenGL rasterizer state viewports")
+		RHI_ASSERT(numberOfViewports > 0 && nullptr != viewports, "Invalid OpenGL rasterizer state viewports")
 
 		// In OpenGL, the origin of the viewport is left bottom while Direct3D is using a left top origin. To make the
 		// Direct3D 11 implementation as efficient as possible the Direct3D convention is used and we have to convert in here.
@@ -20134,7 +20134,7 @@ namespace OpenGLRhi
 		// Set the OpenGL viewport
 		// TODO(co) "GL_ARB_viewport_array" support ("OpenGLRhi::setGraphicsViewports()")
 		// TODO(co) Check for "numberOfViewports" out of range or are the debug events good enough?
-		RHI_ASSERT(mContext, numberOfViewports <= 1, "OpenGL supports only one viewport")
+		RHI_ASSERT(numberOfViewports <= 1, "OpenGL supports only one viewport")
 		glViewport(static_cast<GLint>(viewports->topLeftX), static_cast<GLint>(renderTargetHeight - viewports->topLeftY - viewports->height), static_cast<GLsizei>(viewports->width), static_cast<GLsizei>(viewports->height));
 		glDepthRange(static_cast<GLclampd>(viewports->minDepth), static_cast<GLclampd>(viewports->maxDepth));
 	}
@@ -20144,7 +20144,7 @@ namespace OpenGLRhi
 		// Rasterizer (RS) stage
 
 		// Sanity check
-		RHI_ASSERT(mContext, numberOfScissorRectangles > 0 && nullptr != scissorRectangles, "Invalid OpenGL rasterizer state scissor rectangles")
+		RHI_ASSERT(numberOfScissorRectangles > 0 && nullptr != scissorRectangles, "Invalid OpenGL rasterizer state scissor rectangles")
 
 		// In OpenGL, the origin of the scissor rectangle is left bottom while Direct3D is using a left top origin. To make the
 		// Direct3D 9 & 10 & 11 implementation as efficient as possible the Direct3D convention is used and we have to convert in here.
@@ -20161,7 +20161,7 @@ namespace OpenGLRhi
 		// Set the OpenGL scissor rectangle
 		// TODO(co) "GL_ARB_viewport_array" support ("OpenGLRhi::setGraphicsViewports()")
 		// TODO(co) Check for "numberOfViewports" out of range or are the debug events good enough?
-		RHI_ASSERT(mContext, numberOfScissorRectangles <= 1, "OpenGL supports only one scissor rectangle")
+		RHI_ASSERT(numberOfScissorRectangles <= 1, "OpenGL supports only one scissor rectangle")
 		const GLsizei width  = scissorRectangles->bottomRightX - scissorRectangles->topLeftX;
 		const GLsizei height = scissorRectangles->bottomRightY - scissorRectangles->topLeftY;
 		glScissor(static_cast<GLint>(scissorRectangles->topLeftX), static_cast<GLint>(renderTargetHeight - static_cast<uint32_t>(scissorRectangles->topLeftY) - height), width, height);
@@ -20314,7 +20314,7 @@ namespace OpenGLRhi
 	void OpenGLRhi::clearGraphics(uint32_t clearFlags, const float color[4], float z, uint32_t stencil)
 	{
 		// Sanity check
-		RHI_ASSERT(mContext, z >= 0.0f && z <= 1.0f, "The OpenGL clear graphics z value must be between [0, 1] (inclusive)")
+		RHI_ASSERT(z >= 0.0f && z <= 1.0f, "The OpenGL clear graphics z value must be between [0, 1] (inclusive)")
 
 		// Get API flags
 		uint32_t flagsApi = 0;
@@ -20380,8 +20380,8 @@ namespace OpenGLRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, indirectBuffer)
-		RHI_ASSERT(mContext, numberOfDraws > 0, "Number of OpenGL draws must not be zero")
-		RHI_ASSERT(mContext, mExtensions->isGL_ARB_draw_indirect(), "The GL_ARB_draw_indirect OpenGL extension isn't supported")
+		RHI_ASSERT(numberOfDraws > 0, "Number of OpenGL draws must not be zero")
+		RHI_ASSERT(mExtensions->isGL_ARB_draw_indirect(), "The GL_ARB_draw_indirect OpenGL extension isn't supported")
 		// It's possible to draw without "mVertexArray"
 
 		// Tessellation support: "glPatchParameteri()" is called within "OpenGLRhi::iaSetPrimitiveTopology()"
@@ -20427,8 +20427,8 @@ namespace OpenGLRhi
 	void OpenGLRhi::drawGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(mContext, nullptr != emulationData, "The OpenGL emulation data must be valid")
-		RHI_ASSERT(mContext, numberOfDraws > 0, "The number of OpenGL draws must not be zero")
+		RHI_ASSERT(nullptr != emulationData, "The OpenGL emulation data must be valid")
+		RHI_ASSERT(numberOfDraws > 0, "The number of OpenGL draws must not be zero")
 		// It's possible to draw without "mVertexArray"
 
 		// TODO(co) Currently no buffer overflow check due to lack of interface provided data
@@ -20462,7 +20462,7 @@ namespace OpenGLRhi
 			else
 			{
 				// Without instancing
-				RHI_ASSERT(mContext, drawArguments.instanceCount <= 1, "Invalid OpenGL instance count")
+				RHI_ASSERT(drawArguments.instanceCount <= 1, "Invalid OpenGL instance count")
 				glDrawArrays(mOpenGLPrimitiveTopology, static_cast<GLint>(drawArguments.startVertexLocation), static_cast<GLsizei>(drawArguments.vertexCountPerInstance));
 			}
 			emulationData += sizeof(Rhi::DrawArguments);
@@ -20479,10 +20479,10 @@ namespace OpenGLRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, indirectBuffer)
-		RHI_ASSERT(mContext, numberOfDraws > 0, "Number of OpenGL draws must not be zero")
-		RHI_ASSERT(mContext, nullptr != mVertexArray, "OpenGL draw indexed needs a set vertex array")
-		RHI_ASSERT(mContext, nullptr != mVertexArray->getIndexBuffer(), "OpenGL draw indexed needs a set vertex array which contains an index buffer")
-		RHI_ASSERT(mContext, mExtensions->isGL_ARB_draw_indirect(), "The GL_ARB_draw_indirect OpenGL extension isn't supported")
+		RHI_ASSERT(numberOfDraws > 0, "Number of OpenGL draws must not be zero")
+		RHI_ASSERT(nullptr != mVertexArray, "OpenGL draw indexed needs a set vertex array")
+		RHI_ASSERT(nullptr != mVertexArray->getIndexBuffer(), "OpenGL draw indexed needs a set vertex array which contains an index buffer")
+		RHI_ASSERT(mExtensions->isGL_ARB_draw_indirect(), "The GL_ARB_draw_indirect OpenGL extension isn't supported")
 
 		// Tessellation support: "glPatchParameteri()" is called within "OpenGLRhi::iaSetPrimitiveTopology()"
 
@@ -20528,10 +20528,10 @@ namespace OpenGLRhi
 	void OpenGLRhi::drawIndexedGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(mContext, nullptr != emulationData, "The OpenGL emulation data must be valid")
-		RHI_ASSERT(mContext, numberOfDraws > 0, "The number of OpenGL draws must not be zero")
-		RHI_ASSERT(mContext, nullptr != mVertexArray, "OpenGL draw indexed needs a set vertex array")
-		RHI_ASSERT(mContext, nullptr != mVertexArray->getIndexBuffer(), "OpenGL draw indexed needs a set vertex array which contains an index buffer")
+		RHI_ASSERT(nullptr != emulationData, "The OpenGL emulation data must be valid")
+		RHI_ASSERT(numberOfDraws > 0, "The number of OpenGL draws must not be zero")
+		RHI_ASSERT(nullptr != mVertexArray, "OpenGL draw indexed needs a set vertex array")
+		RHI_ASSERT(nullptr != mVertexArray->getIndexBuffer(), "OpenGL draw indexed needs a set vertex array which contains an index buffer")
 
 		// TODO(co) Currently no buffer overflow check due to lack of interface provided data
 		emulationData += indirectBufferOffset;
@@ -20571,7 +20571,7 @@ namespace OpenGLRhi
 					else
 					{
 						// Error!
-						RHI_ASSERT(mContext, false, "Failed to OpenGL draw indexed emulated")
+						RHI_ASSERT(false, "Failed to OpenGL draw indexed emulated")
 					}
 				}
 				else if (drawIndexedArguments.startInstanceLocation > 0 && mExtensions->isGL_ARB_base_instance())
@@ -20588,7 +20588,7 @@ namespace OpenGLRhi
 			else
 			{
 				// Without instancing
-				RHI_ASSERT(mContext, drawIndexedArguments.instanceCount <= 1, "Invalid OpenGL instance count")
+				RHI_ASSERT(drawIndexedArguments.instanceCount <= 1, "Invalid OpenGL instance count")
 
 				// Use base vertex location?
 				if (drawIndexedArguments.baseVertexLocation > 0)
@@ -20602,7 +20602,7 @@ namespace OpenGLRhi
 					else
 					{
 						// Error!
-						RHI_ASSERT(mContext, false, "Failed to OpenGL draw indexed emulated")
+						RHI_ASSERT(false, "Failed to OpenGL draw indexed emulated")
 					}
 				}
 				else
@@ -20624,7 +20624,7 @@ namespace OpenGLRhi
 	void OpenGLRhi::drawMeshTasks([[maybe_unused]] const Rhi::IIndirectBuffer& indirectBuffer, [[maybe_unused]] uint32_t indirectBufferOffset, [[maybe_unused]] uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(mContext, numberOfDraws > 0, "The number of null draws must not be zero")
+		RHI_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
 
 		// TODO(co) Implement me
 		/*
@@ -20642,8 +20642,8 @@ namespace OpenGLRhi
 	void OpenGLRhi::drawMeshTasksEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(mContext, nullptr != emulationData, "The OpenGL emulation data must be valid")
-		RHI_ASSERT(mContext, numberOfDraws > 0, "The number of OpenGL draws must not be zero")
+		RHI_ASSERT(nullptr != emulationData, "The OpenGL emulation data must be valid")
+		RHI_ASSERT(numberOfDraws > 0, "The number of OpenGL draws must not be zero")
 
 		// TODO(co) Currently no buffer overflow check due to lack of interface provided data
 		emulationData += indirectBufferOffset;
@@ -20871,8 +20871,8 @@ namespace OpenGLRhi
 					// Get the OpenGL texture 2D instances
 					const Texture2D& openGlDestinationTexture2D = static_cast<const Texture2D&>(destinationResource);
 					const Texture2D& openGlSourceTexture2D = static_cast<const Texture2D&>(sourceResource);
-					RHI_ASSERT(mContext, openGlDestinationTexture2D.getWidth() == openGlSourceTexture2D.getWidth(), "OpenGL source and destination width must be identical for resource copy")
-					RHI_ASSERT(mContext, openGlDestinationTexture2D.getHeight() == openGlSourceTexture2D.getHeight(), "OpenGL source and destination height must be identical for resource copy")
+					RHI_ASSERT(openGlDestinationTexture2D.getWidth() == openGlSourceTexture2D.getWidth(), "OpenGL source and destination width must be identical for resource copy")
+					RHI_ASSERT(openGlDestinationTexture2D.getHeight() == openGlSourceTexture2D.getHeight(), "OpenGL source and destination height must be identical for resource copy")
 
 					// Copy resource, but only the top-level mipmap
 					const GLsizei width = static_cast<GLsizei>(openGlDestinationTexture2D.getWidth());
@@ -20915,7 +20915,7 @@ namespace OpenGLRhi
 				else
 				{
 					// Error!
-					RHI_ASSERT(mContext, false, "Failed to copy OpenGL resource")
+					RHI_ASSERT(false, "Failed to copy OpenGL resource")
 				}
 				break;
 
@@ -20960,7 +20960,7 @@ namespace OpenGLRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, resource)
-		RHI_ASSERT(mContext, resource.getResourceType() == Rhi::ResourceType::TEXTURE_2D, "TODO(co) Mipmaps can only be generated for OpenGL 2D texture resources")
+		RHI_ASSERT(resource.getResourceType() == Rhi::ResourceType::TEXTURE_2D, "TODO(co) Mipmaps can only be generated for OpenGL 2D texture resources")
 
 		Texture2D& texture2D = static_cast<Texture2D&>(resource);
 
@@ -21006,8 +21006,8 @@ namespace OpenGLRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, queryPool)
-		RHI_ASSERT(mContext, firstQueryIndex < static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "OpenGL out-of-bounds query index")
-		RHI_ASSERT(mContext, (firstQueryIndex + numberOfQueries) <= static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "OpenGL out-of-bounds query index")
+		RHI_ASSERT(firstQueryIndex < static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "OpenGL out-of-bounds query index")
+		RHI_ASSERT((firstQueryIndex + numberOfQueries) <= static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "OpenGL out-of-bounds query index")
 
 		// Nothing to do in here for OpenGL
 	}
@@ -21019,7 +21019,7 @@ namespace OpenGLRhi
 
 		// Query pool type dependent processing
 		const QueryPool& openGLQueryPool = static_cast<const QueryPool&>(queryPool);
-		RHI_ASSERT(mContext, queryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
+		RHI_ASSERT(queryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
 		switch (openGLQueryPool.getQueryType())
 		{
 			case Rhi::QueryType::OCCLUSION:
@@ -21033,7 +21033,7 @@ namespace OpenGLRhi
 				break;
 
 			case Rhi::QueryType::TIMESTAMP:
-				RHI_ASSERT(mContext, false, "OpenGL begin query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
+				RHI_ASSERT(false, "OpenGL begin query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
 				break;
 		}
 	}
@@ -21045,7 +21045,7 @@ namespace OpenGLRhi
 
 		// Query pool type dependent processing
 		const QueryPool& openGLQueryPool = static_cast<const QueryPool&>(queryPool);
-		RHI_ASSERT(mContext, queryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
+		RHI_ASSERT(queryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
 		switch (openGLQueryPool.getQueryType())
 		{
 			case Rhi::QueryType::OCCLUSION:
@@ -21059,7 +21059,7 @@ namespace OpenGLRhi
 				break;
 
 			case Rhi::QueryType::TIMESTAMP:
-				RHI_ASSERT(mContext, false, "OpenGL end query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
+				RHI_ASSERT(false, "OpenGL end query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
 				break;
 		}
 	}
@@ -21071,15 +21071,15 @@ namespace OpenGLRhi
 
 		// Query pool type dependent processing
 		const QueryPool& openGLQueryPool = static_cast<const QueryPool&>(queryPool);
-		RHI_ASSERT(mContext, queryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
+		RHI_ASSERT(queryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
 		switch (openGLQueryPool.getQueryType())
 		{
 			case Rhi::QueryType::OCCLUSION:
-				RHI_ASSERT(mContext, false, "OpenGL write timestamp query isn't allowed for occlusion queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
+				RHI_ASSERT(false, "OpenGL write timestamp query isn't allowed for occlusion queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
 				break;
 
 			case Rhi::QueryType::PIPELINE_STATISTICS:
-				RHI_ASSERT(mContext, false, "OpenGL write timestamp query isn't allowed for pipeline statistics queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
+				RHI_ASSERT(false, "OpenGL write timestamp query isn't allowed for pipeline statistics queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
 				break;
 
 			case Rhi::QueryType::TIMESTAMP:
@@ -21099,7 +21099,7 @@ namespace OpenGLRhi
 			// "GL_KHR_debug"-extension required
 			if (mExtensions->isGL_KHR_debug())
 			{
-				RHI_ASSERT(mContext, nullptr != name, "OpenGL debug marker names must not be a null pointer")
+				RHI_ASSERT(nullptr != name, "OpenGL debug marker names must not be a null pointer")
 				glDebugMessageInsert(GL_DEBUG_SOURCE_APPLICATION, GL_DEBUG_TYPE_MARKER, 1, GL_DEBUG_SEVERITY_NOTIFICATION, -1, name);
 			}
 		}
@@ -21109,7 +21109,7 @@ namespace OpenGLRhi
 			// "GL_KHR_debug"-extension required
 			if (mExtensions->isGL_KHR_debug())
 			{
-				RHI_ASSERT(mContext, nullptr != name, "OpenGL debug event names must not be a null pointer")
+				RHI_ASSERT(nullptr != name, "OpenGL debug event names must not be a null pointer")
 				glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 1, -1, name);
 			}
 		}
@@ -21168,7 +21168,7 @@ namespace OpenGLRhi
 
 	const char* OpenGLRhi::getShaderLanguageName(uint32_t index) const
 	{
-		RHI_ASSERT(mContext, index < getNumberOfShaderLanguages(), "OpenGL: Shader language index is out-of-bounds")
+		RHI_ASSERT(index < getNumberOfShaderLanguages(), "OpenGL: Shader language index is out-of-bounds")
 
 		// "GL_ARB_shader_objects" or "GL_ARB_separate_shader_objects" required
 		if (mExtensions->isGL_ARB_shader_objects() || mExtensions->isGL_ARB_separate_shader_objects())
@@ -21244,7 +21244,7 @@ namespace OpenGLRhi
 
 	Rhi::IQueryPool* OpenGLRhi::createQueryPool(Rhi::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		RHI_ASSERT(mContext, numberOfQueries > 0, "OpenGL: Number of queries mustn't be zero")
+		RHI_ASSERT(numberOfQueries > 0, "OpenGL: Number of queries mustn't be zero")
 		switch (queryType)
 		{
 			case Rhi::QueryType::OCCLUSION:
@@ -21278,7 +21278,7 @@ namespace OpenGLRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, renderPass)
-		RHI_ASSERT(mContext, SE_NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "OpenGL: The provided native window handle or render window must not be a null handle / null pointer")
+		RHI_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "OpenGL: The provided native window handle or render window must not be a null handle / null pointer")
 
 		// Create the swap chain
 		return RHI_NEW(mContext, SwapChain)(renderPass, windowHandle, useExternalContext RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -21331,9 +21331,9 @@ namespace OpenGLRhi
 	Rhi::IGraphicsPipelineState* OpenGLRhi::createGraphicsPipelineState(const Rhi::GraphicsPipelineState& graphicsPipelineState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		// Sanity checks
-		RHI_ASSERT(mContext, nullptr != graphicsPipelineState.rootSignature, "OpenGL: Invalid graphics pipeline state root signature")
-		RHI_ASSERT(mContext, nullptr != graphicsPipelineState.graphicsProgram, "OpenGL: Invalid graphics pipeline state graphics program")
-		RHI_ASSERT(mContext, nullptr != graphicsPipelineState.renderPass, "OpenGL: Invalid graphics pipeline state render pass")
+		RHI_ASSERT(nullptr != graphicsPipelineState.rootSignature, "OpenGL: Invalid graphics pipeline state root signature")
+		RHI_ASSERT(nullptr != graphicsPipelineState.graphicsProgram, "OpenGL: Invalid graphics pipeline state graphics program")
+		RHI_ASSERT(nullptr != graphicsPipelineState.renderPass, "OpenGL: Invalid graphics pipeline state render pass")
 
 		// Create graphics pipeline state
 		uint16_t id = 0;
@@ -21727,17 +21727,17 @@ namespace OpenGLRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, queryPool)
-		RHI_ASSERT(mContext, numberOfDataBytes >= sizeof(UINT64), "OpenGL out-of-memory query access")
-		RHI_ASSERT(mContext, 1 == numberOfQueries || strideInBytes > 0, "OpenGL invalid stride in bytes")
-		RHI_ASSERT(mContext, numberOfDataBytes >= strideInBytes * numberOfQueries, "OpenGL out-of-memory query access")
-		RHI_ASSERT(mContext, nullptr != data, "OpenGL out-of-memory query access")
-		RHI_ASSERT(mContext, numberOfQueries > 0, "OpenGL number of queries mustn't be zero")
+		RHI_ASSERT(numberOfDataBytes >= sizeof(UINT64), "OpenGL out-of-memory query access")
+		RHI_ASSERT(1 == numberOfQueries || strideInBytes > 0, "OpenGL invalid stride in bytes")
+		RHI_ASSERT(numberOfDataBytes >= strideInBytes * numberOfQueries, "OpenGL out-of-memory query access")
+		RHI_ASSERT(nullptr != data, "OpenGL out-of-memory query access")
+		RHI_ASSERT(numberOfQueries > 0, "OpenGL number of queries mustn't be zero")
 
 		// Query pool type dependent processing
 		bool resultAvailable = true;
 		const QueryPool& openGLQueryPool = static_cast<const QueryPool&>(queryPool);
-		RHI_ASSERT(mContext, firstQueryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
-		RHI_ASSERT(mContext, (firstQueryIndex + numberOfQueries) <= openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
+		RHI_ASSERT(firstQueryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
+		RHI_ASSERT((firstQueryIndex + numberOfQueries) <= openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
 		const bool waitForResult = ((queryResultFlags & Rhi::QueryResultFlags::WAIT) != 0);
 		switch (openGLQueryPool.getQueryType())
 		{
@@ -21772,8 +21772,8 @@ namespace OpenGLRhi
 			}
 
 			case Rhi::QueryType::PIPELINE_STATISTICS:
-				RHI_ASSERT(mContext, numberOfDataBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "OpenGL out-of-memory query access")
-				RHI_ASSERT(mContext, 1 == numberOfQueries || strideInBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "OpenGL out-of-memory query access")
+				RHI_ASSERT(numberOfDataBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "OpenGL out-of-memory query access")
+				RHI_ASSERT(1 == numberOfQueries || strideInBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "OpenGL out-of-memory query access")
 				resultAvailable = static_cast<const PipelineStatisticsQueryPool&>(openGLQueryPool).getQueryPoolResults(data, firstQueryIndex, numberOfQueries, strideInBytes, waitForResult);
 				break;
 		}
@@ -21792,7 +21792,7 @@ namespace OpenGLRhi
 
 		// Sanity check
 		#if SE_DEBUG
-			RHI_ASSERT(mContext, false == mDebugBetweenBeginEndScene, "OpenGL: Begin scene was called while scene rendering is already in progress, missing end scene call?")
+			RHI_ASSERT(false == mDebugBetweenBeginEndScene, "OpenGL: Begin scene was called while scene rendering is already in progress, missing end scene call?")
 			mDebugBetweenBeginEndScene = true;
 		#endif
 
@@ -21803,7 +21803,7 @@ namespace OpenGLRhi
 	void OpenGLRhi::submitCommandBuffer(const Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity check
-		RHI_ASSERT(mContext, !commandBuffer.isEmpty(), "The OpenGL command buffer to execute mustn't be empty")
+		RHI_ASSERT(!commandBuffer.isEmpty(), "The OpenGL command buffer to execute mustn't be empty")
 
 		// Loop through all commands
 		const uint8_t* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
@@ -21827,7 +21827,7 @@ namespace OpenGLRhi
 	{
 		// Sanity check
 		#if SE_DEBUG
-			RHI_ASSERT(mContext, true == mDebugBetweenBeginEndScene, "OpenGL: End scene was called while scene rendering isn't in progress, missing start scene call?")
+			RHI_ASSERT(true == mDebugBetweenBeginEndScene, "OpenGL: End scene was called while scene rendering isn't in progress, missing start scene call?")
 			mDebugBetweenBeginEndScene = false;
 		#endif
 
@@ -22203,7 +22203,7 @@ namespace OpenGLRhi
 			for (uint32_t resourceIndex = 0; resourceIndex < numberOfResources; ++resourceIndex, ++resources)
 			{
 				Rhi::IResource* resource = *resources;
-				RHI_ASSERT(mContext, nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
+				RHI_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
 				const Rhi::DescriptorRange& descriptorRange = reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges)[resourceIndex];
 
 				// Check the type of resource to set
@@ -22503,7 +22503,7 @@ namespace OpenGLRhi
 										// Set the OpenGL sampler states, if required (texture buffer has no sampler state), it's valid that there's no sampler state (e.g. texel fetch instead of sampling might be used)
 										if (Rhi::ResourceType::TEXTURE_BUFFER != resourceType)
 										{
-											RHI_ASSERT(mContext, nullptr != openGLResourceGroup->getSamplerState(), "Invalid OpenGL sampler state")
+											RHI_ASSERT(nullptr != openGLResourceGroup->getSamplerState(), "Invalid OpenGL sampler state")
 											const SamplerState* samplerState = static_cast<const SamplerState*>(openGLResourceGroup->getSamplerState()[resourceIndex]);
 											if (nullptr != samplerState)
 											{
@@ -22647,8 +22647,8 @@ namespace OpenGLRhi
 
 					case Rhi::ResourceType::VERTEX_BUFFER:
 					{
-						RHI_ASSERT(mContext, Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL vertex buffer must bound at SRV or UAV descriptor range type")
-						RHI_ASSERT(mContext, Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "OpenGL descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
+						RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL vertex buffer must bound at SRV or UAV descriptor range type")
+						RHI_ASSERT(Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "OpenGL descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
 
 						// "GL_ARB_uniform_buffer_object" required
 						if (mExtensions->isGL_ARB_uniform_buffer_object())
@@ -22664,8 +22664,8 @@ namespace OpenGLRhi
 
 					case Rhi::ResourceType::INDEX_BUFFER:
 					{
-						RHI_ASSERT(mContext, Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL index buffer must bound at SRV or UAV descriptor range type")
-						RHI_ASSERT(mContext, Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "OpenGL descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
+						RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL index buffer must bound at SRV or UAV descriptor range type")
+						RHI_ASSERT(Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "OpenGL descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
 
 						// "GL_ARB_uniform_buffer_object" required
 						if (mExtensions->isGL_ARB_uniform_buffer_object())
@@ -22681,7 +22681,7 @@ namespace OpenGLRhi
 
 					case Rhi::ResourceType::STRUCTURED_BUFFER:
 					{
-						RHI_ASSERT(mContext, Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL structured buffer must bound at SRV or UAV descriptor range type")
+						RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL structured buffer must bound at SRV or UAV descriptor range type")
 
 						// "GL_ARB_uniform_buffer_object" required
 						if (mExtensions->isGL_ARB_uniform_buffer_object())
@@ -22697,8 +22697,8 @@ namespace OpenGLRhi
 
 					case Rhi::ResourceType::INDIRECT_BUFFER:
 					{
-						RHI_ASSERT(mContext, Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL indirect buffer must bound at SRV or UAV descriptor range type")
-						RHI_ASSERT(mContext, Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "OpenGL descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
+						RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL indirect buffer must bound at SRV or UAV descriptor range type")
+						RHI_ASSERT(Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "OpenGL descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
 
 						// "GL_ARB_uniform_buffer_object" required
 						if (mExtensions->isGL_ARB_uniform_buffer_object())
@@ -22719,8 +22719,8 @@ namespace OpenGLRhi
 							// Attach the buffer to the given UBO binding point
 							// -> Explicit binding points ("layout(binding = 0)" in GLSL shader) requires OpenGL 4.2 or the "GL_ARB_explicit_uniform_location"-extension
 							// -> Direct3D 10 and Direct3D 11 have explicit binding points
-							RHI_ASSERT(mContext, Rhi::DescriptorRangeType::UBV == descriptorRange.rangeType, "OpenGL uniform buffer must bound at UBV descriptor range type")
-							RHI_ASSERT(mContext, nullptr != openGLResourceGroup->getResourceIndexToUniformBlockBindingIndex(), "Invalid OpenGL resource index to uniform block binding index")
+							RHI_ASSERT(Rhi::DescriptorRangeType::UBV == descriptorRange.rangeType, "OpenGL uniform buffer must bound at UBV descriptor range type")
+							RHI_ASSERT(nullptr != openGLResourceGroup->getResourceIndexToUniformBlockBindingIndex(), "Invalid OpenGL resource index to uniform block binding index")
 							glBindBufferBase(GL_UNIFORM_BUFFER, openGLResourceGroup->getResourceIndexToUniformBlockBindingIndex()[resourceIndex], static_cast<UniformBuffer*>(resource)->getOpenGLUniformBuffer());
 						}
 						break;

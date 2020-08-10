@@ -49,10 +49,9 @@ int Application::Run(int argc, const char *argv[])
 		return 1;
 
 	Rhi::DefaultLog defaultLog;
-	Rhi::DefaultAssert defaultAssert;
 	Rhi::DefaultAllocator defaultAllocator;
 #if SE_PLATFORM_WINDOWS
-	Rhi::Context rhiContext(defaultLog, defaultAssert, defaultAllocator, (Rhi::handle)glfwNativeWindowHandle(m_window));
+	Rhi::Context rhiContext(defaultLog, defaultAllocator, (handle)glfwNativeWindowHandle(m_window));
 	const bool loadRhiApiSharedLibrary = false;
 #elif LINUX
 	// Under Linux the OpenGL library interacts with the library from X11 so we need to load the library ourself instead letting it be loaded by the RHI instance
@@ -76,7 +75,7 @@ int Application::Run(int argc, const char *argv[])
 			const Rhi::Capabilities& capabilities = rhi->getCapabilities();
 			mainSwapChain = rhi->createSwapChain(
 				*rhi->createRenderPass(1, &capabilities.preferredSwapChainColorTextureFormat, capabilities.preferredSwapChainDepthStencilTextureFormat, 1 RHI_RESOURCE_DEBUG_NAME("Main")),
-				Rhi::WindowHandle{ (Rhi::handle)glfwNativeWindowHandle(m_window), nullptr, nullptr },	// TODO(co) Linux Wayland support
+				Rhi::WindowHandle{ (handle)glfwNativeWindowHandle(m_window), nullptr, nullptr },	// TODO(co) Linux Wayland support
 				rhi->getContext().isUsingExternalContext()
 				RHI_RESOURCE_DEBUG_NAME("Main"));
 		}

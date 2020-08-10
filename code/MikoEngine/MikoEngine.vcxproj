@@ -175,6 +175,7 @@
     <ClInclude Include="Base\DetectOS.h" />
     <ClInclude Include="Base\EngineVersionConst.h" />
     <ClInclude Include="Base\InlineFunc.h" />
+    <ClInclude Include="Base\PlatformTypes.h" />
     <ClInclude Include="Base\VersionOSConst.h" />
     <ClInclude Include="Base\Win32PlatformDefinitions.h" />
     <ClInclude Include="Core\Logger.h" />
@@ -194,6 +195,7 @@
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Core\Logger.cpp" />
+    <ClCompile Include="Render\DefaultAssert.cpp" />
     <ClCompile Include="Render\Direct3D11Rhi.cpp" />
     <ClCompile Include="Render\Direct3D12Rhi.cpp" />
     <ClCompile Include="Render\NullRhi.cpp" />

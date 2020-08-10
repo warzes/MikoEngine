@@ -10,6 +10,7 @@
 #include "Base/ConfigEngine.h"
 #include "Base/BaseMacros.h"
 #include "Base/InlineFunc.h"
+#include "Base/PlatformTypes.h"
 
 //-----------------------------------------------------------------------------
 // Header config
