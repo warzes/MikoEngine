@@ -18,46 +18,25 @@ namespace Direct3D12Rhi
 }
 
 #if SE_DEBUG
-	/*
-	*  @brief
-	*    Check whether or not the given resource is owned by the given RHI
-	*/
-	#define RHI_MATCH_CHECK(rhiReference, resourceReference) \
+// Check whether or not the given resource is owned by the given RHI
+#	define RHI_MATCH_CHECK(rhiReference, resourceReference) \
 		RHI_ASSERT(&rhiReference == &(resourceReference).getRhi(), "Direct3D 12 error: The given resource is owned by another RHI instance")
-
-	/*
-	*  @brief
-	*    Debug break on execution failure
-	*/
-	#define FAILED_DEBUG_BREAK(toExecute) if (FAILED(toExecute)) { SE_DEBUG_BREAK; }
+// Debug break on execution failure
+#	define FAILED_DEBUG_BREAK(toExecute) if (FAILED(toExecute)) { SE_DEBUG_BREAK; }
 #else
-	/*
-	*  @brief
-	*    Check whether or not the given resource is owned by the given RHI
-	*/
-	#define RHI_MATCH_CHECK(rhiReference, resourceReference)
-
-	/*
-	*  @brief
-	*    Debug break on execution failure
-	*/
-	#define FAILED_DEBUG_BREAK(toExecute) toExecute;
+// Check whether or not the given resource is owned by the given RHI
+#	define RHI_MATCH_CHECK(rhiReference, resourceReference)
+// Debug break on execution failure
+#	define FAILED_DEBUG_BREAK(toExecute) toExecute;
 #endif
 
 namespace
 {
 	namespace detail
 	{
-		//[-------------------------------------------------------]
-		//[ Global definitions                                    ]
-		//[-------------------------------------------------------]
 		static constexpr const char* HLSL_NAME = "HLSL";	///< ASCII name of this shader language, always valid (do not free the memory the returned pointer is pointing to)
 		static constexpr const uint32_t NUMBER_OF_BUFFERED_FRAMES = 2;
 
-
-		//[-------------------------------------------------------]
-		//[ Global functions                                      ]
-		//[-------------------------------------------------------]
 		template <typename T0, typename T1>
 		inline T0 align(const T0 x, const T1 a)
 		{
@@ -77,28 +56,10 @@ namespace
 			}
 		}
 
-
-		//[-------------------------------------------------------]
-		//[ Classes                                               ]
-		//[-------------------------------------------------------]
 		class UploadCommandListAllocator final
 		{
-
-
-		//[-------------------------------------------------------]
-		//[ Public methods                                        ]
-		//[-------------------------------------------------------]
 		public:
-			inline UploadCommandListAllocator() :
-				mD3D12Device(nullptr),
-				mD3D12CommandAllocator(nullptr),
-				mD3D12GraphicsCommandList(nullptr),
-				mD3D12ResourceUploadBuffer(nullptr),
-				mD3D12GpuVirtualAddress{},
-				mData(nullptr),
-				mOffset(0),
-				mNumberOfUploadBufferBytes(0)
-			{}
+			UploadCommandListAllocator() = default;
 	
 			inline ID3D12GraphicsCommandList* getD3D12GraphicsCommandList() const
 			{
@@ -133,17 +94,11 @@ namespace
 			void destroy()
 			{
 				if (nullptr != mD3D12GraphicsCommandList)
-				{
 					mD3D12GraphicsCommandList->Release();
-				}
 				if (nullptr != mD3D12CommandAllocator)
-				{
 					mD3D12CommandAllocator->Release();
-				}
 				if (nullptr != mD3D12ResourceUploadBuffer)
-				{
 					mD3D12ResourceUploadBuffer->Release();
-				}
 			}
 
 			void begin(uint32_t numberOfUploadBufferBytes)
@@ -194,10 +149,6 @@ namespace
 				return alignedOffset;
 			}
 
-
-		//[-------------------------------------------------------]
-		//[ Private static methods                                ]
-		//[-------------------------------------------------------]
 		private:
 			static ID3D12Resource* createBuffer(ID3D12Device& d3d12Device, D3D12_HEAP_TYPE d3dHeapType, size_t numberOfBytes)
 			{
@@ -221,36 +172,21 @@ namespace
 				return d3d12Resource;
 			}
 
-
-		//[-------------------------------------------------------]
-		//[ Private data                                          ]
-		//[-------------------------------------------------------]
 		private:
-			ID3D12Device*			   mD3D12Device;
-			ID3D12CommandAllocator*	   mD3D12CommandAllocator;
-			ID3D12GraphicsCommandList* mD3D12GraphicsCommandList;
-			ID3D12Resource*			   mD3D12ResourceUploadBuffer;
-			D3D12_GPU_VIRTUAL_ADDRESS  mD3D12GpuVirtualAddress;
-			uint8_t*				   mData;
-			uint32_t				   mOffset;
-			uint32_t				   mNumberOfUploadBufferBytes;
-
-
+			ID3D12Device*			   mD3D12Device = nullptr;
+			ID3D12CommandAllocator*	   mD3D12CommandAllocator = nullptr;
+			ID3D12GraphicsCommandList* mD3D12GraphicsCommandList = nullptr;
+			ID3D12Resource*			   mD3D12ResourceUploadBuffer = nullptr;
+			D3D12_GPU_VIRTUAL_ADDRESS  mD3D12GpuVirtualAddress = {};
+			uint8_t*				   mData = nullptr;
+			uint32_t				   mOffset = 0;
+			uint32_t				   mNumberOfUploadBufferBytes = 0;
 		};
 
 		struct UploadContext final
 		{
-
-
-		//[-------------------------------------------------------]
-		//[ Public methods                                        ]
-		//[-------------------------------------------------------]
 		public:
-			inline UploadContext() :
-				mCurrentFrameIndex(0),
-				mCurrentUploadCommandListAllocator(nullptr),
-				mCurrentD3d12GraphicsCommandList(nullptr)
-			{}
+			UploadContext() = default;
 
 			inline void create(ID3D12Device& d3d12Device)
 			{
@@ -295,35 +231,18 @@ namespace
 				mCurrentUploadCommandListAllocator->begin(numberOfUploadBufferBytes);
 			}
 
-
-		//[-------------------------------------------------------]
-		//[ Private data                                          ]
-		//[-------------------------------------------------------]
 		private:
 			UploadCommandListAllocator mUploadCommandListAllocator[NUMBER_OF_BUFFERED_FRAMES];
 			// Current
-			uint32_t							  mCurrentFrameIndex;
-			::detail::UploadCommandListAllocator* mCurrentUploadCommandListAllocator;
-			ID3D12GraphicsCommandList*			  mCurrentD3d12GraphicsCommandList;
-
-
+			uint32_t							  mCurrentFrameIndex = 0;
+			::detail::UploadCommandListAllocator* mCurrentUploadCommandListAllocator = nullptr;
+			ID3D12GraphicsCommandList*			  mCurrentD3d12GraphicsCommandList = nullptr;
 		};
 
-		/*
-		*  @brief
-		*    Descriptor heap
-		*/
 		class DescriptorHeap final
 		{
-		//[-------------------------------------------------------]
-		//[ Public methods                                        ]
-		//[-------------------------------------------------------]
 		public:
 			inline DescriptorHeap(ID3D12Device& d3d12Device, D3D12_DESCRIPTOR_HEAP_TYPE d3d12DescriptorHeapType, uint16_t size, bool shaderVisible) :
-				mD3D12DescriptorHeap(nullptr),
-				mD3D12CpuDescriptorHandleForHeapStart{},
-				mD3D12GpuDescriptorHandleForHeapStart{},
-				mDescriptorSize(0),
 				mMakeIDAllocator(size - 1u)
 			{
 				D3D12_DESCRIPTOR_HEAP_DESC d3d12DescriptorHeadDescription = {};
@@ -382,26 +301,15 @@ namespace
 				return mDescriptorSize;
 			}
 
-
-		//[-------------------------------------------------------]
-		//[ Private methods                                       ]
-		//[-------------------------------------------------------]
 		private:
 			explicit DescriptorHeap(const DescriptorHeap& source) = delete;
 			DescriptorHeap& operator =(const DescriptorHeap& source) = delete;
 
-
-		//[-------------------------------------------------------]
-		//[ Private data                                          ]
-		//[-------------------------------------------------------]
-		private:
-			ID3D12DescriptorHeap*		mD3D12DescriptorHeap;
-			D3D12_CPU_DESCRIPTOR_HANDLE mD3D12CpuDescriptorHandleForHeapStart;
-			D3D12_GPU_DESCRIPTOR_HANDLE mD3D12GpuDescriptorHandleForHeapStart;
-			uint32_t					mDescriptorSize;
+			ID3D12DescriptorHeap*		mD3D12DescriptorHeap = nullptr;
+			D3D12_CPU_DESCRIPTOR_HANDLE mD3D12CpuDescriptorHandleForHeapStart = {};
+			D3D12_GPU_DESCRIPTOR_HANDLE mD3D12GpuDescriptorHandleForHeapStart = {};
+			uint32_t					mDescriptorSize = 0;
 			MakeID						mMakeIDAllocator;
-
-
 		};
 	} // detail
 }
@@ -411,50 +319,16 @@ namespace Direct3D12Rhi
 	//[-------------------------------------------------------]
 	//[ Direct3D12Rhi/Direct3D12Rhi.h                         ]
 	//[-------------------------------------------------------]
-	/**
-	*  @brief
-	*    Direct3D 12 RHI class
-	*/
 	class Direct3D12Rhi final : public Rhi::IRhi
 	{
-
-
-		//[-------------------------------------------------------]
-		//[ Public definitions                                    ]
-		//[-------------------------------------------------------]
 	public:
 		static constexpr uint32_t NUMBER_OF_FRAMES = 2;
 
-
-		//[-------------------------------------------------------]
-		//[ Public data                                           ]
-		//[-------------------------------------------------------]
-	public:
 		MakeID VertexArrayMakeId;
 		MakeID GraphicsPipelineStateMakeId;
 		MakeID ComputePipelineStateMakeId;
-
-
-		//[-------------------------------------------------------]
-		//[ Public methods                                        ]
-		//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Constructor
-		*
-		*  @param[in] context
-		*    RHI context, the RHI context instance must stay valid as long as the RHI instance exists
-		*
-		*  @note
-		*    - Do never ever use a not properly initialized RHI. Use "Rhi::IRhi::isInitialized()" to check the initialization state.
-		*/
+			
 		explicit Direct3D12Rhi(const Rhi::Context& context);
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
 		virtual ~Direct3D12Rhi() override;
 
 		/**
@@ -668,18 +542,10 @@ namespace Direct3D12Rhi
 			RHI_DELETE(mContext, Direct3D12Rhi, this);
 		}
 
-
-		//[-------------------------------------------------------]
-		//[ Private methods                                       ]
-		//[-------------------------------------------------------]
 	private:
 		explicit Direct3D12Rhi(const Direct3D12Rhi& source) = delete;
 		Direct3D12Rhi& operator =(const Direct3D12Rhi& source) = delete;
 
-		/**
-		*  @brief
-		*    Initialize the capabilities
-		*/
 		void initializeCapabilities();
 
 		/**
@@ -697,27 +563,27 @@ namespace Direct3D12Rhi
 #endif
 
 	private:
-		IDXGIFactory4*			   mDxgiFactory4;				///< DXGI factors instance, always valid for a correctly initialized RHI
-		ID3D12Device*			   mD3D12Device;				///< The Direct3D 12 device, null pointer on error (we don't check because this would be a total overhead, the user has to use "Rhi::IRhi::isInitialized()" and is asked to never ever use a not properly initialized RHI)
-		ID3D12CommandQueue*		   mD3D12CommandQueue;			///< The Direct3D 12 command queue, null pointer on error (we don't check because this would be a total overhead, the user has to use "Rhi::IRhi::isInitialized()" and is asked to never ever use a not properly initialized RHI)
-		ID3D12CommandAllocator*	   mD3D12CommandAllocator;
-		ID3D12GraphicsCommandList* mD3D12GraphicsCommandList;
-		Rhi::IShaderLanguage*	   mShaderLanguageHlsl;			///< HLSL shader language instance (we keep a reference to it), can be a null pointer
+		IDXGIFactory4*			   mDxgiFactory4 = nullptr;				///< DXGI factors instance, always valid for a correctly initialized RHI
+		ID3D12Device*			   mD3D12Device = nullptr;				///< The Direct3D 12 device, null pointer on error (we don't check because this would be a total overhead, the user has to use "Rhi::IRhi::isInitialized()" and is asked to never ever use a not properly initialized RHI)
+		ID3D12CommandQueue*		   mD3D12CommandQueue = nullptr;			///< The Direct3D 12 command queue, null pointer on error (we don't check because this would be a total overhead, the user has to use "Rhi::IRhi::isInitialized()" and is asked to never ever use a not properly initialized RHI)
+		ID3D12CommandAllocator*	   mD3D12CommandAllocator = nullptr;
+		ID3D12GraphicsCommandList* mD3D12GraphicsCommandList = nullptr;
+		Rhi::IShaderLanguage*	   mShaderLanguageHlsl = nullptr;			///< HLSL shader language instance (we keep a reference to it), can be a null pointer
 		::detail::UploadContext	   mUploadContext;
-		::detail::DescriptorHeap*  mShaderResourceViewDescriptorHeap;
-		::detail::DescriptorHeap*  mRenderTargetViewDescriptorHeap;
-		::detail::DescriptorHeap*  mDepthStencilViewDescriptorHeap;
-		::detail::DescriptorHeap*  mSamplerDescriptorHeap;
+		::detail::DescriptorHeap*  mShaderResourceViewDescriptorHeap = nullptr;
+		::detail::DescriptorHeap*  mRenderTargetViewDescriptorHeap = nullptr;
+		::detail::DescriptorHeap*  mDepthStencilViewDescriptorHeap = nullptr;
+		::detail::DescriptorHeap*  mSamplerDescriptorHeap = nullptr;
 		//[-------------------------------------------------------]
 		//[ State related                                         ]
 		//[-------------------------------------------------------]
-		Rhi::IRenderTarget*		 mRenderTarget;				///< Output-merger (OM) stage: Currently set render target (we keep a reference to it), can be a null pointer
-		D3D12_PRIMITIVE_TOPOLOGY mD3D12PrimitiveTopology;	///< State cache to avoid making redundant Direct3D 12 calls
-		RootSignature*			 mGraphicsRootSignature;	///< Currently set graphics root signature (we keep a reference to it), can be a null pointer
-		RootSignature*			 mComputeRootSignature;		///< Currently set compute root signature (we keep a reference to it), can be a null pointer
-		VertexArray*			 mVertexArray;				///< Currently set vertex array (we keep a reference to it), can be a null pointer
+		Rhi::IRenderTarget*		 mRenderTarget = nullptr;				///< Output-merger (OM) stage: Currently set render target (we keep a reference to it), can be a null pointer
+		D3D12_PRIMITIVE_TOPOLOGY mD3D12PrimitiveTopology = D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;	///< State cache to avoid making redundant Direct3D 12 calls
+		RootSignature*			 mGraphicsRootSignature = nullptr;	///< Currently set graphics root signature (we keep a reference to it), can be a null pointer
+		RootSignature*			 mComputeRootSignature = nullptr;		///< Currently set compute root signature (we keep a reference to it), can be a null pointer
+		VertexArray*			 mVertexArray = nullptr;				///< Currently set vertex array (we keep a reference to it), can be a null pointer
 #if SE_DEBUG
-		bool mDebugBetweenBeginEndScene;	///< Just here for state tracking in debug builds
+		bool mDebugBetweenBeginEndScene = false;	///< Just here for state tracking in debug builds
 #endif
 	};
 
@@ -8294,48 +8160,16 @@ namespace
 			&ImplementationDispatch::BeginDebugEvent,
 			&ImplementationDispatch::EndDebugEvent
 		};
-
-
-//[-------------------------------------------------------]
-//[ Anonymous detail namespace                            ]
-//[-------------------------------------------------------]
 	} // detail
 }
 
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 namespace Direct3D12Rhi
 {
-
-
-	//[-------------------------------------------------------]
-	//[ Public methods                                        ]
-	//[-------------------------------------------------------]
 	Direct3D12Rhi::Direct3D12Rhi(const Rhi::Context& context) :
 		IRhi(Rhi::NameId::DIRECT3D12, context),
 		VertexArrayMakeId(),
 		GraphicsPipelineStateMakeId(),
-		ComputePipelineStateMakeId(),
-		mDxgiFactory4(nullptr),
-		mD3D12Device(nullptr),
-		mD3D12CommandQueue(nullptr),
-		mD3D12CommandAllocator(nullptr),
-		mD3D12GraphicsCommandList(nullptr),
-		mShaderLanguageHlsl(nullptr),
-		mShaderResourceViewDescriptorHeap(nullptr),
-		mRenderTargetViewDescriptorHeap(nullptr),
-		mDepthStencilViewDescriptorHeap(nullptr),
-		mSamplerDescriptorHeap(nullptr),
-		mRenderTarget(nullptr),
-		mD3D12PrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_UNDEFINED),
-		mGraphicsRootSignature(nullptr),
-		mComputeRootSignature(nullptr),
-		mVertexArray(nullptr)
-		#if SE_DEBUG
-			, mDebugBetweenBeginEndScene(false)
-		#endif
+		ComputePipelineStateMakeId()		
 	{
 		// Enable the Direct3D 12 debug layer
 #if SE_DEBUG
@@ -8348,13 +8182,10 @@ namespace Direct3D12Rhi
 			}
 		}
 #endif
-		//ComPtr<IDXGIFactory4> dxgiFactory;
 		UINT createFactoryFlags = 0;
 #if SE_DEBUG
 		createFactoryFlags = DXGI_CREATE_FACTORY_DEBUG;
 #endif
-
-
 		// Create the DXGI factory instance
 		if (SUCCEEDED(CreateDXGIFactory2(createFactoryFlags, IID_PPV_ARGS(&mDxgiFactory4))))
 		{				
