@@ -30,7 +30,8 @@ bool MyApp::init(int argc, const char * argv[])
 			0										// instancesPerElement (uint32_t)
 		}
 	};
-	const Rhi::VertexAttributes vertexAttributes(sizeof(vertexAttributesLayout) / sizeof(Rhi::VertexAttribute), vertexAttributesLayout);
+	//const Rhi::VertexAttributes vertexAttributes(sizeof(vertexAttributesLayout) / sizeof(Rhi::VertexAttribute), vertexAttributesLayout);
+	const Rhi::VertexAttributes vertexAttributes(glm::countof(vertexAttributesLayout), vertexAttributesLayout);
 
 	{ // Create vertex array object (VAO)
 		// Create the vertex buffer object (VBO)
@@ -50,7 +51,7 @@ bool MyApp::init(int argc, const char * argv[])
 		//    reference of the used vertex buffer objects (VBO). If the reference counter of a
 		//    vertex buffer object (VBO) reaches zero, it's automatically destroyed.
 		const Rhi::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { vertexBuffer };
-		vertexArray = bufferManager->createVertexArray(vertexAttributes, sizeof(vertexArrayVertexBuffers) / sizeof(Rhi::VertexArrayVertexBuffer), vertexArrayVertexBuffers, nullptr RHI_RESOURCE_DEBUG_NAME("Triangle"));
+		vertexArray = bufferManager->createVertexArray(vertexAttributes, glm::countof(vertexArrayVertexBuffers), vertexArrayVertexBuffers, nullptr RHI_RESOURCE_DEBUG_NAME("Triangle"));
 	}
 
 	{
@@ -102,7 +103,7 @@ bool MyApp::init(int argc, const char * argv[])
 		}
 
 		{ // Clear the graphics color buffer of the current render target with gray, do also clear the depth buffer
-			const float color[4] = { 0.5f, 0.5f, 0.5f, 1.0f };
+			const float color[4] = { 0.6f, 0.8f, 1.0f, 1.0f };
 			Rhi::Command::ClearGraphics::create(commandBuffer, Rhi::ClearFlag::COLOR_DEPTH, color);
 		}
 
@@ -118,17 +119,16 @@ bool MyApp::init(int argc, const char * argv[])
 		// Set debug marker
 		// -> Debug methods: When using Direct3D <11.1, these methods map to the Direct3D 9 PIX functions
 		//    (D3DPERF_* functions, also works directly within VisualStudio 2017 out-of-the-box)
-		COMMAND_SET_DEBUG_MARKER(commandBuffer, "Everyone ready for the upcoming triangle?")
+		COMMAND_SET_DEBUG_MARKER(commandBuffer, "Everyone ready for the upcoming triangle?");
 
 		{
 			// Scoped debug event
-			COMMAND_SCOPED_DEBUG_EVENT(commandBuffer, "Drawing the fancy triangle")
+			COMMAND_SCOPED_DEBUG_EVENT(commandBuffer, "Drawing the fancy triangle");
 
-				// Render the specified geometric primitive, based on an array of vertices
-				Rhi::Command::DrawGraphics::create(commandBuffer, 3);
+			// Render the specified geometric primitive, based on an array of vertices
+			Rhi::Command::DrawGraphics::create(commandBuffer, 3);
 		}
 	}
-
 
 	return true;
 }

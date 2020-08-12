@@ -8178,7 +8178,7 @@ namespace Direct3D12Rhi
 			if ( SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&d3d12Debug))) )
 			{
 				d3d12Debug->EnableDebugLayer();
-				//d3d12Debug->Release();
+				d3d12Debug->Release();
 			}
 		}
 #endif

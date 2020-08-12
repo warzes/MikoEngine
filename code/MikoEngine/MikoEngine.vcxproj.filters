@@ -29,14 +29,14 @@
     <ClCompile Include="Render\NullRhi.cpp">
       <Filter>4_Render</Filter>
     </ClCompile>
+    <ClCompile Include="Render\DefaultAllocator.cpp">
+      <Filter>4_Render\Utility</Filter>
+    </ClCompile>
     <ClCompile Include="Render\DefaultAssert.cpp">
-      <Filter>4_Render</Filter>
+      <Filter>4_Render\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Render\DefaultLog.cpp">
-      <Filter>4_Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\DefaultAllocator.cpp">
-      <Filter>4_Render</Filter>
+      <Filter>4_Render\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -87,15 +87,6 @@
     <ClInclude Include="Core\MemoryPtr.h">
       <Filter>1_Core</Filter>
     </ClInclude>
-    <ClInclude Include="Render\DefaultAllocator.h">
-      <Filter>4_Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\DefaultAssert.h">
-      <Filter>4_Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\DefaultLog.h">
-      <Filter>4_Render</Filter>
-    </ClInclude>
     <ClInclude Include="Render\Rhi.h">
       <Filter>4_Render</Filter>
     </ClInclude>
@@ -113,6 +104,15 @@
     </ClInclude>
     <ClInclude Include="Render\D3D11Header.h">
       <Filter>4_Render\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DefaultAllocator.h">
+      <Filter>4_Render\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DefaultAssert.h">
+      <Filter>4_Render\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DefaultLog.h">
+      <Filter>4_Render\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +148,12 @@
     </Filter>
     <Filter Include="4_Render\D3D12">
       <UniqueIdentifier>{5f3e1101-6089-43ee-baca-06f881ece6e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_Render\Core">
+      <UniqueIdentifier>{9c5e9ebd-df77-4f8f-9056-f1331a6275ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_Render\Utility">
+      <UniqueIdentifier>{2fa7478c-9570-4554-8276-db81f464ad93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

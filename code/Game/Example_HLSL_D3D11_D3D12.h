@@ -26,7 +26,6 @@ VS_OUTPUT main(float2 Position : POSITION)	// Clip space vertex position as inpu
 }
 )";
 
-
 //[-------------------------------------------------------]
 //[ Fragment shader source code                           ]
 //[-------------------------------------------------------]
@@ -37,7 +36,7 @@ fragmentShaderSourceCode = R"(
 float4 main(float4 Position : SV_POSITION) : SV_TARGET
 {
 	// Return white
-	return float4(1.0f, 1.0f, 1.0f, 1.0f);
+	return float4(1.0f, 0.5f, 2.5f, 1.0f);
 }
 )";
 

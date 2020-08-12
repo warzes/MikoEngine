@@ -34,9 +34,13 @@ http://nfrechette.github.io/2015/05/11/memory_allocator_interface/ (unrimp examp
 http://cnicholson.net/2009/02/stupid-c-tricks-adventures-in-assert/
 https://milty.nl/grad_guide/index.html     !!!!!!!!!! терминология GAPI
 
+Графика
+https://bartwronski.files.wordpress.com/2014/08/bwronski_volumetric_fog_siggraph2014.pdf
+
 D3D12
 https://www.3dgep.com/learning-directx-12-1/
 https://github.com/vinjn/awesome-d3d12
+https://microsoft.github.io/DirectX-Specs/
 
 ===================================================================================================
 для игр и демо
@@ -59,6 +63,7 @@ https://gpuopen-librariesandsdks.github.io/V-EZ/#_samplers
 https://paroj.github.io/gltut/
 https://www.khronos.org/files/vulkan10-reference-guide.pdf
 https://vulkan.lunarg.com/doc/view/1.2.135.0/windows/tutorial/html/index.html
+https://indiecup.gtpmedia.net
 
 Поддержка feature level
 	Direct3D 11		Windows 7

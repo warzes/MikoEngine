@@ -1,1 +1,3 @@
-﻿- нужно сделать аналог RenderDevice из DX11. Который просто создает вулкан ресурсы без привязки к контексту цели создания. Тогда будет легче и гибче, чем если сразу прибивать все эти вещи к определенным целям
+﻿https://github.com/chaoticbob/tinyrenderers
+https://github.com/GPUOpen-LibrariesAndSDKs/Cauldron
+-urho3d

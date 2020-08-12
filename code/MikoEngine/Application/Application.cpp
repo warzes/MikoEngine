@@ -135,18 +135,54 @@ bool Application::init_base(int argc, const char * argv[])
 	const bool loadRhiApiSharedLibrary = true;
 	rhiContext = std::make_unique<Rhi::X11Context>(getX11Display(), glfwNativeWindowHandle(m_window));
 #endif
-	rhiInstance = std::make_unique<Rhi::RhiInstance>("Vulkan", *rhiContext.get(), loadRhiApiSharedLibrary);
-	rhi = rhiInstance->getRhi();
+	rhiInstance = std::make_unique<Rhi::RhiInstance>("Direct3D12", *rhiContext.get(), loadRhiApiSharedLibrary);
+	rhi = (nullptr != rhiInstance) ? rhiInstance->getRhi() : nullptr;
 	if ( nullptr == rhi && !rhi->isInitialized() )
+	{
+		rhi = nullptr;
+		rhiInstance.reset();
+		rhiInstance = nullptr;
+		rhiContext.reset();
+		rhiContext = nullptr;
 		return 0;
+	}
 
-	// Create RHI swap chain instance
+#if !SE_DEBUG
+	// By using
+	//   "Rhi::IRhi::isDebugEnabled()"
+	// in here its possible to check whether or not your application is currently running
+	// within a known debug/profile tool like e.g. Direct3D PIX (also works directly within VisualStudio
+	// 2017 out-of-the-box). In case you want at least try to protect your asset, you might want to stop
+	// the execution of your application when a debug/profile tool is used which can e.g. record your data.
+	// Please be aware that this will only make it a little bit harder to debug and e.g. while doing so
+	// reading out your asset data. Public articles like
+	// "PIX: How to circumvent D3DPERF_SetOptions" at
+	//   http://www.gamedev.net/blog/1323/entry-2250952-pix-how-to-circumvent-d3dperf-setoptions/
+	// describe how to "hack around" this security measurement, so, don't rely on it. Those debug
+	// methods work fine when using a Direct3D RHI implementation. OpenGL on the other hand
+	// has no Direct3D PIX like functions or extensions, use for instance "gDEBugger" (http://www.gremedy.com/)
+	// instead.
+	if ( nullptr != rhi && rhi->isDebugEnabled() )
+	{
+		// We don't allow debugging in case debugging is disabled
+		//"Debugging with debug/profile tools like e.g. Direct3D PIX is disabled within this application";
+		//delete rhi;
+		//rhi = nullptr;
+	}
+#endif
+
+	// Create render pass using the preferred swap chain texture format
 	const Rhi::Capabilities& capabilities = rhi->getCapabilities();
+
+	Rhi::IRenderPass* renderPass = rhi->createRenderPass(1, &capabilities.preferredSwapChainColorTextureFormat, capabilities.preferredSwapChainDepthStencilTextureFormat, 1 RHI_RESOURCE_DEBUG_NAME("Main"));
+
+	// Create a main swap chain instance
 	mainSwapChain = rhi->createSwapChain(
-		*rhi->createRenderPass(1, &capabilities.preferredSwapChainColorTextureFormat, capabilities.preferredSwapChainDepthStencilTextureFormat, 1 RHI_RESOURCE_DEBUG_NAME("Main")),
+		*renderPass,
 		Rhi::WindowHandle{ (handle)glfwNativeWindowHandle(m_window), nullptr, nullptr },	// TODO(co) Linux Wayland support
 		rhi->getContext().isUsingExternalContext()
 		RHI_RESOURCE_DEBUG_NAME("Main"));
+	mainSwapChain->addReference();	// Internal RHI reference // TODO:???
 	
 	SE_LOG_INFO("Successfully initialized platform!");
 	if ( !init(argc, argv) )
@@ -158,7 +194,37 @@ bool Application::init_base(int argc, const char * argv[])
 void Application::update_base(double delta)
 {
 	begin_frame();
+
+	// TODO: ??????
+#if 1
+	{ // Scene rendering
+				// Scoped debug event
+		COMMAND_SCOPED_DEBUG_EVENT_FUNCTION(commandBuffer)
+
+			// Make the graphics main swap chain to the current render target
+			Rhi::Command::SetGraphicsRenderTarget::create(commandBuffer, mainSwapChain);
+
+		{ // Since Direct3D 12 is command list based, the viewport and scissor rectangle must be set in every draw call to work with all supported RHI implementations
+			// Get the window size
+			uint32_t width = 1;
+			uint32_t height = 1;
+			mainSwapChain->getWidthAndHeight(width, height);
+
+			// Set the graphics viewport and scissor rectangle
+			Rhi::Command::SetGraphicsViewportAndScissorRectangle::create(commandBuffer, 0, 0, width, height);
+		}
+
+		// Submit command buffer to the RHI implementation
+		commandBuffer.submitToRhiAndClear(*rhi);
+
+		// Call the draw method
+		update(delta);
+	}
+	// Submit command buffer to the RHI implementation
+	commandBuffer.submitToRhiAndClear(*rhi);
+#else
 	update(delta);
+#endif	
 	end_frame();
 }
 //-----------------------------------------------------------------------------
@@ -166,6 +232,24 @@ void Application::shutdown_base()
 {
 	// Execute user-side shutdown method.
 	shutdown();
+
+	// Delete the RHI instance
+	if ( nullptr != mainSwapChain )
+	{
+		mainSwapChain->releaseReference();
+		mainSwapChain = nullptr;
+	}
+	rhi = nullptr;
+	//if ( nullptr != rhiInstance )
+	//{
+	//	rhiInstance->destroyRhi();
+	//}
+
+	// Delete the RHI instance
+	//rhiInstance.reset();
+	//rhiInstance = nullptr;
+	//rhiContext.reset();
+	//rhiContext = nullptr;
 
 	// Shutdown GLFW.
 	glfwDestroyWindow(m_window);
@@ -192,7 +276,12 @@ void Application::begin_frame()
 	m_last_mouse_x = m_mouse_x;
 	m_last_mouse_y = m_mouse_y;
 
-	if ( m_window_resized )
+	// Is there a RHI and main swap chain instance?
+	// TODO: перенести в update???
+	if ( nullptr == rhi || nullptr == mainSwapChain )
+		return;
+
+	if ( m_window_resized && mainSwapChain )
 	{
 		// Inform the swap chain that the size of the native window was changed
 		// -> Required for Direct3D 11
@@ -204,6 +293,29 @@ void Application::begin_frame()
 	//	mainSwapChain->setFullscreenState(!mainSwapChain->getFullscreenState());
 
 	m_endFrame = rhi->beginScene();
+
+	//{ // Scene rendering
+	//	// Scoped debug event
+	//	COMMAND_SCOPED_DEBUG_EVENT_FUNCTION(commandBuffer);
+
+	//	// Make the graphics main swap chain to the current render target
+	//	Rhi::Command::SetGraphicsRenderTarget::create(commandBuffer, mainSwapChain);
+
+	//	{ // Since Direct3D 12 is command list based, the viewport and scissor rectangle must be set in every draw call to work with all supported RHI implementations
+	//		// Get the window size
+	//		uint32_t width = 1;
+	//		uint32_t height = 1;
+	//		mainSwapChain->getWidthAndHeight(width, height);
+
+	//		// Set the graphics viewport and scissor rectangle
+	//		Rhi::Command::SetGraphicsViewportAndScissorRectangle::create(commandBuffer, 0, 0, width, height);
+	//	}
+
+	//	// Submit command buffer to the RHI implementation
+	//	commandBuffer.submitToRhiAndClear(*rhi);
+	//}
+
+	//commandBuffer.submitToRhiAndClear(*rhi);
 }
 //-----------------------------------------------------------------------------
 void Application::end_frame()
@@ -211,6 +323,11 @@ void Application::end_frame()
 	m_timer.Stop();
 	m_delta = m_timer.ElapsedTimeMilisec();
 	m_delta_seconds = m_timer.ElapsedTimeSec();
+
+	// Is there a RHI and main swap chain instance?
+	// TODO: перенести в update???
+	if ( nullptr == rhi || nullptr == mainSwapChain )
+		return;
 
 	if ( m_endFrame )
 		rhi->endScene();
