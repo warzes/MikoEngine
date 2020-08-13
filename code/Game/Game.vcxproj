@@ -170,15 +170,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MyApp.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Example_GLSL_410.h" />
-    <ClInclude Include="Example_GLSL_450.h" />
-    <ClInclude Include="Example_GLSL_ES3.h" />
-    <ClInclude Include="Example_HLSL_D3D11_D3D12.h" />
-    <ClInclude Include="Example_Null.h" />
-    <ClInclude Include="MyApp.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Texture_GLSL_410.h" />
+    <ClInclude Include="Texture_GLSL_450.h" />
+    <ClInclude Include="Texture_GLSL_ES3.h" />
+    <ClInclude Include="Texture_HLSL_D3D11_D3D12.h" />
+    <ClInclude Include="Texture_Null.h" />
+    <ClInclude Include="Triangle_GLSL_410.h" />
+    <ClInclude Include="Triangle_GLSL_450.h" />
+    <ClInclude Include="Triangle_GLSL_ES3.h" />
+    <ClInclude Include="Triangle_HLSL_D3D11_D3D12.h" />
+    <ClInclude Include="Triangle_Null.h" />
+    <ClInclude Include="Triangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

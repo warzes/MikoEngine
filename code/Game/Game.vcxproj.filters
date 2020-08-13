@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Triangle.cpp">
+      <Filter>Example\1_triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Example\2_texture</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Triangle.h">
+      <Filter>Example\1_triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle_Null.h">
+      <Filter>Example\1_triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle_HLSL_D3D11_D3D12.h">
+      <Filter>Example\1_triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle_GLSL_ES3.h">
+      <Filter>Example\1_triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle_GLSL_450.h">
+      <Filter>Example\1_triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle_GLSL_410.h">
+      <Filter>Example\1_triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Example\2_texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture_GLSL_450.h">
+      <Filter>Example\2_texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture_GLSL_410.h">
+      <Filter>Example\2_texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture_GLSL_ES3.h">
+      <Filter>Example\2_texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture_HLSL_D3D11_D3D12.h">
+      <Filter>Example\2_texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture_Null.h">
+      <Filter>Example\2_texture</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Example">
+      <UniqueIdentifier>{b8a76135-6ada-4dd0-92a2-eccb88d87724}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\1_triangle">
+      <UniqueIdentifier>{e9f8a838-e8c4-4cca-ac22-7e686d0d6d07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\2_texture">
+      <UniqueIdentifier>{7e7ee91f-fcf7-444c-b7c9-c7faf4af7a96}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -8,6 +8,8 @@
 #include "VulkanContext.h"
 #include "VulkanUnsort.h"
 
+#pragma comment(lib, "vulkan-1.lib")
+
 namespace VulkanRhi
 {
 	VulkanRhi::VulkanRhi(const Rhi::Context& context) :

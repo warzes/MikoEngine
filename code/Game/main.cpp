@@ -1,9 +1,8 @@
-#include "MyApp.h"
+#include "Triangle.h"
+#include "Texture.h"
 //-----------------------------------------------------------------------------
 #pragma comment(lib, "3rdparty.lib")
 #pragma comment(lib, "MikoEngine.lib")
-#pragma comment(lib, "vulkan-1.lib")
-#pragma comment(lib, "OpenGL32.lib")
 //-----------------------------------------------------------------------------
 int main(
 	[[maybe_unused]] int argc,
@@ -11,7 +10,7 @@ int main(
 {
 	try
 	{
-		MyApp app;
+		Texture app;
 		return app.Run(argc, argv);
 	}
 	catch ( const std::exception &e )

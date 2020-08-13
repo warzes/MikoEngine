@@ -2,7 +2,7 @@
 
 #include <MikoEngine/MikoHeader.h>
 
-class MyApp : public Application
+class Triangle : public Application
 {
 public:
     bool init(int argc, const char* argv[]) override;

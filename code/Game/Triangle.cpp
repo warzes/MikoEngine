@@ -1,6 +1,6 @@
-#include "MyApp.h"
+#include "Triangle.h"
 
-bool MyApp::init(int argc, const char * argv[])
+bool Triangle::init(int argc, const char * argv[])
 {
 	// Create the buffer manager
 	bufferManager = rhi->createBufferManager();
@@ -61,11 +61,11 @@ bool MyApp::init(int argc, const char * argv[])
 			// Get the shader source code (outsourced to keep an overview)
 			const char* vertexShaderSourceCode = nullptr;
 			const char* fragmentShaderSourceCode = nullptr;
-#include "Example_GLSL_450.h"	// For Vulkan
-#include "Example_GLSL_410.h"	// macOS 10.11 only supports OpenGL 4.1 hence it's our OpenGL minimum
-#include "Example_GLSL_ES3.h"
-#include "Example_HLSL_D3D11_D3D12.h"
-#include "Example_Null.h"
+#include "Triangle_GLSL_450.h"	// For Vulkan
+#include "Triangle_GLSL_410.h"	// macOS 10.11 only supports OpenGL 4.1 hence it's our OpenGL minimum
+#include "Triangle_GLSL_ES3.h"
+#include "Triangle_HLSL_D3D11_D3D12.h"
+#include "Triangle_Null.h"
 
 			// Create the graphics program
 			Rhi::IShaderLanguage& shaderLanguage = rhi->getDefaultShaderLanguage();
@@ -133,25 +133,25 @@ bool MyApp::init(int argc, const char * argv[])
 	return true;
 }
 
-void MyApp::update(double delta)
+void Triangle::update(double delta)
 {
 	// Submit command buffer to the RHI implementation
 	commandBuffer.submitToRhi(*rhi);
 }
 
-void MyApp::shutdown()
+void Triangle::shutdown()
 {
 }
 
-ApplicationSetting MyApp::intial_app_settings()
+ApplicationSetting Triangle::intial_app_settings()
 {
     ApplicationSetting settings;
     settings.width = 1280;
     settings.height = 720;
-    settings.title = "Hello Game";
+    settings.title = "Triangle";
     return settings;
 }
 
-void MyApp::window_resized(int width, int height)
+void Triangle::window_resized(int width, int height)
 {
 }
