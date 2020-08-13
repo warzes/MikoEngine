@@ -538,7 +538,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		static constexpr const char* GLSL_NAME = "GLSL";	///< ASCII name of this shader language, always valid (do not free the memory the returned pointer is pointing to)
+		static constexpr const char* GLSL_NAME = "GLSL";	// ASCII name of this shader language, always valid (do not free the memory the returned pointer is pointing to)
 
 		#ifdef SE_GLSLTOSPIRV
 			static bool GlslangInitialized = false;
@@ -546,108 +546,108 @@ namespace
 			// Settings from "glslang/StandAlone/ResourceLimits.cpp"
 			static constexpr TBuiltInResource DefaultTBuiltInResource =
 			{
-				32,		///< MaxLights
-				6,		///< MaxClipPlanes
-				32,		///< MaxTextureUnits
-				32,		///< MaxTextureCoords
-				64,		///< MaxVertexAttribs
-				4096,	///< MaxVertexUniformComponents
-				64,		///< MaxVaryingFloats
-				32,		///< MaxVertexTextureImageUnits
-				80,		///< MaxCombinedTextureImageUnits
-				32,		///< MaxTextureImageUnits
-				4096,	///< MaxFragmentUniformComponents
-				32,		///< MaxDrawBuffers
-				128,	///< MaxVertexUniformVectors
-				8,		///< MaxVaryingVectors
-				16,		///< MaxFragmentUniformVectors
-				16,		///< MaxVertexOutputVectors
-				15,		///< MaxFragmentInputVectors
-				-8,		///< MinProgramTexelOffset
-				7,		///< MaxProgramTexelOffset
-				8,		///< MaxClipDistances
-				65535,	///< MaxComputeWorkGroupCountX
-				65535,	///< MaxComputeWorkGroupCountY
-				65535,	///< MaxComputeWorkGroupCountZ
-				1024,	///< MaxComputeWorkGroupSizeX
-				1024,	///< MaxComputeWorkGroupSizeY
-				64,		///< MaxComputeWorkGroupSizeZ
-				1024,	///< MaxComputeUniformComponents
-				16,		///< MaxComputeTextureImageUnits
-				8,		///< MaxComputeImageUniforms
-				8,		///< MaxComputeAtomicCounters
-				1,		///< MaxComputeAtomicCounterBuffers
-				60,		///< MaxVaryingComponents
-				64,		///< MaxVertexOutputComponents
-				64,		///< MaxGeometryInputComponents
-				128,	///< MaxGeometryOutputComponents
-				128,	///< MaxFragmentInputComponents
-				8,		///< MaxImageUnits
-				8,		///< MaxCombinedImageUnitsAndFragmentOutputs
-				8,		///< MaxCombinedShaderOutputResources
-				0,		///< MaxImageSamples
-				0,		///< MaxVertexImageUniforms
-				0,		///< MaxTessControlImageUniforms
-				0,		///< MaxTessEvaluationImageUniforms
-				0,		///< MaxGeometryImageUniforms
-				8,		///< MaxFragmentImageUniforms
-				8,		///< MaxCombinedImageUniforms
-				16,		///< MaxGeometryTextureImageUnits
-				256,	///< MaxGeometryOutputVertices
-				1024,	///< MaxGeometryTotalOutputComponents
-				1024,	///< MaxGeometryUniformComponents
-				64,		///< MaxGeometryVaryingComponents
-				128,	///< MaxTessControlInputComponents
-				128,	///< MaxTessControlOutputComponents
-				16,		///< MaxTessControlTextureImageUnits
-				1024,	///< MaxTessControlUniformComponents
-				4096,	///< MaxTessControlTotalOutputComponents
-				128,	///< MaxTessEvaluationInputComponents
-				128,	///< MaxTessEvaluationOutputComponents
-				16,		///< MaxTessEvaluationTextureImageUnits
-				1024,	///< MaxTessEvaluationUniformComponents
-				120,	///< MaxTessPatchComponents
-				32,		///< MaxPatchVertices
-				64,		///< MaxTessGenLevel
-				16,		///< MaxViewports
-				0,		///< MaxVertexAtomicCounters
-				0,		///< MaxTessControlAtomicCounters
-				0,		///< MaxTessEvaluationAtomicCounters
-				0,		///< MaxGeometryAtomicCounters
-				8,		///< MaxFragmentAtomicCounters
-				8,		///< MaxCombinedAtomicCounters
-				1,		///< MaxAtomicCounterBindings
-				0,		///< MaxVertexAtomicCounterBuffers
-				0,		///< MaxTessControlAtomicCounterBuffers
-				0,		///< MaxTessEvaluationAtomicCounterBuffers
-				0,		///< MaxGeometryAtomicCounterBuffers
-				1,		///< MaxFragmentAtomicCounterBuffers
-				1,		///< MaxCombinedAtomicCounterBuffers
-				16384,	///< MaxAtomicCounterBufferSize
-				4,		///< MaxTransformFeedbackBuffers
-				64,		///< MaxTransformFeedbackInterleavedComponents
-				8,		///< MaxCullDistances
-				8,		///< MaxCombinedClipAndCullDistances
-				4,		///< MaxSamples
-				256,	///< MaxMeshOutputVerticesNV
-				512,	///< MaxMeshOutputPrimitivesNV
-				32,		///< MaxMeshWorkGroupSizeX_NV
-				1,		///< MaxMeshWorkGroupSizeY_NV
-				1,		///< MaxMeshWorkGroupSizeZ_NV
-				32,		///< MaxTaskWorkGroupSizeX_NV
-				1,		///< MaxTaskWorkGroupSizeY_NV
-				1,		///< MaxTaskWorkGroupSizeZ_NV
-				4,		///< MaxMeshViewCountNV
-				{		///< limits
-					1,	///< nonInductiveForLoops
-					1,	///< whileLoops
-					1,	///< doWhileLoops
-					1,	///< generalUniformIndexing
-					1,	///< generalAttributeMatrixVectorIndexing
-					1,	///< generalVaryingIndexing
-					1,	///< generalSamplerIndexing
-					1,	///< generalVariableIndexing
-					1,	///< generalConstantMatrixVectorIndexing
+				32,		// MaxLights
+				6,		// MaxClipPlanes
+				32,		// MaxTextureUnits
+				32,		// MaxTextureCoords
+				64,		// MaxVertexAttribs
+				4096,	// MaxVertexUniformComponents
+				64,		// MaxVaryingFloats
+				32,		// MaxVertexTextureImageUnits
+				80,		// MaxCombinedTextureImageUnits
+				32,		// MaxTextureImageUnits
+				4096,	// MaxFragmentUniformComponents
+				32,		// MaxDrawBuffers
+				128,	// MaxVertexUniformVectors
+				8,		// MaxVaryingVectors
+				16,		// MaxFragmentUniformVectors
+				16,		// MaxVertexOutputVectors
+				15,		// MaxFragmentInputVectors
+				-8,		// MinProgramTexelOffset
+				7,		// MaxProgramTexelOffset
+				8,		// MaxClipDistances
+				65535,	// MaxComputeWorkGroupCountX
+				65535,	// MaxComputeWorkGroupCountY
+				65535,	// MaxComputeWorkGroupCountZ
+				1024,	// MaxComputeWorkGroupSizeX
+				1024,	// MaxComputeWorkGroupSizeY
+				64,		// MaxComputeWorkGroupSizeZ
+				1024,	// MaxComputeUniformComponents
+				16,		// MaxComputeTextureImageUnits
+				8,		// MaxComputeImageUniforms
+				8,		// MaxComputeAtomicCounters
+				1,		// MaxComputeAtomicCounterBuffers
+				60,		// MaxVaryingComponents
+				64,		// MaxVertexOutputComponents
+				64,		// MaxGeometryInputComponents
+				128,	// MaxGeometryOutputComponents
+				128,	// MaxFragmentInputComponents
+				8,		// MaxImageUnits
+				8,		// MaxCombinedImageUnitsAndFragmentOutputs
+				8,		// MaxCombinedShaderOutputResources
+				0,		// MaxImageSamples
+				0,		// MaxVertexImageUniforms
+				0,		// MaxTessControlImageUniforms
+				0,		// MaxTessEvaluationImageUniforms
+				0,		// MaxGeometryImageUniforms
+				8,		// MaxFragmentImageUniforms
+				8,		// MaxCombinedImageUniforms
+				16,		// MaxGeometryTextureImageUnits
+				256,	// MaxGeometryOutputVertices
+				1024,	// MaxGeometryTotalOutputComponents
+				1024,	// MaxGeometryUniformComponents
+				64,		// MaxGeometryVaryingComponents
+				128,	// MaxTessControlInputComponents
+				128,	// MaxTessControlOutputComponents
+				16,		// MaxTessControlTextureImageUnits
+				1024,	// MaxTessControlUniformComponents
+				4096,	// MaxTessControlTotalOutputComponents
+				128,	// MaxTessEvaluationInputComponents
+				128,	// MaxTessEvaluationOutputComponents
+				16,		// MaxTessEvaluationTextureImageUnits
+				1024,	// MaxTessEvaluationUniformComponents
+				120,	// MaxTessPatchComponents
+				32,		// MaxPatchVertices
+				64,		// MaxTessGenLevel
+				16,		// MaxViewports
+				0,		// MaxVertexAtomicCounters
+				0,		// MaxTessControlAtomicCounters
+				0,		// MaxTessEvaluationAtomicCounters
+				0,		// MaxGeometryAtomicCounters
+				8,		// MaxFragmentAtomicCounters
+				8,		// MaxCombinedAtomicCounters
+				1,		// MaxAtomicCounterBindings
+				0,		// MaxVertexAtomicCounterBuffers
+				0,		// MaxTessControlAtomicCounterBuffers
+				0,		// MaxTessEvaluationAtomicCounterBuffers
+				0,		// MaxGeometryAtomicCounterBuffers
+				1,		// MaxFragmentAtomicCounterBuffers
+				1,		// MaxCombinedAtomicCounterBuffers
+				16384,	// MaxAtomicCounterBufferSize
+				4,		// MaxTransformFeedbackBuffers
+				64,		// MaxTransformFeedbackInterleavedComponents
+				8,		// MaxCullDistances
+				8,		// MaxCombinedClipAndCullDistances
+				4,		// MaxSamples
+				256,	// MaxMeshOutputVerticesNV
+				512,	// MaxMeshOutputPrimitivesNV
+				32,		// MaxMeshWorkGroupSizeX_NV
+				1,		// MaxMeshWorkGroupSizeY_NV
+				1,		// MaxMeshWorkGroupSizeZ_NV
+				32,		// MaxTaskWorkGroupSizeX_NV
+				1,		// MaxTaskWorkGroupSizeY_NV
+				1,		// MaxTaskWorkGroupSizeZ_NV
+				4,		// MaxMeshViewCountNV
+				{		// limits
+					1,	// nonInductiveForLoops
+					1,	// whileLoops
+					1,	// doWhileLoops
+					1,	// generalUniformIndexing
+					1,	// generalAttributeMatrixVectorIndexing
+					1,	// generalVaryingIndexing
+					1,	// generalSamplerIndexing
+					1,	// generalVariableIndexing
+					1,	// generalConstantMatrixVectorIndexing
 				}
 			};
 		#endif
@@ -1469,8 +1469,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit OpenGLRhi(const OpenGLRhi& source) = delete;
-		OpenGLRhi& operator =(const OpenGLRhi& source) = delete;
+		explicit OpenGLRhi(const OpenGLRhi&) = delete;
+		OpenGLRhi& operator =(const OpenGLRhi&) = delete;
 
 		/**
 		*  @brief
@@ -1529,35 +1529,35 @@ namespace OpenGLRhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		OpenGLRuntimeLinking* mOpenGLRuntimeLinking;			///< OpenGL runtime linking instance, always valid
-		IOpenGLContext*		  mOpenGLContext;					///< OpenGL context instance, always valid
-		Extensions*			  mExtensions;						///< Extensions instance, always valid
-		Rhi::IShaderLanguage* mShaderLanguage;					///< Shader language instance (we keep a reference to it), can be a null pointer
-		RootSignature*		  mGraphicsRootSignature;			///< Currently set graphics root signature (we keep a reference to it), can be a null pointer
-		RootSignature*		  mComputeRootSignature;			///< Currently set compute root signature (we keep a reference to it), can be a null pointer
-		Rhi::ISamplerState*   mDefaultSamplerState;				///< Default rasterizer state (we keep a reference to it), can be a null pointer
-		GLuint				  mOpenGLCopyResourceFramebuffer;	///< OpenGL framebuffer ("container" object, not shared between OpenGL contexts) used by "OpenGLRhi::OpenGLRhi::copyResource()" if the "GL_ARB_copy_image"-extension isn't available, can be zero if no resource is allocated
-		GLuint				  mDefaultOpenGLVertexArray;		///< Default OpenGL vertex array ("container" object, not shared between OpenGL contexts) to enable attribute-less rendering, can be zero if no resource is allocated
+		OpenGLRuntimeLinking* mOpenGLRuntimeLinking;			// OpenGL runtime linking instance, always valid
+		IOpenGLContext*		  mOpenGLContext;					// OpenGL context instance, always valid
+		Extensions*			  mExtensions;						// Extensions instance, always valid
+		Rhi::IShaderLanguage* mShaderLanguage;					// Shader language instance (we keep a reference to it), can be a null pointer
+		RootSignature*		  mGraphicsRootSignature;			// Currently set graphics root signature (we keep a reference to it), can be a null pointer
+		RootSignature*		  mComputeRootSignature;			// Currently set compute root signature (we keep a reference to it), can be a null pointer
+		Rhi::ISamplerState*   mDefaultSamplerState;				// Default rasterizer state (we keep a reference to it), can be a null pointer
+		GLuint				  mOpenGLCopyResourceFramebuffer;	// OpenGL framebuffer ("container" object, not shared between OpenGL contexts) used by "OpenGLRhi::OpenGLRhi::copyResource()" if the "GL_ARB_copy_image"-extension isn't available, can be zero if no resource is allocated
+		GLuint				  mDefaultOpenGLVertexArray;		// Default OpenGL vertex array ("container" object, not shared between OpenGL contexts) to enable attribute-less rendering, can be zero if no resource is allocated
 		// States
-		GraphicsPipelineState* mGraphicsPipelineState;	///< Currently set graphics pipeline state (we keep a reference to it), can be a null pointer
-		ComputePipelineState*  mComputePipelineState;	///< Currently set compute pipeline state (we keep a reference to it), can be a null pointer
+		GraphicsPipelineState* mGraphicsPipelineState;	// Currently set graphics pipeline state (we keep a reference to it), can be a null pointer
+		ComputePipelineState*  mComputePipelineState;	// Currently set compute pipeline state (we keep a reference to it), can be a null pointer
 		// Input-assembler (IA) stage
-		VertexArray* mVertexArray;				///< Currently set vertex array (we keep a reference to it), can be a null pointer
-		GLenum		 mOpenGLPrimitiveTopology;	///< OpenGL primitive topology describing the type of primitive to render
-		GLint		 mNumberOfVerticesPerPatch;	///< Number of vertices per patch
+		VertexArray* mVertexArray;				// Currently set vertex array (we keep a reference to it), can be a null pointer
+		GLenum		 mOpenGLPrimitiveTopology;	// OpenGL primitive topology describing the type of primitive to render
+		GLint		 mNumberOfVerticesPerPatch;	// Number of vertices per patch
 		// Output-merger (OM) stage
-		Rhi::IRenderTarget* mRenderTarget;	///< Currently set render target (we keep a reference to it), can be a null pointer
+		Rhi::IRenderTarget* mRenderTarget;	// Currently set render target (we keep a reference to it), can be a null pointer
 		// State cache to avoid making redundant OpenGL calls
-		GLenum mOpenGLClipControlOrigin;	///< Currently set OpenGL clip control origin
-		GLuint mOpenGLProgramPipeline;		///< Currently set OpenGL program pipeline, can be zero if no resource is set
-		GLuint mOpenGLProgram;				///< Currently set OpenGL program, can be zero if no resource is set
-		GLuint mOpenGLIndirectBuffer;		///< Currently set OpenGL indirect buffer, can be zero if no resource is set
+		GLenum mOpenGLClipControlOrigin;	// Currently set OpenGL clip control origin
+		GLuint mOpenGLProgramPipeline;		// Currently set OpenGL program pipeline, can be zero if no resource is set
+		GLuint mOpenGLProgram;				// Currently set OpenGL program, can be zero if no resource is set
+		GLuint mOpenGLIndirectBuffer;		// Currently set OpenGL indirect buffer, can be zero if no resource is set
 		// Draw ID uniform location for "GL_ARB_base_instance"-emulation (see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html)
-		GLuint	 mOpenGLVertexProgram;			///< Currently set OpenGL vertex program, can be zero if no resource is set
-		GLint	 mDrawIdUniformLocation;		///< Draw ID uniform location
-		uint32_t mCurrentStartInstanceLocation;	///< Currently set start instance location
+		GLuint	 mOpenGLVertexProgram;			// Currently set OpenGL vertex program, can be zero if no resource is set
+		GLint	 mDrawIdUniformLocation;		// Draw ID uniform location
+		uint32_t mCurrentStartInstanceLocation;	// Currently set start instance location
 		#if SE_DEBUG
-			bool mDebugBetweenBeginEndScene;	///< Just here for state tracking in debug builds
+			bool mDebugBetweenBeginEndScene;	// Just here for state tracking in debug builds
 		#endif
 
 
@@ -1658,8 +1658,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit OpenGLRuntimeLinking(const OpenGLRuntimeLinking& source) = delete;
-		OpenGLRuntimeLinking& operator =(const OpenGLRuntimeLinking& source) = delete;
+		explicit OpenGLRuntimeLinking(const OpenGLRuntimeLinking&) = delete;
+		OpenGLRuntimeLinking& operator =(const OpenGLRuntimeLinking&) = delete;
 
 		/**
 		*  @brief
@@ -1791,11 +1791,11 @@ namespace OpenGLRhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		OpenGLRhi&	mOpenGLRhi;					///< Owner OpenGL RHI instance
-		void*		mOpenGLSharedLibrary = nullptr;		///< OpenGL shared library, can be a null pointer
-		bool		mOwnsOpenGLSharedLibrary;	///< Indicates if the OpenGL shared library was loaded from ourself or provided from external
-		bool		mEntryPointsRegistered;		///< Entry points successfully registered?
-		bool		mInitialized;				///< Already initialized?
+		OpenGLRhi&	mOpenGLRhi;					// Owner OpenGL RHI instance
+		void*		mOpenGLSharedLibrary = nullptr;		// OpenGL shared library, can be a null pointer
+		bool		mOwnsOpenGLSharedLibrary;	// Indicates if the OpenGL shared library was loaded from ourself or provided from external
+		bool		mEntryPointsRegistered;		// Entry points successfully registered?
+		bool		mInitialized;				// Already initialized?
 
 
 	};
@@ -2118,8 +2118,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	public:
-		explicit Extensions(const Extensions& source) = delete;
-		Extensions& operator =(const Extensions& source) = delete;
+		explicit Extensions(const Extensions&) = delete;
+		Extensions& operator =(const Extensions&) = delete;
 
 		/**
 		*  @brief
@@ -3069,9 +3069,9 @@ namespace OpenGLRhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		OpenGLRhi&		mOpenGLRhi;		///< Owner OpenGL RHI instance
-		IOpenGLContext* mOpenGLContext;	///< Owner OpenGL context, always valid!
-		bool			mInitialized;	///< Are the extensions initialized?
+		OpenGLRhi&		mOpenGLRhi;		// Owner OpenGL RHI instance
+		IOpenGLContext* mOpenGLContext;	// Owner OpenGL context, always valid!
+		bool			mInitialized;	// Are the extensions initialized?
 
 		// Supported extensions
 		// WGL (Windows only)
@@ -3197,8 +3197,8 @@ namespace OpenGLRhi
 			mOpenGLRuntimeLinking(openGLRuntimeLinking)
 		{}
 
-		explicit IOpenGLContext(const IOpenGLContext& source) = delete;
-		IOpenGLContext& operator =(const IOpenGLContext& source) = delete;
+		explicit IOpenGLContext(const IOpenGLContext&) = delete;
+		IOpenGLContext& operator =(const IOpenGLContext&) = delete;
 
 		/**
 		*  @brief
@@ -3223,7 +3223,7 @@ namespace OpenGLRhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		OpenGLRuntimeLinking* mOpenGLRuntimeLinking;	///< OpenGL runtime linking instance, if null pointer this isn't a primary context
+		OpenGLRuntimeLinking* mOpenGLRuntimeLinking;	// OpenGL runtime linking instance, if null pointer this isn't a primary context
 
 
 	};
@@ -3348,8 +3348,8 @@ namespace OpenGLRhi
 		//[ Private methods                                       ]
 		//[-------------------------------------------------------]
 		private:
-			explicit OpenGLContextWindows(const OpenGLContextWindows& source) = delete;
-			OpenGLContextWindows& operator =(const OpenGLContextWindows& source) = delete;
+			explicit OpenGLContextWindows(const OpenGLContextWindows&) = delete;
+			OpenGLContextWindows& operator =(const OpenGLContextWindows&) = delete;
 
 			/**
 			*  @brief
@@ -3596,11 +3596,11 @@ namespace OpenGLRhi
 		//[ Private data                                          ]
 		//[-------------------------------------------------------]
 		private:
-			handle mNativeWindowHandle;	///< OpenGL window, can be a null pointer (HWND)
-			handle mDummyWindow;			///< OpenGL dummy window, can be a null pointer (HWND)
-			HDC			mWindowDeviceContext;	///< The device context of the OpenGL dummy window, can be a null pointer
-			HGLRC		mWindowRenderContext;	///< The render context of the OpenGL dummy window, can be a null pointer
-			bool		mOwnsRenderContext;		///< Does this context owns the OpenGL render context?
+			handle mNativeWindowHandle;	// OpenGL window, can be a null pointer (HWND)
+			handle mDummyWindow;			// OpenGL dummy window, can be a null pointer (HWND)
+			HDC			mWindowDeviceContext;	// The device context of the OpenGL dummy window, can be a null pointer
+			HGLRC		mWindowRenderContext;	// The render context of the OpenGL dummy window, can be a null pointer
+			bool		mOwnsRenderContext;		// Does this context owns the OpenGL render context?
 
 
 		};
@@ -3729,8 +3729,8 @@ namespace OpenGLRhi
 		//[ Private methods                                       ]
 		//[-------------------------------------------------------]
 		private:
-			explicit OpenGLContextLinux(const OpenGLContextLinux& source) = delete;
-			OpenGLContextLinux& operator =(const OpenGLContextLinux& source) = delete;
+			explicit OpenGLContextLinux(const OpenGLContextLinux&) = delete;
+			OpenGLContextLinux& operator =(const OpenGLContextLinux&) = delete;
 
 			/**
 			*  @brief
@@ -3968,13 +3968,13 @@ namespace OpenGLRhi
 		//[ Private data                                          ]
 		//[-------------------------------------------------------]
 		private:
-			OpenGLRhi&	mOpenGLRhi;				///< Owner OpenGL RHI instance
-			handle mNativeWindowHandle;	///< OpenGL window, can be a null pointer (Window)
-			Display*	mDisplay;				///< The X11 display connection, can be a null pointer
-			bool		mOwnsX11Display;		///< Indicates if this instance owns the X11 display
-			GLXContext	mWindowRenderContext;	///< The render context of the OpenGL dummy window, can be a null pointer
+			OpenGLRhi&	mOpenGLRhi;				// Owner OpenGL RHI instance
+			handle mNativeWindowHandle;	// OpenGL window, can be a null pointer (Window)
+			Display*	mDisplay;				// The X11 display connection, can be a null pointer
+			bool		mOwnsX11Display;		// Indicates if this instance owns the X11 display
+			GLXContext	mWindowRenderContext;	// The render context of the OpenGL dummy window, can be a null pointer
 			bool		mUseExternalContext;
-			bool		mOwnsRenderContext;		///< Does this context own the OpenGL render context?
+			bool		mOwnsRenderContext;		// Does this context own the OpenGL render context?
 
 
 		};
@@ -4822,19 +4822,19 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ResourceGroup(const ResourceGroup& source) = delete;
-		ResourceGroup& operator =(const ResourceGroup& source) = delete;
+		explicit ResourceGroup(const ResourceGroup&) = delete;
+		ResourceGroup& operator =(const ResourceGroup&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t			 mRootParameterIndex;						///< The root parameter index number for binding
-		uint32_t			 mNumberOfResources;						///< Number of resources this resource group groups together
-		Rhi::IResource**	 mResources;								///< RHI resources, we keep a reference to it
-		Rhi::ISamplerState** mSamplerStates;							///< Sampler states, we keep a reference to it
-		uint32_t*			 mResourceIndexToUniformBlockBindingIndex;	///< Resource index to uniform block binding index mapping, only valid for uniform buffer resources
+		uint32_t			 mRootParameterIndex;						// The root parameter index number for binding
+		uint32_t			 mNumberOfResources;						// Number of resources this resource group groups together
+		Rhi::IResource**	 mResources;								// RHI resources, we keep a reference to it
+		Rhi::ISamplerState** mSamplerStates;							// Sampler states, we keep a reference to it
+		uint32_t*			 mResourceIndexToUniformBlockBindingIndex;	// Resource index to uniform block binding index mapping, only valid for uniform buffer resources
 
 
 	};
@@ -4973,8 +4973,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit RootSignature(const RootSignature& source) = delete;
-		RootSignature& operator =(const RootSignature& source) = delete;
+		explicit RootSignature(const RootSignature&) = delete;
+		RootSignature& operator =(const RootSignature&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -5059,15 +5059,15 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint mOpenGLArrayBuffer;	///< OpenGL array buffer, can be zero if no resource is allocated
+		GLuint mOpenGLArrayBuffer;	// OpenGL array buffer, can be zero if no resource is allocated
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexBuffer(const VertexBuffer& source) = delete;
-		VertexBuffer& operator =(const VertexBuffer& source) = delete;
+		explicit VertexBuffer(const VertexBuffer&) = delete;
+		VertexBuffer& operator =(const VertexBuffer&) = delete;
 
 
 	};
@@ -5147,8 +5147,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexBufferBind(const VertexBufferBind& source) = delete;
-		VertexBufferBind& operator =(const VertexBufferBind& source) = delete;
+		explicit VertexBufferBind(const VertexBufferBind&) = delete;
+		VertexBufferBind& operator =(const VertexBufferBind&) = delete;
 
 
 	};
@@ -5228,8 +5228,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexBufferDsa(const VertexBufferDsa& source) = delete;
-		VertexBufferDsa& operator =(const VertexBufferDsa& source) = delete;
+		explicit VertexBufferDsa(const VertexBufferDsa&) = delete;
+		VertexBufferDsa& operator =(const VertexBufferDsa&) = delete;
 
 
 	};
@@ -5335,17 +5335,17 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint   mOpenGLElementArrayBuffer;	///< OpenGL element array buffer, can be zero if no resource is allocated
-		GLenum   mOpenGLType;				///< OpenGL element array buffer data type
-		uint32_t mIndexSizeInBytes;			///< Number of bytes of an index
+		GLuint   mOpenGLElementArrayBuffer;	// OpenGL element array buffer, can be zero if no resource is allocated
+		GLenum   mOpenGLType;				// OpenGL element array buffer data type
+		uint32_t mIndexSizeInBytes;			// Number of bytes of an index
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit IndexBuffer(const IndexBuffer& source) = delete;
-		IndexBuffer& operator =(const IndexBuffer& source) = delete;
+		explicit IndexBuffer(const IndexBuffer&) = delete;
+		IndexBuffer& operator =(const IndexBuffer&) = delete;
 
 
 	};
@@ -5427,8 +5427,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit IndexBufferBind(const IndexBufferBind& source) = delete;
-		IndexBufferBind& operator =(const IndexBufferBind& source) = delete;
+		explicit IndexBufferBind(const IndexBufferBind&) = delete;
+		IndexBufferBind& operator =(const IndexBufferBind&) = delete;
 
 
 	};
@@ -5510,8 +5510,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit IndexBufferDsa(const IndexBufferDsa& source) = delete;
-		IndexBufferDsa& operator =(const IndexBufferDsa& source) = delete;
+		explicit IndexBufferDsa(const IndexBufferDsa&) = delete;
+		IndexBufferDsa& operator =(const IndexBufferDsa&) = delete;
 
 
 	};
@@ -5543,8 +5543,8 @@ namespace OpenGLRhi
 			public:
 			enum Enum
 			{
-				NO_VAO = 0,	///< No vertex array object
-				VAO    = 1	///< Vertex array object
+				NO_VAO = 0,	// No vertex array object
+				VAO    = 1	// Vertex array object
 			};
 		};
 
@@ -5638,16 +5638,16 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexArray(const VertexArray& source) = delete;
-		VertexArray& operator =(const VertexArray& source) = delete;
+		explicit VertexArray(const VertexArray&) = delete;
+		VertexArray& operator =(const VertexArray&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		IndexBuffer*			   mIndexBuffer;			///< Optional index buffer to use, can be a null pointer, the vertex array instance keeps a reference to the index buffer
-		InternalResourceType::Enum mInternalResourceType;	///< Internal resource type
+		IndexBuffer*			   mIndexBuffer;			// Optional index buffer to use, can be a null pointer, the vertex array instance keeps a reference to the index buffer
+		InternalResourceType::Enum mInternalResourceType;	// Internal resource type
 
 
 	};
@@ -5834,19 +5834,19 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexArrayNoVao(const VertexArrayNoVao& source) = delete;
-		VertexArrayNoVao& operator =(const VertexArrayNoVao& source) = delete;
+		explicit VertexArrayNoVao(const VertexArrayNoVao&) = delete;
+		VertexArrayNoVao& operator =(const VertexArrayNoVao&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t					  mNumberOfAttributes;			///< Number of attributes (position, color, texture coordinate, normal...), having zero attributes is valid
-		Rhi::VertexAttribute*		  mAttributes;					///< At least "numberOfAttributes" instances of vertex attributes, can be a null pointer in case there are zero attributes
-		uint32_t					  mNumberOfVertexBuffers;		///< Number of vertex buffers, having zero vertex buffers is valid
-		Rhi::VertexArrayVertexBuffer* mVertexBuffers;				///< At least mNumberOfVertexBuffers instances of vertex array vertex buffers, can be a null pointer in case there are zero vertex buffers, the data is internally copied and you have to free your memory if you no longer need it
-		bool						  mIsGL_ARB_instanced_arrays;	///< Is the "GL_ARB_instanced_arrays"-extension supported?
+		uint32_t					  mNumberOfAttributes;			// Number of attributes (position, color, texture coordinate, normal...), having zero attributes is valid
+		Rhi::VertexAttribute*		  mAttributes;					// At least "numberOfAttributes" instances of vertex attributes, can be a null pointer in case there are zero attributes
+		uint32_t					  mNumberOfVertexBuffers;		// Number of vertex buffers, having zero vertex buffers is valid
+		Rhi::VertexArrayVertexBuffer* mVertexBuffers;				// At least mNumberOfVertexBuffers instances of vertex array vertex buffers, can be a null pointer in case there are zero vertex buffers, the data is internally copied and you have to free your memory if you no longer need it
+		bool						  mIsGL_ARB_instanced_arrays;	// Is the "GL_ARB_instanced_arrays"-extension supported?
 
 
 	};
@@ -5954,17 +5954,17 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint		   mOpenGLVertexArray;		///< OpenGL vertex array ("container" object, not shared between OpenGL contexts), can be zero if no resource is allocated
-		uint32_t	   mNumberOfVertexBuffers;	///< Number of vertex buffers
-		VertexBuffer** mVertexBuffers;			///< Vertex buffers (we keep a reference to it) used by this vertex array, can be a null pointer
+		GLuint		   mOpenGLVertexArray;		// OpenGL vertex array ("container" object, not shared between OpenGL contexts), can be zero if no resource is allocated
+		uint32_t	   mNumberOfVertexBuffers;	// Number of vertex buffers
+		VertexBuffer** mVertexBuffers;			// Vertex buffers (we keep a reference to it) used by this vertex array, can be a null pointer
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexArrayVao(const VertexArrayVao& source) = delete;
-		VertexArrayVao& operator =(const VertexArrayVao& source) = delete;
+		explicit VertexArrayVao(const VertexArrayVao&) = delete;
+		VertexArrayVao& operator =(const VertexArrayVao&) = delete;
 
 
 	};
@@ -6111,8 +6111,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexArrayVaoBind(const VertexArrayVaoBind& source) = delete;
-		VertexArrayVaoBind& operator =(const VertexArrayVaoBind& source) = delete;
+		explicit VertexArrayVaoBind(const VertexArrayVaoBind&) = delete;
+		VertexArrayVaoBind& operator =(const VertexArrayVaoBind&) = delete;
 
 
 	};
@@ -6314,8 +6314,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexArrayVaoDsa(const VertexArrayVaoDsa& source) = delete;
-		VertexArrayVaoDsa& operator =(const VertexArrayVaoDsa& source) = delete;
+		explicit VertexArrayVaoDsa(const VertexArrayVaoDsa&) = delete;
+		VertexArrayVaoDsa& operator =(const VertexArrayVaoDsa&) = delete;
 
 
 	};
@@ -6425,17 +6425,17 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint mOpenGLTextureBuffer;	///< OpenGL texture buffer, can be zero if no resource is allocated
-		GLuint mOpenGLTexture;			///< OpenGL texture, can be zero if no resource is allocated
-		GLuint mOpenGLInternalFormat;	///< OpenGL internal format
+		GLuint mOpenGLTextureBuffer;	// OpenGL texture buffer, can be zero if no resource is allocated
+		GLuint mOpenGLTexture;			// OpenGL texture, can be zero if no resource is allocated
+		GLuint mOpenGLInternalFormat;	// OpenGL internal format
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureBuffer(const TextureBuffer& source) = delete;
-		TextureBuffer& operator =(const TextureBuffer& source) = delete;
+		explicit TextureBuffer(const TextureBuffer&) = delete;
+		TextureBuffer& operator =(const TextureBuffer&) = delete;
 
 
 	};
@@ -6542,8 +6542,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureBufferBind(const TextureBufferBind& source) = delete;
-		TextureBufferBind& operator =(const TextureBufferBind& source) = delete;
+		explicit TextureBufferBind(const TextureBufferBind&) = delete;
+		TextureBufferBind& operator =(const TextureBufferBind&) = delete;
 
 
 	};
@@ -6660,8 +6660,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureBufferDsa(const TextureBufferDsa& source) = delete;
-		TextureBufferDsa& operator =(const TextureBufferDsa& source) = delete;
+		explicit TextureBufferDsa(const TextureBufferDsa&) = delete;
+		TextureBufferDsa& operator =(const TextureBufferDsa&) = delete;
 
 
 	};
@@ -6739,15 +6739,15 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint mOpenGLStructuredBuffer;	///< OpenGL structured buffer, can be zero if no resource is allocated
+		GLuint mOpenGLStructuredBuffer;	// OpenGL structured buffer, can be zero if no resource is allocated
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit StructuredBuffer(const StructuredBuffer& source) = delete;
-		StructuredBuffer& operator =(const StructuredBuffer& source) = delete;
+		explicit StructuredBuffer(const StructuredBuffer&) = delete;
+		StructuredBuffer& operator =(const StructuredBuffer&) = delete;
 
 
 	};
@@ -6827,8 +6827,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit StructuredBufferBind(const StructuredBufferBind& source) = delete;
-		StructuredBufferBind& operator =(const StructuredBufferBind& source) = delete;
+		explicit StructuredBufferBind(const StructuredBufferBind&) = delete;
+		StructuredBufferBind& operator =(const StructuredBufferBind&) = delete;
 
 
 	};
@@ -6909,8 +6909,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit StructuredBufferDsa(const StructuredBufferDsa& source) = delete;
-		StructuredBufferDsa& operator =(const StructuredBufferDsa& source) = delete;
+		explicit StructuredBufferDsa(const StructuredBufferDsa&) = delete;
+		StructuredBufferDsa& operator =(const StructuredBufferDsa&) = delete;
 
 
 	};
@@ -6998,15 +6998,15 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint mOpenGLIndirectBuffer;	///< OpenGL indirect buffer, can be zero if no resource is allocated
+		GLuint mOpenGLIndirectBuffer;	// OpenGL indirect buffer, can be zero if no resource is allocated
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit IndirectBuffer(const IndirectBuffer& source) = delete;
-		IndirectBuffer& operator =(const IndirectBuffer& source) = delete;
+		explicit IndirectBuffer(const IndirectBuffer&) = delete;
+		IndirectBuffer& operator =(const IndirectBuffer&) = delete;
 
 
 	};
@@ -7086,8 +7086,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit IndirectBufferBind(const IndirectBufferBind& source) = delete;
-		IndirectBufferBind& operator =(const IndirectBufferBind& source) = delete;
+		explicit IndirectBufferBind(const IndirectBufferBind&) = delete;
+		IndirectBufferBind& operator =(const IndirectBufferBind&) = delete;
 
 
 	};
@@ -7167,8 +7167,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit IndirectBufferDsa(const IndirectBufferDsa& source) = delete;
-		IndirectBufferDsa& operator =(const IndirectBufferDsa& source) = delete;
+		explicit IndirectBufferDsa(const IndirectBufferDsa&) = delete;
+		IndirectBufferDsa& operator =(const IndirectBufferDsa&) = delete;
 
 
 	};
@@ -7246,15 +7246,15 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint mOpenGLUniformBuffer;	///< OpenGL uniform buffer, can be zero if no resource is allocated
+		GLuint mOpenGLUniformBuffer;	// OpenGL uniform buffer, can be zero if no resource is allocated
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit UniformBuffer(const UniformBuffer& source) = delete;
-		UniformBuffer& operator =(const UniformBuffer& source) = delete;
+		explicit UniformBuffer(const UniformBuffer&) = delete;
+		UniformBuffer& operator =(const UniformBuffer&) = delete;
 
 
 	};
@@ -7336,8 +7336,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit UniformBufferBind(const UniformBufferBind& source) = delete;
-		UniformBufferBind& operator =(const UniformBufferBind& source) = delete;
+		explicit UniformBufferBind(const UniformBufferBind&) = delete;
+		UniformBufferBind& operator =(const UniformBufferBind&) = delete;
 
 
 	};
@@ -7419,8 +7419,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit UniformBufferDsa(const UniformBufferDsa& source) = delete;
-		UniformBufferDsa& operator =(const UniformBufferDsa& source) = delete;
+		explicit UniformBufferDsa(const UniformBufferDsa&) = delete;
+		UniformBufferDsa& operator =(const UniformBufferDsa&) = delete;
 
 
 	};
@@ -7714,15 +7714,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit BufferManager(const BufferManager& source) = delete;
-		BufferManager& operator =(const BufferManager& source) = delete;
+		explicit BufferManager(const BufferManager&) = delete;
+		BufferManager& operator =(const BufferManager&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		const Extensions* mExtensions;	///< Extensions instance, always valid
+		const Extensions* mExtensions;	// Extensions instance, always valid
 
 
 	};
@@ -7827,16 +7827,16 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint mOpenGLTexture;			///< OpenGL texture, can be zero if no resource is allocated
-		GLuint mOpenGLInternalFormat;	///< OpenGL internal format
+		GLuint mOpenGLTexture;			// OpenGL texture, can be zero if no resource is allocated
+		GLuint mOpenGLInternalFormat;	// OpenGL internal format
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture1D(const Texture1D& source) = delete;
-		Texture1D& operator =(const Texture1D& source) = delete;
+		explicit Texture1D(const Texture1D&) = delete;
+		Texture1D& operator =(const Texture1D&) = delete;
 
 
 	};
@@ -7999,8 +7999,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture1DBind(const Texture1DBind& source) = delete;
-		Texture1DBind& operator =(const Texture1DBind& source) = delete;
+		explicit Texture1DBind(const Texture1DBind&) = delete;
+		Texture1DBind& operator =(const Texture1DBind&) = delete;
 
 
 	};
@@ -8224,8 +8224,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture1DDsa(const Texture1DDsa& source) = delete;
-		Texture1DDsa& operator =(const Texture1DDsa& source) = delete;
+		explicit Texture1DDsa(const Texture1DDsa&) = delete;
+		Texture1DDsa& operator =(const Texture1DDsa&) = delete;
 
 
 	};
@@ -8322,16 +8322,16 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint mOpenGLTexture;			///< OpenGL texture, can be zero if no resource is allocated
-		GLuint mOpenGLInternalFormat;	///< OpenGL internal format
+		GLuint mOpenGLTexture;			// OpenGL texture, can be zero if no resource is allocated
+		GLuint mOpenGLInternalFormat;	// OpenGL internal format
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture1DArray(const Texture1DArray& source) = delete;
-		Texture1DArray& operator =(const Texture1DArray& source) = delete;
+		explicit Texture1DArray(const Texture1DArray&) = delete;
+		Texture1DArray& operator =(const Texture1DArray&) = delete;
 
 
 	};
@@ -8444,8 +8444,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture1DArrayBind(const Texture1DArrayBind& source) = delete;
-		Texture1DArrayBind& operator =(const Texture1DArrayBind& source) = delete;
+		explicit Texture1DArrayBind(const Texture1DArrayBind&) = delete;
+		Texture1DArrayBind& operator =(const Texture1DArrayBind&) = delete;
 
 
 	};
@@ -8683,8 +8683,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture1DArrayDsa(const Texture1DArrayDsa& source) = delete;
-		Texture1DArrayDsa& operator =(const Texture1DArrayDsa& source) = delete;
+		explicit Texture1DArrayDsa(const Texture1DArrayDsa&) = delete;
+		Texture1DArrayDsa& operator =(const Texture1DArrayDsa&) = delete;
 
 
 	};
@@ -8822,17 +8822,17 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		uint8_t mNumberOfMultisamples;	///< The number of multisamples per pixel (valid values: 1, 2, 4, 8)
-		GLuint  mOpenGLTexture;			///< OpenGL texture, can be zero if no resource is allocated
-		GLuint  mOpenGLInternalFormat;	///< OpenGL internal format
+		uint8_t mNumberOfMultisamples;	// The number of multisamples per pixel (valid values: 1, 2, 4, 8)
+		GLuint  mOpenGLTexture;			// OpenGL texture, can be zero if no resource is allocated
+		GLuint  mOpenGLInternalFormat;	// OpenGL internal format
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture2D(const Texture2D& source) = delete;
-		Texture2D& operator =(const Texture2D& source) = delete;
+		explicit Texture2D(const Texture2D&) = delete;
+		Texture2D& operator =(const Texture2D&) = delete;
 
 
 	};
@@ -9061,8 +9061,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture2DBind(const Texture2DBind& source) = delete;
-		Texture2DBind& operator =(const Texture2DBind& source) = delete;
+		explicit Texture2DBind(const Texture2DBind&) = delete;
+		Texture2DBind& operator =(const Texture2DBind&) = delete;
 
 
 	};
@@ -9351,8 +9351,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture2DDsa(const Texture2DDsa& source) = delete;
-		Texture2DDsa& operator =(const Texture2DDsa& source) = delete;
+		explicit Texture2DDsa(const Texture2DDsa&) = delete;
+		Texture2DDsa& operator =(const Texture2DDsa&) = delete;
 
 
 	};
@@ -9464,17 +9464,17 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		uint8_t mNumberOfMultisamples;	///< The number of multisamples per pixel (valid values: 1, 2, 4, 8)
-		GLuint  mOpenGLTexture;			///< OpenGL texture, can be zero if no resource is allocated
-		GLuint  mOpenGLInternalFormat;	///< OpenGL internal format
+		uint8_t mNumberOfMultisamples;	// The number of multisamples per pixel (valid values: 1, 2, 4, 8)
+		GLuint  mOpenGLTexture;			// OpenGL texture, can be zero if no resource is allocated
+		GLuint  mOpenGLInternalFormat;	// OpenGL internal format
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture2DArray(const Texture2DArray& source) = delete;
-		Texture2DArray& operator =(const Texture2DArray& source) = delete;
+		explicit Texture2DArray(const Texture2DArray&) = delete;
+		Texture2DArray& operator =(const Texture2DArray&) = delete;
 
 
 	};
@@ -9589,8 +9589,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture2DArrayBind(const Texture2DArrayBind& source) = delete;
-		Texture2DArrayBind& operator =(const Texture2DArrayBind& source) = delete;
+		explicit Texture2DArrayBind(const Texture2DArrayBind&) = delete;
+		Texture2DArrayBind& operator =(const Texture2DArrayBind&) = delete;
 
 
 	};
@@ -9832,8 +9832,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture2DArrayDsa(const Texture2DArrayDsa& source) = delete;
-		Texture2DArrayDsa& operator =(const Texture2DArrayDsa& source) = delete;
+		explicit Texture2DArrayDsa(const Texture2DArrayDsa&) = delete;
+		Texture2DArrayDsa& operator =(const Texture2DArrayDsa&) = delete;
 
 
 	};
@@ -9969,18 +9969,18 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint					 mOpenGLTexture;			///< OpenGL texture, can be zero if no resource is allocated
+		GLuint					 mOpenGLTexture;			// OpenGL texture, can be zero if no resource is allocated
 		Rhi::TextureFormat::Enum mTextureFormat;
-		GLuint					 mOpenGLInternalFormat;		///< OpenGL internal format
-		GLuint					 mOpenGLPixelUnpackBuffer;	///< OpenGL pixel unpack buffer for dynamic textures, can be zero if no resource is allocated
+		GLuint					 mOpenGLInternalFormat;		// OpenGL internal format
+		GLuint					 mOpenGLPixelUnpackBuffer;	// OpenGL pixel unpack buffer for dynamic textures, can be zero if no resource is allocated
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture3D(const Texture3D& source) = delete;
-		Texture3D& operator =(const Texture3D& source) = delete;
+		explicit Texture3D(const Texture3D&) = delete;
+		Texture3D& operator =(const Texture3D&) = delete;
 
 
 	};
@@ -10190,8 +10190,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture3DBind(const Texture3DBind& source) = delete;
-		Texture3DBind& operator =(const Texture3DBind& source) = delete;
+		explicit Texture3DBind(const Texture3DBind&) = delete;
+		Texture3DBind& operator =(const Texture3DBind&) = delete;
 
 
 	};
@@ -10446,8 +10446,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture3DDsa(const Texture3DDsa& source) = delete;
-		Texture3DDsa& operator =(const Texture3DDsa& source) = delete;
+		explicit Texture3DDsa(const Texture3DDsa&) = delete;
+		Texture3DDsa& operator =(const Texture3DDsa&) = delete;
 
 
 	};
@@ -10552,16 +10552,16 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint mOpenGLTexture;			///< OpenGL texture, can be zero if no resource is allocated
-		GLuint mOpenGLInternalFormat;	///< OpenGL internal format
+		GLuint mOpenGLTexture;			// OpenGL texture, can be zero if no resource is allocated
+		GLuint mOpenGLInternalFormat;	// OpenGL internal format
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureCube(const TextureCube& source) = delete;
-		TextureCube& operator =(const TextureCube& source) = delete;
+		explicit TextureCube(const TextureCube&) = delete;
+		TextureCube& operator =(const TextureCube&) = delete;
 
 
 	};
@@ -10756,8 +10756,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureCubeBind(const TextureCubeBind& source) = delete;
-		TextureCubeBind& operator =(const TextureCubeBind& source) = delete;
+		explicit TextureCubeBind(const TextureCubeBind&) = delete;
+		TextureCubeBind& operator =(const TextureCubeBind&) = delete;
 
 
 	};
@@ -11026,8 +11026,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureCubeDsa(const TextureCubeDsa& source) = delete;
-		TextureCubeDsa& operator =(const TextureCubeDsa& source) = delete;
+		explicit TextureCubeDsa(const TextureCubeDsa&) = delete;
+		TextureCubeDsa& operator =(const TextureCubeDsa&) = delete;
 
 
 	};
@@ -11241,15 +11241,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureManager(const TextureManager& source) = delete;
-		TextureManager& operator =(const TextureManager& source) = delete;
+		explicit TextureManager(const TextureManager&) = delete;
+		TextureManager& operator =(const TextureManager&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		const Extensions* mExtensions;	///< Extensions instance, always valid
+		const Extensions* mExtensions;	// Extensions instance, always valid
 
 
 	};
@@ -11310,8 +11310,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit SamplerState(const SamplerState& source) = delete;
-		SamplerState& operator =(const SamplerState& source) = delete;
+		explicit SamplerState(const SamplerState&) = delete;
+		SamplerState& operator =(const SamplerState&) = delete;
 
 
 	};
@@ -11425,8 +11425,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit SamplerStateBind(const SamplerStateBind& source) = delete;
-		SamplerStateBind& operator =(const SamplerStateBind& source) = delete;
+		explicit SamplerStateBind(const SamplerStateBind&) = delete;
+		SamplerStateBind& operator =(const SamplerStateBind&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -11434,18 +11434,18 @@ namespace OpenGLRhi
 	//[-------------------------------------------------------]
 	private:
 		// "Rhi::SamplerState" translated into OpenGL
-		GLint  mOpenGLMagFilterMode;		///< Rhi::SamplerState::filter
-		GLint  mOpenGLMinFilterMode;		///< Rhi::SamplerState::filter
-		GLint  mOpenGLTextureAddressModeS;	///< Rhi::SamplerState::addressU
-		GLint  mOpenGLTextureAddressModeT;	///< Rhi::SamplerState::addressV
-		GLint  mOpenGLTextureAddressModeR;	///< Rhi::SamplerState::addressW
-		float  mMipLodBias;					///< Rhi::SamplerState::mipLodBias
-		float  mMaxAnisotropy;				///< Rhi::SamplerState::maxAnisotropy
-		GLint  mOpenGLCompareMode;			///< Rhi::SamplerState::comparisonFunc
-		GLenum mOpenGLComparisonFunc;		///< Rhi::SamplerState::comparisonFunc
-		float  mBorderColor[4];				///< Rhi::SamplerState::borderColor[4]
-		float  mMinLod;						///< Rhi::SamplerState::minLod
-		float  mMaxLod;						///< Rhi::SamplerState::maxLod
+		GLint  mOpenGLMagFilterMode;		// Rhi::SamplerState::filter
+		GLint  mOpenGLMinFilterMode;		// Rhi::SamplerState::filter
+		GLint  mOpenGLTextureAddressModeS;	// Rhi::SamplerState::addressU
+		GLint  mOpenGLTextureAddressModeT;	// Rhi::SamplerState::addressV
+		GLint  mOpenGLTextureAddressModeR;	// Rhi::SamplerState::addressW
+		float  mMipLodBias;					// Rhi::SamplerState::mipLodBias
+		float  mMaxAnisotropy;				// Rhi::SamplerState::maxAnisotropy
+		GLint  mOpenGLCompareMode;			// Rhi::SamplerState::comparisonFunc
+		GLenum mOpenGLComparisonFunc;		// Rhi::SamplerState::comparisonFunc
+		float  mBorderColor[4];				// Rhi::SamplerState::borderColor[4]
+		float  mMinLod;						// Rhi::SamplerState::minLod
+		float  mMaxLod;						// Rhi::SamplerState::maxLod
 
 
 	};
@@ -11508,15 +11508,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit SamplerStateDsa(const SamplerStateDsa& source) = delete;
-		SamplerStateDsa& operator =(const SamplerStateDsa& source) = delete;
+		explicit SamplerStateDsa(const SamplerStateDsa&) = delete;
+		SamplerStateDsa& operator =(const SamplerStateDsa&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Rhi::SamplerState mSamplerState;	///< Sampler state
+		Rhi::SamplerState mSamplerState;	// Sampler state
 
 
 	};
@@ -11631,15 +11631,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit SamplerStateSo(const SamplerStateSo& source) = delete;
-		SamplerStateSo& operator =(const SamplerStateSo& source) = delete;
+		explicit SamplerStateSo(const SamplerStateSo&) = delete;
+		SamplerStateSo& operator =(const SamplerStateSo&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLSampler;	///< OpenGL sampler, can be zero if no resource is allocated
+		GLuint mOpenGLSampler;	// OpenGL sampler, can be zero if no resource is allocated
 
 
 	};
@@ -11820,8 +11820,8 @@ namespace OpenGLRhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Rhi::RasterizerState mRasterizerState;		///< Rasterizer state
-		GLenum				 mOpenGLFrontFaceMode;	///< OpenGL front face mode
+		Rhi::RasterizerState mRasterizerState;		// Rasterizer state
+		GLenum				 mOpenGLFrontFaceMode;	// OpenGL front face mode
 
 
 	};
@@ -11906,9 +11906,9 @@ namespace OpenGLRhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Rhi::DepthStencilState mDepthStencilState;		///< Depth stencil state
-		GLboolean			   mOpenGLDepthMaskEnabled;	///< OpenGL depth mask enabled state
-		GLenum				   mOpenGLDepthFunc;		///< OpenGL depth function
+		Rhi::DepthStencilState mDepthStencilState;		// Depth stencil state
+		GLboolean			   mOpenGLDepthMaskEnabled;	// OpenGL depth mask enabled state
+		GLenum				   mOpenGLDepthFunc;		// OpenGL depth function
 
 
 	};
@@ -12003,9 +12003,9 @@ namespace OpenGLRhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Rhi::BlendState mBlendState;		///< Blend state
-		GLenum			mOpenGLSrcBlend;	///< OpenGL source blend function
-		GLenum			mOpenGLDstBlend;	///< OpenGL destination blend function
+		Rhi::BlendState mBlendState;		// Blend state
+		GLenum			mOpenGLSrcBlend;	// OpenGL source blend function
+		GLenum			mOpenGLDstBlend;	// OpenGL destination blend function
 
 
 	};
@@ -12128,8 +12128,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit RenderPass(const RenderPass& source) = delete;
-		RenderPass& operator =(const RenderPass& source) = delete;
+		explicit RenderPass(const RenderPass&) = delete;
+		RenderPass& operator =(const RenderPass&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -12215,8 +12215,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit QueryPool(const QueryPool& source) = delete;
-		QueryPool& operator =(const QueryPool& source) = delete;
+		explicit QueryPool(const QueryPool&) = delete;
+		QueryPool& operator =(const QueryPool&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -12358,8 +12358,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit OcclusionTimestampQueryPool(const OcclusionTimestampQueryPool& source) = delete;
-		OcclusionTimestampQueryPool& operator =(const OcclusionTimestampQueryPool& source) = delete;
+		explicit OcclusionTimestampQueryPool(const OcclusionTimestampQueryPool&) = delete;
+		OcclusionTimestampQueryPool& operator =(const OcclusionTimestampQueryPool&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -12544,8 +12544,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit PipelineStatisticsQueryPool(const PipelineStatisticsQueryPool& source) = delete;
-		PipelineStatisticsQueryPool& operator =(const PipelineStatisticsQueryPool& source) = delete;
+		explicit PipelineStatisticsQueryPool(const PipelineStatisticsQueryPool&) = delete;
+		PipelineStatisticsQueryPool& operator =(const PipelineStatisticsQueryPool&) = delete;
 
 		bool getQueryPoolResult(GLuint openGLQuery, bool waitForResult, uint64_t& queryResult) const
 		{
@@ -12576,17 +12576,17 @@ namespace OpenGLRhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint* mVerticesSubmittedOpenGLQueries;				///< "GL_VERTICES_SUBMITTED_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfInputAssemblerVertices"
-		GLuint* mPrimitivesSubmittedOpenGLQueries;				///< "GL_PRIMITIVES_SUBMITTED_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfInputAssemblerPrimitives"
-		GLuint* mVertexShaderInvocationsOpenGLQueries;			///< "GL_VERTEX_SHADER_INVOCATIONS_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfVertexShaderInvocations"
-		GLuint* mGeometryShaderInvocationsOpenGLQueries;		///< "GL_GEOMETRY_SHADER_INVOCATIONS", "Rhi::PipelineStatisticsQueryResult::numberOfGeometryShaderInvocations"
-		GLuint* mGeometryShaderPrimitivesEmittedOpenGLQueries;	///< "GL_GEOMETRY_SHADER_PRIMITIVES_EMITTED_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfGeometryShaderOutputPrimitives"
-		GLuint* mClippingInputPrimitivesOpenGLQueries;			///< "GL_CLIPPING_INPUT_PRIMITIVES_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfClippingInputPrimitives"
-		GLuint* mClippingOutputPrimitivesOpenGLQueries;			///< "GL_CLIPPING_OUTPUT_PRIMITIVES_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfClippingOutputPrimitives"
-		GLuint* mFragmentShaderInvocationsOpenGLQueries;		///< "GL_FRAGMENT_SHADER_INVOCATIONS_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfFragmentShaderInvocations"
-		GLuint* mTessControlShaderPatchesOpenGLQueries;			///< "GL_TESS_CONTROL_SHADER_PATCHES_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfTessellationControlShaderInvocations"
-		GLuint* mTesEvaluationShaderInvocationsOpenGLQueries;	///< "GL_TESS_EVALUATION_SHADER_INVOCATIONS_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfTessellationEvaluationShaderInvocations"
-		GLuint* mComputeShaderInvocationsOpenGLQueries;			///< "GL_COMPUTE_SHADER_INVOCATIONS_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfComputeShaderInvocations"
+		GLuint* mVerticesSubmittedOpenGLQueries;				// "GL_VERTICES_SUBMITTED_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfInputAssemblerVertices"
+		GLuint* mPrimitivesSubmittedOpenGLQueries;				// "GL_PRIMITIVES_SUBMITTED_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfInputAssemblerPrimitives"
+		GLuint* mVertexShaderInvocationsOpenGLQueries;			// "GL_VERTEX_SHADER_INVOCATIONS_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfVertexShaderInvocations"
+		GLuint* mGeometryShaderInvocationsOpenGLQueries;		// "GL_GEOMETRY_SHADER_INVOCATIONS", "Rhi::PipelineStatisticsQueryResult::numberOfGeometryShaderInvocations"
+		GLuint* mGeometryShaderPrimitivesEmittedOpenGLQueries;	// "GL_GEOMETRY_SHADER_PRIMITIVES_EMITTED_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfGeometryShaderOutputPrimitives"
+		GLuint* mClippingInputPrimitivesOpenGLQueries;			// "GL_CLIPPING_INPUT_PRIMITIVES_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfClippingInputPrimitives"
+		GLuint* mClippingOutputPrimitivesOpenGLQueries;			// "GL_CLIPPING_OUTPUT_PRIMITIVES_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfClippingOutputPrimitives"
+		GLuint* mFragmentShaderInvocationsOpenGLQueries;		// "GL_FRAGMENT_SHADER_INVOCATIONS_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfFragmentShaderInvocations"
+		GLuint* mTessControlShaderPatchesOpenGLQueries;			// "GL_TESS_CONTROL_SHADER_PATCHES_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfTessellationControlShaderInvocations"
+		GLuint* mTesEvaluationShaderInvocationsOpenGLQueries;	// "GL_TESS_EVALUATION_SHADER_INVOCATIONS_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfTessellationEvaluationShaderInvocations"
+		GLuint* mComputeShaderInvocationsOpenGLQueries;			// "GL_COMPUTE_SHADER_INVOCATIONS_ARB", "Rhi::PipelineStatisticsQueryResult::numberOfComputeShaderInvocations"
 
 
 	};
@@ -12839,18 +12839,18 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit SwapChain(const SwapChain& source) = delete;
-		SwapChain& operator =(const SwapChain& source) = delete;
+		explicit SwapChain(const SwapChain&) = delete;
+		SwapChain& operator =(const SwapChain&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		handle			mNativeWindowHandle;	///< Native window handle window, can be a null handle
-		IOpenGLContext*		mOpenGLContext;			///< OpenGL context, must be valid
-		bool				mOwnsOpenGLContext;		///< Does this swap chain own the OpenGL context?
-		Rhi::IRenderWindow* mRenderWindow;			///< Render window instance, can be a null pointer, don't destroy the instance since we don't own it
+		handle			mNativeWindowHandle;	// Native window handle window, can be a null handle
+		IOpenGLContext*		mOpenGLContext;			// OpenGL context, must be valid
+		bool				mOwnsOpenGLContext;		// Does this swap chain own the OpenGL context?
+		Rhi::IRenderWindow* mRenderWindow;			// Render window instance, can be a null pointer, don't destroy the instance since we don't own it
 		uint32_t			mVerticalSynchronizationInterval;
 		uint32_t			mNewVerticalSynchronizationInterval;
 
@@ -13172,21 +13172,21 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint			mOpenGLFramebuffer;			///< OpenGL framebuffer ("container" object, not shared between OpenGL contexts), can be zero if no resource is allocated
-		uint32_t		mNumberOfColorTextures;		///< Number of color render target textures
-		Rhi::ITexture** mColorTextures;				///< The color render target textures (we keep a reference to it), can be a null pointer or can contain null pointers, if not a null pointer there must be at least "mNumberOfColorTextures" textures in the provided C-array of pointers
-		Rhi::ITexture*  mDepthStencilTexture;		///< The depth stencil render target texture (we keep a reference to it), can be a null pointer
-		uint32_t		mWidth;						///< The framebuffer width
-		uint32_t		mHeight;					///< The framebuffer height
-		bool			mMultisampleRenderTarget;	///< Multisample render target?
+		GLuint			mOpenGLFramebuffer;			// OpenGL framebuffer ("container" object, not shared between OpenGL contexts), can be zero if no resource is allocated
+		uint32_t		mNumberOfColorTextures;		// Number of color render target textures
+		Rhi::ITexture** mColorTextures;				// The color render target textures (we keep a reference to it), can be a null pointer or can contain null pointers, if not a null pointer there must be at least "mNumberOfColorTextures" textures in the provided C-array of pointers
+		Rhi::ITexture*  mDepthStencilTexture;		// The depth stencil render target texture (we keep a reference to it), can be a null pointer
+		uint32_t		mWidth;						// The framebuffer width
+		uint32_t		mHeight;					// The framebuffer height
+		bool			mMultisampleRenderTarget;	// Multisample render target?
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Framebuffer(const Framebuffer& source) = delete;
-		Framebuffer& operator =(const Framebuffer& source) = delete;
+		explicit Framebuffer(const Framebuffer&) = delete;
+		Framebuffer& operator =(const Framebuffer&) = delete;
 
 
 	};
@@ -13481,8 +13481,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit FramebufferBind(const FramebufferBind& source) = delete;
-		FramebufferBind& operator =(const FramebufferBind& source) = delete;
+		explicit FramebufferBind(const FramebufferBind&) = delete;
+		FramebufferBind& operator =(const FramebufferBind&) = delete;
 
 
 	};
@@ -13799,8 +13799,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit FramebufferDsa(const FramebufferDsa& source) = delete;
-		FramebufferDsa& operator =(const FramebufferDsa& source) = delete;
+		explicit FramebufferDsa(const FramebufferDsa&) = delete;
+		FramebufferDsa& operator =(const FramebufferDsa&) = delete;
 
 
 	};
@@ -13894,15 +13894,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexShaderMonolithic(const VertexShaderMonolithic& source) = delete;
-		VertexShaderMonolithic& operator =(const VertexShaderMonolithic& source) = delete;
+		explicit VertexShaderMonolithic(const VertexShaderMonolithic&) = delete;
+		VertexShaderMonolithic& operator =(const VertexShaderMonolithic&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLShader;	///< OpenGL shader, can be zero if no resource is allocated
+		GLuint mOpenGLShader;	// OpenGL shader, can be zero if no resource is allocated
 
 
 	};
@@ -13996,15 +13996,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TessellationControlShaderMonolithic(const TessellationControlShaderMonolithic& source) = delete;
-		TessellationControlShaderMonolithic& operator =(const TessellationControlShaderMonolithic& source) = delete;
+		explicit TessellationControlShaderMonolithic(const TessellationControlShaderMonolithic&) = delete;
+		TessellationControlShaderMonolithic& operator =(const TessellationControlShaderMonolithic&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLShader;	///< OpenGL shader, can be zero if no resource is allocated
+		GLuint mOpenGLShader;	// OpenGL shader, can be zero if no resource is allocated
 
 
 	};
@@ -14098,15 +14098,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TessellationEvaluationShaderMonolithic(const TessellationEvaluationShaderMonolithic& source) = delete;
-		TessellationEvaluationShaderMonolithic& operator =(const TessellationEvaluationShaderMonolithic& source) = delete;
+		explicit TessellationEvaluationShaderMonolithic(const TessellationEvaluationShaderMonolithic&) = delete;
+		TessellationEvaluationShaderMonolithic& operator =(const TessellationEvaluationShaderMonolithic&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLShader;	///< OpenGL shader, can be zero if no resource is allocated
+		GLuint mOpenGLShader;	// OpenGL shader, can be zero if no resource is allocated
 
 
 	};
@@ -14245,18 +14245,18 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GeometryShaderMonolithic(const GeometryShaderMonolithic& source) = delete;
-		GeometryShaderMonolithic& operator =(const GeometryShaderMonolithic& source) = delete;
+		explicit GeometryShaderMonolithic(const GeometryShaderMonolithic&) = delete;
+		GeometryShaderMonolithic& operator =(const GeometryShaderMonolithic&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint	 mOpenGLShader;						///< OpenGL shader, can be zero if no resource is allocated
-		GLint	 mOpenGLGsInputPrimitiveTopology;	///< OpenGL geometry shader input primitive topology
-		GLint	 mOpenGLGsOutputPrimitiveTopology;	///< OpenGL geometry shader output primitive topology
-		uint32_t mNumberOfOutputVertices;			///< Number of output vertices
+		GLuint	 mOpenGLShader;						// OpenGL shader, can be zero if no resource is allocated
+		GLint	 mOpenGLGsInputPrimitiveTopology;	// OpenGL geometry shader input primitive topology
+		GLint	 mOpenGLGsOutputPrimitiveTopology;	// OpenGL geometry shader output primitive topology
+		uint32_t mNumberOfOutputVertices;			// Number of output vertices
 
 
 	};
@@ -14350,15 +14350,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit FragmentShaderMonolithic(const FragmentShaderMonolithic& source) = delete;
-		FragmentShaderMonolithic& operator =(const FragmentShaderMonolithic& source) = delete;
+		explicit FragmentShaderMonolithic(const FragmentShaderMonolithic&) = delete;
+		FragmentShaderMonolithic& operator =(const FragmentShaderMonolithic&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLShader;	///< OpenGL shader, can be zero if no resource is allocated
+		GLuint mOpenGLShader;	// OpenGL shader, can be zero if no resource is allocated
 
 
 	};
@@ -14452,15 +14452,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TaskShaderMonolithic(const TaskShaderMonolithic& source) = delete;
-		TaskShaderMonolithic& operator =(const TaskShaderMonolithic& source) = delete;
+		explicit TaskShaderMonolithic(const TaskShaderMonolithic&) = delete;
+		TaskShaderMonolithic& operator =(const TaskShaderMonolithic&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLShader;	///< OpenGL shader, can be zero if no resource is allocated
+		GLuint mOpenGLShader;	// OpenGL shader, can be zero if no resource is allocated
 
 
 	};
@@ -14554,15 +14554,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit MeshShaderMonolithic(const MeshShaderMonolithic& source) = delete;
-		MeshShaderMonolithic& operator =(const MeshShaderMonolithic& source) = delete;
+		explicit MeshShaderMonolithic(const MeshShaderMonolithic&) = delete;
+		MeshShaderMonolithic& operator =(const MeshShaderMonolithic&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLShader;	///< OpenGL shader, can be zero if no resource is allocated
+		GLuint mOpenGLShader;	// OpenGL shader, can be zero if no resource is allocated
 
 
 	};
@@ -14656,15 +14656,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ComputeShaderMonolithic(const ComputeShaderMonolithic& source) = delete;
-		ComputeShaderMonolithic& operator =(const ComputeShaderMonolithic& source) = delete;
+		explicit ComputeShaderMonolithic(const ComputeShaderMonolithic&) = delete;
+		ComputeShaderMonolithic& operator =(const ComputeShaderMonolithic&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLShader;	///< OpenGL shader, can be zero if no resource is allocated
+		GLuint mOpenGLShader;	// OpenGL shader, can be zero if no resource is allocated
 
 
 	};
@@ -15085,15 +15085,15 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint mOpenGLProgram;	///< OpenGL program, can be zero if no resource is allocated
+		GLuint mOpenGLProgram;	// OpenGL program, can be zero if no resource is allocated
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GraphicsProgramMonolithic(const GraphicsProgramMonolithic& source) = delete;
-		GraphicsProgramMonolithic& operator =(const GraphicsProgramMonolithic& source) = delete;
+		explicit GraphicsProgramMonolithic(const GraphicsProgramMonolithic&) = delete;
+		GraphicsProgramMonolithic& operator =(const GraphicsProgramMonolithic&) = delete;
 
 		void linkProgram(OpenGLRhi& openGLRhi, const Rhi::IRootSignature& rootSignature)
 		{
@@ -15230,7 +15230,7 @@ namespace OpenGLRhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLint mDrawIdUniformLocation;	///< Draw ID uniform location, used for "GL_ARB_base_instance"-emulation (see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html)
+		GLint mDrawIdUniformLocation;	// Draw ID uniform location, used for "GL_ARB_base_instance"-emulation (see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html)
 
 
 	};
@@ -15392,8 +15392,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GraphicsProgramMonolithicDsa(const GraphicsProgramMonolithicDsa& source) = delete;
-		GraphicsProgramMonolithicDsa& operator =(const GraphicsProgramMonolithicDsa& source) = delete;
+		explicit GraphicsProgramMonolithicDsa(const GraphicsProgramMonolithicDsa&) = delete;
+		GraphicsProgramMonolithicDsa& operator =(const GraphicsProgramMonolithicDsa&) = delete;
 
 
 	};
@@ -15444,8 +15444,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ComputePipelineState(const ComputePipelineState& source) = delete;
-		ComputePipelineState& operator =(const ComputePipelineState& source) = delete;
+		explicit ComputePipelineState(const ComputePipelineState&) = delete;
+		ComputePipelineState& operator =(const ComputePipelineState&) = delete;
 
 
 	};
@@ -15663,15 +15663,15 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint mOpenGLProgram;	///< OpenGL program, can be zero if no resource is allocated
+		GLuint mOpenGLProgram;	// OpenGL program, can be zero if no resource is allocated
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ComputePipelineStateMonolithic(const ComputePipelineStateMonolithic& source) = delete;
-		ComputePipelineStateMonolithic& operator =(const ComputePipelineStateMonolithic& source) = delete;
+		explicit ComputePipelineStateMonolithic(const ComputePipelineStateMonolithic&) = delete;
+		ComputePipelineStateMonolithic& operator =(const ComputePipelineStateMonolithic&) = delete;
 
 
 	};
@@ -15979,8 +15979,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ShaderLanguageMonolithic(const ShaderLanguageMonolithic& source) = delete;
-		ShaderLanguageMonolithic& operator =(const ShaderLanguageMonolithic& source) = delete;
+		explicit ShaderLanguageMonolithic(const ShaderLanguageMonolithic&) = delete;
+		ShaderLanguageMonolithic& operator =(const ShaderLanguageMonolithic&) = delete;
 
 
 	};
@@ -16121,16 +16121,16 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexShaderSeparate(const VertexShaderSeparate& source) = delete;
-		VertexShaderSeparate& operator =(const VertexShaderSeparate& source) = delete;
+		explicit VertexShaderSeparate(const VertexShaderSeparate&) = delete;
+		VertexShaderSeparate& operator =(const VertexShaderSeparate&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLShaderProgram;	///< OpenGL shader program, can be zero if no resource is allocated
-		GLint  mDrawIdUniformLocation;	///< Draw ID uniform location, used for "GL_ARB_base_instance"-emulation (see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html)
+		GLuint mOpenGLShaderProgram;	// OpenGL shader program, can be zero if no resource is allocated
+		GLint  mDrawIdUniformLocation;	// Draw ID uniform location, used for "GL_ARB_base_instance"-emulation (see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html)
 
 
 	};
@@ -16253,15 +16253,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TessellationControlShaderSeparate(const TessellationControlShaderSeparate& source) = delete;
-		TessellationControlShaderSeparate& operator =(const TessellationControlShaderSeparate& source) = delete;
+		explicit TessellationControlShaderSeparate(const TessellationControlShaderSeparate&) = delete;
+		TessellationControlShaderSeparate& operator =(const TessellationControlShaderSeparate&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLShaderProgram;	///< OpenGL shader program, can be zero if no resource is allocated
+		GLuint mOpenGLShaderProgram;	// OpenGL shader program, can be zero if no resource is allocated
 
 
 	};
@@ -16384,15 +16384,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TessellationEvaluationShaderSeparate(const TessellationEvaluationShaderSeparate& source) = delete;
-		TessellationEvaluationShaderSeparate& operator =(const TessellationEvaluationShaderSeparate& source) = delete;
+		explicit TessellationEvaluationShaderSeparate(const TessellationEvaluationShaderSeparate&) = delete;
+		TessellationEvaluationShaderSeparate& operator =(const TessellationEvaluationShaderSeparate&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLShaderProgram;	///< OpenGL shader program, can be zero if no resource is allocated
+		GLuint mOpenGLShaderProgram;	// OpenGL shader program, can be zero if no resource is allocated
 
 
 	};
@@ -16535,15 +16535,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GeometryShaderSeparate(const GeometryShaderSeparate& source) = delete;
-		GeometryShaderSeparate& operator =(const GeometryShaderSeparate& source) = delete;
+		explicit GeometryShaderSeparate(const GeometryShaderSeparate&) = delete;
+		GeometryShaderSeparate& operator =(const GeometryShaderSeparate&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLShaderProgram;	///< OpenGL shader program, can be zero if no resource is allocated
+		GLuint mOpenGLShaderProgram;	// OpenGL shader program, can be zero if no resource is allocated
 
 
 	};
@@ -16666,15 +16666,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit FragmentShaderSeparate(const FragmentShaderSeparate& source) = delete;
-		FragmentShaderSeparate& operator =(const FragmentShaderSeparate& source) = delete;
+		explicit FragmentShaderSeparate(const FragmentShaderSeparate&) = delete;
+		FragmentShaderSeparate& operator =(const FragmentShaderSeparate&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLShaderProgram;	///< OpenGL shader program, can be zero if no resource is allocated
+		GLuint mOpenGLShaderProgram;	// OpenGL shader program, can be zero if no resource is allocated
 
 
 	};
@@ -16797,15 +16797,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TaskShaderSeparate(const TaskShaderSeparate& source) = delete;
-		TaskShaderSeparate& operator =(const TaskShaderSeparate& source) = delete;
+		explicit TaskShaderSeparate(const TaskShaderSeparate&) = delete;
+		TaskShaderSeparate& operator =(const TaskShaderSeparate&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLShaderProgram;	///< OpenGL shader program, can be zero if no resource is allocated
+		GLuint mOpenGLShaderProgram;	// OpenGL shader program, can be zero if no resource is allocated
 
 
 	};
@@ -16928,15 +16928,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit MeshShaderSeparate(const MeshShaderSeparate& source) = delete;
-		MeshShaderSeparate& operator =(const MeshShaderSeparate& source) = delete;
+		explicit MeshShaderSeparate(const MeshShaderSeparate&) = delete;
+		MeshShaderSeparate& operator =(const MeshShaderSeparate&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLShaderProgram;	///< OpenGL shader program, can be zero if no resource is allocated
+		GLuint mOpenGLShaderProgram;	// OpenGL shader program, can be zero if no resource is allocated
 
 
 	};
@@ -17059,15 +17059,15 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ComputeShaderSeparate(const ComputeShaderSeparate& source) = delete;
-		ComputeShaderSeparate& operator =(const ComputeShaderSeparate& source) = delete;
+		explicit ComputeShaderSeparate(const ComputeShaderSeparate&) = delete;
+		ComputeShaderSeparate& operator =(const ComputeShaderSeparate&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLShaderProgram;	///< OpenGL shader program, can be zero if no resource is allocated
+		GLuint mOpenGLShaderProgram;	// OpenGL shader program, can be zero if no resource is allocated
 
 
 	};
@@ -17765,25 +17765,25 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint mOpenGLProgramPipeline;	///< OpenGL program pipeline ("container" object, not shared between OpenGL contexts), can be zero if no resource is allocated
+		GLuint mOpenGLProgramPipeline;	// OpenGL program pipeline ("container" object, not shared between OpenGL contexts), can be zero if no resource is allocated
 		// Traditional graphics program
-		VertexShaderSeparate*				  mVertexShaderSeparate;					///< Vertex shader the program is using (we keep a reference to it), can be a null pointer
-		TessellationControlShaderSeparate*	  mTessellationControlShaderSeparate;		///< Tessellation control shader the program is using (we keep a reference to it), can be a null pointer
-		TessellationEvaluationShaderSeparate* mTessellationEvaluationShaderSeparate;	///< Tessellation evaluation shader the program is using (we keep a reference to it), can be a null pointer
-		GeometryShaderSeparate*				  mGeometryShaderSeparate;					///< Geometry shader the program is using (we keep a reference to it), can be a null pointer
+		VertexShaderSeparate*				  mVertexShaderSeparate;					// Vertex shader the program is using (we keep a reference to it), can be a null pointer
+		TessellationControlShaderSeparate*	  mTessellationControlShaderSeparate;		// Tessellation control shader the program is using (we keep a reference to it), can be a null pointer
+		TessellationEvaluationShaderSeparate* mTessellationEvaluationShaderSeparate;	// Tessellation evaluation shader the program is using (we keep a reference to it), can be a null pointer
+		GeometryShaderSeparate*				  mGeometryShaderSeparate;					// Geometry shader the program is using (we keep a reference to it), can be a null pointer
 		// Both graphics programs
-		FragmentShaderSeparate* mFragmentShaderSeparate;	///< Fragment shader the program is using (we keep a reference to it), can be a null pointer
+		FragmentShaderSeparate* mFragmentShaderSeparate;	// Fragment shader the program is using (we keep a reference to it), can be a null pointer
 		// Task and mesh shader based graphics program
-		TaskShaderSeparate* mTaskShaderSeparate;	///< Task shader the program is using (we keep a reference to it), can be a null pointer
-		MeshShaderSeparate* mMeshShaderSeparate;	///< Mesh shader the program is using (we keep a reference to it), can be a null pointer
+		TaskShaderSeparate* mTaskShaderSeparate;	// Task shader the program is using (we keep a reference to it), can be a null pointer
+		MeshShaderSeparate* mMeshShaderSeparate;	// Mesh shader the program is using (we keep a reference to it), can be a null pointer
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GraphicsProgramSeparate(const GraphicsProgramSeparate& source) = delete;
-		GraphicsProgramSeparate& operator =(const GraphicsProgramSeparate& source) = delete;
+		explicit GraphicsProgramSeparate(const GraphicsProgramSeparate&) = delete;
+		GraphicsProgramSeparate& operator =(const GraphicsProgramSeparate&) = delete;
 
 
 	};
@@ -17943,8 +17943,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GraphicsProgramSeparateDsa(const GraphicsProgramSeparateDsa& source) = delete;
-		GraphicsProgramSeparateDsa& operator =(const GraphicsProgramSeparateDsa& source) = delete;
+		explicit GraphicsProgramSeparateDsa(const GraphicsProgramSeparateDsa&) = delete;
+		GraphicsProgramSeparateDsa& operator =(const GraphicsProgramSeparateDsa&) = delete;
 
 
 	};
@@ -18169,16 +18169,16 @@ namespace OpenGLRhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint				   mOpenGLProgramPipeline;	///< OpenGL program pipeline ("container" object, not shared between OpenGL contexts), can be zero if no resource is allocated
-		ComputeShaderSeparate& mComputeShaderSeparate;	///< Compute shader the compute pipeline state is using (we keep a reference to it)
+		GLuint				   mOpenGLProgramPipeline;	// OpenGL program pipeline ("container" object, not shared between OpenGL contexts), can be zero if no resource is allocated
+		ComputeShaderSeparate& mComputeShaderSeparate;	// Compute shader the compute pipeline state is using (we keep a reference to it)
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ComputePipelineStateSeparate(const ComputePipelineStateSeparate& source) = delete;
-		ComputePipelineStateSeparate& operator =(const ComputePipelineStateSeparate& source) = delete;
+		explicit ComputePipelineStateSeparate(const ComputePipelineStateSeparate&) = delete;
+		ComputePipelineStateSeparate& operator =(const ComputePipelineStateSeparate&) = delete;
 
 
 	};
@@ -18677,8 +18677,8 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ShaderLanguageSeparate(const ShaderLanguageSeparate& source) = delete;
-		ShaderLanguageSeparate& operator =(const ShaderLanguageSeparate& source) = delete;
+		explicit ShaderLanguageSeparate(const ShaderLanguageSeparate&) = delete;
+		ShaderLanguageSeparate& operator =(const ShaderLanguageSeparate&) = delete;
 
 
 	};
@@ -18862,16 +18862,16 @@ namespace OpenGLRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GraphicsPipelineState(const GraphicsPipelineState& source) = delete;
-		GraphicsPipelineState& operator =(const GraphicsPipelineState& source) = delete;
+		explicit GraphicsPipelineState(const GraphicsPipelineState&) = delete;
+		GraphicsPipelineState& operator =(const GraphicsPipelineState&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLenum				   mOpenGLPrimitiveTopology;	///< OpenGL primitive topology describing the type of primitive to render
-		GLint				   mNumberOfVerticesPerPatch;	///< Number of vertices per patch
+		GLenum				   mOpenGLPrimitiveTopology;	// OpenGL primitive topology describing the type of primitive to render
+		GLint				   mNumberOfVerticesPerPatch;	// Number of vertices per patch
 		Rhi::IGraphicsProgram* mGraphicsProgram;
 		Rhi::IRenderPass*	   mRenderPass;
 		RasterizerState		   mRasterizerState;
@@ -19450,7 +19450,7 @@ namespace OpenGLRhi
 			mComputeRootSignature->releaseReference();
 		}
 
-		#ifdef SE_STATISTICS
+		#if SE_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
 			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
@@ -19467,7 +19467,7 @@ namespace OpenGLRhi
 				}
 
 				// Use debug output to show the current number of resource instances
-				getStatistics().debugOutputCurrentResouces(mContext);
+				getStatistics().debugOutputCurrentResouces();
 			}
 		}
 		#endif

@@ -377,8 +377,8 @@ namespace Direct3D11Rhi
 		//[ Private methods                                       ]
 		//[-------------------------------------------------------]
 	private:
-		explicit Direct3D11RuntimeLinking(const Direct3D11RuntimeLinking& source) = delete;
-		Direct3D11RuntimeLinking& operator =(const Direct3D11RuntimeLinking& source) = delete;
+		explicit Direct3D11RuntimeLinking(const Direct3D11RuntimeLinking&) = delete;
+		Direct3D11RuntimeLinking& operator =(const Direct3D11RuntimeLinking&) = delete;
 
 		/**
 		*  @brief
@@ -671,16 +671,16 @@ if ( nullptr != agsInit )
 		}
 
 	private:
-		Direct3D11Rhi&	mDirect3D11Rhi;				///< Owner Direct3D 11 RHI instance
-		void*			mDxgiSharedLibrary;			///< DXGI shared library, can be a null pointer
-		void*			mD3D11SharedLibrary;		///< D3D11 shared library, can be a null pointer
-		void*			mD3DCompilerSharedLibrary;	///< D3DCompiler shared library, can be a null pointer
+		Direct3D11Rhi&	mDirect3D11Rhi;				// Owner Direct3D 11 RHI instance
+		void*			mDxgiSharedLibrary;			// DXGI shared library, can be a null pointer
+		void*			mD3D11SharedLibrary;		// D3D11 shared library, can be a null pointer
+		void*			mD3DCompilerSharedLibrary;	// D3DCompiler shared library, can be a null pointer
 #ifdef DYNAMIC_AMD_AGS
-		void*		mAmdAgsSharedLibrary;		///< AMD AGS shared library, can be a null pointer
+		void*		mAmdAgsSharedLibrary;		// AMD AGS shared library, can be a null pointer
 #endif
-		AGSContext*		mAgsContext;				///< AMD AGS context, can be a null pointer
-		void*			mNvAPISharedLibrary;		///< NvAPI shared library, can be a null pointer
-		bool			mEntryPointsRegistered;		///< Entry points successfully registered?
-		bool			mInitialized;				///< Already initialized?
+		AGSContext*		mAgsContext;				// AMD AGS context, can be a null pointer
+		void*			mNvAPISharedLibrary;		// NvAPI shared library, can be a null pointer
+		bool			mEntryPointsRegistered;		// Entry points successfully registered?
+		bool			mInitialized;				// Already initialized?
 	};
 } // Direct3D11Rhi

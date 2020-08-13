@@ -51,7 +51,7 @@ namespace
 {
 	namespace detail
 	{
-		static constexpr const char* GLSLES_NAME = "GLSLES";	///< ASCII name of this shader language, always valid (do not free the memory the returned pointer is pointing to)
+		static constexpr const char* GLSLES_NAME = "GLSLES";	// ASCII name of this shader language, always valid (do not free the memory the returned pointer is pointing to)
 
 
 		//[-------------------------------------------------------]
@@ -809,8 +809,8 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit OpenGLES3Rhi(const OpenGLES3Rhi& source) = delete;
-		OpenGLES3Rhi& operator =(const OpenGLES3Rhi& source) = delete;
+		explicit OpenGLES3Rhi(const OpenGLES3Rhi&) = delete;
+		OpenGLES3Rhi& operator =(const OpenGLES3Rhi&) = delete;
 
 		/**
 		*  @brief
@@ -841,27 +841,27 @@ namespace OpenGLES3Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		IOpenGLES3Context*	  mOpenGLES3Context;					///< OpenGL ES 3 context instance, always valid
-		Rhi::IShaderLanguage* mShaderLanguageGlsl;					///< GLSL shader language instance (we keep a reference to it), can be a null pointer
-		RootSignature*		  mGraphicsRootSignature;				///< Currently set graphics root signature (we keep a reference to it), can be a null pointer
-		Rhi::ISamplerState*   mDefaultSamplerState;					///< Default rasterizer state (we keep a reference to it), can be a null pointer
-		GLuint				  mOpenGLES3CopyResourceFramebuffer;	///< OpenGL ES 3 framebuffer ("container" object, not shared between OpenGL ES 3 contexts) used by "OpenGLES3Rhi::OpenGLES3Rhi::copyResource()", can be zero if no resource is allocated
-		GLuint				  mDefaultOpenGLES3VertexArray;			///< Default OpenGL ES 3 vertex array ("container" object, not shared between OpenGL contexts) to enable attribute-less rendering, can be zero if no resource is allocated
+		IOpenGLES3Context*	  mOpenGLES3Context;					// OpenGL ES 3 context instance, always valid
+		Rhi::IShaderLanguage* mShaderLanguageGlsl;					// GLSL shader language instance (we keep a reference to it), can be a null pointer
+		RootSignature*		  mGraphicsRootSignature;				// Currently set graphics root signature (we keep a reference to it), can be a null pointer
+		Rhi::ISamplerState*   mDefaultSamplerState;					// Default rasterizer state (we keep a reference to it), can be a null pointer
+		GLuint				  mOpenGLES3CopyResourceFramebuffer;	// OpenGL ES 3 framebuffer ("container" object, not shared between OpenGL ES 3 contexts) used by "OpenGLES3Rhi::OpenGLES3Rhi::copyResource()", can be zero if no resource is allocated
+		GLuint				  mDefaultOpenGLES3VertexArray;			// Default OpenGL ES 3 vertex array ("container" object, not shared between OpenGL contexts) to enable attribute-less rendering, can be zero if no resource is allocated
 		// States
-		GraphicsPipelineState* mGraphicsPipelineState;	///< Currently set graphics pipeline state (we keep a reference to it), can be a null pointer
+		GraphicsPipelineState* mGraphicsPipelineState;	// Currently set graphics pipeline state (we keep a reference to it), can be a null pointer
 		// Input-assembler (IA) stage
-		VertexArray* mVertexArray;					///< Currently set vertex array (we keep a reference to it), can be a null pointer
-		GLenum		 mOpenGLES3PrimitiveTopology;	///< OpenGL ES 3 primitive topology describing the type of primitive to render
+		VertexArray* mVertexArray;					// Currently set vertex array (we keep a reference to it), can be a null pointer
+		GLenum		 mOpenGLES3PrimitiveTopology;	// OpenGL ES 3 primitive topology describing the type of primitive to render
 		// Output-merger (OM) stage
-		Rhi::IRenderTarget* mRenderTarget;	///< Currently set render target (we keep a reference to it), can be a null pointer
+		Rhi::IRenderTarget* mRenderTarget;	// Currently set render target (we keep a reference to it), can be a null pointer
 		// State cache to avoid making redundant OpenGL ES 3 calls
-		GLenum	 mOpenGLES3ClipControlOrigin;	///< Currently set OpenGL ES 3 clip control origin
-		GLuint	 mOpenGLES3Program;				///< Currently set OpenGL ES 3 program, can be zero if no resource is set
+		GLenum	 mOpenGLES3ClipControlOrigin;	// Currently set OpenGL ES 3 clip control origin
+		GLuint	 mOpenGLES3Program;				// Currently set OpenGL ES 3 program, can be zero if no resource is set
 		// Draw ID uniform location for "GL_EXT_base_instance"-emulation (see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html)
-		GLint	 mDrawIdUniformLocation;		///< Draw ID uniform location
-		uint32_t mCurrentStartInstanceLocation;	///< Currently set start instance location
+		GLint	 mDrawIdUniformLocation;		// Draw ID uniform location
+		uint32_t mCurrentStartInstanceLocation;	// Currently set start instance location
 		#if SE_DEBUG
-			bool mDebugBetweenBeginEndScene;	///< Just here for state tracking in debug builds
+			bool mDebugBetweenBeginEndScene;	// Just here for state tracking in debug builds
 		#endif
 
 
@@ -1193,7 +1193,7 @@ namespace OpenGLES3Rhi
 		*  @param[in] source
 		*    Source to copy from
 		*/
-		explicit IOpenGLES3Context(const IOpenGLES3Context& source) = delete;
+		explicit IOpenGLES3Context(const IOpenGLES3Context&) = delete;
 
 		/**
 		*  @brief
@@ -1363,7 +1363,7 @@ namespace OpenGLES3Rhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		handle	mNativeWindowHandle;	///< Handle of a native OS window which is valid as long as the RHI instance exists, "SE_NULL_HANDLE" if there's no such window
+		handle	mNativeWindowHandle;	// Handle of a native OS window which is valid as long as the RHI instance exists, "SE_NULL_HANDLE" if there's no such window
 		// X11
 		#if (defined(LINUX) && !defined(__ANDROID__))
 			::Display	   *mX11Display;
@@ -1374,7 +1374,7 @@ namespace OpenGLES3Rhi
 		// EGL
 		EGLConfig			mEGLConfig;
 		EGLContext			mEGLContext;
-		EGLNativeWindowType	mDummyNativeWindow;	///< Native dummy window handle, can be identical to "mNativeWindowHandle" if it's in fact no dummy at all, can be "SE_NULL_HANDLE"
+		EGLNativeWindowType	mDummyNativeWindow;	// Native dummy window handle, can be identical to "mNativeWindowHandle" if it's in fact no dummy at all, can be "SE_NULL_HANDLE"
 		EGLSurface			mDummySurface;
 		bool				mUseExternalContext;
 
@@ -1450,8 +1450,8 @@ namespace OpenGLES3Rhi
 		inline IExtensions()
 		{}
 
-		explicit IExtensions(const IExtensions& source) = delete;
-		IExtensions& operator =(const IExtensions& source) = delete;
+		explicit IExtensions(const IExtensions&) = delete;
+		IExtensions& operator =(const IExtensions&) = delete;
 
 
 	};
@@ -1721,15 +1721,15 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ExtensionsRuntimeLinking(const ExtensionsRuntimeLinking& source) = delete;
-		ExtensionsRuntimeLinking& operator =(const ExtensionsRuntimeLinking& source) = delete;
+		explicit ExtensionsRuntimeLinking(const ExtensionsRuntimeLinking&) = delete;
+		ExtensionsRuntimeLinking& operator =(const ExtensionsRuntimeLinking&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		OpenGLES3Rhi& mOpenGLES3Rhi;	///< Owner OpenGL ES 3 RHI instance
+		OpenGLES3Rhi& mOpenGLES3Rhi;	// Owner OpenGL ES 3 RHI instance
 		// EXT
 		bool mGL_EXT_texture_compression_s3tc;
 		bool mGL_EXT_texture_compression_dxt1;
@@ -1976,8 +1976,8 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit OpenGLES3ContextRuntimeLinking(const OpenGLES3ContextRuntimeLinking& source) = delete;
-		OpenGLES3ContextRuntimeLinking& operator =(const OpenGLES3ContextRuntimeLinking& source) = delete;
+		explicit OpenGLES3ContextRuntimeLinking(const OpenGLES3ContextRuntimeLinking&) = delete;
+		OpenGLES3ContextRuntimeLinking& operator =(const OpenGLES3ContextRuntimeLinking&) = delete;
 
 		/**
 		*  @brief
@@ -2432,11 +2432,11 @@ namespace OpenGLES3Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		OpenGLES3Rhi&			  mOpenGLES3Rhi;			///< Owner OpenGL ES 3 RHI instance
-		void*					  mEGLSharedLibrary;		///< EGL shared library, can be a null pointer
-		void*					  mGLESSharedLibrary;		///< OpenGL ES 3 shared library, can be a null pointer
-		bool					  mEntryPointsRegistered;	///< Entry points successfully registered?
-		ExtensionsRuntimeLinking* mExtensions;				///< Extensions instance, always valid!
+		OpenGLES3Rhi&			  mOpenGLES3Rhi;			// Owner OpenGL ES 3 RHI instance
+		void*					  mEGLSharedLibrary;		// EGL shared library, can be a null pointer
+		void*					  mGLESSharedLibrary;		// OpenGL ES 3 shared library, can be a null pointer
+		bool					  mEntryPointsRegistered;	// Entry points successfully registered?
+		ExtensionsRuntimeLinking* mExtensions;				// Extensions instance, always valid!
 
 
 	};
@@ -3382,19 +3382,19 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ResourceGroup(const ResourceGroup& source) = delete;
-		ResourceGroup& operator =(const ResourceGroup& source) = delete;
+		explicit ResourceGroup(const ResourceGroup&) = delete;
+		ResourceGroup& operator =(const ResourceGroup&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t			 mRootParameterIndex;						///< The root parameter index number for binding
-		uint32_t			 mNumberOfResources;						///< Number of resources this resource group groups together
-		Rhi::IResource**	 mResources;								///< RHI resources, we keep a reference to it
-		Rhi::ISamplerState** mSamplerStates;							///< Sampler states, we keep a reference to it
-		uint32_t*			 mResourceIndexToUniformBlockBindingIndex;	///< Resource index to uniform block binding index mapping, only valid for uniform buffer resources
+		uint32_t			 mRootParameterIndex;						// The root parameter index number for binding
+		uint32_t			 mNumberOfResources;						// Number of resources this resource group groups together
+		Rhi::IResource**	 mResources;								// RHI resources, we keep a reference to it
+		Rhi::ISamplerState** mSamplerStates;							// Sampler states, we keep a reference to it
+		uint32_t*			 mResourceIndexToUniformBlockBindingIndex;	// Resource index to uniform block binding index mapping, only valid for uniform buffer resources
 
 
 	};
@@ -3533,8 +3533,8 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit RootSignature(const RootSignature& source) = delete;
-		RootSignature& operator =(const RootSignature& source) = delete;
+		explicit RootSignature(const RootSignature&) = delete;
+		RootSignature& operator =(const RootSignature&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -3653,16 +3653,16 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexBuffer(const VertexBuffer& source) = delete;
-		VertexBuffer& operator =(const VertexBuffer& source) = delete;
+		explicit VertexBuffer(const VertexBuffer&) = delete;
+		VertexBuffer& operator =(const VertexBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint	 mOpenGLES3ArrayBuffer;	///< OpenGL ES 3 array buffer, can be zero if no resource is allocated
-		uint32_t mBufferSize;			///< Holds the size of the buffer
+		GLuint	 mOpenGLES3ArrayBuffer;	// OpenGL ES 3 array buffer, can be zero if no resource is allocated
+		uint32_t mBufferSize;			// Holds the size of the buffer
 
 
 	};
@@ -3814,18 +3814,18 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit IndexBuffer(const IndexBuffer& source) = delete;
-		IndexBuffer& operator =(const IndexBuffer& source) = delete;
+		explicit IndexBuffer(const IndexBuffer&) = delete;
+		IndexBuffer& operator =(const IndexBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint	 mOpenGLES3ElementArrayBuffer;	///< OpenGL ES 3 element array buffer, can be zero if no resource is allocated
-		GLenum   mOpenGLES3Type;				///< OpenGL ES 3 element array buffer data type
-		uint32_t mIndexSizeInBytes;				///< Number of bytes of an index
-		uint32_t mBufferSize;					///< Holds the size of the buffer
+		GLuint	 mOpenGLES3ElementArrayBuffer;	// OpenGL ES 3 element array buffer, can be zero if no resource is allocated
+		GLenum   mOpenGLES3Type;				// OpenGL ES 3 element array buffer data type
+		uint32_t mIndexSizeInBytes;				// Number of bytes of an index
+		uint32_t mBufferSize;					// Holds the size of the buffer
 
 
 	};
@@ -4052,18 +4052,18 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexArray(const VertexArray& source) = delete;
-		VertexArray& operator =(const VertexArray& source) = delete;
+		explicit VertexArray(const VertexArray&) = delete;
+		VertexArray& operator =(const VertexArray&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint		   mOpenGLES3VertexArray;	///< OpenGL ES 3 vertex array, can be zero if no resource is allocated
-		uint32_t	   mNumberOfVertexBuffers;	///< Number of vertex buffers
-		VertexBuffer** mVertexBuffers;			///< Vertex buffers (we keep a reference to it) used by this vertex array, can be a null pointer
-		IndexBuffer*   mIndexBuffer;			///< Optional index buffer to use, can be a null pointer, the vertex array instance keeps a reference to the index buffer
+		GLuint		   mOpenGLES3VertexArray;	// OpenGL ES 3 vertex array, can be zero if no resource is allocated
+		uint32_t	   mNumberOfVertexBuffers;	// Number of vertex buffers
+		VertexBuffer** mVertexBuffers;			// Vertex buffers (we keep a reference to it) used by this vertex array, can be a null pointer
+		IndexBuffer*   mIndexBuffer;			// Optional index buffer to use, can be a null pointer, the vertex array instance keeps a reference to the index buffer
 
 
 	};
@@ -4172,17 +4172,17 @@ namespace OpenGLES3Rhi
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		GLuint	 mOpenGLES3TextureBuffer;	///< OpenGL ES 3 texture buffer, can be zero if no resource is allocated
-		GLuint	 mOpenGLES3Texture;			///< OpenGL ES 3 texture, can be zero if no resource is allocated
-		uint32_t mBufferSize;				///< Holds the size of the buffer
+		GLuint	 mOpenGLES3TextureBuffer;	// OpenGL ES 3 texture buffer, can be zero if no resource is allocated
+		GLuint	 mOpenGLES3Texture;			// OpenGL ES 3 texture, can be zero if no resource is allocated
+		uint32_t mBufferSize;				// Holds the size of the buffer
 
 
 	//[-------------------------------------------------------]
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureBuffer(const TextureBuffer& source) = delete;
-		TextureBuffer& operator =(const TextureBuffer& source) = delete;
+		explicit TextureBuffer(const TextureBuffer&) = delete;
+		TextureBuffer& operator =(const TextureBuffer&) = delete;
 
 
 	};
@@ -4289,8 +4289,8 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureBufferBind(const TextureBufferBind& source) = delete;
-		TextureBufferBind& operator =(const TextureBufferBind& source) = delete;
+		explicit TextureBufferBind(const TextureBufferBind&) = delete;
+		TextureBufferBind& operator =(const TextureBufferBind&) = delete;
 
 
 	};
@@ -4371,8 +4371,8 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureBufferBindEmulation(const TextureBufferBindEmulation& source) = delete;
-		TextureBufferBindEmulation& operator =(const TextureBufferBindEmulation& source) = delete;
+		explicit TextureBufferBindEmulation(const TextureBufferBindEmulation&) = delete;
+		TextureBufferBindEmulation& operator =(const TextureBufferBindEmulation&) = delete;
 
 
 	};
@@ -4480,8 +4480,8 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit IndirectBuffer(const IndirectBuffer& source) = delete;
-		IndirectBuffer& operator =(const IndirectBuffer& source) = delete;
+		explicit IndirectBuffer(const IndirectBuffer&) = delete;
+		IndirectBuffer& operator =(const IndirectBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -4489,7 +4489,7 @@ namespace OpenGLES3Rhi
 	//[-------------------------------------------------------]
 	private:
 		uint32_t mNumberOfBytes;
-		uint8_t* mData;				///< Indirect buffer data, can be a null pointer
+		uint8_t* mData;				// Indirect buffer data, can be a null pointer
 
 
 	};
@@ -4604,16 +4604,16 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit UniformBuffer(const UniformBuffer& source) = delete;
-		UniformBuffer& operator =(const UniformBuffer& source) = delete;
+		explicit UniformBuffer(const UniformBuffer&) = delete;
+		UniformBuffer& operator =(const UniformBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint	 mOpenGLES3UniformBuffer;	///< OpenGL ES 3 uniform buffer, can be zero if no resource is allocated
-		uint32_t mBufferSize;				///< Holds the size of the buffer
+		GLuint	 mOpenGLES3UniformBuffer;	// OpenGL ES 3 uniform buffer, can be zero if no resource is allocated
+		uint32_t mBufferSize;				// Holds the size of the buffer
 
 
 	};
@@ -4780,15 +4780,15 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit BufferManager(const BufferManager& source) = delete;
-		BufferManager& operator =(const BufferManager& source) = delete;
+		explicit BufferManager(const BufferManager&) = delete;
+		BufferManager& operator =(const BufferManager&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		const IExtensions* mExtensions;	///< Extensions instance, always valid
+		const IExtensions* mExtensions;	// Extensions instance, always valid
 
 
 	};
@@ -4992,15 +4992,15 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture1D(const Texture1D& source) = delete;
-		Texture1D& operator =(const Texture1D& source) = delete;
+		explicit Texture1D(const Texture1D&) = delete;
+		Texture1D& operator =(const Texture1D&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLES3Texture;	///< OpenGL ES 3 texture, can be zero if no resource is allocated
+		GLuint mOpenGLES3Texture;	// OpenGL ES 3 texture, can be zero if no resource is allocated
 
 
 	};
@@ -5142,15 +5142,15 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture1DArray(const Texture1DArray& source) = delete;
-		Texture1DArray& operator =(const Texture1DArray& source) = delete;
+		explicit Texture1DArray(const Texture1DArray&) = delete;
+		Texture1DArray& operator =(const Texture1DArray&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLES3Texture;	///< OpenGL ES 3 texture, can be zero if no resource is allocated
+		GLuint mOpenGLES3Texture;	// OpenGL ES 3 texture, can be zero if no resource is allocated
 
 
 	};
@@ -5392,15 +5392,15 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture2D(const Texture2D& source) = delete;
-		Texture2D& operator =(const Texture2D& source) = delete;
+		explicit Texture2D(const Texture2D&) = delete;
+		Texture2D& operator =(const Texture2D&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLES3Texture;	///< OpenGL ES 3 texture, can be zero if no resource is allocated
+		GLuint mOpenGLES3Texture;	// OpenGL ES 3 texture, can be zero if no resource is allocated
 
 
 	};
@@ -5542,15 +5542,15 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture2DArray(const Texture2DArray& source) = delete;
-		Texture2DArray& operator =(const Texture2DArray& source) = delete;
+		explicit Texture2DArray(const Texture2DArray&) = delete;
+		Texture2DArray& operator =(const Texture2DArray&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLES3Texture;	///< OpenGL ES 3 texture, can be zero if no resource is allocated
+		GLuint mOpenGLES3Texture;	// OpenGL ES 3 texture, can be zero if no resource is allocated
 
 
 	};
@@ -5771,8 +5771,8 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture3D(const Texture3D& source) = delete;
-		Texture3D& operator =(const Texture3D& source) = delete;
+		explicit Texture3D(const Texture3D&) = delete;
+		Texture3D& operator =(const Texture3D&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -5780,7 +5780,7 @@ namespace OpenGLES3Rhi
 	//[-------------------------------------------------------]
 	private:
 		Rhi::TextureFormat::Enum mTextureFormat;
-		GLuint					 mOpenGLES3Texture;	///< OpenGL ES 3 texture, can be zero if no resource is allocated
+		GLuint					 mOpenGLES3Texture;	// OpenGL ES 3 texture, can be zero if no resource is allocated
 
 
 	};
@@ -6016,15 +6016,15 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureCube(const TextureCube& source) = delete;
-		TextureCube& operator =(const TextureCube& source) = delete;
+		explicit TextureCube(const TextureCube&) = delete;
+		TextureCube& operator =(const TextureCube&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLES3Texture;	///< OpenGL ES 3 texture, can be zero if no resource is allocated
+		GLuint mOpenGLES3Texture;	// OpenGL ES 3 texture, can be zero if no resource is allocated
 
 
 	};
@@ -6167,15 +6167,15 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureManager(const TextureManager& source) = delete;
-		TextureManager& operator =(const TextureManager& source) = delete;
+		explicit TextureManager(const TextureManager&) = delete;
+		TextureManager& operator =(const TextureManager&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		const IExtensions* mExtensions;	///< Extensions instance, always valid
+		const IExtensions* mExtensions;	// Extensions instance, always valid
 
 
 	};
@@ -6296,8 +6296,8 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit SamplerState(const SamplerState& source) = delete;
-		SamplerState& operator =(const SamplerState& source) = delete;
+		explicit SamplerState(const SamplerState&) = delete;
+		SamplerState& operator =(const SamplerState&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -6305,17 +6305,17 @@ namespace OpenGLES3Rhi
 	//[-------------------------------------------------------]
 	private:
 		// "Rhi::SamplerState" translated into OpenGL ES 3
-		GLint  mOpenGLMagFilterMode;		///< Rhi::SamplerState::filter
-		GLint  mOpenGLMinFilterMode;		///< Rhi::SamplerState::filter
-		GLint  mOpenGLTextureAddressModeS;	///< Rhi::SamplerState::addressU
-		GLint  mOpenGLTextureAddressModeT;	///< Rhi::SamplerState::addressV
-		GLint  mOpenGLTextureAddressModeR;	///< Rhi::SamplerState::addressW
-		float  mMipLodBias;					///< Rhi::SamplerState::mipLodBias
-		float  mMaxAnisotropy;				///< Rhi::SamplerState::maxAnisotropy
-		GLint  mOpenGLCompareMode;			///< Rhi::SamplerState::comparisonFunc
-		GLenum mOpenGLComparisonFunc;		///< Rhi::SamplerState::comparisonFunc
-		float  mMinLod;						///< Rhi::SamplerState::minLod
-		float  mMaxLod;						///< Rhi::SamplerState::maxLod
+		GLint  mOpenGLMagFilterMode;		// Rhi::SamplerState::filter
+		GLint  mOpenGLMinFilterMode;		// Rhi::SamplerState::filter
+		GLint  mOpenGLTextureAddressModeS;	// Rhi::SamplerState::addressU
+		GLint  mOpenGLTextureAddressModeT;	// Rhi::SamplerState::addressV
+		GLint  mOpenGLTextureAddressModeR;	// Rhi::SamplerState::addressW
+		float  mMipLodBias;					// Rhi::SamplerState::mipLodBias
+		float  mMaxAnisotropy;				// Rhi::SamplerState::maxAnisotropy
+		GLint  mOpenGLCompareMode;			// Rhi::SamplerState::comparisonFunc
+		GLenum mOpenGLComparisonFunc;		// Rhi::SamplerState::comparisonFunc
+		float  mMinLod;						// Rhi::SamplerState::minLod
+		float  mMaxLod;						// Rhi::SamplerState::maxLod
 
 
 	};
@@ -6523,8 +6523,8 @@ namespace OpenGLES3Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Rhi::RasterizerState mRasterizerState;			///< Rasterizer state
-		GLenum				 mOpenGLES3FrontFaceMode;	///< OpenGL ES 3 front face mode
+		Rhi::RasterizerState mRasterizerState;			// Rasterizer state
+		GLenum				 mOpenGLES3FrontFaceMode;	// OpenGL ES 3 front face mode
 
 
 	};
@@ -6609,9 +6609,9 @@ namespace OpenGLES3Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Rhi::DepthStencilState mDepthStencilState;			///< Depth stencil state
-		GLboolean			   mOpenGLES3DepthMaskEnabled;	///< OpenGL ES 3 depth mask enabled state
-		GLenum				   mOpenGLES3DepthFunc;			///< OpenGL ES 3 depth function
+		Rhi::DepthStencilState mDepthStencilState;			// Depth stencil state
+		GLboolean			   mOpenGLES3DepthMaskEnabled;	// OpenGL ES 3 depth mask enabled state
+		GLenum				   mOpenGLES3DepthFunc;			// OpenGL ES 3 depth function
 
 
 	};
@@ -6699,9 +6699,9 @@ namespace OpenGLES3Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Rhi::BlendState mBlendState;		///< Blend state
-		GLenum			mOpenGLES3SrcBlend;	///< OpenGL ES 3 source blend function
-		GLenum			mOpenGLES3DstBlend;	///< OpenGL ES 3 destination blend function
+		Rhi::BlendState mBlendState;		// Blend state
+		GLenum			mOpenGLES3SrcBlend;	// OpenGL ES 3 source blend function
+		GLenum			mOpenGLES3DstBlend;	// OpenGL ES 3 destination blend function
 
 
 	};
@@ -6784,8 +6784,8 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit RenderPass(const RenderPass& source) = delete;
-		RenderPass& operator =(const RenderPass& source) = delete;
+		explicit RenderPass(const RenderPass&) = delete;
+		RenderPass& operator =(const RenderPass&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -7011,16 +7011,16 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit SwapChain(const SwapChain& source) = delete;
-		SwapChain& operator =(const SwapChain& source) = delete;
+		explicit SwapChain(const SwapChain&) = delete;
+		SwapChain& operator =(const SwapChain&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		handle			mNativeWindowHandle;	///< Native window handle window, can be a null handle
-		Rhi::IRenderWindow* mRenderWindow;			///< Render window instance, can be a null pointer, don't destroy the instance since we don't own it
+		handle			mNativeWindowHandle;	// Native window handle window, can be a null handle
+		Rhi::IRenderWindow* mRenderWindow;			// Render window instance, can be a null pointer, don't destroy the instance since we don't own it
 		uint32_t			mNewVerticalSynchronizationInterval;
 
 
@@ -7428,21 +7428,21 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Framebuffer(const Framebuffer& source) = delete;
-		Framebuffer& operator =(const Framebuffer& source) = delete;
+		explicit Framebuffer(const Framebuffer&) = delete;
+		Framebuffer& operator =(const Framebuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint			mOpenGLES3Framebuffer;	///< OpenGL ES 3 framebuffer, can be zero if no resource is allocated
-		GLuint			mDepthRenderbuffer;		///< OpenGL ES render buffer for the depth component, can be zero if no resource is allocated
-		uint32_t		mNumberOfColorTextures;	///< Number of color render target textures
-		Rhi::ITexture** mColorTextures;			///< The color render target textures (we keep a reference to it), can be a null pointer or can contain null pointers, if not a null pointer there must be at least "mNumberOfColorTextures" textures in the provided C-array of pointers
-		Rhi::ITexture*  mDepthStencilTexture;	///< The depth stencil render target texture (we keep a reference to it), can be a null pointer
-		uint32_t		mWidth;					///< The framebuffer width
-		uint32_t		mHeight;				///< The framebuffer height
+		GLuint			mOpenGLES3Framebuffer;	// OpenGL ES 3 framebuffer, can be zero if no resource is allocated
+		GLuint			mDepthRenderbuffer;		// OpenGL ES render buffer for the depth component, can be zero if no resource is allocated
+		uint32_t		mNumberOfColorTextures;	// Number of color render target textures
+		Rhi::ITexture** mColorTextures;			// The color render target textures (we keep a reference to it), can be a null pointer or can contain null pointers, if not a null pointer there must be at least "mNumberOfColorTextures" textures in the provided C-array of pointers
+		Rhi::ITexture*  mDepthStencilTexture;	// The depth stencil render target texture (we keep a reference to it), can be a null pointer
+		uint32_t		mWidth;					// The framebuffer width
+		uint32_t		mHeight;				// The framebuffer height
 
 
 	};
@@ -7536,15 +7536,15 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexShaderGlsl(const VertexShaderGlsl& source) = delete;
-		VertexShaderGlsl& operator =(const VertexShaderGlsl& source) = delete;
+		explicit VertexShaderGlsl(const VertexShaderGlsl&) = delete;
+		VertexShaderGlsl& operator =(const VertexShaderGlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLuint mOpenGLES3Shader;	///< OpenGL ES 3 shader, can be zero if no resource is allocated
+		GLuint mOpenGLES3Shader;	// OpenGL ES 3 shader, can be zero if no resource is allocated
 
 
 	};
@@ -7638,15 +7638,15 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit FragmentShaderGlsl(const FragmentShaderGlsl& source) = delete;
-		FragmentShaderGlsl& operator =(const FragmentShaderGlsl& source) = delete;
+		explicit FragmentShaderGlsl(const FragmentShaderGlsl&) = delete;
+		FragmentShaderGlsl& operator =(const FragmentShaderGlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t mOpenGLES3Shader;	///< OpenGL ES 3 shader, can be zero if no resource is allocated
+		uint32_t mOpenGLES3Shader;	// OpenGL ES 3 shader, can be zero if no resource is allocated
 
 
 	};
@@ -8104,17 +8104,17 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GraphicsProgramGlsl(const GraphicsProgramGlsl& source) = delete;
-		GraphicsProgramGlsl& operator =(const GraphicsProgramGlsl& source) = delete;
+		explicit GraphicsProgramGlsl(const GraphicsProgramGlsl&) = delete;
+		GraphicsProgramGlsl& operator =(const GraphicsProgramGlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t mNumberOfRootSignatureParameters;	///< Number of root signature parameters
-		GLuint	 mOpenGLES3Program;					///< OpenGL ES 3 program, can be zero if no resource is allocated
-		GLint	 mDrawIdUniformLocation;			///< Draw ID uniform location, used for "GL_EXT_base_instance"-emulation (see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html)
+		uint32_t mNumberOfRootSignatureParameters;	// Number of root signature parameters
+		GLuint	 mOpenGLES3Program;					// OpenGL ES 3 program, can be zero if no resource is allocated
+		GLint	 mDrawIdUniformLocation;			// Draw ID uniform location, used for "GL_EXT_base_instance"-emulation (see "17/11/2012 Surviving without gl_DrawID" - https://www.g-truc.net/post-0518.html)
 
 
 	};
@@ -8311,8 +8311,8 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ShaderLanguageGlsl(const ShaderLanguageGlsl& source) = delete;
-		ShaderLanguageGlsl& operator =(const ShaderLanguageGlsl& source) = delete;
+		explicit ShaderLanguageGlsl(const ShaderLanguageGlsl&) = delete;
+		ShaderLanguageGlsl& operator =(const ShaderLanguageGlsl&) = delete;
 
 
 	};
@@ -8441,15 +8441,15 @@ namespace OpenGLES3Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GraphicsPipelineState(const GraphicsPipelineState& source) = delete;
-		GraphicsPipelineState& operator =(const GraphicsPipelineState& source) = delete;
+		explicit GraphicsPipelineState(const GraphicsPipelineState&) = delete;
+		GraphicsPipelineState& operator =(const GraphicsPipelineState&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GLenum					mOpenGLES3PrimitiveTopology;	///< OpenGL ES 3 primitive topology describing the type of primitive to render
+		GLenum					mOpenGLES3PrimitiveTopology;	// OpenGL ES 3 primitive topology describing the type of primitive to render
 		Rhi::IGraphicsProgram*	mGraphicsProgram;
 		Rhi::IRenderPass*		mRenderPass;
 		RasterizerState			mRasterizerState;
@@ -8850,7 +8850,7 @@ namespace OpenGLES3Rhi
 		#endif
 	{
 		// Initialize the OpenGL ES 3 context
-		mOpenGLES3Context = RHI_NEW(mContext, OpenGLES3ContextRuntimeLinking)(*this, context.getNativeWindowHandle(), context.isUsingExternalContext());
+		mOpenGLES3Context = RHI_NEW(mContext, OpenGLES3ContextRuntimeLinking)(*this, context.getNativeWindowHandle(), false);
 		if (mOpenGLES3Context->initialize(0))
 		{
 			#if SE_DEBUG
@@ -8932,7 +8932,7 @@ namespace OpenGLES3Rhi
 			mGraphicsRootSignature->releaseReference();
 		}
 
-		#ifdef SE_STATISTICS
+		#if SE_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
 			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
@@ -8949,7 +8949,7 @@ namespace OpenGLES3Rhi
 				}
 
 				// Use debug output to show the current number of resource instances
-				getStatistics().debugOutputCurrentResouces(mContext);
+				getStatistics().debugOutputCurrentResouces();
 			}
 		}
 		#endif

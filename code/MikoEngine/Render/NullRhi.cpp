@@ -45,7 +45,7 @@ namespace
 {
 	namespace detail
 	{
-		static constexpr const char* NULL_NAME = "Null";	///< ASCII name of this shader language, always valid (do not free the memory the returned pointer is pointing to)
+		static constexpr const char* NULL_NAME = "Null";	// ASCII name of this shader language, always valid (do not free the memory the returned pointer is pointing to)
 	} // detail
 }
 
@@ -176,8 +176,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit NullRhi(const NullRhi& source) = delete;
-		NullRhi& operator =(const NullRhi& source) = delete;
+		explicit NullRhi(const NullRhi&) = delete;
+		NullRhi& operator =(const NullRhi&) = delete;
 
 		/**
 		*  @brief
@@ -190,12 +190,12 @@ namespace NullRhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Rhi::IShaderLanguage* mShaderLanguage;			///< Null shader language instance (we keep a reference to it), can be a null pointer
-		Rhi::IRenderTarget*   mRenderTarget;			///< Currently set render target (we keep a reference to it), can be a null pointer
-		RootSignature*		  mGraphicsRootSignature;	///< Currently set graphics root signature (we keep a reference to it), can be a null pointer
-		RootSignature*		  mComputeRootSignature;	///< Currently set compute root signature (we keep a reference to it), can be a null pointer
+		Rhi::IShaderLanguage* mShaderLanguage;			// Null shader language instance (we keep a reference to it), can be a null pointer
+		Rhi::IRenderTarget*   mRenderTarget;			// Currently set render target (we keep a reference to it), can be a null pointer
+		RootSignature*		  mGraphicsRootSignature;	// Currently set graphics root signature (we keep a reference to it), can be a null pointer
+		RootSignature*		  mComputeRootSignature;	// Currently set compute root signature (we keep a reference to it), can be a null pointer
 		#if SE_DEBUG
-			bool mDebugBetweenBeginEndScene;	///< Just here for state tracking in debug builds
+			bool mDebugBetweenBeginEndScene;	// Just here for state tracking in debug builds
 		#endif
 	};
 
@@ -324,18 +324,18 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ResourceGroup(const ResourceGroup& source) = delete;
-		ResourceGroup& operator =(const ResourceGroup& source) = delete;
+		explicit ResourceGroup(const ResourceGroup&) = delete;
+		ResourceGroup& operator =(const ResourceGroup&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t			 mRootParameterIndex;	///< The root parameter index number for binding
-		uint32_t			 mNumberOfResources;	///< Number of resources this resource group groups together
-		Rhi::IResource**	 mResources;			///< RHI resources, we keep a reference to it
-		Rhi::ISamplerState** mSamplerStates;		///< Sampler states, we keep a reference to it
+		uint32_t			 mRootParameterIndex;	// The root parameter index number for binding
+		uint32_t			 mNumberOfResources;	// Number of resources this resource group groups together
+		Rhi::IResource**	 mResources;			// RHI resources, we keep a reference to it
+		Rhi::ISamplerState** mSamplerStates;		// Sampler states, we keep a reference to it
 
 
 	};
@@ -473,8 +473,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit RootSignature(const RootSignature& source) = delete;
-		RootSignature& operator =(const RootSignature& source) = delete;
+		explicit RootSignature(const RootSignature&) = delete;
+		RootSignature& operator =(const RootSignature&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -537,8 +537,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexBuffer(const VertexBuffer& source) = delete;
-		VertexBuffer& operator =(const VertexBuffer& source) = delete;
+		explicit VertexBuffer(const VertexBuffer&) = delete;
+		VertexBuffer& operator =(const VertexBuffer&) = delete;
 
 
 	};
@@ -594,8 +594,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit IndexBuffer(const IndexBuffer& source) = delete;
-		IndexBuffer& operator =(const IndexBuffer& source) = delete;
+		explicit IndexBuffer(const IndexBuffer&) = delete;
+		IndexBuffer& operator =(const IndexBuffer&) = delete;
 
 
 	};
@@ -656,8 +656,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexArray(const VertexArray& source) = delete;
-		VertexArray& operator =(const VertexArray& source) = delete;
+		explicit VertexArray(const VertexArray&) = delete;
+		VertexArray& operator =(const VertexArray&) = delete;
 
 
 	};
@@ -713,8 +713,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureBuffer(const TextureBuffer& source) = delete;
-		TextureBuffer& operator =(const TextureBuffer& source) = delete;
+		explicit TextureBuffer(const TextureBuffer&) = delete;
+		TextureBuffer& operator =(const TextureBuffer&) = delete;
 
 
 	};
@@ -770,8 +770,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit StructuredBuffer(const StructuredBuffer& source) = delete;
-		StructuredBuffer& operator =(const StructuredBuffer& source) = delete;
+		explicit StructuredBuffer(const StructuredBuffer&) = delete;
+		StructuredBuffer& operator =(const StructuredBuffer&) = delete;
 
 
 	};
@@ -837,8 +837,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit IndirectBuffer(const IndirectBuffer& source) = delete;
-		IndirectBuffer& operator =(const IndirectBuffer& source) = delete;
+		explicit IndirectBuffer(const IndirectBuffer&) = delete;
+		IndirectBuffer& operator =(const IndirectBuffer&) = delete;
 
 
 	};
@@ -894,8 +894,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit UniformBuffer(const UniformBuffer& source) = delete;
-		UniformBuffer& operator =(const UniformBuffer& source) = delete;
+		explicit UniformBuffer(const UniformBuffer&) = delete;
+		UniformBuffer& operator =(const UniformBuffer&) = delete;
 
 
 	};
@@ -1055,8 +1055,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit BufferManager(const BufferManager& source) = delete;
-		BufferManager& operator =(const BufferManager& source) = delete;
+		explicit BufferManager(const BufferManager&) = delete;
+		BufferManager& operator =(const BufferManager&) = delete;
 
 
 	};
@@ -1114,8 +1114,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture1D(const Texture1D& source) = delete;
-		Texture1D& operator =(const Texture1D& source) = delete;
+		explicit Texture1D(const Texture1D&) = delete;
+		Texture1D& operator =(const Texture1D&) = delete;
 
 
 	};
@@ -1175,8 +1175,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture1DArray(const Texture1DArray& source) = delete;
-		Texture1DArray& operator =(const Texture1DArray& source) = delete;
+		explicit Texture1DArray(const Texture1DArray&) = delete;
+		Texture1DArray& operator =(const Texture1DArray&) = delete;
 
 
 	};
@@ -1236,8 +1236,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture2D(const Texture2D& source) = delete;
-		Texture2D& operator =(const Texture2D& source) = delete;
+		explicit Texture2D(const Texture2D&) = delete;
+		Texture2D& operator =(const Texture2D&) = delete;
 
 
 	};
@@ -1299,8 +1299,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture2DArray(const Texture2DArray& source) = delete;
-		Texture2DArray& operator =(const Texture2DArray& source) = delete;
+		explicit Texture2DArray(const Texture2DArray&) = delete;
+		Texture2DArray& operator =(const Texture2DArray&) = delete;
 
 
 	};
@@ -1362,8 +1362,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture3D(const Texture3D& source) = delete;
-		Texture3D& operator =(const Texture3D& source) = delete;
+		explicit Texture3D(const Texture3D&) = delete;
+		Texture3D& operator =(const Texture3D&) = delete;
 
 
 	};
@@ -1421,8 +1421,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureCube(const TextureCube& source) = delete;
-		TextureCube& operator =(const TextureCube& source) = delete;
+		explicit TextureCube(const TextureCube&) = delete;
+		TextureCube& operator =(const TextureCube&) = delete;
 
 
 	};
@@ -1482,8 +1482,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureCubeArray(const TextureCubeArray& source) = delete;
-		TextureCubeArray& operator =(const TextureCubeArray& source) = delete;
+		explicit TextureCubeArray(const TextureCubeArray&) = delete;
+		TextureCubeArray& operator =(const TextureCubeArray&) = delete;
 
 
 	};
@@ -1621,8 +1621,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureManager(const TextureManager& source) = delete;
-		TextureManager& operator =(const TextureManager& source) = delete;
+		explicit TextureManager(const TextureManager&) = delete;
+		TextureManager& operator =(const TextureManager&) = delete;
 
 
 	};
@@ -1678,8 +1678,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit SamplerState(const SamplerState& source) = delete;
-		SamplerState& operator =(const SamplerState& source) = delete;
+		explicit SamplerState(const SamplerState&) = delete;
+		SamplerState& operator =(const SamplerState&) = delete;
 
 
 	};
@@ -1762,8 +1762,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit RenderPass(const RenderPass& source) = delete;
-		RenderPass& operator =(const RenderPass& source) = delete;
+		explicit RenderPass(const RenderPass&) = delete;
+		RenderPass& operator =(const RenderPass&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -1941,15 +1941,15 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit SwapChain(const SwapChain& source) = delete;
-		SwapChain& operator =(const SwapChain& source) = delete;
+		explicit SwapChain(const SwapChain&) = delete;
+		SwapChain& operator =(const SwapChain&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		handle mNativeWindowHandle;	///< Native window handle window, can be a null handle
+		handle mNativeWindowHandle;	// Native window handle window, can be a null handle
 
 
 	};
@@ -2017,8 +2017,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Framebuffer(const Framebuffer& source) = delete;
-		Framebuffer& operator =(const Framebuffer& source) = delete;
+		explicit Framebuffer(const Framebuffer&) = delete;
+		Framebuffer& operator =(const Framebuffer&) = delete;
 
 
 	};
@@ -2084,8 +2084,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexShader(const VertexShader& source) = delete;
-		VertexShader& operator =(const VertexShader& source) = delete;
+		explicit VertexShader(const VertexShader&) = delete;
+		VertexShader& operator =(const VertexShader&) = delete;
 
 
 	};
@@ -2151,8 +2151,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TessellationControlShader(const TessellationControlShader& source) = delete;
-		TessellationControlShader& operator =(const TessellationControlShader& source) = delete;
+		explicit TessellationControlShader(const TessellationControlShader&) = delete;
+		TessellationControlShader& operator =(const TessellationControlShader&) = delete;
 
 
 	};
@@ -2218,8 +2218,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TessellationEvaluationShader(const TessellationEvaluationShader& source) = delete;
-		TessellationEvaluationShader& operator =(const TessellationEvaluationShader& source) = delete;
+		explicit TessellationEvaluationShader(const TessellationEvaluationShader&) = delete;
+		TessellationEvaluationShader& operator =(const TessellationEvaluationShader&) = delete;
 
 
 	};
@@ -2285,8 +2285,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GeometryShader(const GeometryShader& source) = delete;
-		GeometryShader& operator =(const GeometryShader& source) = delete;
+		explicit GeometryShader(const GeometryShader&) = delete;
+		GeometryShader& operator =(const GeometryShader&) = delete;
 
 
 	};
@@ -2352,8 +2352,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit FragmentShader(const FragmentShader& source) = delete;
-		FragmentShader& operator =(const FragmentShader& source) = delete;
+		explicit FragmentShader(const FragmentShader&) = delete;
+		FragmentShader& operator =(const FragmentShader&) = delete;
 
 
 	};
@@ -2419,8 +2419,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TaskShader(const TaskShader& source) = delete;
-		TaskShader& operator =(const TaskShader& source) = delete;
+		explicit TaskShader(const TaskShader&) = delete;
+		TaskShader& operator =(const TaskShader&) = delete;
 
 
 	};
@@ -2486,8 +2486,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit MeshShader(const MeshShader& source) = delete;
-		MeshShader& operator =(const MeshShader& source) = delete;
+		explicit MeshShader(const MeshShader&) = delete;
+		MeshShader& operator =(const MeshShader&) = delete;
 
 
 	};
@@ -2553,8 +2553,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ComputeShader(const ComputeShader& source) = delete;
-		ComputeShader& operator =(const ComputeShader& source) = delete;
+		explicit ComputeShader(const ComputeShader&) = delete;
+		ComputeShader& operator =(const ComputeShader&) = delete;
 
 
 	};
@@ -2686,8 +2686,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GraphicsProgram(const GraphicsProgram& source) = delete;
-		GraphicsProgram& operator =(const GraphicsProgram& source) = delete;
+		explicit GraphicsProgram(const GraphicsProgram&) = delete;
+		GraphicsProgram& operator =(const GraphicsProgram&) = delete;
 
 
 	};
@@ -2901,8 +2901,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ShaderLanguage(const ShaderLanguage& source) = delete;
-		ShaderLanguage& operator =(const ShaderLanguage& source) = delete;
+		explicit ShaderLanguage(const ShaderLanguage&) = delete;
+		ShaderLanguage& operator =(const ShaderLanguage&) = delete;
 
 
 	};
@@ -2978,8 +2978,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GraphicsPipelineState(const GraphicsPipelineState& source) = delete;
-		GraphicsPipelineState& operator =(const GraphicsPipelineState& source) = delete;
+		explicit GraphicsPipelineState(const GraphicsPipelineState&) = delete;
+		GraphicsPipelineState& operator =(const GraphicsPipelineState&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -3063,8 +3063,8 @@ namespace NullRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ComputePipelineState(const ComputePipelineState& source) = delete;
-		ComputePipelineState& operator =(const ComputePipelineState& source) = delete;
+		explicit ComputePipelineState(const ComputePipelineState&) = delete;
+		ComputePipelineState& operator =(const ComputePipelineState&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -3420,7 +3420,7 @@ namespace NullRhi
 			mComputeRootSignature = nullptr;
 		}
 
-		#ifdef SE_STATISTICS
+		#if SE_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
 			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
@@ -3437,7 +3437,7 @@ namespace NullRhi
 				}
 
 				// Use debug output to show the current number of resource instances
-				getStatistics().debugOutputCurrentResouces(mContext);
+				getStatistics().debugOutputCurrentResouces();
 			}
 		}
 		#endif

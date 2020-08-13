@@ -176,14 +176,40 @@
     <ClInclude Include="Core\Logger.h" />
     <ClInclude Include="Core\MemoryPtr.h" />
     <ClInclude Include="MikoHeader.h" />
+    <ClInclude Include="Render\BlendStateTypes.h" />
+    <ClInclude Include="Render\BufferTypes.h" />
+    <ClInclude Include="Render\Capabilities.h" />
     <ClInclude Include="Render\D3D11Header.h" />
     <ClInclude Include="Render\D3D11RuntimeLinking.inl" />
     <ClInclude Include="Render\DefaultAllocator.h" />
     <ClInclude Include="Render\DefaultAssert.h" />
     <ClInclude Include="Render\DefaultLog.h" />
+    <ClInclude Include="Render\DepthStencilStateTypes.h" />
+    <ClInclude Include="Render\IGraphicsProgram.h" />
+    <ClInclude Include="Render\IndexBufferTypes.h" />
+    <ClInclude Include="Render\IndirectBufferTypes.h" />
+    <ClInclude Include="Render\IQueryPool.h" />
+    <ClInclude Include="Render\IRenderPass.h" />
+    <ClInclude Include="Render\IResource.h" />
+    <ClInclude Include="Render\IResourceGroup.h" />
+    <ClInclude Include="Render\IRhi.h" />
+    <ClInclude Include="Render\IShaderLanguage.h" />
     <ClInclude Include="Render\MakeID.h" />
+    <ClInclude Include="Render\PipelineStateTypes.h" />
+    <ClInclude Include="Render\QueryType.h" />
+    <ClInclude Include="Render\RasterizerStateTypes.h" />
     <ClInclude Include="Render\Rhi.h" />
+    <ClInclude Include="Render\RHIContext.h" />
+    <ClInclude Include="Render\RHICore.h" />
     <ClInclude Include="Render\RhiInstance.h" />
+    <ClInclude Include="Render\RHITypes.h" />
+    <ClInclude Include="Render\IRootSignature.h" />
+    <ClInclude Include="Render\RootSignatureTypes.h" />
+    <ClInclude Include="Render\SamplerStateTypes.h" />
+    <ClInclude Include="Render\ShaderTypes.h" />
+    <ClInclude Include="Render\Statistics.h" />
+    <ClInclude Include="Render\TextureTypes.h" />
+    <ClInclude Include="Render\VertexArrayTypes.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Utility\Timer.h" />
     <ClInclude Include="Utility\Version.h" />
@@ -210,6 +236,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

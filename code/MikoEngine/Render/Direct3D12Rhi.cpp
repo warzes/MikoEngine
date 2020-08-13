@@ -34,7 +34,7 @@ namespace
 {
 	namespace detail
 	{
-		static constexpr const char* HLSL_NAME = "HLSL";	///< ASCII name of this shader language, always valid (do not free the memory the returned pointer is pointing to)
+		static constexpr const char* HLSL_NAME = "HLSL";	// ASCII name of this shader language, always valid (do not free the memory the returned pointer is pointing to)
 		static constexpr const uint32_t NUMBER_OF_BUFFERED_FRAMES = 2;
 
 		template <typename T0, typename T1>
@@ -302,8 +302,8 @@ namespace
 			}
 
 		private:
-			explicit DescriptorHeap(const DescriptorHeap& source) = delete;
-			DescriptorHeap& operator =(const DescriptorHeap& source) = delete;
+			explicit DescriptorHeap(const DescriptorHeap&) = delete;
+			DescriptorHeap& operator =(const DescriptorHeap&) = delete;
 
 			ID3D12DescriptorHeap*		mD3D12DescriptorHeap = nullptr;
 			D3D12_CPU_DESCRIPTOR_HANDLE mD3D12CpuDescriptorHandleForHeapStart = {};
@@ -543,8 +543,8 @@ namespace Direct3D12Rhi
 		}
 
 	private:
-		explicit Direct3D12Rhi(const Direct3D12Rhi& source) = delete;
-		Direct3D12Rhi& operator =(const Direct3D12Rhi& source) = delete;
+		explicit Direct3D12Rhi(const Direct3D12Rhi&) = delete;
+		Direct3D12Rhi& operator =(const Direct3D12Rhi&) = delete;
 
 		void initializeCapabilities();
 
@@ -563,12 +563,12 @@ namespace Direct3D12Rhi
 #endif
 
 	private:
-		IDXGIFactory4*			   mDxgiFactory4 = nullptr;				///< DXGI factors instance, always valid for a correctly initialized RHI
-		ID3D12Device*			   mD3D12Device = nullptr;				///< The Direct3D 12 device, null pointer on error (we don't check because this would be a total overhead, the user has to use "Rhi::IRhi::isInitialized()" and is asked to never ever use a not properly initialized RHI)
-		ID3D12CommandQueue*		   mD3D12CommandQueue = nullptr;			///< The Direct3D 12 command queue, null pointer on error (we don't check because this would be a total overhead, the user has to use "Rhi::IRhi::isInitialized()" and is asked to never ever use a not properly initialized RHI)
+		IDXGIFactory4*			   mDxgiFactory4 = nullptr;				// DXGI factors instance, always valid for a correctly initialized RHI
+		ID3D12Device*			   mD3D12Device = nullptr;				// The Direct3D 12 device, null pointer on error (we don't check because this would be a total overhead, the user has to use "Rhi::IRhi::isInitialized()" and is asked to never ever use a not properly initialized RHI)
+		ID3D12CommandQueue*		   mD3D12CommandQueue = nullptr;			// The Direct3D 12 command queue, null pointer on error (we don't check because this would be a total overhead, the user has to use "Rhi::IRhi::isInitialized()" and is asked to never ever use a not properly initialized RHI)
 		ID3D12CommandAllocator*	   mD3D12CommandAllocator = nullptr;
 		ID3D12GraphicsCommandList* mD3D12GraphicsCommandList = nullptr;
-		Rhi::IShaderLanguage*	   mShaderLanguageHlsl = nullptr;			///< HLSL shader language instance (we keep a reference to it), can be a null pointer
+		Rhi::IShaderLanguage*	   mShaderLanguageHlsl = nullptr;			// HLSL shader language instance (we keep a reference to it), can be a null pointer
 		::detail::UploadContext	   mUploadContext;
 		::detail::DescriptorHeap*  mShaderResourceViewDescriptorHeap = nullptr;
 		::detail::DescriptorHeap*  mRenderTargetViewDescriptorHeap = nullptr;
@@ -577,13 +577,13 @@ namespace Direct3D12Rhi
 		//[-------------------------------------------------------]
 		//[ State related                                         ]
 		//[-------------------------------------------------------]
-		Rhi::IRenderTarget*		 mRenderTarget = nullptr;				///< Output-merger (OM) stage: Currently set render target (we keep a reference to it), can be a null pointer
-		D3D12_PRIMITIVE_TOPOLOGY mD3D12PrimitiveTopology = D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;	///< State cache to avoid making redundant Direct3D 12 calls
-		RootSignature*			 mGraphicsRootSignature = nullptr;	///< Currently set graphics root signature (we keep a reference to it), can be a null pointer
-		RootSignature*			 mComputeRootSignature = nullptr;		///< Currently set compute root signature (we keep a reference to it), can be a null pointer
-		VertexArray*			 mVertexArray = nullptr;				///< Currently set vertex array (we keep a reference to it), can be a null pointer
+		Rhi::IRenderTarget*		 mRenderTarget = nullptr;				// Output-merger (OM) stage: Currently set render target (we keep a reference to it), can be a null pointer
+		D3D12_PRIMITIVE_TOPOLOGY mD3D12PrimitiveTopology = D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;	// State cache to avoid making redundant Direct3D 12 calls
+		RootSignature*			 mGraphicsRootSignature = nullptr;	// Currently set graphics root signature (we keep a reference to it), can be a null pointer
+		RootSignature*			 mComputeRootSignature = nullptr;		// Currently set compute root signature (we keep a reference to it), can be a null pointer
+		VertexArray*			 mVertexArray = nullptr;				// Currently set vertex array (we keep a reference to it), can be a null pointer
 #if SE_DEBUG
-		bool mDebugBetweenBeginEndScene = false;	///< Just here for state tracking in debug builds
+		bool mDebugBetweenBeginEndScene = false;	// Just here for state tracking in debug builds
 #endif
 	};
 
@@ -1234,8 +1234,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit RootSignature(const RootSignature& source) = delete;
-		RootSignature& operator =(const RootSignature& source) = delete;
+		explicit RootSignature(const RootSignature&) = delete;
+		RootSignature& operator =(const RootSignature&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -1243,7 +1243,7 @@ namespace Direct3D12Rhi
 	//[-------------------------------------------------------]
 	private:
 		Rhi::RootSignature	 mRootSignature;
-		ID3D12RootSignature* mD3D12RootSignature;	///< Direct3D 12 root signature, can be a null pointer
+		ID3D12RootSignature* mD3D12RootSignature;	// Direct3D 12 root signature, can be a null pointer
 
 
 	};
@@ -1382,15 +1382,15 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexBuffer(const VertexBuffer& source) = delete;
-		VertexBuffer& operator =(const VertexBuffer& source) = delete;
+		explicit VertexBuffer(const VertexBuffer&) = delete;
+		VertexBuffer& operator =(const VertexBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t		mNumberOfBytes;	///< Number of bytes within the vertex buffer
+		uint32_t		mNumberOfBytes;	// Number of bytes within the vertex buffer
 		ID3D12Resource* mD3D12Resource;
 
 
@@ -1551,8 +1551,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit IndexBuffer(const IndexBuffer& source) = delete;
-		IndexBuffer& operator =(const IndexBuffer& source) = delete;
+		explicit IndexBuffer(const IndexBuffer&) = delete;
+		IndexBuffer& operator =(const IndexBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -1727,20 +1727,20 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexArray(const VertexArray& source) = delete;
-		VertexArray& operator =(const VertexArray& source) = delete;
+		explicit VertexArray(const VertexArray&) = delete;
+		VertexArray& operator =(const VertexArray&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		IndexBuffer*			  mIndexBuffer;				///< Optional index buffer to use, can be a null pointer, the vertex array instance keeps a reference to the index buffer
+		IndexBuffer*			  mIndexBuffer;				// Optional index buffer to use, can be a null pointer, the vertex array instance keeps a reference to the index buffer
 		// Direct3D 12 input slots
-		UINT					  mNumberOfSlots;			///< Number of used Direct3D 12 input slots
+		UINT					  mNumberOfSlots;			// Number of used Direct3D 12 input slots
 		D3D12_VERTEX_BUFFER_VIEW* mD3D12VertexBufferViews;
 		// For proper vertex buffer reference counter behaviour
-		VertexBuffer**			  mVertexBuffers;			///< Vertex buffers (we keep a reference to it) used by this vertex array, can be a null pointer
+		VertexBuffer**			  mVertexBuffers;			// Vertex buffers (we keep a reference to it) used by this vertex array, can be a null pointer
 
 
 	};
@@ -1895,8 +1895,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureBuffer(const TextureBuffer& source) = delete;
-		TextureBuffer& operator =(const TextureBuffer& source) = delete;
+		explicit TextureBuffer(const TextureBuffer&) = delete;
+		TextureBuffer& operator =(const TextureBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -2052,8 +2052,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit StructuredBuffer(const StructuredBuffer& source) = delete;
-		StructuredBuffer& operator =(const StructuredBuffer& source) = delete;
+		explicit StructuredBuffer(const StructuredBuffer&) = delete;
+		StructuredBuffer& operator =(const StructuredBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -2061,7 +2061,7 @@ namespace Direct3D12Rhi
 	//[-------------------------------------------------------]
 	private:
 		// TODO(co) Direct3D 12 update
-		//ID3D12Buffer* mD3D12Buffer;	///< Direct3D texture buffer instance, can be a null pointer
+		//ID3D12Buffer* mD3D12Buffer;	// Direct3D texture buffer instance, can be a null pointer
 
 
 	};
@@ -2237,8 +2237,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit IndirectBuffer(const IndirectBuffer& source) = delete;
-		IndirectBuffer& operator =(const IndirectBuffer& source) = delete;
+		explicit IndirectBuffer(const IndirectBuffer&) = delete;
+		IndirectBuffer& operator =(const IndirectBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -2378,8 +2378,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit UniformBuffer(const UniformBuffer& source) = delete;
-		UniformBuffer& operator =(const UniformBuffer& source) = delete;
+		explicit UniformBuffer(const UniformBuffer&) = delete;
+		UniformBuffer& operator =(const UniformBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -2531,8 +2531,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit BufferManager(const BufferManager& source) = delete;
-		BufferManager& operator =(const BufferManager& source) = delete;
+		explicit BufferManager(const BufferManager&) = delete;
+		BufferManager& operator =(const BufferManager&) = delete;
 
 
 	};
@@ -2677,8 +2677,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture1D(const Texture1D& source) = delete;
-		Texture1D& operator =(const Texture1D& source) = delete;
+		explicit Texture1D(const Texture1D&) = delete;
+		Texture1D& operator =(const Texture1D&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -2863,8 +2863,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture1DArray(const Texture1DArray& source) = delete;
-		Texture1DArray& operator =(const Texture1DArray& source) = delete;
+		explicit Texture1DArray(const Texture1DArray&) = delete;
+		Texture1DArray& operator =(const Texture1DArray&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -3051,8 +3051,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture2D(const Texture2D& source) = delete;
-		Texture2D& operator =(const Texture2D& source) = delete;
+		explicit Texture2D(const Texture2D&) = delete;
+		Texture2D& operator =(const Texture2D&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -3240,8 +3240,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture2DArray(const Texture2DArray& source) = delete;
-		Texture2DArray& operator =(const Texture2DArray& source) = delete;
+		explicit Texture2DArray(const Texture2DArray&) = delete;
+		Texture2DArray& operator =(const Texture2DArray&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -3408,8 +3408,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture3D(const Texture3D& source) = delete;
-		Texture3D& operator =(const Texture3D& source) = delete;
+		explicit Texture3D(const Texture3D&) = delete;
+		Texture3D& operator =(const Texture3D&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -3582,8 +3582,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureCube(const TextureCube& source) = delete;
-		TextureCube& operator =(const TextureCube& source) = delete;
+		explicit TextureCube(const TextureCube&) = delete;
+		TextureCube& operator =(const TextureCube&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -3728,8 +3728,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureManager(const TextureManager& source) = delete;
-		TextureManager& operator =(const TextureManager& source) = delete;
+		explicit TextureManager(const TextureManager&) = delete;
+		TextureManager& operator =(const TextureManager&) = delete;
 
 
 	};
@@ -3806,8 +3806,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit SamplerState(const SamplerState& source) = delete;
-		SamplerState& operator =(const SamplerState& source) = delete;
+		explicit SamplerState(const SamplerState&) = delete;
+		SamplerState& operator =(const SamplerState&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -3934,8 +3934,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit RenderPass(const RenderPass& source) = delete;
-		RenderPass& operator =(const RenderPass& source) = delete;
+		explicit RenderPass(const RenderPass&) = delete;
+		RenderPass& operator =(const RenderPass&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -4210,8 +4210,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit QueryPool(const QueryPool& source) = delete;
-		QueryPool& operator =(const QueryPool& source) = delete;
+		explicit QueryPool(const QueryPool&) = delete;
+		QueryPool& operator =(const QueryPool&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -4701,8 +4701,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit SwapChain(const SwapChain& source) = delete;
-		SwapChain& operator =(const SwapChain& source) = delete;
+		explicit SwapChain(const SwapChain&) = delete;
+		SwapChain& operator =(const SwapChain&) = delete;
 
 		/**
 		*  @brief
@@ -4930,12 +4930,12 @@ namespace Direct3D12Rhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		IDXGISwapChain3*	  mDxgiSwapChain3;												///< The DXGI swap chain 3 instance, null pointer on error
-		ID3D12DescriptorHeap* mD3D12DescriptorHeapRenderTargetView;							///< The Direct3D 12 render target view descriptor heap instance, null pointer on error
-		ID3D12DescriptorHeap* mD3D12DescriptorHeapDepthStencilView;							///< The Direct3D 12 depth stencil view descriptor heap instance, null pointer on error
-		UINT				  mRenderTargetViewDescriptorSize;								///< Render target view descriptor size
-		ID3D12Resource*		  mD3D12ResourceRenderTargets[Direct3D12Rhi::NUMBER_OF_FRAMES];	///< The Direct3D 12 render target instances, null pointer on error
-		ID3D12Resource*		  mD3D12ResourceDepthStencil;									///< The Direct3D 12 depth stencil instance, null pointer on error
+		IDXGISwapChain3*	  mDxgiSwapChain3;												// The DXGI swap chain 3 instance, null pointer on error
+		ID3D12DescriptorHeap* mD3D12DescriptorHeapRenderTargetView;							// The Direct3D 12 render target view descriptor heap instance, null pointer on error
+		ID3D12DescriptorHeap* mD3D12DescriptorHeapDepthStencilView;							// The Direct3D 12 depth stencil view descriptor heap instance, null pointer on error
+		UINT				  mRenderTargetViewDescriptorSize;								// Render target view descriptor size
+		ID3D12Resource*		  mD3D12ResourceRenderTargets[Direct3D12Rhi::NUMBER_OF_FRAMES];	// The Direct3D 12 render target instances, null pointer on error
+		ID3D12Resource*		  mD3D12ResourceDepthStencil;									// The Direct3D 12 depth stencil instance, null pointer on error
 
 		// Synchronization objects
 		uint32_t	 mSynchronizationInterval;
@@ -5386,8 +5386,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Framebuffer(const Framebuffer& source) = delete;
-		Framebuffer& operator =(const Framebuffer& source) = delete;
+		explicit Framebuffer(const Framebuffer&) = delete;
+		Framebuffer& operator =(const Framebuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -5395,14 +5395,14 @@ namespace Direct3D12Rhi
 	//[-------------------------------------------------------]
 	private:
 		// Generic part
-		uint32_t		mNumberOfColorTextures;	///< Number of color render target textures
-		Rhi::ITexture** mColorTextures;			///< The color render target textures (we keep a reference to it), can be a null pointer or can contain null pointers, if not a null pointer there must be at least "m_nNumberOfColorTextures" textures in the provided C-array of pointers
-		Rhi::ITexture*  mDepthStencilTexture;	///< The depth stencil render target texture (we keep a reference to it), can be a null pointer
-		uint32_t		mWidth;					///< The framebuffer width
-		uint32_t		mHeight;				///< The framebuffer height
+		uint32_t		mNumberOfColorTextures;	// Number of color render target textures
+		Rhi::ITexture** mColorTextures;			// The color render target textures (we keep a reference to it), can be a null pointer or can contain null pointers, if not a null pointer there must be at least "m_nNumberOfColorTextures" textures in the provided C-array of pointers
+		Rhi::ITexture*  mDepthStencilTexture;	// The depth stencil render target texture (we keep a reference to it), can be a null pointer
+		uint32_t		mWidth;					// The framebuffer width
+		uint32_t		mHeight;				// The framebuffer height
 		// Direct3D 12 part
-		ID3D12DescriptorHeap** mD3D12DescriptorHeapRenderTargetViews;	///< The Direct3D 12 render target view descriptor heap instance, null pointer on error
-		ID3D12DescriptorHeap*  mD3D12DescriptorHeapDepthStencilView;	///< The Direct3D 12 depth stencil view descriptor heap instance, null pointer on error
+		ID3D12DescriptorHeap** mD3D12DescriptorHeapRenderTargetViews;	// The Direct3D 12 render target view descriptor heap instance, null pointer on error
+		ID3D12DescriptorHeap*  mD3D12DescriptorHeapDepthStencilView;	// The Direct3D 12 depth stencil view descriptor heap instance, null pointer on error
 
 
 	};
@@ -5516,15 +5516,15 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexShaderHlsl(const VertexShaderHlsl& source) = delete;
-		VertexShaderHlsl& operator =(const VertexShaderHlsl& source) = delete;
+		explicit VertexShaderHlsl(const VertexShaderHlsl&) = delete;
+		VertexShaderHlsl& operator =(const VertexShaderHlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ID3DBlob* mD3DBlobVertexShader;	///< Direct3D 12 vertex shader blob, can be a null pointer
+		ID3DBlob* mD3DBlobVertexShader;	// Direct3D 12 vertex shader blob, can be a null pointer
 
 
 	};
@@ -5638,15 +5638,15 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TessellationControlShaderHlsl(const TessellationControlShaderHlsl& source) = delete;
-		TessellationControlShaderHlsl& operator =(const TessellationControlShaderHlsl& source) = delete;
+		explicit TessellationControlShaderHlsl(const TessellationControlShaderHlsl&) = delete;
+		TessellationControlShaderHlsl& operator =(const TessellationControlShaderHlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ID3DBlob* mD3DBlobHullShader;	///< Direct3D 12 hull shader blob, can be a null pointer
+		ID3DBlob* mD3DBlobHullShader;	// Direct3D 12 hull shader blob, can be a null pointer
 
 
 	};
@@ -5760,15 +5760,15 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TessellationEvaluationShaderHlsl(const TessellationEvaluationShaderHlsl& source) = delete;
-		TessellationEvaluationShaderHlsl& operator =(const TessellationEvaluationShaderHlsl& source) = delete;
+		explicit TessellationEvaluationShaderHlsl(const TessellationEvaluationShaderHlsl&) = delete;
+		TessellationEvaluationShaderHlsl& operator =(const TessellationEvaluationShaderHlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ID3DBlob* mD3DBlobDomainShader;	///< Direct3D 12 domain shader blob, can be a null pointer
+		ID3DBlob* mD3DBlobDomainShader;	// Direct3D 12 domain shader blob, can be a null pointer
 
 
 	};
@@ -5882,15 +5882,15 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GeometryShaderHlsl(const GeometryShaderHlsl& source) = delete;
-		GeometryShaderHlsl& operator =(const GeometryShaderHlsl& source) = delete;
+		explicit GeometryShaderHlsl(const GeometryShaderHlsl&) = delete;
+		GeometryShaderHlsl& operator =(const GeometryShaderHlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ID3DBlob* mD3DBlobGeometryShader;	///< Direct3D 12 geometry shader blob, can be a null pointer
+		ID3DBlob* mD3DBlobGeometryShader;	// Direct3D 12 geometry shader blob, can be a null pointer
 
 
 	};
@@ -6004,15 +6004,15 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit FragmentShaderHlsl(const FragmentShaderHlsl& source) = delete;
-		FragmentShaderHlsl& operator =(const FragmentShaderHlsl& source) = delete;
+		explicit FragmentShaderHlsl(const FragmentShaderHlsl&) = delete;
+		FragmentShaderHlsl& operator =(const FragmentShaderHlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ID3DBlob* mD3DBlobFragmentShader;	///< Direct3D 12 mesh shader blob, can be a null pointer
+		ID3DBlob* mD3DBlobFragmentShader;	// Direct3D 12 mesh shader blob, can be a null pointer
 
 
 	};
@@ -6126,15 +6126,15 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TaskShaderHlsl(const TaskShaderHlsl& source) = delete;
-		TaskShaderHlsl& operator =(const TaskShaderHlsl& source) = delete;
+		explicit TaskShaderHlsl(const TaskShaderHlsl&) = delete;
+		TaskShaderHlsl& operator =(const TaskShaderHlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ID3DBlob* mD3DBlobTaskShader;	///< Direct3D 12 task shader blob, can be a null pointer
+		ID3DBlob* mD3DBlobTaskShader;	// Direct3D 12 task shader blob, can be a null pointer
 
 
 	};
@@ -6248,15 +6248,15 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit MeshShaderHlsl(const MeshShaderHlsl& source) = delete;
-		MeshShaderHlsl& operator =(const MeshShaderHlsl& source) = delete;
+		explicit MeshShaderHlsl(const MeshShaderHlsl&) = delete;
+		MeshShaderHlsl& operator =(const MeshShaderHlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ID3DBlob* mD3DBlobMeshShader;	///< Direct3D 12 mesh shader blob, can be a null pointer
+		ID3DBlob* mD3DBlobMeshShader;	// Direct3D 12 mesh shader blob, can be a null pointer
 
 
 	};
@@ -6370,15 +6370,15 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ComputeShaderHlsl(const ComputeShaderHlsl& source) = delete;
-		ComputeShaderHlsl& operator =(const ComputeShaderHlsl& source) = delete;
+		explicit ComputeShaderHlsl(const ComputeShaderHlsl&) = delete;
+		ComputeShaderHlsl& operator =(const ComputeShaderHlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ID3DBlob* mD3DBlobComputeShader;	///< Direct3D 12 compute shader blob, can be a null pointer
+		ID3DBlob* mD3DBlobComputeShader;	// Direct3D 12 compute shader blob, can be a null pointer
 
 
 	};
@@ -6636,8 +6636,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GraphicsProgramHlsl(const GraphicsProgramHlsl& source) = delete;
-		GraphicsProgramHlsl& operator =(const GraphicsProgramHlsl& source) = delete;
+		explicit GraphicsProgramHlsl(const GraphicsProgramHlsl&) = delete;
+		GraphicsProgramHlsl& operator =(const GraphicsProgramHlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -6645,15 +6645,15 @@ namespace Direct3D12Rhi
 	//[-------------------------------------------------------]
 	private:
 		// Traditional graphics program
-		VertexShaderHlsl*				  mVertexShaderHlsl = nullptr;					///< Vertex shader the graphics program is using (we keep a reference to it), can be a null pointer
-		TessellationControlShaderHlsl*	  mTessellationControlShaderHlsl = nullptr;		///< Tessellation control shader the graphics program is using (we keep a reference to it), can be a null pointer
-		TessellationEvaluationShaderHlsl* mTessellationEvaluationShaderHlsl = nullptr;	///< Tessellation evaluation shader the graphics program is using (we keep a reference to it), can be a null pointer
-		GeometryShaderHlsl*				  mGeometryShaderHlsl = nullptr;					///< Geometry shader the graphics program is using (we keep a reference to it), can be a null pointer
+		VertexShaderHlsl*				  mVertexShaderHlsl = nullptr;					// Vertex shader the graphics program is using (we keep a reference to it), can be a null pointer
+		TessellationControlShaderHlsl*	  mTessellationControlShaderHlsl = nullptr;		// Tessellation control shader the graphics program is using (we keep a reference to it), can be a null pointer
+		TessellationEvaluationShaderHlsl* mTessellationEvaluationShaderHlsl = nullptr;	// Tessellation evaluation shader the graphics program is using (we keep a reference to it), can be a null pointer
+		GeometryShaderHlsl*				  mGeometryShaderHlsl = nullptr;					// Geometry shader the graphics program is using (we keep a reference to it), can be a null pointer
 		// Both graphics programs
-		FragmentShaderHlsl* mFragmentShaderHlsl = nullptr;	///< Fragment shader the graphics program is using (we keep a reference to it), can be a null pointer
+		FragmentShaderHlsl* mFragmentShaderHlsl = nullptr;	// Fragment shader the graphics program is using (we keep a reference to it), can be a null pointer
 		// Task and mesh shader based graphics program
-		TaskShaderHlsl* mTaskShaderHlsl = nullptr;	///< Task shader the graphics program is using (we keep a reference to it), can be a null pointer
-		MeshShaderHlsl* mMeshShaderHlsl = nullptr;	///< Mesh shader the graphics program is using (we keep a reference to it), can be a null pointer
+		TaskShaderHlsl* mTaskShaderHlsl = nullptr;	// Task shader the graphics program is using (we keep a reference to it), can be a null pointer
+		MeshShaderHlsl* mMeshShaderHlsl = nullptr;	// Mesh shader the graphics program is using (we keep a reference to it), can be a null pointer
 
 
 	};
@@ -6921,8 +6921,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ShaderLanguageHlsl(const ShaderLanguageHlsl& source) = delete;
-		ShaderLanguageHlsl& operator =(const ShaderLanguageHlsl& source) = delete;
+		explicit ShaderLanguageHlsl(const ShaderLanguageHlsl&) = delete;
+		ShaderLanguageHlsl& operator =(const ShaderLanguageHlsl&) = delete;
 
 
 	};
@@ -7218,8 +7218,8 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GraphicsPipelineState(const GraphicsPipelineState& source) = delete;
-		GraphicsPipelineState& operator =(const GraphicsPipelineState& source) = delete;
+		explicit GraphicsPipelineState(const GraphicsPipelineState&) = delete;
+		GraphicsPipelineState& operator =(const GraphicsPipelineState&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -7227,7 +7227,7 @@ namespace Direct3D12Rhi
 	//[-------------------------------------------------------]
 	private:
 		D3D12_PRIMITIVE_TOPOLOGY mD3D12PrimitiveTopology;
-		ID3D12PipelineState*	 mD3D12GraphicsPipelineState;	///< Direct3D 12 graphics pipeline state, can be a null pointer
+		ID3D12PipelineState*	 mD3D12GraphicsPipelineState;	// Direct3D 12 graphics pipeline state, can be a null pointer
 		Rhi::IRootSignature*	 mRootSignature;
 		Rhi::IGraphicsProgram*	 mGraphicsProgram;
 		Rhi::IRenderPass*		 mRenderPass;
@@ -7344,15 +7344,15 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ComputePipelineState(const ComputePipelineState& source) = delete;
-		ComputePipelineState& operator =(const ComputePipelineState& source) = delete;
+		explicit ComputePipelineState(const ComputePipelineState&) = delete;
+		ComputePipelineState& operator =(const ComputePipelineState&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ID3D12PipelineState* mD3D12ComputePipelineState;	///< Direct3D 12 compute pipeline state, can be a null pointer
+		ID3D12PipelineState* mD3D12ComputePipelineState;	// Direct3D 12 compute pipeline state, can be a null pointer
 		Rhi::IRootSignature& mRootSignature;
 		Rhi::IComputeShader& mComputeShader;
 
@@ -7810,19 +7810,19 @@ namespace Direct3D12Rhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ResourceGroup(const ResourceGroup& source) = delete;
-		ResourceGroup& operator =(const ResourceGroup& source) = delete;
+		explicit ResourceGroup(const ResourceGroup&) = delete;
+		ResourceGroup& operator =(const ResourceGroup&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		RootSignature&			   mRootSignature;				///< Root signature
-		D3D12_DESCRIPTOR_HEAP_TYPE mD3D12DescriptorHeapType;	///< The Direct3D 12 descriptor heap type ("D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV" or "D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER")
-		uint32_t				   mNumberOfResources;			///< Number of resources this resource group groups together
-		Rhi::IResource**		   mResources;					///< RHI resource, we keep a reference to it
-		Rhi::ISamplerState**	   mSamplerStates;				///< Sampler states, we keep a reference to it
+		RootSignature&			   mRootSignature;				// Root signature
+		D3D12_DESCRIPTOR_HEAP_TYPE mD3D12DescriptorHeapType;	// The Direct3D 12 descriptor heap type ("D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV" or "D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER")
+		uint32_t				   mNumberOfResources;			// Number of resources this resource group groups together
+		Rhi::IResource**		   mResources;					// RHI resource, we keep a reference to it
+		Rhi::ISamplerState**	   mSamplerStates;				// Sampler states, we keep a reference to it
 		uint16_t				   mDescriptorHeapOffset;
 		uint16_t				   mDescriptorHeapSize;
 
@@ -8287,7 +8287,7 @@ namespace Direct3D12Rhi
 			mRenderTarget = nullptr;
 		}
 
-		#ifdef SE_STATISTICS
+		#if SE_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
 			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
@@ -8304,7 +8304,7 @@ namespace Direct3D12Rhi
 				}
 
 				// Use debug output to show the current number of resource instances
-				getStatistics().debugOutputCurrentResouces(mContext);
+				getStatistics().debugOutputCurrentResouces();
 			}
 		}
 		#endif

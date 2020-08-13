@@ -23,13 +23,13 @@ class DefaultLog
 public:
 	enum class Type
 	{
-		TRACE,					///< Trace, also known as verbose logging
-		DEBUG,					///< Debug
-		INFORMATION,			///< Information
-		WARNING,				///< General warning
-		PERFORMANCE_WARNING,	///< Performance related warning
-		COMPATIBILITY_WARNING,	///< Compatibility related warning
-		CRITICAL				///< Critical
+		TRACE,					// Trace, also known as verbose logging
+		DEBUG,					// Debug
+		INFORMATION,			// Information
+		WARNING,				// General warning
+		PERFORMANCE_WARNING,	// Performance related warning
+		COMPATIBILITY_WARNING,	// Compatibility related warning
+		CRITICAL				// Critical
 	};
 
 	DefaultLog() = default;

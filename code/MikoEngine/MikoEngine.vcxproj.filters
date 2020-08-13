@@ -84,9 +84,6 @@
     <ClInclude Include="Base\BaseHeader.h">
       <Filter>0_Base</Filter>
     </ClInclude>
-    <ClInclude Include="Core\MemoryPtr.h">
-      <Filter>1_Core</Filter>
-    </ClInclude>
     <ClInclude Include="Render\Rhi.h">
       <Filter>4_Render</Filter>
     </ClInclude>
@@ -113,6 +110,87 @@
     </ClInclude>
     <ClInclude Include="Render\DefaultLog.h">
       <Filter>4_Render\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RHICore.h">
+      <Filter>4_Render\RHI</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RHIContext.h">
+      <Filter>4_Render\RHI</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RHITypes.h">
+      <Filter>4_Render\RHI</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\SamplerStateTypes.h">
+      <Filter>4_Render\RHI\ResourceTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RootSignatureTypes.h">
+      <Filter>4_Render\RHI\ResourceTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\TextureTypes.h">
+      <Filter>4_Render\RHI\ResourceTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\BlendStateTypes.h">
+      <Filter>4_Render\RHI\ResourceTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\BufferTypes.h">
+      <Filter>4_Render\RHI\ResourceTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\VertexArrayTypes.h">
+      <Filter>4_Render\RHI\ResourceTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IndexBufferTypes.h">
+      <Filter>4_Render\RHI\ResourceTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IndirectBufferTypes.h">
+      <Filter>4_Render\RHI\ResourceTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RasterizerStateTypes.h">
+      <Filter>4_Render\RHI\ResourceTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DepthStencilStateTypes.h">
+      <Filter>4_Render\RHI\ResourceTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\PipelineStateTypes.h">
+      <Filter>4_Render\RHI\ResourceTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ShaderTypes.h">
+      <Filter>4_Render\RHI\ResourceTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\QueryType.h">
+      <Filter>4_Render\RHI\ResourceTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\MemoryPtr.h">
+      <Filter>1_Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Capabilities.h">
+      <Filter>4_Render\RHI</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Statistics.h">
+      <Filter>4_Render\RHI</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IRhi.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IShaderLanguage.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IResource.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IRootSignature.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IResourceGroup.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IGraphicsProgram.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IRenderPass.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IQueryPool.h">
+      <Filter>4_Render\RHI\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -149,14 +227,21 @@
     <Filter Include="4_Render\D3D12">
       <UniqueIdentifier>{5f3e1101-6089-43ee-baca-06f881ece6e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4_Render\Core">
-      <UniqueIdentifier>{9c5e9ebd-df77-4f8f-9056-f1331a6275ed}</UniqueIdentifier>
-    </Filter>
     <Filter Include="4_Render\Utility">
       <UniqueIdentifier>{2fa7478c-9570-4554-8276-db81f464ad93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_Render\RHI">
+      <UniqueIdentifier>{9c5e9ebd-df77-4f8f-9056-f1331a6275ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_Render\RHI\ResourceTypes">
+      <UniqueIdentifier>{86fab3e2-257a-49cc-b4c1-1ec824d2670a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_Render\RHI\Interface">
+      <UniqueIdentifier>{365a6a36-e0e9-4b82-a866-76cf233456cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

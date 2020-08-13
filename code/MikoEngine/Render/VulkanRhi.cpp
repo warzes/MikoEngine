@@ -203,7 +203,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		static constexpr const char* GLSL_NAME = "GLSL";	///< ASCII name of this shader language, always valid (do not free the memory the returned pointer is pointing to)
+		static constexpr const char* GLSL_NAME = "GLSL";	// ASCII name of this shader language, always valid (do not free the memory the returned pointer is pointing to)
 		typedef std::vector<VkPhysicalDevice> VkPhysicalDevices;
 		typedef std::vector<VkExtensionProperties> VkExtensionPropertiesVector;
 		typedef std::array<VkPipelineShaderStageCreateInfo, 5> VkPipelineShaderStageCreateInfos;
@@ -235,108 +235,108 @@ namespace
 			// Settings from "glslang/StandAlone/ResourceLimits.cpp"
 			static constexpr TBuiltInResource DefaultTBuiltInResource =
 			{
-				32,		///< MaxLights
-				6,		///< MaxClipPlanes
-				32,		///< MaxTextureUnits
-				32,		///< MaxTextureCoords
-				64,		///< MaxVertexAttribs
-				4096,	///< MaxVertexUniformComponents
-				64,		///< MaxVaryingFloats
-				32,		///< MaxVertexTextureImageUnits
-				80,		///< MaxCombinedTextureImageUnits
-				32,		///< MaxTextureImageUnits
-				4096,	///< MaxFragmentUniformComponents
-				32,		///< MaxDrawBuffers
-				128,	///< MaxVertexUniformVectors
-				8,		///< MaxVaryingVectors
-				16,		///< MaxFragmentUniformVectors
-				16,		///< MaxVertexOutputVectors
-				15,		///< MaxFragmentInputVectors
-				-8,		///< MinProgramTexelOffset
-				7,		///< MaxProgramTexelOffset
-				8,		///< MaxClipDistances
-				65535,	///< MaxComputeWorkGroupCountX
-				65535,	///< MaxComputeWorkGroupCountY
-				65535,	///< MaxComputeWorkGroupCountZ
-				1024,	///< MaxComputeWorkGroupSizeX
-				1024,	///< MaxComputeWorkGroupSizeY
-				64,		///< MaxComputeWorkGroupSizeZ
-				1024,	///< MaxComputeUniformComponents
-				16,		///< MaxComputeTextureImageUnits
-				8,		///< MaxComputeImageUniforms
-				8,		///< MaxComputeAtomicCounters
-				1,		///< MaxComputeAtomicCounterBuffers
-				60,		///< MaxVaryingComponents
-				64,		///< MaxVertexOutputComponents
-				64,		///< MaxGeometryInputComponents
-				128,	///< MaxGeometryOutputComponents
-				128,	///< MaxFragmentInputComponents
-				8,		///< MaxImageUnits
-				8,		///< MaxCombinedImageUnitsAndFragmentOutputs
-				8,		///< MaxCombinedShaderOutputResources
-				0,		///< MaxImageSamples
-				0,		///< MaxVertexImageUniforms
-				0,		///< MaxTessControlImageUniforms
-				0,		///< MaxTessEvaluationImageUniforms
-				0,		///< MaxGeometryImageUniforms
-				8,		///< MaxFragmentImageUniforms
-				8,		///< MaxCombinedImageUniforms
-				16,		///< MaxGeometryTextureImageUnits
-				256,	///< MaxGeometryOutputVertices
-				1024,	///< MaxGeometryTotalOutputComponents
-				1024,	///< MaxGeometryUniformComponents
-				64,		///< MaxGeometryVaryingComponents
-				128,	///< MaxTessControlInputComponents
-				128,	///< MaxTessControlOutputComponents
-				16,		///< MaxTessControlTextureImageUnits
-				1024,	///< MaxTessControlUniformComponents
-				4096,	///< MaxTessControlTotalOutputComponents
-				128,	///< MaxTessEvaluationInputComponents
-				128,	///< MaxTessEvaluationOutputComponents
-				16,		///< MaxTessEvaluationTextureImageUnits
-				1024,	///< MaxTessEvaluationUniformComponents
-				120,	///< MaxTessPatchComponents
-				32,		///< MaxPatchVertices
-				64,		///< MaxTessGenLevel
-				16,		///< MaxViewports
-				0,		///< MaxVertexAtomicCounters
-				0,		///< MaxTessControlAtomicCounters
-				0,		///< MaxTessEvaluationAtomicCounters
-				0,		///< MaxGeometryAtomicCounters
-				8,		///< MaxFragmentAtomicCounters
-				8,		///< MaxCombinedAtomicCounters
-				1,		///< MaxAtomicCounterBindings
-				0,		///< MaxVertexAtomicCounterBuffers
-				0,		///< MaxTessControlAtomicCounterBuffers
-				0,		///< MaxTessEvaluationAtomicCounterBuffers
-				0,		///< MaxGeometryAtomicCounterBuffers
-				1,		///< MaxFragmentAtomicCounterBuffers
-				1,		///< MaxCombinedAtomicCounterBuffers
-				16384,	///< MaxAtomicCounterBufferSize
-				4,		///< MaxTransformFeedbackBuffers
-				64,		///< MaxTransformFeedbackInterleavedComponents
-				8,		///< MaxCullDistances
-				8,		///< MaxCombinedClipAndCullDistances
-				4,		///< MaxSamples
-				256,	///< MaxMeshOutputVerticesNV
-				512,	///< MaxMeshOutputPrimitivesNV
-				32,		///< MaxMeshWorkGroupSizeX_NV
-				1,		///< MaxMeshWorkGroupSizeY_NV
-				1,		///< MaxMeshWorkGroupSizeZ_NV
-				32,		///< MaxTaskWorkGroupSizeX_NV
-				1,		///< MaxTaskWorkGroupSizeY_NV
-				1,		///< MaxTaskWorkGroupSizeZ_NV
-				4,		///< MaxMeshViewCountNV
-				{		///< limits
-					1,	///< nonInductiveForLoops
-					1,	///< whileLoops
-					1,	///< doWhileLoops
-					1,	///< generalUniformIndexing
-					1,	///< generalAttributeMatrixVectorIndexing
-					1,	///< generalVaryingIndexing
-					1,	///< generalSamplerIndexing
-					1,	///< generalVariableIndexing
-					1,	///< generalConstantMatrixVectorIndexing
+				32,		// MaxLights
+				6,		// MaxClipPlanes
+				32,		// MaxTextureUnits
+				32,		// MaxTextureCoords
+				64,		// MaxVertexAttribs
+				4096,	// MaxVertexUniformComponents
+				64,		// MaxVaryingFloats
+				32,		// MaxVertexTextureImageUnits
+				80,		// MaxCombinedTextureImageUnits
+				32,		// MaxTextureImageUnits
+				4096,	// MaxFragmentUniformComponents
+				32,		// MaxDrawBuffers
+				128,	// MaxVertexUniformVectors
+				8,		// MaxVaryingVectors
+				16,		// MaxFragmentUniformVectors
+				16,		// MaxVertexOutputVectors
+				15,		// MaxFragmentInputVectors
+				-8,		// MinProgramTexelOffset
+				7,		// MaxProgramTexelOffset
+				8,		// MaxClipDistances
+				65535,	// MaxComputeWorkGroupCountX
+				65535,	// MaxComputeWorkGroupCountY
+				65535,	// MaxComputeWorkGroupCountZ
+				1024,	// MaxComputeWorkGroupSizeX
+				1024,	// MaxComputeWorkGroupSizeY
+				64,		// MaxComputeWorkGroupSizeZ
+				1024,	// MaxComputeUniformComponents
+				16,		// MaxComputeTextureImageUnits
+				8,		// MaxComputeImageUniforms
+				8,		// MaxComputeAtomicCounters
+				1,		// MaxComputeAtomicCounterBuffers
+				60,		// MaxVaryingComponents
+				64,		// MaxVertexOutputComponents
+				64,		// MaxGeometryInputComponents
+				128,	// MaxGeometryOutputComponents
+				128,	// MaxFragmentInputComponents
+				8,		// MaxImageUnits
+				8,		// MaxCombinedImageUnitsAndFragmentOutputs
+				8,		// MaxCombinedShaderOutputResources
+				0,		// MaxImageSamples
+				0,		// MaxVertexImageUniforms
+				0,		// MaxTessControlImageUniforms
+				0,		// MaxTessEvaluationImageUniforms
+				0,		// MaxGeometryImageUniforms
+				8,		// MaxFragmentImageUniforms
+				8,		// MaxCombinedImageUniforms
+				16,		// MaxGeometryTextureImageUnits
+				256,	// MaxGeometryOutputVertices
+				1024,	// MaxGeometryTotalOutputComponents
+				1024,	// MaxGeometryUniformComponents
+				64,		// MaxGeometryVaryingComponents
+				128,	// MaxTessControlInputComponents
+				128,	// MaxTessControlOutputComponents
+				16,		// MaxTessControlTextureImageUnits
+				1024,	// MaxTessControlUniformComponents
+				4096,	// MaxTessControlTotalOutputComponents
+				128,	// MaxTessEvaluationInputComponents
+				128,	// MaxTessEvaluationOutputComponents
+				16,		// MaxTessEvaluationTextureImageUnits
+				1024,	// MaxTessEvaluationUniformComponents
+				120,	// MaxTessPatchComponents
+				32,		// MaxPatchVertices
+				64,		// MaxTessGenLevel
+				16,		// MaxViewports
+				0,		// MaxVertexAtomicCounters
+				0,		// MaxTessControlAtomicCounters
+				0,		// MaxTessEvaluationAtomicCounters
+				0,		// MaxGeometryAtomicCounters
+				8,		// MaxFragmentAtomicCounters
+				8,		// MaxCombinedAtomicCounters
+				1,		// MaxAtomicCounterBindings
+				0,		// MaxVertexAtomicCounterBuffers
+				0,		// MaxTessControlAtomicCounterBuffers
+				0,		// MaxTessEvaluationAtomicCounterBuffers
+				0,		// MaxGeometryAtomicCounterBuffers
+				1,		// MaxFragmentAtomicCounterBuffers
+				1,		// MaxCombinedAtomicCounterBuffers
+				16384,	// MaxAtomicCounterBufferSize
+				4,		// MaxTransformFeedbackBuffers
+				64,		// MaxTransformFeedbackInterleavedComponents
+				8,		// MaxCullDistances
+				8,		// MaxCombinedClipAndCullDistances
+				4,		// MaxSamples
+				256,	// MaxMeshOutputVerticesNV
+				512,	// MaxMeshOutputPrimitivesNV
+				32,		// MaxMeshWorkGroupSizeX_NV
+				1,		// MaxMeshWorkGroupSizeY_NV
+				1,		// MaxMeshWorkGroupSizeZ_NV
+				32,		// MaxTaskWorkGroupSizeX_NV
+				1,		// MaxTaskWorkGroupSizeY_NV
+				1,		// MaxTaskWorkGroupSizeZ_NV
+				4,		// MaxMeshViewCountNV
+				{		// limits
+					1,	// nonInductiveForLoops
+					1,	// whileLoops
+					1,	// doWhileLoops
+					1,	// generalUniformIndexing
+					1,	// generalAttributeMatrixVectorIndexing
+					1,	// generalVaryingIndexing
+					1,	// generalSamplerIndexing
+					1,	// generalVariableIndexing
+					1,	// generalConstantMatrixVectorIndexing
 				}
 			};
 		#endif
@@ -1468,7 +1468,7 @@ namespace VulkanRhi
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		typedef std::array<VkClearValue, 9>	VkClearValues;	///< 8 color render targets and one depth stencil render target
+		typedef std::array<VkClearValue, 9>	VkClearValues;	// 8 color render targets and one depth stencil render target
 
 
 	//[-------------------------------------------------------]
@@ -1648,8 +1648,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VulkanRhi(const VulkanRhi& source) = delete;
-		VulkanRhi& operator =(const VulkanRhi& source) = delete;
+		explicit VulkanRhi(const VulkanRhi&) = delete;
+		VulkanRhi& operator =(const VulkanRhi&) = delete;
 
 		/**
 		*  @brief
@@ -1674,25 +1674,25 @@ namespace VulkanRhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkAllocationCallbacks mVkAllocationCallbacks;	///< Vulkan allocation callbacks
-		VulkanRuntimeLinking* mVulkanRuntimeLinking;	///< Vulkan runtime linking instance, always valid
-		VulkanContext*		  mVulkanContext;			///< Vulkan context instance, always valid
-		Rhi::IShaderLanguage* mShaderLanguageGlsl;		///< GLSL shader language instance (we keep a reference to it), can be a null pointer
-		RootSignature*		  mGraphicsRootSignature;	///< Currently set graphics root signature (we keep a reference to it), can be a null pointer
-		RootSignature*		  mComputeRootSignature;	///< Currently set compute root signature (we keep a reference to it), can be a null pointer
-		Rhi::ISamplerState*	  mDefaultSamplerState;		///< Default rasterizer state (we keep a reference to it), can be a null pointer
-		bool				  mInsideVulkanRenderPass;	///< Some Vulkan commands like "vkCmdClearColorImage()" can only be executed outside a Vulkan render pass, so need to delay starting a Vulkan render pass
+		VkAllocationCallbacks mVkAllocationCallbacks;	// Vulkan allocation callbacks
+		VulkanRuntimeLinking* mVulkanRuntimeLinking;	// Vulkan runtime linking instance, always valid
+		VulkanContext*		  mVulkanContext;			// Vulkan context instance, always valid
+		Rhi::IShaderLanguage* mShaderLanguageGlsl;		// GLSL shader language instance (we keep a reference to it), can be a null pointer
+		RootSignature*		  mGraphicsRootSignature;	// Currently set graphics root signature (we keep a reference to it), can be a null pointer
+		RootSignature*		  mComputeRootSignature;	// Currently set compute root signature (we keep a reference to it), can be a null pointer
+		Rhi::ISamplerState*	  mDefaultSamplerState;		// Default rasterizer state (we keep a reference to it), can be a null pointer
+		bool				  mInsideVulkanRenderPass;	// Some Vulkan commands like "vkCmdClearColorImage()" can only be executed outside a Vulkan render pass, so need to delay starting a Vulkan render pass
 		VkClearValues		  mVkClearValues;
 		//[-------------------------------------------------------]
 		//[ Input-assembler (IA) stage                            ]
 		//[-------------------------------------------------------]
-		VertexArray* mVertexArray;	///< Currently set vertex array (we keep a reference to it), can be a null pointer
+		VertexArray* mVertexArray;	// Currently set vertex array (we keep a reference to it), can be a null pointer
 		//[-------------------------------------------------------]
 		//[ Output-merger (OM) stage                              ]
 		//[-------------------------------------------------------]
-		Rhi::IRenderTarget* mRenderTarget;	///< Currently set render target (we keep a reference to it), can be a null pointer
+		Rhi::IRenderTarget* mRenderTarget;	// Currently set render target (we keep a reference to it), can be a null pointer
 		#if SE_DEBUG
-			bool mDebugBetweenBeginEndScene;	///< Just here for state tracking in debug builds
+			bool mDebugBetweenBeginEndScene;	// Just here for state tracking in debug builds
 		#endif
 
 
@@ -1981,8 +1981,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VulkanRuntimeLinking(const VulkanRuntimeLinking& source) = delete;
-		VulkanRuntimeLinking& operator =(const VulkanRuntimeLinking& source) = delete;
+		explicit VulkanRuntimeLinking(const VulkanRuntimeLinking&) = delete;
+		VulkanRuntimeLinking& operator =(const VulkanRuntimeLinking&) = delete;
 
 		/**
 		*  @brief
@@ -2308,14 +2308,14 @@ namespace VulkanRhi
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VulkanRhi&				 mVulkanRhi;						///< Owner Vulkan RHI instance
-		bool					 mValidationEnabled;				///< Validation enabled?
-		void*					 mVulkanSharedLibrary;				///< Vulkan shared library, can be a null pointer
-		bool					 mEntryPointsRegistered;			///< Entry points successfully registered?
-		VkInstance				 mVkInstance;						///< Vulkan instance, stores all per-application states
-		VkDebugReportCallbackEXT mVkDebugReportCallbackEXT;			///< Vulkan debug report callback, can be a null handle
-		bool					 mInstanceLevelFunctionsRegistered;	///< Instance level Vulkan function pointers registered?
-		bool					 mInitialized;						///< Already initialized?
+		VulkanRhi&				 mVulkanRhi;						// Owner Vulkan RHI instance
+		bool					 mValidationEnabled;				// Validation enabled?
+		void*					 mVulkanSharedLibrary;				// Vulkan shared library, can be a null pointer
+		bool					 mEntryPointsRegistered;			// Entry points successfully registered?
+		VkInstance				 mVkInstance;						// Vulkan instance, stores all per-application states
+		VkDebugReportCallbackEXT mVkDebugReportCallbackEXT;			// Vulkan debug report callback, can be a null handle
+		bool					 mInstanceLevelFunctionsRegistered;	// Instance level Vulkan function pointers registered?
+		bool					 mInitialized;						// Already initialized?
 
 
 	};
@@ -2587,23 +2587,23 @@ namespace VulkanRhi
 	//[ Protected methods                                     ]
 	//[-------------------------------------------------------]
 	protected:
-		explicit VulkanContext(const VulkanContext& source) = delete;
-		VulkanContext& operator =(const VulkanContext& source) = delete;
+		explicit VulkanContext(const VulkanContext&) = delete;
+		VulkanContext& operator =(const VulkanContext&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VulkanRhi&		 mVulkanRhi;				///< Owner Vulkan RHI instance
-		VkPhysicalDevice mVkPhysicalDevice;			///< Vulkan physical device this context is using
-		VkDevice		 mVkDevice;					///< Vulkan device instance this context is using (equivalent of a OpenGL context or Direct3D 11 device)
-		uint32_t		 mGraphicsQueueFamilyIndex;	///< Graphics queue family index, ~0u if invalid
-		uint32_t		 mPresentQueueFamilyIndex;	///< Present queue family index, ~0u if invalid
-		VkQueue			 mGraphicsVkQueue;			///< Handle to the Vulkan device graphics queue that command buffers are submitted to
-		VkQueue			 mPresentVkQueue;			///< Handle to the Vulkan device present queue
-		VkCommandPool	 mVkCommandPool;			///< Vulkan command buffer pool instance
-		VkCommandBuffer  mVkCommandBuffer;			///< Vulkan command buffer instance
+		VulkanRhi&		 mVulkanRhi;				// Owner Vulkan RHI instance
+		VkPhysicalDevice mVkPhysicalDevice;			// Vulkan physical device this context is using
+		VkDevice		 mVkDevice;					// Vulkan device instance this context is using (equivalent of a OpenGL context or Direct3D 11 device)
+		uint32_t		 mGraphicsQueueFamilyIndex;	// Graphics queue family index, ~0u if invalid
+		uint32_t		 mPresentQueueFamilyIndex;	// Present queue family index, ~0u if invalid
+		VkQueue			 mGraphicsVkQueue;			// Handle to the Vulkan device graphics queue that command buffers are submitted to
+		VkQueue			 mPresentVkQueue;			// Handle to the Vulkan device present queue
+		VkCommandPool	 mVkCommandPool;			// Vulkan command buffer pool instance
+		VkCommandBuffer  mVkCommandBuffer;			// Vulkan command buffer instance
 
 
 	};
@@ -4389,8 +4389,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit RootSignature(const RootSignature& source) = delete;
-		RootSignature& operator =(const RootSignature& source) = delete;
+		explicit RootSignature(const RootSignature&) = delete;
+		RootSignature& operator =(const RootSignature&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -4517,16 +4517,16 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexBuffer(const VertexBuffer& source) = delete;
-		VertexBuffer& operator =(const VertexBuffer& source) = delete;
+		explicit VertexBuffer(const VertexBuffer&) = delete;
+		VertexBuffer& operator =(const VertexBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkBuffer	   mVkBuffer;		///< Vulkan vertex buffer
-		VkDeviceMemory mVkDeviceMemory;	///< Vulkan vertex memory
+		VkBuffer	   mVkBuffer;		// Vulkan vertex buffer
+		VkDeviceMemory mVkDeviceMemory;	// Vulkan vertex memory
 
 
 	};
@@ -4651,17 +4651,17 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit IndexBuffer(const IndexBuffer& source) = delete;
-		IndexBuffer& operator =(const IndexBuffer& source) = delete;
+		explicit IndexBuffer(const IndexBuffer&) = delete;
+		IndexBuffer& operator =(const IndexBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkIndexType	   mVkIndexType;	///< Vulkan vertex type
-		VkBuffer	   mVkBuffer;		///< Vulkan vertex buffer
-		VkDeviceMemory mVkDeviceMemory;	///< Vulkan vertex memory
+		VkIndexType	   mVkIndexType;	// Vulkan vertex type
+		VkBuffer	   mVkBuffer;		// Vulkan vertex buffer
+		VkDeviceMemory mVkDeviceMemory;	// Vulkan vertex memory
 
 
 	};
@@ -4845,22 +4845,22 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexArray(const VertexArray& source) = delete;
-		VertexArray& operator =(const VertexArray& source) = delete;
+		explicit VertexArray(const VertexArray&) = delete;
+		VertexArray& operator =(const VertexArray&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		IndexBuffer*   mIndexBuffer;		///< Optional index buffer to use, can be a null pointer, the vertex array instance keeps a reference to the index buffer
+		IndexBuffer*   mIndexBuffer;		// Optional index buffer to use, can be a null pointer, the vertex array instance keeps a reference to the index buffer
 		// Vulkan input slots
-		uint32_t	   mNumberOfSlots;		///< Number of used Vulkan input slots
-		VkBuffer*	   mVertexVkBuffers;	///< Vulkan vertex buffers
-		uint32_t*	   mStrides;			///< Strides in bytes, if "mVertexVkBuffers" is no null pointer this is no null pointer as well
-		VkDeviceSize*  mOffsets;			///< Offsets in bytes, if "mVertexVkBuffers" is no null pointer this is no null pointer as well
+		uint32_t	   mNumberOfSlots;		// Number of used Vulkan input slots
+		VkBuffer*	   mVertexVkBuffers;	// Vulkan vertex buffers
+		uint32_t*	   mStrides;			// Strides in bytes, if "mVertexVkBuffers" is no null pointer this is no null pointer as well
+		VkDeviceSize*  mOffsets;			// Offsets in bytes, if "mVertexVkBuffers" is no null pointer this is no null pointer as well
 		// For proper vertex buffer reference counter behaviour
-		VertexBuffer** mVertexBuffers;		///< Vertex buffers (we keep a reference to it) used by this vertex array, can be a null pointer
+		VertexBuffer** mVertexBuffers;		// Vertex buffers (we keep a reference to it) used by this vertex array, can be a null pointer
 
 
 	};
@@ -5018,17 +5018,17 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureBuffer(const TextureBuffer& source) = delete;
-		TextureBuffer& operator =(const TextureBuffer& source) = delete;
+		explicit TextureBuffer(const TextureBuffer&) = delete;
+		TextureBuffer& operator =(const TextureBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkBuffer	   mVkBuffer;		///< Vulkan uniform texel buffer
-		VkDeviceMemory mVkDeviceMemory;	///< Vulkan uniform texel memory
-		VkBufferView   mVkBufferView;	///< Vulkan buffer view
+		VkBuffer	   mVkBuffer;		// Vulkan uniform texel buffer
+		VkDeviceMemory mVkDeviceMemory;	// Vulkan uniform texel memory
+		VkBufferView   mVkBufferView;	// Vulkan buffer view
 
 
 	};
@@ -5138,16 +5138,16 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit StructuredBuffer(const StructuredBuffer& source) = delete;
-		StructuredBuffer& operator =(const StructuredBuffer& source) = delete;
+		explicit StructuredBuffer(const StructuredBuffer&) = delete;
+		StructuredBuffer& operator =(const StructuredBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkBuffer	   mVkBuffer;		///< Vulkan uniform texel buffer
-		VkDeviceMemory mVkDeviceMemory;	///< Vulkan uniform texel memory
+		VkBuffer	   mVkBuffer;		// Vulkan uniform texel buffer
+		VkDeviceMemory mVkDeviceMemory;	// Vulkan uniform texel memory
 
 
 	};
@@ -5274,16 +5274,16 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit IndirectBuffer(const IndirectBuffer& source) = delete;
-		IndirectBuffer& operator =(const IndirectBuffer& source) = delete;
+		explicit IndirectBuffer(const IndirectBuffer&) = delete;
+		IndirectBuffer& operator =(const IndirectBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkBuffer	   mVkBuffer;		///< Vulkan indirect buffer
-		VkDeviceMemory mVkDeviceMemory;	///< Vulkan indirect memory
+		VkBuffer	   mVkBuffer;		// Vulkan indirect buffer
+		VkDeviceMemory mVkDeviceMemory;	// Vulkan indirect memory
 
 
 	};
@@ -5386,16 +5386,16 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit UniformBuffer(const UniformBuffer& source) = delete;
-		UniformBuffer& operator =(const UniformBuffer& source) = delete;
+		explicit UniformBuffer(const UniformBuffer&) = delete;
+		UniformBuffer& operator =(const UniformBuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkBuffer	   mVkBuffer;		///< Vulkan uniform buffer
-		VkDeviceMemory mVkDeviceMemory;	///< Vulkan uniform memory
+		VkBuffer	   mVkBuffer;		// Vulkan uniform buffer
+		VkDeviceMemory mVkDeviceMemory;	// Vulkan uniform memory
 
 
 	};
@@ -5538,8 +5538,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit BufferManager(const BufferManager& source) = delete;
-		BufferManager& operator =(const BufferManager& source) = delete;
+		explicit BufferManager(const BufferManager&) = delete;
+		BufferManager& operator =(const BufferManager&) = delete;
 
 
 	};
@@ -5647,8 +5647,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture1D(const Texture1D& source) = delete;
-		Texture1D& operator =(const Texture1D& source) = delete;
+		explicit Texture1D(const Texture1D&) = delete;
+		Texture1D& operator =(const Texture1D&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -5779,8 +5779,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture1DArray(const Texture1DArray& source) = delete;
-		Texture1DArray& operator =(const Texture1DArray& source) = delete;
+		explicit Texture1DArray(const Texture1DArray&) = delete;
+		Texture1DArray& operator =(const Texture1DArray&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -5974,8 +5974,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture2D(const Texture2D& source) = delete;
-		Texture2D& operator =(const Texture2D& source) = delete;
+		explicit Texture2D(const Texture2D&) = delete;
+		Texture2D& operator =(const Texture2D&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -6108,8 +6108,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture2DArray(const Texture2DArray& source) = delete;
-		Texture2DArray& operator =(const Texture2DArray& source) = delete;
+		explicit Texture2DArray(const Texture2DArray&) = delete;
+		Texture2DArray& operator =(const Texture2DArray&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -6232,8 +6232,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Texture3D(const Texture3D& source) = delete;
-		Texture3D& operator =(const Texture3D& source) = delete;
+		explicit Texture3D(const Texture3D&) = delete;
+		Texture3D& operator =(const Texture3D&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -6351,8 +6351,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureCube(const TextureCube& source) = delete;
-		TextureCube& operator =(const TextureCube& source) = delete;
+		explicit TextureCube(const TextureCube&) = delete;
+		TextureCube& operator =(const TextureCube&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -6472,8 +6472,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureCubeArray(const TextureCubeArray& source) = delete;
-		TextureCubeArray& operator =(const TextureCubeArray& source) = delete;
+		explicit TextureCubeArray(const TextureCubeArray&) = delete;
+		TextureCubeArray& operator =(const TextureCubeArray&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -6628,8 +6628,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TextureManager(const TextureManager& source) = delete;
-		TextureManager& operator =(const TextureManager& source) = delete;
+		explicit TextureManager(const TextureManager&) = delete;
+		TextureManager& operator =(const TextureManager&) = delete;
 
 
 	};
@@ -6749,15 +6749,15 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit SamplerState(const SamplerState& source) = delete;
-		SamplerState& operator =(const SamplerState& source) = delete;
+		explicit SamplerState(const SamplerState&) = delete;
+		SamplerState& operator =(const SamplerState&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkSampler mVkSampler;	///< Vulkan sampler instance, "VK_NULL_HANDLE" in case of error
+		VkSampler mVkSampler;	// Vulkan sampler instance, "VK_NULL_HANDLE" in case of error
 
 
 	};
@@ -7017,18 +7017,18 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit RenderPass(const RenderPass& source) = delete;
-		RenderPass& operator =(const RenderPass& source) = delete;
+		explicit RenderPass(const RenderPass&) = delete;
+		RenderPass& operator =(const RenderPass&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkRenderPass			 mVkRenderPass;							///< Vulkan render pass instance, can be a null handle
-		uint32_t				 mNumberOfColorAttachments;				///< Number of color render target textures
-		Rhi::TextureFormat::Enum mDepthStencilAttachmentTextureFormat;	///< The depth stencil attachment texture format
-		VkSampleCountFlagBits	 mVkSampleCountFlagBits;				///< Vulkan sample count flag bits
+		VkRenderPass			 mVkRenderPass;							// Vulkan render pass instance, can be a null handle
+		uint32_t				 mNumberOfColorAttachments;				// Number of color render target textures
+		Rhi::TextureFormat::Enum mDepthStencilAttachmentTextureFormat;	// The depth stencil attachment texture format
+		VkSampleCountFlagBits	 mVkSampleCountFlagBits;				// Vulkan sample count flag bits
 
 
 	};
@@ -7195,8 +7195,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit QueryPool(const QueryPool& source) = delete;
-		QueryPool& operator =(const QueryPool& source) = delete;
+		explicit QueryPool(const QueryPool&) = delete;
+		QueryPool& operator =(const QueryPool&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -7233,7 +7233,7 @@ namespace VulkanRhi
 		[[nodiscard]] static VkFormat findColorVkFormat(const Rhi::Context& context, VkInstance vkInstance, const VulkanContext& vulkanContext)
 		{
 			const VkPhysicalDevice vkPhysicalDevice = vulkanContext.getVkPhysicalDevice();
-			const VkSurfaceKHR vkSurfaceKHR = detail::createPresentationSurface(context, vulkanContext.getVulkanRhi().getVkAllocationCallbacks(), vkInstance, vkPhysicalDevice, vulkanContext.getGraphicsQueueFamilyIndex(), Rhi::WindowHandle{context.getNativeWindowHandle(), nullptr, nullptr});
+			const VkSurfaceKHR vkSurfaceKHR = detail::createPresentationSurface(context, vulkanContext.getVulkanRhi().getVkAllocationCallbacks(), vkInstance, vkPhysicalDevice, vulkanContext.getGraphicsQueueFamilyIndex(), Rhi::WindowHandle{context.getNativeWindowHandle(), nullptr});
 			const VkSurfaceFormatKHR desiredVkSurfaceFormatKHR = ::detail::getSwapChainFormat(context, vkPhysicalDevice, vkSurfaceKHR);
 			vkDestroySurfaceKHR(vkInstance, vkSurfaceKHR, vulkanContext.getVulkanRhi().getVkAllocationCallbacks());
 			return desiredVkSurfaceFormatKHR.format;
@@ -7588,8 +7588,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit SwapChain(const SwapChain& source) = delete;
-		SwapChain& operator =(const SwapChain& source) = delete;
+		explicit SwapChain(const SwapChain&) = delete;
+		SwapChain& operator =(const SwapChain&) = delete;
 
 		void createVulkanSwapChain()
 		{
@@ -7846,9 +7846,9 @@ namespace VulkanRhi
 	private:
 		struct SwapChainBuffer
 		{
-			VkImage		  vkImage		= VK_NULL_HANDLE;	///< Vulkan image, don't destroy since we don't own it
-			VkImageView   vkImageView	= VK_NULL_HANDLE;	///< Vulkan image view, destroy if no longer needed
-			VkFramebuffer vkFramebuffer	= VK_NULL_HANDLE;	///< Vulkan framebuffer, destroy if no longer needed
+			VkImage		  vkImage		= VK_NULL_HANDLE;	// Vulkan image, don't destroy since we don't own it
+			VkImageView   vkImageView	= VK_NULL_HANDLE;	// Vulkan image view, destroy if no longer needed
+			VkFramebuffer vkFramebuffer	= VK_NULL_HANDLE;	// Vulkan framebuffer, destroy if no longer needed
 		};
 		typedef std::vector<SwapChainBuffer> SwapChainBuffers;
 
@@ -7858,19 +7858,19 @@ namespace VulkanRhi
 	//[-------------------------------------------------------]
 	private:
 		// Operation system window
-		handle			mNativeWindowHandle;	///< Native window handle window, can be a null handle
-		Rhi::IRenderWindow* mRenderWindow;			///< Render window instance, can be a null pointer, don't destroy the instance since we don't own it
+		handle			mNativeWindowHandle;	// Native window handle window, can be a null handle
+		Rhi::IRenderWindow* mRenderWindow;			// Render window instance, can be a null pointer, don't destroy the instance since we don't own it
 		// Vulkan presentation surface
-		VkSurfaceKHR mVkSurfaceKHR;	///< Vulkan presentation surface, destroy if no longer needed
+		VkSurfaceKHR mVkSurfaceKHR;	// Vulkan presentation surface, destroy if no longer needed
 		// Vulkan swap chain and color render target related
-		VkSwapchainKHR	 mVkSwapchainKHR;				///< Vulkan swap chain, destroy if no longer needed
-		VkRenderPass	 mVkRenderPass;					///< Vulkan render pass, destroy if no longer needed (due to "VK_IMAGE_LAYOUT_PRESENT_SRC_KHR" we need an own Vulkan render pass instance)
-		SwapChainBuffers mSwapChainBuffer;				///< Swap chain buffer for managing the color render targets
-		VkSemaphore		 mImageAvailableVkSemaphore;	///< Vulkan semaphore, destroy if no longer needed
-		VkSemaphore		 mRenderingFinishedVkSemaphore;	///< Vulkan semaphore, destroy if no longer needed
-		uint32_t		 mCurrentImageIndex;			///< The index of the current Vulkan swap chain image to render into, ~0 if invalid
+		VkSwapchainKHR	 mVkSwapchainKHR;				// Vulkan swap chain, destroy if no longer needed
+		VkRenderPass	 mVkRenderPass;					// Vulkan render pass, destroy if no longer needed (due to "VK_IMAGE_LAYOUT_PRESENT_SRC_KHR" we need an own Vulkan render pass instance)
+		SwapChainBuffers mSwapChainBuffer;				// Swap chain buffer for managing the color render targets
+		VkSemaphore		 mImageAvailableVkSemaphore;	// Vulkan semaphore, destroy if no longer needed
+		VkSemaphore		 mRenderingFinishedVkSemaphore;	// Vulkan semaphore, destroy if no longer needed
+		uint32_t		 mCurrentImageIndex;			// The index of the current Vulkan swap chain image to render into, ~0 if invalid
 		// Depth render target related
-		VkFormat		mDepthVkFormat;	///< Can be "VK_FORMAT_UNDEFINED" if no depth stencil buffer is needed
+		VkFormat		mDepthVkFormat;	// Can be "VK_FORMAT_UNDEFINED" if no depth stencil buffer is needed
 		VkImage			mDepthVkImage;
 		VkDeviceMemory  mDepthVkDeviceMemory;
 		VkImageView		mDepthVkImageView;
@@ -8219,21 +8219,21 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit Framebuffer(const Framebuffer& source) = delete;
-		Framebuffer& operator =(const Framebuffer& source) = delete;
+		explicit Framebuffer(const Framebuffer&) = delete;
+		Framebuffer& operator =(const Framebuffer&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		uint32_t		mNumberOfColorTextures;	///< Number of color render target textures
-		Rhi::ITexture** mColorTextures;			///< The color render target textures (we keep a reference to it), can be a null pointer or can contain null pointers, if not a null pointer there must be at least "mNumberOfColorTextures" textures in the provided C-array of pointers
-		Rhi::ITexture*  mDepthStencilTexture;	///< The depth stencil render target texture (we keep a reference to it), can be a null pointer
-		uint32_t		mWidth;					///< The framebuffer width
-		uint32_t		mHeight;				///< The framebuffer height
-		VkRenderPass	mVkRenderPass;			///< Vulkan render pass instance, can be a null handle, we don't own it
-		VkFramebuffer	mVkFramebuffer;			///< Vulkan framebuffer instance, can be a null handle
+		uint32_t		mNumberOfColorTextures;	// Number of color render target textures
+		Rhi::ITexture** mColorTextures;			// The color render target textures (we keep a reference to it), can be a null pointer or can contain null pointers, if not a null pointer there must be at least "mNumberOfColorTextures" textures in the provided C-array of pointers
+		Rhi::ITexture*  mDepthStencilTexture;	// The depth stencil render target texture (we keep a reference to it), can be a null pointer
+		uint32_t		mWidth;					// The framebuffer width
+		uint32_t		mHeight;				// The framebuffer height
+		VkRenderPass	mVkRenderPass;			// Vulkan render pass instance, can be a null handle, we don't own it
+		VkFramebuffer	mVkFramebuffer;			// Vulkan framebuffer instance, can be a null handle
 
 
 	};
@@ -8350,15 +8350,15 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit VertexShaderGlsl(const VertexShaderGlsl& source) = delete;
-		VertexShaderGlsl& operator =(const VertexShaderGlsl& source) = delete;
+		explicit VertexShaderGlsl(const VertexShaderGlsl&) = delete;
+		VertexShaderGlsl& operator =(const VertexShaderGlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkShaderModule mVkShaderModule;	///< Vulkan shader module, destroy it if you no longer need it
+		VkShaderModule mVkShaderModule;	// Vulkan shader module, destroy it if you no longer need it
 
 
 	};
@@ -8475,15 +8475,15 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TessellationControlShaderGlsl(const TessellationControlShaderGlsl& source) = delete;
-		TessellationControlShaderGlsl& operator =(const TessellationControlShaderGlsl& source) = delete;
+		explicit TessellationControlShaderGlsl(const TessellationControlShaderGlsl&) = delete;
+		TessellationControlShaderGlsl& operator =(const TessellationControlShaderGlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkShaderModule mVkShaderModule;	///< Vulkan shader module, destroy it if you no longer need it
+		VkShaderModule mVkShaderModule;	// Vulkan shader module, destroy it if you no longer need it
 
 
 	};
@@ -8600,15 +8600,15 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TessellationEvaluationShaderGlsl(const TessellationEvaluationShaderGlsl& source) = delete;
-		TessellationEvaluationShaderGlsl& operator =(const TessellationEvaluationShaderGlsl& source) = delete;
+		explicit TessellationEvaluationShaderGlsl(const TessellationEvaluationShaderGlsl&) = delete;
+		TessellationEvaluationShaderGlsl& operator =(const TessellationEvaluationShaderGlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkShaderModule mVkShaderModule;	///< Vulkan shader module, destroy it if you no longer need it
+		VkShaderModule mVkShaderModule;	// Vulkan shader module, destroy it if you no longer need it
 
 
 	};
@@ -8739,15 +8739,15 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GeometryShaderGlsl(const GeometryShaderGlsl& source) = delete;
-		GeometryShaderGlsl& operator =(const GeometryShaderGlsl& source) = delete;
+		explicit GeometryShaderGlsl(const GeometryShaderGlsl&) = delete;
+		GeometryShaderGlsl& operator =(const GeometryShaderGlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkShaderModule mVkShaderModule;	///< Vulkan shader module, destroy it if you no longer need it
+		VkShaderModule mVkShaderModule;	// Vulkan shader module, destroy it if you no longer need it
 
 
 	};
@@ -8864,15 +8864,15 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit FragmentShaderGlsl(const FragmentShaderGlsl& source) = delete;
-		FragmentShaderGlsl& operator =(const FragmentShaderGlsl& source) = delete;
+		explicit FragmentShaderGlsl(const FragmentShaderGlsl&) = delete;
+		FragmentShaderGlsl& operator =(const FragmentShaderGlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkShaderModule mVkShaderModule;	///< Vulkan shader module, destroy it if you no longer need it
+		VkShaderModule mVkShaderModule;	// Vulkan shader module, destroy it if you no longer need it
 
 
 	};
@@ -8989,15 +8989,15 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit TaskShaderGlsl(const TaskShaderGlsl& source) = delete;
-		TaskShaderGlsl& operator =(const TaskShaderGlsl& source) = delete;
+		explicit TaskShaderGlsl(const TaskShaderGlsl&) = delete;
+		TaskShaderGlsl& operator =(const TaskShaderGlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkShaderModule mVkShaderModule;	///< Vulkan shader module, destroy it if you no longer need it
+		VkShaderModule mVkShaderModule;	// Vulkan shader module, destroy it if you no longer need it
 
 
 	};
@@ -9114,15 +9114,15 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit MeshShaderGlsl(const MeshShaderGlsl& source) = delete;
-		MeshShaderGlsl& operator =(const MeshShaderGlsl& source) = delete;
+		explicit MeshShaderGlsl(const MeshShaderGlsl&) = delete;
+		MeshShaderGlsl& operator =(const MeshShaderGlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkShaderModule mVkShaderModule;	///< Vulkan shader module, destroy it if you no longer need it
+		VkShaderModule mVkShaderModule;	// Vulkan shader module, destroy it if you no longer need it
 
 
 	};
@@ -9239,15 +9239,15 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ComputeShaderGlsl(const ComputeShaderGlsl& source) = delete;
-		ComputeShaderGlsl& operator =(const ComputeShaderGlsl& source) = delete;
+		explicit ComputeShaderGlsl(const ComputeShaderGlsl&) = delete;
+		ComputeShaderGlsl& operator =(const ComputeShaderGlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		VkShaderModule mVkShaderModule;	///< Vulkan shader module, destroy it if you no longer need it
+		VkShaderModule mVkShaderModule;	// Vulkan shader module, destroy it if you no longer need it
 
 
 	};
@@ -9514,8 +9514,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GraphicsProgramGlsl(const GraphicsProgramGlsl& source) = delete;
-		GraphicsProgramGlsl& operator =(const GraphicsProgramGlsl& source) = delete;
+		explicit GraphicsProgramGlsl(const GraphicsProgramGlsl&) = delete;
+		GraphicsProgramGlsl& operator =(const GraphicsProgramGlsl&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -9523,15 +9523,15 @@ namespace VulkanRhi
 	//[-------------------------------------------------------]
 	private:
 		// Traditional graphics program
-		VertexShaderGlsl*				  mVertexShaderGlsl;					///< Vertex shader the graphics program is using (we keep a reference to it), can be a null pointer
-		TessellationControlShaderGlsl*	  mTessellationControlShaderGlsl;		///< Tessellation control shader the graphics program is using (we keep a reference to it), can be a null pointer
-		TessellationEvaluationShaderGlsl* mTessellationEvaluationShaderGlsl;	///< Tessellation evaluation shader the graphics program is using (we keep a reference to it), can be a null pointer
-		GeometryShaderGlsl*				  mGeometryShaderGlsl;					///< Geometry shader the graphics program is using (we keep a reference to it), can be a null pointer
+		VertexShaderGlsl*				  mVertexShaderGlsl;					// Vertex shader the graphics program is using (we keep a reference to it), can be a null pointer
+		TessellationControlShaderGlsl*	  mTessellationControlShaderGlsl;		// Tessellation control shader the graphics program is using (we keep a reference to it), can be a null pointer
+		TessellationEvaluationShaderGlsl* mTessellationEvaluationShaderGlsl;	// Tessellation evaluation shader the graphics program is using (we keep a reference to it), can be a null pointer
+		GeometryShaderGlsl*				  mGeometryShaderGlsl;					// Geometry shader the graphics program is using (we keep a reference to it), can be a null pointer
 		// Both graphics programs
-		FragmentShaderGlsl* mFragmentShaderGlsl;	///< Fragment shader the graphics program is using (we keep a reference to it), can be a null pointer
+		FragmentShaderGlsl* mFragmentShaderGlsl;	// Fragment shader the graphics program is using (we keep a reference to it), can be a null pointer
 		// Task and mesh shader based graphics program
-		TaskShaderGlsl* mTaskShaderGlsl;	///< Task shader the graphics program is using (we keep a reference to it), can be a null pointer
-		MeshShaderGlsl* mMeshShaderGlsl;	///< Mesh shader the graphics program is using (we keep a reference to it), can be a null pointer
+		TaskShaderGlsl* mTaskShaderGlsl;	// Task shader the graphics program is using (we keep a reference to it), can be a null pointer
+		MeshShaderGlsl* mMeshShaderGlsl;	// Mesh shader the graphics program is using (we keep a reference to it), can be a null pointer
 
 
 	};
@@ -9781,8 +9781,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ShaderLanguageGlsl(const ShaderLanguageGlsl& source) = delete;
-		ShaderLanguageGlsl& operator =(const ShaderLanguageGlsl& source) = delete;
+		explicit ShaderLanguageGlsl(const ShaderLanguageGlsl&) = delete;
+		ShaderLanguageGlsl& operator =(const ShaderLanguageGlsl&) = delete;
 
 
 	};
@@ -10137,8 +10137,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit GraphicsPipelineState(const GraphicsPipelineState& source) = delete;
-		GraphicsPipelineState& operator =(const GraphicsPipelineState& source) = delete;
+		explicit GraphicsPipelineState(const GraphicsPipelineState&) = delete;
+		GraphicsPipelineState& operator =(const GraphicsPipelineState&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -10148,7 +10148,7 @@ namespace VulkanRhi
 		Rhi::IRootSignature*   mRootSignature;
 		Rhi::IGraphicsProgram* mGraphicsProgram;
 		Rhi::IRenderPass*	   mRenderPass;
-		VkPipeline			   mVkPipeline;	///< The Vulkan graphics pipeline
+		VkPipeline			   mVkPipeline;	// The Vulkan graphics pipeline
 
 
 	};
@@ -10278,8 +10278,8 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ComputePipelineState(const ComputePipelineState& source) = delete;
-		ComputePipelineState& operator =(const ComputePipelineState& source) = delete;
+		explicit ComputePipelineState(const ComputePipelineState&) = delete;
+		ComputePipelineState& operator =(const ComputePipelineState&) = delete;
 
 
 	//[-------------------------------------------------------]
@@ -10288,7 +10288,7 @@ namespace VulkanRhi
 	private:
 		Rhi::IRootSignature& mRootSignature;
 		Rhi::IComputeShader& mComputeShader;
-		VkPipeline			 mVkPipeline;		///< The Vulkan compute pipeline
+		VkPipeline			 mVkPipeline;		// The Vulkan compute pipeline
 
 
 	};
@@ -10737,19 +10737,19 @@ namespace VulkanRhi
 	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		explicit ResourceGroup(const ResourceGroup& source) = delete;
-		ResourceGroup& operator =(const ResourceGroup& source) = delete;
+		explicit ResourceGroup(const ResourceGroup&) = delete;
+		ResourceGroup& operator =(const ResourceGroup&) = delete;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		RootSignature&		 mRootSignature;		///< Root signature
-		VkDescriptorSet		 mVkDescriptorSet;		///< "mVkDescriptorPool" of the root signature is the owner which manages the memory, can be a null handle (e.g. for a sampler resource group)
-		uint32_t			 mNumberOfResources;	///< Number of resources this resource group groups together
-		Rhi::IResource**	 mResources;			///< RHI resource, we keep a reference to it
-		Rhi::ISamplerState** mSamplerStates;		///< Sampler states, we keep a reference to it
+		RootSignature&		 mRootSignature;		// Root signature
+		VkDescriptorSet		 mVkDescriptorSet;		// "mVkDescriptorPool" of the root signature is the owner which manages the memory, can be a null handle (e.g. for a sampler resource group)
+		uint32_t			 mNumberOfResources;	// Number of resources this resource group groups together
+		Rhi::IResource**	 mResources;			// RHI resource, we keep a reference to it
+		Rhi::ISamplerState** mSamplerStates;		// Sampler states, we keep a reference to it
 
 
 	};
@@ -11232,7 +11232,7 @@ namespace VulkanRhi
 			mComputeRootSignature->releaseReference();
 		}
 
-		#ifdef SE_STATISTICS
+		#if SE_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
 			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
@@ -11249,7 +11249,7 @@ namespace VulkanRhi
 				}
 
 				// Use debug output to show the current number of resource instances
-				getStatistics().debugOutputCurrentResouces(mContext);
+				getStatistics().debugOutputCurrentResouces();
 			}
 		}
 		#endif

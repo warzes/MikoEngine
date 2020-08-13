@@ -171,8 +171,8 @@ bool Application::init_base(int argc, const char * argv[])
 	// Create a main swap chain instance
 	mainSwapChain = rhi->createSwapChain(
 		*renderPass,
-		Rhi::WindowHandle{ (handle)glfwNativeWindowHandle(m_window), nullptr, nullptr },	// TODO(co) Linux Wayland support
-		rhi->getContext().isUsingExternalContext()
+		Rhi::WindowHandle{ (handle)glfwNativeWindowHandle(m_window), nullptr },
+		false
 		RHI_RESOURCE_DEBUG_NAME("Main"));
 	mainSwapChain->addReference();	// Internal RHI reference // TODO:???
 	
