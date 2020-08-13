@@ -104,7 +104,6 @@ bool Application::init_base(int argc, const char * argv[])
 	}
 
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-
 	glfwWindowHint(GLFW_RESIZABLE, resizable);
 	glfwWindowHint(GLFW_MAXIMIZED, maximized);
 	glfwWindowHint(GLFW_REFRESH_RATE, refresh_rate);

@@ -84,12 +84,6 @@
     <ClInclude Include="Base\BaseHeader.h">
       <Filter>0_Base</Filter>
     </ClInclude>
-    <ClInclude Include="Render\Rhi.h">
-      <Filter>4_Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\RhiInstance.h">
-      <Filter>4_Render</Filter>
-    </ClInclude>
     <ClInclude Include="Render\MakeID.h">
       <Filter>4_Render\temp</Filter>
     </ClInclude>
@@ -300,6 +294,12 @@
     <ClInclude Include="Render\CommandBuffer.h">
       <Filter>4_Render\RHI</Filter>
     </ClInclude>
+    <ClInclude Include="Render\Rhi.h">
+      <Filter>4_Render\RHI</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RhiInstance.h">
+      <Filter>4_Render\RHI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
@@ -347,9 +347,8 @@
     <Filter Include="4_Render\RHI\Interface">
       <UniqueIdentifier>{365a6a36-e0e9-4b82-a866-76cf233456cb}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
+    <Filter Include="4_Render\OpenGL">
+      <UniqueIdentifier>{b16f6fcd-5941-410f-9a4b-ec5d1787a81c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

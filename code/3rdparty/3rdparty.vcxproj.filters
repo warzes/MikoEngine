@@ -715,9 +715,6 @@
     <ClCompile Include="assimp\contrib\zlib\zutil.c">
       <Filter>zlib</Filter>
     </ClCompile>
-    <ClCompile Include="glad.c">
-      <Filter>glad</Filter>
-    </ClCompile>
     <ClCompile Include="smol-v\smolv.cpp" />
     <ClCompile Include="glslang\glslangUnityBuild3.cpp">
       <Filter>glslang</Filter>
@@ -1439,9 +1436,6 @@
     <ClInclude Include="assimp\contrib\irrXML\irrXML.h">
       <Filter>IrrXML</Filter>
     </ClInclude>
-    <ClInclude Include="glad.h">
-      <Filter>glad</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
@@ -1680,9 +1674,6 @@
     </Filter>
     <Filter Include="zlib">
       <UniqueIdentifier>{3f6e75fb-1095-4c60-b0be-00d324122059}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="glad">
-      <UniqueIdentifier>{c270c2e4-7845-4cf4-ba6e-d2c668108bc7}</UniqueIdentifier>
     </Filter>
     <Filter Include="glslang">
       <UniqueIdentifier>{476633dc-2b2e-4342-bac0-0dd511f60a80}</UniqueIdentifier>

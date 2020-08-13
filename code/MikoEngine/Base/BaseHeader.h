@@ -84,7 +84,6 @@ SE_PRAGMA_WARNING_LEVEL(0)
 //-----------------------------------------------------------------------------
 // OpenGL
 #if SE_OPENGL
-//#	include <glad.h>
 #	if SE_PLATFORM_WINDOWS
 #		undef GL_GLEXT_PROTOTYPES
 #		include <GL/gl.h>
