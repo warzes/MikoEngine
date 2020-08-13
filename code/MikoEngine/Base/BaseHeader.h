@@ -110,7 +110,7 @@ SE_PRAGMA_WARNING_LEVEL(0)
 #		define VK_USE_PLATFORM_XLIB_KHR
 #		define VK_USE_PLATFORM_WAYLAND_KHR
 #	endif
-#	define VK_NO_PROTOTYPES
+//#	define VK_NO_PROTOTYPES
 #	include <vulkan/vulkan.h>
 //#	define VMA_USE_STL_SHARED_MUTEX 0 // TODO
 //#	include <vk_mem_alloc.h>

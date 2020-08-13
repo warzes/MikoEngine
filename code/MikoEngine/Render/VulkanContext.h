@@ -54,8 +54,6 @@ namespace VulkanRhi
 				mVkDevice = ::detail::createVkDevice(mVulkanRhi.getContext(), mVulkanRhi.getVkAllocationCallbacks(), mVkPhysicalDevice, vulkanRuntimeLinking.isValidationEnabled(), enableDebugMarker, mGraphicsQueueFamilyIndex, mPresentQueueFamilyIndex);
 				if ( VK_NULL_HANDLE != mVkDevice )
 				{
-					// Load device based instance level Vulkan function pointers
-					if ( mVulkanRhi.getVulkanRuntimeLinking().loadDeviceLevelVulkanEntryPoints(mVkDevice) )
 					{
 						// Get the Vulkan device graphics queue that command buffers are submitted to
 						vkGetDeviceQueue(mVkDevice, mGraphicsQueueFamilyIndex, 0, &mGraphicsVkQueue);
