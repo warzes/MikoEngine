@@ -126,16 +126,8 @@ bool Application::init_base(int argc, const char * argv[])
 
 	glfwMakeContextCurrent(m_window); // TODO: only opengl? or?
 
-#if SE_PLATFORM_WINDOWS
 	rhiContext = std::make_unique<Rhi::Context>(glfwNativeWindowHandle(m_window));
-	const bool loadRhiApiSharedLibrary = false;
-#elif LINUX
-	// Under Linux the OpenGL library interacts with the library from X11 so we need to load the library ourself instead letting it be loaded by the RHI instance
-	// -> See http://dri.sourceforge.net/doc/DRIuserguide.html "11.5 libGL.so and dlopen()"
-	const bool loadRhiApiSharedLibrary = true;
-	rhiContext = std::make_unique<Rhi::X11Context>(getX11Display(), glfwNativeWindowHandle(m_window));
-#endif
-	rhiInstance = std::make_unique<Rhi::RhiInstance>("Direct3D12", *rhiContext.get(), loadRhiApiSharedLibrary);
+	rhiInstance = std::make_unique<Rhi::RhiInstance>("OpenGL", *rhiContext.get());
 	rhi = (nullptr != rhiInstance) ? rhiInstance->getRhi() : nullptr;
 	if ( nullptr == rhi && !rhi->isInitialized() )
 	{

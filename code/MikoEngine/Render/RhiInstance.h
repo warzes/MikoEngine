@@ -26,29 +26,8 @@ namespace Rhi
 	class RhiInstance final
 	{
 	public:
-		/**
-		*  @brief
-		*    Constructor
-		*
-		*  @param[in] rhiName
-		*    Case sensitive ASCII name of the RHI to instance, must be valid. Usually "Rhi::DEFAULT_RHI_NAME".
-		*    Example RHI names: "Null", "Vulkan", "OpenGL", "OpenGLES3", "Direct3D9", "Direct3D10", "Direct3D11", "Direct3D12"
-		*  @param[in] context
-		*    RHI context, the RHI context instance must stay valid as long as the RHI instance exists
-		*  @param[in] loadRhiApiSharedLibrary
-		*    Indicates if the RHI instance should load the RHI API shared library (true) or not (false, default)
-		*/
-		RhiInstance(const char* rhiName, Context& context, bool loadRhiApiSharedLibrary = false)
+		RhiInstance(const char* rhiName, Context& context)
 		{
-			// In order to keep it simple in this test project the supported RHI implementations are
-			// fixed typed in. For a real system a dynamic plugin system would be a good idea.
-			if (loadRhiApiSharedLibrary)
-			{
-				// User wants us to load the RHI API shared library
-				loadOpenGLSharedLibraryInternal(rhiName);
-				context.setRhiApiSharedLibrary(mOpenGLSharedLibrary);
-			}
-
 #if SE_RHINULL
 			if (0 == strcmp(rhiName, "Null"))
 				mRhi = createNullRhiInstance(context);
@@ -78,14 +57,6 @@ namespace Rhi
 		~RhiInstance()
 		{
 			mRhi = nullptr;
-
-#if SE_PLATFORM_WINDOWS
-			if (nullptr != mOpenGLSharedLibrary)
-				::FreeLibrary(static_cast<HMODULE>(mOpenGLSharedLibrary));
-#elif defined LINUX
-			if (nullptr != mOpenGLSharedLibrary)
-				::dlclose(mOpenGLSharedLibrary);
-#endif
 		}
 
 		[[nodiscard]] inline IRhi* getRhi() const
@@ -97,24 +68,8 @@ namespace Rhi
 		{
 			mRhi = nullptr;
 		}
+
 	private:
-		void loadOpenGLSharedLibraryInternal([[maybe_unused]] const char* rhiName)
-		{
-			// TODO(sw) Currently this is only needed for OpenGL (libGL.so) under Linux. This interacts with the library libX11.
-#ifdef LINUX
-// Under Linux the OpenGL library (libGL.so) registers callbacks in libX11 when loaded, which gets called on XCloseDisplay
-// When the OpenGL library gets unloaded before the XCloseDisplay call then the X11 library wants to call the callbacks registered by the OpenGL library -> crash
-// So we load it here. The user must make sure that an instance of this class gets destroyed after XCloseDisplay was called
-// See http://dri.sourceforge.net/doc/DRIuserguide.html "11.5 libGL.so and dlopen()"
-			if (0 == strcmp(rhiName, "OpenGL"))
-			{
-				mOpenGLSharedLibrary = ::dlopen("libGL.so", RTLD_NOW | RTLD_GLOBAL);
-			}
-#endif
-		}
-	private:
-		void* mRhiSharedLibrary = nullptr;    // Shared RHI library, can be a null pointer
 		IRhiPtr mRhi;                         // RHI instance, can be a null pointer
-		void* mOpenGLSharedLibrary = nullptr; // Shared OpenGL library, can be a null pointer
 	};
 } // Rhi

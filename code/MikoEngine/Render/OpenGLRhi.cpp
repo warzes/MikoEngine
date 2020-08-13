@@ -1596,7 +1596,6 @@ namespace OpenGLRhi
 		*/
 		inline explicit OpenGLRuntimeLinking(OpenGLRhi& openGLRhi) :
 			mOpenGLRhi(openGLRhi),
-			mOpenGLSharedLibrary(mOpenGLRhi.getContext().getRhiApiSharedLibrary()),
 			mOwnsOpenGLSharedLibrary(nullptr == mOpenGLSharedLibrary),	// We can do this here because "mOpenGLSharedLibrary" lays before this variable
 			mEntryPointsRegistered(false),
 			mInitialized(false)
@@ -1793,7 +1792,7 @@ namespace OpenGLRhi
 	//[-------------------------------------------------------]
 	private:
 		OpenGLRhi&	mOpenGLRhi;					///< Owner OpenGL RHI instance
-		void*		mOpenGLSharedLibrary;		///< OpenGL shared library, can be a null pointer
+		void*		mOpenGLSharedLibrary = nullptr;		///< OpenGL shared library, can be a null pointer
 		bool		mOwnsOpenGLSharedLibrary;	///< Indicates if the OpenGL shared library was loaded from ourself or provided from external
 		bool		mEntryPointsRegistered;		///< Entry points successfully registered?
 		bool		mInitialized;				///< Already initialized?

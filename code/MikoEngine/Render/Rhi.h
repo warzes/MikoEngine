@@ -6,36 +6,18 @@
 #include "DefaultAllocator.h"
 
 #if SE_DEBUG
-	/**
-	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
-	*
-	*  @param[in] debugName
-	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
-	*/
+	// Resource name for debugging purposes, ignored when not using "SE_DEBUG"
+	// debugName - ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
 	#define RHI_RESOURCE_DEBUG_NAME_PARAMETER , const char debugName[] = ""
 	#define RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT , const char debugName[]
-
-	/**
-	*  @brief
-	*    Pass resource name for debugging purposes, ignored when not using "SE_DEBUG"
-	*/
+	// Pass resource name for debugging purposes, ignored when not using "SE_DEBUG"
 	#define RHI_RESOURCE_DEBUG_PASS_PARAMETER , debugName
 #else
-	/**
-	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
-	*
-	*  @param[in] debugName
-	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
-	*/
+	// Resource name for debugging purposes, ignored when not using "SE_DEBUG"
+	// debugName - ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
 	#define RHI_RESOURCE_DEBUG_NAME_PARAMETER
 	#define RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT
-
-	/**
-	*  @brief
-	*    Pass resource name for debugging purposes, ignored when not using "SE_DEBUG"
-	*/
+	// Pass resource name for debugging purposes, ignored when not using "SE_DEBUG"
 	#define RHI_RESOURCE_DEBUG_PASS_PARAMETER
 #endif
 
@@ -97,35 +79,15 @@ namespace Rhi
 	//[-------------------------------------------------------]
 	//[ Rhi/Context.h                                         ]
 	//[-------------------------------------------------------]
-	/**
-	*  @brief
-	*    Context class encapsulating all embedding related wirings
-	*/
 	class Context
 	{
-
-	// Public definitions
 	public:
 		enum class ContextType
 		{
-			WINDOWS,
-			X11,
-			WAYLAND
+			WINDOWS
 		};
-
-	// Public methods
 	public:
-		/**
-		*  @brief
-		*    Constructor
-		*
-		*  @param[in] nativeWindowHandle
-		*    Native window handle
-		*  @param[in] useExternalContext
-		*    Indicates if an external RHI context is used; in this case the RHI itself has nothing to do with the creation/managing of an RHI context
-		*  @param[in] contextType
-		*    The type of the context
-		*/
+
 		inline Context(handle nativeWindowHandle = 0, bool useExternalContext = false, ContextType contextType = Context::ContextType::WINDOWS) :
 			mNativeWindowHandle(nativeWindowHandle),
 			mUseExternalContext(useExternalContext),
@@ -133,65 +95,51 @@ namespace Rhi
 			mRhiApiSharedLibrary(nullptr)
 		{}
 
-		/**
-		*  @brief
-		*    Return the native window handle
-		*
-		*  @return
-		*    The native window handle
-		*/
 		[[nodiscard]] inline handle getNativeWindowHandle() const
 		{
 			return mNativeWindowHandle;
 		}
 
-		/**
-		*  @brief
-		*    Return whether or not an external context is used
-		*
-		*  @return
-		*    "true" if an external context is used, else "false"
-		*/
 		[[nodiscard]] inline bool isUsingExternalContext() const
 		{
 			return mUseExternalContext;
 		}
 
-		/**
-		*  @brief
-		*    Return the type of the context
-		*
-		*  @return
-		*    The context type
-		*/
-		[[nodiscard]] inline ContextType getType() const
-		{
-			return mContextType;
-		}
+		///**
+		//*  @brief
+		//*    Return the type of the context
+		//*
+		//*  @return
+		//*    The context type
+		//*/
+		//[[nodiscard]] inline ContextType getType() const
+		//{
+		//	return mContextType;
+		//}
 
-		/**
-		*  @brief
-		*    Return a handle to the RHI API shared library
-		*
-		*  @return
-		*    The handle to the RHI API shared library, can be a null pointer
-		*/
-		[[nodiscard]] inline void* getRhiApiSharedLibrary() const
-		{
-			return mRhiApiSharedLibrary;
-		}
+		///**
+		//*  @brief
+		//*    Return a handle to the RHI API shared library
+		//*
+		//*  @return
+		//*    The handle to the RHI API shared library, can be a null pointer
+		//*/
+		//[[nodiscard]] inline void* getRhiApiSharedLibrary() const
+		//{
+		//	return mRhiApiSharedLibrary;
+		//}
 
-		/**
-		*  @brief
-		*    Set the handle for the RHI API shared library to use instead of let it load by the RHI instance
-		*
-		*  @param[in] rhiApiSharedLibrary
-		*    A handle to the RHI API shared library, can be a null pointer; the RHI will use this handle instead of loading the RHI API shared library itself
-		*/
-		inline void setRhiApiSharedLibrary(void* rhiApiSharedLibrary)
-		{
-			mRhiApiSharedLibrary = rhiApiSharedLibrary;
-		}
+		///**
+		//*  @brief
+		//*    Set the handle for the RHI API shared library to use instead of let it load by the RHI instance
+		//*
+		//*  @param[in] rhiApiSharedLibrary
+		//*    A handle to the RHI API shared library, can be a null pointer; the RHI will use this handle instead of loading the RHI API shared library itself
+		//*/
+		//inline void setRhiApiSharedLibrary(void* rhiApiSharedLibrary)
+		//{
+		//	mRhiApiSharedLibrary = rhiApiSharedLibrary;
+		//}
 
 	// Private methods
 	private:
@@ -205,47 +153,6 @@ namespace Rhi
 		ContextType	mContextType;
 		void*		mRhiApiSharedLibrary;	///< A handle to the RHI API shared library (e.g. obtained via "dlopen()" and co), can be a null pointer
 	};
-
-	#ifdef LINUX
-		class X11Context final : public Context
-		{
-		public:
-			inline X11Context(_XDisplay* display, handle nativeWindowHandle = 0, bool useExternalContext = false) :
-				Context(log, assert, allocator, nativeWindowHandle, useExternalContext, Context::ContextType::X11),
-				mDisplay(display)
-			{}
-
-			[[nodiscard]] inline _XDisplay* getDisplay() const
-			{
-				return mDisplay;
-			}
-		private:
-			_XDisplay* mDisplay;
-		};
-
-		class WaylandContext final : public Context
-		{
-		public:			
-			inline WaylandContext(wl_display* display, wl_surface* surface = 0, bool useExternalContext = false) :
-				Context(log, assert, allocator, 1, useExternalContext, Context::ContextType::WAYLAND),	// Under Wayland the surface (aka window) handle is not an integer, but the RHI implementation expects an integer as window handle so we give here an value != 0 so that a swap chain is created
-				mDisplay(display),
-				mSurface(surface)
-			{}
-
-			[[nodiscard]] inline wl_display* getDisplay() const
-			{
-				return mDisplay;
-			}
-
-			[[nodiscard]] inline wl_surface* getSurface() const
-			{
-				return mSurface;
-			}
-		private:
-			wl_display* mDisplay;
-			wl_surface* mSurface;
-		};
-	#endif
 
 	//[-------------------------------------------------------]
 	//[ Rhi/RhiTypes.h                                        ]

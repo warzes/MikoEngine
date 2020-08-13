@@ -41,7 +41,7 @@ out vec4 OutputColor;	// Output variable for fragment color
 void main()
 {
 	// Return white
-	return float4(1.0f, 0.5f, 2.5f, 1.0f);
+	OutputColor = vec4(1.0, 0.5, 2.5, 1.0);
 }
 )";
 
