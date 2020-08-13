@@ -12,8 +12,6 @@ namespace VulkanRhi
 		inline VulkanRuntimeLinking(VulkanRhi& vulkanRhi, bool enableValidation) :
 			mVulkanRhi(vulkanRhi),
 			mValidationEnabled(enableValidation),
-			mVulkanSharedLibrary(nullptr),
-			mEntryPointsRegistered(false),
 			mVkInstance(VK_NULL_HANDLE),
 			mVkDebugReportCallbackEXT(VK_NULL_HANDLE),
 			mInstanceLevelFunctionsRegistered(false),
@@ -34,21 +32,6 @@ namespace VulkanRhi
 			{
 				vkDestroyInstance(mVkInstance, mVulkanRhi.getVkAllocationCallbacks());
 			}
-
-			// Destroy the shared library instances
-#if SE_PLATFORM_WINDOWS
-			if ( nullptr != mVulkanSharedLibrary )
-			{
-				::FreeLibrary(static_cast<HMODULE>(mVulkanSharedLibrary));
-			}
-#elif defined LINUX
-			if ( nullptr != mVulkanSharedLibrary )
-			{
-				::dlclose(mVulkanSharedLibrary);
-			}
-#else
-#error "Unsupported platform"
-#endif
 		}
 
 		/**
@@ -78,37 +61,28 @@ namespace VulkanRhi
 				// We're now initialized
 				mInitialized = true;
 
-				// Load the shared libraries
-				if ( loadSharedLibraries() )
+				// Create the Vulkan instance
+				const VkResult vkResult = createVulkanInstance(mValidationEnabled);
+				if ( VK_SUCCESS == vkResult )
 				{
-					// Load the global level Vulkan function entry points
-					mEntryPointsRegistered = loadGlobalLevelVulkanEntryPoints();
-					if ( mEntryPointsRegistered )
-					{
-						// Create the Vulkan instance
-						const VkResult vkResult = createVulkanInstance(mValidationEnabled);
-						if ( VK_SUCCESS == vkResult )
-						{
-							// Load instance based instance level Vulkan function pointers
-							mInstanceLevelFunctionsRegistered = loadInstanceLevelVulkanEntryPoints();
+					// Load instance based instance level Vulkan function pointers
+					mInstanceLevelFunctionsRegistered = loadInstanceLevelVulkanEntryPoints();
 
-							// Setup debug callback
-							if ( mInstanceLevelFunctionsRegistered && mValidationEnabled )
-							{
-								setupDebugCallback();
-							}
-						}
-						else
-						{
-							// Error!
-							RHI_LOG(CRITICAL, "Failed to create the Vulkan instance")
-						}
+					// Setup debug callback
+					if ( mInstanceLevelFunctionsRegistered && mValidationEnabled )
+					{
+						setupDebugCallback();
 					}
+				}
+				else
+				{
+					// Error!
+					RHI_LOG(CRITICAL, "Failed to create the Vulkan instance")
 				}
 			}
 
 			// Entry points successfully registered?
-			return (mEntryPointsRegistered && (VK_NULL_HANDLE != mVkInstance) && mInstanceLevelFunctionsRegistered);
+			return ( (VK_NULL_HANDLE != mVkInstance) && mInstanceLevelFunctionsRegistered);
 		}
 
 		/**
@@ -128,123 +102,7 @@ namespace VulkanRhi
 		//[-------------------------------------------------------]
 	private:
 		explicit VulkanRuntimeLinking(const VulkanRuntimeLinking&) = delete;
-		VulkanRuntimeLinking& operator =(const VulkanRuntimeLinking&) = delete;
-
-		/**
-		*  @brief
-		*    Load the shared libraries
-		*
-		*  @return
-		*    "true" if all went fine, else "false"
-		*/
-		[[nodiscard]] bool loadSharedLibraries()
-		{
-//			// Load the shared library
-//#if SE_PLATFORM_WINDOWS
-//			mVulkanSharedLibrary = ::LoadLibraryExA("vulkan-1.dll", nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
-//			if ( nullptr == mVulkanSharedLibrary )
-//			{
-//				RHI_LOG(CRITICAL, "Failed to load in the shared Vulkan library \"vulkan-1.dll\"")
-//			}
-//#elif defined LINUX
-//			mVulkanSharedLibrary = ::dlopen("libvulkan.so", RTLD_NOW);
-//			if ( nullptr == mVulkanSharedLibrary )
-//			{
-//				RHI_LOG(CRITICAL, "Failed to load in the shared Vulkan library \"libvulkan-1.so\"")
-//			}
-//#else
-//#error "Unsupported platform"
-//#endif
-//
-//// Done
-//			return (nullptr != mVulkanSharedLibrary);
-			return true;
-		}
-
-		/**
-		*  @brief
-		*    Load the global level Vulkan function entry points
-		*
-		*  @return
-		*    "true" if all went fine, else "false"
-		*/
-		[[nodiscard]] bool loadGlobalLevelVulkanEntryPoints() const
-		{
-			bool result = true;	// Success by default
-
-//			// Define a helper macro
-//#if SE_PLATFORM_WINDOWS
-//#define IMPORT_FUNC(funcName)																																			\
-//					if (result)																																							\
-//					{																																									\
-//						void* symbol = ::GetProcAddress(static_cast<HMODULE>(mVulkanSharedLibrary), #funcName);																			\
-//						if (nullptr != symbol)																																			\
-//						{																																								\
-//							*(reinterpret_cast<void**>(&(funcName))) = symbol;																											\
-//						}																																								\
-//						else																																							\
-//						{																																								\
-//							wchar_t moduleFilename[MAX_PATH];																															\
-//							moduleFilename[0] = '\0';																																	\
-//							::GetModuleFileNameW(static_cast<HMODULE>(mVulkanSharedLibrary), moduleFilename, MAX_PATH);																	\
-//							RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the shared Vulkan library \"%s\"", #funcName, moduleFilename)	\
-//							result = false;																																				\
-//						}																																								\
-//					}
-//#elif defined(__ANDROID__)
-//#define IMPORT_FUNC(funcName)																																				\
-//					if (result)																																								\
-//					{																																										\
-//						void* symbol = ::dlsym(mVulkanSharedLibrary, #funcName);																											\
-//						if (nullptr != symbol)																																				\
-//						{																																									\
-//							*(reinterpret_cast<void**>(&(funcName))) = symbol;																												\
-//						}																																									\
-//						else																																								\
-//						{																																									\
-//							const char* libraryName = "unknown";																															\
-//							RHI_LOG(CRITICAL, "Failed to locate the Vulkan entry point \"%s\" within the Vulkan shared library \"%s\"", #funcName, libraryName)	\
-//							result = false;																																					\
-//						}																																									\
-//					}
-//#elif defined LINUX
-//#define IMPORT_FUNC(funcName)																																		\
-//					if (result)																																						\
-//					{																																								\
-//						void* symbol = ::dlsym(mVulkanSharedLibrary, #funcName);																									\
-//						if (nullptr != symbol)																																		\
-//						{																																							\
-//							*(reinterpret_cast<void**>(&(funcName))) = symbol;																										\
-//						}																																							\
-//						else																																						\
-//						{																																							\
-//							link_map *linkMap = nullptr;																															\
-//							const char* libraryName = "unknown";																													\
-//							if (dlinfo(mVulkanSharedLibrary, RTLD_DI_LINKMAP, &linkMap))																							\
-//							{																																						\
-//								libraryName = linkMap->l_name;																														\
-//							}																																						\
-//							RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the shared Vulkan library \"%s\"", #funcName, libraryName)	\
-//							result = false;																																			\
-//						}																																							\
-//					}
-//#else
-//#error "Unsupported platform"
-//#endif
-//
-//// Load the Vulkan global level function entry points
-//			IMPORT_FUNC(vkGetInstanceProcAddr)
-//				IMPORT_FUNC(vkGetDeviceProcAddr)
-//				IMPORT_FUNC(vkEnumerateInstanceExtensionProperties)
-//				IMPORT_FUNC(vkEnumerateInstanceLayerProperties)
-//				IMPORT_FUNC(vkCreateInstance)
-
-				// Undefine the helper macro
-#undef IMPORT_FUNC
-
-// Done
-return result;
-		}
+		VulkanRuntimeLinking& operator=(const VulkanRuntimeLinking&) = delete;
 
 		/**
 		*  @brief
@@ -311,11 +169,11 @@ return result;
 			{
 				VK_STRUCTURE_TYPE_APPLICATION_INFO,	// sType (VkStructureType)
 				nullptr,							// pNext (const void*)
-				"Unrimp Application",				// pApplicationName (const char*)
+				"Miko Application",					// pApplicationName (const char*)
 				VK_MAKE_VERSION(0, 0, 0),			// applicationVersion (uint32_t)
-				"Unrimp",							// pEngineName (const char*)
+				"MikoEngine",						// pEngineName (const char*)
 				VK_MAKE_VERSION(0, 0, 0),			// engineVersion (uint32_t)
-				VK_API_VERSION_1_0					// apiVersion (uint32_t)
+				VK_API_VERSION_1_2					// apiVersion (uint32_t)
 			};
 
 			const VkInstanceCreateInfo vkInstanceCreateInfo =
@@ -365,54 +223,12 @@ return result;
 					} \
 				}
 
-//			// Load the Vulkan instance level function entry points
-//				IMPORT_FUNC(vkDestroyInstance)
-//				IMPORT_FUNC(vkEnumeratePhysicalDevices)
-//				IMPORT_FUNC(vkEnumerateDeviceLayerProperties)
-//				IMPORT_FUNC(vkEnumerateDeviceExtensionProperties)
-//				IMPORT_FUNC(vkGetPhysicalDeviceQueueFamilyProperties)
-//				IMPORT_FUNC(vkGetPhysicalDeviceFeatures)
-//				IMPORT_FUNC(vkGetPhysicalDeviceFormatProperties)
-//				IMPORT_FUNC(vkGetPhysicalDeviceMemoryProperties)
-//				IMPORT_FUNC(vkGetPhysicalDeviceProperties)
-//				IMPORT_FUNC(vkCreateDevice)
 				if ( mValidationEnabled )
 				{
 					// "VK_EXT_debug_report"-extension
 					IMPORT_FUNC(vkCreateDebugReportCallbackEXT);
 					IMPORT_FUNC(vkDestroyDebugReportCallbackEXT);
 				}
-//			// "VK_KHR_surface"-extension
-//			IMPORT_FUNC(vkDestroySurfaceKHR)
-//				IMPORT_FUNC(vkGetPhysicalDeviceSurfaceSupportKHR)
-//				IMPORT_FUNC(vkGetPhysicalDeviceSurfaceFormatsKHR)
-//				IMPORT_FUNC(vkGetPhysicalDeviceSurfaceCapabilitiesKHR)
-//				IMPORT_FUNC(vkGetPhysicalDeviceSurfacePresentModesKHR)
-//#ifdef VK_USE_PLATFORM_WIN32_KHR
-//				// "VK_KHR_win32_surface"-extension
-//				IMPORT_FUNC(vkCreateWin32SurfaceKHR)
-//#elif defined VK_USE_PLATFORM_ANDROID_KHR
-//				// "VK_KHR_android_surface"-extension
-//				#warning "TODO(co) Not tested"
-//				IMPORT_FUNC(vkCreateAndroidSurfaceKHR)
-//#elif defined VK_USE_PLATFORM_XLIB_KHR || defined VK_USE_PLATFORM_WAYLAND_KHR
-//#if defined VK_USE_PLATFORM_XLIB_KHR
-//				// "VK_KHR_xlib_surface"-extension
-//				IMPORT_FUNC(vkCreateXlibSurfaceKHR)
-//#endif
-//#if defined VK_USE_PLATFORM_WAYLAND_KHR
-//				// "VK_KHR_wayland_surface"-extension
-//				IMPORT_FUNC(vkCreateWaylandSurfaceKHR)
-//#endif
-//#elif defined VK_USE_PLATFORM_XCB_KHR
-//				// "VK_KHR_xcb_surface"-extension
-//				#warning "TODO(co) Not tested"
-//				IMPORT_FUNC(vkCreateXcbSurfaceKHR)
-//#else
-//#error "Unsupported platform"
-//#endif
-//
-				// Undefine the helper macro
 #undef IMPORT_FUNC
 
 				// Done
@@ -446,16 +262,12 @@ return result;
 				RHI_LOG(WARNING, "Failed to create the Vulkan debug report callback")
 			}
 		}
-
-
 		//[-------------------------------------------------------]
 		//[ Private data                                          ]
 		//[-------------------------------------------------------]
 	private:
 		VulkanRhi&				 mVulkanRhi;						// Owner Vulkan RHI instance
 		bool					 mValidationEnabled;				// Validation enabled?
-		void*					 mVulkanSharedLibrary;				// Vulkan shared library, can be a null pointer
-		bool					 mEntryPointsRegistered;			// Entry points successfully registered?
 		VkInstance				 mVkInstance;						// Vulkan instance, stores all per-application states
 		VkDebugReportCallbackEXT mVkDebugReportCallbackEXT;			// Vulkan debug report callback, can be a null handle
 		bool					 mInstanceLevelFunctionsRegistered;	// Instance level Vulkan function pointers registered?
