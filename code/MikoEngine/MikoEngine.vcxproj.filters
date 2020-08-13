@@ -192,6 +192,114 @@
     <ClInclude Include="Render\IQueryPool.h">
       <Filter>4_Render\RHI\Interface</Filter>
     </ClInclude>
+    <ClInclude Include="Render\IRenderTarget.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ISwapChain.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IFramebuffer.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IBufferManager.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IVertexArray.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IBuffer.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IVertexBuffer.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IIndexBuffer.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ITextureBuffer.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IStructuredBuffer.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IIndirectBuffer.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IUniformBuffer.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ITextureManager.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ITexture.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ITexture1D.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ITexture1DArray.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ITexture2D.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ITexture2DArray.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ITexture3D.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ITextureCube.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ITextureCubeArray.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IState.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IPipelineState.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IGraphicsPipelineState.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IComputePipelineState.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ISamplerState.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IShader.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IVertexShader.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ITessellationControlShader.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ITessellationEvaluationShader.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IGeometryShader.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IFragmentShader.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ITaskShader.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IMeshShader.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IComputeShader.h">
+      <Filter>4_Render\RHI\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\CommandBuffer.h">
+      <Filter>4_Render\RHI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
