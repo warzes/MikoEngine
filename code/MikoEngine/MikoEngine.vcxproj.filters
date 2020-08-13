@@ -300,6 +300,60 @@
     <ClInclude Include="Render\RhiInstance.h">
       <Filter>4_Render\RHI</Filter>
     </ClInclude>
+    <ClInclude Include="Render\OpenGLCore.h">
+      <Filter>4_Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\OpenGLFunc.h">
+      <Filter>4_Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\OpenGLRhi.h">
+      <Filter>4_Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\OpenGLRuntimeLinking.h">
+      <Filter>4_Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\OpenGLExtensions.h">
+      <Filter>4_Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\IOpenGLContext.h">
+      <Filter>4_Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\OpenGLMapping.h">
+      <Filter>4_Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ResourceGroup.h">
+      <Filter>4_Render\OpenGL\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RootSignature.h">
+      <Filter>4_Render\OpenGL\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\OpenGLUnsort.h">
+      <Filter>4_Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Direct3D12Unsort.h">
+      <Filter>4_Render\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Direct3D12Rhi.h">
+      <Filter>4_Render\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Direct3D12Core.h">
+      <Filter>4_Render\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\VulkanCore.h">
+      <Filter>4_Render\Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\VulkanUnsort.h">
+      <Filter>4_Render\Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\VulkanRhi.h">
+      <Filter>4_Render\Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\VulkanRuntimeLinking.h">
+      <Filter>4_Render\Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\VulkanContext.h">
+      <Filter>4_Render\Vulkan</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
@@ -349,6 +403,12 @@
     </Filter>
     <Filter Include="4_Render\OpenGL">
       <UniqueIdentifier>{b16f6fcd-5941-410f-9a4b-ec5d1787a81c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_Render\OpenGL\Resource">
+      <UniqueIdentifier>{762a1050-d116-491f-8cbd-825a3808cc41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_Render\Vulkan">
+      <UniqueIdentifier>{87399581-bcd9-4299-a6ac-65022f3f4f79}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

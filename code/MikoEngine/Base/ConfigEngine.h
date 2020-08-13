@@ -20,3 +20,6 @@
 
 // Set "SE_STATISTICS" as preprocessor definition in order to enable the gathering of statistics (tiny binary size and tiny negative performance impact)
 #define SE_STATISTICS 1
+
+//If this RHI was compiled with "SE_OPENGL_STATE_CLEANUP" set as preprocessor definition, the previous OpenGL state will be restored after performing an operation (worse performance, increases the binary size slightly, might avoid unexpected behaviour when using OpenGL directly beside this RHI)
+#define SE_OPENGL_STATE_CLEANUP 1
