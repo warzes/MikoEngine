@@ -2,7 +2,7 @@
 
 #include "ApplicationSettings.h"
 #include "Utility/Timer.h"
-#include "Render/RhiInstance.h"
+#include "RHI/RhiInstance.h"
 
 // Key and Mouse button limits.
 #define MAX_KEYS 1024
