@@ -23,3 +23,12 @@
 
 //If this RHI was compiled with "SE_OPENGL_STATE_CLEANUP" set as preprocessor definition, the previous OpenGL state will be restored after performing an operation (worse performance, increases the binary size slightly, might avoid unexpected behaviour when using OpenGL directly beside this RHI)
 #define SE_OPENGL_STATE_CLEANUP 1
+
+//- Set "RENDERER_GRAPHICS_DEBUGGER" as preprocessor definition to enable graphics debugger support
+#define RENDERER_GRAPHICS_DEBUGGER 1
+//- Set "RENDERER_PROFILER" as preprocessor definition to enable profiler support
+#define RENDERER_PROFILER 1
+//- Set "RENDERER_IMGUI" as preprocessor definition to enable ImGui support
+#define RENDERER_IMGUI 1
+//- Set "RENDERER_OPENVR" as preprocessor definition to enable OpenVR support
+#define RENDERER_OPENVR 1

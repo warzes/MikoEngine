@@ -636,7 +636,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -784,7 +784,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -953,7 +953,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1129,7 +1129,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1297,7 +1297,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1454,7 +1454,7 @@ namespace Direct3D12Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1639,7 +1639,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1780,7 +1780,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1934,7 +1934,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2080,7 +2080,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2266,7 +2266,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2454,7 +2454,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2643,7 +2643,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2811,7 +2811,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2985,7 +2985,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3133,7 +3133,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3211,7 +3211,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3340,7 +3340,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3616,7 +3616,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -4107,7 +4107,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -4792,7 +4792,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -4922,7 +4922,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -5044,7 +5044,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -5166,7 +5166,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -5288,7 +5288,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -5410,7 +5410,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -5532,7 +5532,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -5654,7 +5654,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -5776,7 +5776,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -6042,7 +6042,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -6329,7 +6329,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -6626,7 +6626,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -6752,7 +6752,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -7218,7 +7218,7 @@ namespace Direct3D12Rhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -7278,7 +7278,7 @@ namespace Direct3D12Rhi
 		}
 
 		// Create resource group
-		return RHI_NEW(context, ResourceGroup)(*this, d3d12DescriptorHeapType, numberOfResources, resources, samplerStates RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(ResourceGroup)(*this, d3d12DescriptorHeapType, numberOfResources, resources, samplerStates RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 

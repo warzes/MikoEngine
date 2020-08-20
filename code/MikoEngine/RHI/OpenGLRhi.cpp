@@ -3537,6 +3537,6 @@ namespace OpenGLRhi
 
 Rhi::IRhi* createOpenGLRhiInstance(const Rhi::Context& context)
 {
-	return RHI_NEW(context, OpenGLRhi::OpenGLRhi)(context);
+	return RHI_NEW(OpenGLRhi::OpenGLRhi)(context);
 }
 #endif // SE_OPENGL

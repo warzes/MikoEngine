@@ -120,7 +120,7 @@ namespace OpenGLRhi
 		virtual void finish() override;
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override

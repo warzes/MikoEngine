@@ -1943,7 +1943,7 @@ namespace Direct3D12Rhi
 
 Rhi::IRhi* createDirect3D12RhiInstance(const Rhi::Context& context)
 {
-	return RHI_NEW(context, Direct3D12Rhi::Direct3D12Rhi)(context);
+	return RHI_NEW(Direct3D12Rhi::Direct3D12Rhi)(context);
 }
 
 #endif // SE_DIRECT3D12

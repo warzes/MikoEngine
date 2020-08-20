@@ -85,7 +85,7 @@ protected:
 	std::unique_ptr<Rhi::RhiInstance> rhiInstance = nullptr;
 	Rhi::IRhiPtr rhi = nullptr;
 	Rhi::ISwapChainPtr mainSwapChain = nullptr;
-	Rhi::CommandBuffer commandBuffer;	///< Command buffer
+	Rhi::CommandBuffer commandBuffer;	// Command buffer
 
 	bool m_window_resized = false;
 	bool m_endFrame = true;

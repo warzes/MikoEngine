@@ -120,7 +120,7 @@ namespace OpenGLRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override

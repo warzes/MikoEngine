@@ -1756,7 +1756,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1884,7 +1884,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2018,7 +2018,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2212,7 +2212,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2385,7 +2385,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2505,7 +2505,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2641,7 +2641,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2753,7 +2753,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2907,7 +2907,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3016,7 +3016,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3148,7 +3148,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3343,7 +3343,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3477,7 +3477,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3601,7 +3601,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3720,7 +3720,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3841,7 +3841,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3999,7 +3999,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -4120,7 +4120,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -4388,7 +4388,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -4566,7 +4566,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -4959,7 +4959,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -5590,7 +5590,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -5721,7 +5721,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -5846,7 +5846,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -5971,7 +5971,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -6110,7 +6110,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -6235,7 +6235,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -6360,7 +6360,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -6485,7 +6485,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -6610,7 +6610,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -6885,7 +6885,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -7153,7 +7153,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -7509,7 +7509,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -7650,7 +7650,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -8109,7 +8109,7 @@ namespace VulkanRhi
 
 
 		//[-------------------------------------------------------]
-		//[ Protected virtual Rhi::RefCount methods               ]
+		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -8170,7 +8170,7 @@ namespace VulkanRhi
 		}
 
 		// Create resource group
-		return RHI_NEW(context, ResourceGroup)(*this, rootParameterIndex, vkDescriptorSet, numberOfResources, resources, samplerStates RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(ResourceGroup)(*this, rootParameterIndex, vkDescriptorSet, numberOfResources, resources, samplerStates RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 

@@ -117,7 +117,7 @@ public:
 		return mRefCount;
 	}
 
-	// Protected virtual Rhi::RefCount methods
+	// Protected virtual RefCount methods
 protected:
 	/**
 	*  @brief
@@ -127,7 +127,7 @@ protected:
 
 	// Private data
 private:
-	uint32_t mRefCount; ///< Reference count
+	uint32_t mRefCount; // Reference count
 
 };
 
@@ -377,6 +377,6 @@ private:
 
 	// Private data
 private:
-	AType* mPtr; ///< Pointer to reference counter, can be a null pointer
+	AType* mPtr; // Pointer to reference counter, can be a null pointer
 
 };

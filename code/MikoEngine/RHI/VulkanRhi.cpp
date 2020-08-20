@@ -1444,6 +1444,6 @@ namespace VulkanRhi
 
 Rhi::IRhi* createVulkanRhiInstance(const Rhi::Context& context)
 {
-	return RHI_NEW(context, VulkanRhi::VulkanRhi)(context);
+	return RHI_NEW(VulkanRhi::VulkanRhi)(context);
 }
 #endif // SE_VULKAN

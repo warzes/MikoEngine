@@ -166,7 +166,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		virtual void selfDestruct() override;
@@ -311,7 +311,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -460,7 +460,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -524,7 +524,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -581,7 +581,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -643,7 +643,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -700,7 +700,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -757,7 +757,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -824,7 +824,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -881,7 +881,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1042,7 +1042,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1101,7 +1101,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1162,7 +1162,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1223,7 +1223,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1286,7 +1286,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1349,7 +1349,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1408,7 +1408,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1469,7 +1469,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1608,7 +1608,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1665,7 +1665,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1749,7 +1749,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -1928,7 +1928,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2004,7 +2004,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2071,7 +2071,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2138,7 +2138,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2205,7 +2205,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2272,7 +2272,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2339,7 +2339,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2406,7 +2406,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2473,7 +2473,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2540,7 +2540,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2673,7 +2673,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2888,7 +2888,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -2965,7 +2965,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3050,7 +3050,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -4017,7 +4017,7 @@ namespace NullRhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	void NullRhi::selfDestruct()
 	{
@@ -4114,7 +4114,7 @@ namespace NullRhi
 
 Rhi::IRhi* createNullRhiInstance(const Rhi::Context& context)
 {
-	return RHI_NEW(context, NullRhi::NullRhi)(context);
+	return RHI_NEW(NullRhi::NullRhi)(context);
 }
 
 #endif // SE_RHINULL

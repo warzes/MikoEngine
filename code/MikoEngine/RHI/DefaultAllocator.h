@@ -122,14 +122,14 @@ DefaultAllocator& GetAllocator();
 // Macros & definitions
 
 // Malloc and free
-#define RHI_MALLOC_TYPED(context, type, newNumberOfElements) reinterpret_cast<type*>(GetAllocator().reallocate(nullptr, 0, sizeof(type) * (newNumberOfElements), 1))
-#define RHI_FREE(context, oldPointer) GetAllocator().reallocate(oldPointer, 0, 0, 1)
+#define RHI_MALLOC_TYPED(type, newNumberOfElements) reinterpret_cast<type*>(GetAllocator().reallocate(nullptr, 0, sizeof(type) * (newNumberOfElements), 1))
+#define RHI_FREE(oldPointer) GetAllocator().reallocate(oldPointer, 0, 0, 1)
 
 // New and delete
 // - Using placement new and explicit destructor call
 // - See http://cnicholson.net/2009/02/stupid-c-tricks-adventures-in-assert/ - "2.  Wrap your macros in do { … } while(0)." for background information about the do-while wrap
-#define RHI_NEW(context, type) new (GetAllocator().reallocate(nullptr, 0, sizeof(type), 1)) type
-#define RHI_DELETE(context, type, oldPointer) \
+#define RHI_NEW(type) new (GetAllocator().reallocate(nullptr, 0, sizeof(type), 1)) type
+#define RHI_DELETE(type, oldPointer) \
 		do \
 		{ \
 			if (nullptr != oldPointer) \

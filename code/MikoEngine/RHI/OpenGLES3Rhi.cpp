@@ -770,7 +770,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3369,7 +3369,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3520,7 +3520,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3640,7 +3640,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -3801,7 +3801,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -4039,7 +4039,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -4159,7 +4159,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -4467,7 +4467,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -4591,7 +4591,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -4767,7 +4767,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -4979,7 +4979,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -5129,7 +5129,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -5379,7 +5379,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -5529,7 +5529,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -5758,7 +5758,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -6003,7 +6003,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -6154,7 +6154,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -6283,7 +6283,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -6771,7 +6771,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -6998,7 +6998,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -7415,7 +7415,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -7523,7 +7523,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -7625,7 +7625,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -8091,7 +8091,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -8298,7 +8298,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -8428,7 +8428,7 @@ namespace OpenGLES3Rhi
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual Rhi::RefCount methods               ]
+	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
 		inline virtual void selfDestruct() override
@@ -10682,7 +10682,7 @@ namespace OpenGLES3Rhi
 
 Rhi::IRhi* createOpenGLES3RhiInstance(const Rhi::Context& context)
 {
-	return RHI_NEW(context, OpenGLES3Rhi::OpenGLES3Rhi)(context);
+	return RHI_NEW(OpenGLES3Rhi::OpenGLES3Rhi)(context);
 }
 
 #endif // SE_OPENGLES
