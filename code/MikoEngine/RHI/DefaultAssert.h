@@ -38,7 +38,7 @@ public:
 	*  @return
 	*    "true" to request debug break, else "false"
 	*/
-	[[nodiscard]] inline bool handleAssert(const char* expression, const char* file, uint32_t line, const char* format, ...)
+	[[nodiscard]] bool handleAssert(const char* expression, const char* file, uint32_t line, const char* format, ...)
 	{
 		bool requestDebugBreak = false;
 
@@ -105,7 +105,7 @@ private:
 	*  @return
 	*    "true" to request debug break, else "false"
 	*/
-	[[nodiscard]] inline bool handleAssertInternal(const char* expression, const char* file, uint32_t line, const char* message, uint32_t)
+	[[nodiscard]] bool handleAssertInternal(const char* expression, const char* file, uint32_t line, const char* message, uint32_t)
 	{
 		std::lock_guard<std::mutex> mutexLock(mMutex);
 		bool requestDebugBreak = false;

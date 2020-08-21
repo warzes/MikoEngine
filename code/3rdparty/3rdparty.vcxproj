@@ -250,10 +250,23 @@
     <ClCompile Include="assimp\contrib\zlib\trees.c" />
     <ClCompile Include="assimp\contrib\zlib\uncompr.c" />
     <ClCompile Include="assimp\contrib\zlib\zutil.c" />
+    <ClCompile Include="crunch\crunchUnityBuild1.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="crunch\crunchUnityBuild2.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="glfw.c" />
     <ClCompile Include="glslang\glslangUnityBuild1.cpp" />
     <ClCompile Include="glslang\glslangUnityBuild2.cpp" />
     <ClCompile Include="glslang\glslangUnityBuild3.cpp" />
+    <ClCompile Include="ImGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="imgui\examples\imgui_impl_dx11.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -288,6 +301,22 @@
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
+    <ClCompile Include="lz4\lz4.c" />
+    <ClCompile Include="lz4\lz4frame.c" />
+    <ClCompile Include="lz4\lz4hc.c" />
+    <ClCompile Include="lz4\xxhash.c" />
+    <ClCompile Include="mikktspace\mikktspace.c" />
+    <ClCompile Include="MojoShader\mojoshader_common.cpp" />
+    <ClCompile Include="MojoShader\mojoshader_lexer.cpp" />
+    <ClCompile Include="MojoShader\mojoshader_preprocessor.cpp" />
+    <ClCompile Include="PhysicsFS\physfs.c" />
+    <ClCompile Include="PhysicsFS\physfs_archiver_dir.c" />
+    <ClCompile Include="PhysicsFS\physfs_archiver_unpacked.c" />
+    <ClCompile Include="PhysicsFS\physfs_archiver_zip.c" />
+    <ClCompile Include="PhysicsFS\physfs_byteorder.c" />
+    <ClCompile Include="PhysicsFS\physfs_platform_windows.c" />
+    <ClCompile Include="PhysicsFS\physfs_unicode.c" />
+    <ClCompile Include="Remotery\Remotery.c" />
     <ClCompile Include="smol-v\smolv.cpp" />
     <ClCompile Include="stb_image.c" />
     <ClCompile Include="tiny_obj_loader.cpp" />

@@ -91,10 +91,10 @@ namespace Direct3D12Rhi
 
 							// Create descriptor heaps
 							// TODO(co) The initial descriptor heap sizes are probably too small, additionally the descriptor heap should be able to dynamically grow during runtime (in case it can't be avoided)
-							mShaderResourceViewDescriptorHeap = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,	64, true);
-							mRenderTargetViewDescriptorHeap   = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV,			16, false);
-							mDepthStencilViewDescriptorHeap	  = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_DSV,			16, false);
-							mSamplerDescriptorHeap			  = RHI_NEW(mContext, ::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER,		16, true);
+							mShaderResourceViewDescriptorHeap = RHI_NEW(::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV,	64, true);
+							mRenderTargetViewDescriptorHeap   = RHI_NEW(::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV,			16, false);
+							mDepthStencilViewDescriptorHeap	  = RHI_NEW(::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_DSV,			16, false);
+							mSamplerDescriptorHeap			  = RHI_NEW(::detail::DescriptorHeap)(*mD3D12Device, D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER,		16, true);
 						}
 						else
 						{
@@ -166,10 +166,10 @@ namespace Direct3D12Rhi
 		mUploadContext.destroy();
 
 		// Release descriptor heaps
-		RHI_DELETE(mContext, ::detail::DescriptorHeap, mShaderResourceViewDescriptorHeap);
-		RHI_DELETE(mContext, ::detail::DescriptorHeap, mRenderTargetViewDescriptorHeap);
-		RHI_DELETE(mContext, ::detail::DescriptorHeap, mDepthStencilViewDescriptorHeap);
-		RHI_DELETE(mContext, ::detail::DescriptorHeap, mSamplerDescriptorHeap);
+		RHI_DELETE(::detail::DescriptorHeap, mShaderResourceViewDescriptorHeap);
+		RHI_DELETE(::detail::DescriptorHeap, mRenderTargetViewDescriptorHeap);
+		RHI_DELETE(::detail::DescriptorHeap, mDepthStencilViewDescriptorHeap);
+		RHI_DELETE(::detail::DescriptorHeap, mSamplerDescriptorHeap);
 
 		// Release the HLSL shader language instance, in case we have one
 		if (nullptr != mShaderLanguageHlsl)
@@ -1097,7 +1097,7 @@ namespace Direct3D12Rhi
 				// If required, create the HLSL shader language instance right now
 				if (nullptr == mShaderLanguageHlsl)
 				{
-					mShaderLanguageHlsl = RHI_NEW(mContext, ShaderLanguageHlsl)(*this);
+					mShaderLanguageHlsl = RHI_NEW(ShaderLanguageHlsl)(*this);
 					mShaderLanguageHlsl->addReference();	// Internal RHI reference
 				}
 
@@ -1119,13 +1119,13 @@ namespace Direct3D12Rhi
 	//[-------------------------------------------------------]
 	Rhi::IRenderPass* Direct3D12Rhi::createRenderPass(uint32_t numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, [[maybe_unused]] uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		return RHI_NEW(mContext, RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IQueryPool* Direct3D12Rhi::createQueryPool([[maybe_unused]] Rhi::QueryType queryType, [[maybe_unused]] uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		RHI_ASSERT(numberOfQueries > 0, "Direct3D 12: Number of queries mustn't be zero")
-		return RHI_NEW(mContext, QueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(QueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::ISwapChain* Direct3D12Rhi::createSwapChain(Rhi::IRenderPass& renderPass, Rhi::WindowHandle windowHandle, bool RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
@@ -1135,7 +1135,7 @@ namespace Direct3D12Rhi
 		RHI_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle, "Direct3D 12: The provided native window handle must not be a null handle")
 
 		// Create the swap chain
-		return RHI_NEW(mContext, SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IFramebuffer* Direct3D12Rhi::createFramebuffer(Rhi::IRenderPass& renderPass, const Rhi::FramebufferAttachment* colorFramebufferAttachments, const Rhi::FramebufferAttachment* depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
@@ -1144,22 +1144,22 @@ namespace Direct3D12Rhi
 		RHI_MATCH_CHECK(*this, renderPass)
 
 		// Create the framebuffer
-		return RHI_NEW(mContext, Framebuffer)(renderPass, colorFramebufferAttachments, depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(Framebuffer)(renderPass, colorFramebufferAttachments, depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IBufferManager* Direct3D12Rhi::createBufferManager()
 	{
-		return RHI_NEW(mContext, BufferManager)(*this);
+		return RHI_NEW(BufferManager)(*this);
 	}
 
 	Rhi::ITextureManager* Direct3D12Rhi::createTextureManager()
 	{
-		return RHI_NEW(mContext, TextureManager)(*this);
+		return RHI_NEW(TextureManager)(*this);
 	}
 
 	Rhi::IRootSignature* Direct3D12Rhi::createRootSignature(const Rhi::RootSignature& rootSignature RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		return RHI_NEW(mContext, RootSignature)(*this, rootSignature RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(RootSignature)(*this, rootSignature RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IGraphicsPipelineState* Direct3D12Rhi::createGraphicsPipelineState(const Rhi::GraphicsPipelineState& graphicsPipelineState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
@@ -1173,7 +1173,7 @@ namespace Direct3D12Rhi
 		uint16_t id = 0;
 		if (GraphicsPipelineStateMakeId.CreateID(id))
 		{
-			return RHI_NEW(mContext, GraphicsPipelineState)(*this, graphicsPipelineState, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(GraphicsPipelineState)(*this, graphicsPipelineState, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		// Error: Ensure a correct reference counter behaviour
@@ -1196,7 +1196,7 @@ namespace Direct3D12Rhi
 		uint16_t id = 0;
 		if (ComputePipelineStateMakeId.CreateID(id))
 		{
-			return RHI_NEW(mContext, ComputePipelineState)(*this, rootSignature, computeShader, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(ComputePipelineState)(*this, rootSignature, computeShader, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		// Error: Ensure a correct reference counter behaviour
@@ -1210,7 +1210,7 @@ namespace Direct3D12Rhi
 	Rhi::ISamplerState* Direct3D12Rhi::createSamplerState(const Rhi::SamplerState& samplerState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		// No debug name possible since all sampler states are inside a descriptor heap
-		return RHI_NEW(mContext, SamplerState)(*this, samplerState RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(SamplerState)(*this, samplerState RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 

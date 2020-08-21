@@ -29,27 +29,27 @@
 #define WIN32_LEAN_AND_MEAN      // 
 #define WIN32_EXTRA_LEAN         // 
 #define VC_EXTRALEAN             // 
-#define NOIME                    // 
-#define NOWINRES                 // 
-#define NOGDICAPMASKS            // CC_*, LC_*, PC_*, CP_*, TC_*, RC_
-#define NOVIRTUALKEYCODES        // VK_*
-#define NOWINMESSAGES            // WM_*, EM_*, LB_*, CB_*
+//#define NOIME                    // 
+//#define NOWINRES                 // 
+//#define NOGDICAPMASKS            // CC_*, LC_*, PC_*, CP_*, TC_*, RC_
+//#define NOVIRTUALKEYCODES        // VK_*
+//#define NOWINMESSAGES            // WM_*, EM_*, LB_*, CB_*
 //#define NOWINSTYLES              // WS_*, CS_*, ES_*, LBS_*, SBS_*, CBS_*
-#define NOSYSMETRICS             // SM_*
-#define NOMENUS                  // MF_*
-#define NOICONS                  // IDI_*
-#define NOKEYSTATES              // MK_*
-#define NOSYSCOMMANDS            // SC_*
-#define NORASTEROPS              // Binary and Tertiary raster ops
-#define NOSHOWWINDOW             // SW_*
-#define OEMRESOURCE              // OEM Resource values
-#define NOATOM                   // Atom Manager routines
-#define NOCLIPBOARD              // Clipboard routines
-#define NOCOLOR                  // Screen colors
-#define NOCTLMGR                 // Control and Dialog routines
-#define NODRAWTEXT               // DrawText() and DT_*
+//#define NOSYSMETRICS             // SM_*
+//#define NOMENUS                  // MF_*
+//#define NOICONS                  // IDI_*
+//#define NOKEYSTATES              // MK_*
+//#define NOSYSCOMMANDS            // SC_*
+//#define NORASTEROPS              // Binary and Tertiary raster ops
+//#define NOSHOWWINDOW             // SW_*
+//#define OEMRESOURCE              // OEM Resource values
+//#define NOATOM                   // Atom Manager routines
+//#define NOCLIPBOARD              // Clipboard routines
+//#define NOCOLOR                  // Screen colors
+//#define NOCTLMGR                 // Control and Dialog routines
+//#define NODRAWTEXT               // DrawText() and DT_*
 //#define NOGDI                    // All GDI defines and routines
-#define NOBITMAP                 // 
+//#define NOBITMAP                 // 
 //#define NOUSER                   // All USER defines and routines
 //#define NOMB                     // MB_* and MessageBox()
 //#define NOMEMMGR                 // GMEM_*, LMEM_*, GHND, LHND, associated routines

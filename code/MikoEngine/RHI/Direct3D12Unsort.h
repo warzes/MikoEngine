@@ -421,7 +421,7 @@ namespace Direct3D12Rhi
 					const uint32_t numberOfParameters = mRootSignature.numberOfParameters;
 					if ( numberOfParameters > 0 )
 					{
-						mRootSignature.parameters = RHI_MALLOC_TYPED(context, Rhi::RootParameter, numberOfParameters);
+						mRootSignature.parameters = RHI_MALLOC_TYPED(Rhi::RootParameter, numberOfParameters);
 						Rhi::RootParameter* destinationRootParameters = const_cast<Rhi::RootParameter*>(mRootSignature.parameters);
 						memcpy(destinationRootParameters, rootSignature.parameters, sizeof(Rhi::RootParameter) * numberOfParameters);
 
@@ -433,7 +433,7 @@ namespace Direct3D12Rhi
 							if ( Rhi::RootParameterType::DESCRIPTOR_TABLE == destinationRootParameter.parameterType )
 							{
 								const uint32_t numberOfDescriptorRanges = destinationRootParameter.descriptorTable.numberOfDescriptorRanges;
-								destinationRootParameter.descriptorTable.descriptorRanges = reinterpret_cast<uintptr_t>(RHI_MALLOC_TYPED(context, Rhi::DescriptorRange, numberOfDescriptorRanges));
+								destinationRootParameter.descriptorTable.descriptorRanges = reinterpret_cast<uintptr_t>(RHI_MALLOC_TYPED(Rhi::DescriptorRange, numberOfDescriptorRanges));
 								memcpy(reinterpret_cast<Rhi::DescriptorRange*>(destinationRootParameter.descriptorTable.descriptorRanges), reinterpret_cast<const Rhi::DescriptorRange*>(sourceRootParameter.descriptorTable.descriptorRanges), sizeof(Rhi::DescriptorRange) * numberOfDescriptorRanges);
 							}
 						}
@@ -444,7 +444,7 @@ namespace Direct3D12Rhi
 					const uint32_t numberOfStaticSamplers = mRootSignature.numberOfStaticSamplers;
 					if ( numberOfStaticSamplers > 0 )
 					{
-						mRootSignature.staticSamplers = RHI_MALLOC_TYPED(context, Rhi::StaticSampler, numberOfStaticSamplers);
+						mRootSignature.staticSamplers = RHI_MALLOC_TYPED(Rhi::StaticSampler, numberOfStaticSamplers);
 						memcpy(const_cast<Rhi::StaticSampler*>(mRootSignature.staticSamplers), rootSignature.staticSamplers, sizeof(Rhi::StaticSampler) * numberOfStaticSamplers);
 					}
 				}
@@ -459,7 +459,7 @@ namespace Direct3D12Rhi
 					d3d12RootSignatureDesc.NumParameters = numberOfRootParameters;
 					if ( numberOfRootParameters > 0 )
 					{
-						d3d12RootSignatureDesc.pParameters = RHI_MALLOC_TYPED(context, D3D12_ROOT_PARAMETER, numberOfRootParameters);
+						d3d12RootSignatureDesc.pParameters = RHI_MALLOC_TYPED(D3D12_ROOT_PARAMETER, numberOfRootParameters);
 						D3D12_ROOT_PARAMETER* d3dRootParameters = const_cast<D3D12_ROOT_PARAMETER*>(d3d12RootSignatureDesc.pParameters);
 						for ( uint32_t parameterIndex = 0; parameterIndex < numberOfRootParameters; ++parameterIndex )
 						{
@@ -472,7 +472,7 @@ namespace Direct3D12Rhi
 							{
 								const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
 								d3dRootParameter.DescriptorTable.NumDescriptorRanges = numberOfDescriptorRanges;
-								d3dRootParameter.DescriptorTable.pDescriptorRanges = RHI_MALLOC_TYPED(context, D3D12_DESCRIPTOR_RANGE, numberOfDescriptorRanges);
+								d3dRootParameter.DescriptorTable.pDescriptorRanges = RHI_MALLOC_TYPED(D3D12_DESCRIPTOR_RANGE, numberOfDescriptorRanges);
 
 								// "Rhi::DescriptorRange" is not identical to "D3D12_DESCRIPTOR_RANGE" because it had to be extended by information required by OpenGL
 								for ( uint32_t descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex )
@@ -515,7 +515,7 @@ namespace Direct3D12Rhi
 					d3d12RootSignatureDesc.NumStaticSamplers = numberOfStaticSamplers;
 					if ( numberOfStaticSamplers > 0 )
 					{
-						d3d12RootSignatureDesc.pStaticSamplers = RHI_MALLOC_TYPED(context, D3D12_STATIC_SAMPLER_DESC, numberOfStaticSamplers);
+						d3d12RootSignatureDesc.pStaticSamplers = RHI_MALLOC_TYPED(D3D12_STATIC_SAMPLER_DESC, numberOfStaticSamplers);
 						memcpy(const_cast<D3D12_STATIC_SAMPLER_DESC*>(d3d12RootSignatureDesc.pStaticSamplers), rootSignature.staticSamplers, sizeof(Rhi::StaticSampler) * numberOfStaticSamplers);
 					}
 					else
@@ -566,12 +566,12 @@ namespace Direct3D12Rhi
 					const D3D12_ROOT_PARAMETER& d3d12RootParameter = d3d12RootSignatureDesc.pParameters[i];
 					if ( D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE == d3d12RootParameter.ParameterType )
 					{
-						RHI_FREE(context, const_cast<D3D12_DESCRIPTOR_RANGE*>(d3d12RootParameter.DescriptorTable.pDescriptorRanges));
+						RHI_FREE(const_cast<D3D12_DESCRIPTOR_RANGE*>(d3d12RootParameter.DescriptorTable.pDescriptorRanges));
 					}
 				}
-				RHI_FREE(context, const_cast<D3D12_ROOT_PARAMETER*>(d3d12RootSignatureDesc.pParameters));
+				RHI_FREE(const_cast<D3D12_ROOT_PARAMETER*>(d3d12RootSignatureDesc.pParameters));
 			}
-			RHI_FREE(context, const_cast<D3D12_STATIC_SAMPLER_DESC*>(d3d12RootSignatureDesc.pStaticSamplers));
+			RHI_FREE(const_cast<D3D12_STATIC_SAMPLER_DESC*>(d3d12RootSignatureDesc.pStaticSamplers));
 		}
 
 		/**
@@ -595,12 +595,12 @@ namespace Direct3D12Rhi
 					const Rhi::RootParameter& rootParameter = mRootSignature.parameters[i];
 					if ( Rhi::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType )
 					{
-						RHI_FREE(context, reinterpret_cast<Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges));
+						RHI_FREE(reinterpret_cast<Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges));
 					}
 				}
-				RHI_FREE(context, const_cast<Rhi::RootParameter*>(mRootSignature.parameters));
+				RHI_FREE(const_cast<Rhi::RootParameter*>(mRootSignature.parameters));
 			}
-			RHI_FREE(context, const_cast<Rhi::StaticSampler*>(mRootSignature.staticSamplers));
+			RHI_FREE(const_cast<Rhi::StaticSampler*>(mRootSignature.staticSamplers));
 		}
 
 		/**
@@ -641,7 +641,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), RootSignature, this);
+			RHI_DELETE(RootSignature, this);
 		}
 
 
@@ -789,7 +789,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), VertexBuffer, this);
+			RHI_DELETE(VertexBuffer, this);
 		}
 
 
@@ -958,7 +958,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), IndexBuffer, this);
+			RHI_DELETE(IndexBuffer, this);
 		}
 
 
@@ -1032,8 +1032,8 @@ namespace Direct3D12Rhi
 			if ( mNumberOfSlots > 0 )
 			{
 				const Rhi::Context& context = direct3D12Rhi.getContext();
-				mD3D12VertexBufferViews = RHI_MALLOC_TYPED(context, D3D12_VERTEX_BUFFER_VIEW, mNumberOfSlots);
-				mVertexBuffers = RHI_MALLOC_TYPED(context, VertexBuffer*, mNumberOfSlots);
+				mD3D12VertexBufferViews = RHI_MALLOC_TYPED(D3D12_VERTEX_BUFFER_VIEW, mNumberOfSlots);
+				mVertexBuffers = RHI_MALLOC_TYPED(VertexBuffer*, mNumberOfSlots);
 
 				{ // Loop through all vertex buffers
 					D3D12_VERTEX_BUFFER_VIEW* currentD3D12VertexBufferView = mD3D12VertexBufferViews;
@@ -1075,7 +1075,7 @@ namespace Direct3D12Rhi
 			// Cleanup Direct3D 12 input slot data, if needed
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 			const Rhi::Context& context = direct3D12Rhi.getContext();
-			RHI_FREE(context, mD3D12VertexBufferViews);
+			RHI_FREE(mD3D12VertexBufferViews);
 
 			// Release the reference to the used vertex buffers
 			if ( nullptr != mVertexBuffers )
@@ -1088,7 +1088,7 @@ namespace Direct3D12Rhi
 				}
 
 				// Cleanup
-				RHI_FREE(context, mVertexBuffers);
+				RHI_FREE(mVertexBuffers);
 			}
 
 			// Free the unique compact vertex array ID
@@ -1134,7 +1134,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), VertexArray, this);
+			RHI_DELETE(VertexArray, this);
 		}
 
 
@@ -1302,7 +1302,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TextureBuffer, this);
+			RHI_DELETE(TextureBuffer, this);
 		}
 
 
@@ -1459,7 +1459,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), StructuredBuffer, this);
+			RHI_DELETE(StructuredBuffer, this);
 		}
 
 
@@ -1644,7 +1644,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), IndirectBuffer, this);
+			RHI_DELETE(IndirectBuffer, this);
 		}
 
 
@@ -1785,7 +1785,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), UniformBuffer, this);
+			RHI_DELETE(UniformBuffer, this);
 		}
 
 
@@ -1855,13 +1855,13 @@ namespace Direct3D12Rhi
 		[[nodiscard]] inline virtual Rhi::IVertexBuffer* createVertexBuffer(uint32_t numberOfBytes, const void* data = nullptr, [[maybe_unused]] uint32_t bufferFlags = 0, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			return RHI_NEW(direct3D12Rhi.getContext(), VertexBuffer)(direct3D12Rhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(VertexBuffer)(direct3D12Rhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::IIndexBuffer* createIndexBuffer(uint32_t numberOfBytes, const void* data = nullptr, [[maybe_unused]] uint32_t bufferFlags = 0, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW, Rhi::IndexBufferFormat::Enum indexBufferFormat = Rhi::IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			return RHI_NEW(direct3D12Rhi.getContext(), IndexBuffer)(direct3D12Rhi, numberOfBytes, data, bufferUsage, indexBufferFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(IndexBuffer)(direct3D12Rhi, numberOfBytes, data, bufferUsage, indexBufferFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::IVertexArray* createVertexArray(const Rhi::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const Rhi::VertexArrayVertexBuffer* vertexBuffers, Rhi::IIndexBuffer* indexBuffer = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -1884,7 +1884,7 @@ namespace Direct3D12Rhi
 				uint16_t id = 0;
 			if ( direct3D12Rhi.VertexArrayMakeId.CreateID(id) )
 			{
-				return RHI_NEW(direct3D12Rhi.getContext(), VertexArray)(direct3D12Rhi, vertexAttributes, numberOfVertexBuffers, vertexBuffers, static_cast<IndexBuffer*>(indexBuffer), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(VertexArray)(direct3D12Rhi, vertexAttributes, numberOfVertexBuffers, vertexBuffers, static_cast<IndexBuffer*>(indexBuffer), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 
 			// Error: Ensure a correct reference counter behaviour
@@ -1905,19 +1905,19 @@ namespace Direct3D12Rhi
 		[[nodiscard]] inline virtual Rhi::ITextureBuffer* createTextureBuffer(uint32_t numberOfBytes, const void* data = nullptr, uint32_t = Rhi::BufferFlag::SHADER_RESOURCE, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW, Rhi::TextureFormat::Enum textureFormat = Rhi::TextureFormat::R32G32B32A32F RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			return RHI_NEW(direct3D12Rhi.getContext(), TextureBuffer)(direct3D12Rhi, numberOfBytes, data, bufferUsage, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(TextureBuffer)(direct3D12Rhi, numberOfBytes, data, bufferUsage, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::IStructuredBuffer* createStructuredBuffer(uint32_t numberOfBytes, const void* data, [[maybe_unused]] uint32_t bufferFlags, Rhi::BufferUsage bufferUsage, uint32_t numberOfStructureBytes RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			return RHI_NEW(direct3D12Rhi.getContext(), StructuredBuffer)(direct3D12Rhi, numberOfBytes, data, bufferUsage, numberOfStructureBytes RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(StructuredBuffer)(direct3D12Rhi, numberOfBytes, data, bufferUsage, numberOfStructureBytes RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::IIndirectBuffer* createIndirectBuffer(uint32_t numberOfBytes, const void* data = nullptr, uint32_t indirectBufferFlags = 0, [[maybe_unused]] Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			return RHI_NEW(direct3D12Rhi.getContext(), IndirectBuffer)(direct3D12Rhi, numberOfBytes, data, indirectBufferFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(IndirectBuffer)(direct3D12Rhi, numberOfBytes, data, indirectBufferFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::IUniformBuffer* createUniformBuffer(uint32_t numberOfBytes, const void* data = nullptr, Rhi::BufferUsage bufferUsage = Rhi::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -1929,7 +1929,7 @@ namespace Direct3D12Rhi
 			// RHI_ASSERT((bufferFlags & Rhi::BufferFlag::SHADER_RESOURCE) != 0, "Invalid Direct3D 12 buffer flags, uniform buffer must be used as shader resource")
 
 			// Create the uniform buffer
-			return RHI_NEW(direct3D12Rhi.getContext(), UniformBuffer)(direct3D12Rhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(UniformBuffer)(direct3D12Rhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 
@@ -1939,7 +1939,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), BufferManager, this);
+			RHI_DELETE(BufferManager, this);
 		}
 
 
@@ -2085,7 +2085,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture1D, this);
+			RHI_DELETE(Texture1D, this);
 		}
 
 
@@ -2271,7 +2271,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture1DArray, this);
+			RHI_DELETE(Texture1DArray, this);
 		}
 
 
@@ -2459,7 +2459,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture2D, this);
+			RHI_DELETE(Texture2D, this);
 		}
 
 
@@ -2648,7 +2648,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture2DArray, this);
+			RHI_DELETE(Texture2DArray, this);
 		}
 
 
@@ -2816,7 +2816,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture3D, this);
+			RHI_DELETE(Texture3D, this);
 		}
 
 
@@ -2990,7 +2990,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TextureCube, this);
+			RHI_DELETE(TextureCube, this);
 		}
 
 
@@ -3064,7 +3064,7 @@ namespace Direct3D12Rhi
 			RHI_ASSERT(width > 0, "Direct3D 12 create texture 1D was called with invalid parameters")
 
 				// Create 1D texture resource, texture usage isn't supported
-				return RHI_NEW(direct3D12Rhi.getContext(), Texture1D)(direct3D12Rhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(Texture1D)(direct3D12Rhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] virtual Rhi::ITexture1DArray* createTexture1DArray(uint32_t width, uint32_t numberOfSlices, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -3075,7 +3075,7 @@ namespace Direct3D12Rhi
 			RHI_ASSERT(width > 0 && numberOfSlices > 0, "Direct3D 12 create texture 1D array was called with invalid parameters")
 
 				// Create 1D texture array resource, texture usage isn't supported
-				return RHI_NEW(direct3D12Rhi.getContext(), Texture1DArray)(direct3D12Rhi, width, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(Texture1DArray)(direct3D12Rhi, width, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] virtual Rhi::ITexture2D* createTexture2D(uint32_t width, uint32_t height, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT, uint8_t numberOfMultisamples = 1, const Rhi::OptimizedTextureClearValue* optimizedTextureClearValue = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -3086,7 +3086,7 @@ namespace Direct3D12Rhi
 			RHI_ASSERT(width > 0 && height > 0, "Direct3D 12 create texture 2D was called with invalid parameters")
 
 				// Create 2D texture resource, texture usage isn't supported
-				return RHI_NEW(direct3D12Rhi.getContext(), Texture2D)(direct3D12Rhi, width, height, textureFormat, data, textureFlags, numberOfMultisamples, optimizedTextureClearValue RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(Texture2D)(direct3D12Rhi, width, height, textureFormat, data, textureFlags, numberOfMultisamples, optimizedTextureClearValue RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] virtual Rhi::ITexture2DArray* createTexture2DArray(uint32_t width, uint32_t height, uint32_t numberOfSlices, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -3097,7 +3097,7 @@ namespace Direct3D12Rhi
 			RHI_ASSERT(width > 0 && height > 0 && numberOfSlices > 0, "Direct3D 12 create texture 2D array was called with invalid parameters")
 
 				// Create 2D texture array resource, texture usage isn't supported
-				return RHI_NEW(direct3D12Rhi.getContext(), Texture2DArray)(direct3D12Rhi, width, height, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(Texture2DArray)(direct3D12Rhi, width, height, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] virtual Rhi::ITexture3D* createTexture3D(uint32_t width, uint32_t height, uint32_t depth, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -3108,7 +3108,7 @@ namespace Direct3D12Rhi
 			RHI_ASSERT(width > 0 && height > 0 && depth > 0, "Direct3D 12 create texture 3D was called with invalid parameters")
 
 				// Create 3D texture resource, texture usage isn't supported
-				return RHI_NEW(direct3D12Rhi.getContext(), Texture3D)(direct3D12Rhi, width, height, depth, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(Texture3D)(direct3D12Rhi, width, height, depth, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] virtual Rhi::ITextureCube* createTextureCube(uint32_t width, Rhi::TextureFormat::Enum textureFormat, const void* data = nullptr, uint32_t textureFlags = 0, [[maybe_unused]] Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -3119,7 +3119,7 @@ namespace Direct3D12Rhi
 			RHI_ASSERT(width > 0, "Direct3D 12 create texture cube was called with invalid parameters")
 
 				// Create cube texture resource, texture usage isn't supported
-				return RHI_NEW(direct3D12Rhi.getContext(), TextureCube)(direct3D12Rhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(TextureCube)(direct3D12Rhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] virtual Rhi::ITextureCubeArray* createTextureCubeArray([[maybe_unused]] uint32_t width, [[maybe_unused]] uint32_t numberOfSlices, [[maybe_unused]] Rhi::TextureFormat::Enum textureFormat, [[maybe_unused]] const void* data = nullptr, [[maybe_unused]] uint32_t textureFlags = 0, [[maybe_unused]] Rhi::TextureUsage textureUsage = Rhi::TextureUsage::DEFAULT RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -3138,7 +3138,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TextureManager, this);
+			RHI_DELETE(TextureManager, this);
 		}
 
 
@@ -3216,7 +3216,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), SamplerState, this);
+			RHI_DELETE(SamplerState, this);
 		}
 
 
@@ -3345,7 +3345,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), RenderPass, this);
+			RHI_DELETE(RenderPass, this);
 		}
 
 
@@ -3621,7 +3621,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), QueryPool, this);
+			RHI_DELETE(QueryPool, this);
 		}
 
 
@@ -4112,7 +4112,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), SwapChain, this);
+			RHI_DELETE(SwapChain, this);
 		}
 
 
@@ -4420,8 +4420,8 @@ namespace Direct3D12Rhi
 			if ( mNumberOfColorTextures > 0 )
 			{
 				const Rhi::Context& context = direct3D12Rhi.getContext();
-				mColorTextures = RHI_MALLOC_TYPED(context, Rhi::ITexture*, mNumberOfColorTextures);
-				mD3D12DescriptorHeapRenderTargetViews = RHI_MALLOC_TYPED(context, ID3D12DescriptorHeap*, mNumberOfColorTextures);
+				mColorTextures = RHI_MALLOC_TYPED(Rhi::ITexture*, mNumberOfColorTextures);
+				mD3D12DescriptorHeapRenderTargetViews = RHI_MALLOC_TYPED(ID3D12DescriptorHeap*, mNumberOfColorTextures);
 
 				// Loop through all color textures
 				ID3D12DescriptorHeap** d3d12DescriptorHeapRenderTargetView = mD3D12DescriptorHeapRenderTargetViews;
@@ -4654,14 +4654,14 @@ namespace Direct3D12Rhi
 			{ // Assign a debug name to the Direct3D 12 render target view, do also add the index to the name
 				const size_t adjustedDetailedDebugNameLength = detailedDebugNameLength + 5;	// Direct3D 12 supports 8 render targets ("D3D12_SIMULTANEOUS_RENDER_TARGET_COUNT", so: One digit + one [ + one ] + one space + terminating zero = 5 characters)
 				const Rhi::Context& context = direct3D12Rhi.getContext();
-				char* nameWithIndex = RHI_MALLOC_TYPED(context, char, detailedDebugNameLength);
+				char* nameWithIndex = RHI_MALLOC_TYPED(char, detailedDebugNameLength);
 				ID3D12DescriptorHeap** d3d12DescriptorHeapRenderTargetViewsEnd = mD3D12DescriptorHeapRenderTargetViews + mNumberOfColorTextures;
 				for ( ID3D12DescriptorHeap** d3d12DescriptorHeapRenderTargetView = mD3D12DescriptorHeapRenderTargetViews; d3d12DescriptorHeapRenderTargetView < d3d12DescriptorHeapRenderTargetViewsEnd; ++d3d12DescriptorHeapRenderTargetView )
 				{
 					sprintf_s(nameWithIndex, detailedDebugNameLength, "%s [%u]", detailedDebugName, static_cast<uint32_t>(d3d12DescriptorHeapRenderTargetView - mD3D12DescriptorHeapRenderTargetViews));
 					FAILED_DEBUG_BREAK((*d3d12DescriptorHeapRenderTargetView)->SetPrivateData(WKPDID_D3DDebugObjectName, static_cast<UINT>(adjustedDetailedDebugNameLength), nameWithIndex))
 				}
-				RHI_FREE(context, nameWithIndex);
+				RHI_FREE(nameWithIndex);
 			}
 
 			// Assign a debug name to the Direct3D 12 depth stencil view
@@ -4690,7 +4690,7 @@ namespace Direct3D12Rhi
 				}
 
 				// Cleanup
-				RHI_FREE(context, mD3D12DescriptorHeapRenderTargetViews);
+				RHI_FREE(mD3D12DescriptorHeapRenderTargetViews);
 			}
 			if ( nullptr != mColorTextures )
 			{
@@ -4702,7 +4702,7 @@ namespace Direct3D12Rhi
 				}
 
 				// Cleanup
-				RHI_FREE(context, mColorTextures);
+				RHI_FREE(mColorTextures);
 			}
 
 			// Release the reference to the used depth stencil texture
@@ -4797,7 +4797,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Framebuffer, this);
+			RHI_DELETE(Framebuffer, this);
 		}
 
 
@@ -4927,7 +4927,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), VertexShaderHlsl, this);
+			RHI_DELETE(VertexShaderHlsl, this);
 		}
 
 
@@ -5049,7 +5049,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TessellationControlShaderHlsl, this);
+			RHI_DELETE(TessellationControlShaderHlsl, this);
 		}
 
 
@@ -5171,7 +5171,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TessellationEvaluationShaderHlsl, this);
+			RHI_DELETE(TessellationEvaluationShaderHlsl, this);
 		}
 
 
@@ -5293,7 +5293,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), GeometryShaderHlsl, this);
+			RHI_DELETE(GeometryShaderHlsl, this);
 		}
 
 
@@ -5415,7 +5415,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), FragmentShaderHlsl, this);
+			RHI_DELETE(FragmentShaderHlsl, this);
 		}
 
 
@@ -5537,7 +5537,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TaskShaderHlsl, this);
+			RHI_DELETE(TaskShaderHlsl, this);
 		}
 
 
@@ -5659,7 +5659,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), MeshShaderHlsl, this);
+			RHI_DELETE(MeshShaderHlsl, this);
 		}
 
 
@@ -5781,7 +5781,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ComputeShaderHlsl, this);
+			RHI_DELETE(ComputeShaderHlsl, this);
 		}
 
 
@@ -6047,7 +6047,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), GraphicsProgramHlsl, this);
+			RHI_DELETE(GraphicsProgramHlsl, this);
 		}
 
 
@@ -6133,14 +6133,14 @@ namespace Direct3D12Rhi
 			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 vertex shader bytecode is invalid")
 
 				// There's no need to check for "Rhi::Capabilities::vertexShader", we know there's vertex shader support
-				return RHI_NEW(direct3D12Rhi.getContext(), VertexShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(VertexShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::IVertexShader* createVertexShaderFromSourceCode([[maybe_unused]] const Rhi::VertexAttributes& vertexAttributes, const Rhi::ShaderSourceCode& shaderSourceCode, Rhi::ShaderBytecode* shaderBytecode = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			// There's no need to check for "Rhi::Capabilities::vertexShader", we know there's vertex shader support
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			return RHI_NEW(direct3D12Rhi.getContext(), VertexShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(VertexShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::ITessellationControlShader* createTessellationControlShaderFromBytecode(const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -6152,7 +6152,7 @@ namespace Direct3D12Rhi
 			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 tessellation control shader bytecode is invalid")
 
 				// There's no need to check for "Rhi::Capabilities::maximumNumberOfPatchVertices", we know there's tessellation control shader support
-				return RHI_NEW(direct3D12Rhi.getContext(), TessellationControlShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(TessellationControlShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::ITessellationControlShader* createTessellationControlShaderFromSourceCode(const Rhi::ShaderSourceCode& shaderSourceCode, Rhi::ShaderBytecode* shaderBytecode = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -6161,7 +6161,7 @@ namespace Direct3D12Rhi
 
 			// There's no need to check for "Rhi::Capabilities::maximumNumberOfPatchVertices", we know there's tessellation control shader support
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			return RHI_NEW(direct3D12Rhi.getContext(), TessellationControlShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(TessellationControlShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::ITessellationEvaluationShader* createTessellationEvaluationShaderFromBytecode(const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -6173,7 +6173,7 @@ namespace Direct3D12Rhi
 			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 tessellation evaluation shader bytecode is invalid")
 
 				// There's no need to check for "Rhi::Capabilities::maximumNumberOfPatchVertices", we know there's tessellation evaluation shader support
-				return RHI_NEW(direct3D12Rhi.getContext(), TessellationEvaluationShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(TessellationEvaluationShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::ITessellationEvaluationShader* createTessellationEvaluationShaderFromSourceCode(const Rhi::ShaderSourceCode& shaderSourceCode, Rhi::ShaderBytecode* shaderBytecode = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -6182,7 +6182,7 @@ namespace Direct3D12Rhi
 
 			// There's no need to check for "Rhi::Capabilities::maximumNumberOfPatchVertices", we know there's tessellation evaluation shader support
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			return RHI_NEW(direct3D12Rhi.getContext(), TessellationEvaluationShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(TessellationEvaluationShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::IGeometryShader* createGeometryShaderFromBytecode(const Rhi::ShaderBytecode& shaderBytecode, [[maybe_unused]] Rhi::GsInputPrimitiveTopology gsInputPrimitiveTopology, [[maybe_unused]] Rhi::GsOutputPrimitiveTopology gsOutputPrimitiveTopology, [[maybe_unused]] uint32_t numberOfOutputVertices RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -6196,7 +6196,7 @@ namespace Direct3D12Rhi
 				// Ignore "gsInputPrimitiveTopology", it's directly set within HLSL
 				// Ignore "gsOutputPrimitiveTopology", it's directly set within HLSL
 				// Ignore "numberOfOutputVertices", it's directly set within HLSL
-				return RHI_NEW(direct3D12Rhi.getContext(), GeometryShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(GeometryShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::IGeometryShader* createGeometryShaderFromSourceCode(const Rhi::ShaderSourceCode& shaderSourceCode, [[maybe_unused]] Rhi::GsInputPrimitiveTopology gsInputPrimitiveTopology, [[maybe_unused]] Rhi::GsOutputPrimitiveTopology gsOutputPrimitiveTopology, [[maybe_unused]] uint32_t numberOfOutputVertices, Rhi::ShaderBytecode* shaderBytecode = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -6206,7 +6206,7 @@ namespace Direct3D12Rhi
 			// Ignore "gsOutputPrimitiveTopology", it's directly set within HLSL
 			// Ignore "numberOfOutputVertices", it's directly set within HLSL
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			return RHI_NEW(direct3D12Rhi.getContext(), GeometryShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(GeometryShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::IFragmentShader* createFragmentShaderFromBytecode(const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -6217,14 +6217,14 @@ namespace Direct3D12Rhi
 			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 fragment shader bytecode is invalid")
 
 				// There's no need to check for "Rhi::Capabilities::fragmentShader", we know there's fragment shader support
-				return RHI_NEW(direct3D12Rhi.getContext(), FragmentShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(FragmentShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::IFragmentShader* createFragmentShaderFromSourceCode(const Rhi::ShaderSourceCode& shaderSourceCode, Rhi::ShaderBytecode* shaderBytecode = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			// There's no need to check for "Rhi::Capabilities::fragmentShader", we know there's fragment shader support
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			return RHI_NEW(direct3D12Rhi.getContext(), FragmentShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(FragmentShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::ITaskShader* createTaskShaderFromBytecode(const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -6236,7 +6236,7 @@ namespace Direct3D12Rhi
 				RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 task shader bytecode is invalid")
 
 				// Create the task shader
-				return RHI_NEW(direct3D12Rhi.getContext(), TaskShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(TaskShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::ITaskShader* createTaskShaderFromSourceCode(const Rhi::ShaderSourceCode& shaderSourceCode, Rhi::ShaderBytecode* shaderBytecode = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -6247,7 +6247,7 @@ namespace Direct3D12Rhi
 			RHI_ASSERT(direct3D12Rhi.getCapabilities().meshShader, "Direct3D 12 task shader support is unavailable, DirectX 12 Ultimate needed")
 
 				// Create the task shader
-				return RHI_NEW(direct3D12Rhi.getContext(), TaskShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(TaskShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::IMeshShader* createMeshShaderFromBytecode(const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -6259,7 +6259,7 @@ namespace Direct3D12Rhi
 				RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 mesh shader bytecode is invalid")
 
 				// Create the task shader
-				return RHI_NEW(direct3D12Rhi.getContext(), MeshShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(MeshShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::IMeshShader* createMeshShaderFromSourceCode(const Rhi::ShaderSourceCode& shaderSourceCode, Rhi::ShaderBytecode* shaderBytecode = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -6270,7 +6270,7 @@ namespace Direct3D12Rhi
 			RHI_ASSERT(direct3D12Rhi.getCapabilities().meshShader, "Direct3D 12 mesh shader support is unavailable, DirectX 12 Ultimate needed")
 
 				// Create the task shader
-				return RHI_NEW(direct3D12Rhi.getContext(), MeshShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(MeshShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::IComputeShader* createComputeShaderFromBytecode(const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -6281,14 +6281,14 @@ namespace Direct3D12Rhi
 			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 compute shader bytecode is invalid")
 
 				// There's no need to check for "Rhi::Capabilities::computeShader", we know there's compute shader support
-				return RHI_NEW(direct3D12Rhi.getContext(), ComputeShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(ComputeShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] inline virtual Rhi::IComputeShader* createComputeShaderFromSourceCode(const Rhi::ShaderSourceCode& shaderSourceCode, Rhi::ShaderBytecode* shaderBytecode = nullptr RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
 		{
 			// There's no need to check for "Rhi::Capabilities::computeShader", we know there's compute shader support
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			return RHI_NEW(direct3D12Rhi.getContext(), ComputeShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(ComputeShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] virtual Rhi::IGraphicsProgram* createGraphicsProgram([[maybe_unused]] const Rhi::IRootSignature& rootSignature, [[maybe_unused]] const Rhi::VertexAttributes& vertexAttributes, Rhi::IVertexShader* vertexShader, Rhi::ITessellationControlShader* tessellationControlShader, Rhi::ITessellationEvaluationShader* tessellationEvaluationShader, Rhi::IGeometryShader* geometryShader, Rhi::IFragmentShader* fragmentShader RHI_RESOURCE_DEBUG_NAME_PARAMETER) override
@@ -6307,7 +6307,7 @@ namespace Direct3D12Rhi
 				RHI_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 fragment shader language mismatch")
 
 				// Create the graphics program
-				return RHI_NEW(direct3D12Rhi.getContext(), GraphicsProgramHlsl)(direct3D12Rhi, static_cast<VertexShaderHlsl*>(vertexShader), static_cast<TessellationControlShaderHlsl*>(tessellationControlShader), static_cast<TessellationEvaluationShaderHlsl*>(tessellationEvaluationShader), static_cast<GeometryShaderHlsl*>(geometryShader), static_cast<FragmentShaderHlsl*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(GraphicsProgramHlsl)(direct3D12Rhi, static_cast<VertexShaderHlsl*>(vertexShader), static_cast<TessellationControlShaderHlsl*>(tessellationControlShader), static_cast<TessellationEvaluationShaderHlsl*>(tessellationEvaluationShader), static_cast<GeometryShaderHlsl*>(geometryShader), static_cast<FragmentShaderHlsl*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		[[nodiscard]] virtual Rhi::IGraphicsProgram* createGraphicsProgram([[maybe_unused]] const Rhi::IRootSignature& rootSignature, Rhi::ITaskShader* taskShader, Rhi::IMeshShader& meshShader, Rhi::IFragmentShader* fragmentShader RHI_RESOURCE_DEBUG_NAME_PARAMETER)
@@ -6324,7 +6324,7 @@ namespace Direct3D12Rhi
 				RHI_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 fragment shader language mismatch")
 
 				// Create the graphics program
-				return RHI_NEW(direct3D12Rhi.getContext(), GraphicsProgramHlsl)(direct3D12Rhi, static_cast<TaskShaderHlsl*>(taskShader), static_cast<MeshShaderHlsl&>(meshShader), static_cast<FragmentShaderHlsl*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(GraphicsProgramHlsl)(direct3D12Rhi, static_cast<TaskShaderHlsl*>(taskShader), static_cast<MeshShaderHlsl&>(meshShader), static_cast<FragmentShaderHlsl*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 
@@ -6334,7 +6334,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ShaderLanguageHlsl, this);
+			RHI_DELETE(ShaderLanguageHlsl, this);
 		}
 
 
@@ -6631,7 +6631,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), GraphicsPipelineState, this);
+			RHI_DELETE(GraphicsPipelineState, this);
 		}
 
 
@@ -6757,7 +6757,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ComputePipelineState, this);
+			RHI_DELETE(ComputePipelineState, this);
 		}
 
 
@@ -6818,7 +6818,7 @@ namespace Direct3D12Rhi
 			mRootSignature(rootSignature),
 			mD3D12DescriptorHeapType(d3d12DescriptorHeapType),
 			mNumberOfResources(numberOfResources),
-			mResources(RHI_MALLOC_TYPED(rootSignature.getRhi().getContext(), Rhi::IResource*, mNumberOfResources)),
+			mResources(RHI_MALLOC_TYPED(Rhi::IResource*, mNumberOfResources)),
 			mSamplerStates(nullptr),
 			mDescriptorHeapOffset(0),
 			mDescriptorHeapSize(static_cast<uint16_t>(numberOfResources))
@@ -6832,7 +6832,7 @@ namespace Direct3D12Rhi
 				// Process all resources and add our reference to the RHI resource
 				if ( nullptr != samplerStates )
 				{
-					mSamplerStates = RHI_MALLOC_TYPED(direct3D12Rhi.getContext(), Rhi::ISamplerState*, mNumberOfResources);
+					mSamplerStates = RHI_MALLOC_TYPED(Rhi::ISamplerState*, mNumberOfResources);
 					for ( uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex )
 					{
 						Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex] = samplerStates[resourceIndex];
@@ -7167,13 +7167,13 @@ namespace Direct3D12Rhi
 						samplerState->releaseReference();
 					}
 				}
-				RHI_FREE(context, mSamplerStates);
+				RHI_FREE(mSamplerStates);
 			}
 			for ( uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex )
 			{
 				mResources[resourceIndex]->releaseReference();
 			}
-			RHI_FREE(context, mResources);
+			RHI_FREE(mResources);
 			mRootSignature.releaseReference();
 
 			// Release descriptor heap
@@ -7223,7 +7223,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ResourceGroup, this);
+			RHI_DELETE(ResourceGroup, this);
 		}
 
 

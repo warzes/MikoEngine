@@ -264,3 +264,17 @@ DefaultLog& GetLog();
 				SE_DEBUG_BREAK; \
 			} \
 		} while (0);
+
+#define RHI_LOG_ONCE(type, format, ...) \
+		do \
+		{ \
+			static bool loggedOnce = false; \
+			if (!loggedOnce) \
+			{ \
+				loggedOnce = true; \
+				if (GetLog().print(DefaultLog::Type::type, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), format, ##__VA_ARGS__)) \
+				{ \
+					SE_DEBUG_BREAK; \
+				} \
+			} \
+		} while (0);

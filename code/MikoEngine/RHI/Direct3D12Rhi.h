@@ -225,7 +225,7 @@ namespace Direct3D12Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(mContext, Direct3D12Rhi, this);
+			RHI_DELETE(Direct3D12Rhi, this);
 		}
 
 	private:

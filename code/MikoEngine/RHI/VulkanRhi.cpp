@@ -40,11 +40,11 @@ namespace VulkanRhi
 		#endif
 
 		// Is Vulkan available?
-		mVulkanRuntimeLinking = RHI_NEW(mContext, VulkanRuntimeLinking)(*this, enableValidation);
+		mVulkanRuntimeLinking = RHI_NEW(VulkanRuntimeLinking)(*this, enableValidation);
 		if (mVulkanRuntimeLinking->isVulkanAvaiable())
 		{
 			// TODO(co) Add external Vulkan context support
-			mVulkanContext = RHI_NEW(mContext, VulkanContext)(*this);
+			mVulkanContext = RHI_NEW(VulkanContext)(*this);
 
 			// Is the Vulkan context initialized?
 			if (mVulkanContext->isInitialized())
@@ -121,10 +121,10 @@ namespace VulkanRhi
 		}
 
 		// Destroy the Vulkan context instance
-		RHI_DELETE(mContext, VulkanContext, mVulkanContext);
+		RHI_DELETE(VulkanContext, mVulkanContext);
 
 		// Destroy the Vulkan runtime linking instance
-		RHI_DELETE(mContext, VulkanRuntimeLinking, mVulkanRuntimeLinking);
+		RHI_DELETE(VulkanRuntimeLinking, mVulkanRuntimeLinking);
 	}
 
 
@@ -758,7 +758,7 @@ namespace VulkanRhi
 				// If required, create the GLSL shader language instance right now
 				if (nullptr == mShaderLanguageGlsl)
 				{
-					mShaderLanguageGlsl = RHI_NEW(mContext, ShaderLanguageGlsl(*this));
+					mShaderLanguageGlsl = RHI_NEW(ShaderLanguageGlsl(*this));
 					mShaderLanguageGlsl->addReference();	// Internal RHI reference
 				}
 				return mShaderLanguageGlsl;
@@ -780,13 +780,13 @@ namespace VulkanRhi
 	//[-------------------------------------------------------]
 	Rhi::IRenderPass* VulkanRhi::createRenderPass(uint32_t numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		return RHI_NEW(mContext, RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IQueryPool* VulkanRhi::createQueryPool(Rhi::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		RHI_ASSERT(numberOfQueries > 0, "Vulkan: Number of queries mustn't be zero")
-		return RHI_NEW(mContext, QueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(QueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::ISwapChain* VulkanRhi::createSwapChain(Rhi::IRenderPass& renderPass, Rhi::WindowHandle windowHandle, bool RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
@@ -796,7 +796,7 @@ namespace VulkanRhi
 		RHI_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "Vulkan: The provided native window handle or render window must not be a null handle / null pointer")
 
 		// Create the swap chain
-		return RHI_NEW(mContext, SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IFramebuffer* VulkanRhi::createFramebuffer(Rhi::IRenderPass& renderPass, const Rhi::FramebufferAttachment* colorFramebufferAttachments, const Rhi::FramebufferAttachment* depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
@@ -805,22 +805,22 @@ namespace VulkanRhi
 		RHI_MATCH_CHECK(*this, renderPass)
 
 		// Create the framebuffer
-		return RHI_NEW(mContext, Framebuffer)(renderPass, colorFramebufferAttachments, depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(Framebuffer)(renderPass, colorFramebufferAttachments, depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IBufferManager* VulkanRhi::createBufferManager()
 	{
-		return RHI_NEW(mContext, BufferManager)(*this);
+		return RHI_NEW(BufferManager)(*this);
 	}
 
 	Rhi::ITextureManager* VulkanRhi::createTextureManager()
 	{
-		return RHI_NEW(mContext, TextureManager)(*this);
+		return RHI_NEW(TextureManager)(*this);
 	}
 
 	Rhi::IRootSignature* VulkanRhi::createRootSignature(const Rhi::RootSignature& rootSignature RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		return RHI_NEW(mContext, RootSignature)(*this, rootSignature RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(RootSignature)(*this, rootSignature RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IGraphicsPipelineState* VulkanRhi::createGraphicsPipelineState(const Rhi::GraphicsPipelineState& graphicsPipelineState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
@@ -834,7 +834,7 @@ namespace VulkanRhi
 		uint16_t id = 0;
 		if (GraphicsPipelineStateMakeId.CreateID(id))
 		{
-			return RHI_NEW(mContext, GraphicsPipelineState)(*this, graphicsPipelineState, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(GraphicsPipelineState)(*this, graphicsPipelineState, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		// Error: Ensure a correct reference counter behaviour
@@ -857,7 +857,7 @@ namespace VulkanRhi
 		uint16_t id = 0;
 		if (ComputePipelineStateMakeId.CreateID(id))
 		{
-			return RHI_NEW(mContext, ComputePipelineState)(*this, rootSignature, computeShader, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(ComputePipelineState)(*this, rootSignature, computeShader, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		// Error: Ensure a correct reference counter behaviour
@@ -870,7 +870,7 @@ namespace VulkanRhi
 
 	Rhi::ISamplerState* VulkanRhi::createSamplerState(const Rhi::SamplerState& samplerState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		return RHI_NEW(mContext, SamplerState)(*this, samplerState RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(SamplerState)(*this, samplerState RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 

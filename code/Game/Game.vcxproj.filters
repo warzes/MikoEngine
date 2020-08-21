@@ -8,6 +8,9 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Example\2_texture</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Example\Mesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Triangle.h">
@@ -46,6 +49,24 @@
     <ClInclude Include="Texture_Null.h">
       <Filter>Example\2_texture</Filter>
     </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Example\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh_GLSL_450.h">
+      <Filter>Example\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh_GLSL_410.h">
+      <Filter>Example\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh_GLSL_ES3.h">
+      <Filter>Example\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh_HLSL_D3D11_D3D12.h">
+      <Filter>Example\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh_Null.h">
+      <Filter>Example\Mesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Example">
@@ -56,6 +77,9 @@
     </Filter>
     <Filter Include="Example\2_texture">
       <UniqueIdentifier>{7e7ee91f-fcf7-444c-b7c9-c7faf4af7a96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\Mesh">
+      <UniqueIdentifier>{29c2f4f6-2f2d-4f7e-b34e-e0c880ff4f20}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

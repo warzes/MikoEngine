@@ -36,7 +36,7 @@ namespace OpenGLRhi
 				const uint32_t numberOfParameters = mRootSignature.numberOfParameters;
 				if ( numberOfParameters > 0 )
 				{
-					mRootSignature.parameters = RHI_MALLOC_TYPED(context, Rhi::RootParameter, numberOfParameters);
+					mRootSignature.parameters = RHI_MALLOC_TYPED(Rhi::RootParameter, numberOfParameters);
 					Rhi::RootParameter* destinationRootParameters = const_cast<Rhi::RootParameter*>(mRootSignature.parameters);
 					memcpy(destinationRootParameters, rootSignature.parameters, sizeof(Rhi::RootParameter) * numberOfParameters);
 
@@ -48,7 +48,7 @@ namespace OpenGLRhi
 						if ( Rhi::RootParameterType::DESCRIPTOR_TABLE == destinationRootParameter.parameterType )
 						{
 							const uint32_t numberOfDescriptorRanges = destinationRootParameter.descriptorTable.numberOfDescriptorRanges;
-							destinationRootParameter.descriptorTable.descriptorRanges = reinterpret_cast<uintptr_t>(RHI_MALLOC_TYPED(context, Rhi::DescriptorRange, numberOfDescriptorRanges));
+							destinationRootParameter.descriptorTable.descriptorRanges = reinterpret_cast<uintptr_t>(RHI_MALLOC_TYPED(Rhi::DescriptorRange, numberOfDescriptorRanges));
 							memcpy(reinterpret_cast<Rhi::DescriptorRange*>(destinationRootParameter.descriptorTable.descriptorRanges), reinterpret_cast<const Rhi::DescriptorRange*>(sourceRootParameter.descriptorTable.descriptorRanges), sizeof(Rhi::DescriptorRange) * numberOfDescriptorRanges);
 						}
 					}
@@ -59,7 +59,7 @@ namespace OpenGLRhi
 				const uint32_t numberOfStaticSamplers = mRootSignature.numberOfStaticSamplers;
 				if ( numberOfStaticSamplers > 0 )
 				{
-					mRootSignature.staticSamplers = RHI_MALLOC_TYPED(context, Rhi::StaticSampler, numberOfStaticSamplers);
+					mRootSignature.staticSamplers = RHI_MALLOC_TYPED(Rhi::StaticSampler, numberOfStaticSamplers);
 					memcpy(const_cast<Rhi::StaticSampler*>(mRootSignature.staticSamplers), rootSignature.staticSamplers, sizeof(Rhi::StaticSampler) * numberOfStaticSamplers);
 				}
 			}
@@ -80,12 +80,12 @@ namespace OpenGLRhi
 					const Rhi::RootParameter& rootParameter = mRootSignature.parameters[i];
 					if ( Rhi::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType )
 					{
-						RHI_FREE(context, reinterpret_cast<Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges));
+						RHI_FREE(reinterpret_cast<Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges));
 					}
 				}
-				RHI_FREE(context, const_cast<Rhi::RootParameter*>(mRootSignature.parameters));
+				RHI_FREE(const_cast<Rhi::RootParameter*>(mRootSignature.parameters));
 			}
-			RHI_FREE(context, const_cast<Rhi::StaticSampler*>(mRootSignature.staticSamplers));
+			RHI_FREE(const_cast<Rhi::StaticSampler*>(mRootSignature.staticSamplers));
 		}
 
 		/**
@@ -115,7 +115,7 @@ namespace OpenGLRhi
 				RHI_ASSERT(nullptr != resources, "The OpenGL resource pointers must be valid")
 
 				// Create resource group
-				return RHI_NEW(rhi.getContext(), ResourceGroup)(rhi, mRootSignature, rootParameterIndex, numberOfResources, resources, samplerStates RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(ResourceGroup)(rhi, mRootSignature, rootParameterIndex, numberOfResources, resources, samplerStates RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 
@@ -125,7 +125,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), RootSignature, this);
+			RHI_DELETE(RootSignature, this);
 		}
 
 

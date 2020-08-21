@@ -442,7 +442,7 @@ namespace OpenGLRhi
 		#endif
 	{
 		// Is OpenGL available?
-		mOpenGLRuntimeLinking = RHI_NEW(mContext, OpenGLRuntimeLinking)(*this);
+		mOpenGLRuntimeLinking = RHI_NEW(OpenGLRuntimeLinking)(*this);
 		if (mOpenGLRuntimeLinking->isOpenGLAvaiable())
 		{
 			const handle nativeWindowHandle = mContext.getNativeWindowHandle();
@@ -451,16 +451,16 @@ namespace OpenGLRhi
 #if SE_PLATFORM_WINDOWS
 			{
 				// TODO(co) Add external OpenGL context support
-				mOpenGLContext = RHI_NEW(mContext, OpenGLContextWindows)(mOpenGLRuntimeLinking, renderPass.getDepthStencilAttachmentTextureFormat(), nativeWindowHandle);
+				mOpenGLContext = RHI_NEW(OpenGLContextWindows)(mOpenGLRuntimeLinking, renderPass.getDepthStencilAttachmentTextureFormat(), nativeWindowHandle);
 			}
 			#elif defined LINUX
-				mOpenGLContext = RHI_NEW(mContext, OpenGLContextLinux)(*this, mOpenGLRuntimeLinking, renderPass.getDepthStencilAttachmentTextureFormat(), nativeWindowHandle, mContext.isUsingExternalContext());
+				mOpenGLContext = RHI_NEW(OpenGLContextLinux)(*this, mOpenGLRuntimeLinking, renderPass.getDepthStencilAttachmentTextureFormat(), nativeWindowHandle, mContext.isUsingExternalContext());
 			#else
 				#error "Unsupported platform"
 			#endif
 
 			// We're using "this" in here, so we are not allowed to write the following within the initializer list
-			mExtensions = RHI_NEW(mContext, Extensions)(*this, *mOpenGLContext);
+			mExtensions = RHI_NEW(Extensions)(*this, *mOpenGLContext);
 
 			// Is the OpenGL context and extensions initialized?
 			if (mOpenGLContext->isInitialized() && mExtensions->initialize())
@@ -592,13 +592,13 @@ namespace OpenGLRhi
 		}
 
 		// Destroy the extensions instance
-		RHI_DELETE(mContext, Extensions, mExtensions);
+		RHI_DELETE(Extensions, mExtensions);
 
 		// Destroy the OpenGL context instance
-		RHI_DELETE(mContext, IOpenGLContext, mOpenGLContext);
+		RHI_DELETE(IOpenGLContext, mOpenGLContext);
 
 		// Destroy the OpenGL runtime linking instance
-		RHI_DELETE(mContext, OpenGLRuntimeLinking, mOpenGLRuntimeLinking);
+		RHI_DELETE(OpenGLRuntimeLinking, mOpenGLRuntimeLinking);
 	}
 
 
@@ -1832,7 +1832,7 @@ namespace OpenGLRhi
 						// If required, create the separate shader language instance right now
 						if (nullptr == mShaderLanguage)
 						{
-							mShaderLanguage = RHI_NEW(mContext, ShaderLanguageSeparate)(*this);
+							mShaderLanguage = RHI_NEW(ShaderLanguageSeparate)(*this);
 							mShaderLanguage->addReference();	// Internal RHI reference
 						}
 
@@ -1844,7 +1844,7 @@ namespace OpenGLRhi
 						// If required, create the monolithic shader language instance right now
 						if (nullptr == mShaderLanguage)
 						{
-							mShaderLanguage = RHI_NEW(mContext, ShaderLanguageMonolithic)(*this);
+							mShaderLanguage = RHI_NEW(ShaderLanguageMonolithic)(*this);
 							mShaderLanguage->addReference();	// Internal RHI reference
 						}
 
@@ -1870,7 +1870,7 @@ namespace OpenGLRhi
 	//[-------------------------------------------------------]
 	Rhi::IRenderPass* OpenGLRhi::createRenderPass(uint32_t numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		return RHI_NEW(mContext, RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IQueryPool* OpenGLRhi::createQueryPool(Rhi::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
@@ -1884,7 +1884,7 @@ namespace OpenGLRhi
 					RHI_LOG(CRITICAL, "OpenGL extension \"GL_ARB_occlusion_query\" isn't supported")
 					return nullptr;
 				}
-				return RHI_NEW(mContext, OcclusionTimestampQueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(OcclusionTimestampQueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 
 			case Rhi::QueryType::PIPELINE_STATISTICS:
 				if (!mExtensions->isGL_ARB_pipeline_statistics_query())
@@ -1892,7 +1892,7 @@ namespace OpenGLRhi
 					RHI_LOG(CRITICAL, "OpenGL extension \"GL_ARB_pipeline_statistics_query\" isn't supported")
 					return nullptr;
 				}
-				return RHI_NEW(mContext, PipelineStatisticsQueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(PipelineStatisticsQueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 
 			case Rhi::QueryType::TIMESTAMP:
 				if (!mExtensions->isGL_ARB_timer_query())
@@ -1900,7 +1900,7 @@ namespace OpenGLRhi
 					RHI_LOG(CRITICAL, "OpenGL extension \"GL_ARB_timer_query\" isn't supported")
 					return nullptr;
 				}
-				return RHI_NEW(mContext, OcclusionTimestampQueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(OcclusionTimestampQueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 		return nullptr;
 	}
@@ -1912,7 +1912,7 @@ namespace OpenGLRhi
 		RHI_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "OpenGL: The provided native window handle or render window must not be a null handle / null pointer")
 
 		// Create the swap chain
-		return RHI_NEW(mContext, SwapChain)(renderPass, windowHandle, useExternalContext RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(SwapChain)(renderPass, windowHandle, useExternalContext RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IFramebuffer* OpenGLRhi::createFramebuffer(Rhi::IRenderPass& renderPass, const Rhi::FramebufferAttachment* colorFramebufferAttachments, const Rhi::FramebufferAttachment* depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
@@ -1928,13 +1928,13 @@ namespace OpenGLRhi
 			{
 				// Effective direct state access (DSA)
 				// -> Validation is done inside the framebuffer implementation
-				return RHI_NEW(mContext, FramebufferDsa)(renderPass, colorFramebufferAttachments, depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(FramebufferDsa)(renderPass, colorFramebufferAttachments, depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
 				// Traditional bind version
 				// -> Validation is done inside the framebuffer implementation
-				return RHI_NEW(mContext, FramebufferBind)(renderPass, colorFramebufferAttachments, depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(FramebufferBind)(renderPass, colorFramebufferAttachments, depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 		}
 		else
@@ -1946,17 +1946,17 @@ namespace OpenGLRhi
 
 	Rhi::IBufferManager* OpenGLRhi::createBufferManager()
 	{
-		return RHI_NEW(mContext, BufferManager)(*this);
+		return RHI_NEW(BufferManager)(*this);
 	}
 
 	Rhi::ITextureManager* OpenGLRhi::createTextureManager()
 	{
-		return RHI_NEW(mContext, TextureManager)(*this);
+		return RHI_NEW(TextureManager)(*this);
 	}
 
 	Rhi::IRootSignature* OpenGLRhi::createRootSignature(const Rhi::RootSignature& rootSignature RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		return RHI_NEW(mContext, RootSignature)(*this, rootSignature RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(RootSignature)(*this, rootSignature RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IGraphicsPipelineState* OpenGLRhi::createGraphicsPipelineState(const Rhi::GraphicsPipelineState& graphicsPipelineState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
@@ -1970,7 +1970,7 @@ namespace OpenGLRhi
 		uint16_t id = 0;
 		if (GraphicsPipelineStateMakeId.CreateID(id))
 		{
-			return RHI_NEW(mContext, GraphicsPipelineState)(*this, graphicsPipelineState, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(GraphicsPipelineState)(*this, graphicsPipelineState, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		// Error: Ensure a correct reference counter behaviour
@@ -1997,11 +1997,11 @@ namespace OpenGLRhi
 			// -> Prefer "GL_ARB_separate_shader_objects" over "GL_ARB_shader_objects"
 			if (mExtensions->isGL_ARB_separate_shader_objects())
 			{
-				return RHI_NEW(mContext, ComputePipelineStateSeparate)(*this, rootSignature, static_cast<ComputeShaderSeparate&>(computeShader), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(ComputePipelineStateSeparate)(*this, rootSignature, static_cast<ComputeShaderSeparate&>(computeShader), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else if (mExtensions->isGL_ARB_shader_objects())
 			{
-				return RHI_NEW(mContext, ComputePipelineStateMonolithic)(*this, rootSignature, static_cast<ComputeShaderMonolithic&>(computeShader), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(ComputePipelineStateMonolithic)(*this, rootSignature, static_cast<ComputeShaderMonolithic&>(computeShader), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 		}
 
@@ -2019,19 +2019,19 @@ namespace OpenGLRhi
 		if (mExtensions->isGL_ARB_sampler_objects())
 		{
 			// Effective sampler object (SO)
-			return RHI_NEW(mContext, SamplerStateSo)(*this, samplerState RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(SamplerStateSo)(*this, samplerState RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		// Is "GL_EXT_direct_state_access" there?
 		else if (mExtensions->isGL_EXT_direct_state_access() || mExtensions->isGL_ARB_direct_state_access())
 		{
 			// Direct state access (DSA) version to emulate a sampler object
-			return RHI_NEW(mContext, SamplerStateDsa)(*this, samplerState RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(SamplerStateDsa)(*this, samplerState RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 		else
 		{
 			// Traditional bind version to emulate a sampler object
-			return RHI_NEW(mContext, SamplerStateBind)(*this, samplerState RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(SamplerStateBind)(*this, samplerState RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 	}
 

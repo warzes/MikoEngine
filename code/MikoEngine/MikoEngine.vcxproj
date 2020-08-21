@@ -93,10 +93,10 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;$(SolutionDir)3rdparty\glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;$(SolutionDir)3rdparty\glslang\src\;$(SolutionDir)3rdparty\acl\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -110,10 +110,10 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;$(SolutionDir)3rdparty\glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;$(SolutionDir)3rdparty\glslang\src\;$(SolutionDir)3rdparty\acl\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -129,9 +129,9 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;$(SolutionDir)3rdparty\glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;$(SolutionDir)3rdparty\glslang\src\;$(SolutionDir)3rdparty\acl\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -149,9 +149,9 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;$(SolutionDir)3rdparty\glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\assimp\include\;$(SolutionDir)3rdparty\glslang\src\;$(SolutionDir)3rdparty\acl\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -193,7 +193,6 @@
     <ClInclude Include="Renderer\Core\IGraphicsDebugger.h" />
     <ClInclude Include="Renderer\Core\IProfiler.h" />
     <ClInclude Include="Renderer\Core\Loader.h" />
-    <ClInclude Include="Renderer\Core\MakeId.h" />
     <ClInclude Include="Renderer\Core\Manager.h" />
     <ClInclude Include="Renderer\Core\Math\EulerAngles.h" />
     <ClInclude Include="Renderer\Core\Math\Frustum.h" />
@@ -202,8 +201,6 @@
     <ClInclude Include="Renderer\Core\Math\Transform.h" />
     <ClInclude Include="Renderer\Core\PackedElementManager.h" />
     <ClInclude Include="Renderer\Core\Platform\PlatformManager.h" />
-    <ClInclude Include="Renderer\Core\Platform\PlatformTypes.h" />
-    <ClInclude Include="Renderer\Core\Platform\WindowsHeader.h" />
     <ClInclude Include="Renderer\Core\RemoteryProfiler.h" />
     <ClInclude Include="Renderer\Core\RenderDocGraphicsDebugger.h" />
     <ClInclude Include="Renderer\Core\Renderer\FramebufferManager.h" />
@@ -223,8 +220,7 @@
     <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_GLSL_410.h" />
     <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_GLSL_450.h" />
     <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_GLSL_ES3.h" />
-    <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_HLSL_D3D10_D3D11_D3D12.h" />
-    <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_HLSL_D3D9.h" />
+    <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_HLSL_D3D11_D3D12.h" />
     <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_Null.h" />
     <ClInclude Include="Renderer\DebugGui\ImGuiLog.h" />
     <ClInclude Include="Renderer\IRenderer.h" />
@@ -266,8 +262,7 @@
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\CompositorResourcePassVrHiddenAreaMesh.h" />
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_GLSL_410.h" />
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_GLSL_ES3.h" />
-    <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_HLSL_D3D10_D3D11_D3D12.h" />
-    <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_HLSL_D3D9.h" />
+    <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_HLSL_D3D11_D3D12.h" />
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_Null.h" />
     <ClInclude Include="Renderer\Resource\CompositorWorkspace\CompositorContextData.h" />
     <ClInclude Include="Renderer\Resource\CompositorWorkspace\CompositorWorkspaceInstance.h" />
@@ -500,7 +495,12 @@
     <ClCompile Include="Renderer\Core\Time\TimeManager.cpp" />
     <ClCompile Include="Renderer\DebugGui\DebugGuiHelper.cpp" />
     <ClCompile Include="Renderer\DebugGui\DebugGuiManager.cpp" />
-    <ClCompile Include="Renderer\DebugGui\Detail\DebugGuiManagerLinux.cpp" />
+    <ClCompile Include="Renderer\DebugGui\Detail\DebugGuiManagerLinux.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Renderer\DebugGui\Detail\DebugGuiManagerWindows.cpp" />
     <ClCompile Include="Renderer\RendererImpl.cpp" />
     <ClCompile Include="Renderer\RenderQueue\Renderable.cpp" />

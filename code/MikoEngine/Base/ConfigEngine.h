@@ -10,7 +10,7 @@
 // TODO:
 #define SE_RHINULL 1
 #define SE_OPENGL 1
-#define SE_OPENGLES 1
+#define SE_OPENGLES 0
 #define SE_VULKAN 1
 #define SE_DIRECT3D11 0
 #define SE_DIRECT3D12 1

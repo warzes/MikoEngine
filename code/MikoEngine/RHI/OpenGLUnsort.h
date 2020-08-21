@@ -47,7 +47,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), VertexBuffer, this);
+			RHI_DELETE(VertexBuffer, this);
 		}
 
 
@@ -322,7 +322,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), IndexBuffer, this);
+			RHI_DELETE(IndexBuffer, this);
 		}
 
 
@@ -619,7 +619,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), VertexArray, this);
+			RHI_DELETE(VertexArray, this);
 		}
 
 
@@ -709,9 +709,9 @@ namespace OpenGLRhi
 		VertexArrayNoVao(OpenGLRhi& openGLRhi, const Rhi::VertexAttributes& vertexAttributes, uint32_t numberOfVertexBuffers, const Rhi::VertexArrayVertexBuffer* vertexBuffers, IndexBuffer* indexBuffer, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			VertexArray(openGLRhi, indexBuffer, InternalResourceType::NO_VAO, id RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mNumberOfAttributes(vertexAttributes.numberOfAttributes),
-			mAttributes(mNumberOfAttributes ? RHI_MALLOC_TYPED(openGLRhi.getContext(), Rhi::VertexAttribute, mNumberOfAttributes) : nullptr),
+			mAttributes(mNumberOfAttributes ? RHI_MALLOC_TYPED(Rhi::VertexAttribute, mNumberOfAttributes) : nullptr),
 			mNumberOfVertexBuffers(numberOfVertexBuffers),
-			mVertexBuffers(numberOfVertexBuffers ? RHI_MALLOC_TYPED(openGLRhi.getContext(), Rhi::VertexArrayVertexBuffer, numberOfVertexBuffers) : nullptr),
+			mVertexBuffers(numberOfVertexBuffers ? RHI_MALLOC_TYPED(Rhi::VertexArrayVertexBuffer, numberOfVertexBuffers) : nullptr),
 			mIsGL_ARB_instanced_arrays(openGLRhi.getExtensions().isGL_ARB_instanced_arrays())
 		{
 			// Copy over the data
@@ -740,7 +740,7 @@ namespace OpenGLRhi
 		{
 			// Destroy the vertex array attributes
 			const Rhi::Context& context = getRhi().getContext();
-			RHI_FREE(context, mAttributes);
+			RHI_FREE(mAttributes);
 
 			// Destroy the vertex array vertex buffers
 			if ( nullptr != mVertexBuffers )
@@ -753,7 +753,7 @@ namespace OpenGLRhi
 				}
 
 				// Cleanup
-				RHI_FREE(context, mVertexBuffers);
+				RHI_FREE(mVertexBuffers);
 			}
 		}
 
@@ -909,7 +909,7 @@ namespace OpenGLRhi
 				}
 
 				// Cleanup
-				RHI_FREE(getRhi().getContext(), mVertexBuffers);
+				RHI_FREE(mVertexBuffers);
 			}
 		}
 
@@ -954,7 +954,7 @@ namespace OpenGLRhi
 			// Add a reference to the used vertex buffers
 			if ( numberOfVertexBuffers > 0 )
 			{
-				mVertexBuffers = RHI_MALLOC_TYPED(openGLRhi.getContext(), VertexBuffer*, numberOfVertexBuffers);
+				mVertexBuffers = RHI_MALLOC_TYPED(VertexBuffer*, numberOfVertexBuffers);
 
 				// Loop through all vertex buffers
 				VertexBuffer** currentVertexBuffers = mVertexBuffers;
@@ -1415,7 +1415,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TextureBuffer, this);
+			RHI_DELETE(TextureBuffer, this);
 		}
 
 
@@ -1736,7 +1736,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), StructuredBuffer, this);
+			RHI_DELETE(StructuredBuffer, this);
 		}
 
 
@@ -1998,7 +1998,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), IndirectBuffer, this);
+			RHI_DELETE(IndirectBuffer, this);
 		}
 
 
@@ -2249,7 +2249,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), UniformBuffer, this);
+			RHI_DELETE(UniformBuffer, this);
 		}
 
 
@@ -2510,12 +2510,12 @@ namespace OpenGLRhi
 				if ( mExtensions->isGL_EXT_direct_state_access() || mExtensions->isGL_ARB_direct_state_access() )
 				{
 					// Effective direct state access (DSA)
-					return RHI_NEW(openGLRhi.getContext(), VertexBufferDsa)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(VertexBufferDsa)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 				else
 				{
 					// Traditional bind version
-					return RHI_NEW(openGLRhi.getContext(), VertexBufferBind)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(VertexBufferBind)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 			}
 			else
@@ -2535,12 +2535,12 @@ namespace OpenGLRhi
 				if ( mExtensions->isGL_EXT_direct_state_access() || mExtensions->isGL_ARB_direct_state_access() )
 				{
 					// Effective direct state access (DSA)
-					return RHI_NEW(openGLRhi.getContext(), IndexBufferDsa)(openGLRhi, numberOfBytes, data, bufferUsage, indexBufferFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(IndexBufferDsa)(openGLRhi, numberOfBytes, data, bufferUsage, indexBufferFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 				else
 				{
 					// Traditional bind version
-					return RHI_NEW(openGLRhi.getContext(), IndexBufferBind)(openGLRhi, numberOfBytes, data, bufferUsage, indexBufferFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(IndexBufferBind)(openGLRhi, numberOfBytes, data, bufferUsage, indexBufferFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 			}
 			else
@@ -2579,18 +2579,18 @@ namespace OpenGLRhi
 					if ( mExtensions->isGL_EXT_direct_state_access() || mExtensions->isGL_ARB_direct_state_access() )
 					{
 						// Effective direct state access (DSA)
-						return RHI_NEW(openGLRhi.getContext(), VertexArrayVaoDsa)(openGLRhi, vertexAttributes, numberOfVertexBuffers, vertexBuffers, static_cast<IndexBuffer*>(indexBuffer), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+						return RHI_NEW(VertexArrayVaoDsa)(openGLRhi, vertexAttributes, numberOfVertexBuffers, vertexBuffers, static_cast<IndexBuffer*>(indexBuffer), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 					}
 					else
 					{
 						// Traditional bind version
-						return RHI_NEW(openGLRhi.getContext(), VertexArrayVaoBind)(openGLRhi, vertexAttributes, numberOfVertexBuffers, vertexBuffers, static_cast<IndexBuffer*>(indexBuffer), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+						return RHI_NEW(VertexArrayVaoBind)(openGLRhi, vertexAttributes, numberOfVertexBuffers, vertexBuffers, static_cast<IndexBuffer*>(indexBuffer), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 					}
 				}
 				else
 				{
 					// Traditional version
-					return RHI_NEW(openGLRhi.getContext(), VertexArrayNoVao)(openGLRhi, vertexAttributes, numberOfVertexBuffers, vertexBuffers, static_cast<IndexBuffer*>(indexBuffer), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(VertexArrayNoVao)(openGLRhi, vertexAttributes, numberOfVertexBuffers, vertexBuffers, static_cast<IndexBuffer*>(indexBuffer), id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 			}
 
@@ -2623,12 +2623,12 @@ namespace OpenGLRhi
 					if ( mExtensions->isGL_EXT_direct_state_access() || mExtensions->isGL_ARB_direct_state_access() )
 					{
 						// Effective direct state access (DSA)
-						return RHI_NEW(openGLRhi.getContext(), TextureBufferDsa)(openGLRhi, numberOfBytes, data, bufferUsage, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+						return RHI_NEW(TextureBufferDsa)(openGLRhi, numberOfBytes, data, bufferUsage, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 					}
 					else
 					{
 						// Traditional bind version
-						return RHI_NEW(openGLRhi.getContext(), TextureBufferBind)(openGLRhi, numberOfBytes, data, bufferUsage, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+						return RHI_NEW(TextureBufferBind)(openGLRhi, numberOfBytes, data, bufferUsage, textureFormat RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 					}
 				}
 				else
@@ -2653,12 +2653,12 @@ namespace OpenGLRhi
 					if ( mExtensions->isGL_EXT_direct_state_access() || mExtensions->isGL_ARB_direct_state_access() )
 					{
 						// Effective direct state access (DSA)
-						return RHI_NEW(openGLRhi.getContext(), StructuredBufferDsa)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+						return RHI_NEW(StructuredBufferDsa)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 					}
 					else
 					{
 						// Traditional bind version
-						return RHI_NEW(openGLRhi.getContext(), StructuredBufferBind)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+						return RHI_NEW(StructuredBufferBind)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 					}
 				}
 				else
@@ -2685,12 +2685,12 @@ namespace OpenGLRhi
 					if ( mExtensions->isGL_EXT_direct_state_access() || mExtensions->isGL_ARB_direct_state_access() )
 					{
 						// Effective direct state access (DSA)
-						return RHI_NEW(openGLRhi.getContext(), IndirectBufferDsa)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+						return RHI_NEW(IndirectBufferDsa)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 					}
 					else
 					{
 						// Traditional bind version
-						return RHI_NEW(openGLRhi.getContext(), IndirectBufferBind)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+						return RHI_NEW(IndirectBufferBind)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 					}
 				}
 				else
@@ -2717,12 +2717,12 @@ namespace OpenGLRhi
 				if ( mExtensions->isGL_EXT_direct_state_access() || mExtensions->isGL_ARB_direct_state_access() )
 				{
 					// Effective direct state access (DSA)
-					return RHI_NEW(openGLRhi.getContext(), UniformBufferDsa)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(UniformBufferDsa)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 				else
 				{
 					// Traditional bind version
-					return RHI_NEW(openGLRhi.getContext(), UniformBufferBind)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(UniformBufferBind)(openGLRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 			}
 			else
@@ -2739,7 +2739,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), BufferManager, this);
+			RHI_DELETE(BufferManager, this);
 		}
 
 
@@ -2830,7 +2830,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture1D, this);
+			RHI_DELETE(Texture1D, this);
 		}
 
 
@@ -3326,7 +3326,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture1DArray, this);
+			RHI_DELETE(Texture1DArray, this);
 		}
 
 
@@ -3826,7 +3826,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture2D, this);
+			RHI_DELETE(Texture2D, this);
 		}
 
 
@@ -4473,7 +4473,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture2DArray, this);
+			RHI_DELETE(Texture2DArray, this);
 		}
 
 
@@ -4980,7 +4980,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture3D, this);
+			RHI_DELETE(Texture3D, this);
 		}
 
 
@@ -5572,7 +5572,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TextureCube, this);
+			RHI_DELETE(TextureCube, this);
 		}
 
 
@@ -6141,12 +6141,12 @@ namespace OpenGLRhi
 				if ( mExtensions->isGL_EXT_direct_state_access() || mExtensions->isGL_ARB_direct_state_access() )
 				{
 					// Effective direct state access (DSA)
-					return RHI_NEW(openGLRhi.getContext(), Texture1DDsa)(openGLRhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(Texture1DDsa)(openGLRhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 				else
 				{
 					// Traditional bind version
-					return RHI_NEW(openGLRhi.getContext(), Texture1DBind)(openGLRhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(Texture1DBind)(openGLRhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 		}
 
@@ -6165,12 +6165,12 @@ namespace OpenGLRhi
 					if ( mExtensions->isGL_EXT_direct_state_access() || mExtensions->isGL_ARB_direct_state_access() )
 					{
 						// Effective direct state access (DSA)
-						return RHI_NEW(openGLRhi.getContext(), Texture1DArrayDsa)(openGLRhi, width, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+						return RHI_NEW(Texture1DArrayDsa)(openGLRhi, width, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 					}
 					else
 					{
 						// Traditional bind version
-						return RHI_NEW(openGLRhi.getContext(), Texture1DArrayBind)(openGLRhi, width, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+						return RHI_NEW(Texture1DArrayBind)(openGLRhi, width, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 					}
 				}
 				else
@@ -6191,12 +6191,12 @@ namespace OpenGLRhi
 				if ( mExtensions->isGL_EXT_direct_state_access() || mExtensions->isGL_ARB_direct_state_access() )
 				{
 					// Effective direct state access (DSA)
-					return RHI_NEW(openGLRhi.getContext(), Texture2DDsa)(openGLRhi, width, height, textureFormat, data, textureFlags, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(Texture2DDsa)(openGLRhi, width, height, textureFormat, data, textureFlags, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 				else
 				{
 					// Traditional bind version
-					return RHI_NEW(openGLRhi.getContext(), Texture2DBind)(openGLRhi, width, height, textureFormat, data, textureFlags, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(Texture2DBind)(openGLRhi, width, height, textureFormat, data, textureFlags, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 		}
 
@@ -6215,12 +6215,12 @@ namespace OpenGLRhi
 					if ( mExtensions->isGL_EXT_direct_state_access() || mExtensions->isGL_ARB_direct_state_access() )
 					{
 						// Effective direct state access (DSA)
-						return RHI_NEW(openGLRhi.getContext(), Texture2DArrayDsa)(openGLRhi, width, height, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+						return RHI_NEW(Texture2DArrayDsa)(openGLRhi, width, height, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 					}
 					else
 					{
 						// Traditional bind version
-						return RHI_NEW(openGLRhi.getContext(), Texture2DArrayBind)(openGLRhi, width, height, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+						return RHI_NEW(Texture2DArrayBind)(openGLRhi, width, height, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 					}
 				}
 				else
@@ -6241,12 +6241,12 @@ namespace OpenGLRhi
 				if ( mExtensions->isGL_EXT_direct_state_access() || mExtensions->isGL_ARB_direct_state_access() )
 				{
 					// Effective direct state access (DSA)
-					return RHI_NEW(openGLRhi.getContext(), Texture3DDsa)(openGLRhi, width, height, depth, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(Texture3DDsa)(openGLRhi, width, height, depth, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 				else
 				{
 					// Traditional bind version
-					return RHI_NEW(openGLRhi.getContext(), Texture3DBind)(openGLRhi, width, height, depth, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(Texture3DBind)(openGLRhi, width, height, depth, textureFormat, data, textureFlags, textureUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 		}
 
@@ -6263,12 +6263,12 @@ namespace OpenGLRhi
 				if ( mExtensions->isGL_EXT_direct_state_access() || mExtensions->isGL_ARB_direct_state_access() )
 				{
 					// Effective direct state access (DSA)
-					return RHI_NEW(openGLRhi.getContext(), TextureCubeDsa)(openGLRhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(TextureCubeDsa)(openGLRhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 				else
 				{
 					// Traditional bind version
-					return RHI_NEW(openGLRhi.getContext(), TextureCubeBind)(openGLRhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(TextureCubeBind)(openGLRhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 		}
 
@@ -6288,7 +6288,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TextureManager, this);
+			RHI_DELETE(TextureManager, this);
 		}
 
 
@@ -6342,7 +6342,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), SamplerState, this);
+			RHI_DELETE(SamplerState, this);
 		}
 
 
@@ -7188,7 +7188,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), RenderPass, this);
+			RHI_DELETE(RenderPass, this);
 		}
 
 
@@ -7330,7 +7330,7 @@ namespace OpenGLRhi
 		*/
 		OcclusionTimestampQueryPool(OpenGLRhi& openGLRhi, Rhi::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			QueryPool(openGLRhi, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLQueries(RHI_MALLOC_TYPED(openGLRhi.getContext(), GLuint, numberOfQueries))
+			mOpenGLQueries(RHI_MALLOC_TYPED(GLuint, numberOfQueries))
 		{
 			// If possible, use "glCreateQueries()" (OpenGL 4.5) in order to create the query instance at once
 			if ( nullptr != glCreateQueries )
@@ -7398,7 +7398,7 @@ namespace OpenGLRhi
 			// Destroy the OpenGL queries
 			// -> Silently ignores 0's and names that do not correspond to existing queries
 			glDeleteQueriesARB(static_cast<GLsizei>(mNumberOfQueries), mOpenGLQueries);
-			RHI_FREE(getRhi().getContext(), mOpenGLQueries);
+			RHI_FREE(mOpenGLQueries);
 		}
 
 		/**
@@ -7420,7 +7420,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), OcclusionTimestampQueryPool, this);
+			RHI_DELETE(OcclusionTimestampQueryPool, this);
 		}
 
 
@@ -7472,7 +7472,7 @@ namespace OpenGLRhi
 		*/
 		PipelineStatisticsQueryPool(OpenGLRhi& openGLRhi, Rhi::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			QueryPool(openGLRhi, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVerticesSubmittedOpenGLQueries(RHI_MALLOC_TYPED(openGLRhi.getContext(), GLuint, numberOfQueries * 11)),
+			mVerticesSubmittedOpenGLQueries(RHI_MALLOC_TYPED(GLuint, numberOfQueries * 11)),
 			mPrimitivesSubmittedOpenGLQueries(mVerticesSubmittedOpenGLQueries + numberOfQueries),
 			mVertexShaderInvocationsOpenGLQueries(mPrimitivesSubmittedOpenGLQueries + numberOfQueries),
 			mGeometryShaderInvocationsOpenGLQueries(mVertexShaderInvocationsOpenGLQueries + numberOfQueries),
@@ -7529,7 +7529,7 @@ namespace OpenGLRhi
 			// Destroy the OpenGL queries
 			// -> Silently ignores 0's and names that do not correspond to existing queries
 			glDeleteQueriesARB(static_cast<GLsizei>(mNumberOfQueries) * 11, mVerticesSubmittedOpenGLQueries);
-			RHI_FREE(getRhi().getContext(), mVerticesSubmittedOpenGLQueries);
+			RHI_FREE(mVerticesSubmittedOpenGLQueries);
 		}
 
 		void beginQuery(uint32_t queryIndex) const
@@ -7606,7 +7606,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), PipelineStatisticsQueryPool, this);
+			RHI_DELETE(PipelineStatisticsQueryPool, this);
 		}
 
 
@@ -7693,9 +7693,9 @@ namespace OpenGLRhi
 			ISwapChain(renderPass RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mNativeWindowHandle(windowHandle.nativeWindowHandle),
 #if SE_PLATFORM_WINDOWS
-			mOpenGLContext(RHI_NEW(renderPass.getRhi().getContext(), OpenGLContextWindows)(static_cast<const RenderPass&>(renderPass).getDepthStencilAttachmentTextureFormat(), windowHandle.nativeWindowHandle, static_cast<const OpenGLContextWindows*>(&static_cast<OpenGLRhi&>(renderPass.getRhi()).getOpenGLContext()))),
+			mOpenGLContext(RHI_NEW(OpenGLContextWindows)(static_cast<const RenderPass&>(renderPass).getDepthStencilAttachmentTextureFormat(), windowHandle.nativeWindowHandle, static_cast<const OpenGLContextWindows*>(&static_cast<OpenGLRhi&>(renderPass.getRhi()).getOpenGLContext()))),
 #elif defined LINUX
-			mOpenGLContext(RHI_NEW(renderPass.getRhi().getContext(), OpenGLContextLinux)(static_cast<OpenGLRhi&>(renderPass.getRhi()), static_cast<const RenderPass&>(renderPass).getDepthStencilAttachmentTextureFormat(), windowHandle.nativeWindowHandle, useExternalContext, static_cast<const OpenGLContextLinux*>(&static_cast<OpenGLRhi&>(renderPass.getRhi()).getOpenGLContext()))),
+			mOpenGLContext(RHI_NEW(OpenGLContextLinux)(static_cast<OpenGLRhi&>(renderPass.getRhi()), static_cast<const RenderPass&>(renderPass).getDepthStencilAttachmentTextureFormat(), windowHandle.nativeWindowHandle, useExternalContext, static_cast<const OpenGLContextLinux*>(&static_cast<OpenGLRhi&>(renderPass.getRhi()).getOpenGLContext()))),
 #else
 #error "Unsupported platform"
 #endif
@@ -7714,7 +7714,7 @@ namespace OpenGLRhi
 		{
 			if ( mOwnsOpenGLContext )
 			{
-				RHI_DELETE(getRhi().getContext(), IOpenGLContext, mOpenGLContext);
+				RHI_DELETE(IOpenGLContext, mOpenGLContext);
 			}
 		}
 
@@ -7901,7 +7901,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), SwapChain, this);
+			RHI_DELETE(SwapChain, this);
 		}
 
 
@@ -7963,7 +7963,7 @@ namespace OpenGLRhi
 				}
 
 				// Cleanup
-				RHI_FREE(getRhi().getContext(), mColorTextures);
+				RHI_FREE(mColorTextures);
 			}
 
 			// Release the reference to the used depth stencil texture
@@ -8039,7 +8039,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Framebuffer, this);
+			RHI_DELETE(Framebuffer, this);
 		}
 
 
@@ -8080,7 +8080,7 @@ namespace OpenGLRhi
 			// Add a reference to the used color textures
 			if ( mNumberOfColorTextures > 0 )
 			{
-				mColorTextures = RHI_MALLOC_TYPED(renderPass.getRhi().getContext(), Rhi::ITexture*, mNumberOfColorTextures);
+				mColorTextures = RHI_MALLOC_TYPED(Rhi::ITexture*, mNumberOfColorTextures);
 
 				// Loop through all color textures
 				Rhi::ITexture** colorTexturesEnd = mColorTextures + mNumberOfColorTextures;
@@ -8953,7 +8953,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), VertexShaderMonolithic, this);
+			RHI_DELETE(VertexShaderMonolithic, this);
 		}
 
 
@@ -9055,7 +9055,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TessellationControlShaderMonolithic, this);
+			RHI_DELETE(TessellationControlShaderMonolithic, this);
 		}
 
 
@@ -9157,7 +9157,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TessellationEvaluationShaderMonolithic, this);
+			RHI_DELETE(TessellationEvaluationShaderMonolithic, this);
 		}
 
 
@@ -9304,7 +9304,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), GeometryShaderMonolithic, this);
+			RHI_DELETE(GeometryShaderMonolithic, this);
 		}
 
 
@@ -9409,7 +9409,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), FragmentShaderMonolithic, this);
+			RHI_DELETE(FragmentShaderMonolithic, this);
 		}
 
 
@@ -9511,7 +9511,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TaskShaderMonolithic, this);
+			RHI_DELETE(TaskShaderMonolithic, this);
 		}
 
 
@@ -9613,7 +9613,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), MeshShaderMonolithic, this);
+			RHI_DELETE(MeshShaderMonolithic, this);
 		}
 
 
@@ -9715,7 +9715,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ComputeShaderMonolithic, this);
+			RHI_DELETE(ComputeShaderMonolithic, this);
 		}
 
 
@@ -10144,7 +10144,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), GraphicsProgramMonolithic, this);
+			RHI_DELETE(GraphicsProgramMonolithic, this);
 		}
 
 
@@ -10278,7 +10278,7 @@ namespace OpenGLRhi
 				{
 					// Allocate memory for the information
 					const Rhi::Context& context = openGLRhi.getContext();
-					char* informationLog = RHI_MALLOC_TYPED(context, char, informationLength);
+					char* informationLog = RHI_MALLOC_TYPED(char, informationLength);
 
 					// Get the information
 					glGetProgramInfoLog(mOpenGLProgram, informationLength, nullptr, informationLog);
@@ -10287,7 +10287,7 @@ namespace OpenGLRhi
 					RHI_LOG(CRITICAL, informationLog)
 
 						// Cleanup information memory
-						RHI_FREE(context, informationLog);
+						RHI_FREE(informationLog);
 				}
 			}
 		}
@@ -10673,7 +10673,7 @@ namespace OpenGLRhi
 				{
 					// Allocate memory for the information
 					const Rhi::Context& context = openGLRhi.getContext();
-					char* informationLog = RHI_MALLOC_TYPED(context, char, informationLength);
+					char* informationLog = RHI_MALLOC_TYPED(char, informationLength);
 
 					// Get the information
 					glGetProgramInfoLog(mOpenGLProgram, informationLength, nullptr, informationLog);
@@ -10682,7 +10682,7 @@ namespace OpenGLRhi
 					RHI_LOG(CRITICAL, informationLog)
 
 						// Cleanup information memory
-						RHI_FREE(context, informationLog);
+						RHI_FREE(informationLog);
 				}
 			}
 
@@ -10726,7 +10726,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ComputePipelineStateMonolithic, this);
+			RHI_DELETE(ComputePipelineStateMonolithic, this);
 		}
 
 
@@ -10809,7 +10809,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 			if ( openGLRhi.getExtensions().isGL_ARB_vertex_shader() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), VertexShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(VertexShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -10832,7 +10832,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 			if ( openGLRhi.getExtensions().isGL_ARB_tessellation_shader() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), TessellationControlShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(TessellationControlShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -10855,7 +10855,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 			if ( openGLRhi.getExtensions().isGL_ARB_tessellation_shader() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), TessellationEvaluationShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(TessellationEvaluationShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -10882,7 +10882,7 @@ namespace OpenGLRhi
 				//   "layout(triangles) in;"
 				//   "layout(triangle_strip, max_vertices = 3) out;"
 				// -> To be able to support older GLSL versions, we have to provide this information also via OpenGL API functions
-				return RHI_NEW(openGLRhi.getContext(), GeometryShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode, gsInputPrimitiveTopology, gsOutputPrimitiveTopology, numberOfOutputVertices RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(GeometryShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode, gsInputPrimitiveTopology, gsOutputPrimitiveTopology, numberOfOutputVertices RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -10905,7 +10905,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 			if ( openGLRhi.getExtensions().isGL_ARB_fragment_shader() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), FragmentShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(FragmentShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -10928,7 +10928,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 			if ( openGLRhi.getExtensions().isGL_NV_mesh_shader() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), TaskShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(TaskShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -10951,7 +10951,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 			if ( openGLRhi.getExtensions().isGL_NV_mesh_shader() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), MeshShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(MeshShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -10974,7 +10974,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 			if ( openGLRhi.getExtensions().isGL_ARB_compute_shader() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), ComputeShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(ComputeShaderMonolithic)(openGLRhi, shaderSourceCode.sourceCode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -11002,12 +11002,12 @@ namespace OpenGLRhi
 				if ( openGLRhi.getExtensions().isGL_EXT_direct_state_access() || openGLRhi.getExtensions().isGL_ARB_direct_state_access() )
 				{
 					// Effective direct state access (DSA)
-					return RHI_NEW(openGLRhi.getContext(), GraphicsProgramMonolithicDsa)(openGLRhi, rootSignature, vertexAttributes, static_cast<VertexShaderMonolithic*>(vertexShader), static_cast<TessellationControlShaderMonolithic*>(tessellationControlShader), static_cast<TessellationEvaluationShaderMonolithic*>(tessellationEvaluationShader), static_cast<GeometryShaderMonolithic*>(geometryShader), static_cast<FragmentShaderMonolithic*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(GraphicsProgramMonolithicDsa)(openGLRhi, rootSignature, vertexAttributes, static_cast<VertexShaderMonolithic*>(vertexShader), static_cast<TessellationControlShaderMonolithic*>(tessellationControlShader), static_cast<TessellationEvaluationShaderMonolithic*>(tessellationEvaluationShader), static_cast<GeometryShaderMonolithic*>(geometryShader), static_cast<FragmentShaderMonolithic*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 				else
 				{
 					// Traditional bind version
-					return RHI_NEW(openGLRhi.getContext(), GraphicsProgramMonolithic)(openGLRhi, rootSignature, vertexAttributes, static_cast<VertexShaderMonolithic*>(vertexShader), static_cast<TessellationControlShaderMonolithic*>(tessellationControlShader), static_cast<TessellationEvaluationShaderMonolithic*>(tessellationEvaluationShader), static_cast<GeometryShaderMonolithic*>(geometryShader), static_cast<FragmentShaderMonolithic*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(GraphicsProgramMonolithic)(openGLRhi, rootSignature, vertexAttributes, static_cast<VertexShaderMonolithic*>(vertexShader), static_cast<TessellationControlShaderMonolithic*>(tessellationControlShader), static_cast<TessellationEvaluationShaderMonolithic*>(tessellationEvaluationShader), static_cast<GeometryShaderMonolithic*>(geometryShader), static_cast<FragmentShaderMonolithic*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 		}
 
@@ -11028,12 +11028,12 @@ namespace OpenGLRhi
 				if ( openGLRhi.getExtensions().isGL_EXT_direct_state_access() || openGLRhi.getExtensions().isGL_ARB_direct_state_access() )
 				{
 					// Effective direct state access (DSA)
-					return RHI_NEW(openGLRhi.getContext(), GraphicsProgramMonolithicDsa)(openGLRhi, rootSignature, static_cast<TaskShaderMonolithic*>(taskShader), static_cast<MeshShaderMonolithic&>(meshShader), static_cast<FragmentShaderMonolithic*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(GraphicsProgramMonolithicDsa)(openGLRhi, rootSignature, static_cast<TaskShaderMonolithic*>(taskShader), static_cast<MeshShaderMonolithic&>(meshShader), static_cast<FragmentShaderMonolithic*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 				else
 				{
 					// Traditional bind version
-					return RHI_NEW(openGLRhi.getContext(), GraphicsProgramMonolithic)(openGLRhi, rootSignature, static_cast<TaskShaderMonolithic*>(taskShader), static_cast<MeshShaderMonolithic&>(meshShader), static_cast<FragmentShaderMonolithic*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+					return RHI_NEW(GraphicsProgramMonolithic)(openGLRhi, rootSignature, static_cast<TaskShaderMonolithic*>(taskShader), static_cast<MeshShaderMonolithic&>(meshShader), static_cast<FragmentShaderMonolithic*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 				}
 		}
 
@@ -11044,7 +11044,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ShaderLanguageMonolithic, this);
+			RHI_DELETE(ShaderLanguageMonolithic, this);
 		}
 
 
@@ -11184,7 +11184,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), VertexShaderSeparate, this);
+			RHI_DELETE(VertexShaderSeparate, this);
 		}
 
 
@@ -11316,7 +11316,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TessellationControlShaderSeparate, this);
+			RHI_DELETE(TessellationControlShaderSeparate, this);
 		}
 
 
@@ -11447,7 +11447,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TessellationEvaluationShaderSeparate, this);
+			RHI_DELETE(TessellationEvaluationShaderSeparate, this);
 		}
 
 
@@ -11598,7 +11598,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), GeometryShaderSeparate, this);
+			RHI_DELETE(GeometryShaderSeparate, this);
 		}
 
 
@@ -11729,7 +11729,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), FragmentShaderSeparate, this);
+			RHI_DELETE(FragmentShaderSeparate, this);
 		}
 
 
@@ -11860,7 +11860,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TaskShaderSeparate, this);
+			RHI_DELETE(TaskShaderSeparate, this);
 		}
 
 
@@ -11991,7 +11991,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), MeshShaderSeparate, this);
+			RHI_DELETE(MeshShaderSeparate, this);
 		}
 
 
@@ -12122,7 +12122,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ComputeShaderSeparate, this);
+			RHI_DELETE(ComputeShaderSeparate, this);
 		}
 
 
@@ -12353,7 +12353,7 @@ namespace OpenGLRhi
 				{
 					// Allocate memory for the information
 					const Rhi::Context& context = openGLRhi.getContext();
-					char* informationLog = RHI_MALLOC_TYPED(context, char, informationLength);
+					char* informationLog = RHI_MALLOC_TYPED(char, informationLength);
 
 					// Get the information
 					glGetProgramPipelineInfoLog(mOpenGLProgramPipeline, informationLength, nullptr, informationLog);
@@ -12362,7 +12362,7 @@ namespace OpenGLRhi
 					RHI_LOG(CRITICAL, informationLog)
 
 						// Cleanup information memory
-						RHI_FREE(context, informationLog);
+						RHI_FREE(informationLog);
 				}
 			}
 
@@ -12552,7 +12552,7 @@ namespace OpenGLRhi
 				{
 					// Allocate memory for the information
 					const Rhi::Context& context = openGLRhi.getContext();
-					char* informationLog = RHI_MALLOC_TYPED(context, char, informationLength);
+					char* informationLog = RHI_MALLOC_TYPED(char, informationLength);
 
 					// Get the information
 					glGetProgramPipelineInfoLog(mOpenGLProgramPipeline, informationLength, nullptr, informationLog);
@@ -12561,7 +12561,7 @@ namespace OpenGLRhi
 					RHI_LOG(CRITICAL, informationLog)
 
 						// Cleanup information memory
-						RHI_FREE(context, informationLog);
+						RHI_FREE(informationLog);
 				}
 			}
 
@@ -12828,7 +12828,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), GraphicsProgramSeparate, this);
+			RHI_DELETE(GraphicsProgramSeparate, this);
 		}
 
 
@@ -13172,7 +13172,7 @@ namespace OpenGLRhi
 				{
 					// Allocate memory for the information
 					const Rhi::Context& context = openGLRhi.getContext();
-					char* informationLog = RHI_MALLOC_TYPED(context, char, informationLength);
+					char* informationLog = RHI_MALLOC_TYPED(char, informationLength);
 
 					// Get the information
 					glGetProgramPipelineInfoLog(mOpenGLProgramPipeline, informationLength, nullptr, informationLog);
@@ -13181,7 +13181,7 @@ namespace OpenGLRhi
 					RHI_LOG(CRITICAL, informationLog)
 
 						// Cleanup information memory
-						RHI_FREE(context, informationLog);
+						RHI_FREE(informationLog);
 				}
 			}
 
@@ -13235,7 +13235,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ComputePipelineStateSeparate, this);
+			RHI_DELETE(ComputePipelineStateSeparate, this);
 		}
 
 
@@ -13327,7 +13327,7 @@ namespace OpenGLRhi
 				const Extensions& extensions = openGLRhi.getExtensions();
 			if ( extensions.isGL_ARB_vertex_shader() && extensions.isGL_ARB_gl_spirv() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), VertexShaderSeparate)(openGLRhi, vertexAttributes, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(VertexShaderSeparate)(openGLRhi, vertexAttributes, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13343,7 +13343,7 @@ namespace OpenGLRhi
 			const Extensions& extensions = openGLRhi.getExtensions();
 			if ( extensions.isGL_ARB_vertex_shader() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), VertexShaderSeparate)(openGLRhi, vertexAttributes, shaderSourceCode.sourceCode, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(VertexShaderSeparate)(openGLRhi, vertexAttributes, shaderSourceCode.sourceCode, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13363,7 +13363,7 @@ namespace OpenGLRhi
 				const Extensions& extensions = openGLRhi.getExtensions();
 			if ( extensions.isGL_ARB_tessellation_shader() && extensions.isGL_ARB_gl_spirv() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), TessellationControlShaderSeparate)(openGLRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(TessellationControlShaderSeparate)(openGLRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13379,7 +13379,7 @@ namespace OpenGLRhi
 			const Extensions& extensions = openGLRhi.getExtensions();
 			if ( extensions.isGL_ARB_tessellation_shader() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), TessellationControlShaderSeparate)(openGLRhi, shaderSourceCode.sourceCode, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(TessellationControlShaderSeparate)(openGLRhi, shaderSourceCode.sourceCode, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13399,7 +13399,7 @@ namespace OpenGLRhi
 				const Extensions& extensions = openGLRhi.getExtensions();
 			if ( extensions.isGL_ARB_tessellation_shader() && extensions.isGL_ARB_gl_spirv() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), TessellationEvaluationShaderSeparate)(openGLRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(TessellationEvaluationShaderSeparate)(openGLRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13415,7 +13415,7 @@ namespace OpenGLRhi
 			const Extensions& extensions = openGLRhi.getExtensions();
 			if ( extensions.isGL_ARB_tessellation_shader() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), TessellationEvaluationShaderSeparate)(openGLRhi, shaderSourceCode.sourceCode, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(TessellationEvaluationShaderSeparate)(openGLRhi, shaderSourceCode.sourceCode, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13439,7 +13439,7 @@ namespace OpenGLRhi
 				//   "layout(triangles) in;"
 				//   "layout(triangle_strip, max_vertices = 3) out;"
 				// -> To be able to support older GLSL versions, we have to provide this information also via OpenGL API functions
-				return RHI_NEW(openGLRhi.getContext(), GeometryShaderSeparate)(openGLRhi, shaderBytecode, gsInputPrimitiveTopology, gsOutputPrimitiveTopology, numberOfOutputVertices RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(GeometryShaderSeparate)(openGLRhi, shaderBytecode, gsInputPrimitiveTopology, gsOutputPrimitiveTopology, numberOfOutputVertices RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13459,7 +13459,7 @@ namespace OpenGLRhi
 				//   "layout(triangles) in;"
 				//   "layout(triangle_strip, max_vertices = 3) out;"
 				// -> To be able to support older GLSL versions, we have to provide this information also via OpenGL API functions
-				return RHI_NEW(openGLRhi.getContext(), GeometryShaderSeparate)(openGLRhi, shaderSourceCode.sourceCode, gsInputPrimitiveTopology, gsOutputPrimitiveTopology, numberOfOutputVertices, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(GeometryShaderSeparate)(openGLRhi, shaderSourceCode.sourceCode, gsInputPrimitiveTopology, gsOutputPrimitiveTopology, numberOfOutputVertices, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13479,7 +13479,7 @@ namespace OpenGLRhi
 				const Extensions& extensions = openGLRhi.getExtensions();
 			if ( extensions.isGL_ARB_fragment_shader() && extensions.isGL_ARB_gl_spirv() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), FragmentShaderSeparate)(openGLRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(FragmentShaderSeparate)(openGLRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13495,7 +13495,7 @@ namespace OpenGLRhi
 			const Extensions& extensions = openGLRhi.getExtensions();
 			if ( extensions.isGL_ARB_fragment_shader() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), FragmentShaderSeparate)(openGLRhi, shaderSourceCode.sourceCode, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(FragmentShaderSeparate)(openGLRhi, shaderSourceCode.sourceCode, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13515,7 +13515,7 @@ namespace OpenGLRhi
 				const Extensions& extensions = openGLRhi.getExtensions();
 			if ( extensions.isGL_NV_mesh_shader() && extensions.isGL_ARB_gl_spirv() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), TaskShaderSeparate)(openGLRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(TaskShaderSeparate)(openGLRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13531,7 +13531,7 @@ namespace OpenGLRhi
 			const Extensions& extensions = openGLRhi.getExtensions();
 			if ( extensions.isGL_NV_mesh_shader() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), TaskShaderSeparate)(openGLRhi, shaderSourceCode.sourceCode, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(TaskShaderSeparate)(openGLRhi, shaderSourceCode.sourceCode, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13551,7 +13551,7 @@ namespace OpenGLRhi
 				const Extensions& extensions = openGLRhi.getExtensions();
 			if ( extensions.isGL_NV_mesh_shader() && extensions.isGL_ARB_gl_spirv() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), MeshShaderSeparate)(openGLRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(MeshShaderSeparate)(openGLRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13567,7 +13567,7 @@ namespace OpenGLRhi
 			const Extensions& extensions = openGLRhi.getExtensions();
 			if ( extensions.isGL_NV_mesh_shader() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), MeshShaderSeparate)(openGLRhi, shaderSourceCode.sourceCode, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(MeshShaderSeparate)(openGLRhi, shaderSourceCode.sourceCode, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13587,7 +13587,7 @@ namespace OpenGLRhi
 				const Extensions& extensions = openGLRhi.getExtensions();
 			if ( extensions.isGL_ARB_compute_shader() && extensions.isGL_ARB_gl_spirv() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), ComputeShaderSeparate)(openGLRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(ComputeShaderSeparate)(openGLRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13603,7 +13603,7 @@ namespace OpenGLRhi
 			const Extensions& extensions = openGLRhi.getExtensions();
 			if ( extensions.isGL_ARB_compute_shader() )
 			{
-				return RHI_NEW(openGLRhi.getContext(), ComputeShaderSeparate)(openGLRhi, shaderSourceCode.sourceCode, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(ComputeShaderSeparate)(openGLRhi, shaderSourceCode.sourceCode, (extensions.isGL_ARB_gl_spirv() ? shaderBytecode : nullptr) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
@@ -13645,12 +13645,12 @@ namespace OpenGLRhi
 			else if ( openGLRhi.getExtensions().isGL_EXT_direct_state_access() || openGLRhi.getExtensions().isGL_ARB_direct_state_access() )
 			{
 				// Effective direct state access (DSA)
-				return RHI_NEW(openGLRhi.getContext(), GraphicsProgramSeparateDsa)(openGLRhi, rootSignature, static_cast<VertexShaderSeparate*>(vertexShader), static_cast<TessellationControlShaderSeparate*>(tessellationControlShader), static_cast<TessellationEvaluationShaderSeparate*>(tessellationEvaluationShader), static_cast<GeometryShaderSeparate*>(geometryShader), static_cast<FragmentShaderSeparate*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(GraphicsProgramSeparateDsa)(openGLRhi, rootSignature, static_cast<VertexShaderSeparate*>(vertexShader), static_cast<TessellationControlShaderSeparate*>(tessellationControlShader), static_cast<TessellationEvaluationShaderSeparate*>(tessellationEvaluationShader), static_cast<GeometryShaderSeparate*>(geometryShader), static_cast<FragmentShaderSeparate*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
 				// Traditional bind version
-				return RHI_NEW(openGLRhi.getContext(), GraphicsProgramSeparate)(openGLRhi, rootSignature, static_cast<VertexShaderSeparate*>(vertexShader), static_cast<TessellationControlShaderSeparate*>(tessellationControlShader), static_cast<TessellationEvaluationShaderSeparate*>(tessellationEvaluationShader), static_cast<GeometryShaderSeparate*>(geometryShader), static_cast<FragmentShaderSeparate*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(GraphicsProgramSeparate)(openGLRhi, rootSignature, static_cast<VertexShaderSeparate*>(vertexShader), static_cast<TessellationControlShaderSeparate*>(tessellationControlShader), static_cast<TessellationEvaluationShaderSeparate*>(tessellationEvaluationShader), static_cast<GeometryShaderSeparate*>(geometryShader), static_cast<FragmentShaderSeparate*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 
 			// Error! Shader language mismatch!
@@ -13710,12 +13710,12 @@ namespace OpenGLRhi
 			else if ( openGLRhi.getExtensions().isGL_EXT_direct_state_access() || openGLRhi.getExtensions().isGL_ARB_direct_state_access() )
 			{
 				// Effective direct state access (DSA)
-				return RHI_NEW(openGLRhi.getContext(), GraphicsProgramSeparateDsa)(openGLRhi, rootSignature, static_cast<TaskShaderSeparate*>(taskShader), static_cast<MeshShaderSeparate&>(meshShader), static_cast<FragmentShaderSeparate*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(GraphicsProgramSeparateDsa)(openGLRhi, rootSignature, static_cast<TaskShaderSeparate*>(taskShader), static_cast<MeshShaderSeparate&>(meshShader), static_cast<FragmentShaderSeparate*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 			else
 			{
 				// Traditional bind version
-				return RHI_NEW(openGLRhi.getContext(), GraphicsProgramSeparate)(openGLRhi, rootSignature, static_cast<TaskShaderSeparate*>(taskShader), static_cast<MeshShaderSeparate&>(meshShader), static_cast<FragmentShaderSeparate*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+				return RHI_NEW(GraphicsProgramSeparate)(openGLRhi, rootSignature, static_cast<TaskShaderSeparate*>(taskShader), static_cast<MeshShaderSeparate&>(meshShader), static_cast<FragmentShaderSeparate*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 			}
 
 			// Error! Shader language mismatch!
@@ -13744,7 +13744,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ShaderLanguageSeparate, this);
+			RHI_DELETE(ShaderLanguageSeparate, this);
 		}
 
 
@@ -13924,7 +13924,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), GraphicsPipelineState, this);
+			RHI_DELETE(GraphicsPipelineState, this);
 		}
 
 

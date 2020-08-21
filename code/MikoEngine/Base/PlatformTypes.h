@@ -15,3 +15,5 @@ typedef uint32_t handle;
 #else
 #	error "Unsupported platform"
 #endif
+
+#define NULL_HANDLE 0

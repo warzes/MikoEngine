@@ -38,7 +38,7 @@ namespace OpenGLRhi
 			IResourceGroup(rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mRootParameterIndex(rootParameterIndex),
 			mNumberOfResources(numberOfResources),
-			mResources(RHI_MALLOC_TYPED(rhi.getContext(), Rhi::IResource*, mNumberOfResources)),
+			mResources(RHI_MALLOC_TYPED(Rhi::IResource*, mNumberOfResources)),
 			mSamplerStates(nullptr),
 			mResourceIndexToUniformBlockBindingIndex(nullptr)
 		{
@@ -77,7 +77,7 @@ namespace OpenGLRhi
 				{
 					if ( nullptr == mResourceIndexToUniformBlockBindingIndex )
 					{
-						mResourceIndexToUniformBlockBindingIndex = RHI_MALLOC_TYPED(context, uint32_t, mNumberOfResources);
+						mResourceIndexToUniformBlockBindingIndex = RHI_MALLOC_TYPED(uint32_t, mNumberOfResources);
 						memset(mResourceIndexToUniformBlockBindingIndex, 0, sizeof(uint32_t) * mNumberOfResources);
 					}
 					mResourceIndexToUniformBlockBindingIndex[resourceIndex] = uniformBlockBindingIndex;
@@ -86,7 +86,7 @@ namespace OpenGLRhi
 			}
 			if ( nullptr != samplerStates )
 			{
-				mSamplerStates = RHI_MALLOC_TYPED(context, Rhi::ISamplerState*, mNumberOfResources);
+				mSamplerStates = RHI_MALLOC_TYPED(Rhi::ISamplerState*, mNumberOfResources);
 				for ( uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex )
 				{
 					Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex] = samplerStates[resourceIndex];
@@ -116,14 +116,14 @@ namespace OpenGLRhi
 						samplerState->releaseReference();
 					}
 				}
-				RHI_FREE(context, mSamplerStates);
+				RHI_FREE(mSamplerStates);
 			}
 			for ( uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex )
 			{
 				mResources[resourceIndex]->releaseReference();
 			}
-			RHI_FREE(context, mResources);
-			RHI_FREE(context, mResourceIndexToUniformBlockBindingIndex);
+			RHI_FREE(mResources);
+			RHI_FREE(mResourceIndexToUniformBlockBindingIndex);
 		}
 
 		/**
@@ -181,7 +181,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ResourceGroup, this);
+			RHI_DELETE(ResourceGroup, this);
 		}
 
 

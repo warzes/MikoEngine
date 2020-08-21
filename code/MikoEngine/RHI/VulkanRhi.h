@@ -174,7 +174,7 @@ namespace VulkanRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(mContext, VulkanRhi, this);
+			RHI_DELETE(VulkanRhi, this);
 		}
 
 

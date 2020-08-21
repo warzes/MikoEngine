@@ -125,7 +125,7 @@ namespace OpenGLRhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(mContext, OpenGLRhi, this);
+			RHI_DELETE(OpenGLRhi, this);
 		}
 
 		//[-------------------------------------------------------]

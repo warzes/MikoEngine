@@ -810,12 +810,6 @@
     <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_GLSL_ES3.h">
       <Filter>5_Renderer\DebugGui\Detail\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_HLSL_D3D9.h">
-      <Filter>5_Renderer\DebugGui\Detail\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_HLSL_D3D10_D3D11_D3D12.h">
-      <Filter>5_Renderer\DebugGui\Detail\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_Null.h">
       <Filter>5_Renderer\DebugGui\Detail\Shader</Filter>
     </ClInclude>
@@ -844,9 +838,6 @@
       <Filter>5_Renderer\Core</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\Loader.h">
-      <Filter>5_Renderer\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Core\MakeId.h">
       <Filter>5_Renderer\Core</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\Manager.h">
@@ -892,12 +883,6 @@
       <Filter>5_Renderer\Core\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\Platform\PlatformManager.h">
-      <Filter>5_Renderer\Core\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Core\Platform\PlatformTypes.h">
-      <Filter>5_Renderer\Core\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Core\Platform\WindowsHeader.h">
       <Filter>5_Renderer\Core\Platform</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\Math\EulerAngles.h">
@@ -1365,13 +1350,13 @@
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_GLSL_ES3.h">
       <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_HLSL_D3D9.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_HLSL_D3D10_D3D11_D3D12.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_Null.h">
+      <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_HLSL_D3D11_D3D12.h">
+      <Filter>5_Renderer\DebugGui\Detail\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_HLSL_D3D11_D3D12.h">
       <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader</Filter>
     </ClInclude>
   </ItemGroup>

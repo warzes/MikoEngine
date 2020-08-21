@@ -671,7 +671,7 @@ namespace
 				return VK_FALSE;
 			}
 
-			// TODO(co) File "unrimp\source\rhi\private\vulkanrhi\vulkanrhi.cpp" | Line 1029 | Critical: Vulkan debug report callback: Object type: "VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT" Object: "4963848" Location: "0" Message code: "0" Layer prefix: "Loader Message" Message: "loader_create_device_chain: Failed to find 'vkGetInstanceProcAddr' in layer C:\Program Files (x86)\Steam\.\SteamOverlayVulkanLayer.dll.  Skipping layer." 
+			// TODO(co) File "source\rhi\private\vulkanrhi\vulkanrhi.cpp" | Line 1029 | Critical: Vulkan debug report callback: Object type: "VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT" Object: "4963848" Location: "0" Message code: "0" Layer prefix: "Loader Message" Message: "loader_create_device_chain: Failed to find 'vkGetInstanceProcAddr' in layer C:\Program Files (x86)\Steam\.\SteamOverlayVulkanLayer.dll.  Skipping layer." 
 			if ( VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT == objectType && object && 0 == location && 0 == messageCode && nullptr != strstr(pMessage, "SteamOverlayVulkanLayer.dll") )
 			{
 				return VK_FALSE;
@@ -1107,7 +1107,7 @@ namespace
 			// -> http://aras-p.info/blog/2016/09/01/SPIR-V-Compression/
 			const size_t spirvOutputBufferSize = smolv::GetDecodedBufferSize(shaderBytecode.getBytecode(), shaderBytecode.getNumberOfBytes());
 			// TODO(co) Try to avoid new/delete by trying to use the C-runtime stack if there aren't too many bytes
-			uint8_t* spirvOutputBuffer = RHI_MALLOC_TYPED(context, uint8_t, spirvOutputBufferSize);
+			uint8_t* spirvOutputBuffer = RHI_MALLOC_TYPED(uint8_t, spirvOutputBufferSize);
 			smolv::Decode(shaderBytecode.getBytecode(), shaderBytecode.getNumberOfBytes(), spirvOutputBuffer, spirvOutputBufferSize);
 
 			// Create the Vulkan shader module
@@ -1126,7 +1126,7 @@ namespace
 			}
 
 			// Done
-			RHI_FREE(context, spirvOutputBuffer);
+			RHI_FREE(spirvOutputBuffer);
 			return vkShaderModule;
 		}
 

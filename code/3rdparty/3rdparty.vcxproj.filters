@@ -725,6 +725,57 @@
     <ClCompile Include="glslang\glslangUnityBuild2.cpp">
       <Filter>glslang</Filter>
     </ClCompile>
+    <ClCompile Include="lz4\xxhash.c">
+      <Filter>lz4</Filter>
+    </ClCompile>
+    <ClCompile Include="lz4\lz4.c">
+      <Filter>lz4</Filter>
+    </ClCompile>
+    <ClCompile Include="lz4\lz4frame.c">
+      <Filter>lz4</Filter>
+    </ClCompile>
+    <ClCompile Include="lz4\lz4hc.c">
+      <Filter>lz4</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsFS\physfs_unicode.c">
+      <Filter>PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsFS\physfs.c">
+      <Filter>PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsFS\physfs_archiver_dir.c">
+      <Filter>PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsFS\physfs_archiver_unpacked.c">
+      <Filter>PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsFS\physfs_archiver_zip.c">
+      <Filter>PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsFS\physfs_byteorder.c">
+      <Filter>PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsFS\physfs_platform_windows.c">
+      <Filter>PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="Remotery\Remotery.c" />
+    <ClCompile Include="ImGuizmo\ImGuizmo.cpp" />
+    <ClCompile Include="MojoShader\mojoshader_preprocessor.cpp">
+      <Filter>mojoshader</Filter>
+    </ClCompile>
+    <ClCompile Include="MojoShader\mojoshader_common.cpp">
+      <Filter>mojoshader</Filter>
+    </ClCompile>
+    <ClCompile Include="MojoShader\mojoshader_lexer.cpp">
+      <Filter>mojoshader</Filter>
+    </ClCompile>
+    <ClCompile Include="mikktspace\mikktspace.c" />
+    <ClCompile Include="crunch\crunchUnityBuild2.cpp">
+      <Filter>crunch</Filter>
+    </ClCompile>
+    <ClCompile Include="crunch\crunchUnityBuild1.cpp">
+      <Filter>crunch</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h" />
@@ -1677,6 +1728,18 @@
     </Filter>
     <Filter Include="glslang">
       <UniqueIdentifier>{476633dc-2b2e-4342-bac0-0dd511f60a80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lz4">
+      <UniqueIdentifier>{931b72ab-e44a-49ff-a797-f0913958dce6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PhysicsFS">
+      <UniqueIdentifier>{e51c6a05-c5dc-4a63-9135-64560355ecdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mojoshader">
+      <UniqueIdentifier>{21bb7c88-62f0-42b9-a5b4-1b0c7bd6556c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="crunch">
+      <UniqueIdentifier>{a6d6dfb7-c2d8-4398-a638-ff60c92a4a8d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

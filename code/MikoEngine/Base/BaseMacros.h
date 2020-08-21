@@ -34,8 +34,12 @@
 
 #if SE_PLATFORM_WINDOWS
 #	define SE_DEBUG_BREAK __debugbreak()
+#	define RESTRICT __restrict
+#	define RESTRICT_RETURN __restrict
 #elif SE_PLATFORM_LINUX
 #	define SE_DEBUG_BREAK __builtin_trap()
+#	define RESTRICT __restrict__
+#	define RESTRICT_RETURN
 #endif // SE_PLATFORM_*
 
 

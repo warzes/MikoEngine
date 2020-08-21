@@ -334,7 +334,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(mContext, Direct3D11Rhi, this);
+			RHI_DELETE(Direct3D11Rhi, this);
 		}
 
 
@@ -757,7 +757,7 @@ namespace Direct3D11Rhi
 		ResourceGroup(Rhi::IRhi& rhi, uint32_t numberOfResources, Rhi::IResource** resources, Rhi::ISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IResourceGroup(rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mNumberOfResources(numberOfResources),
-			mResources(RHI_MALLOC_TYPED(rhi.getContext(), Rhi::IResource*, mNumberOfResources)),
+			mResources(RHI_MALLOC_TYPED(Rhi::IResource*, mNumberOfResources)),
 			mSamplerStates(nullptr)
 		{
 			// Process all resources and add our reference to the RHI resource
@@ -770,7 +770,7 @@ namespace Direct3D11Rhi
 			}
 			if (nullptr != samplerStates)
 			{
-				mSamplerStates = RHI_MALLOC_TYPED(rhi.getContext(), Rhi::ISamplerState*, mNumberOfResources);
+				mSamplerStates = RHI_MALLOC_TYPED(Rhi::ISamplerState*, mNumberOfResources);
 				for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
 				{
 					Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex] = samplerStates[resourceIndex];
@@ -800,13 +800,13 @@ namespace Direct3D11Rhi
 						samplerState->releaseReference();
 					}
 				}
-				RHI_FREE(context, mSamplerStates);
+				RHI_FREE(mSamplerStates);
 			}
 			for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
 			{
 				mResources[resourceIndex]->releaseReference();
 			}
-			RHI_FREE(context, mResources);
+			RHI_FREE(mResources);
 		}
 
 		/**
@@ -840,7 +840,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ResourceGroup, this);
+			RHI_DELETE(ResourceGroup, this);
 		}
 
 
@@ -900,7 +900,7 @@ namespace Direct3D11Rhi
 				const uint32_t numberOfParameters = mRootSignature.numberOfParameters;
 				if (numberOfParameters > 0)
 				{
-					mRootSignature.parameters = RHI_MALLOC_TYPED(context, Rhi::RootParameter, numberOfParameters);
+					mRootSignature.parameters = RHI_MALLOC_TYPED(Rhi::RootParameter, numberOfParameters);
 					Rhi::RootParameter* destinationRootParameters = const_cast<Rhi::RootParameter*>(mRootSignature.parameters);
 					memcpy(destinationRootParameters, rootSignature.parameters, sizeof(Rhi::RootParameter) * numberOfParameters);
 
@@ -912,7 +912,7 @@ namespace Direct3D11Rhi
 						if (Rhi::RootParameterType::DESCRIPTOR_TABLE == destinationRootParameter.parameterType)
 						{
 							const uint32_t numberOfDescriptorRanges = destinationRootParameter.descriptorTable.numberOfDescriptorRanges;
-							destinationRootParameter.descriptorTable.descriptorRanges = reinterpret_cast<uintptr_t>(RHI_MALLOC_TYPED(context, Rhi::DescriptorRange, numberOfDescriptorRanges));
+							destinationRootParameter.descriptorTable.descriptorRanges = reinterpret_cast<uintptr_t>(RHI_MALLOC_TYPED(Rhi::DescriptorRange, numberOfDescriptorRanges));
 							memcpy(reinterpret_cast<Rhi::DescriptorRange*>(destinationRootParameter.descriptorTable.descriptorRanges), reinterpret_cast<const Rhi::DescriptorRange*>(sourceRootParameter.descriptorTable.descriptorRanges), sizeof(Rhi::DescriptorRange) * numberOfDescriptorRanges);
 						}
 					}
@@ -923,7 +923,7 @@ namespace Direct3D11Rhi
 				const uint32_t numberOfStaticSamplers = mRootSignature.numberOfStaticSamplers;
 				if (numberOfStaticSamplers > 0)
 				{
-					mRootSignature.staticSamplers = RHI_MALLOC_TYPED(context, Rhi::StaticSampler, numberOfStaticSamplers);
+					mRootSignature.staticSamplers = RHI_MALLOC_TYPED(Rhi::StaticSampler, numberOfStaticSamplers);
 					memcpy(const_cast<Rhi::StaticSampler*>(mRootSignature.staticSamplers), rootSignature.staticSamplers, sizeof(Rhi::StaticSampler) * numberOfStaticSamplers);
 				}
 			}
@@ -943,12 +943,12 @@ namespace Direct3D11Rhi
 					const Rhi::RootParameter& rootParameter = mRootSignature.parameters[i];
 					if (Rhi::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
 					{
-						RHI_FREE(context, reinterpret_cast<Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges));
+						RHI_FREE(reinterpret_cast<Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges));
 					}
 				}
-				RHI_FREE(context, const_cast<Rhi::RootParameter*>(mRootSignature.parameters));
+				RHI_FREE(const_cast<Rhi::RootParameter*>(mRootSignature.parameters));
 			}
-			RHI_FREE(context, const_cast<Rhi::StaticSampler*>(mRootSignature.staticSamplers));
+			RHI_FREE(const_cast<Rhi::StaticSampler*>(mRootSignature.staticSamplers));
 		}
 
 		/**
@@ -978,7 +978,7 @@ namespace Direct3D11Rhi
 			RHI_ASSERT(nullptr != resources, "The Direct3D 11 resource pointers must be valid")
 
 			// Create resource group
-			return RHI_NEW(rhi.getContext(), ResourceGroup)(rhi, numberOfResources, resources, samplerStates RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(ResourceGroup)(rhi, numberOfResources, resources, samplerStates RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 
@@ -988,7 +988,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), RootSignature, this);
+			RHI_DELETE(RootSignature, this);
 		}
 
 
@@ -1208,7 +1208,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), VertexBuffer, this);
+			RHI_DELETE(VertexBuffer, this);
 		}
 
 
@@ -1449,7 +1449,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), IndexBuffer, this);
+			RHI_DELETE(IndexBuffer, this);
 		}
 
 
@@ -1527,11 +1527,11 @@ namespace Direct3D11Rhi
 			if (mNumberOfSlots > 0)
 			{
 				const Rhi::Context& context = direct3D11Rhi.getContext();
-				mD3D11Buffers = RHI_MALLOC_TYPED(context, ID3D11Buffer*, mNumberOfSlots);
-				mStrides = RHI_MALLOC_TYPED(context, UINT, mNumberOfSlots);
-				mOffsets = RHI_MALLOC_TYPED(context, UINT, mNumberOfSlots);
+				mD3D11Buffers = RHI_MALLOC_TYPED(ID3D11Buffer*, mNumberOfSlots);
+				mStrides = RHI_MALLOC_TYPED(UINT, mNumberOfSlots);
+				mOffsets = RHI_MALLOC_TYPED(UINT, mNumberOfSlots);
 				memset(mOffsets, 0, sizeof(UINT) * mNumberOfSlots);	// Vertex buffer offset is not supported by OpenGL, so our RHI implementation doesn't support it either, set everything to zero
-				mVertexBuffers = RHI_MALLOC_TYPED(context, VertexBuffer*, mNumberOfSlots);
+				mVertexBuffers = RHI_MALLOC_TYPED(VertexBuffer*, mNumberOfSlots);
 
 				{ // Loop through all vertex buffers
 					ID3D11Buffer** currentD3D11Buffer = mD3D11Buffers;
@@ -1574,9 +1574,9 @@ namespace Direct3D11Rhi
 			const Rhi::Context& context = direct3D11Rhi.getContext();
 			if (mNumberOfSlots > 0)
 			{
-				RHI_FREE(context, mD3D11Buffers);
-				RHI_FREE(context, mStrides);
-				RHI_FREE(context, mOffsets);
+				RHI_FREE(mD3D11Buffers);
+				RHI_FREE(mStrides);
+				RHI_FREE(mOffsets);
 			}
 
 			// Release the reference to the used vertex buffers
@@ -1590,7 +1590,7 @@ namespace Direct3D11Rhi
 				}
 
 				// Cleanup
-				RHI_FREE(context, mVertexBuffers);
+				RHI_FREE(mVertexBuffers);
 			}
 
 			// Free the unique compact vertex array ID
@@ -1644,7 +1644,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), VertexArray, this);
+			RHI_DELETE(VertexArray, this);
 		}
 
 
@@ -1872,7 +1872,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TextureBuffer, this);
+			RHI_DELETE(TextureBuffer, this);
 		}
 
 
@@ -2097,7 +2097,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), StructuredBuffer, this);
+			RHI_DELETE(StructuredBuffer, this);
 		}
 
 
@@ -2369,7 +2369,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), IndirectBuffer, this);
+			RHI_DELETE(IndirectBuffer, this);
 		}
 
 
@@ -2519,7 +2519,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), UniformBuffer, this);
+			RHI_DELETE(UniformBuffer, this);
 		}
 
 
@@ -2669,7 +2669,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), BufferManager, this);
+			RHI_DELETE(BufferManager, this);
 		}
 
 
@@ -2963,7 +2963,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture1D, this);
+			RHI_DELETE(Texture1D, this);
 		}
 
 
@@ -3082,7 +3082,7 @@ namespace Direct3D11Rhi
 				const Rhi::Context& context = direct3D11Rhi.getContext();
 				RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
 				D3D11_SUBRESOURCE_DATA d3d11SubresourceDataStack[MAXIMUM_NUMBER_OF_SLICES * MAXIMUM_NUMBER_OF_MIPMAPS];
-				D3D11_SUBRESOURCE_DATA* d3d11SubresourceData = (numberOfSlices <= MAXIMUM_NUMBER_OF_SLICES) ? d3d11SubresourceDataStack : RHI_MALLOC_TYPED(context, D3D11_SUBRESOURCE_DATA, numberOfSlices);
+				D3D11_SUBRESOURCE_DATA* d3d11SubresourceData = (numberOfSlices <= MAXIMUM_NUMBER_OF_SLICES) ? d3d11SubresourceDataStack : RHI_MALLOC_TYPED(D3D11_SUBRESOURCE_DATA, numberOfSlices);
 
 				// Did the user provided data containing mipmaps from 0-n down to 1x1 linearly in memory?
 				if (dataContainsMipmaps)
@@ -3143,7 +3143,7 @@ namespace Direct3D11Rhi
 				FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateTexture1D(&d3d11Texture1DDesc, d3d11SubresourceData, &mD3D11Texture1D))
 				if (numberOfSlices > MAXIMUM_NUMBER_OF_SLICES)
 				{
-					RHI_FREE(context, d3d11SubresourceData);
+					RHI_FREE(d3d11SubresourceData);
 				}
 			}
 			else
@@ -3290,7 +3290,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture1DArray, this);
+			RHI_DELETE(Texture1DArray, this);
 		}
 
 
@@ -3650,7 +3650,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture2D, this);
+			RHI_DELETE(Texture2D, this);
 		}
 
 
@@ -3776,7 +3776,7 @@ namespace Direct3D11Rhi
 				const Rhi::Context& context = direct3D11Rhi.getContext();
 				RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
 				D3D11_SUBRESOURCE_DATA d3d11SubresourceDataStack[MAXIMUM_NUMBER_OF_SLICES * MAXIMUM_NUMBER_OF_MIPMAPS];
-				D3D11_SUBRESOURCE_DATA* d3d11SubresourceData = (numberOfSlices <= MAXIMUM_NUMBER_OF_SLICES) ? d3d11SubresourceDataStack : RHI_MALLOC_TYPED(context, D3D11_SUBRESOURCE_DATA, numberOfSlices);
+				D3D11_SUBRESOURCE_DATA* d3d11SubresourceData = (numberOfSlices <= MAXIMUM_NUMBER_OF_SLICES) ? d3d11SubresourceDataStack : RHI_MALLOC_TYPED(D3D11_SUBRESOURCE_DATA, numberOfSlices);
 
 				// Did the user provided data containing mipmaps from 0-n down to 1x1 linearly in memory?
 				if (dataContainsMipmaps)
@@ -3842,7 +3842,7 @@ namespace Direct3D11Rhi
 				FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateTexture2D(&d3d11Texture2DDesc, d3d11SubresourceData, &mD3D11Texture2D))
 				if (numberOfSlices > MAXIMUM_NUMBER_OF_SLICES)
 				{
-					RHI_FREE(context, d3d11SubresourceData);
+					RHI_FREE(d3d11SubresourceData);
 				}
 			}
 			else
@@ -4001,7 +4001,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture2DArray, this);
+			RHI_DELETE(Texture2DArray, this);
 		}
 
 
@@ -4320,7 +4320,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture3D, this);
+			RHI_DELETE(Texture3D, this);
 		}
 
 
@@ -4647,7 +4647,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TextureCube, this);
+			RHI_DELETE(TextureCube, this);
 		}
 
 
@@ -4979,7 +4979,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TextureCubeArray, this);
+			RHI_DELETE(TextureCubeArray, this);
 		}
 
 
@@ -5128,7 +5128,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TextureManager, this);
+			RHI_DELETE(TextureManager, this);
 		}
 
 
@@ -5232,7 +5232,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), SamplerState, this);
+			RHI_DELETE(SamplerState, this);
 		}
 
 
@@ -5662,7 +5662,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), RenderPass, this);
+			RHI_DELETE(RenderPass, this);
 		}
 
 
@@ -5808,7 +5808,7 @@ namespace Direct3D11Rhi
 			{
 				mD3D11Queries[i]->Release();
 			}
-			RHI_FREE(getRhi().getContext(), mD3D11Queries);
+			RHI_FREE(mD3D11Queries);
 		}
 
 		/**
@@ -5854,7 +5854,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), QueryPool, this);
+			RHI_DELETE(QueryPool, this);
 		}
 
 
@@ -6356,7 +6356,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), SwapChain, this);
+			RHI_DELETE(SwapChain, this);
 		}
 
 
@@ -6538,8 +6538,8 @@ namespace Direct3D11Rhi
 			const Rhi::Context& context = direct3D11Rhi.getContext();
 			if (mNumberOfColorTextures > 0)
 			{
-				mColorTextures = RHI_MALLOC_TYPED(context, Rhi::ITexture*, mNumberOfColorTextures);
-				mD3D11RenderTargetViews = RHI_MALLOC_TYPED(context, ID3D11RenderTargetView*, mNumberOfColorTextures);
+				mColorTextures = RHI_MALLOC_TYPED(Rhi::ITexture*, mNumberOfColorTextures);
+				mD3D11RenderTargetViews = RHI_MALLOC_TYPED(ID3D11RenderTargetView*, mNumberOfColorTextures);
 
 				// Loop through all color textures
 				ID3D11RenderTargetView** d3d11RenderTargetView = mD3D11RenderTargetViews;
@@ -6733,14 +6733,14 @@ namespace Direct3D11Rhi
 
 				{ // Assign a debug name to the Direct3D 11 render target view, do also add the index to the name
 					const size_t adjustedDetailedDebugNameLength = detailedDebugNameLength + 5;	// Direct3D 11 supports 8 render targets ("D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT", so: One digit + one [ + one ] + one space + terminating zero = 5 characters)
-					char* nameWithIndex = RHI_MALLOC_TYPED(context, char, adjustedDetailedDebugNameLength);
+					char* nameWithIndex = RHI_MALLOC_TYPED(char, adjustedDetailedDebugNameLength);
 					ID3D11RenderTargetView** d3d11RenderTargetViewsEnd = mD3D11RenderTargetViews + mNumberOfColorTextures;
 					for (ID3D11RenderTargetView** d3d11RenderTargetView = mD3D11RenderTargetViews; d3d11RenderTargetView < d3d11RenderTargetViewsEnd; ++d3d11RenderTargetView)
 					{
 						sprintf_s(nameWithIndex, adjustedDetailedDebugNameLength, "%s [%u]", detailedDebugName, static_cast<uint32_t>(d3d11RenderTargetView - mD3D11RenderTargetViews));
 						FAILED_DEBUG_BREAK((*d3d11RenderTargetView)->SetPrivateData(WKPDID_D3DDebugObjectName, static_cast<UINT>(adjustedDetailedDebugNameLength), nameWithIndex))
 					}
-					RHI_FREE(context, nameWithIndex);
+					RHI_FREE(nameWithIndex);
 				}
 
 				// Assign a debug name to the Direct3D 11 depth stencil view
@@ -6769,7 +6769,7 @@ namespace Direct3D11Rhi
 				}
 
 				// Cleanup
-				RHI_FREE(context, mD3D11RenderTargetViews);
+				RHI_FREE(mD3D11RenderTargetViews);
 			}
 			if (nullptr != mColorTextures)
 			{
@@ -6781,7 +6781,7 @@ namespace Direct3D11Rhi
 				}
 
 				// Cleanup
-				RHI_FREE(context, mColorTextures);
+				RHI_FREE(mColorTextures);
 			}
 
 			// Release the reference to the used depth stencil texture
@@ -6876,7 +6876,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Framebuffer, this);
+			RHI_DELETE(Framebuffer, this);
 		}
 
 
@@ -7052,7 +7052,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), VertexShaderHlsl, this);
+			RHI_DELETE(VertexShaderHlsl, this);
 		}
 
 
@@ -7200,7 +7200,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TessellationControlShaderHlsl, this);
+			RHI_DELETE(TessellationControlShaderHlsl, this);
 		}
 
 
@@ -7347,7 +7347,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TessellationEvaluationShaderHlsl, this);
+			RHI_DELETE(TessellationEvaluationShaderHlsl, this);
 		}
 
 
@@ -7494,7 +7494,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), GeometryShaderHlsl, this);
+			RHI_DELETE(GeometryShaderHlsl, this);
 		}
 
 
@@ -7641,7 +7641,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), FragmentShaderHlsl, this);
+			RHI_DELETE(FragmentShaderHlsl, this);
 		}
 
 
@@ -7788,7 +7788,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ComputeShaderHlsl, this);
+			RHI_DELETE(ComputeShaderHlsl, this);
 		}
 
 
@@ -7974,7 +7974,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), GraphicsProgramHlsl, this);
+			RHI_DELETE(GraphicsProgramHlsl, this);
 		}
 
 
@@ -8221,7 +8221,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ShaderLanguageHlsl, this);
+			RHI_DELETE(ShaderLanguageHlsl, this);
 		}
 
 
@@ -8296,7 +8296,7 @@ namespace Direct3D11Rhi
 
 						// TODO(co) We could manage in here without new/delete when using a fixed maximum supported number of elements
 						const Rhi::Context& context = direct3D11Rhi.getContext();
-						D3D11_INPUT_ELEMENT_DESC* d3d11InputElementDescs   = numberOfAttributes ? RHI_MALLOC_TYPED(context, D3D11_INPUT_ELEMENT_DESC, numberOfAttributes) : RHI_MALLOC_TYPED(context, D3D11_INPUT_ELEMENT_DESC, 1);
+						D3D11_INPUT_ELEMENT_DESC* d3d11InputElementDescs   = numberOfAttributes ? RHI_MALLOC_TYPED(D3D11_INPUT_ELEMENT_DESC, numberOfAttributes) : RHI_MALLOC_TYPED(D3D11_INPUT_ELEMENT_DESC, 1);
 						D3D11_INPUT_ELEMENT_DESC* d3d11InputElementDesc    = d3d11InputElementDescs;
 						D3D11_INPUT_ELEMENT_DESC* d3d11InputElementDescEnd = d3d11InputElementDescs + numberOfAttributes;
 						for (; d3d11InputElementDesc < d3d11InputElementDescEnd; ++d3d11InputElementDesc, ++attributes)
@@ -8325,7 +8325,7 @@ namespace Direct3D11Rhi
 						FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateInputLayout(d3d11InputElementDescs, numberOfAttributes, d3dBlobVertexShader->GetBufferPointer(), d3dBlobVertexShader->GetBufferSize(), &mD3D11InputLayout))
 
 						// Destroy Direct3D 11 input element descriptions
-						RHI_FREE(context, d3d11InputElementDescs);
+						RHI_FREE(d3d11InputElementDescs);
 
 						// Assign a default name to the resource for debugging purposes
 						#if SE_DEBUG
@@ -8440,7 +8440,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), GraphicsPipelineState, this);
+			RHI_DELETE(GraphicsPipelineState, this);
 		}
 
 
@@ -8544,7 +8544,7 @@ namespace Direct3D11Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ComputePipelineState, this);
+			RHI_DELETE(ComputePipelineState, this);
 		}
 
 
@@ -9226,7 +9226,7 @@ namespace Direct3D11Rhi
 		}
 
 		// Destroy the Direct3D 11 runtime linking instance
-		RHI_DELETE(mContext, Direct3D11RuntimeLinking, mDirect3D11RuntimeLinking);
+		RHI_DELETE(Direct3D11RuntimeLinking, mDirect3D11RuntimeLinking);
 	}
 
 
@@ -10986,7 +10986,7 @@ namespace Direct3D11Rhi
 				// If required, create the HLSL shader language instance right now
 				if (nullptr == mShaderLanguageHlsl)
 				{
-					mShaderLanguageHlsl = RHI_NEW(mContext, ShaderLanguageHlsl)(*this);
+					mShaderLanguageHlsl = RHI_NEW(ShaderLanguageHlsl)(*this);
 					mShaderLanguageHlsl->addReference();	// Internal RHI reference
 				}
 
@@ -11008,13 +11008,13 @@ namespace Direct3D11Rhi
 	//[-------------------------------------------------------]
 	Rhi::IRenderPass* Direct3D11Rhi::createRenderPass(uint32_t numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		return RHI_NEW(mContext, RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IQueryPool* Direct3D11Rhi::createQueryPool(Rhi::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		RHI_ASSERT(numberOfQueries > 0, "Direct3D 11: Number of queries mustn't be zero")
-		return RHI_NEW(mContext, QueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(QueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::ISwapChain* Direct3D11Rhi::createSwapChain(Rhi::IRenderPass& renderPass, Rhi::WindowHandle windowHandle, bool RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
@@ -11024,7 +11024,7 @@ namespace Direct3D11Rhi
 		RHI_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle, "Direct3D 11: The provided native window handle must not be a null handle")
 
 		// Create the swap chain
-		return RHI_NEW(mContext, SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IFramebuffer* Direct3D11Rhi::createFramebuffer(Rhi::IRenderPass& renderPass, const Rhi::FramebufferAttachment* colorFramebufferAttachments, const Rhi::FramebufferAttachment* depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
@@ -11033,22 +11033,22 @@ namespace Direct3D11Rhi
 		RHI_MATCH_CHECK(*this, renderPass)
 
 		// Create the framebuffer
-		return RHI_NEW(mContext, Framebuffer)(renderPass, colorFramebufferAttachments, depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(Framebuffer)(renderPass, colorFramebufferAttachments, depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IBufferManager* Direct3D11Rhi::createBufferManager()
 	{
-		return RHI_NEW(mContext, BufferManager)(*this);
+		return RHI_NEW(BufferManager)(*this);
 	}
 
 	Rhi::ITextureManager* Direct3D11Rhi::createTextureManager()
 	{
-		return RHI_NEW(mContext, TextureManager)(*this);
+		return RHI_NEW(TextureManager)(*this);
 	}
 
 	Rhi::IRootSignature* Direct3D11Rhi::createRootSignature(const Rhi::RootSignature& rootSignature RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		return RHI_NEW(mContext, RootSignature)(*this, rootSignature RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(RootSignature)(*this, rootSignature RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IGraphicsPipelineState* Direct3D11Rhi::createGraphicsPipelineState(const Rhi::GraphicsPipelineState& graphicsPipelineState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
@@ -11062,7 +11062,7 @@ namespace Direct3D11Rhi
 		uint16_t id = 0;
 		if (GraphicsPipelineStateMakeId.CreateID(id))
 		{
-			return RHI_NEW(mContext, GraphicsPipelineState)(*this, graphicsPipelineState, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(GraphicsPipelineState)(*this, graphicsPipelineState, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		// Error: Ensure a correct reference counter behaviour
@@ -11089,7 +11089,7 @@ namespace Direct3D11Rhi
 		uint16_t id = 0;
 		if (ComputePipelineStateMakeId.CreateID(id))
 		{
-			return RHI_NEW(mContext, ComputePipelineState)(*this, computeShader, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(ComputePipelineState)(*this, computeShader, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		// Error: Ensure a correct reference counter behaviour
@@ -11100,7 +11100,7 @@ namespace Direct3D11Rhi
 
 	Rhi::ISamplerState* Direct3D11Rhi::createSamplerState(const Rhi::SamplerState& samplerState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		return RHI_NEW(mContext, SamplerState)(*this, samplerState RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(SamplerState)(*this, samplerState RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 

@@ -35,10 +35,13 @@ SE_PRAGMA_WARNING_LEVEL(0)
 #include <algorithm>
 #include <chrono>
 #include <optional>
+#include <filesystem>
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <functional>
 
+#include <queue>
 #include <vector>
 #include <array>
 #include <set>
@@ -48,6 +51,7 @@ SE_PRAGMA_WARNING_LEVEL(0)
 #include <atomic>
 #include <mutex>
 #include <thread>
+#include <future>
 
 SE_PRAGMA_WARNING_POP
 
@@ -118,13 +122,20 @@ SE_PRAGMA_WARNING_LEVEL(0)
 
 //-----------------------------------------------------------------------------
 // GLM
-#define GLM_FORCE_RADIANS
 // GLM use the OpenGL depth range of -1.0 to 1.0 by default. We want range from 0.0 to 1.0 for Vulkan.
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#define GLM_FORCE_CXX17
+#define GLM_FORCE_INLINE
+#define GLM_FORCE_SIMD_AVX2
+#define GLM_FORCE_XYZW_ONLY
+#define GLM_FORCE_LEFT_HANDED
+#define GLM_FORCE_RADIANS
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
+#include <glm/detail/setup.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
 #include <glm/gtx/hash.hpp>
 
 //-----------------------------------------------------------------------------
@@ -190,6 +201,7 @@ SE_PRAGMA_WARNING_LEVEL(0);
 #	include <Windows.h>
 #	include <VersionHelpers.h>
 #	include <wrl.h> // Windows Runtime Library. Needed for Microsoft::WRL::ComPtr<> template class.
+#	include <shellapi.h>
 #	undef near
 #	undef far
 #else
@@ -207,6 +219,8 @@ SE_PRAGMA_WARNING_DISABLE_MSVC(4820); //'4' bytes padding added after data membe
 SE_PRAGMA_WARNING_DISABLE_MSVC(4100); // unreferenced formal parameter
 SE_PRAGMA_WARNING_DISABLE_MSVC(4625); // copy constructor was implicitly defined as deleted
 SE_PRAGMA_WARNING_DISABLE_MSVC(4626); // assignment operator was implicitly defined as deleted
+SE_PRAGMA_WARNING_DISABLE_MSVC(4710); // function not inlined
+
 SE_PRAGMA_WARNING_DISABLE_MSVC(4996); // This function or variable may be unsafe.To disable deprecation, use _CRT_SECURE_NO_WARNINGS.
 SE_PRAGMA_WARNING_DISABLE_MSVC(5026); // move constructor was implicitly defined as deleted
 SE_PRAGMA_WARNING_DISABLE_MSVC(5027); // move assignment operator was implicitly defined as deleted

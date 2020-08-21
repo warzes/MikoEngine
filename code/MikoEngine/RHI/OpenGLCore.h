@@ -188,16 +188,16 @@ namespace
 			if ( informationLength > 1 )
 			{
 				// Allocate memory for the information
-				char* informationLog = RHI_MALLOC_TYPED(context, char, informationLength);
+				char* informationLog = RHI_MALLOC_TYPED(char, informationLength);
 
 				// Get the information
 				glGetShaderInfoLog(openGLShader, informationLength, nullptr, informationLog);
 
 				// Output the debug string
-				RHI_LOG(CRITICAL, informationLog)
+				RHI_LOG(CRITICAL, informationLog);
 
 					// Cleanup information memory
-					RHI_FREE(context, informationLog);
+				RHI_FREE(informationLog);
 			}
 		}
 
@@ -209,7 +209,7 @@ namespace
 			if ( informationLength > 1 )
 			{
 				// Allocate memory for the information
-				char* informationLog = RHI_MALLOC_TYPED(context, char, informationLength);
+				char* informationLog = RHI_MALLOC_TYPED(char, informationLength);
 
 				// Get the information
 				glGetShaderInfoLog(openGLShader, informationLength, nullptr, informationLog);
@@ -221,7 +221,7 @@ namespace
 				}
 
 				// Cleanup information memory
-				RHI_FREE(context, informationLog);
+				RHI_FREE(informationLog);
 			}
 		}
 
@@ -233,7 +233,7 @@ namespace
 			if ( informationLength > 1 )
 			{
 				// Allocate memory for the information
-				char* informationLog = RHI_MALLOC_TYPED(context, char, informationLength);
+				char* informationLog = RHI_MALLOC_TYPED(char, informationLength);
 
 				// Get the information
 				glGetProgramInfoLog(openGLProgram, informationLength, nullptr, informationLog);
@@ -242,7 +242,7 @@ namespace
 				RHI_LOG(CRITICAL, informationLog)
 
 					// Cleanup information memory
-					RHI_FREE(context, informationLog);
+					RHI_FREE(informationLog);
 			}
 		}
 
@@ -254,7 +254,7 @@ namespace
 			if ( informationLength > 1 )
 			{
 				// Allocate memory for the information
-				char* informationLog = RHI_MALLOC_TYPED(context, char, informationLength);
+				char* informationLog = RHI_MALLOC_TYPED(char, informationLength);
 
 				// Get the information
 				glGetProgramInfoLog(openGLProgram, informationLength, nullptr, informationLog);
@@ -266,7 +266,7 @@ namespace
 				}
 
 				// Cleanup information memory
-				RHI_FREE(context, informationLog);
+				RHI_FREE(informationLog);
 			}
 		}
 
@@ -296,10 +296,10 @@ namespace
 				// -> https://github.com/aras-p/smol-v
 				// -> http://aras-p.info/blog/2016/09/01/SPIR-V-Compression/
 				const size_t spirvOutputBufferSize = smolv::GetDecodedBufferSize(shaderBytecode.getBytecode(), shaderBytecode.getNumberOfBytes());
-				uint8_t* spirvOutputBuffer = RHI_MALLOC_TYPED(context, uint8_t, spirvOutputBufferSize);
+				uint8_t* spirvOutputBuffer = RHI_MALLOC_TYPED(uint8_t, spirvOutputBufferSize);
 				smolv::Decode(shaderBytecode.getBytecode(), shaderBytecode.getNumberOfBytes(), spirvOutputBuffer, spirvOutputBufferSize);
 				glShaderBinary(1, &openGLShader, GL_SHADER_BINARY_FORMAT_SPIR_V_ARB, spirvOutputBuffer, static_cast<GLsizei>(spirvOutputBufferSize));
-				RHI_FREE(context, spirvOutputBuffer);
+				RHI_FREE(spirvOutputBuffer);
 			}
 
 			// Done
@@ -539,7 +539,7 @@ namespace
 					if ( informationLength > 1 )
 					{
 						// Allocate memory for the information
-						GLchar* informationLog = RHI_MALLOC_TYPED(context, GLchar, informationLength);
+						GLchar* informationLog = RHI_MALLOC_TYPED(GLchar, informationLength);
 
 						// Get the information
 						glGetShaderInfoLog(openGLShader, informationLength, nullptr, informationLog);
@@ -551,7 +551,7 @@ namespace
 						}
 
 						// Cleanup information memory
-						RHI_FREE(context, informationLog);
+						RHI_FREE(informationLog);
 					}
 				}
 

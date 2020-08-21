@@ -775,7 +775,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(mContext, OpenGLES3Rhi, this);
+			RHI_DELETE(OpenGLES3Rhi, this);
 		}
 
 
@@ -2491,7 +2491,7 @@ namespace OpenGLES3Rhi
 				{
 					// Allocate memory for the information
 					const Rhi::Context& context = openGLES3Rhi.getContext();
-					GLchar* informationLog = RHI_MALLOC_TYPED(context, GLchar, informationLength);
+					GLchar* informationLog = RHI_MALLOC_TYPED(GLchar, informationLength);
 
 					// Get the information
 					glGetShaderInfoLog(openGLES3Shader, informationLength, nullptr, informationLog);
@@ -2503,7 +2503,7 @@ namespace OpenGLES3Rhi
 					}
 
 					// Cleanup information memory
-					RHI_FREE(context, informationLog);
+					RHI_FREE(informationLog);
 				}
 			}
 
@@ -3270,7 +3270,7 @@ namespace OpenGLES3Rhi
 				{
 					if (nullptr == mResourceIndexToUniformBlockBindingIndex)
 					{
-						mResourceIndexToUniformBlockBindingIndex = RHI_MALLOC_TYPED(context, uint32_t, mNumberOfResources);
+						mResourceIndexToUniformBlockBindingIndex = RHI_MALLOC_TYPED(uint32_t, mNumberOfResources);
 						memset(mResourceIndexToUniformBlockBindingIndex, 0, sizeof(uint32_t) * mNumberOfResources);
 					}
 					mResourceIndexToUniformBlockBindingIndex[resourceIndex] = uniformBlockBindingIndex;
@@ -3279,7 +3279,7 @@ namespace OpenGLES3Rhi
 			}
 			if (nullptr != samplerStates)
 			{
-				mSamplerStates = RHI_MALLOC_TYPED(context, Rhi::ISamplerState*, mNumberOfResources);
+				mSamplerStates = RHI_MALLOC_TYPED(Rhi::ISamplerState*, mNumberOfResources);
 				for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
 				{
 					Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex] = samplerStates[resourceIndex];
@@ -3309,14 +3309,14 @@ namespace OpenGLES3Rhi
 						samplerState->releaseReference();
 					}
 				}
-				RHI_FREE(context, mSamplerStates);
+				RHI_FREE(mSamplerStates);
 			}
 			for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
 			{
 				mResources[resourceIndex]->releaseReference();
 			}
-			RHI_FREE(context, mResources);
-			RHI_FREE(context, mResourceIndexToUniformBlockBindingIndex);
+			RHI_FREE(mResources);
+			RHI_FREE(mResourceIndexToUniformBlockBindingIndex);
 		}
 
 		/**
@@ -3374,7 +3374,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ResourceGroup, this);
+			RHI_DELETE(ResourceGroup, this);
 		}
 
 
@@ -3436,7 +3436,7 @@ namespace OpenGLES3Rhi
 				const uint32_t numberOfParameters = mRootSignature.numberOfParameters;
 				if (numberOfParameters > 0)
 				{
-					mRootSignature.parameters = RHI_MALLOC_TYPED(context, Rhi::RootParameter, numberOfParameters);
+					mRootSignature.parameters = RHI_MALLOC_TYPED(Rhi::RootParameter, numberOfParameters);
 					Rhi::RootParameter* destinationRootParameters = const_cast<Rhi::RootParameter*>(mRootSignature.parameters);
 					memcpy(destinationRootParameters, rootSignature.parameters, sizeof(Rhi::RootParameter) * numberOfParameters);
 
@@ -3448,7 +3448,7 @@ namespace OpenGLES3Rhi
 						if (Rhi::RootParameterType::DESCRIPTOR_TABLE == destinationRootParameter.parameterType)
 						{
 							const uint32_t numberOfDescriptorRanges = destinationRootParameter.descriptorTable.numberOfDescriptorRanges;
-							destinationRootParameter.descriptorTable.descriptorRanges = reinterpret_cast<uintptr_t>(RHI_MALLOC_TYPED(context, Rhi::DescriptorRange, numberOfDescriptorRanges));
+							destinationRootParameter.descriptorTable.descriptorRanges = reinterpret_cast<uintptr_t>(RHI_MALLOC_TYPED(Rhi::DescriptorRange, numberOfDescriptorRanges));
 							memcpy(reinterpret_cast<Rhi::DescriptorRange*>(destinationRootParameter.descriptorTable.descriptorRanges), reinterpret_cast<const Rhi::DescriptorRange*>(sourceRootParameter.descriptorTable.descriptorRanges), sizeof(Rhi::DescriptorRange) * numberOfDescriptorRanges);
 						}
 					}
@@ -3459,7 +3459,7 @@ namespace OpenGLES3Rhi
 				const uint32_t numberOfStaticSamplers = mRootSignature.numberOfStaticSamplers;
 				if (numberOfStaticSamplers > 0)
 				{
-					mRootSignature.staticSamplers = RHI_MALLOC_TYPED(context, Rhi::StaticSampler, numberOfStaticSamplers);
+					mRootSignature.staticSamplers = RHI_MALLOC_TYPED(Rhi::StaticSampler, numberOfStaticSamplers);
 					memcpy(const_cast<Rhi::StaticSampler*>(mRootSignature.staticSamplers), rootSignature.staticSamplers, sizeof(Rhi::StaticSampler) * numberOfStaticSamplers);
 				}
 			}
@@ -3480,12 +3480,12 @@ namespace OpenGLES3Rhi
 					const Rhi::RootParameter& rootParameter = mRootSignature.parameters[i];
 					if (Rhi::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType)
 					{
-						RHI_FREE(context, reinterpret_cast<Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges));
+						RHI_FREE(reinterpret_cast<Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges));
 					}
 				}
-				RHI_FREE(context, const_cast<Rhi::RootParameter*>(mRootSignature.parameters));
+				RHI_FREE(const_cast<Rhi::RootParameter*>(mRootSignature.parameters));
 			}
-			RHI_FREE(context, const_cast<Rhi::StaticSampler*>(mRootSignature.staticSamplers));
+			RHI_FREE(const_cast<Rhi::StaticSampler*>(mRootSignature.staticSamplers));
 		}
 
 		/**
@@ -3525,7 +3525,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), RootSignature, this);
+			RHI_DELETE(RootSignature, this);
 		}
 
 
@@ -3645,7 +3645,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), VertexBuffer, this);
+			RHI_DELETE(VertexBuffer, this);
 		}
 
 
@@ -3806,7 +3806,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), IndexBuffer, this);
+			RHI_DELETE(IndexBuffer, this);
 		}
 
 
@@ -4044,7 +4044,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), VertexArray, this);
+			RHI_DELETE(VertexArray, this);
 		}
 
 
@@ -4164,7 +4164,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TextureBuffer, this);
+			RHI_DELETE(TextureBuffer, this);
 		}
 
 
@@ -4440,7 +4440,7 @@ namespace OpenGLES3Rhi
 		*/
 		inline virtual ~IndirectBuffer() override
 		{
-			RHI_FREE(getRhi().getContext(), mData);
+			RHI_FREE(mData);
 		}
 
 		/**
@@ -4472,7 +4472,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), IndirectBuffer, this);
+			RHI_DELETE(IndirectBuffer, this);
 		}
 
 
@@ -4596,7 +4596,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), UniformBuffer, this);
+			RHI_DELETE(UniformBuffer, this);
 		}
 
 
@@ -4772,7 +4772,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), BufferManager, this);
+			RHI_DELETE(BufferManager, this);
 		}
 
 
@@ -4984,7 +4984,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture1D, this);
+			RHI_DELETE(Texture1D, this);
 		}
 
 
@@ -5134,7 +5134,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture1DArray, this);
+			RHI_DELETE(Texture1DArray, this);
 		}
 
 
@@ -5384,7 +5384,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture2D, this);
+			RHI_DELETE(Texture2D, this);
 		}
 
 
@@ -5534,7 +5534,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture2DArray, this);
+			RHI_DELETE(Texture2DArray, this);
 		}
 
 
@@ -5763,7 +5763,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Texture3D, this);
+			RHI_DELETE(Texture3D, this);
 		}
 
 
@@ -6008,7 +6008,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TextureCube, this);
+			RHI_DELETE(TextureCube, this);
 		}
 
 
@@ -6159,7 +6159,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), TextureManager, this);
+			RHI_DELETE(TextureManager, this);
 		}
 
 
@@ -6288,7 +6288,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), SamplerState, this);
+			RHI_DELETE(SamplerState, this);
 		}
 
 
@@ -6776,7 +6776,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), RenderPass, this);
+			RHI_DELETE(RenderPass, this);
 		}
 
 
@@ -7003,7 +7003,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), SwapChain, this);
+			RHI_DELETE(SwapChain, this);
 		}
 
 
@@ -7356,7 +7356,7 @@ namespace OpenGLES3Rhi
 				}
 
 				// Cleanup
-				RHI_FREE(getRhi().getContext(), mColorTextures);
+				RHI_FREE(mColorTextures);
 			}
 
 			// Release the reference to the used depth stencil texture
@@ -7420,7 +7420,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), Framebuffer, this);
+			RHI_DELETE(Framebuffer, this);
 		}
 
 
@@ -7528,7 +7528,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), VertexShaderGlsl, this);
+			RHI_DELETE(VertexShaderGlsl, this);
 		}
 
 
@@ -7630,7 +7630,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), FragmentShaderGlsl, this);
+			RHI_DELETE(FragmentShaderGlsl, this);
 		}
 
 
@@ -7832,7 +7832,7 @@ namespace OpenGLES3Rhi
 				{
 					// Allocate memory for the information
 					const Rhi::Context& context = openGLES3Rhi.getContext();
-					char* informationLog = RHI_MALLOC_TYPED(context, char, informationLength);
+					char* informationLog = RHI_MALLOC_TYPED(char, informationLength);
 
 					// Get the information
 					glGetProgramInfoLog(mOpenGLES3Program, informationLength, nullptr, informationLog);
@@ -7841,7 +7841,7 @@ namespace OpenGLES3Rhi
 					RHI_LOG(CRITICAL, informationLog)
 
 					// Cleanup information memory
-					RHI_FREE(context, informationLog);
+					RHI_FREE(informationLog);
 				}
 			}
 
@@ -8096,7 +8096,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), GraphicsProgramGlsl, this);
+			RHI_DELETE(GraphicsProgramGlsl, this);
 		}
 
 
@@ -8303,7 +8303,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), ShaderLanguageGlsl, this);
+			RHI_DELETE(ShaderLanguageGlsl, this);
 		}
 
 
@@ -8433,7 +8433,7 @@ namespace OpenGLES3Rhi
 	protected:
 		inline virtual void selfDestruct() override
 		{
-			RHI_DELETE(getRhi().getContext(), GraphicsPipelineState, this);
+			RHI_DELETE(GraphicsPipelineState, this);
 		}
 
 
@@ -8850,7 +8850,7 @@ namespace OpenGLES3Rhi
 		#endif
 	{
 		// Initialize the OpenGL ES 3 context
-		mOpenGLES3Context = RHI_NEW(mContext, OpenGLES3ContextRuntimeLinking)(*this, context.getNativeWindowHandle(), false);
+		mOpenGLES3Context = RHI_NEW(OpenGLES3ContextRuntimeLinking)(*this, context.getNativeWindowHandle(), false);
 		if (mOpenGLES3Context->initialize(0))
 		{
 			#if SE_DEBUG
@@ -8961,7 +8961,7 @@ namespace OpenGLES3Rhi
 		}
 
 		// Destroy the OpenGL ES 3 context instance
-		RHI_DELETE(mContext, IOpenGLES3Context, mOpenGLES3Context);
+		RHI_DELETE(IOpenGLES3Context, mOpenGLES3Context);
 	}
 
 
@@ -9913,7 +9913,7 @@ namespace OpenGLES3Rhi
 				// If required, create the GLSL shader language instance right now
 				if (nullptr == mShaderLanguageGlsl)
 				{
-					mShaderLanguageGlsl = RHI_NEW(mContext, ShaderLanguageGlsl)(*this);
+					mShaderLanguageGlsl = RHI_NEW(ShaderLanguageGlsl)(*this);
 					mShaderLanguageGlsl->addReference();	// Internal RHI reference
 				}
 
@@ -9935,7 +9935,7 @@ namespace OpenGLES3Rhi
 	//[-------------------------------------------------------]
 	Rhi::IRenderPass* OpenGLES3Rhi::createRenderPass(uint32_t numberOfColorAttachments, const Rhi::TextureFormat::Enum* colorAttachmentTextureFormats, Rhi::TextureFormat::Enum depthStencilAttachmentTextureFormat, uint8_t numberOfMultisamples RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		return RHI_NEW(mContext, RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(RenderPass)(*this, numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IQueryPool* OpenGLES3Rhi::createQueryPool([[maybe_unused]] Rhi::QueryType queryType, [[maybe_unused]] uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER_NO_DEFAULT)
@@ -9951,7 +9951,7 @@ namespace OpenGLES3Rhi
 		RHI_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "OpenGL ES 3: The provided native window handle or render window must not be a null handle / null pointer")
 
 		// Create the swap chain
-		return RHI_NEW(mContext, SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IFramebuffer* OpenGLES3Rhi::createFramebuffer(Rhi::IRenderPass& renderPass, const Rhi::FramebufferAttachment* colorFramebufferAttachments, const Rhi::FramebufferAttachment* depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
@@ -9960,22 +9960,22 @@ namespace OpenGLES3Rhi
 		RHI_MATCH_CHECK(*this, renderPass)
 
 		// Create the framebuffer
-		return RHI_NEW(mContext, Framebuffer)(renderPass, colorFramebufferAttachments, depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(Framebuffer)(renderPass, colorFramebufferAttachments, depthStencilFramebufferAttachment RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IBufferManager* OpenGLES3Rhi::createBufferManager()
 	{
-		return RHI_NEW(mContext, BufferManager)(*this);
+		return RHI_NEW(BufferManager)(*this);
 	}
 
 	Rhi::ITextureManager* OpenGLES3Rhi::createTextureManager()
 	{
-		return RHI_NEW(mContext, TextureManager)(*this);
+		return RHI_NEW(TextureManager)(*this);
 	}
 
 	Rhi::IRootSignature* OpenGLES3Rhi::createRootSignature(const Rhi::RootSignature& rootSignature RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		return RHI_NEW(mContext, RootSignature)(*this, rootSignature RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(RootSignature)(*this, rootSignature RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 	Rhi::IGraphicsPipelineState* OpenGLES3Rhi::createGraphicsPipelineState(const Rhi::GraphicsPipelineState& graphicsPipelineState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
@@ -9989,7 +9989,7 @@ namespace OpenGLES3Rhi
 		uint16_t id = 0;
 		if (GraphicsPipelineStateMakeId.CreateID(id))
 		{
-			return RHI_NEW(mContext, GraphicsPipelineState)(*this, graphicsPipelineState, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+			return RHI_NEW(GraphicsPipelineState)(*this, graphicsPipelineState, id RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 		}
 
 		// Error: Ensure a correct reference counter behaviour
@@ -10020,7 +10020,7 @@ namespace OpenGLES3Rhi
 
 	Rhi::ISamplerState* OpenGLES3Rhi::createSamplerState(const Rhi::SamplerState& samplerState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		return RHI_NEW(mContext, SamplerState)(*this, samplerState RHI_RESOURCE_DEBUG_PASS_PARAMETER);
+		return RHI_NEW(SamplerState)(*this, samplerState RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
 
