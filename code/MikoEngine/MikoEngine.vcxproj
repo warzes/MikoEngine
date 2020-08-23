@@ -599,7 +599,12 @@
     <ClCompile Include="Renderer\Resource\Skeleton\Loader\SkeletonResourceLoader.cpp" />
     <ClCompile Include="Renderer\Resource\Skeleton\SkeletonResource.cpp" />
     <ClCompile Include="Renderer\Resource\Skeleton\SkeletonResourceManager.cpp" />
-    <ClCompile Include="Renderer\Resource\Texture\Loader\CrnArrayTextureResourceLoader.cpp" />
+    <ClCompile Include="Renderer\Resource\Texture\Loader\CrnArrayTextureResourceLoader.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Renderer\Resource\Texture\Loader\CrnTextureResourceLoader.cpp" />
     <ClCompile Include="Renderer\Resource\Texture\Loader\ITextureResourceLoader.cpp" />
     <ClCompile Include="Renderer\Resource\Texture\Loader\KtxTextureResourceLoader.cpp" />

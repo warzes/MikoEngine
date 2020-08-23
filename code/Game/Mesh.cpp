@@ -122,8 +122,7 @@ bool Mesh::init(int argc, const char * argv[])
 		}
 
 		// Create uniform buffer
-		// -> Direct3D 9 does not support uniform buffers
-		// -> Direct3D 10, 11 and 12 do not support individual uniforms
+		// -> Direct3D 11 and 12 do not support individual uniforms
 		// -> The RHI is just a light weight abstraction layer, so we need to handle the differences
 		// -> Allocate enough memory for two 4x4 floating point matrices
 		if ( 0 != rhi->getCapabilities().maximumUniformBufferSize )
@@ -215,12 +214,21 @@ bool Mesh::init(int argc, const char * argv[])
 		}
 
 		// Create mesh instance
-		renderer.getMeshResourceManager().loadMeshResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/SM_Imrod"), mMeshResourceId, this);
+		//renderer.getMeshResourceManager().loadMeshResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/SM_Imrod"), mMeshResourceId, this);
+
+		//{ // Load in the albedo, emissive, normal and roughness texture
+		//	Renderer::TextureResourceManager& textureResourceManager = renderer.getTextureResourceManager();
+		//	textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/T_Imrod_argb_nxa"), ASSET_ID("Unrimp/Texture/DynamicByCode/Identity_argb_nxa2D"), m_argb_nxaTextureResourceId, this);
+		//	textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/T_Imrod_hr_rg_mb_nya"), ASSET_ID("Unrimp/Texture/DynamicByCode/Identity_hr_rg_mb_nya2D"), m_hr_rg_mb_nyaTextureResourceId, this);
+		//	textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/T_Imrod_e"), ASSET_ID("Unrimp/Texture/DynamicByCode/IdentityEmissiveMap2D"), mEmissiveTextureResourceId, this);
+		//}
+
+		renderer.getMeshResourceManager().loadMeshResourceByAssetId(ASSET_ID("Example/Mesh/Cerberus/SM_Cerberus"), mMeshResourceId, this);
 
 		{ // Load in the albedo, emissive, normal and roughness texture
 			Renderer::TextureResourceManager& textureResourceManager = renderer.getTextureResourceManager();
-			textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/T_Imrod_argb_nxa"), ASSET_ID("Unrimp/Texture/DynamicByCode/Identity_argb_nxa2D"), m_argb_nxaTextureResourceId, this);
-			textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/T_Imrod_hr_rg_mb_nya"), ASSET_ID("Unrimp/Texture/DynamicByCode/Identity_hr_rg_mb_nya2D"), m_hr_rg_mb_nyaTextureResourceId, this);
+			textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Cerberus/T_Cerberus_argb_nxa"), ASSET_ID("Unrimp/Texture/DynamicByCode/Identity_argb_nxa2D"), m_argb_nxaTextureResourceId, this);
+			textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Cerberus/T_Cerberus_hr_rg_mb_nya"), ASSET_ID("Unrimp/Texture/DynamicByCode/Identity_hr_rg_mb_nya2D"), m_hr_rg_mb_nyaTextureResourceId, this);
 			textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/T_Imrod_e"), ASSET_ID("Unrimp/Texture/DynamicByCode/IdentityEmissiveMap2D"), mEmissiveTextureResourceId, this);
 		}
 	}
@@ -266,8 +274,8 @@ void Mesh::update(double delta)
 		}
 
 		// Calculate the object space to clip space matrix
-		const glm::mat4 viewSpaceToClipSpace = glm::perspective(45.0f, aspectRatio, 100.0f, 0.1f);	// Near and far flipped due to usage of Reversed-Z (see e.g. https://developer.nvidia.com/content/depth-precision-visualized and https://nlguillemot.wordpress.com/2016/12/07/reversed-z-in-opengl/)
-		const glm::mat4 viewTranslate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -7.0f, 25.0f));
+		const glm::mat4 viewSpaceToClipSpace = glm::perspective(45.0f, aspectRatio, 1000.0f, 0.1f);	// Near and far flipped due to usage of Reversed-Z (see e.g. https://developer.nvidia.com/content/depth-precision-visualized and https://nlguillemot.wordpress.com/2016/12/07/reversed-z-in-opengl/)
+		const glm::mat4 viewTranslate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -7.0f, 50.0f));
 		const glm::mat4 worldSpaceToViewSpace = glm::rotate(viewTranslate, mGlobalTimer, glm::vec3(0.0f, 1.0f, 0.0f));
 		const glm::mat4 objectSpaceToWorldSpace = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f));
 		glm::mat4 objectSpaceToViewSpace = worldSpaceToViewSpace * objectSpaceToWorldSpace;
@@ -386,6 +394,7 @@ ApplicationSetting Mesh::intial_app_settings()
 	settings.width = 1280;
 	settings.height = 720;
 	settings.title = "Mesh Example";
+	settings.vsync = false;
 	return settings;
 }
 

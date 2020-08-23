@@ -48,7 +48,7 @@ struct DataArrayList;
 ///	A node instance can store values via a linked list. You can get the first value from the DDLNode.
 /// A node can store data-array-lists and references as well.
 ///
-class DLL_ODDLPARSER_EXPORT DDLNode {
+class DDLNode {
 public:
     friend class OpenDDLParser;
 

@@ -68,10 +68,6 @@ private:
 	Renderer::IGraphicsDebugger* mGraphicsDebugger;	///< Graphics debugger instance, can be a null pointer
 #endif
 
-
-
-
-
 	Rhi::CommandBuffer			   mCommandBuffer;				///< Command buffer
 	Rhi::IRootSignaturePtr		   mRootSignature;				///< Root signature, can be a null pointer
 	Rhi::IUniformBufferPtr		   mUniformBuffer;				///< Uniform buffer object (UBO), can be a null pointer
