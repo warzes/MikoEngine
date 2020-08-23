@@ -107,7 +107,7 @@ namespace Renderer
 		#define ADD_ASSET_ID(name) assetIds.push_back(ASSET_ID(name));
 
 		// Add asset IDs
-		ADD_ASSET_ID("Unrimp/Texture/DynamicByCode/ImGuiGlyphMap2D")
+		ADD_ASSET_ID("Engine/Texture/DynamicByCode/ImGuiGlyphMap2D")
 
 		// Undefine helper macro
 		#undef ADD_ASSET_ID
@@ -324,7 +324,7 @@ namespace Renderer
 			mTexture2D = mRenderer.getTextureManager().createTexture2D(static_cast<uint32_t>(width), static_cast<uint32_t>(height), Rhi::TextureFormat::R8, pixels, Rhi::TextureFlag::GENERATE_MIPMAPS | Rhi::TextureFlag::SHADER_RESOURCE, Rhi::TextureUsage::DEFAULT, 1, nullptr RHI_RESOURCE_DEBUG_NAME("Debug 2D GUI glyph texture atlas"));
 
 			// Tell the texture resource manager about our render target texture so it can be referenced inside e.g. compositor nodes
-			mRenderer.getTextureResourceManager().createTextureResourceByAssetId(ASSET_ID("Unrimp/Texture/DynamicByCode/ImGuiGlyphMap2D"), *mTexture2D);
+			mRenderer.getTextureResourceManager().createTextureResourceByAssetId(ASSET_ID("Engine/Texture/DynamicByCode/ImGuiGlyphMap2D"), *mTexture2D);
 		}
 	}
 
@@ -347,7 +347,7 @@ namespace Renderer
 		// Create ImGui context
 		mImGuiContext = ImGui::CreateContext();
 
-		// Change ImGui filenames so one is able to guess where those files come from when using Unrimp
+		// Change ImGui filenames so one is able to guess where those files come from when using Engine
 		const IFileManager& fileManager = renderer.getFileManager();
 		const char* localDataMountPoint = fileManager.getLocalDataMountPoint();
 		ImGuiIO& imGuiIo = ImGui::GetIO();
@@ -357,8 +357,8 @@ namespace Renderer
 		{
 			// ImGui has no file system abstraction and needs absolute filenames
 			const std::string virtualDebugGuiDirectoryName = localDataMountPoint;
-			mAbsoluteIniFilename = fileManager.mapVirtualToAbsoluteFilename(IFileManager::FileMode::WRITE, (virtualDebugGuiDirectoryName + "/UnrimpImGuiLayout.ini").c_str());
-			mAbsoluteLogFilename = fileManager.mapVirtualToAbsoluteFilename(IFileManager::FileMode::WRITE, (virtualDebugGuiDirectoryName + "/UnrimpImGuiLog.txt").c_str());
+			mAbsoluteIniFilename = fileManager.mapVirtualToAbsoluteFilename(IFileManager::FileMode::WRITE, (virtualDebugGuiDirectoryName + "/EngineImGuiLayout.ini").c_str());
+			mAbsoluteLogFilename = fileManager.mapVirtualToAbsoluteFilename(IFileManager::FileMode::WRITE, (virtualDebugGuiDirectoryName + "/EngineImGuiLog.txt").c_str());
 			imGuiIo.IniFilename = mAbsoluteIniFilename.c_str();
 			imGuiIo.LogFilename = mAbsoluteLogFilename.c_str();
 		}

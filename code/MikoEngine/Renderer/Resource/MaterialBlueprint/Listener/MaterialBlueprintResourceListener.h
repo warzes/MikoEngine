@@ -73,9 +73,9 @@ namespace Renderer
 		*
 		*  @remarks
 		*    The material blueprint resource listener automatically generates some dynamic default texture assets one can reference e.g. inside material blueprint resources:
-		*    - "Unrimp/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D"
-		*    - "Unrimp/Texture/DynamicByCode/SsaoSampleKernel"
-		*    - "Unrimp/Texture/DynamicByCode/SsaoNoise4x4"
+		*    - "Engine/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D"
+		*    - "Engine/Texture/DynamicByCode/SsaoSampleKernel"
+		*    - "Engine/Texture/DynamicByCode/SsaoNoise4x4"
 		*/
 		static void getDefaultTextureAssetIds(AssetIds& assetIds);
 

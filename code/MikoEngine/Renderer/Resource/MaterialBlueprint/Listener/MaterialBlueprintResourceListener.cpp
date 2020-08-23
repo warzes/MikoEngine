@@ -110,7 +110,7 @@ namespace
 		*    - Basing on "GPU Gems 2" - "Chapter 24. Using Lookup Tables to Accelerate Color Transformations" by Jeremy Selan, Sony Pictures Imageworks - http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter24.html
 		*    - A way for artists to create color correction lookup tables is described at https://docs.unrealengine.com/latest/INT/Engine/Rendering/PostProcessEffects/ColorGrading/
 		*    - Color correction lookup table size is 16
-		*    - Resulting texture asset ID is "Unrimp/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D"
+		*    - Resulting texture asset ID is "Engine/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D"
 		*/
 		[[nodiscard]] Renderer::TextureResourceId createIdentityColorCorrectionLookupTable3D(const Renderer::IRenderer& renderer)
 		{
@@ -139,7 +139,7 @@ namespace
 
 			// Create dynamic texture asset
 			return renderer.getTextureResourceManager().createTextureResourceByAssetId(
-				ASSET_ID("Unrimp/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D"),
+				ASSET_ID("Engine/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D"),
 				*renderer.getTextureManager().createTexture3D(SIZE, SIZE, SIZE, Rhi::TextureFormat::R8G8B8A8, data, Rhi::TextureFlag::SHADER_RESOURCE, Rhi::TextureUsage::IMMUTABLE RHI_RESOURCE_DEBUG_NAME("Identity color correction lookup table (LUT)")));
 		}
 
@@ -156,7 +156,7 @@ namespace
 		*  @note
 		*    - Basing on "SSAO Tutorial" from John Chapman - http://john-chapman-graphics.blogspot.de/2013/01/ssao-tutorial.html
 		*    - Kernel size is 16, since the samples are randomly distributed this doesn't mean that a shader has to use all samples
-		*    - Resulting texture asset ID is "Unrimp/Texture/DynamicByCode/SsaoSampleKernel"
+		*    - Resulting texture asset ID is "Engine/Texture/DynamicByCode/SsaoSampleKernel"
 		*/
 		[[nodiscard]] Renderer::TextureResourceId createSsaoSampleKernelTexture(const Renderer::IRenderer& renderer)
 		{
@@ -185,7 +185,7 @@ namespace
 
 			// Create dynamic texture asset
 			return renderer.getTextureResourceManager().createTextureResourceByAssetId(
-				ASSET_ID("Unrimp/Texture/DynamicByCode/SsaoSampleKernel"),
+				ASSET_ID("Engine/Texture/DynamicByCode/SsaoSampleKernel"),
 				*renderer.getTextureManager().createTexture1D(KERNEL_SIZE, Rhi::TextureFormat::R32G32B32A32F, kernel, Rhi::TextureFlag::SHADER_RESOURCE, Rhi::TextureUsage::IMMUTABLE RHI_RESOURCE_DEBUG_NAME("Screen space ambient occlusion sample kernel")));
 		}
 
@@ -202,7 +202,7 @@ namespace
 		*  @note
 		*    - Basing on "SSAO Tutorial" from John Chapman - http://john-chapman-graphics.blogspot.de/2013/01/ssao-tutorial.html
 		*    - Noise texture size is 4x4
-		*    - Resulting texture asset ID is "Unrimp/Texture/DynamicByCode/SsaoNoise4x4"
+		*    - Resulting texture asset ID is "Engine/Texture/DynamicByCode/SsaoNoise4x4"
 		*/
 		[[nodiscard]] Renderer::TextureResourceId createSsaoNoiseTexture4x4(const Renderer::IRenderer& renderer)
 		{
@@ -222,7 +222,7 @@ namespace
 
 			// Create dynamic texture asset
 			return renderer.getTextureResourceManager().createTextureResourceByAssetId(
-				ASSET_ID("Unrimp/Texture/DynamicByCode/SsaoNoise4x4"),
+				ASSET_ID("Engine/Texture/DynamicByCode/SsaoNoise4x4"),
 				*renderer.getTextureManager().createTexture2D(NOISE_SIZE, NOISE_SIZE, Rhi::TextureFormat::R32G32B32A32F, noise, Rhi::TextureFlag::SHADER_RESOURCE, Rhi::TextureUsage::IMMUTABLE, 1, nullptr RHI_RESOURCE_DEBUG_NAME("Screen space ambient occlusion 4x4 noise")));
 		}
 
@@ -276,9 +276,9 @@ namespace Renderer
 		#define ADD_ASSET_ID(name) assetIds.push_back(ASSET_ID(name));
 
 		// Add asset IDs
-		ADD_ASSET_ID("Unrimp/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D")
-		ADD_ASSET_ID("Unrimp/Texture/DynamicByCode/SsaoSampleKernel")
-		ADD_ASSET_ID("Unrimp/Texture/DynamicByCode/SsaoNoise4x4")
+		ADD_ASSET_ID("Engine/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D")
+		ADD_ASSET_ID("Engine/Texture/DynamicByCode/SsaoSampleKernel")
+		ADD_ASSET_ID("Engine/Texture/DynamicByCode/SsaoNoise4x4")
 
 		// Undefine helper macro
 		#undef ADD_ASSET_ID

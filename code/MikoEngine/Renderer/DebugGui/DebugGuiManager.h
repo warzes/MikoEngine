@@ -70,7 +70,7 @@ namespace Renderer
 		*
 		*  @remarks
 		*    The debug GUI manager automatically generates some dynamic default texture assets one can reference e.g. inside material blueprint resources:
-		*    - "Unrimp/Texture/DynamicByCode/ImGuiGlyphMap2D"
+		*    - "Engine/Texture/DynamicByCode/ImGuiGlyphMap2D"
 		*/
 		static void getDefaultTextureAssetIds(AssetIds& assetIds);
 

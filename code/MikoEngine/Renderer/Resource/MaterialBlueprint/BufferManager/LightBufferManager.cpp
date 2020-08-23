@@ -57,7 +57,7 @@ namespace Renderer
 		#define ADD_ASSET_ID(name) assetIds.push_back(ASSET_ID(name));
 
 		// Add asset IDs
-		ADD_ASSET_ID("Unrimp/Texture/DynamicByCode/LightClustersMap3D")
+		ADD_ASSET_ID("Engine/Texture/DynamicByCode/LightClustersMap3D")
 
 		// Undefine helper macro
 		#undef ADD_ASSET_ID
@@ -82,7 +82,7 @@ namespace Renderer
 
 		// Create the clusters 3D texture resource
 		mClusters3DTextureResourceId = mRenderer.getTextureResourceManager().createTextureResourceByAssetId(
-			ASSET_ID("Unrimp/Texture/DynamicByCode/LightClustersMap3D"),
+			ASSET_ID("Engine/Texture/DynamicByCode/LightClustersMap3D"),
 			*mRenderer.getTextureManager().createTexture3D(::detail::CLUSTER_X, ::detail::CLUSTER_Y, ::detail::CLUSTER_Z, Rhi::TextureFormat::R32_UINT, nullptr, Rhi::TextureFlag::SHADER_RESOURCE, Rhi::TextureUsage::DYNAMIC RHI_RESOURCE_DEBUG_NAME("Light clusters")));
 	}
 

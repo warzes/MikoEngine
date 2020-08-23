@@ -248,10 +248,7 @@ namespace Renderer
 	*    Compile time string ID macro
 	*/
 	#define STRING_ID(string) \
-		__pragma(warning(push)) \
-		__pragma(warning(disable:4307)) \
-			std::integral_constant<uint32_t, Renderer::StringId::compileTimeFNV(string)>::value \
-		__pragma(warning(pop))
+			std::integral_constant<uint32_t, Renderer::StringId::compileTimeFNV(string)>::value
 #else
 	/**
 	*  @brief

@@ -71,7 +71,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t ASSET_PACKAGE_ID = STRING_ID("Unrimp/OpenVR");
+		static constexpr uint32_t ASSET_PACKAGE_ID = STRING_ID("Engine/OpenVR");
 
 
 		//[-------------------------------------------------------]

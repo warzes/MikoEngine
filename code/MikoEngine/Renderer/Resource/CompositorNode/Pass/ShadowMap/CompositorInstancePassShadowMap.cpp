@@ -27,8 +27,8 @@ namespace
 		//[-------------------------------------------------------]
 		static constexpr float	  SHADOW_MAP_FILTER_SIZE							  = 7.0f;
 		static constexpr uint8_t  INTERMEDIATE_CASCADE_INDEX						  = 3;
-		static constexpr uint32_t DEPTH_SHADOW_MAP_TEXTURE_ASSET_ID					  = ASSET_ID("Unrimp/Texture/DynamicByCode/DepthShadowMap");
-		static constexpr uint32_t INTERMEDIATE_DEPTH_BLUR_SHADOW_MAP_TEXTURE_ASSET_ID = ASSET_ID("Unrimp/Texture/DynamicByCode/IntermediateDepthBlurShadowMap");
+		static constexpr uint32_t DEPTH_SHADOW_MAP_TEXTURE_ASSET_ID					  = ASSET_ID("Engine/Texture/DynamicByCode/DepthShadowMap");
+		static constexpr uint32_t INTERMEDIATE_DEPTH_BLUR_SHADOW_MAP_TEXTURE_ASSET_ID = ASSET_ID("Engine/Texture/DynamicByCode/IntermediateDepthBlurShadowMap");
 
 
 		//[-------------------------------------------------------]

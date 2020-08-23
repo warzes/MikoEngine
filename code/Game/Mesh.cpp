@@ -218,18 +218,18 @@ bool Mesh::init(int argc, const char * argv[])
 
 		//{ // Load in the albedo, emissive, normal and roughness texture
 		//	Renderer::TextureResourceManager& textureResourceManager = renderer.getTextureResourceManager();
-		//	textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/T_Imrod_argb_nxa"), ASSET_ID("Unrimp/Texture/DynamicByCode/Identity_argb_nxa2D"), m_argb_nxaTextureResourceId, this);
-		//	textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/T_Imrod_hr_rg_mb_nya"), ASSET_ID("Unrimp/Texture/DynamicByCode/Identity_hr_rg_mb_nya2D"), m_hr_rg_mb_nyaTextureResourceId, this);
-		//	textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/T_Imrod_e"), ASSET_ID("Unrimp/Texture/DynamicByCode/IdentityEmissiveMap2D"), mEmissiveTextureResourceId, this);
+		//	textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/T_Imrod_argb_nxa"), ASSET_ID("Engine/Texture/DynamicByCode/Identity_argb_nxa2D"), m_argb_nxaTextureResourceId, this);
+		//	textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/T_Imrod_hr_rg_mb_nya"), ASSET_ID("Engine/Texture/DynamicByCode/Identity_hr_rg_mb_nya2D"), m_hr_rg_mb_nyaTextureResourceId, this);
+		//	textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/T_Imrod_e"), ASSET_ID("Engine/Texture/DynamicByCode/IdentityEmissiveMap2D"), mEmissiveTextureResourceId, this);
 		//}
 
 		renderer.getMeshResourceManager().loadMeshResourceByAssetId(ASSET_ID("Example/Mesh/Cerberus/SM_Cerberus"), mMeshResourceId, this);
 
 		{ // Load in the albedo, emissive, normal and roughness texture
 			Renderer::TextureResourceManager& textureResourceManager = renderer.getTextureResourceManager();
-			textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Cerberus/T_Cerberus_argb_nxa"), ASSET_ID("Unrimp/Texture/DynamicByCode/Identity_argb_nxa2D"), m_argb_nxaTextureResourceId, this);
-			textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Cerberus/T_Cerberus_hr_rg_mb_nya"), ASSET_ID("Unrimp/Texture/DynamicByCode/Identity_hr_rg_mb_nya2D"), m_hr_rg_mb_nyaTextureResourceId, this);
-			textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/T_Imrod_e"), ASSET_ID("Unrimp/Texture/DynamicByCode/IdentityEmissiveMap2D"), mEmissiveTextureResourceId, this);
+			textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Cerberus/T_Cerberus_argb_nxa"), ASSET_ID("Engine/Texture/DynamicByCode/Identity_argb_nxa2D"), m_argb_nxaTextureResourceId, this);
+			textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Cerberus/T_Cerberus_hr_rg_mb_nya"), ASSET_ID("Engine/Texture/DynamicByCode/Identity_hr_rg_mb_nya2D"), m_hr_rg_mb_nyaTextureResourceId, this);
+			textureResourceManager.loadTextureResourceByAssetId(ASSET_ID("Example/Mesh/Imrod/T_Imrod_e"), ASSET_ID("Engine/Texture/DynamicByCode/IdentityEmissiveMap2D"), mEmissiveTextureResourceId, this);
 		}
 	}
 

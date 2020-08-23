@@ -51,7 +51,7 @@ namespace Renderer
 		*
 		*  @remarks
 		*    The light buffer manager automatically generates some dynamic default texture assets one can reference e.g. inside material blueprint resources:
-		*    - "Unrimp/Texture/DynamicByCode/LightClustersMap3D"
+		*    - "Engine/Texture/DynamicByCode/LightClustersMap3D"
 		*/
 		static void getDefaultTextureAssetIds(AssetIds& assetIds);
 
