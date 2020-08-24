@@ -451,9 +451,7 @@
     <ClInclude Include="RHI\ResourceGroup.h" />
     <ClInclude Include="RHI\Rhi.h" />
     <ClInclude Include="RHI\RHIContext.h" />
-    <ClInclude Include="RHI\RHICore.h" />
     <ClInclude Include="RHI\RHIDebug.h" />
-    <ClInclude Include="RHI\RhiInstance.h" />
     <ClInclude Include="RHI\RHITypes.h" />
     <ClInclude Include="RHI\IRootSignature.h" />
     <ClInclude Include="RHI\RootSignature.h" />

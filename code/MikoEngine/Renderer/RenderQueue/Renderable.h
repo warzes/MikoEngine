@@ -1,6 +1,5 @@
 #pragma once
 
-#include "RHI/RHICore.h"
 #include "RHI/Rhi.h"
 
 namespace Renderer

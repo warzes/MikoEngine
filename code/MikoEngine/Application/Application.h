@@ -2,7 +2,7 @@
 
 #include "ApplicationSettings.h"
 #include "Utility/Timer.h"
-#include "RHI/RhiInstance.h"
+#include "RHI/Rhi.h"
 
 // Key and Mouse button limits.
 #define MAX_KEYS 1024
@@ -82,7 +82,6 @@ protected:
 #elif SE_PLATFORM_LINUX
 	std::unique_ptr<Rhi::X11Context> rhiContext = nullptr;	
 #endif
-	std::unique_ptr<Rhi::RhiInstance> rhiInstance = nullptr;
 	Rhi::IRhiPtr rhi = nullptr;
 	Rhi::ISwapChainPtr mainSwapChain = nullptr;
 	Rhi::CommandBuffer commandBuffer;	// Command buffer

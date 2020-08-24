@@ -15,6 +15,5 @@
 #include "RHI/DefaultAssert.h"
 #include "RHI/DefaultAllocator.h"
 #include "RHI/Rhi.h"
-#include "RHI/RhiInstance.h"
 
 #include "Application/Application.h"

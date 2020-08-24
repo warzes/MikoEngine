@@ -495,9 +495,6 @@
     <ClInclude Include="RHI\DefaultLog.h">
       <Filter>4_RHI\old\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="RHI\RHICore.h">
-      <Filter>4_RHI\old\RHI</Filter>
-    </ClInclude>
     <ClInclude Include="RHI\RHIContext.h">
       <Filter>4_RHI\old\RHI</Filter>
     </ClInclude>
@@ -685,9 +682,6 @@
       <Filter>4_RHI\old\RHI</Filter>
     </ClInclude>
     <ClInclude Include="RHI\Rhi.h">
-      <Filter>4_RHI\old\RHI</Filter>
-    </ClInclude>
-    <ClInclude Include="RHI\RhiInstance.h">
       <Filter>4_RHI\old\RHI</Filter>
     </ClInclude>
     <ClInclude Include="RHI\OpenGLCore.h">

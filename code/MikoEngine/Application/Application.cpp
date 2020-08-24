@@ -13,6 +13,25 @@ extern "C"
 	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
 //-----------------------------------------------------------------------------
+#if SE_RHINULL
+[[nodiscard]] extern Rhi::IRhi* createNullRhiInstance(const Rhi::Context&);
+#endif
+#if SE_VULKAN
+[[nodiscard]] extern Rhi::IRhi* createVulkanRhiInstance(const Rhi::Context&);
+#endif
+#if SE_OPENGL
+[[nodiscard]] extern Rhi::IRhi* createOpenGLRhiInstance(const Rhi::Context&);
+#endif
+#if SE_OPENGLES
+[[nodiscard]] extern Rhi::IRhi* createOpenGLES3RhiInstance(const Rhi::Context&);
+#endif
+#if SE_DIRECT3D11
+[[nodiscard]] extern Rhi::IRhi* createDirect3D11RhiInstance(const Rhi::Context&);
+#endif
+#if SE_DIRECT3D12
+[[nodiscard]] extern Rhi::IRhi* createDirect3D12RhiInstance(const Rhi::Context&);
+#endif
+//-----------------------------------------------------------------------------
 handle glfwNativeWindowHandle(GLFWwindow* _window)
 {
 #	if SE_PLATFORM_LINUX || SE_PLATFORM_BSD
@@ -126,13 +145,36 @@ bool Application::init_base(int argc, const char * argv[])
 	glfwMakeContextCurrent(m_window); // TODO: only opengl? or?
 
 	rhiContext = std::make_unique<Rhi::Context>(glfwNativeWindowHandle(m_window));
-	rhiInstance = std::make_unique<Rhi::RhiInstance>("Direct3D11", *rhiContext.get());
-	rhi = (nullptr != rhiInstance) ? rhiInstance->getRhi() : nullptr;
+
+	const char* rhiName = "Direct3D11";
+#if SE_RHINULL
+	if ( 0 == strcmp(rhiName, "Null") )
+		rhi = createNullRhiInstance(*rhiContext.get());
+#endif
+#if SE_VULKAN
+	if ( 0 == strcmp(rhiName, "Vulkan") )
+		rhi = createVulkanRhiInstance(*rhiContext.get());
+#endif
+#if SE_OPENGL
+	if ( 0 == strcmp(rhiName, "OpenGL") )
+		rhi = createOpenGLRhiInstance(*rhiContext.get());
+#endif
+#if SE_OPENGLES
+	if ( 0 == strcmp(rhiName, "OpenGLES3") )
+		rhi = createOpenGLES3RhiInstance(*rhiContext.get());
+#endif
+#if SE_DIRECT3D11
+	if ( 0 == strcmp(rhiName, "Direct3D11") )
+		rhi = createDirect3D11RhiInstance(*rhiContext.get());
+#endif
+#if SE_DIRECT3D12
+	if ( 0 == strcmp(rhiName, "Direct3D12") )
+		rhi = createDirect3D12RhiInstance(*rhiContext.get());
+#endif
+
 	if ( nullptr == rhi && !rhi->isInitialized() )
 	{
 		rhi = nullptr;
-		rhiInstance.reset();
-		rhiInstance = nullptr;
 		rhiContext.reset();
 		rhiContext = nullptr;
 		return 0;
@@ -231,14 +273,6 @@ void Application::shutdown_base()
 		mainSwapChain = nullptr;
 	}
 	rhi = nullptr;
-	//if ( nullptr != rhiInstance )
-	//{
-	//	rhiInstance->destroyRhi();
-	//}
-
-	// Delete the RHI instance
-	//rhiInstance.reset();
-	//rhiInstance = nullptr;
 	//rhiContext.reset();
 	//rhiContext = nullptr;
 
@@ -284,29 +318,6 @@ void Application::begin_frame()
 	//	mainSwapChain->setFullscreenState(!mainSwapChain->getFullscreenState());
 
 	m_endFrame = rhi->beginScene();
-
-	//{ // Scene rendering
-	//	// Scoped debug event
-	//	COMMAND_SCOPED_DEBUG_EVENT_FUNCTION(commandBuffer);
-
-	//	// Make the graphics main swap chain to the current render target
-	//	Rhi::Command::SetGraphicsRenderTarget::create(commandBuffer, mainSwapChain);
-
-	//	{ // Since Direct3D 12 is command list based, the viewport and scissor rectangle must be set in every draw call to work with all supported RHI implementations
-	//		// Get the window size
-	//		uint32_t width = 1;
-	//		uint32_t height = 1;
-	//		mainSwapChain->getWidthAndHeight(width, height);
-
-	//		// Set the graphics viewport and scissor rectangle
-	//		Rhi::Command::SetGraphicsViewportAndScissorRectangle::create(commandBuffer, 0, 0, width, height);
-	//	}
-
-	//	// Submit command buffer to the RHI implementation
-	//	commandBuffer.submitToRhiAndClear(*rhi);
-	//}
-
-	//commandBuffer.submitToRhiAndClear(*rhi);
 }
 //-----------------------------------------------------------------------------
 void Application::end_frame()
