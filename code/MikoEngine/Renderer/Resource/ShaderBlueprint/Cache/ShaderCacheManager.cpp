@@ -88,7 +88,7 @@ namespace Renderer
 				{
 					// Build the shader source code
 					const IRenderer& renderer = mShaderBlueprintResourceManager.getRenderer();
-					ShaderBuilder shaderBuilder(renderer.getRhi().getContext());
+					ShaderBuilder shaderBuilder;
 					ShaderBuilder::BuildShader buildShader;
 					shaderBuilder.createSourceCode(renderer.getShaderPieceResourceManager(), *shaderBlueprintResource, graphicsPipelineStateSignature.getShaderProperties(), buildShader);
 					std::string& sourceCode = buildShader.sourceCode;
@@ -218,7 +218,7 @@ namespace Renderer
 				{
 					// Build the shader source code
 					const IRenderer& renderer = mShaderBlueprintResourceManager.getRenderer();
-					ShaderBuilder shaderBuilder(renderer.getRhi().getContext());
+					ShaderBuilder shaderBuilder;
 					ShaderBuilder::BuildShader buildShader;
 					shaderBuilder.createSourceCode(renderer.getShaderPieceResourceManager(), *shaderBlueprintResource, computePipelineStateSignature.getShaderProperties(), buildShader);
 					std::string& sourceCode = buildShader.sourceCode;

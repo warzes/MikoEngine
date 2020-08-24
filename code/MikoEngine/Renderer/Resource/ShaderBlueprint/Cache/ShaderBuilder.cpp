@@ -14,8 +14,6 @@
 #include "Renderer/Core/Math/Math.h"
 #include "Renderer/IRenderer.h"
 
-#include <algorithm>
-
 
 //[-------------------------------------------------------]
 //[ Anonymous detail namespace                            ]
@@ -351,7 +349,7 @@ namespace
 
 		// Returns true if we found an @end, false if we found
 		// \@else instead (can only happen if allowsElse=true).
-		bool findBlockEnd(const Rhi::Context& context, SubStringRef& outSubString, bool& syntaxError, bool allowsElse = false)
+		bool findBlockEnd(SubStringRef& outSubString, bool& syntaxError, bool allowsElse = false)
 		{
 			bool isElse = false;
 			static const constexpr char* blockNames[] =
@@ -463,7 +461,7 @@ namespace
 			return isElse;
 		}
 
-		[[nodiscard]] size_t evaluateExpressionEnd(const Rhi::Context& context, const SubStringRef& outSubString)
+		[[nodiscard]] size_t evaluateExpressionEnd(const SubStringRef& outSubString)
 		{
 			std::string::const_iterator it = outSubString.begin();
 			std::string::const_iterator en = outSubString.end();
@@ -498,7 +496,7 @@ namespace
 			return returnValue;
 		}
 
-		[[nodiscard]] bool evaluateExpressionRecursive(const Rhi::Context& context, const Renderer::ShaderProperties& shaderProperties, ExpressionVec& expression, bool& outSyntaxError)
+		[[nodiscard]] bool evaluateExpressionRecursive(const Renderer::ShaderProperties& shaderProperties, ExpressionVec& expression, bool& outSyntaxError)
 		{
 			ExpressionVec::iterator itor = expression.begin();
 			ExpressionVec::iterator end  = expression.end();
@@ -551,7 +549,7 @@ namespace
 				}
 				else
 				{
-					exp.result = evaluateExpressionRecursive(context, shaderProperties, exp.children, syntaxError);
+					exp.result = evaluateExpressionRecursive(shaderProperties, exp.children, syntaxError);
 					lastExpWasOperator = false;
 				}
 
@@ -596,9 +594,9 @@ namespace
 			return retVal;
 		}
 
-		[[nodiscard]] bool evaluateExpression(const Rhi::Context& context, const Renderer::ShaderProperties& shaderProperties, SubStringRef& outSubString, bool& outSyntaxError)
+		[[nodiscard]] bool evaluateExpression(const Renderer::ShaderProperties& shaderProperties, SubStringRef& outSubString, bool& outSyntaxError)
 		{
-			const size_t expEnd = evaluateExpressionEnd(context, outSubString);
+			const size_t expEnd = evaluateExpressionEnd(outSubString);
 			if (std::string::npos == expEnd)
 			{
 				outSyntaxError = true;
@@ -696,7 +694,7 @@ namespace
 			}
 			if (!syntaxError)
 			{
-				retVal = evaluateExpressionRecursive(context, shaderProperties, outExpressions, syntaxError) != 0;
+				retVal = evaluateExpressionRecursive(shaderProperties, outExpressions, syntaxError) != 0;
 			}
 			if (syntaxError)
 			{
@@ -706,9 +704,9 @@ namespace
 			return retVal;
 		}
 
-		void evaluateParamArgs(const Rhi::Context& context, SubStringRef& outSubString, StringVector& outArgs, bool& outSyntaxError)
+		void evaluateParamArgs(SubStringRef& outSubString, StringVector& outArgs, bool& outSyntaxError)
 		{
-			const size_t expEnd = evaluateExpressionEnd(context, outSubString);
+			const size_t expEnd = evaluateExpressionEnd(outSubString);
 			if (std::string::npos == expEnd)
 			{
 				outSyntaxError = true;
@@ -941,7 +939,7 @@ namespace Renderer
 			copy(outBuffer, subString, pos);
 
 			subString.setStart(subString.getStart() + pos + ::detail::c_operations[keyword].length);
-			evaluateParamArgs(mContext, subString, argValues, syntaxError);
+			evaluateParamArgs(subString, argValues, syntaxError);
 
 			syntaxError |= (argValues.size() < 2 || argValues.size() > 3);
 
@@ -1026,10 +1024,10 @@ namespace Renderer
 			copy(outBuffer, subString, pos);
 
 			subString.setStart(subString.getStart() + pos + sizeof("@foreach"));
-			evaluateParamArgs(mContext, subString, argValues, syntaxError);
+			evaluateParamArgs(subString, argValues, syntaxError);
 
 			::detail::SubStringRef blockSubString = subString;
-			::detail::findBlockEnd(mContext, blockSubString, syntaxError);
+			::detail::findBlockEnd(blockSubString, syntaxError);
 
 			if (!syntaxError)
 			{
@@ -1095,10 +1093,10 @@ namespace Renderer
 			copy(outBuffer, subString, pos);
 
 			subString.setStart(subString.getStart() + pos + sizeof("@property"));
-			const bool result = evaluateExpression(mContext, mShaderProperties, subString, syntaxError);
+			const bool result = evaluateExpression(mShaderProperties, subString, syntaxError);
 
 			::detail::SubStringRef blockSubString = subString;
-			const bool isElse = ::detail::findBlockEnd(mContext, blockSubString, syntaxError, true);
+			const bool isElse = ::detail::findBlockEnd(blockSubString, syntaxError, true);
 
 			if (result && !syntaxError)
 			{
@@ -1109,7 +1107,7 @@ namespace Renderer
 			{
 				subString.setStart(blockSubString.getEnd() + sizeof("@else"));
 				blockSubString = subString;
-				::detail::findBlockEnd(mContext, blockSubString, syntaxError);
+				::detail::findBlockEnd(blockSubString, syntaxError);
 				if (!syntaxError && !result)
 				{
 					copy(outBuffer, blockSubString, blockSubString.getSize());
@@ -1152,7 +1150,7 @@ namespace Renderer
 			::detail::copy(outBuffer, subString, pos);
 
 			subString.setStart(subString.getStart() + pos + sizeof("@piece"));
-			::detail::evaluateParamArgs(mContext, subString, argValues, syntaxError);
+			::detail::evaluateParamArgs(subString, argValues, syntaxError);
 
 			syntaxError |= (argValues.size() != 1);
 
@@ -1172,7 +1170,7 @@ namespace Renderer
 				else
 				{
 					::detail::SubStringRef blockSubString = subString;
-					::detail::findBlockEnd(mContext, blockSubString, syntaxError);
+					::detail::findBlockEnd(blockSubString, syntaxError);
 
 					std::string tempBuffer;
 					::detail::copy(tempBuffer, blockSubString, blockSubString.getSize());
@@ -1207,7 +1205,7 @@ namespace Renderer
 			::detail::copy(outBuffer, subString, pos);
 
 			subString.setStart(subString.getStart() + pos + sizeof("@insertpiece"));
-			::detail::evaluateParamArgs(mContext, subString, argValues, syntaxError);
+			::detail::evaluateParamArgs(subString, argValues, syntaxError);
 
 			syntaxError |= (argValues.size() != 1);
 
@@ -1276,7 +1274,7 @@ namespace Renderer
 			::detail::copy(outBuffer, subString, pos);
 
 			subString.setStart(subString.getStart() + pos + ::detail::c_counterOperations[keyword].length);
-			evaluateParamArgs(mContext, subString, argValues, syntaxError);
+			evaluateParamArgs(subString, argValues, syntaxError);
 
 			if (keyword <= 1)
 			{

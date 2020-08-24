@@ -1,41 +1,19 @@
 #include "stdafx.h"
 #include "Renderer/Resource/ShaderBlueprint/Cache/ShaderProperties.h"
 
-//[-------------------------------------------------------]
-//[ Anonymous detail namespace                            ]
-//[-------------------------------------------------------]
 namespace
 {
 	namespace detail
 	{
-
-
-		//[-------------------------------------------------------]
-		//[ Global functions                                      ]
-		//[-------------------------------------------------------]
 		[[nodiscard]] inline bool orderPropertyByShaderPropertyId(const Renderer::ShaderProperties::Property& left, const Renderer::ShaderProperties::Property& right)
 		{
 			return (left.shaderPropertyId < right.shaderPropertyId);
 		}
-
-
-//[-------------------------------------------------------]
-//[ Anonymous detail namespace                            ]
-//[-------------------------------------------------------]
 	} // detail
 }
 
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 namespace Renderer
 {
-
-
-	//[-------------------------------------------------------]
-	//[ Public methods                                        ]
-	//[-------------------------------------------------------]
 	bool ShaderProperties::hasPropertyValue(ShaderPropertyId shaderPropertyId) const
 	{
 		const Property property(shaderPropertyId, 0);
@@ -117,9 +95,4 @@ namespace Renderer
 		// Equal
 		return true;
 	}
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 } // Renderer

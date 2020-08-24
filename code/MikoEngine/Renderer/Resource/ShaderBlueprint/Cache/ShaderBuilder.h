@@ -1,51 +1,15 @@
 #pragma once
 
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
 #include "Renderer/Resource/ShaderBlueprint/Cache/ShaderProperties.h"
 
-// Disable warnings in external headers, we can't fix them
-SE_PRAGMA_WARNING_PUSH
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'argument': conversion from 'long' to 'unsigned int', signed/unsigned mismatch
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4530)	// warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4571)	// warning C4571: Informational: catch(...) semantics changed since Visual C++ 7.1; structured exceptions (SEH) are no longer caught
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4625)	// warning C4625: 'std::codecvt_base': copy constructor was implicitly defined as deleted
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4626)	// warning C4626: 'std::codecvt<char16_t,char,_Mbstatet>': assignment operator was implicitly defined as deleted
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668: '_M_HYBRID_X86_ARM64' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4774)	// warning C4774: 'sprintf_s' : format string expected in argument 3 is not a string literal
-	SE_PRAGMA_WARNING_DISABLE_MSVC(5026)	// warning C5026: 'std::_Generic_error_category': move constructor was implicitly defined as deleted
-	SE_PRAGMA_WARNING_DISABLE_MSVC(5027)	// warning C5027: 'std::_Generic_error_category': move assignment operator was implicitly defined as deleted
-	#include <map>
-	#include <string>
-SE_PRAGMA_WARNING_POP
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace Rhi
-{
-	class Context;
-}
 namespace Renderer
 {
 	class ShaderBlueprintResource;
 	class ShaderPieceResourceManager;
 }
 
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 namespace Renderer
 {
-
-
-	//[-------------------------------------------------------]
-	//[ Global definitions                                    ]
-	//[-------------------------------------------------------]
 	typedef StringId						AssetId;				// Asset identifier, internally just a POD "uint32_t", string ID scheme is "<project name>/<asset directory>/<asset name>"
 	typedef std::vector<AssetId>			AssetIds;
 	typedef std::map<uint32_t, std::string> DynamicShaderPieces;	// Key is "Renderer::StringId"	// TODO(co) Visual Studio 2017: "std::unordered_map" appears to have an inefficient assignment operator which does memory handling even if containers are empty all the time, "std::map" isn't the most effective structure either but currently still better
@@ -85,8 +49,7 @@ namespace Renderer
 		*  @brief
 		*    Constructor
 		*/
-		inline explicit ShaderBuilder(const Rhi::Context& context) :
-			mContext(context)
+		inline ShaderBuilder() 
 		{
 			// Nothing here
 		}
@@ -135,7 +98,6 @@ namespace Renderer
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		const Rhi::Context& mContext;
 		ShaderProperties	mShaderProperties;
 		DynamicShaderPieces	mDynamicShaderPieces;
 		std::string			mInString;	// Could be a local variable, but when making it to a member we reduce memory allocations

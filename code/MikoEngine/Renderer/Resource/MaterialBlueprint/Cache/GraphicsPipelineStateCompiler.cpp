@@ -172,7 +172,7 @@ namespace Renderer
 		ShaderBlueprintResourceManager& shaderBlueprintResourceManager = mRenderer.getShaderBlueprintResourceManager();
 		ShaderCacheManager& shaderCacheManager = shaderBlueprintResourceManager.getShaderCacheManager();
 		const ShaderPieceResourceManager& shaderPieceResourceManager = mRenderer.getShaderPieceResourceManager();
-		ShaderBuilder shaderBuilder(mRenderer.getRhi().getContext());
+		ShaderBuilder shaderBuilder;
 
 		RENDERER_SET_CURRENT_THREAD_DEBUG_NAME("PSC: Stage 1", "Renderer: Pipeline state compiler stage: 1. Asynchronous shader building")
 		while (!mShutdownBuilderThread)
