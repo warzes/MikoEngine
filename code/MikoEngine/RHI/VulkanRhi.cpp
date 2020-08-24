@@ -1269,7 +1269,7 @@ namespace VulkanRhi
 		}
 
 		// Preferred swap chain texture format
-		mCapabilities.preferredSwapChainColorTextureFormat = (SwapChain::findColorVkFormat(getContext(), mVulkanRuntimeLinking->getVkInstance(), *mVulkanContext) == VK_FORMAT_R8G8B8A8_UNORM) ? Rhi::TextureFormat::Enum::R8G8B8A8 : Rhi::TextureFormat::Enum::B8G8R8A8;
+		mCapabilities.preferredSwapChainColorTextureFormat = (SwapChain::findColorVkFormat(getContext().getNativeWindowHandle(), mVulkanRuntimeLinking->getVkInstance(), *mVulkanContext) == VK_FORMAT_R8G8B8A8_UNORM) ? Rhi::TextureFormat::Enum::R8G8B8A8 : Rhi::TextureFormat::Enum::B8G8R8A8;
 
 		{ // Preferred swap chain depth stencil texture format
 			const VkFormat depthVkFormat = SwapChain::findDepthVkFormat(mVulkanContext->getVkPhysicalDevice());

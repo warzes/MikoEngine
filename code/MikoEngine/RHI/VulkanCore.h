@@ -208,7 +208,7 @@ namespace
 			vkPipelineShaderStageCreateInfo.pSpecializationInfo = nullptr;												// pSpecializationInfo (const VkSpecializationInfo*)
 		}
 
-		void enumeratePhysicalDevices(const Rhi::Context& context, VkInstance vkInstance, VkPhysicalDevices& vkPhysicalDevices)
+		void enumeratePhysicalDevices(VkInstance vkInstance, VkPhysicalDevices& vkPhysicalDevices)
 		{
 			// Get the number of available physical devices
 			uint32_t physicalDeviceCount = 0;
@@ -254,7 +254,7 @@ namespace
 			return false;
 		}
 
-		[[nodiscard]] VkPhysicalDevice selectPhysicalDevice(const Rhi::Context& context, const VkPhysicalDevices& vkPhysicalDevices, bool validationEnabled, bool& enableDebugMarker)
+		[[nodiscard]] VkPhysicalDevice selectPhysicalDevice(const VkPhysicalDevices& vkPhysicalDevices, bool validationEnabled, bool& enableDebugMarker)
 		{
 			// TODO(co) I'am sure this selection can be improved (rating etc.)
 			for ( const VkPhysicalDevice& vkPhysicalDevice : vkPhysicalDevices )
@@ -360,7 +360,7 @@ namespace
 				return VK_NULL_HANDLE;
 		}
 
-		[[nodiscard]] VkResult createVkDevice(const Rhi::Context& context, const VkAllocationCallbacks* vkAllocationCallbacks, VkPhysicalDevice vkPhysicalDevice, const VkDeviceQueueCreateInfo& vkDeviceQueueCreateInfo, bool enableValidation, bool enableDebugMarker, VkDevice& vkDevice)
+		[[nodiscard]] VkResult createVkDevice(const VkAllocationCallbacks* vkAllocationCallbacks, VkPhysicalDevice vkPhysicalDevice, const VkDeviceQueueCreateInfo& vkDeviceQueueCreateInfo, bool enableValidation, bool enableDebugMarker, VkDevice& vkDevice)
 		{
 			// See http://vulkan.gpuinfo.org/listfeatures.php to check out GPU hardware capabilities
 			static constexpr std::array<const char*, 3> enabledExtensions =
@@ -475,7 +475,7 @@ namespace
 			return vkResult;
 		}
 
-		[[nodiscard]] VkDevice createVkDevice(const Rhi::Context& context, const VkAllocationCallbacks* vkAllocationCallbacks, VkPhysicalDevice vkPhysicalDevice, bool enableValidation, bool enableDebugMarker, uint32_t& graphicsQueueFamilyIndex, uint32_t& presentQueueFamilyIndex)
+		[[nodiscard]] VkDevice createVkDevice(const VkAllocationCallbacks* vkAllocationCallbacks, VkPhysicalDevice vkPhysicalDevice, bool enableValidation, bool enableDebugMarker, uint32_t& graphicsQueueFamilyIndex, uint32_t& presentQueueFamilyIndex)
 		{
 			VkDevice vkDevice = VK_NULL_HANDLE;
 
@@ -505,12 +505,12 @@ namespace
 							1,											// queueCount (uint32_t)
 							queuePriorities.data()						// pQueuePriorities (const float*)
 						};
-						VkResult vkResult = createVkDevice(context, vkAllocationCallbacks, vkPhysicalDevice, vkDeviceQueueCreateInfo, enableValidation, enableDebugMarker, vkDevice);
+						VkResult vkResult = createVkDevice(vkAllocationCallbacks, vkPhysicalDevice, vkDeviceQueueCreateInfo, enableValidation, enableDebugMarker, vkDevice);
 						if ( VK_ERROR_LAYER_NOT_PRESENT == vkResult && enableValidation )
 						{
 							// Error! Since the show must go on, try creating a Vulkan device instance without validation enabled...
 							RHI_LOG(WARNING, "Failed to create the Vulkan device instance with validation enabled, layer is not present")
-								vkResult = createVkDevice(context, vkAllocationCallbacks, vkPhysicalDevice, vkDeviceQueueCreateInfo, false, enableDebugMarker, vkDevice);
+								vkResult = createVkDevice(vkAllocationCallbacks, vkPhysicalDevice, vkDeviceQueueCreateInfo, false, enableDebugMarker, vkDevice);
 						}
 						// TODO(co) Error handling: Evaluate "vkResult"?
 						graphicsQueueFamilyIndex = graphicsQueueIndex;
@@ -531,7 +531,7 @@ namespace
 			return vkDevice;
 		}
 
-		[[nodiscard]] VkCommandPool createVkCommandPool(const Rhi::Context& context, const VkAllocationCallbacks* vkAllocationCallbacks, VkDevice vkDevice, uint32_t graphicsQueueFamilyIndex)
+		[[nodiscard]] VkCommandPool createVkCommandPool(const VkAllocationCallbacks* vkAllocationCallbacks, VkDevice vkDevice, uint32_t graphicsQueueFamilyIndex)
 		{
 			VkCommandPool vkCommandPool = VK_NULL_HANDLE;
 
@@ -554,7 +554,7 @@ namespace
 			return vkCommandPool;
 		}
 
-		[[nodiscard]] VkCommandBuffer createVkCommandBuffer(const Rhi::Context& context, VkDevice vkDevice, VkCommandPool vkCommandPool)
+		[[nodiscard]] VkCommandBuffer createVkCommandBuffer(VkDevice vkDevice, VkCommandPool vkCommandPool)
 		{
 			VkCommandBuffer vkCommandBuffer = VK_NULL_HANDLE;
 
@@ -644,8 +644,6 @@ namespace
 
 		[[nodiscard]] VKAPI_ATTR VkBool32 VKAPI_CALL debugReportCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objectType, uint64_t object, size_t location, int32_t messageCode, const char* pLayerPrefix, const char* pMessage, void* pUserData)
 		{
-			const Rhi::Context* context = static_cast<const Rhi::Context*>(pUserData);
-
 			// TODO(co) Inside e.g. the "InstancedCubes"-example the log gets currently flooded with
 			//          "Warning: Vulkan debug report callback: Object type: "VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT" Object: "120" Location: "5460" Message code: "0" Layer prefix: "DS" Message: "DescriptorSet 0x78 previously bound as set #0 is incompatible with set 0xc82f498 newly bound as set #0 so set #1 and any subsequent sets were disturbed by newly bound pipelineLayout (0x8b)" ".
 			//          It's a known Vulkan API issue regarding validation. See https://github.com/KhronosGroup/Vulkan-Docs/issues/305 - "vkCmdBindDescriptorSets should be able to take NULL sets. #305".
@@ -706,7 +704,7 @@ namespace
 			return VK_FALSE;
 		}
 
-		[[nodiscard]] VkSurfaceKHR createPresentationSurface(const Rhi::Context& context, const VkAllocationCallbacks* vkAllocationCallbacks, VkInstance vkInstance, VkPhysicalDevice vkPhysicalDevice, uint32_t graphicsQueueFamilyIndex, Rhi::WindowHandle windoInfo)
+		[[nodiscard]] VkSurfaceKHR createPresentationSurface(const VkAllocationCallbacks* vkAllocationCallbacks, VkInstance vkInstance, VkPhysicalDevice vkPhysicalDevice, uint32_t graphicsQueueFamilyIndex, Rhi::WindowHandle windoInfo)
 		{
 			VkSurfaceKHR vkSurfaceKHR = VK_NULL_HANDLE;
 
@@ -823,7 +821,7 @@ namespace
 			return numberOfImages;
 		}
 
-		[[nodiscard]] VkSurfaceFormatKHR getSwapChainFormat(const Rhi::Context& context, VkPhysicalDevice vkPhysicalDevice, VkSurfaceKHR vkSurfaceKHR)
+		[[nodiscard]] VkSurfaceFormatKHR getSwapChainFormat(VkPhysicalDevice vkPhysicalDevice, VkSurfaceKHR vkSurfaceKHR)
 		{
 			uint32_t surfaceFormatCount = 0;
 			if ( (vkGetPhysicalDeviceSurfaceFormatsKHR(vkPhysicalDevice, vkSurfaceKHR, &surfaceFormatCount, nullptr) != VK_SUCCESS) || (0 == surfaceFormatCount) )
@@ -889,7 +887,7 @@ namespace
 			return vkSurfaceCapabilitiesKHR.currentExtent;
 		}
 
-		[[nodiscard]] VkImageUsageFlags getSwapChainUsageFlags(const Rhi::Context& context, const VkSurfaceCapabilitiesKHR& vkSurfaceCapabilitiesKHR)
+		[[nodiscard]] VkImageUsageFlags getSwapChainUsageFlags(const VkSurfaceCapabilitiesKHR& vkSurfaceCapabilitiesKHR)
 		{
 			// Color attachment flag must always be supported. We can define other usage flags but we always need to check if they are supported.
 			if ( vkSurfaceCapabilitiesKHR.supportedUsageFlags & VK_IMAGE_USAGE_TRANSFER_DST_BIT )
@@ -924,7 +922,7 @@ namespace
 			return (vkSurfaceCapabilitiesKHR.supportedTransforms & VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR) ? VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR : vkSurfaceCapabilitiesKHR.currentTransform;
 		}
 
-		[[nodiscard]] VkPresentModeKHR getSwapChainPresentMode(const Rhi::Context& context, VkPhysicalDevice vkPhysicalDevice, VkSurfaceKHR vkSurfaceKHR)
+		[[nodiscard]] VkPresentModeKHR getSwapChainPresentMode(VkPhysicalDevice vkPhysicalDevice, VkSurfaceKHR vkSurfaceKHR)
 		{
 			uint32_t presentModeCount = 0;
 			if ( (vkGetPhysicalDeviceSurfacePresentModesKHR(vkPhysicalDevice, vkSurfaceKHR, &presentModeCount, nullptr) != VK_SUCCESS) || (0 == presentModeCount) )
@@ -962,7 +960,7 @@ namespace
 				return VK_PRESENT_MODE_MAX_ENUM_KHR;
 		}
 
-		[[nodiscard]] VkRenderPass createRenderPass(const Rhi::Context& context, const VkAllocationCallbacks* vkAllocationCallbacks, VkDevice vkDevice, VkFormat colorVkFormat, VkFormat depthVkFormat, VkSampleCountFlagBits vkSampleCountFlagBits)
+		[[nodiscard]] VkRenderPass createRenderPass(const VkAllocationCallbacks* vkAllocationCallbacks, VkDevice vkDevice, VkFormat colorVkFormat, VkFormat depthVkFormat, VkSampleCountFlagBits vkSampleCountFlagBits)
 		{
 			const bool hasDepthStencilAttachment = (VK_FORMAT_UNDEFINED != depthVkFormat);
 
@@ -1073,8 +1071,6 @@ namespace
 		*  @brief
 		*    Create Vulkan shader module from bytecode
 		*
-		*  @param[in] context
-		*    RHI context
 		*  @param[in] vkAllocationCallbacks
 		*    Vulkan allocation callbacks
 		*  @param[in] vkDevice
@@ -1085,7 +1081,7 @@ namespace
 		*  @return
 		*    The Vulkan shader module, null handle on error
 		*/
-		[[nodiscard]] VkShaderModule createVkShaderModuleFromBytecode(const Rhi::Context& context, const VkAllocationCallbacks* vkAllocationCallbacks, VkDevice vkDevice, const Rhi::ShaderBytecode& shaderBytecode)
+		[[nodiscard]] VkShaderModule createVkShaderModuleFromBytecode(const VkAllocationCallbacks* vkAllocationCallbacks, VkDevice vkDevice, const Rhi::ShaderBytecode& shaderBytecode)
 		{
 			// Decode from SMOL-V: like Vulkan/Khronos SPIR-V, but smaller
 			// -> https://github.com/aras-p/smol-v
@@ -1135,7 +1131,7 @@ namespace
 #ifdef _MSC_VER
 #pragma optimize("", off)
 #endif
-		[[nodiscard]] VkShaderModule createVkShaderModuleFromSourceCode(const Rhi::Context& context, const VkAllocationCallbacks* vkAllocationCallbacks, VkDevice vkDevice, VkShaderStageFlagBits vkShaderStageFlagBits, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode)
+		[[nodiscard]] VkShaderModule createVkShaderModuleFromSourceCode(const VkAllocationCallbacks* vkAllocationCallbacks, VkDevice vkDevice, VkShaderStageFlagBits vkShaderStageFlagBits, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode)
 		{
 #ifdef SE_GLSLTOSPIRV
 			// Initialize glslang, if necessary

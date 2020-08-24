@@ -2,56 +2,37 @@
 
 namespace VulkanRhi
 {
-	//[-------------------------------------------------------]
-//[ VulkanRhi/VulkanContext.h                             ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Vulkan context class
-*/
 	class VulkanContext final
 	{
-
-
-		//[-------------------------------------------------------]
-		//[ Public methods                                        ]
-		//[-------------------------------------------------------]
 	public:
-		/**
-		*  @brief
-		*    Constructor
-		*
-		*  @param[in] vulkanRhi
-		*    Owner Vulkan RHI instance
-		*/
-		explicit VulkanContext(VulkanRhi& vulkanRhi) :
-			mVulkanRhi(vulkanRhi),
-			mVkPhysicalDevice(VK_NULL_HANDLE),
-			mVkDevice(VK_NULL_HANDLE),
-			mGraphicsQueueFamilyIndex(~0u),
-			mPresentQueueFamilyIndex(~0u),
-			mGraphicsVkQueue(VK_NULL_HANDLE),
-			mPresentVkQueue(VK_NULL_HANDLE),
-			mVkCommandPool(VK_NULL_HANDLE),
-			mVkCommandBuffer(VK_NULL_HANDLE)
+		explicit VulkanContext(VulkanRhi &vulkanRhi) 
+			: mVulkanRhi(vulkanRhi)
+			, mVkPhysicalDevice(VK_NULL_HANDLE)
+			, mVkDevice(VK_NULL_HANDLE)
+			, mGraphicsQueueFamilyIndex(~0u)
+			, mPresentQueueFamilyIndex(~0u)
+			, mGraphicsVkQueue(VK_NULL_HANDLE)
+			, mPresentVkQueue(VK_NULL_HANDLE)
+			, mVkCommandPool(VK_NULL_HANDLE)
+			, mVkCommandBuffer(VK_NULL_HANDLE)
 		{
-			const VulkanRuntimeLinking& vulkanRuntimeLinking = mVulkanRhi.getVulkanRuntimeLinking();
+			const VulkanRuntimeLinking &vulkanRuntimeLinking = mVulkanRhi.getVulkanRuntimeLinking();
 
 			// Get the physical Vulkan device this context should use
 			bool enableDebugMarker = true;	// TODO(co) Make it possible to setup from the outside whether or not the "VK_EXT_debug_marker"-extension should be used (e.g. retail shipped games might not want to have this enabled)
 			{
 				detail::VkPhysicalDevices vkPhysicalDevices;
-				::detail::enumeratePhysicalDevices(vulkanRhi.getContext(), vulkanRuntimeLinking.getVkInstance(), vkPhysicalDevices);
+				::detail::enumeratePhysicalDevices(vulkanRuntimeLinking.getVkInstance(), vkPhysicalDevices);
 				if ( !vkPhysicalDevices.empty() )
 				{
-					mVkPhysicalDevice = ::detail::selectPhysicalDevice(vulkanRhi.getContext(), vkPhysicalDevices, vulkanRhi.getVulkanRuntimeLinking().isValidationEnabled(), enableDebugMarker);
+					mVkPhysicalDevice = ::detail::selectPhysicalDevice(vkPhysicalDevices, vulkanRhi.getVulkanRuntimeLinking().isValidationEnabled(), enableDebugMarker);
 				}
 			}
 
 			// Create the logical Vulkan device instance
 			if ( VK_NULL_HANDLE != mVkPhysicalDevice )
 			{
-				mVkDevice = ::detail::createVkDevice(mVulkanRhi.getContext(), mVulkanRhi.getVkAllocationCallbacks(), mVkPhysicalDevice, vulkanRuntimeLinking.isValidationEnabled(), enableDebugMarker, mGraphicsQueueFamilyIndex, mPresentQueueFamilyIndex);
+				mVkDevice = ::detail::createVkDevice(mVulkanRhi.getVkAllocationCallbacks(), mVkPhysicalDevice, vulkanRuntimeLinking.isValidationEnabled(), enableDebugMarker, mGraphicsQueueFamilyIndex, mPresentQueueFamilyIndex);
 				if ( VK_NULL_HANDLE != mVkDevice )
 				{
 					{
@@ -64,11 +45,11 @@ namespace VulkanRhi
 							if ( VK_NULL_HANDLE != mPresentVkQueue )
 							{
 								// Create Vulkan command pool instance
-								mVkCommandPool = ::detail::createVkCommandPool(mVulkanRhi.getContext(), mVulkanRhi.getVkAllocationCallbacks(), mVkDevice, mGraphicsQueueFamilyIndex);
+								mVkCommandPool = ::detail::createVkCommandPool(mVulkanRhi.getVkAllocationCallbacks(), mVkDevice, mGraphicsQueueFamilyIndex);
 								if ( VK_NULL_HANDLE != mVkCommandPool )
 								{
 									// Create Vulkan command buffer instance
-									mVkCommandBuffer = ::detail::createVkCommandBuffer(mVulkanRhi.getContext(), mVkDevice, mVkCommandPool);
+									mVkCommandBuffer = ::detail::createVkCommandBuffer(mVkDevice, mVkCommandPool);
 								}
 								else
 								{
@@ -87,10 +68,6 @@ namespace VulkanRhi
 			}
 		}
 
-		/**
-		*  @brief
-		*    Destructor
-		*/
 		~VulkanContext()
 		{
 			if ( VK_NULL_HANDLE != mVkDevice )
@@ -242,13 +219,13 @@ namespace VulkanRhi
 			}
 
 			// Error!
-			RHI_LOG(CRITICAL, "Failed to find suitable Vulkan memory type")
-				return ~0u;
+			RHI_LOG(CRITICAL, "Failed to find suitable Vulkan memory type");
+			return ~0u;
 		}
 
 		[[nodiscard]] inline VkCommandBuffer createVkCommandBuffer() const
 		{
-			return ::detail::createVkCommandBuffer(mVulkanRhi.getContext(), mVkDevice, mVkCommandPool);
+			return ::detail::createVkCommandBuffer(mVkDevice, mVkCommandPool);
 		}
 
 		void destroyVkCommandBuffer(VkCommandBuffer vkCommandBuffer) const

@@ -7,9 +7,6 @@ namespace VulkanRhi
 	//[-------------------------------------------------------]
 	class Mapping final
 	{
-		//[-------------------------------------------------------]
-		//[ Public static methods                                 ]
-		//[-------------------------------------------------------]
 	public:
 		//[-------------------------------------------------------]
 		//[ Rhi::FilterMode                                       ]
@@ -18,15 +15,13 @@ namespace VulkanRhi
 		*  @brief
 		*    "Rhi::FilterMode" to Vulkan magnification filter mode
 		*
-		*  @param[in] context
-		*    RHI context to use
 		*  @param[in] filterMode
 		*    "Rhi::FilterMode" to map
 		*
 		*  @return
 		*    Vulkan magnification filter mode
 		*/
-		[[nodiscard]] static VkFilter getVulkanMagFilterMode([[maybe_unused]] const Rhi::Context& context, Rhi::FilterMode filterMode)
+		[[nodiscard]] static VkFilter getVulkanMagFilterMode(Rhi::FilterMode filterMode)
 		{
 			switch ( filterMode )
 			{
@@ -97,15 +92,13 @@ namespace VulkanRhi
 		*  @brief
 		*    "Rhi::FilterMode" to Vulkan minification filter mode
 		*
-		*  @param[in] context
-		*    RHI context to use
 		*  @param[in] filterMode
 		*    "Rhi::FilterMode" to map
 		*
 		*  @return
 		*    Vulkan minification filter mode
 		*/
-		[[nodiscard]] static VkFilter getVulkanMinFilterMode([[maybe_unused]] const Rhi::Context& context, Rhi::FilterMode filterMode)
+		[[nodiscard]] static VkFilter getVulkanMinFilterMode(Rhi::FilterMode filterMode)
 		{
 			switch ( filterMode )
 			{
@@ -175,16 +168,14 @@ namespace VulkanRhi
 		/**
 		*  @brief
 		*    "Rhi::FilterMode" to Vulkan sampler mipmap mode
-		*
-		*  @param[in] context
-		*    Rhi context to use
+
 		*  @param[in] filterMode
 		*    "Rhi::FilterMode" to map
 		*
 		*  @return
 		*    Vulkan sampler mipmap mode
 		*/
-		[[nodiscard]] static VkSamplerMipmapMode getVulkanMipmapMode([[maybe_unused]] const Rhi::Context& context, Rhi::FilterMode filterMode)
+		[[nodiscard]] static VkSamplerMipmapMode getVulkanMipmapMode(Rhi::FilterMode filterMode)
 		{
 			switch ( filterMode )
 			{
@@ -406,15 +397,13 @@ namespace VulkanRhi
 		*  @brief
 		*    "Rhi::IndexBufferFormat" to Vulkan type
 		*
-		*  @param[in] context
-		*    RHI context to use
 		*  @param[in] indexBufferFormat
 		*    "Rhi::IndexBufferFormat" to map
 		*
 		*  @return
 		*    Vulkan index type
 		*/
-		[[nodiscard]] static VkIndexType getVulkanType([[maybe_unused]] const Rhi::Context& context, Rhi::IndexBufferFormat::Enum indexBufferFormat)
+		[[nodiscard]] static VkIndexType getVulkanType(Rhi::IndexBufferFormat::Enum indexBufferFormat)
 		{
 			RHI_ASSERT(Rhi::IndexBufferFormat::UNSIGNED_CHAR != indexBufferFormat, "One byte per element index buffer format isn't supported by Vulkan")
 				static constexpr VkIndexType MAPPING[] =
@@ -510,15 +499,13 @@ namespace VulkanRhi
 		*  @brief
 		*    Number of multisamples to Vulkan sample count flag bits
 		*
-		*  @param[in] context
-		*    RHI context to use
 		*  @param[in] numberOfMultisamples
 		*    The number of multisamples per pixel (valid values: 1, 2, 4, 8)
 		*
 		*  @return
 		*    Vulkan sample count flag bits
 		*/
-		[[nodiscard]] static VkSampleCountFlagBits getVulkanSampleCountFlagBits([[maybe_unused]] const Rhi::Context& context, uint8_t numberOfMultisamples)
+		[[nodiscard]] static VkSampleCountFlagBits getVulkanSampleCountFlagBits(uint8_t numberOfMultisamples)
 		{
 			RHI_ASSERT(numberOfMultisamples <= 8, "Invalid number of Vulkan multisamples")
 				static constexpr VkSampleCountFlagBits MAPPING[] =
@@ -538,10 +525,6 @@ namespace VulkanRhi
 	//[-------------------------------------------------------]
 	//[ VulkanRhi/Helper.h                                    ]
 	//[-------------------------------------------------------]
-	/**
-	*  @brief
-	*    Vulkan helper
-	*/
 	class Helper final
 	{
 
@@ -970,7 +953,7 @@ namespace VulkanRhi
 			const bool     layered = (VK_IMAGE_VIEW_TYPE_2D_ARRAY == vkImageViewType || VK_IMAGE_VIEW_TYPE_CUBE == vkImageViewType || VK_IMAGE_VIEW_TYPE_CUBE_ARRAY == vkImageViewType);
 			const uint32_t layerCount = layered ? vkExtent3D.depth : 1;
 			const uint32_t depth = layered ? 1 : vkExtent3D.depth;
-			const VkSampleCountFlagBits vkSampleCountFlagBits = Mapping::getVulkanSampleCountFlagBits(vulkanRhi.getContext(), numberOfMultisamples);
+			const VkSampleCountFlagBits vkSampleCountFlagBits = Mapping::getVulkanSampleCountFlagBits(numberOfMultisamples);
 			VkImageAspectFlags vkImageAspectFlags = isDepthTextureFormat ? VK_IMAGE_ASPECT_DEPTH_BIT : VK_IMAGE_ASPECT_COLOR_BIT;
 			if ( ::detail::hasVkFormatStencilComponent(vkFormat) )
 			{
@@ -1332,7 +1315,6 @@ namespace VulkanRhi
 			static constexpr uint32_t maxSets = 4242;	// TODO(co) We probably need to get this provided from the outside
 
 			// Copy the parameter data
-			const Rhi::Context& context = vulkanRhi.getContext();
 			const uint32_t numberOfRootParameters = mRootSignature.numberOfParameters;
 			if ( numberOfRootParameters > 0 )
 			{
@@ -1695,7 +1677,6 @@ namespace VulkanRhi
 			}
 
 			// Destroy the root signature data
-			const Rhi::Context& context = vulkanRhi.getContext();
 			if ( nullptr != mRootSignature.parameters )
 			{
 				for ( uint32_t rootParameterIndex = 0; rootParameterIndex < mRootSignature.numberOfParameters; ++rootParameterIndex )
@@ -1948,7 +1929,7 @@ namespace VulkanRhi
 		*/
 		IndexBuffer(VulkanRhi& vulkanRhi, uint32_t numberOfBytes, const void* data, uint32_t bufferFlags, [[maybe_unused]] Rhi::BufferUsage bufferUsage, Rhi::IndexBufferFormat::Enum indexBufferFormat RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IIndexBuffer(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkIndexType(Mapping::getVulkanType(vulkanRhi.getContext(), indexBufferFormat)),
+			mVkIndexType(Mapping::getVulkanType(indexBufferFormat)),
 			mVkBuffer(VK_NULL_HANDLE),
 			mVkDeviceMemory(VK_NULL_HANDLE)
 		{
@@ -2099,7 +2080,6 @@ namespace VulkanRhi
 			// Add a reference to the used vertex buffers
 			if ( mNumberOfSlots > 0 )
 			{
-				const Rhi::Context& context = vulkanRhi.getContext();
 				mVertexVkBuffers = RHI_MALLOC_TYPED(VkBuffer, mNumberOfSlots);
 				mStrides = RHI_MALLOC_TYPED(uint32_t, mNumberOfSlots);
 				mOffsets = RHI_MALLOC_TYPED(VkDeviceSize, mNumberOfSlots);
@@ -2144,7 +2124,6 @@ namespace VulkanRhi
 
 			// Cleanup Vulkan input slot data
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
-			const Rhi::Context& context = vulkanRhi.getContext();
 			if ( mNumberOfSlots > 0 )
 			{
 				RHI_FREE(mVertexVkBuffers);
@@ -4060,9 +4039,9 @@ namespace VulkanRhi
 				VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO,											// sType (VkStructureType)
 				nullptr,																		// pNext (const void*)
 				0,																				// flags (VkSamplerCreateFlags)
-				Mapping::getVulkanMagFilterMode(vulkanRhi.getContext(), samplerState.filter),	// magFilter (VkFilter)
-				Mapping::getVulkanMinFilterMode(vulkanRhi.getContext(), samplerState.filter),	// minFilter (VkFilter)
-				Mapping::getVulkanMipmapMode(vulkanRhi.getContext(), samplerState.filter),		// mipmapMode (VkSamplerMipmapMode)
+				Mapping::getVulkanMagFilterMode(samplerState.filter),	// magFilter (VkFilter)
+				Mapping::getVulkanMinFilterMode(samplerState.filter),	// minFilter (VkFilter)
+				Mapping::getVulkanMipmapMode(samplerState.filter),		// mipmapMode (VkSamplerMipmapMode)
 				Mapping::getVulkanTextureAddressMode(samplerState.addressU),					// addressModeU (VkSamplerAddressMode)
 				Mapping::getVulkanTextureAddressMode(samplerState.addressV),					// addressModeV (VkSamplerAddressMode)
 				Mapping::getVulkanTextureAddressMode(samplerState.addressW),					// addressModeW (VkSamplerAddressMode)
@@ -4185,7 +4164,7 @@ namespace VulkanRhi
 			mVkRenderPass(VK_NULL_HANDLE),
 			mNumberOfColorAttachments(numberOfColorAttachments),
 			mDepthStencilAttachmentTextureFormat(depthStencilAttachmentTextureFormat),
-			mVkSampleCountFlagBits(Mapping::getVulkanSampleCountFlagBits(vulkanRhi.getContext(), numberOfMultisamples))
+			mVkSampleCountFlagBits(Mapping::getVulkanSampleCountFlagBits(numberOfMultisamples))
 		{
 			const bool hasDepthStencilAttachment = (Rhi::TextureFormat::Enum::UNKNOWN != depthStencilAttachmentTextureFormat);
 
@@ -4614,11 +4593,11 @@ namespace VulkanRhi
 		//[ Public static methods                                 ]
 		//[-------------------------------------------------------]
 	public:
-		[[nodiscard]] static VkFormat findColorVkFormat(const Rhi::Context& context, VkInstance vkInstance, const VulkanContext& vulkanContext)
+		[[nodiscard]] static VkFormat findColorVkFormat(const handle& nativeWindowHandle, VkInstance vkInstance, const VulkanContext& vulkanContext)
 		{
 			const VkPhysicalDevice vkPhysicalDevice = vulkanContext.getVkPhysicalDevice();
-			const VkSurfaceKHR vkSurfaceKHR = detail::createPresentationSurface(context, vulkanContext.getVulkanRhi().getVkAllocationCallbacks(), vkInstance, vkPhysicalDevice, vulkanContext.getGraphicsQueueFamilyIndex(), Rhi::WindowHandle{ context.getNativeWindowHandle(), nullptr });
-			const VkSurfaceFormatKHR desiredVkSurfaceFormatKHR = ::detail::getSwapChainFormat(context, vkPhysicalDevice, vkSurfaceKHR);
+			const VkSurfaceKHR vkSurfaceKHR = detail::createPresentationSurface(vulkanContext.getVulkanRhi().getVkAllocationCallbacks(), vkInstance, vkPhysicalDevice, vulkanContext.getGraphicsQueueFamilyIndex(), Rhi::WindowHandle{ nativeWindowHandle, nullptr });
+			const VkSurfaceFormatKHR desiredVkSurfaceFormatKHR = ::detail::getSwapChainFormat(vkPhysicalDevice, vkSurfaceKHR);
 			vkDestroySurfaceKHR(vkInstance, vkSurfaceKHR, vulkanContext.getVulkanRhi().getVkAllocationCallbacks());
 			return desiredVkSurfaceFormatKHR.format;
 		}
@@ -4666,7 +4645,7 @@ namespace VulkanRhi
 			const VulkanContext&   vulkanContext = vulkanRhi.getVulkanContext();
 			const VkInstance	   vkInstance = vulkanRhi.getVulkanRuntimeLinking().getVkInstance();
 			const VkPhysicalDevice vkPhysicalDevice = vulkanContext.getVkPhysicalDevice();
-			mVkSurfaceKHR = detail::createPresentationSurface(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vkInstance, vkPhysicalDevice, vulkanContext.getGraphicsQueueFamilyIndex(), windowHandle);
+			mVkSurfaceKHR = detail::createPresentationSurface(vulkanRhi.getVkAllocationCallbacks(), vkInstance, vkPhysicalDevice, vulkanContext.getGraphicsQueueFamilyIndex(), windowHandle);
 			if ( VK_NULL_HANDLE != mVkSurfaceKHR )
 			{
 				// Create the Vulkan swap chain
@@ -4803,8 +4782,6 @@ namespace VulkanRhi
 			if ( SE_NULL_HANDLE != mNativeWindowHandle )
 			{
 				VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
-				const Rhi::Context& context = vulkanRhi.getContext();
-				RHI_ASSERT(context.getType() == Rhi::Context::ContextType::X11, "Invalid Vulkan context type")
 
 					// If the given RHI context is an X11 context use the display connection object provided by the context
 					if ( context.getType() == Rhi::Context::ContextType::X11 )
@@ -4979,7 +4956,6 @@ namespace VulkanRhi
 		{
 			// Get the Vulkan physical device
 			const VulkanRhi&	   vulkanRhi = static_cast<const VulkanRhi&>(getRhi());
-			const Rhi::Context&	   context = vulkanRhi.getContext();
 			const VulkanContext&   vulkanContext = vulkanRhi.getVulkanContext();
 			const VkPhysicalDevice vkPhysicalDevice = vulkanContext.getVkPhysicalDevice();
 			const VkDevice		   vkDevice = vulkanContext.getVkDevice();
@@ -5001,11 +4977,11 @@ namespace VulkanRhi
 
 			// Get Vulkan swap chain settings
 			const uint32_t                      desiredNumberOfImages = ::detail::getNumberOfSwapChainImages(vkSurfaceCapabilitiesKHR);
-			const VkSurfaceFormatKHR            desiredVkSurfaceFormatKHR = ::detail::getSwapChainFormat(context, vkPhysicalDevice, mVkSurfaceKHR);
+			const VkSurfaceFormatKHR            desiredVkSurfaceFormatKHR = ::detail::getSwapChainFormat(vkPhysicalDevice, mVkSurfaceKHR);
 			const VkExtent2D                    desiredVkExtent2D = ::detail::getSwapChainExtent(vkSurfaceCapabilitiesKHR);
-			const VkImageUsageFlags             desiredVkImageUsageFlags = ::detail::getSwapChainUsageFlags(context, vkSurfaceCapabilitiesKHR);
+			const VkImageUsageFlags             desiredVkImageUsageFlags = ::detail::getSwapChainUsageFlags(vkSurfaceCapabilitiesKHR);
 			const VkSurfaceTransformFlagBitsKHR desiredVkSurfaceTransformFlagBitsKHR = ::detail::getSwapChainTransform(vkSurfaceCapabilitiesKHR);
-			const VkPresentModeKHR              desiredVkPresentModeKHR = ::detail::getSwapChainPresentMode(context, vkPhysicalDevice, mVkSurfaceKHR);
+			const VkPresentModeKHR              desiredVkPresentModeKHR = ::detail::getSwapChainPresentMode(vkPhysicalDevice, mVkSurfaceKHR);
 
 			// Validate Vulkan swap chain settings
 			if ( -1 == static_cast<int>(desiredVkImageUsageFlags) )
@@ -5062,7 +5038,7 @@ namespace VulkanRhi
 			createDepthRenderTarget(desiredVkExtent2D);
 
 			// Create render pass
-			mVkRenderPass = ::detail::createRenderPass(context, vulkanRhi.getVkAllocationCallbacks(), vkDevice, desiredVkSurfaceFormatKHR.format, mDepthVkFormat, static_cast<RenderPass&>(getRenderPass()).getVkSampleCountFlagBits());
+			mVkRenderPass = ::detail::createRenderPass(vulkanRhi.getVkAllocationCallbacks(), vkDevice, desiredVkSurfaceFormatKHR.format, mDepthVkFormat, static_cast<RenderPass&>(getRenderPass()).getVkSampleCountFlagBits());
 
 			// Vulkan swap chain image handling
 			if ( VK_NULL_HANDLE != mVkRenderPass )
@@ -5651,7 +5627,7 @@ namespace VulkanRhi
 		*/
 		VertexShaderGlsl(VulkanRhi& vulkanRhi, const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IVertexShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -5673,7 +5649,7 @@ namespace VulkanRhi
 		*/
 		VertexShaderGlsl(VulkanRhi& vulkanRhi, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IVertexShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_VERTEX_BIT, sourceCode, shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_VERTEX_BIT, sourceCode, shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -5776,7 +5752,7 @@ namespace VulkanRhi
 		*/
 		TessellationControlShaderGlsl(VulkanRhi& vulkanRhi, const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITessellationControlShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -5798,7 +5774,7 @@ namespace VulkanRhi
 		*/
 		TessellationControlShaderGlsl(VulkanRhi& vulkanRhi, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITessellationControlShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT, sourceCode, shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT, sourceCode, shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -5901,7 +5877,7 @@ namespace VulkanRhi
 		*/
 		TessellationEvaluationShaderGlsl(VulkanRhi& vulkanRhi, const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITessellationEvaluationShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -5923,7 +5899,7 @@ namespace VulkanRhi
 		*/
 		TessellationEvaluationShaderGlsl(VulkanRhi& vulkanRhi, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITessellationEvaluationShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT, sourceCode, shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT, sourceCode, shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -6033,7 +6009,7 @@ namespace VulkanRhi
 		// TODO(co) Remove unused parameters
 		GeometryShaderGlsl(VulkanRhi& vulkanRhi, const Rhi::ShaderBytecode& shaderBytecode, [[maybe_unused]] Rhi::GsInputPrimitiveTopology gsInputPrimitiveTopology, [[maybe_unused]] Rhi::GsOutputPrimitiveTopology gsOutputPrimitiveTopology, [[maybe_unused]] uint32_t numberOfOutputVertices RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IGeometryShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -6062,7 +6038,7 @@ namespace VulkanRhi
 		// TODO(co) Remove unused parameters
 		GeometryShaderGlsl(VulkanRhi& vulkanRhi, const char* sourceCode, [[maybe_unused]] Rhi::GsInputPrimitiveTopology gsInputPrimitiveTopology, [[maybe_unused]] Rhi::GsOutputPrimitiveTopology gsOutputPrimitiveTopology, [[maybe_unused]] uint32_t numberOfOutputVertices, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IGeometryShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_GEOMETRY_BIT, sourceCode, shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_GEOMETRY_BIT, sourceCode, shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -6165,7 +6141,7 @@ namespace VulkanRhi
 		*/
 		FragmentShaderGlsl(VulkanRhi& vulkanRhi, const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IFragmentShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -6187,7 +6163,7 @@ namespace VulkanRhi
 		*/
 		FragmentShaderGlsl(VulkanRhi& vulkanRhi, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IFragmentShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_FRAGMENT_BIT, sourceCode, shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_FRAGMENT_BIT, sourceCode, shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -6290,7 +6266,7 @@ namespace VulkanRhi
 		*/
 		TaskShaderGlsl(VulkanRhi& vulkanRhi, const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITaskShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -6312,7 +6288,7 @@ namespace VulkanRhi
 		*/
 		TaskShaderGlsl(VulkanRhi& vulkanRhi, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITaskShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_TASK_BIT_NV, sourceCode, shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_TASK_BIT_NV, sourceCode, shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -6415,7 +6391,7 @@ namespace VulkanRhi
 		*/
 		MeshShaderGlsl(VulkanRhi& vulkanRhi, const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IMeshShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -6437,7 +6413,7 @@ namespace VulkanRhi
 		*/
 		MeshShaderGlsl(VulkanRhi& vulkanRhi, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IMeshShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_MESH_BIT_NV, sourceCode, shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_MESH_BIT_NV, sourceCode, shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -6540,7 +6516,7 @@ namespace VulkanRhi
 		*/
 		ComputeShaderGlsl(VulkanRhi& vulkanRhi, const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IComputeShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromBytecode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -6562,7 +6538,7 @@ namespace VulkanRhi
 		*/
 		ComputeShaderGlsl(VulkanRhi& vulkanRhi, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IComputeShader(vulkanRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getContext(), vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_COMPUTE_BIT, sourceCode, shaderBytecode))
+			mVkShaderModule(::detail::createVkShaderModuleFromSourceCode(vulkanRhi.getVkAllocationCallbacks(), vulkanRhi.getVulkanContext().getVkDevice(), VK_SHADER_STAGE_COMPUTE_BIT, sourceCode, shaderBytecode))
 		{
 #if SE_DEBUG
 			if ( nullptr != vkDebugMarkerSetObjectNameEXT )
@@ -8068,7 +8044,6 @@ namespace VulkanRhi
 		virtual ~ResourceGroup() override
 		{
 			// Remove our reference from the RHI resources
-			const Rhi::Context& context = getRhi().getContext();
 			if ( nullptr != mSamplerStates )
 			{
 				for ( uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex )
@@ -8143,7 +8118,6 @@ namespace VulkanRhi
 	Rhi::IResourceGroup* RootSignature::createResourceGroup(uint32_t rootParameterIndex, uint32_t numberOfResources, Rhi::IResource** resources, Rhi::ISamplerState** samplerStates RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
-		const Rhi::Context& context = vulkanRhi.getContext();
 
 		// Sanity checks
 		RHI_ASSERT(VK_NULL_HANDLE != mVkDescriptorPool, "The Vulkan descriptor pool instance must be valid")

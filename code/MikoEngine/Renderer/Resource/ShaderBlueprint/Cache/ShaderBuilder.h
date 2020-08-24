@@ -14,10 +14,6 @@ namespace Renderer
 	typedef std::vector<AssetId>			AssetIds;
 	typedef std::map<uint32_t, std::string> DynamicShaderPieces;	// Key is "Renderer::StringId"	// TODO(co) Visual Studio 2017: "std::unordered_map" appears to have an inefficient assignment operator which does memory handling even if containers are empty all the time, "std::map" isn't the most effective structure either but currently still better
 
-
-	//[-------------------------------------------------------]
-	//[ Classes                                               ]
-	//[-------------------------------------------------------]
 	/**
 	*  @brief
 	*    Shader builder
@@ -27,11 +23,6 @@ namespace Renderer
 	*/
 	class ShaderBuilder final
 	{
-
-
-	//[-------------------------------------------------------]
-	//[ Public definitions                                    ]
-	//[-------------------------------------------------------]
 	public:
 		struct BuildShader final
 		{
@@ -39,29 +30,9 @@ namespace Renderer
 			AssetIds	assetIds;						// List of IDs of the assets (shader blueprint, shader piece) which took part in the shader cache creation
 			uint64_t	combinedAssetFileHashes = 0;	// Combination of the file hash of all assets (shader blueprint, shader piece) which took part in the shader cache creation
 		};
-
-
-	//[-------------------------------------------------------]
-	//[ Public methods                                        ]
-	//[-------------------------------------------------------]
 	public:
-		/**
-		*  @brief
-		*    Constructor
-		*/
-		inline ShaderBuilder() 
-		{
-			// Nothing here
-		}
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		inline ~ShaderBuilder()
-		{
-			// Nothing here
-		}
+		ShaderBuilder() = default;
+		~ShaderBuilder() = default;
 
 		/**
 		*  @brief
@@ -78,10 +49,6 @@ namespace Renderer
 		*/
 		void createSourceCode(const ShaderPieceResourceManager& shaderPieceResourceManager, const ShaderBlueprintResource& shaderBlueprintResource, const ShaderProperties& shaderProperties, BuildShader& buildShader);
 
-
-	//[-------------------------------------------------------]
-	//[ Private methods                                       ]
-	//[-------------------------------------------------------]
 	private:
 		explicit ShaderBuilder(const ShaderBuilder&) = delete;
 		ShaderBuilder& operator=(const ShaderBuilder&) = delete;
@@ -93,21 +60,9 @@ namespace Renderer
 		bool parseCounter(const std::string& inBuffer, std::string& outBuffer);
 		bool parse(const std::string& inBuffer, std::string& outBuffer) const;
 
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
 		ShaderProperties	mShaderProperties;
 		DynamicShaderPieces	mDynamicShaderPieces;
 		std::string			mInString;	// Could be a local variable, but when making it to a member we reduce memory allocations
 		std::string			mOutString;	// Could be a local variable, but when making it to a member we reduce memory allocations
-
-
 	};
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 } // Renderer
