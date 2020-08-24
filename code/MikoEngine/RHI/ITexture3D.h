@@ -23,7 +23,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITexture3D() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfTexture3Ds;
 #endif
@@ -86,7 +86,7 @@ namespace Rhi
 			mHeight(height),
 			mDepth(depth)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedTexture3Ds;
 			++rhi.getStatistics().currentNumberOfTexture3Ds;

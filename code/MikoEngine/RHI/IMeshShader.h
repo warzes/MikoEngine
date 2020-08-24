@@ -13,7 +13,7 @@ namespace Rhi
 		*/
 		inline virtual ~IMeshShader() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfMeshShaders;
 #endif
@@ -31,7 +31,7 @@ namespace Rhi
 		inline explicit IMeshShader(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IShader(ResourceType::MESH_SHADER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedMeshShaders;
 			++rhi.getStatistics().currentNumberOfMeshShaders;

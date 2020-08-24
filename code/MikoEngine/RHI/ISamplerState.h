@@ -62,7 +62,7 @@ namespace Rhi
 		*/
 		inline virtual ~ISamplerState() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfSamplerStates;
 #endif
@@ -80,7 +80,7 @@ namespace Rhi
 		inline explicit ISamplerState(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IState(ResourceType::SAMPLER_STATE, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedSamplerStates;
 			++rhi.getStatistics().currentNumberOfSamplerStates;

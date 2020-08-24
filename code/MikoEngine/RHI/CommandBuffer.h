@@ -160,7 +160,7 @@ namespace Rhi
 			mCommandPacketBuffer(nullptr),
 			mPreviousCommandPacketByteIndex(~0u),
 			mCurrentCommandPacketByteIndex(0)
-#if SE_STATISTICS
+#if SE_RHI_STATISTICS
 			, mNumberOfCommands(0)
 #endif
 		{
@@ -183,7 +183,7 @@ namespace Rhi
 			return (~0u == mPreviousCommandPacketByteIndex);
 		}
 
-#if SE_STATISTICS
+#if SE_RHI_STATISTICS
 		/**
 		*  @brief
 		*    Return the number of commands inside the command buffer
@@ -223,7 +223,7 @@ namespace Rhi
 		{
 			mPreviousCommandPacketByteIndex = ~0u;
 			mCurrentCommandPacketByteIndex = 0;
-#if SE_STATISTICS
+#if SE_RHI_STATISTICS
 			mNumberOfCommands = 0;
 #endif
 		}
@@ -281,7 +281,7 @@ namespace Rhi
 			mCurrentCommandPacketByteIndex += numberOfCommandBytes;
 
 			// Done
-#if SE_STATISTICS
+#if SE_RHI_STATISTICS
 			++mNumberOfCommands;
 #endif
 			return CommandPacketHelper::getCommand<U>(commandPacket);
@@ -374,7 +374,7 @@ namespace Rhi
 			// Finalize
 			commandBuffer.mPreviousCommandPacketByteIndex = commandBuffer.mCurrentCommandPacketByteIndex + mPreviousCommandPacketByteIndex;
 			commandBuffer.mCurrentCommandPacketByteIndex += mCurrentCommandPacketByteIndex;
-#if SE_STATISTICS
+#if SE_RHI_STATISTICS
 			commandBuffer.mNumberOfCommands += mNumberOfCommands;
 #endif
 		}
@@ -404,7 +404,7 @@ namespace Rhi
 		// Current state
 		uint32_t mPreviousCommandPacketByteIndex;
 		uint32_t mCurrentCommandPacketByteIndex;
-#if SE_STATISTICS
+#if SE_RHI_STATISTICS
 		uint32_t mNumberOfCommands;
 #endif
 	};

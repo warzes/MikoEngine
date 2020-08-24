@@ -20,7 +20,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITexture2D() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfTexture2Ds;
 #endif
@@ -68,7 +68,7 @@ namespace Rhi
 			mWidth(width),
 			mHeight(height)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedTexture2Ds;
 			++rhi.getStatistics().currentNumberOfTexture2Ds;

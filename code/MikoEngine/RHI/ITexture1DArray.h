@@ -20,7 +20,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITexture1DArray() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfTexture1DArrays;
 #endif
@@ -68,7 +68,7 @@ namespace Rhi
 			mWidth(width),
 			mNumberOfSlices(numberOfSlices)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedTexture1DArrays;
 			++rhi.getStatistics().currentNumberOfTexture1DArrays;

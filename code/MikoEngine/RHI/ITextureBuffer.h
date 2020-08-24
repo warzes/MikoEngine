@@ -31,7 +31,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITextureBuffer() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfTextureBuffers;
 #endif
@@ -49,7 +49,7 @@ namespace Rhi
 		inline explicit ITextureBuffer(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IBuffer(ResourceType::TEXTURE_BUFFER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedTextureBuffers;
 			++rhi.getStatistics().currentNumberOfTextureBuffers;

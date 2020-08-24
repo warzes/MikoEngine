@@ -33,7 +33,7 @@ namespace Rhi
 		*/
 		inline virtual ~IUniformBuffer() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfUniformBuffers;
 #endif
@@ -51,7 +51,7 @@ namespace Rhi
 		inline explicit IUniformBuffer(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IBuffer(ResourceType::UNIFORM_BUFFER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedUniformBuffers;
 			++rhi.getStatistics().currentNumberOfUniformBuffers;

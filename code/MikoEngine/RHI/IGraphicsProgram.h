@@ -7,7 +7,7 @@ namespace Rhi
 	public:
 		inline virtual ~IGraphicsProgram() override
 		{
-#if SE_STATISTICS
+#if SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfGraphicsPrograms;
 #endif
@@ -54,7 +54,7 @@ namespace Rhi
 		inline explicit IGraphicsProgram(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IResource(ResourceType::GRAPHICS_PROGRAM, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-#if SE_STATISTICS
+#if SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedGraphicsPrograms;
 			++rhi.getStatistics().currentNumberOfGraphicsPrograms;

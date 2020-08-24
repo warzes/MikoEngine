@@ -26,7 +26,7 @@ namespace Rhi
 		*/
 		inline virtual ~IVertexArray() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfVertexArrays;
 #endif
@@ -59,7 +59,7 @@ namespace Rhi
 			IResource(ResourceType::VERTEX_ARRAY, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mId(id)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedVertexArrays;
 			++rhi.getStatistics().currentNumberOfVertexArrays;

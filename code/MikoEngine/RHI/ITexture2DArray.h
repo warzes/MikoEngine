@@ -23,7 +23,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITexture2DArray() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfTexture2DArrays;
 #endif
@@ -86,7 +86,7 @@ namespace Rhi
 			mHeight(height),
 			mNumberOfSlices(numberOfSlices)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedTexture2DArrays;
 			++rhi.getStatistics().currentNumberOfTexture2DArrays;

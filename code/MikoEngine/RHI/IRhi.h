@@ -74,7 +74,7 @@ namespace Rhi
 			return *shaderLanguage;
 		}
 
-#if SE_STATISTICS
+#if SE_RHI_STATISTICS
 		[[nodiscard]] inline const Statistics& getStatistics() const
 		{
 			return mStatistics;
@@ -415,7 +415,7 @@ namespace Rhi
 		explicit IRhi(const IRhi&) = delete;
 		IRhi& operator=(const IRhi&) = delete;
 
-#if SE_STATISTICS
+#if SE_RHI_STATISTICS
 		[[nodiscard]] inline Statistics& getStatistics()
 		{
 			return mStatistics;
@@ -427,7 +427,7 @@ namespace Rhi
 		const Context& mContext;
 		Capabilities   mCapabilities;
 
-#if SE_STATISTICS
+#if SE_RHI_STATISTICS
 	private:
 		Statistics mStatistics;
 #endif

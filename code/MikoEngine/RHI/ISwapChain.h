@@ -72,7 +72,7 @@ namespace Rhi
 		*/
 		inline virtual ~ISwapChain() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfSwapChains;
 #endif
@@ -158,7 +158,7 @@ namespace Rhi
 		inline explicit ISwapChain(IRenderPass& renderPass RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IRenderTarget(ResourceType::SWAP_CHAIN, renderPass RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++getRhi().getStatistics().numberOfCreatedSwapChains;
 			++getRhi().getStatistics().currentNumberOfSwapChains;

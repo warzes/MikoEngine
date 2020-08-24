@@ -23,7 +23,7 @@ namespace Rhi
 	public:
 		inline virtual ~IResourceGroup() override
 		{
-#if SE_STATISTICS
+#if SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfResourceGroups;
 #endif
@@ -41,7 +41,7 @@ namespace Rhi
 		inline explicit IResourceGroup(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IResource(ResourceType::RESOURCE_GROUP, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-#if SE_STATISTICS
+#if SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedResourceGroups;
 			++rhi.getStatistics().currentNumberOfResourceGroups;

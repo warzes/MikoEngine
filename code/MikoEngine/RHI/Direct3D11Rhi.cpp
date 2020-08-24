@@ -9089,10 +9089,10 @@ namespace Direct3D11Rhi
 			mComputeRootSignature = nullptr;
 		}
 
-		#if SE_STATISTICS
+		#if SE_RHI_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
-			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
+			const uint32_t numberOfCurrentResources = getStatistics().GetNumberOfCurrentResources();
 			if (numberOfCurrentResources > 0)
 			{
 				// Error!
@@ -9106,7 +9106,7 @@ namespace Direct3D11Rhi
 				}
 
 				// Use debug output to show the current number of resource instances
-				getStatistics().debugOutputCurrentResouces();
+				getStatistics().DebugOutputCurrentResouces();
 			}
 		}
 		#endif

@@ -14,7 +14,7 @@ namespace Rhi
 	public:
 		inline virtual ~IRootSignature() override
 		{
-#if SE_STATISTICS
+#if SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfRootSignatures;
 #endif
@@ -45,7 +45,7 @@ namespace Rhi
 		inline explicit IRootSignature(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IResource(ResourceType::ROOT_SIGNATURE, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-#if SE_STATISTICS
+#if SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedRootSignatures;
 			++rhi.getStatistics().currentNumberOfRootSignatures;

@@ -13,7 +13,7 @@ namespace Rhi
 		*/
 		inline virtual ~IFragmentShader() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfFragmentShaders;
 #endif
@@ -31,7 +31,7 @@ namespace Rhi
 		inline explicit IFragmentShader(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IShader(ResourceType::FRAGMENT_SHADER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedFragmentShaders;
 			++rhi.getStatistics().currentNumberOfFragmentShaders;

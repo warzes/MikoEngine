@@ -36,7 +36,7 @@ namespace Rhi
 		*/
 		inline virtual ~IFramebuffer() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfFramebuffers;
 #endif
@@ -54,7 +54,7 @@ namespace Rhi
 		inline explicit IFramebuffer(IRenderPass& renderPass RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IRenderTarget(ResourceType::FRAMEBUFFER, renderPass RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++getRhi().getStatistics().numberOfCreatedFramebuffers;
 			++getRhi().getStatistics().currentNumberOfFramebuffers;

@@ -20,7 +20,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITextureCube() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfTextureCubes;
 #endif
@@ -53,7 +53,7 @@ namespace Rhi
 			ITexture(ResourceType::TEXTURE_CUBE, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mWidth(width)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedTextureCubes;
 			++rhi.getStatistics().currentNumberOfTextureCubes;

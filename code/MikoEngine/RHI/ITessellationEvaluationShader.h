@@ -17,7 +17,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITessellationEvaluationShader() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfTessellationEvaluationShaders;
 #endif
@@ -35,7 +35,7 @@ namespace Rhi
 		inline explicit ITessellationEvaluationShader(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IShader(ResourceType::TESSELLATION_EVALUATION_SHADER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedTessellationEvaluationShaders;
 			++rhi.getStatistics().currentNumberOfTessellationEvaluationShaders;

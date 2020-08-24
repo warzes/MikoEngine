@@ -24,7 +24,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITexture1D() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfTexture1Ds;
 #endif
@@ -57,7 +57,7 @@ namespace Rhi
 			ITexture(ResourceType::TEXTURE_1D, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mWidth(width)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedTexture1Ds;
 			++rhi.getStatistics().currentNumberOfTexture1Ds;

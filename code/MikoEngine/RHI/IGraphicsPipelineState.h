@@ -13,7 +13,7 @@ namespace Rhi
 		*/
 		inline virtual ~IGraphicsPipelineState() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfGraphicsPipelineStates;
 #endif
@@ -33,7 +33,7 @@ namespace Rhi
 		inline IGraphicsPipelineState(IRhi& rhi, uint16_t id RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IPipelineState(ResourceType::GRAPHICS_PIPELINE_STATE, rhi, id RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedGraphicsPipelineStates;
 			++rhi.getStatistics().currentNumberOfGraphicsPipelineStates;

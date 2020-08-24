@@ -13,7 +13,7 @@ namespace Rhi
 		*/
 		inline virtual ~IGeometryShader() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfGeometryShaders;
 #endif
@@ -31,7 +31,7 @@ namespace Rhi
 		inline explicit IGeometryShader(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IShader(ResourceType::GEOMETRY_SHADER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedGeometryShaders;
 			++rhi.getStatistics().currentNumberOfGeometryShaders;

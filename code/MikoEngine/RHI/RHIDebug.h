@@ -73,8 +73,6 @@
 // Debug break on execution failure
 #	define FAILED_DEBUG_BREAK(toExecute) if (FAILED(toExecute)) { SE_DEBUG_BREAK; }
 #else
-// Check whether or not the given resource is owned by the given RHI
 #	define RHI_MATCH_CHECK(rhiReference, resourceReference)
-// Debug break on execution failure
 #	define FAILED_DEBUG_BREAK(toExecute) toExecute;
 #endif // SE_DEBUG

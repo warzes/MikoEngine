@@ -232,7 +232,6 @@ namespace NullRhi
 		virtual ~ResourceGroup() override
 		{
 			// Remove our reference from the RHI resources
-			const Rhi::Context& context = getRhi().getContext();
 			if (nullptr != mSamplerStates)
 			{
 				for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
@@ -338,8 +337,6 @@ namespace NullRhi
 			IRootSignature(nullRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mRootSignature(rootSignature)
 		{
-			const Rhi::Context& context = nullRhi.getContext();
-
 			{ // Copy the parameter data
 				const uint32_t numberOfParameters = mRootSignature.numberOfParameters;
 				if (numberOfParameters > 0)
@@ -379,7 +376,6 @@ namespace NullRhi
 		*/
 		virtual ~RootSignature() override
 		{
-			const Rhi::Context& context = getRhi().getContext();
 			if (nullptr != mRootSignature.parameters)
 			{
 				for (uint32_t i = 0; i < mRootSignature.numberOfParameters; ++i)
@@ -3387,10 +3383,10 @@ namespace NullRhi
 			mComputeRootSignature = nullptr;
 		}
 
-		#if SE_STATISTICS
+		#if SE_RHI_STATISTICS
 		{ // For debugging: At this point there should be no resource instances left, validate this!
 			// -> Are the currently any resource instances?
-			const uint32_t numberOfCurrentResources = getStatistics().getNumberOfCurrentResources();
+			const uint32_t numberOfCurrentResources = getStatistics().GetNumberOfCurrentResources();
 			if (numberOfCurrentResources > 0)
 			{
 				// Error!
@@ -3404,7 +3400,7 @@ namespace NullRhi
 				}
 
 				// Use debug output to show the current number of resource instances
-				getStatistics().debugOutputCurrentResouces();
+				getStatistics().DebugOutputCurrentResouces();
 			}
 		}
 		#endif

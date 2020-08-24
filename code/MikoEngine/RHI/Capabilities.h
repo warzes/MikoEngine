@@ -5,6 +5,38 @@ namespace Rhi
 	class Capabilities final
 	{
 	public:
+		inline Capabilities()
+			: deviceName{}
+			, preferredSwapChainColorTextureFormat(TextureFormat::Enum::UNKNOWN)
+			, preferredSwapChainDepthStencilTextureFormat(TextureFormat::Enum::UNKNOWN)
+			, maximumNumberOfViewports(0)
+			, maximumNumberOfSimultaneousRenderTargets(0)
+			, maximumTextureDimension(0)
+			, maximumNumberOf1DTextureArraySlices(0)
+			, maximumNumberOf2DTextureArraySlices(0)
+			, maximumNumberOfCubeTextureArraySlices(0)
+			, maximumTextureBufferSize(0)
+			, maximumStructuredBufferSize(0)
+			, maximumIndirectBufferSize(0)
+			, maximumUniformBufferSize(0)
+			, maximumNumberOfMultisamples(1)
+			, maximumAnisotropy(1)
+			, upperLeftOrigin(true)
+			, zeroToOneClipZ(true)
+			, individualUniforms(false)
+			, instancedArrays(false)
+			, drawInstanced(false)
+			, baseVertex(false)
+			, nativeMultithreading(false)
+			, shaderBytecode(false)
+			, vertexShader(false)
+			, maximumNumberOfPatchVertices(0)
+			, maximumNumberOfGsOutputVertices(0)
+			, fragmentShader(false)
+			, meshShader(false)
+			, computeShader(false)
+		{}
+
 		char				deviceName[128];								// UTF-8 device name of the used graphics card (e.g. "AMD Radeon R9 200 Series")
 		TextureFormat::Enum preferredSwapChainColorTextureFormat;			// Preferred swap chain color texture format
 		TextureFormat::Enum preferredSwapChainDepthStencilTextureFormat;	// Preferred swap chain depth stencil texture format
@@ -36,38 +68,6 @@ namespace Rhi
 		bool				meshShader;										// Is there support for task shaders (TS) and mesh shaders (MS)?
 		// Compute
 		bool				computeShader;									// Is there support for compute shaders (CS)?
-
-		inline Capabilities() :
-			deviceName{},
-			preferredSwapChainColorTextureFormat(TextureFormat::Enum::UNKNOWN),
-			preferredSwapChainDepthStencilTextureFormat(TextureFormat::Enum::UNKNOWN),
-			maximumNumberOfViewports(0),
-			maximumNumberOfSimultaneousRenderTargets(0),
-			maximumTextureDimension(0),
-			maximumNumberOf1DTextureArraySlices(0),
-			maximumNumberOf2DTextureArraySlices(0),
-			maximumNumberOfCubeTextureArraySlices(0),
-			maximumTextureBufferSize(0),
-			maximumStructuredBufferSize(0),
-			maximumIndirectBufferSize(0),
-			maximumUniformBufferSize(0),
-			maximumNumberOfMultisamples(1),
-			maximumAnisotropy(1),
-			upperLeftOrigin(true),
-			zeroToOneClipZ(true),
-			individualUniforms(false),
-			instancedArrays(false),
-			drawInstanced(false),
-			baseVertex(false),
-			nativeMultithreading(false),
-			shaderBytecode(false),
-			vertexShader(false),
-			maximumNumberOfPatchVertices(0),
-			maximumNumberOfGsOutputVertices(0),
-			fragmentShader(false),
-			meshShader(false),
-			computeShader(false)
-		{}
 
 	private:
 		explicit Capabilities(const Capabilities&) = delete;

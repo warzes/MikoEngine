@@ -543,12 +543,6 @@
     <ClInclude Include="Core\MemoryPtr.h">
       <Filter>1_Core</Filter>
     </ClInclude>
-    <ClInclude Include="RHI\Capabilities.h">
-      <Filter>4_RHI\old\RHI</Filter>
-    </ClInclude>
-    <ClInclude Include="RHI\Statistics.h">
-      <Filter>4_RHI\old\RHI</Filter>
-    </ClInclude>
     <ClInclude Include="RHI\IRhi.h">
       <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
@@ -1351,6 +1345,12 @@
       <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader</Filter>
     </ClInclude>
     <ClInclude Include="RHI\RHIDebug.h">
+      <Filter>4_RHI\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RHI\Statistics.h">
+      <Filter>4_RHI\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RHI\Capabilities.h">
       <Filter>4_RHI\Core</Filter>
     </ClInclude>
   </ItemGroup>

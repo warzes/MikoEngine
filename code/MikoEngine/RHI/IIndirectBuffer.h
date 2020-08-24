@@ -22,7 +22,7 @@ namespace Rhi
 		*/
 		inline virtual ~IIndirectBuffer() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfIndirectBuffers;
 #endif
@@ -77,7 +77,7 @@ namespace Rhi
 		inline explicit IIndirectBuffer(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IBuffer(ResourceType::INDIRECT_BUFFER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedIndirectBuffers;
 			++rhi.getStatistics().currentNumberOfIndirectBuffers;

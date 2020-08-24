@@ -13,7 +13,7 @@ namespace Rhi
 		*/
 		inline virtual ~ITaskShader() override
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			--getRhi().getStatistics().currentNumberOfTaskShaders;
 #endif
@@ -31,7 +31,7 @@ namespace Rhi
 		inline explicit ITaskShader(IRhi& rhi RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			IShader(ResourceType::TASK_SHADER, rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER)
 		{
-#ifdef SE_STATISTICS
+#ifdef SE_RHI_STATISTICS
 			// Update the statistics
 			++rhi.getStatistics().numberOfCreatedTaskShaders;
 			++rhi.getStatistics().currentNumberOfTaskShaders;
