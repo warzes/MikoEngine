@@ -350,8 +350,6 @@ namespace Direct3D11Rhi
 	*  @brief
 	*    Creates, loads and compiles a shader from source code
 	*
-	*  @param[in] context
-	*    RHI context
 	*  @param[in] shaderModel
 	*    ASCII shader model (for example "vs_4_0", "gs_4_0", "ps_4_0"), must be a valid pointer
 	*  @param[in] sourceCode
@@ -364,7 +362,7 @@ namespace Direct3D11Rhi
 	*  @return
 	*    The loaded and compiled shader, can be a null pointer, release the instance if you no longer need it
 	*/
-	[[nodiscard]] ID3DBlob* loadShaderFromSourcecode(const Rhi::Context& context, const char* shaderModel, const char* sourceCode, const char* entryPoint, Rhi::IShaderLanguage::OptimizationLevel optimizationLevel)
+	[[nodiscard]] ID3DBlob* loadShaderFromSourcecode(const char* shaderModel, const char* sourceCode, const char* entryPoint, Rhi::IShaderLanguage::OptimizationLevel optimizationLevel)
 	{
 		// Sanity checks
 		RHI_ASSERT(nullptr != shaderModel, "Invalid Direct3D 11 shader model")
@@ -737,7 +735,6 @@ namespace Direct3D11Rhi
 		virtual ~ResourceGroup() override
 		{
 			// Remove our reference from the RHI resources
-			const Rhi::Context& context = getRhi().getContext();
 			if (nullptr != mSamplerStates)
 			{
 				for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
@@ -842,8 +839,6 @@ namespace Direct3D11Rhi
 			IRootSignature(direct3D11Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mRootSignature(rootSignature)
 		{
-			const Rhi::Context& context = direct3D11Rhi.getContext();
-
 			{ // Copy the parameter data
 				const uint32_t numberOfParameters = mRootSignature.numberOfParameters;
 				if (numberOfParameters > 0)
@@ -883,7 +878,6 @@ namespace Direct3D11Rhi
 		*/
 		virtual ~RootSignature() override
 		{
-			const Rhi::Context& context = getRhi().getContext();
 			if (nullptr != mRootSignature.parameters)
 			{
 				for (uint32_t i = 0; i < mRootSignature.numberOfParameters; ++i)
@@ -1474,7 +1468,6 @@ namespace Direct3D11Rhi
 			// Add a reference to the used vertex buffers
 			if (mNumberOfSlots > 0)
 			{
-				const Rhi::Context& context = direct3D11Rhi.getContext();
 				mD3D11Buffers = RHI_MALLOC_TYPED(ID3D11Buffer*, mNumberOfSlots);
 				mStrides = RHI_MALLOC_TYPED(UINT, mNumberOfSlots);
 				mOffsets = RHI_MALLOC_TYPED(UINT, mNumberOfSlots);
@@ -1519,7 +1512,6 @@ namespace Direct3D11Rhi
 
 			// Cleanup Direct3D 11 input slot data
 			Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(getRhi());
-			const Rhi::Context& context = direct3D11Rhi.getContext();
 			if (mNumberOfSlots > 0)
 			{
 				RHI_FREE(mD3D11Buffers);
@@ -3027,7 +3019,6 @@ namespace Direct3D11Rhi
 				// We don't want dynamic allocations, so we limit the maximum number of mipmaps and hence are able to use the efficient C runtime stack
 				static constexpr uint32_t MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
 				static constexpr uint32_t MAXIMUM_NUMBER_OF_SLICES = 10;
-				const Rhi::Context& context = direct3D11Rhi.getContext();
 				RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
 				D3D11_SUBRESOURCE_DATA d3d11SubresourceDataStack[MAXIMUM_NUMBER_OF_SLICES * MAXIMUM_NUMBER_OF_MIPMAPS];
 				D3D11_SUBRESOURCE_DATA* d3d11SubresourceData = (numberOfSlices <= MAXIMUM_NUMBER_OF_SLICES) ? d3d11SubresourceDataStack : RHI_MALLOC_TYPED(D3D11_SUBRESOURCE_DATA, numberOfSlices);
@@ -3721,7 +3712,6 @@ namespace Direct3D11Rhi
 				// We don't want dynamic allocations, so we limit the maximum number of mipmaps and hence are able to use the efficient C runtime stack
 				static constexpr uint32_t MAXIMUM_NUMBER_OF_MIPMAPS = 15;	// A 16384x16384 texture has 15 mipmaps
 				static constexpr uint32_t MAXIMUM_NUMBER_OF_SLICES = 10;
-				const Rhi::Context& context = direct3D11Rhi.getContext();
 				RHI_ASSERT(numberOfMipmaps <= MAXIMUM_NUMBER_OF_MIPMAPS, "Invalid Direct3D 11 number of mipmaps")
 				D3D11_SUBRESOURCE_DATA d3d11SubresourceDataStack[MAXIMUM_NUMBER_OF_SLICES * MAXIMUM_NUMBER_OF_MIPMAPS];
 				D3D11_SUBRESOURCE_DATA* d3d11SubresourceData = (numberOfSlices <= MAXIMUM_NUMBER_OF_SLICES) ? d3d11SubresourceDataStack : RHI_MALLOC_TYPED(D3D11_SUBRESOURCE_DATA, numberOfSlices);
@@ -6483,7 +6473,6 @@ namespace Direct3D11Rhi
 
 			// Add a reference to the used color textures
 			const Direct3D11Rhi& direct3D11Rhi = static_cast<Direct3D11Rhi&>(renderPass.getRhi());
-			const Rhi::Context& context = direct3D11Rhi.getContext();
 			if (mNumberOfColorTextures > 0)
 			{
 				mColorTextures = RHI_MALLOC_TYPED(Rhi::ITexture*, mNumberOfColorTextures);
@@ -6706,7 +6695,6 @@ namespace Direct3D11Rhi
 		virtual ~Framebuffer() override
 		{
 			// Release the reference to the used color textures
-			const Rhi::Context& context = getRhi().getContext();
 			if (nullptr != mD3D11RenderTargetViews)
 			{
 				// Release references
@@ -6917,7 +6905,7 @@ namespace Direct3D11Rhi
 			mD3D11VertexShader(nullptr)
 		{
 			// Create the Direct3D 11 binary large object for the vertex shader
-			mD3DBlobVertexShader = loadShaderFromSourcecode(direct3D11Rhi.getContext(), "vs_5_0", sourceCode, nullptr, optimizationLevel);
+			mD3DBlobVertexShader = loadShaderFromSourcecode("vs_5_0", sourceCode, nullptr, optimizationLevel);
 			if (nullptr != mD3DBlobVertexShader)
 			{
 				// Create the Direct3D 11 vertex shader
@@ -7080,7 +7068,7 @@ namespace Direct3D11Rhi
 			mD3D11HullShader(nullptr)
 		{
 			// Create the Direct3D 11 binary large object for the hull shader
-			ID3DBlob* d3dBlob = loadShaderFromSourcecode(direct3D11Rhi.getContext(), "hs_5_0", sourceCode, nullptr, optimizationLevel);
+			ID3DBlob* d3dBlob = loadShaderFromSourcecode("hs_5_0", sourceCode, nullptr, optimizationLevel);
 			if (nullptr != d3dBlob)
 			{
 				// Create the Direct3D 11 hull shader
@@ -7227,7 +7215,7 @@ namespace Direct3D11Rhi
 			mD3D11DomainShader(nullptr)
 		{
 			// Create the Direct3D 11 binary large object for the domain shader
-			ID3DBlob* d3dBlob = loadShaderFromSourcecode(direct3D11Rhi.getContext(), "ds_5_0", sourceCode, nullptr, optimizationLevel);
+			ID3DBlob* d3dBlob = loadShaderFromSourcecode("ds_5_0", sourceCode, nullptr, optimizationLevel);
 			if (nullptr != d3dBlob)
 			{
 				// Create the Direct3D 11 domain shader
@@ -7374,7 +7362,7 @@ namespace Direct3D11Rhi
 			mD3D11GeometryShader(nullptr)
 		{
 			// Create the Direct3D 11 binary large object for the geometry shader
-			ID3DBlob* d3dBlob = loadShaderFromSourcecode(direct3D11Rhi.getContext(), "gs_5_0", sourceCode, nullptr, optimizationLevel);
+			ID3DBlob* d3dBlob = loadShaderFromSourcecode("gs_5_0", sourceCode, nullptr, optimizationLevel);
 			if (nullptr != d3dBlob)
 			{
 				// Create the Direct3D 11 geometry shader
@@ -7521,7 +7509,7 @@ namespace Direct3D11Rhi
 			mD3D11PixelShader(nullptr)
 		{
 			// Create the Direct3D 11 binary large object for the pixel shader
-			ID3DBlob* d3dBlob = loadShaderFromSourcecode(direct3D11Rhi.getContext(), "ps_5_0", sourceCode, nullptr, optimizationLevel);
+			ID3DBlob* d3dBlob = loadShaderFromSourcecode("ps_5_0", sourceCode, nullptr, optimizationLevel);
 			if (nullptr != d3dBlob)
 			{
 				// Create the Direct3D 11 pixel shader
@@ -7668,7 +7656,7 @@ namespace Direct3D11Rhi
 			mD3D11ComputeShader(nullptr)
 		{
 			// Create the Direct3D 11 binary large object for the compute shader
-			ID3DBlob* d3dBlob = loadShaderFromSourcecode(direct3D11Rhi.getContext(), "cs_5_0", sourceCode, nullptr, optimizationLevel);
+			ID3DBlob* d3dBlob = loadShaderFromSourcecode("cs_5_0", sourceCode, nullptr, optimizationLevel);
 			if (nullptr != d3dBlob)
 			{
 				// Create the Direct3D 11 compute shader
@@ -8243,7 +8231,6 @@ namespace Direct3D11Rhi
 						const Rhi::VertexAttribute* attributes = graphicsPipelineState.vertexAttributes.attributes;
 
 						// TODO(co) We could manage in here without new/delete when using a fixed maximum supported number of elements
-						const Rhi::Context& context = direct3D11Rhi.getContext();
 						D3D11_INPUT_ELEMENT_DESC* d3d11InputElementDescs   = numberOfAttributes ? RHI_MALLOC_TYPED(D3D11_INPUT_ELEMENT_DESC, numberOfAttributes) : RHI_MALLOC_TYPED(D3D11_INPUT_ELEMENT_DESC, 1);
 						D3D11_INPUT_ELEMENT_DESC* d3d11InputElementDesc    = d3d11InputElementDescs;
 						D3D11_INPUT_ELEMENT_DESC* d3d11InputElementDescEnd = d3d11InputElementDescs + numberOfAttributes;

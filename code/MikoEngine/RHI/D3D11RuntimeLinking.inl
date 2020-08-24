@@ -132,10 +132,6 @@ FNDEF_NvAPI(NvAPI_Status, NvAPI_D3D11_MultiDrawIndexedInstancedIndirect, (__in I
 
 namespace Direct3D11Rhi
 {
-	//[-------------------------------------------------------]
-	//[ Macros & definitions                                  ]
-	//[-------------------------------------------------------]
-	// Redirect D3D11* function calls to funcPtr_D3D11*
 #ifndef FNPTR
 #define FNPTR(name) funcPtr_##name
 #endif
@@ -150,15 +146,10 @@ namespace Direct3D11Rhi
 #endif
 			mAgsContext(nullptr),
 			mNvAPISharedLibrary(nullptr),
-			mEntryPointsRegistered(false),
 			mInitialized(false)
 		{
 		}
 
-		/**
-		*  @brief
-		*    Destructor
-		*/
 		~Direct3D11RuntimeLinking()
 		{
 #ifdef DYNAMIC_AMD_AGS
@@ -166,33 +157,26 @@ namespace Direct3D11Rhi
 			{
 				if ( nullptr != agsDeInit && AGS_SUCCESS != agsDeInit(mAgsContext) )
 				{
-					RHI_LOG(CRITICAL, "Direct3D 11: Failed to unload AMG AGS")
+					RHI_LOG(CRITICAL, "Direct3D 11: Failed to unload AMG AGS");
 				}
 				::FreeLibrary(static_cast<HMODULE>(mAmdAgsSharedLibrary));
 			}
 #else
 			if ( AGS_SUCCESS != agsDeInit(mAgsContext) )
 			{
-				RHI_LOG(CRITICAL, "Direct3D 11: Failed to unload AMG AGS")
+				RHI_LOG(CRITICAL, "Direct3D 11: Failed to unload AMG AGS");
 			}
 #endif
 			if ( nullptr != mNvAPISharedLibrary )
 			{
 				if ( nullptr != NvAPI_Unload && 0 != NvAPI_Unload() )
 				{
-					RHI_LOG(CRITICAL, "Direct3D 11: Failed to unload NvAPI")
+					RHI_LOG(CRITICAL, "Direct3D 11: Failed to unload NvAPI");
 				}
 				::FreeLibrary(static_cast<HMODULE>(mNvAPISharedLibrary));
 			}
 		}
 
-		/**
-		*  @brief
-		*    Return whether or not Direct3D 11 is available
-		*
-		*  @return
-		*    "true" if Direct3D 11 is available, else "false"
-		*/
 		[[nodiscard]] bool isDirect3D11Avaiable()
 		{
 			// Already initialized?
@@ -201,122 +185,113 @@ namespace Direct3D11Rhi
 				// We're now initialized
 				mInitialized = true;
 
-				// Load the shared libraries
-				if ( loadSharedLibraries() )
+				// AMD AGS and NvAPI for e.g. multi-draw-indirect support
+
+					// Check whether or not the primary DXGI adapter is an AMD GPU
+				bool amdDxgiAdapter = false;
+				bool nvidiaDxgiAdapter = false;
 				{
-					// Load the DXGI, D3D11 and D3DCompiler entry points
-					mEntryPointsRegistered = (loadDxgiEntryPoints() && loadD3D11EntryPoints() && loadD3DCompilerEntryPoints());
-
-					// AMD AGS and NvAPI for e.g. multi-draw-indirect support
-					if ( mEntryPointsRegistered )
-					{
-						// Check whether or not the primary DXGI adapter is an AMD GPU
-						bool amdDxgiAdapter = false;
-						bool nvidiaDxgiAdapter = false;
+					// Get the primary DXGI adapter
+					IDXGIFactory* dxgiFactory = nullptr;
+					FAILED_DEBUG_BREAK(CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&dxgiFactory))
+						if ( nullptr == dxgiFactory )
 						{
-							// Get the primary DXGI adapter
-							IDXGIFactory* dxgiFactory = nullptr;
-							FAILED_DEBUG_BREAK(CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&dxgiFactory))
-								if ( nullptr == dxgiFactory )
-								{
-									// Error!
-									return false;
-								}
-							IDXGIAdapter* dxgiAdapter = nullptr;
-							FAILED_DEBUG_BREAK(dxgiFactory->EnumAdapters(0, &dxgiAdapter))
-								DXGI_ADAPTER_DESC dxgiAdapterDesc = {};
-							FAILED_DEBUG_BREAK(dxgiAdapter->GetDesc(&dxgiAdapterDesc));
-								if ( 0x1414 == dxgiAdapterDesc.VendorId )	// 0x1414 = "Capture Adapter" when using Visual Studio graphics debugger
-								{
-									RHI_LOG(COMPATIBILITY_WARNING, "Direct3D 11 capture adapter used (e.g. Visual Studio graphics debugger), AMD AGS and NvAPI support disabled")
-								}
-								else
-								{
-									amdDxgiAdapter = (0x1002 == dxgiAdapterDesc.VendorId);		// 0x1002 -> See "How-To Identify the Manufacturer and Model of an AMD Graphics Card" at http://support.amd.com/en-us/kb-articles/Pages/HowtoidentifythemodelofanATIgraphicscard.aspx
-									nvidiaDxgiAdapter = (0x10DE == dxgiAdapterDesc.VendorId);	// 0x10DE -> See "Device IDs" at http://www.nvidia.com/object/device_ids.html
-								}
-							dxgiAdapter->Release();
-							dxgiFactory->Release();
+							// Error!
+							return false;
 						}
+					IDXGIAdapter* dxgiAdapter = nullptr;
+					FAILED_DEBUG_BREAK(dxgiFactory->EnumAdapters(0, &dxgiAdapter))
+						DXGI_ADAPTER_DESC dxgiAdapterDesc = {};
+					FAILED_DEBUG_BREAK(dxgiAdapter->GetDesc(&dxgiAdapterDesc));
+					if ( 0x1414 == dxgiAdapterDesc.VendorId )	// 0x1414 = "Capture Adapter" when using Visual Studio graphics debugger
+					{
+						RHI_LOG(COMPATIBILITY_WARNING, "Direct3D 11 capture adapter used (e.g. Visual Studio graphics debugger), AMD AGS and NvAPI support disabled")
+					}
+					else
+					{
+						amdDxgiAdapter = (0x1002 == dxgiAdapterDesc.VendorId);		// 0x1002 -> See "How-To Identify the Manufacturer and Model of an AMD Graphics Card" at http://support.amd.com/en-us/kb-articles/Pages/HowtoidentifythemodelofanATIgraphicscard.aspx
+						nvidiaDxgiAdapter = (0x10DE == dxgiAdapterDesc.VendorId);	// 0x10DE -> See "Device IDs" at http://www.nvidia.com/object/device_ids.html
+					}
+					dxgiAdapter->Release();
+					dxgiFactory->Release();
+				}
 
-						// Optional vendor specific part: AMD AGS
-						if ( amdDxgiAdapter )
-						{
+				// Optional vendor specific part: AMD AGS
+				if ( amdDxgiAdapter )
+				{
 #ifdef DYNAMIC_AMD_AGS
 #if SE_ARCH_64BIT
-							static constexpr const char* AMD_AGS_SHARED_LIBRARY_NAME = "amd_ags_x64.dll";
+					static constexpr const char* AMD_AGS_SHARED_LIBRARY_NAME = "amd_ags_x64.dll";
 #else
-							static constexpr const char* AMD_AGS_SHARED_LIBRARY_NAME = "amd_ags_x86.dll";
+					static constexpr const char* AMD_AGS_SHARED_LIBRARY_NAME = "amd_ags_x86.dll";
 #endif
-							mAmdAgsSharedLibrary = ::LoadLibraryExA(AMD_AGS_SHARED_LIBRARY_NAME, nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
-							if ( nullptr != mAmdAgsSharedLibrary )
-							{
-								if ( !loadAmdAgsEntryPoints() )
-								{
-									RHI_LOG(CRITICAL, "Direct3D 11: Failed to load AMD AGS function entry points")
-										::FreeLibrary(static_cast<HMODULE>(mAmdAgsSharedLibrary));
-									mAmdAgsSharedLibrary = nullptr;
-									agsInit = nullptr;
-									agsDeInit = nullptr;
-									agsDriverExtensionsDX11_CreateDevice = nullptr;
-									agsDriverExtensionsDX11_DestroyDevice = nullptr;
-									agsDriverExtensionsDX11_MultiDrawInstancedIndirect = nullptr;
-									agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirect = nullptr;
-								}
-							}
-							else
-							{
-								RHI_LOG(PERFORMANCE_WARNING, "Direct3D 11: Failed to load the AMD AGS shared library \"%s\"", AMD_AGS_SHARED_LIBRARY_NAME)
-							}
-#else
-							{
-								// Initialize AMD AGS (e.g. for multi-indirect-draw support)
-								const AGSConfiguration agsConfiguration = { &AmdAgsAllocCallback, &AmdAgsFreeCallback };
-								if ( AGS_SUCCESS == agsInit(&mAgsContext, &agsConfiguration, nullptr) )
-								{
-									RHI_LOG(TRACE, "Direct3D 11: Successfully initialized AMD AGS")
-								}
-								else
-								{
-									RHI_LOG(CRITICAL, "Direct3D 11: Failed to initialize AMD AGS")
-								}
-							}
-#endif
-						}
-
-						// Optional vendor specific part: NvAPI
-						if ( nvidiaDxgiAdapter )
+					mAmdAgsSharedLibrary = ::LoadLibraryExA(AMD_AGS_SHARED_LIBRARY_NAME, nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
+					if ( nullptr != mAmdAgsSharedLibrary )
+					{
+						if ( !loadAmdAgsEntryPoints() )
 						{
-#if SE_ARCH_64BIT
-							static constexpr const char* NVAPI_SHARED_LIBRARY_NAME = "nvapi64.dll";
-#else
-							static constexpr const char* NVAPI_SHARED_LIBRARY_NAME = "nvapi.dll";
-#endif
-							mNvAPISharedLibrary = ::LoadLibraryExA(NVAPI_SHARED_LIBRARY_NAME, nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
-							if ( nullptr != mNvAPISharedLibrary )
-							{
-								if ( !loadNvAPIEntryPoints() )
-								{
-									RHI_LOG(PERFORMANCE_WARNING, "Direct3D 11: Failed to load NvAPI function entry points, maybe a graphics debugger like RenderDoc disabled NvAPI")
-										::FreeLibrary(static_cast<HMODULE>(mNvAPISharedLibrary));
-									mNvAPISharedLibrary = nullptr;
-									NvAPI_Initialize = nullptr;
-									NvAPI_Unload = nullptr;
-									NvAPI_D3D11_MultiDrawInstancedIndirect = nullptr;
-									NvAPI_D3D11_MultiDrawIndexedInstancedIndirect = nullptr;
-								}
-							}
-							else
-							{
-								RHI_LOG(PERFORMANCE_WARNING, "Direct3D 11: Failed to load the NvAPI shared library \"%s\"", NVAPI_SHARED_LIBRARY_NAME)
-							}
+							RHI_LOG(CRITICAL, "Direct3D 11: Failed to load AMD AGS function entry points")
+								::FreeLibrary(static_cast<HMODULE>(mAmdAgsSharedLibrary));
+							mAmdAgsSharedLibrary = nullptr;
+							agsInit = nullptr;
+							agsDeInit = nullptr;
+							agsDriverExtensionsDX11_CreateDevice = nullptr;
+							agsDriverExtensionsDX11_DestroyDevice = nullptr;
+							agsDriverExtensionsDX11_MultiDrawInstancedIndirect = nullptr;
+							agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirect = nullptr;
 						}
+					}
+					else
+					{
+						RHI_LOG(PERFORMANCE_WARNING, "Direct3D 11: Failed to load the AMD AGS shared library \"%s\"", AMD_AGS_SHARED_LIBRARY_NAME)
+					}
+#else
+					{
+						// Initialize AMD AGS (e.g. for multi-indirect-draw support)
+						const AGSConfiguration agsConfiguration = { &AmdAgsAllocCallback, &AmdAgsFreeCallback };
+						if ( AGS_SUCCESS == agsInit(&mAgsContext, &agsConfiguration, nullptr) )
+						{
+							RHI_LOG(TRACE, "Direct3D 11: Successfully initialized AMD AGS")
+						}
+						else
+						{
+							RHI_LOG(CRITICAL, "Direct3D 11: Failed to initialize AMD AGS")
+						}
+					}
+#endif
+				}
+
+				// Optional vendor specific part: NvAPI
+				if ( nvidiaDxgiAdapter )
+				{
+#if SE_ARCH_64BIT
+					static constexpr const char* NVAPI_SHARED_LIBRARY_NAME = "nvapi64.dll";
+#else
+					static constexpr const char* NVAPI_SHARED_LIBRARY_NAME = "nvapi.dll";
+#endif
+					mNvAPISharedLibrary = ::LoadLibraryExA(NVAPI_SHARED_LIBRARY_NAME, nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
+					if ( nullptr != mNvAPISharedLibrary )
+					{
+						if ( !loadNvAPIEntryPoints() )
+						{
+							RHI_LOG(PERFORMANCE_WARNING, "Direct3D 11: Failed to load NvAPI function entry points, maybe a graphics debugger like RenderDoc disabled NvAPI")
+								::FreeLibrary(static_cast<HMODULE>(mNvAPISharedLibrary));
+							mNvAPISharedLibrary = nullptr;
+							NvAPI_Initialize = nullptr;
+							NvAPI_Unload = nullptr;
+							NvAPI_D3D11_MultiDrawInstancedIndirect = nullptr;
+							NvAPI_D3D11_MultiDrawIndexedInstancedIndirect = nullptr;
+						}
+					}
+					else
+					{
+						RHI_LOG(PERFORMANCE_WARNING, "Direct3D 11: Failed to load the NvAPI shared library \"%s\"", NVAPI_SHARED_LIBRARY_NAME)
 					}
 				}
 			}
 
 			// Entry points successfully registered?
-			return mEntryPointsRegistered;
+			return true;
 		}
 
 		/**
@@ -339,65 +314,7 @@ namespace Direct3D11Rhi
 		explicit Direct3D11RuntimeLinking(const Direct3D11RuntimeLinking&) = delete;
 		Direct3D11RuntimeLinking& operator =(const Direct3D11RuntimeLinking&) = delete;
 
-		/**
-		*  @brief
-		*    Load the shared libraries
-		*
-		*  @return
-		*    "true" if all went fine, else "false"
-		*/
-		[[nodiscard]] bool loadSharedLibraries()
-		{
-			return true;
-		}
-
-		/**
-		*  @brief
-		*    Load the DXGI entry points
-		*
-		*  @return
-		*    "true" if all went fine, else "false"
-		*/
-		[[nodiscard]] bool loadDxgiEntryPoints()
-		{
-			bool result = true;	// Success by default
-return result;
-		}
-
-		/**
-		*  @brief
-		*    Load the D3D11 entry points
-		*
-		*  @return
-		*    "true" if all went fine, else "false"
-		*/
-		[[nodiscard]] bool loadD3D11EntryPoints()
-		{
-			bool result = true;	// Success by default
-return result;
-		}
-
-		/**
-		*  @brief
-		*    Load the D3DCompiler entry points
-		*
-		*  @return
-		*    "true" if all went fine, else "false"
-		*/
-		[[nodiscard]] bool loadD3DCompilerEntryPoints()
-		{
-			bool result = true;	// Success by default
-return result;
-		}
-
 #ifdef DYNAMIC_AMD_AGS
-		/**
-		*  @brief
-		*    Load the AMD AGS entry points
-		*
-		*  @return
-		*    "true" if all went fine, else "false"
-		*/
 		[[nodiscard]] bool loadAmdAgsEntryPoints()
 		{
 			bool result = true;	// Success by default
@@ -422,30 +339,30 @@ return result;
 					}
 
 				// Load the entry points
-			IMPORT_FUNC(agsInit)
-				IMPORT_FUNC(agsDeInit)
-				IMPORT_FUNC(agsDriverExtensionsDX11_CreateDevice)
-				IMPORT_FUNC(agsDriverExtensionsDX11_DestroyDevice)
-				IMPORT_FUNC(agsDriverExtensionsDX11_MultiDrawInstancedIndirect)
-				IMPORT_FUNC(agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirect)
+			IMPORT_FUNC(agsInit);
+			IMPORT_FUNC(agsDeInit);
+			IMPORT_FUNC(agsDriverExtensionsDX11_CreateDevice);
+			IMPORT_FUNC(agsDriverExtensionsDX11_DestroyDevice);
+			IMPORT_FUNC(agsDriverExtensionsDX11_MultiDrawInstancedIndirect);
+			IMPORT_FUNC(agsDriverExtensionsDX11_MultiDrawIndexedInstancedIndirect);
 
-				// Undefine the helper macro
+			// Undefine the helper macro
 #undef IMPORT_FUNC
 
-// Initialize AMD AGS (e.g. for multi-indirect-draw support)
-if ( nullptr != agsInit )
-{
-	const AGSConfiguration agsConfiguration = { &AmdAgsAllocCallback, &AmdAgsFreeCallback };
-	if ( AGS_SUCCESS == agsInit(&mAgsContext, &agsConfiguration, nullptr) )
-	{
-		RHI_LOG(TRACE, "Direct3D 11: Successfully initialized AMD AGS")
-	}
-	else
-	{
-		RHI_LOG(CRITICAL, "Direct3D 11: Failed to initialize AMD AGS")
-			result = false;
-	}
-}
+			// Initialize AMD AGS (e.g. for multi-indirect-draw support)
+			if ( nullptr != agsInit )
+			{
+				const AGSConfiguration agsConfiguration = { &AmdAgsAllocCallback, &AmdAgsFreeCallback };
+				if ( AGS_SUCCESS == agsInit(&mAgsContext, &agsConfiguration, nullptr) )
+				{
+					RHI_LOG(TRACE, "Direct3D 11: Successfully initialized AMD AGS");
+				}
+				else
+				{
+					RHI_LOG(CRITICAL, "Direct3D 11: Failed to initialize AMD AGS");
+					result = false;
+				}
+			}
 
 			// Done
 			return result;
@@ -494,10 +411,10 @@ if ( nullptr != agsInit )
 				// Query function pointers
 				if ( nullptr != nvapi_QueryInterface )
 				{
-					IMPORT_NVAPI_FUNC(NvAPI_Initialize, 0x150E828UL)
-						IMPORT_NVAPI_FUNC(NvAPI_Unload, 0xD22BDD7EUL)
-						IMPORT_NVAPI_FUNC(NvAPI_D3D11_MultiDrawInstancedIndirect, 0xD4E26BBF)
-						IMPORT_NVAPI_FUNC(NvAPI_D3D11_MultiDrawIndexedInstancedIndirect, 0x59E890F9)
+					IMPORT_NVAPI_FUNC(NvAPI_Initialize, 0x150E828UL);
+					IMPORT_NVAPI_FUNC(NvAPI_Unload, 0xD22BDD7EUL);
+					IMPORT_NVAPI_FUNC(NvAPI_D3D11_MultiDrawInstancedIndirect, 0xD4E26BBF);
+					IMPORT_NVAPI_FUNC(NvAPI_D3D11_MultiDrawIndexedInstancedIndirect, 0x59E890F9);
 				}
 
 			// Undefine the helper macro
@@ -530,7 +447,6 @@ if ( nullptr != agsInit )
 #endif
 		AGSContext*		mAgsContext;				// AMD AGS context, can be a null pointer
 		void*			mNvAPISharedLibrary;		// NvAPI shared library, can be a null pointer
-		bool			mEntryPointsRegistered;		// Entry points successfully registered?
 		bool			mInitialized;				// Already initialized?
 	};
 } // Direct3D11Rhi
