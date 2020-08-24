@@ -959,7 +959,7 @@ namespace NullRhi
 			NullRhi& nullRhi = static_cast<NullRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat)) == 0, "The null texture buffer size must be a multiple of the selected texture format bytes per texel")
+			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat)) == 0, "The null texture buffer size must be a multiple of the selected texture format bytes per texel")
 
 			// Create the texture buffer
 			return RHI_NEW(TextureBuffer)(nullRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER);

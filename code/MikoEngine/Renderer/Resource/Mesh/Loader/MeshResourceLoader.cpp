@@ -72,7 +72,7 @@ namespace Renderer
 
 		// Read in the index buffer
 		mIndexBufferFormat = meshHeader.indexBufferFormat;
-		mNumberOfUsedIndexBufferDataBytes = Rhi::IndexBufferFormat::getNumberOfBytesPerElement(static_cast<Rhi::IndexBufferFormat::Enum>(mIndexBufferFormat)) * mMeshResource->getNumberOfIndices();
+		mNumberOfUsedIndexBufferDataBytes = Rhi::IndexBufferFormat::GetNumberOfBytesPerElement(static_cast<Rhi::IndexBufferFormat::Enum>(mIndexBufferFormat)) * mMeshResource->getNumberOfIndices();
 		if (mNumberOfUsedIndexBufferDataBytes > 0)
 		{
 			// Allocate memory for the local index buffer data

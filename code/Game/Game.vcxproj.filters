@@ -11,6 +11,15 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Example\Mesh</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Example\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="VrController.cpp">
+      <Filter>Example\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="FreeCameraController.cpp">
+      <Filter>Example\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Triangle.h">
@@ -67,6 +76,18 @@
     <ClInclude Include="Mesh_Null.h">
       <Filter>Example\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Example\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="IController.h">
+      <Filter>Example\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="VrController.h">
+      <Filter>Example\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="FreeCameraController.h">
+      <Filter>Example\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Example">
@@ -80,6 +101,9 @@
     </Filter>
     <Filter Include="Example\Mesh">
       <UniqueIdentifier>{29c2f4f6-2f2d-4f7e-b34e-e0c880ff4f20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\Scene">
+      <UniqueIdentifier>{11a030e9-1860-429f-b827-79361f8b0138}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

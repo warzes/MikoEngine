@@ -2270,7 +2270,7 @@ namespace OpenGLRhi
 					GLint openGLUnpackBufferBackup = 0;
 					glGetIntegerv(GL_PIXEL_UNPACK_BUFFER_BINDING_ARB, &openGLUnpackBufferBackup);
 				#endif
-				glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
+				glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
 
 				// Copy pixel unpack buffer to texture
 				glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, openGLPixelUnpackBuffer);

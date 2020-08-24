@@ -343,7 +343,7 @@ namespace OpenGLRhi
 			IIndexBuffer(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mOpenGLElementArrayBuffer(0),
 			mOpenGLType(Mapping::getOpenGLType(indexBufferFormat)),
-			mIndexSizeInBytes(Rhi::IndexBufferFormat::getNumberOfBytesPerElement(indexBufferFormat))
+			mIndexSizeInBytes(Rhi::IndexBufferFormat::GetNumberOfBytesPerElement(indexBufferFormat))
 		{
 		}
 
@@ -2613,7 +2613,7 @@ namespace OpenGLRhi
 			OpenGLRhi& openGLRhi = static_cast<OpenGLRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat)) == 0, "The OpenGL texture buffer size must be a multiple of the selected texture format bytes per texel")
+			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat)) == 0, "The OpenGL texture buffer size must be a multiple of the selected texture format bytes per texel")
 
 				// "GL_ARB_texture_buffer_object" required
 				if ( mExtensions->isGL_ARB_texture_buffer_object() )
@@ -2928,7 +2928,7 @@ namespace OpenGLRhi
 #endif
 
 			// Set correct unpack alignment
-			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
+			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
 
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
@@ -3089,7 +3089,7 @@ namespace OpenGLRhi
 #endif
 
 			// Set correct unpack alignment
-			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
+			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
 
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
@@ -3421,7 +3421,7 @@ namespace OpenGLRhi
 #endif
 
 			// Set correct unpack alignment
-			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
+			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
 
 			// Create the OpenGL texture instance
 			glGenTextures(1, &mOpenGLTexture);
@@ -3532,7 +3532,7 @@ namespace OpenGLRhi
 #endif
 
 			// Set correct unpack alignment
-			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
+			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
 
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
@@ -3961,7 +3961,7 @@ namespace OpenGLRhi
 #endif
 
 				// Set correct unpack alignment
-				glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
+				glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
 
 				// Calculate the number of mipmaps
 				const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
@@ -4201,7 +4201,7 @@ namespace OpenGLRhi
 #endif
 
 				// Set correct unpack alignment
-				glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
+				glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
 
 				// Calculate the number of mipmaps
 				const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
@@ -4574,7 +4574,7 @@ namespace OpenGLRhi
 #endif
 
 			// Set correct unpack alignment
-			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
+			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
 
 			// Create the OpenGL texture instance
 			glGenTextures(1, &mOpenGLTexture);
@@ -4687,7 +4687,7 @@ namespace OpenGLRhi
 #endif
 
 			// Set correct unpack alignment
-			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
+			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
 
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
@@ -5092,7 +5092,7 @@ namespace OpenGLRhi
 #endif
 
 			// Set correct unpack alignment
-			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
+			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
 
 			// Create OpenGL pixel unpack buffer for dynamic textures, if necessary
 			if ( Rhi::TextureUsage::IMMUTABLE != textureUsage )
@@ -5297,7 +5297,7 @@ namespace OpenGLRhi
 #endif
 
 			// Set correct unpack alignment
-			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
+			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
 
 			// Create OpenGL pixel unpack buffer for dynamic textures, if necessary
 			if ( Rhi::TextureUsage::IMMUTABLE != textureUsage )
@@ -5670,7 +5670,7 @@ namespace OpenGLRhi
 #endif
 
 			// Set correct unpack alignment
-			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
+			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
 
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
@@ -5860,7 +5860,7 @@ namespace OpenGLRhi
 #endif
 
 			// Set correct unpack alignment
-			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
+			glPixelStorei(GL_UNPACK_ALIGNMENT, (Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat) & 3) ? 1 : 4);
 
 			// Calculate the number of mipmaps
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);

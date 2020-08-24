@@ -97,7 +97,7 @@ namespace Rhi
 			return MAPPING[textureFormat];
 		}
 
-		[[nodiscard]] static inline uint32_t getNumberOfBytesPerElement(Enum textureFormat)
+		[[nodiscard]] static inline uint32_t GetNumberOfBytesPerElement(Enum textureFormat)
 		{
 			static constexpr uint32_t MAPPING[] =
 			{

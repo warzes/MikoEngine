@@ -496,43 +496,43 @@
       <Filter>4_RHI\old\Utility</Filter>
     </ClInclude>
     <ClInclude Include="RHI\SamplerStateTypes.h">
-      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\RootSignatureTypes.h">
-      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\TextureTypes.h">
-      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\BlendStateTypes.h">
-      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\BufferTypes.h">
-      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\VertexArrayTypes.h">
-      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IndexBufferTypes.h">
-      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IndirectBufferTypes.h">
-      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\RasterizerStateTypes.h">
-      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\DepthStencilStateTypes.h">
-      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\PipelineStateTypes.h">
-      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ShaderTypes.h">
-      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\QueryType.h">
-      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="Core\MemoryPtr.h">
       <Filter>1_Core</Filter>
@@ -1592,9 +1592,6 @@
     <Filter Include="4_RHI\old\RHI">
       <UniqueIdentifier>{9c5e9ebd-df77-4f8f-9056-f1331a6275ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4_RHI\old\RHI\ResourceTypes">
-      <UniqueIdentifier>{86fab3e2-257a-49cc-b4c1-1ec824d2670a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="4_RHI\old\RHI\Interface">
       <UniqueIdentifier>{365a6a36-e0e9-4b82-a866-76cf233456cb}</UniqueIdentifier>
     </Filter>
@@ -1615,6 +1612,9 @@
     </Filter>
     <Filter Include="4_RHI\Core">
       <UniqueIdentifier>{cfbbd14e-bfae-4a63-b19b-898e3ef4cc63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_RHI\ResourceTypes">
+      <UniqueIdentifier>{86fab3e2-257a-49cc-b4c1-1ec824d2670a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

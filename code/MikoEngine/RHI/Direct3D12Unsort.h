@@ -1193,7 +1193,7 @@ namespace Direct3D12Rhi
 			mD3D12Resource(nullptr)
 		{
 			// Sanity check
-			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat)) == 0, "The Direct3D 12 texture buffer size must be a multiple of the selected texture format bytes per texel")
+			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat)) == 0, "The Direct3D 12 texture buffer size must be a multiple of the selected texture format bytes per texel")
 
 				// TODO(co) This is only meant for the Direct3D 12 RHI implementation kickoff.
 				// Note: using upload heaps to transfer static data like vert buffers is not 
@@ -1398,7 +1398,7 @@ namespace Direct3D12Rhi
 					d3d12ShaderResourceViewDesc.Format				 = Mapping::getDirect3D12Format(textureFormat);
 					d3d12ShaderResourceViewDesc.ViewDimension		 = D3D12_SRV_DIMENSION_BUFFER;
 					d3d12ShaderResourceViewDesc.Buffer.ElementOffset = 0;
-					d3d12ShaderResourceViewDesc.Buffer.ElementWidth	 = numberOfBytes / Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat);
+					d3d12ShaderResourceViewDesc.Buffer.ElementWidth	 = numberOfBytes / Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat);
 
 					// Create the Direct3D 12 shader resource view instance
 					FAILED_DEBUG_BREAK(direct3D12Rhi.getD3D12Device().CreateShaderResourceView(mD3D12Buffer, &d3d12ShaderResourceViewDesc, &mD3D12ShaderResourceViewTexture))
@@ -6888,7 +6888,7 @@ namespace Direct3D12Rhi
 							d3d12ShaderResourceViewDesc.Format = Mapping::getDirect3D12Format(textureFormat);
 							d3d12ShaderResourceViewDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
 							d3d12ShaderResourceViewDesc.Buffer.FirstElement = 0;
-							d3d12ShaderResourceViewDesc.Buffer.NumElements = textureBuffer->getNumberOfBytes() / Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat);
+							d3d12ShaderResourceViewDesc.Buffer.NumElements = textureBuffer->getNumberOfBytes() / Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat);
 							d3d12Device.CreateShaderResourceView(textureBuffer->getD3D12Resource(), &d3d12ShaderResourceViewDesc, d3d12CpuDescriptorHandle);
 							break;
 						}

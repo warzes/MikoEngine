@@ -6,8 +6,8 @@ namespace Rhi
 	{
 		enum Enum
 		{
-			UNORDERED_ACCESS = 1 << 0,	// This buffer can be used for unordered access which is needed for compute shader read/write buffers (when using Direct3D 11 a unordered access view (UAV) will be generated)
-			SHADER_RESOURCE = 1 << 1	// This buffer can be used as shader resource (when using Direct3D 11 a shader resource view (SRV) will be generated)
+			UNORDERED_ACCESS = 1 << 0, // This buffer can be used for unordered access which is needed for compute shader read/write buffers (when using Direct3D 11 a unordered access view (UAV) will be generated)
+			SHADER_RESOURCE  = 1 << 1  // This buffer can be used as shader resource (when using Direct3D 11 a shader resource view (SRV) will be generated)
 		};
 	};
 
@@ -15,10 +15,10 @@ namespace Rhi
 	{
 		enum Enum
 		{
-			UNORDERED_ACCESS = 1 << 0,	// This indirect buffer can be used for unordered access which is needed for compute shader read/write indirect buffers (when using Direct3D 11 a unordered access view (UAV) will be generated)
-			SHADER_RESOURCE = 1 << 1,	// This indirect buffer can be used as shader resource (when using Direct3D 11 a shader resource view (SRV) will be generated)
-			DRAW_ARGUMENTS = 1 << 2,	// This indirect buffer contains "Rhi::DrawArguments" as elements, if "Rhi::IndirectBufferFlag::DRAW_ARGUMENTS" is set it's invalid to have "Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS" set as well
-			DRAW_INDEXED_ARGUMENTS = 1 << 3		// This indirect buffer contains "Rhi::DrawIndexedArguments" as elements, if "Rhi::IndirectBufferFlag::DRAW_ARGUMENTS" is set it's invalid to have "Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS" set as well
+			UNORDERED_ACCESS       = 1 << 0, // This indirect buffer can be used for unordered access which is needed for compute shader read/write indirect buffers (when using Direct3D 11 a unordered access view (UAV) will be generated)
+			SHADER_RESOURCE       = 1 << 1, // This indirect buffer can be used as shader resource (when using Direct3D 11 a shader resource view (SRV) will be generated)
+			DRAW_ARGUMENTS        = 1 << 2, // This indirect buffer contains "Rhi::DrawArguments" as elements, if "Rhi::IndirectBufferFlag::DRAW_ARGUMENTS" is set it's invalid to have "Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS" set as well
+			DRAW_INDEXED_ARGUMENTS = 1 << 3 // This indirect buffer contains "Rhi::DrawIndexedArguments" as elements, if "Rhi::IndirectBufferFlag::DRAW_ARGUMENTS" is set it's invalid to have "Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS" set as well
 		};
 	};
 

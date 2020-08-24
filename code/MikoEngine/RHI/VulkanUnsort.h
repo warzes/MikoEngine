@@ -2266,7 +2266,7 @@ namespace VulkanRhi
 			mVkBufferView(VK_NULL_HANDLE)
 		{
 			// Sanity check
-			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat)) == 0, "The Vulkan texture buffer size must be a multiple of the selected texture format bytes per texel")
+			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat)) == 0, "The Vulkan texture buffer size must be a multiple of the selected texture format bytes per texel")
 
 				// Create the texture buffer
 				uint32_t vkBufferUsageFlagBits = 0;

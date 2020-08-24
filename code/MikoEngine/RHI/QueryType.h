@@ -2,51 +2,29 @@
 
 namespace Rhi
 {
-	/**
-	*  @brief
-	*    Asynchronous query type
-	*/
 	enum class QueryType
 	{
-		OCCLUSION = 0,	// Occlusion query, result is a "uint64_t" containing the number of passed samples
-		PIPELINE_STATISTICS = 1,	// Pipeline statistics query, result is a "Rhi::PipelineStatisticsQueryResult"
-		TIMESTAMP = 2		// Timestamp query, result is a "uint64_t" containing a timestamp in nanosecond
+		OCCLUSION           = 0, // Occlusion query, result is a "uint64_t" containing the number of passed samples
+		PIPELINE_STATISTICS = 1, // Pipeline statistics query, result is a "Rhi::PipelineStatisticsQueryResult"
+		TIMESTAMP           = 2  // Timestamp query, result is a "uint64_t" containing a timestamp in nanosecond
 	};
 
-	/**
-	*  @brief
-	*    Asynchronous query control flags
-	*/
 	struct QueryControlFlags final
 	{
 		enum Enum
 		{
-			PRECISE = 1 << 0	// Query control precise
+			PRECISE = 1 << 0     // Query control precise
 		};
 	};
 
-	/**
-	*  @brief
-	*    Asynchronous query result flags
-	*/
 	struct QueryResultFlags final
 	{
 		enum Enum
 		{
-			WAIT = 1 << 0	// Wait for the result
+			WAIT = 1 << 0        // Wait for the result
 		};
 	};
 
-	/**
-	*  @brief
-	*    Asynchronous pipeline statistics query result
-	*
-	*  @note
-	*    - This pipeline statistics structure maps directly to Direct3D 11 and Direct3D 12, do not change it
-	*
-	*  @see
-	*    - "D3D11_QUERY_DATA_PIPELINE_STATISTICS"-documentation for details
-	*/
 	struct PipelineStatisticsQueryResult final
 	{
 		uint64_t numberOfInputAssemblerVertices;					// Number of vertices read by input assembler

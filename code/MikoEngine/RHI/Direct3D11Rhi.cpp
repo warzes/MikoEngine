@@ -1272,7 +1272,7 @@ namespace Direct3D11Rhi
 					D3D11_SHADER_RESOURCE_VIEW_DESC d3d11ShaderResourceViewDesc = {};
 					d3d11ShaderResourceViewDesc.Format				 = mDXGIFormat;
 					d3d11ShaderResourceViewDesc.ViewDimension		 = D3D11_SRV_DIMENSION_BUFFER;
-					d3d11ShaderResourceViewDesc.Buffer.ElementWidth	 = numberOfBytes / Rhi::IndexBufferFormat::getNumberOfBytesPerElement(indexBufferFormat);
+					d3d11ShaderResourceViewDesc.Buffer.ElementWidth	 = numberOfBytes / Rhi::IndexBufferFormat::GetNumberOfBytesPerElement(indexBufferFormat);
 
 					// Create the Direct3D 11 shader resource view instance
 					FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateShaderResourceView(mD3D11Buffer, &d3d11ShaderResourceViewDesc, &mD3D11ShaderResourceView))
@@ -1285,7 +1285,7 @@ namespace Direct3D11Rhi
 					D3D11_UNORDERED_ACCESS_VIEW_DESC d3d11UnorderedAccessViewDesc = {};
 					d3d11UnorderedAccessViewDesc.Format				= mDXGIFormat;
 					d3d11UnorderedAccessViewDesc.ViewDimension		= D3D11_UAV_DIMENSION_BUFFER;
-					d3d11UnorderedAccessViewDesc.Buffer.NumElements = numberOfBytes / Rhi::IndexBufferFormat::getNumberOfBytesPerElement(indexBufferFormat);
+					d3d11UnorderedAccessViewDesc.Buffer.NumElements = numberOfBytes / Rhi::IndexBufferFormat::GetNumberOfBytesPerElement(indexBufferFormat);
 
 					// Create the Direct3D 11 unordered access view instance
 					FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateUnorderedAccessView(mD3D11Buffer, &d3d11UnorderedAccessViewDesc, &mD3D11UnorderedAccessView))
@@ -1654,7 +1654,7 @@ namespace Direct3D11Rhi
 			mD3D11UnorderedAccessView(nullptr)
 		{
 			// Sanity check
-			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat)) == 0, "The Direct3D 11 texture buffer size must be a multiple of the selected texture format bytes per texel")
+			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat)) == 0, "The Direct3D 11 texture buffer size must be a multiple of the selected texture format bytes per texel")
 
 			{ // Buffer part
 				// Direct3D 11 buffer description
@@ -1704,7 +1704,7 @@ namespace Direct3D11Rhi
 				D3D11_SHADER_RESOURCE_VIEW_DESC d3d11ShaderResourceViewDesc = {};
 				d3d11ShaderResourceViewDesc.Format				 = Mapping::getDirect3D11ResourceFormat(textureFormat);
 				d3d11ShaderResourceViewDesc.ViewDimension		 = D3D11_SRV_DIMENSION_BUFFER;
-				d3d11ShaderResourceViewDesc.Buffer.ElementWidth	 = numberOfBytes / Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat);
+				d3d11ShaderResourceViewDesc.Buffer.ElementWidth	 = numberOfBytes / Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat);
 
 				// Create the Direct3D 11 shader resource view instance
 				FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateShaderResourceView(mD3D11Buffer, &d3d11ShaderResourceViewDesc, &mD3D11ShaderResourceView))
@@ -1717,7 +1717,7 @@ namespace Direct3D11Rhi
 				D3D11_UNORDERED_ACCESS_VIEW_DESC d3d11UnorderedAccessViewDesc = {};
 				d3d11UnorderedAccessViewDesc.Format				= Mapping::getDirect3D11ShaderResourceViewFormat(textureFormat);
 				d3d11UnorderedAccessViewDesc.ViewDimension		= D3D11_UAV_DIMENSION_BUFFER;
-				d3d11UnorderedAccessViewDesc.Buffer.NumElements = numberOfBytes / Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat);
+				d3d11UnorderedAccessViewDesc.Buffer.NumElements = numberOfBytes / Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat);
 
 				// Create the Direct3D 11 unordered access view instance
 				FAILED_DEBUG_BREAK(direct3D11Rhi.getD3D11Device()->CreateUnorderedAccessView(mD3D11Buffer, &d3d11UnorderedAccessViewDesc, &mD3D11UnorderedAccessView))

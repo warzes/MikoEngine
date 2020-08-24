@@ -2,8 +2,6 @@
 
 namespace Rhi
 {
-	// "Point" = "nearest" in OpenGL terminology
-	// - "D3D12_FILTER"-documentation for details
 	enum class FilterMode
 	{
 		MIN_MAG_MIP_POINT = 0,					// Use point sampling for minification, magnification, and mip-level sampling.
@@ -27,7 +25,6 @@ namespace Rhi
 		UNKNOWN = 0xd6							// Unknown invalid setting
 	};
 
-	// "D3D12_TEXTURE_ADDRESS_MODE"-documentation for details
 	enum class TextureAddressMode
 	{
 		WRAP = 1,			// Tile the texture at every integer junction. For example, for u values between 0 and 3, the texture is repeated three times.

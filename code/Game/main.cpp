@@ -1,6 +1,7 @@
 #include "Triangle.h"
 #include "Texture.h"
 #include "Mesh.h"
+#include "Scene.h"
 //-----------------------------------------------------------------------------
 #pragma comment(lib, "3rdparty.lib")
 #pragma comment(lib, "MikoEngine.lib")
@@ -11,7 +12,7 @@ int main(
 {
 	try
 	{
-		Mesh app;
+		Scene app;
 		return app.Run(argc, argv);
 	}
 	catch ( const std::exception &e )

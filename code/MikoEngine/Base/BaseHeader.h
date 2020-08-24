@@ -139,6 +139,7 @@ SE_PRAGMA_WARNING_LEVEL(0)
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
 #include <glm/gtx/hash.hpp>
+#include <glm/gtx/intersect.hpp>
 
 //-----------------------------------------------------------------------------
 // SPIRV

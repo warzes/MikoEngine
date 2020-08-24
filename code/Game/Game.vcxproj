@@ -169,18 +169,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FreeCameraController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="VrController.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FreeCameraController.h" />
+    <ClInclude Include="IController.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Mesh_GLSL_410.h" />
     <ClInclude Include="Mesh_GLSL_450.h" />
     <ClInclude Include="Mesh_GLSL_ES3.h" />
     <ClInclude Include="Mesh_HLSL_D3D11_D3D12.h" />
     <ClInclude Include="Mesh_Null.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture_GLSL_410.h" />
     <ClInclude Include="Texture_GLSL_450.h" />
@@ -193,6 +199,7 @@
     <ClInclude Include="Triangle_HLSL_D3D11_D3D12.h" />
     <ClInclude Include="Triangle_Null.h" />
     <ClInclude Include="Triangle.h" />
+    <ClInclude Include="VrController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

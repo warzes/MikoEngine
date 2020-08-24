@@ -3669,7 +3669,7 @@ namespace OpenGLES3Rhi
 			IIndexBuffer(openGLES3Rhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mOpenGLES3ElementArrayBuffer(0),
 			mOpenGLES3Type(GL_UNSIGNED_SHORT),
-			mIndexSizeInBytes(Rhi::IndexBufferFormat::getNumberOfBytesPerElement(indexBufferFormat)),
+			mIndexSizeInBytes(Rhi::IndexBufferFormat::GetNumberOfBytesPerElement(indexBufferFormat)),
 			mBufferSize(numberOfBytes)
 		{
 			// "GL_UNSIGNED_INT" is only allowed when the "GL_OES_element_index_uint" extension is there
@@ -4680,7 +4680,7 @@ namespace OpenGLES3Rhi
 			OpenGLES3Rhi& openGLES3Rhi = static_cast<OpenGLES3Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::getNumberOfBytesPerElement(textureFormat)) == 0, "The OpenGL ES 3 texture buffer size must be a multiple of the selected texture format bytes per texel")
+			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat)) == 0, "The OpenGL ES 3 texture buffer size must be a multiple of the selected texture format bytes per texel")
 
 			// Is "GL_EXT_texture_buffer" there?
 			if (mExtensions->isGL_EXT_texture_buffer())
