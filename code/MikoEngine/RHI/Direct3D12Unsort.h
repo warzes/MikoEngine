@@ -9,8 +9,6 @@ namespace Direct3D12Rhi
 	*  @brief
 	*    Creates, loads and compiles a shader from source code
 	*
-	*  @param[in] context
-	*    RHI context
 	*  @param[in] shaderModel
 	*    ASCII shader model (for example "vs_5_0", "gs_5_0", "ps_5_0"), must be a valid pointer
 	*  @param[in] sourceCode
@@ -23,7 +21,7 @@ namespace Direct3D12Rhi
 	*  @return
 	*    The loaded and compiled shader, can be a null pointer, release the instance if you no longer need it
 	*/
-	[[nodiscard]] ID3DBlob* loadShaderFromSourcecode(const Rhi::Context& context, const char* shaderModel, const char* sourceCode, const char* entryPoint, Rhi::IShaderLanguage::OptimizationLevel optimizationLevel)
+	[[nodiscard]] ID3DBlob* loadShaderFromSourcecode(const char* shaderModel, const char* sourceCode, const char* entryPoint, Rhi::IShaderLanguage::OptimizationLevel optimizationLevel)
 	{
 		// Sanity checks
 		RHI_ASSERT(nullptr != shaderModel, "Invalid Direct3D 12 shader model")
@@ -414,8 +412,6 @@ namespace Direct3D12Rhi
 			mRootSignature(rootSignature),
 			mD3D12RootSignature(nullptr)
 		{
-			const Rhi::Context& context = direct3D12Rhi.getContext();
-
 			{ // We need a backup of the given root signature
 				{ // Copy the parameter data
 					const uint32_t numberOfParameters = mRootSignature.numberOfParameters;
@@ -587,7 +583,6 @@ namespace Direct3D12Rhi
 			}
 
 			// Destroy the backup of the given root signature
-			const Rhi::Context& context = getRhi().getContext();
 			if ( nullptr != mRootSignature.parameters )
 			{
 				for ( uint32_t i = 0; i < mRootSignature.numberOfParameters; ++i )
@@ -1031,7 +1026,6 @@ namespace Direct3D12Rhi
 			// Add a reference to the used vertex buffers
 			if ( mNumberOfSlots > 0 )
 			{
-				const Rhi::Context& context = direct3D12Rhi.getContext();
 				mD3D12VertexBufferViews = RHI_MALLOC_TYPED(D3D12_VERTEX_BUFFER_VIEW, mNumberOfSlots);
 				mVertexBuffers = RHI_MALLOC_TYPED(VertexBuffer*, mNumberOfSlots);
 
@@ -1074,7 +1068,6 @@ namespace Direct3D12Rhi
 
 			// Cleanup Direct3D 12 input slot data, if needed
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			const Rhi::Context& context = direct3D12Rhi.getContext();
 			RHI_FREE(mD3D12VertexBufferViews);
 
 			// Release the reference to the used vertex buffers
@@ -4419,7 +4412,6 @@ namespace Direct3D12Rhi
 			// Add a reference to the used color textures
 			if ( mNumberOfColorTextures > 0 )
 			{
-				const Rhi::Context& context = direct3D12Rhi.getContext();
 				mColorTextures = RHI_MALLOC_TYPED(Rhi::ITexture*, mNumberOfColorTextures);
 				mD3D12DescriptorHeapRenderTargetViews = RHI_MALLOC_TYPED(ID3D12DescriptorHeap*, mNumberOfColorTextures);
 
@@ -4653,7 +4645,6 @@ namespace Direct3D12Rhi
 
 			{ // Assign a debug name to the Direct3D 12 render target view, do also add the index to the name
 				const size_t adjustedDetailedDebugNameLength = detailedDebugNameLength + 5;	// Direct3D 12 supports 8 render targets ("D3D12_SIMULTANEOUS_RENDER_TARGET_COUNT", so: One digit + one [ + one ] + one space + terminating zero = 5 characters)
-				const Rhi::Context& context = direct3D12Rhi.getContext();
 				char* nameWithIndex = RHI_MALLOC_TYPED(char, detailedDebugNameLength);
 				ID3D12DescriptorHeap** d3d12DescriptorHeapRenderTargetViewsEnd = mD3D12DescriptorHeapRenderTargetViews + mNumberOfColorTextures;
 				for ( ID3D12DescriptorHeap** d3d12DescriptorHeapRenderTargetView = mD3D12DescriptorHeapRenderTargetViews; d3d12DescriptorHeapRenderTargetView < d3d12DescriptorHeapRenderTargetViewsEnd; ++d3d12DescriptorHeapRenderTargetView )
@@ -4679,7 +4670,6 @@ namespace Direct3D12Rhi
 		virtual ~Framebuffer() override
 		{
 			// Release the reference to the used color textures
-			const Rhi::Context& context = getRhi().getContext();
 			if ( nullptr != mD3D12DescriptorHeapRenderTargetViews )
 			{
 				// Release references
@@ -4876,7 +4866,7 @@ namespace Direct3D12Rhi
 			mD3DBlobVertexShader(nullptr)
 		{
 			// Create the Direct3D 12 binary large object for the vertex shader
-			mD3DBlobVertexShader = loadShaderFromSourcecode(direct3D12Rhi.getContext(), "vs_5_0", sourceCode, nullptr, optimizationLevel);
+			mD3DBlobVertexShader = loadShaderFromSourcecode("vs_5_0", sourceCode, nullptr, optimizationLevel);
 
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
@@ -4998,7 +4988,7 @@ namespace Direct3D12Rhi
 			mD3DBlobHullShader(nullptr)
 		{
 			// Create the Direct3D 12 binary large object for the hull shader
-			mD3DBlobHullShader = loadShaderFromSourcecode(direct3D12Rhi.getContext(), "hs_5_0", sourceCode, nullptr, optimizationLevel);
+			mD3DBlobHullShader = loadShaderFromSourcecode("hs_5_0", sourceCode, nullptr, optimizationLevel);
 
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
@@ -5120,7 +5110,7 @@ namespace Direct3D12Rhi
 			mD3DBlobDomainShader(nullptr)
 		{
 			// Create the Direct3D 12 binary large object for the domain shader
-			mD3DBlobDomainShader = loadShaderFromSourcecode(direct3D12Rhi.getContext(), "ds_5_0", sourceCode, nullptr, optimizationLevel);
+			mD3DBlobDomainShader = loadShaderFromSourcecode("ds_5_0", sourceCode, nullptr, optimizationLevel);
 
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
@@ -5242,7 +5232,7 @@ namespace Direct3D12Rhi
 			mD3DBlobGeometryShader(nullptr)
 		{
 			// Create the Direct3D 12 binary large object for the geometry shader
-			mD3DBlobGeometryShader = loadShaderFromSourcecode(direct3D12Rhi.getContext(), "gs_5_0", sourceCode, nullptr, optimizationLevel);
+			mD3DBlobGeometryShader = loadShaderFromSourcecode("gs_5_0", sourceCode, nullptr, optimizationLevel);
 
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
@@ -5364,7 +5354,7 @@ namespace Direct3D12Rhi
 			mD3DBlobFragmentShader(nullptr)
 		{
 			// Create the Direct3D 12 binary large object for the fragment shader
-			mD3DBlobFragmentShader = loadShaderFromSourcecode(direct3D12Rhi.getContext(), "ps_5_0", sourceCode, nullptr, optimizationLevel);
+			mD3DBlobFragmentShader = loadShaderFromSourcecode("ps_5_0", sourceCode, nullptr, optimizationLevel);
 
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
@@ -5486,7 +5476,7 @@ namespace Direct3D12Rhi
 			mD3DBlobTaskShader(nullptr)
 		{
 			// Create the Direct3D 12 binary large object for the task shader
-			mD3DBlobTaskShader = loadShaderFromSourcecode(direct3D12Rhi.getContext(), "ps_5_0", sourceCode, nullptr, optimizationLevel);
+			mD3DBlobTaskShader = loadShaderFromSourcecode("ps_5_0", sourceCode, nullptr, optimizationLevel);
 
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
@@ -5608,7 +5598,7 @@ namespace Direct3D12Rhi
 			mD3DBlobMeshShader(nullptr)
 		{
 			// Create the Direct3D 12 binary large object for the mesh shader
-			mD3DBlobMeshShader = loadShaderFromSourcecode(direct3D12Rhi.getContext(), "ps_5_0", sourceCode, nullptr, optimizationLevel);
+			mD3DBlobMeshShader = loadShaderFromSourcecode("ps_5_0", sourceCode, nullptr, optimizationLevel);
 
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
@@ -5730,7 +5720,7 @@ namespace Direct3D12Rhi
 			mD3DBlobComputeShader(nullptr)
 		{
 			// Create the Direct3D 12 binary large object for the compute shader
-			mD3DBlobComputeShader = loadShaderFromSourcecode(direct3D12Rhi.getContext(), "cs_5_0", sourceCode, nullptr, optimizationLevel);
+			mD3DBlobComputeShader = loadShaderFromSourcecode("cs_5_0", sourceCode, nullptr, optimizationLevel);
 
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
@@ -7156,7 +7146,6 @@ namespace Direct3D12Rhi
 		{
 			// Remove our reference from the RHI resources
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			const Rhi::Context& context = direct3D12Rhi.getContext();
 			if ( nullptr != mSamplerStates )
 			{
 				for ( uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex )
@@ -7254,7 +7243,6 @@ namespace Direct3D12Rhi
 	{
 		// Sanity checks
 		Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-		const Rhi::Context& context = direct3D12Rhi.getContext();
 		RHI_ASSERT(numberOfResources > 0, "The number of Direct3D 12 resources must not be zero")
 			RHI_ASSERT(nullptr != resources, "The Direct3D 12 resource pointers must be valid")
 

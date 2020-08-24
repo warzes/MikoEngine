@@ -30,8 +30,6 @@ namespace OpenGLRhi
 			IRootSignature(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mRootSignature(rootSignature)
 		{
-			const Rhi::Context& context = openGLRhi.getContext();
-
 			{ // Copy the parameter data
 				const uint32_t numberOfParameters = mRootSignature.numberOfParameters;
 				if ( numberOfParameters > 0 )
@@ -72,7 +70,6 @@ namespace OpenGLRhi
 		virtual ~RootSignature() override
 		{
 			// Destroy the root signature data
-			const Rhi::Context& context = getRhi().getContext();
 			if ( nullptr != mRootSignature.parameters )
 			{
 				for ( uint32_t i = 0; i < mRootSignature.numberOfParameters; ++i )

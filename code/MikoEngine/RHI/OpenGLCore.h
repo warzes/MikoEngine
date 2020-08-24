@@ -151,7 +151,7 @@ namespace
 			}
 		}
 
-		void printOpenGLShaderInformationIntoLog(const Rhi::Context& context, GLuint openGLShader)
+		void printOpenGLShaderInformationIntoLog(GLuint openGLShader)
 		{
 			// Get the length of the information (including a null termination)
 			GLint informationLength = 0;
@@ -172,7 +172,7 @@ namespace
 			}
 		}
 
-		void printOpenGLShaderInformationIntoLog(const Rhi::Context& context, GLuint openGLShader, const char* sourceCode)
+		void printOpenGLShaderInformationIntoLog(GLuint openGLShader, const char* sourceCode)
 		{
 			// Get the length of the information (including a null termination)
 			GLint informationLength = 0;
@@ -196,7 +196,7 @@ namespace
 			}
 		}
 
-		void printOpenGLProgramInformationIntoLog(const Rhi::Context& context, GLuint openGLProgram)
+		void printOpenGLProgramInformationIntoLog(GLuint openGLProgram)
 		{
 			// Get the length of the information (including a null termination)
 			GLint informationLength = 0;
@@ -210,14 +210,14 @@ namespace
 				glGetProgramInfoLog(openGLProgram, informationLength, nullptr, informationLog);
 
 				// Output the debug string
-				RHI_LOG(CRITICAL, informationLog)
+				RHI_LOG(CRITICAL, informationLog);
 
-					// Cleanup information memory
-					RHI_FREE(informationLog);
+				// Cleanup information memory
+				RHI_FREE(informationLog);
 			}
 		}
 
-		void printOpenGLProgramInformationIntoLog(const Rhi::Context& context, GLuint openGLProgram, const char* sourceCode)
+		void printOpenGLProgramInformationIntoLog(GLuint openGLProgram, const char* sourceCode)
 		{
 			// Get the length of the information (including a null termination)
 			GLint informationLength = 0;
@@ -245,8 +245,6 @@ namespace
 		*  @brief
 		*    Create and load a shader from bytecode
 		*
-		*  @param[in] context
-		*    RHI context to use
 		*  @param[in] shaderType
 		*    Shader type (for example "GL_VERTEX_SHADER_ARB")
 		*  @param[in] shaderBytecode
@@ -255,7 +253,7 @@ namespace
 		*  @return
 		*    The OpenGL shader, 0 on error, destroy the resource if you no longer need it
 		*/
-		[[nodiscard]] GLuint loadShaderFromBytecode(const Rhi::Context& context, GLenum shaderType, const Rhi::ShaderBytecode& shaderBytecode)
+		[[nodiscard]] GLuint loadShaderFromBytecode(GLenum shaderType, const Rhi::ShaderBytecode& shaderBytecode)
 		{
 			// Create the shader object
 			const GLuint openGLShader = glCreateShader(shaderType);
@@ -281,8 +279,6 @@ namespace
 		*  @brief
 		*    Create and load a shader program from bytecode
 		*
-		*  @param[in] context
-		*    RHI context to use
 		*  @param[in] shaderType
 		*    Shader type (for example "GL_VERTEX_SHADER_ARB")
 		*  @param[in] shaderBytecode
@@ -291,10 +287,10 @@ namespace
 		*  @return
 		*    The OpenGL shader program, 0 on error, destroy the resource if you no longer need it
 		*/
-		[[nodiscard]] GLuint loadShaderProgramFromBytecode(const Rhi::Context& context, GLenum shaderType, const Rhi::ShaderBytecode& shaderBytecode)
+		[[nodiscard]] GLuint loadShaderProgramFromBytecode(GLenum shaderType, const Rhi::ShaderBytecode& shaderBytecode)
 		{
 			// Create and load the shader object
-			const GLuint openGLShader = loadShaderFromBytecode(context, shaderType, shaderBytecode);
+			const GLuint openGLShader = loadShaderFromBytecode(shaderType, shaderBytecode);
 
 			// Specialize the shader
 			// -> Before this shader the isn't compiled, after this shader is supposed to be compiled
@@ -319,7 +315,7 @@ namespace
 				if ( GL_TRUE != linked )
 				{
 					// Error, program link failed!
-					printOpenGLProgramInformationIntoLog(context, openGLProgram, nullptr);
+					printOpenGLProgramInformationIntoLog(openGLProgram, nullptr);
 				}
 
 				// Done
@@ -328,7 +324,7 @@ namespace
 			else
 			{
 				// Error, failed to compile the shader!
-				printOpenGLShaderInformationIntoLog(context, openGLShader, nullptr);
+				printOpenGLShaderInformationIntoLog(openGLShader, nullptr);
 
 				// Destroy the OpenGL shader
 				// -> A value of 0 for shader will be silently ignored
@@ -343,8 +339,6 @@ namespace
 		*  @brief
 		*    Create, load and compile a shader program from source code
 		*
-		*  @param[in] context
-		*    RHI context to use
 		*  @param[in] shaderType
 		*    Shader type (for example "GL_VERTEX_SHADER_ARB")
 		*  @param[in] sourceCode
@@ -353,7 +347,7 @@ namespace
 		*  @return
 		*    The OpenGL shader program, 0 on error, destroy the resource if you no longer need it
 		*/
-		[[nodiscard]] GLuint loadShaderProgramFromSourceCode(const Rhi::Context& context, GLenum shaderType, const GLchar* sourceCode)
+		[[nodiscard]] GLuint loadShaderProgramFromSourceCode(GLenum shaderType, const GLchar* sourceCode)
 		{
 			// Create the shader program
 			const GLuint openGLProgram = glCreateShaderProgramv(shaderType, 1, &sourceCode);
@@ -369,7 +363,7 @@ namespace
 			else
 			{
 				// Error, failed to compile the shader!
-				printOpenGLProgramInformationIntoLog(context, openGLProgram, sourceCode);
+				printOpenGLProgramInformationIntoLog(openGLProgram, sourceCode);
 
 				// Destroy the program
 				// -> A value of 0 for shader will be silently ignored
@@ -381,7 +375,7 @@ namespace
 		}
 
 		// Basing on the implementation from https://www.opengl.org/registry/specs/ARB/separate_shader_objects.txt
-		[[nodiscard]] GLuint createShaderProgramObject(const Rhi::Context& context, GLuint openGLShader, const Rhi::VertexAttributes& vertexAttributes)
+		[[nodiscard]] GLuint createShaderProgramObject(GLuint openGLShader, const Rhi::VertexAttributes& vertexAttributes)
 		{
 			if ( openGLShader > 0 )
 			{
@@ -427,7 +421,7 @@ namespace
 					else
 					{
 						// Error, program link failed!
-						printOpenGLProgramInformationIntoLog(context, openGLProgram);
+						printOpenGLProgramInformationIntoLog(openGLProgram);
 					}
 				}
 			}
@@ -436,10 +430,10 @@ namespace
 			return 0;
 		}
 
-		[[nodiscard]] GLuint loadShaderProgramFromBytecode(const Rhi::Context& context, const Rhi::VertexAttributes& vertexAttributes, GLenum shaderType, const Rhi::ShaderBytecode& shaderBytecode)
+		[[nodiscard]] GLuint loadShaderProgramFromBytecode(const Rhi::VertexAttributes& vertexAttributes, GLenum shaderType, const Rhi::ShaderBytecode& shaderBytecode)
 		{
 			// Create and load the shader object
-			const GLuint openGLShader = loadShaderFromBytecode(context, shaderType, shaderBytecode);
+			const GLuint openGLShader = loadShaderFromBytecode(shaderType, shaderBytecode);
 
 			// Specialize the shader
 			// -> Before this shader the isn't compiled, after this shader is supposed to be compiled
@@ -451,12 +445,12 @@ namespace
 			if ( GL_TRUE == compiled )
 			{
 				// All went fine, create and return the program
-				return createShaderProgramObject(context, openGLShader, vertexAttributes);
+				return createShaderProgramObject(openGLShader, vertexAttributes);
 			}
 			else
 			{
 				// Error, failed to compile the shader!
-				printOpenGLShaderInformationIntoLog(context, openGLShader);
+				printOpenGLShaderInformationIntoLog(openGLShader);
 
 				// Destroy the OpenGL shader
 				// -> A value of 0 for shader will be silently ignored
@@ -471,8 +465,6 @@ namespace
 		*  @brief
 		*    Creates, loads and compiles a shader from source code
 		*
-		*  @param[in] context
-		*    RHI context to use
 		*  @param[in] shaderType
 		*    Shader type (for example "GL_VERTEX_SHADER_ARB")
 		*  @param[in] sourceCode
@@ -481,7 +473,7 @@ namespace
 		*  @return
 		*    The OpenGL shader, 0 on error, destroy the resource if you no longer need it
 		*/
-		[[nodiscard]] GLuint loadShaderFromSourcecode(const Rhi::Context& context, GLenum shaderType, const GLchar* sourceCode)
+		[[nodiscard]] GLuint loadShaderFromSourcecode(GLenum shaderType, const GLchar* sourceCode)
 		{
 			// Create the shader object
 			const GLuint openGLShader = glCreateShader(shaderType);
@@ -535,17 +527,15 @@ namespace
 			}
 		}
 
-		[[nodiscard]] GLuint loadShaderProgramFromSourcecode(const Rhi::Context& context, const Rhi::VertexAttributes& vertexAttributes, GLenum type, const char* sourceCode)
+		[[nodiscard]] GLuint loadShaderProgramFromSourcecode(const Rhi::VertexAttributes& vertexAttributes, GLenum type, const char* sourceCode)
 		{
-			return createShaderProgramObject(context, loadShaderFromSourcecode(context, type, sourceCode), vertexAttributes);
+			return createShaderProgramObject(loadShaderFromSourcecode(type, sourceCode), vertexAttributes);
 		}
 
 		/**
 		*  @brief
 		*    Compile shader source code to shader bytecode
 		*
-		*  @param[in] context
-		*    RHI context to use
 		*  @param[in] shaderType
 		*    Shader type (for example "GL_VERTEX_SHADER_ARB")
 		*  @param[in] sourceCode
@@ -557,7 +547,7 @@ namespace
 #ifdef _MSC_VER
 #pragma optimize("", off)
 #endif
-		void shaderSourceCodeToShaderBytecode(const Rhi::Context& context, GLenum shaderType, const GLchar* sourceCode, Rhi::ShaderBytecode& shaderBytecode)
+		void shaderSourceCodeToShaderBytecode(GLenum shaderType, const GLchar* sourceCode, Rhi::ShaderBytecode& shaderBytecode)
 		{
 #ifdef SE_GLSLTOSPIRV
 			// Initialize glslang, if necessary

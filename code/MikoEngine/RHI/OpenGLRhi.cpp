@@ -27,7 +27,7 @@ namespace
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
 
-		[[nodiscard]] bool mapBuffer([[maybe_unused]] const Rhi::Context& context, const OpenGLRhi::Extensions& extensions, GLenum target, [[maybe_unused]] GLenum bindingTarget, GLuint openGLBuffer, Rhi::MapType mapType, Rhi::MappedSubresource& mappedSubresource)
+		[[nodiscard]] bool mapBuffer(const OpenGLRhi::Extensions& extensions, GLenum target, [[maybe_unused]] GLenum bindingTarget, GLuint openGLBuffer, Rhi::MapType mapType, Rhi::MappedSubresource& mappedSubresource)
 		{
 			// TODO(co) This buffer update isn't efficient, use e.g. persistent buffer mapping
 
@@ -2045,22 +2045,22 @@ namespace OpenGLRhi
 		switch (resource.getResourceType())
 		{
 			case Rhi::ResourceType::VERTEX_BUFFER:
-				return ::detail::mapBuffer(mContext, *mExtensions, GL_ARRAY_BUFFER_ARB, GL_ARRAY_BUFFER_BINDING_ARB, static_cast<VertexBuffer&>(resource).getOpenGLArrayBuffer(), mapType, mappedSubresource);
+				return ::detail::mapBuffer(*mExtensions, GL_ARRAY_BUFFER_ARB, GL_ARRAY_BUFFER_BINDING_ARB, static_cast<VertexBuffer&>(resource).getOpenGLArrayBuffer(), mapType, mappedSubresource);
 
 			case Rhi::ResourceType::INDEX_BUFFER:
-				return ::detail::mapBuffer(mContext, *mExtensions, GL_ELEMENT_ARRAY_BUFFER_ARB, GL_ELEMENT_ARRAY_BUFFER_BINDING_ARB, static_cast<IndexBuffer&>(resource).getOpenGLElementArrayBuffer(), mapType, mappedSubresource);
+				return ::detail::mapBuffer(*mExtensions, GL_ELEMENT_ARRAY_BUFFER_ARB, GL_ELEMENT_ARRAY_BUFFER_BINDING_ARB, static_cast<IndexBuffer&>(resource).getOpenGLElementArrayBuffer(), mapType, mappedSubresource);
 
 			case Rhi::ResourceType::TEXTURE_BUFFER:
-				return ::detail::mapBuffer(mContext, *mExtensions, GL_TEXTURE_BUFFER_ARB, GL_TEXTURE_BINDING_BUFFER_ARB, static_cast<TextureBuffer&>(resource).getOpenGLTextureBuffer(), mapType, mappedSubresource);
+				return ::detail::mapBuffer(*mExtensions, GL_TEXTURE_BUFFER_ARB, GL_TEXTURE_BINDING_BUFFER_ARB, static_cast<TextureBuffer&>(resource).getOpenGLTextureBuffer(), mapType, mappedSubresource);
 
 			case Rhi::ResourceType::STRUCTURED_BUFFER:
-				return ::detail::mapBuffer(mContext, *mExtensions, GL_TEXTURE_BUFFER_ARB, GL_TEXTURE_BINDING_BUFFER_ARB, static_cast<StructuredBuffer&>(resource).getOpenGLStructuredBuffer(), mapType, mappedSubresource);
+				return ::detail::mapBuffer(*mExtensions, GL_TEXTURE_BUFFER_ARB, GL_TEXTURE_BINDING_BUFFER_ARB, static_cast<StructuredBuffer&>(resource).getOpenGLStructuredBuffer(), mapType, mappedSubresource);
 
 			case Rhi::ResourceType::INDIRECT_BUFFER:
-				return ::detail::mapBuffer(mContext, *mExtensions, GL_DRAW_INDIRECT_BUFFER, GL_DRAW_INDIRECT_BUFFER_BINDING, static_cast<IndirectBuffer&>(resource).getOpenGLIndirectBuffer(), mapType, mappedSubresource);
+				return ::detail::mapBuffer(*mExtensions, GL_DRAW_INDIRECT_BUFFER, GL_DRAW_INDIRECT_BUFFER_BINDING, static_cast<IndirectBuffer&>(resource).getOpenGLIndirectBuffer(), mapType, mappedSubresource);
 
 			case Rhi::ResourceType::UNIFORM_BUFFER:
-				return ::detail::mapBuffer(mContext, *mExtensions, GL_UNIFORM_BUFFER, GL_UNIFORM_BUFFER_BINDING, static_cast<UniformBuffer&>(resource).getOpenGLUniformBuffer(), mapType, mappedSubresource);
+				return ::detail::mapBuffer(*mExtensions, GL_UNIFORM_BUFFER, GL_UNIFORM_BUFFER_BINDING, static_cast<UniformBuffer&>(resource).getOpenGLUniformBuffer(), mapType, mappedSubresource);
 
 			case Rhi::ResourceType::TEXTURE_1D:
 			{
@@ -2133,7 +2133,7 @@ namespace OpenGLRhi
 			}
 
 			case Rhi::ResourceType::TEXTURE_3D:
-				return ::detail::mapBuffer(mContext, *mExtensions, GL_PIXEL_UNPACK_BUFFER_ARB, GL_PIXEL_UNPACK_BUFFER_BINDING_ARB, static_cast<Texture3D&>(resource).getOpenGLPixelUnpackBuffer(), mapType, mappedSubresource);
+				return ::detail::mapBuffer(*mExtensions, GL_PIXEL_UNPACK_BUFFER_ARB, GL_PIXEL_UNPACK_BUFFER_BINDING_ARB, static_cast<Texture3D&>(resource).getOpenGLPixelUnpackBuffer(), mapType, mappedSubresource);
 
 			case Rhi::ResourceType::TEXTURE_CUBE:
 			{

@@ -43,7 +43,6 @@ namespace OpenGLRhi
 			mResourceIndexToUniformBlockBindingIndex(nullptr)
 		{
 			// Get the uniform block binding start index
-			const Rhi::Context& context = rhi.getContext();
 			uint32_t uniformBlockBindingIndex = 0;
 			for ( uint32_t currentRootParameterIndex = 0; currentRootParameterIndex < rootParameterIndex; ++currentRootParameterIndex )
 			{
@@ -105,7 +104,6 @@ namespace OpenGLRhi
 		virtual ~ResourceGroup() override
 		{
 			// Remove our reference from the RHI resources
-			const Rhi::Context& context = getRhi().getContext();
 			if ( nullptr != mSamplerStates )
 			{
 				for ( uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex )

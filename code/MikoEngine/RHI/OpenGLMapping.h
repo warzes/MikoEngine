@@ -12,15 +12,13 @@ namespace OpenGLRhi
 		*  @brief
 		*    "Rhi::FilterMode" to OpenGL magnification filter mode
 		*
-		*  @param[in] context
-		*    RHI context to use
 		*  @param[in] filterMode
 		*    "Rhi::FilterMode" to map
 		*
 		*  @return
 		*    OpenGL magnification filter mode
 		*/
-		[[nodiscard]] static GLint getOpenGLMagFilterMode([[maybe_unused]] const Rhi::Context& context, Rhi::FilterMode filterMode)
+		[[nodiscard]] static GLint getOpenGLMagFilterMode(Rhi::FilterMode filterMode)
 		{
 			switch ( filterMode )
 			{
@@ -91,8 +89,6 @@ namespace OpenGLRhi
 		*  @brief
 		*    "Rhi::FilterMode" to OpenGL minification filter mode
 		*
-		*  @param[in] context
-		*    RHI context to use
 		*  @param[in] filterMode
 		*    "Rhi::FilterMode" to map
 		*  @param[in] hasMipmaps
@@ -101,7 +97,7 @@ namespace OpenGLRhi
 		*  @return
 		*    OpenGL minification filter mode
 		*/
-		[[nodiscard]] static GLint getOpenGLMinFilterMode([[maybe_unused]] const Rhi::Context& context, Rhi::FilterMode filterMode, bool hasMipmaps)
+		[[nodiscard]] static GLint getOpenGLMinFilterMode(Rhi::FilterMode filterMode, bool hasMipmaps)
 		{
 			switch ( filterMode )
 			{
@@ -172,15 +168,13 @@ namespace OpenGLRhi
 		*  @brief
 		*    "Rhi::FilterMode" to OpenGL compare mode
 		*
-		*  @param[in] context
-		*    RHI context to use
 		*  @param[in] filterMode
 		*    "Rhi::FilterMode" to map
 		*
 		*  @return
 		*    OpenGL compare mode
 		*/
-		[[nodiscard]] static GLint getOpenGLCompareMode([[maybe_unused]] const Rhi::Context& context, Rhi::FilterMode filterMode)
+		[[nodiscard]] static GLint getOpenGLCompareMode(Rhi::FilterMode filterMode)
 		{
 			switch ( filterMode )
 			{

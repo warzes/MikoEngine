@@ -739,7 +739,6 @@ namespace OpenGLRhi
 		virtual ~VertexArrayNoVao() override
 		{
 			// Destroy the vertex array attributes
-			const Rhi::Context& context = getRhi().getContext();
 			RHI_FREE(mAttributes);
 
 			// Destroy the vertex array vertex buffers
@@ -6402,14 +6401,14 @@ namespace OpenGLRhi
 		*/
 		SamplerStateBind(OpenGLRhi& openGLRhi, const Rhi::SamplerState& samplerState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT) :
 			SamplerState(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLMagFilterMode(Mapping::getOpenGLMagFilterMode(openGLRhi.getContext(), samplerState.filter)),
-			mOpenGLMinFilterMode(Mapping::getOpenGLMinFilterMode(openGLRhi.getContext(), samplerState.filter, samplerState.maxLod > 0.0f)),
+			mOpenGLMagFilterMode(Mapping::getOpenGLMagFilterMode(samplerState.filter)),
+			mOpenGLMinFilterMode(Mapping::getOpenGLMinFilterMode(samplerState.filter, samplerState.maxLod > 0.0f)),
 			mOpenGLTextureAddressModeS(Mapping::getOpenGLTextureAddressMode(samplerState.addressU)),
 			mOpenGLTextureAddressModeT(Mapping::getOpenGLTextureAddressMode(samplerState.addressV)),
 			mOpenGLTextureAddressModeR(Mapping::getOpenGLTextureAddressMode(samplerState.addressW)),
 			mMipLodBias(samplerState.mipLodBias),
 			mMaxAnisotropy(static_cast<float>(samplerState.maxAnisotropy)),	// Maximum anisotropy is "uint32_t" in Direct3D 10 & 11
-			mOpenGLCompareMode(Mapping::getOpenGLCompareMode(openGLRhi.getContext(), samplerState.filter)),
+			mOpenGLCompareMode(Mapping::getOpenGLCompareMode(samplerState.filter)),
 			mOpenGLComparisonFunc(Mapping::getOpenGLComparisonFunc(samplerState.comparisonFunc)),
 			mMinLod(samplerState.minLod),
 			mMaxLod(samplerState.maxLod)
@@ -6618,8 +6617,8 @@ namespace OpenGLRhi
 				glGenSamplers(1, &mOpenGLSampler);
 
 			// Rhi::SamplerState::filter
-			glSamplerParameteri(mOpenGLSampler, GL_TEXTURE_MAG_FILTER, Mapping::getOpenGLMagFilterMode(openGLRhi.getContext(), samplerState.filter));
-			glSamplerParameteri(mOpenGLSampler, GL_TEXTURE_MIN_FILTER, Mapping::getOpenGLMinFilterMode(openGLRhi.getContext(), samplerState.filter, samplerState.maxLod > 0.0f));
+			glSamplerParameteri(mOpenGLSampler, GL_TEXTURE_MAG_FILTER, Mapping::getOpenGLMagFilterMode(samplerState.filter));
+			glSamplerParameteri(mOpenGLSampler, GL_TEXTURE_MIN_FILTER, Mapping::getOpenGLMinFilterMode(samplerState.filter, samplerState.maxLod > 0.0f));
 
 			// Rhi::SamplerState::addressU
 			glSamplerParameteri(mOpenGLSampler, GL_TEXTURE_WRAP_S, Mapping::getOpenGLTextureAddressMode(samplerState.addressU));
@@ -6640,7 +6639,7 @@ namespace OpenGLRhi
 
 			// Rhi::SamplerState::comparisonFunc
 			// -> "GL_EXT_shadow_funcs"/"GL_EXT_shadow_samplers"-extension
-			glSamplerParameteri(mOpenGLSampler, GL_TEXTURE_COMPARE_MODE, Mapping::getOpenGLCompareMode(openGLRhi.getContext(), samplerState.filter));
+			glSamplerParameteri(mOpenGLSampler, GL_TEXTURE_COMPARE_MODE, Mapping::getOpenGLCompareMode(samplerState.filter));
 			glSamplerParameteri(mOpenGLSampler, GL_TEXTURE_COMPARE_FUNC, static_cast<GLint>(Mapping::getOpenGLComparisonFunc(samplerState.comparisonFunc)));
 
 			// Rhi::SamplerState::borderColor[4]
@@ -8901,7 +8900,7 @@ namespace OpenGLRhi
 		*/
 		inline VertexShaderMonolithic(OpenGLRhi& openGLRhi, const char* sourceCode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IVertexShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShader(::detail::loadShaderFromSourcecode(openGLRhi.getContext(), GL_VERTEX_SHADER_ARB, sourceCode))
+			mOpenGLShader(::detail::loadShaderFromSourcecode(GL_VERTEX_SHADER_ARB, sourceCode))
 		{
 			// Assign a default name to the resource for debugging purposes
 #if SE_DEBUG
@@ -9003,7 +9002,7 @@ namespace OpenGLRhi
 		*/
 		inline TessellationControlShaderMonolithic(OpenGLRhi& openGLRhi, const char* sourceCode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITessellationControlShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShader(::detail::loadShaderFromSourcecode(openGLRhi.getContext(), GL_TESS_CONTROL_SHADER, sourceCode))
+			mOpenGLShader(::detail::loadShaderFromSourcecode(GL_TESS_CONTROL_SHADER, sourceCode))
 		{
 			// Assign a default name to the resource for debugging purposes
 #if SE_DEBUG
@@ -9105,7 +9104,7 @@ namespace OpenGLRhi
 		*/
 		inline TessellationEvaluationShaderMonolithic(OpenGLRhi& openGLRhi, const char* sourceCode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITessellationEvaluationShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShader(::detail::loadShaderFromSourcecode(openGLRhi.getContext(), GL_TESS_EVALUATION_SHADER, sourceCode))
+			mOpenGLShader(::detail::loadShaderFromSourcecode(GL_TESS_EVALUATION_SHADER, sourceCode))
 		{
 			// Assign a default name to the resource for debugging purposes
 #if SE_DEBUG
@@ -9213,7 +9212,7 @@ namespace OpenGLRhi
 		*/
 		inline GeometryShaderMonolithic(OpenGLRhi& openGLRhi, const char* sourceCode, Rhi::GsInputPrimitiveTopology gsInputPrimitiveTopology, Rhi::GsOutputPrimitiveTopology gsOutputPrimitiveTopology, uint32_t numberOfOutputVertices RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IGeometryShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShader(::detail::loadShaderFromSourcecode(openGLRhi.getContext(), GL_GEOMETRY_SHADER_ARB, sourceCode)),
+			mOpenGLShader(::detail::loadShaderFromSourcecode(GL_GEOMETRY_SHADER_ARB, sourceCode)),
 			mOpenGLGsInputPrimitiveTopology(static_cast<int>(gsInputPrimitiveTopology)),	// The "Rhi::GsInputPrimitiveTopology" values directly map to OpenGL constants, do not change them
 			mOpenGLGsOutputPrimitiveTopology(static_cast<int>(gsOutputPrimitiveTopology)),	// The "Rhi::GsOutputPrimitiveTopology" values directly map to OpenGL constants, do not change them
 			mNumberOfOutputVertices(numberOfOutputVertices)
@@ -9357,7 +9356,7 @@ namespace OpenGLRhi
 		*/
 		inline FragmentShaderMonolithic(OpenGLRhi& openGLRhi, const char* sourceCode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IFragmentShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShader(::detail::loadShaderFromSourcecode(openGLRhi.getContext(), GL_FRAGMENT_SHADER_ARB, sourceCode))
+			mOpenGLShader(::detail::loadShaderFromSourcecode(GL_FRAGMENT_SHADER_ARB, sourceCode))
 		{
 			// Assign a default name to the resource for debugging purposes
 #if SE_DEBUG
@@ -9459,7 +9458,7 @@ namespace OpenGLRhi
 		*/
 		inline TaskShaderMonolithic(OpenGLRhi& openGLRhi, const char* sourceCode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITaskShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShader(::detail::loadShaderFromSourcecode(openGLRhi.getContext(), GL_TASK_SHADER_NV, sourceCode))
+			mOpenGLShader(::detail::loadShaderFromSourcecode(GL_TASK_SHADER_NV, sourceCode))
 		{
 			// Assign a default name to the resource for debugging purposes
 #if SE_DEBUG
@@ -9561,7 +9560,7 @@ namespace OpenGLRhi
 		*/
 		inline MeshShaderMonolithic(OpenGLRhi& openGLRhi, const char* sourceCode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IMeshShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShader(::detail::loadShaderFromSourcecode(openGLRhi.getContext(), GL_MESH_SHADER_NV, sourceCode))
+			mOpenGLShader(::detail::loadShaderFromSourcecode(GL_MESH_SHADER_NV, sourceCode))
 		{
 			// Assign a default name to the resource for debugging purposes
 #if SE_DEBUG
@@ -9663,7 +9662,7 @@ namespace OpenGLRhi
 		*/
 		inline ComputeShaderMonolithic(OpenGLRhi& openGLRhi, const char* sourceCode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IComputeShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShader(::detail::loadShaderFromSourcecode(openGLRhi.getContext(), GL_COMPUTE_SHADER, sourceCode))
+			mOpenGLShader(::detail::loadShaderFromSourcecode(GL_COMPUTE_SHADER, sourceCode))
 		{
 			// Assign a default name to the resource for debugging purposes
 #if SE_DEBUG
@@ -10277,7 +10276,6 @@ namespace OpenGLRhi
 				if ( informationLength > 1 )
 				{
 					// Allocate memory for the information
-					const Rhi::Context& context = openGLRhi.getContext();
 					char* informationLog = RHI_MALLOC_TYPED(char, informationLength);
 
 					// Get the information
@@ -10672,7 +10670,6 @@ namespace OpenGLRhi
 				if ( informationLength > 1 )
 				{
 					// Allocate memory for the information
-					const Rhi::Context& context = openGLRhi.getContext();
 					char* informationLog = RHI_MALLOC_TYPED(char, informationLength);
 
 					// Get the information
@@ -11087,7 +11084,7 @@ namespace OpenGLRhi
 		*/
 		inline VertexShaderSeparate(OpenGLRhi& openGLRhi, const Rhi::VertexAttributes& vertexAttributes, const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IVertexShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(openGLRhi.getContext(), vertexAttributes, GL_VERTEX_SHADER_ARB, shaderBytecode)),
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(vertexAttributes, GL_VERTEX_SHADER_ARB, shaderBytecode)),
 			mDrawIdUniformLocation(openGLRhi.getExtensions().isGL_ARB_base_instance() ? -1 : glGetUniformLocation(mOpenGLShaderProgram, "drawIdUniform"))
 		{
 			// Assign a default name to the resource for debugging purposes
@@ -11113,13 +11110,13 @@ namespace OpenGLRhi
 		*/
 		inline VertexShaderSeparate(OpenGLRhi& openGLRhi, const Rhi::VertexAttributes& vertexAttributes, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IVertexShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourcecode(openGLRhi.getContext(), vertexAttributes, GL_VERTEX_SHADER_ARB, sourceCode)),
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourcecode(vertexAttributes, GL_VERTEX_SHADER_ARB, sourceCode)),
 			mDrawIdUniformLocation(openGLRhi.getExtensions().isGL_ARB_base_instance() ? -1 : glGetUniformLocation(mOpenGLShaderProgram, "drawIdUniform"))
 		{
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
 			{
-				::detail::shaderSourceCodeToShaderBytecode(openGLRhi.getContext(), GL_VERTEX_SHADER_ARB, sourceCode, *shaderBytecode);
+				::detail::shaderSourceCodeToShaderBytecode(GL_VERTEX_SHADER_ARB, sourceCode, *shaderBytecode);
 			}
 
 			// Assign a default name to the resource for debugging purposes
@@ -11235,7 +11232,7 @@ namespace OpenGLRhi
 		*/
 		inline TessellationControlShaderSeparate(OpenGLRhi& openGLRhi, const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITessellationControlShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(openGLRhi.getContext(), GL_TESS_CONTROL_SHADER, shaderBytecode))
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(GL_TESS_CONTROL_SHADER, shaderBytecode))
 		{
 			// Assign a default name to the resource for debugging purposes
 #if SE_DEBUG
@@ -11258,12 +11255,12 @@ namespace OpenGLRhi
 		*/
 		inline TessellationControlShaderSeparate(OpenGLRhi& openGLRhi, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITessellationControlShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourceCode(openGLRhi.getContext(), GL_TESS_CONTROL_SHADER, sourceCode))
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourceCode(GL_TESS_CONTROL_SHADER, sourceCode))
 		{
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
 			{
-				::detail::shaderSourceCodeToShaderBytecode(openGLRhi.getContext(), GL_TESS_CONTROL_SHADER, sourceCode, *shaderBytecode);
+				::detail::shaderSourceCodeToShaderBytecode(GL_TESS_CONTROL_SHADER, sourceCode, *shaderBytecode);
 			}
 
 			// Assign a default name to the resource for debugging purposes
@@ -11366,7 +11363,7 @@ namespace OpenGLRhi
 		*/
 		inline TessellationEvaluationShaderSeparate(OpenGLRhi& openGLRhi, const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITessellationEvaluationShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(openGLRhi.getContext(), GL_TESS_EVALUATION_SHADER, shaderBytecode))
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(GL_TESS_EVALUATION_SHADER, shaderBytecode))
 		{
 			// Assign a default name to the resource for debugging purposes
 #if SE_DEBUG
@@ -11389,12 +11386,12 @@ namespace OpenGLRhi
 		*/
 		inline TessellationEvaluationShaderSeparate(OpenGLRhi& openGLRhi, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITessellationEvaluationShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourceCode(openGLRhi.getContext(), GL_TESS_EVALUATION_SHADER, sourceCode))
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourceCode(GL_TESS_EVALUATION_SHADER, sourceCode))
 		{
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
 			{
-				::detail::shaderSourceCodeToShaderBytecode(openGLRhi.getContext(), GL_TESS_EVALUATION_SHADER, sourceCode, *shaderBytecode);
+				::detail::shaderSourceCodeToShaderBytecode(GL_TESS_EVALUATION_SHADER, sourceCode, *shaderBytecode);
 			}
 
 			// Assign a default name to the resource for debugging purposes
@@ -11503,7 +11500,7 @@ namespace OpenGLRhi
 		*/
 		inline GeometryShaderSeparate(OpenGLRhi& openGLRhi, const Rhi::ShaderBytecode& shaderBytecode, [[maybe_unused]] Rhi::GsInputPrimitiveTopology gsInputPrimitiveTopology, [[maybe_unused]] Rhi::GsOutputPrimitiveTopology gsOutputPrimitiveTopology, [[maybe_unused]] uint32_t numberOfOutputVertices RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IGeometryShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(openGLRhi.getContext(), GL_GEOMETRY_SHADER_ARB, shaderBytecode))
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(GL_GEOMETRY_SHADER_ARB, shaderBytecode))
 		{
 			// Assign a default name to the resource for debugging purposes
 #if SE_DEBUG
@@ -11532,7 +11529,7 @@ namespace OpenGLRhi
 		*/
 		inline GeometryShaderSeparate(OpenGLRhi& openGLRhi, const char* sourceCode, Rhi::GsInputPrimitiveTopology gsInputPrimitiveTopology, Rhi::GsOutputPrimitiveTopology gsOutputPrimitiveTopology, uint32_t numberOfOutputVertices, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IGeometryShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourceCode(openGLRhi.getContext(), GL_GEOMETRY_SHADER_ARB, sourceCode))
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourceCode(GL_GEOMETRY_SHADER_ARB, sourceCode))
 		{
 			// In modern GLSL, "geometry shader input primitive topology" & "geometry shader output primitive topology" & "number of output vertices" can be directly set within GLSL by writing e.g.
 			//   "layout(triangles) in;"
@@ -11545,7 +11542,7 @@ namespace OpenGLRhi
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
 			{
-				::detail::shaderSourceCodeToShaderBytecode(openGLRhi.getContext(), GL_GEOMETRY_SHADER_ARB, sourceCode, *shaderBytecode);
+				::detail::shaderSourceCodeToShaderBytecode(GL_GEOMETRY_SHADER_ARB, sourceCode, *shaderBytecode);
 			}
 
 			// Assign a default name to the resource for debugging purposes
@@ -11648,7 +11645,7 @@ namespace OpenGLRhi
 		*/
 		inline FragmentShaderSeparate(OpenGLRhi& openGLRhi, const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IFragmentShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(openGLRhi.getContext(), GL_FRAGMENT_SHADER_ARB, shaderBytecode))
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(GL_FRAGMENT_SHADER_ARB, shaderBytecode))
 		{
 			// Assign a default name to the resource for debugging purposes
 #if SE_DEBUG
@@ -11671,12 +11668,12 @@ namespace OpenGLRhi
 		*/
 		inline FragmentShaderSeparate(OpenGLRhi& openGLRhi, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IFragmentShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourceCode(openGLRhi.getContext(), GL_FRAGMENT_SHADER_ARB, sourceCode))
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourceCode(GL_FRAGMENT_SHADER_ARB, sourceCode))
 		{
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
 			{
-				::detail::shaderSourceCodeToShaderBytecode(openGLRhi.getContext(), GL_FRAGMENT_SHADER_ARB, sourceCode, *shaderBytecode);
+				::detail::shaderSourceCodeToShaderBytecode(GL_FRAGMENT_SHADER_ARB, sourceCode, *shaderBytecode);
 			}
 
 			// Assign a default name to the resource for debugging purposes
@@ -11779,7 +11776,7 @@ namespace OpenGLRhi
 		*/
 		inline TaskShaderSeparate(OpenGLRhi& openGLRhi, const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITaskShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(openGLRhi.getContext(), GL_TASK_SHADER_NV, shaderBytecode))
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(GL_TASK_SHADER_NV, shaderBytecode))
 		{
 			// Assign a default name to the resource for debugging purposes
 #if SE_DEBUG
@@ -11802,12 +11799,12 @@ namespace OpenGLRhi
 		*/
 		inline TaskShaderSeparate(OpenGLRhi& openGLRhi, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			ITaskShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourceCode(openGLRhi.getContext(), GL_TASK_SHADER_NV, sourceCode))
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourceCode(GL_TASK_SHADER_NV, sourceCode))
 		{
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
 			{
-				::detail::shaderSourceCodeToShaderBytecode(openGLRhi.getContext(), GL_TASK_SHADER_NV, sourceCode, *shaderBytecode);
+				::detail::shaderSourceCodeToShaderBytecode(GL_TASK_SHADER_NV, sourceCode, *shaderBytecode);
 			}
 
 			// Assign a default name to the resource for debugging purposes
@@ -11910,7 +11907,7 @@ namespace OpenGLRhi
 		*/
 		inline MeshShaderSeparate(OpenGLRhi& openGLRhi, const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IMeshShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(openGLRhi.getContext(), GL_MESH_SHADER_NV, shaderBytecode))
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(GL_MESH_SHADER_NV, shaderBytecode))
 		{
 			// Assign a default name to the resource for debugging purposes
 #if SE_DEBUG
@@ -11933,12 +11930,12 @@ namespace OpenGLRhi
 		*/
 		inline MeshShaderSeparate(OpenGLRhi& openGLRhi, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IMeshShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourceCode(openGLRhi.getContext(), GL_MESH_SHADER_NV, sourceCode))
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourceCode(GL_MESH_SHADER_NV, sourceCode))
 		{
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
 			{
-				::detail::shaderSourceCodeToShaderBytecode(openGLRhi.getContext(), GL_MESH_SHADER_NV, sourceCode, *shaderBytecode);
+				::detail::shaderSourceCodeToShaderBytecode(GL_MESH_SHADER_NV, sourceCode, *shaderBytecode);
 			}
 
 			// Assign a default name to the resource for debugging purposes
@@ -12041,7 +12038,7 @@ namespace OpenGLRhi
 		*/
 		inline ComputeShaderSeparate(OpenGLRhi& openGLRhi, const Rhi::ShaderBytecode& shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IComputeShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(openGLRhi.getContext(), GL_COMPUTE_SHADER, shaderBytecode))
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromBytecode(GL_COMPUTE_SHADER, shaderBytecode))
 		{
 			// Assign a default name to the resource for debugging purposes
 #if SE_DEBUG
@@ -12064,12 +12061,12 @@ namespace OpenGLRhi
 		*/
 		inline ComputeShaderSeparate(OpenGLRhi& openGLRhi, const char* sourceCode, Rhi::ShaderBytecode* shaderBytecode RHI_RESOURCE_DEBUG_NAME_PARAMETER) :
 			IComputeShader(openGLRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER),
-			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourceCode(openGLRhi.getContext(), GL_COMPUTE_SHADER, sourceCode))
+			mOpenGLShaderProgram(::detail::loadShaderProgramFromSourceCode(GL_COMPUTE_SHADER, sourceCode))
 		{
 			// Return shader bytecode, if requested do to so
 			if ( nullptr != shaderBytecode )
 			{
-				::detail::shaderSourceCodeToShaderBytecode(openGLRhi.getContext(), GL_COMPUTE_SHADER, sourceCode, *shaderBytecode);
+				::detail::shaderSourceCodeToShaderBytecode(GL_COMPUTE_SHADER, sourceCode, *shaderBytecode);
 			}
 
 			// Assign a default name to the resource for debugging purposes
@@ -12352,7 +12349,6 @@ namespace OpenGLRhi
 				if ( informationLength > 1 )
 				{
 					// Allocate memory for the information
-					const Rhi::Context& context = openGLRhi.getContext();
 					char* informationLog = RHI_MALLOC_TYPED(char, informationLength);
 
 					// Get the information
@@ -12551,7 +12547,6 @@ namespace OpenGLRhi
 				if ( informationLength > 1 )
 				{
 					// Allocate memory for the information
-					const Rhi::Context& context = openGLRhi.getContext();
 					char* informationLog = RHI_MALLOC_TYPED(char, informationLength);
 
 					// Get the information
@@ -13171,7 +13166,6 @@ namespace OpenGLRhi
 				if ( informationLength > 1 )
 				{
 					// Allocate memory for the information
-					const Rhi::Context& context = openGLRhi.getContext();
 					char* informationLog = RHI_MALLOC_TYPED(char, informationLength);
 
 					// Get the information
