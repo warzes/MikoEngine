@@ -1,49 +1,14 @@
 #pragma once
 
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-
 #include "Renderer/Core/StringId.h"
 #include "Renderer/Core/GetInvalid.h"
 
-// Disable warnings in external headers, we can't fix them
-SE_PRAGMA_WARNING_PUSH
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'argument': conversion from 'long' to 'unsigned int', signed/unsigned mismatch
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4571)	// warning C4571: Informational: catch(...) semantics changed since Visual C++ 7.1; structured exceptions (SEH) are no longer caught
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668: '_M_HYBRID_X86_ARM64' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
-	#include <vector>
-SE_PRAGMA_WARNING_POP
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 namespace Renderer
 {
-
-
-	//[-------------------------------------------------------]
-	//[ Global definitions                                    ]
-	//[-------------------------------------------------------]
 	typedef StringId ShaderPropertyId;	// Shader property identifier, internally just a POD "uint32_t", result of hashing the property name
 
-
-	//[-------------------------------------------------------]
-	//[ Classes                                               ]
-	//[-------------------------------------------------------]
-	/**
-	*  @brief
-	*    Shader properties
-	*/
 	class ShaderProperties final
 	{
-
-
-	//[-------------------------------------------------------]
-	//[ Public definitions                                    ]
-	//[-------------------------------------------------------]
 	public:
 		struct Property final
 		{
@@ -72,48 +37,21 @@ namespace Renderer
 
 		typedef std::vector<Property> SortedPropertyVector;
 
-
-	//[-------------------------------------------------------]
-	//[ Public methods                                        ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Constructor
-		*/
 		inline ShaderProperties()
 		{
-			// Nothing here
 		}
 
-		/**
-		*  @brief
-		*    Constructor with memory reserve (doesn't add properties, property set is still initially empty)
-		*
-		*  @param[in] numberOfPropertiesToReserve
-		*    Number of properties to reserve
-		*/
+		// Constructor with memory reserve (doesn't add properties, property set is still initially empty)
 		inline explicit ShaderProperties(size_t numberOfPropertiesToReserve)
 		{
 			mSortedPropertyVector.reserve(numberOfPropertiesToReserve);
 		}
 
-		/**
-		*  @brief
-		*    Destructor
-		*/
 		inline ~ShaderProperties()
 		{
 			// Nothing here
 		}
 
-		/**
-		*  @brief
-		*    Return the properties
-		*
-		*  @return
-		*    The properties
-		*/
 		[[nodiscard]] inline const SortedPropertyVector& getSortedPropertyVector() const
 		{
 			return mSortedPropertyVector;
@@ -124,10 +62,6 @@ namespace Renderer
 			return mSortedPropertyVector;
 		}
 
-		/**
-		*  @brief
-		*    Remove all shader properties
-		*/
 		inline void clear()
 		{
 			mSortedPropertyVector.clear();
@@ -200,18 +134,7 @@ namespace Renderer
 
 		[[nodiscard]] bool operator ==(const ShaderProperties& shaderProperties) const;
 
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
 	private:
 		SortedPropertyVector mSortedPropertyVector;
-
-
 	};
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 } // Renderer

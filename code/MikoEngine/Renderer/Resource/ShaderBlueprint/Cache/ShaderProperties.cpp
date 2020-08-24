@@ -1,9 +1,6 @@
 #include "stdafx.h"
 #include "Renderer/Resource/ShaderBlueprint/Cache/ShaderProperties.h"
 
-#include <algorithm>
-
-
 //[-------------------------------------------------------]
 //[ Anonymous detail namespace                            ]
 //[-------------------------------------------------------]

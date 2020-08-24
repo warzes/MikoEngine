@@ -11,32 +11,14 @@
     <ClCompile Include="Utility\Timer.cpp">
       <Filter>2_Utility</Filter>
     </ClCompile>
-    <ClCompile Include="RHI\Direct3D11Rhi.cpp">
-      <Filter>4_RHI</Filter>
-    </ClCompile>
-    <ClCompile Include="RHI\Direct3D12Rhi.cpp">
-      <Filter>4_RHI</Filter>
-    </ClCompile>
-    <ClCompile Include="RHI\OpenGLRhi.cpp">
-      <Filter>4_RHI</Filter>
-    </ClCompile>
-    <ClCompile Include="RHI\OpenGLES3Rhi.cpp">
-      <Filter>4_RHI</Filter>
-    </ClCompile>
-    <ClCompile Include="RHI\VulkanRhi.cpp">
-      <Filter>4_RHI</Filter>
-    </ClCompile>
-    <ClCompile Include="RHI\NullRhi.cpp">
-      <Filter>4_RHI</Filter>
-    </ClCompile>
     <ClCompile Include="RHI\DefaultAllocator.cpp">
-      <Filter>4_RHI\Utility</Filter>
+      <Filter>4_RHI\old\Utility</Filter>
     </ClCompile>
     <ClCompile Include="RHI\DefaultAssert.cpp">
-      <Filter>4_RHI\Utility</Filter>
+      <Filter>4_RHI\old\Utility</Filter>
     </ClCompile>
     <ClCompile Include="RHI\DefaultLog.cpp">
-      <Filter>4_RHI\Utility</Filter>
+      <Filter>4_RHI\old\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Context.cpp">
       <Filter>5_Renderer</Filter>
@@ -431,6 +413,24 @@
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\CompositorResourcePassVrHiddenAreaMesh.cpp">
       <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh</Filter>
     </ClCompile>
+    <ClCompile Include="RHI\VulkanRhi.cpp">
+      <Filter>4_RHI\old</Filter>
+    </ClCompile>
+    <ClCompile Include="RHI\Direct3D11Rhi.cpp">
+      <Filter>4_RHI\old</Filter>
+    </ClCompile>
+    <ClCompile Include="RHI\Direct3D12Rhi.cpp">
+      <Filter>4_RHI\old</Filter>
+    </ClCompile>
+    <ClCompile Include="RHI\NullRhi.cpp">
+      <Filter>4_RHI\old</Filter>
+    </ClCompile>
+    <ClCompile Include="RHI\OpenGLES3Rhi.cpp">
+      <Filter>4_RHI\old</Filter>
+    </ClCompile>
+    <ClCompile Include="RHI\OpenGLRhi.cpp">
+      <Filter>4_RHI\old</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -478,274 +478,274 @@
       <Filter>0_Base</Filter>
     </ClInclude>
     <ClInclude Include="RHI\MakeID.h">
-      <Filter>4_RHI\temp</Filter>
+      <Filter>4_RHI\old\temp</Filter>
     </ClInclude>
     <ClInclude Include="Base\PlatformTypes.h">
       <Filter>0_Base</Filter>
     </ClInclude>
     <ClInclude Include="RHI\D3D11RuntimeLinking.inl">
-      <Filter>4_RHI\D3D11</Filter>
+      <Filter>4_RHI\old\D3D11</Filter>
     </ClInclude>
     <ClInclude Include="RHI\D3D11Header.h">
-      <Filter>4_RHI\D3D11</Filter>
+      <Filter>4_RHI\old\D3D11</Filter>
     </ClInclude>
     <ClInclude Include="RHI\DefaultAllocator.h">
-      <Filter>4_RHI\Utility</Filter>
+      <Filter>4_RHI\old\Utility</Filter>
     </ClInclude>
     <ClInclude Include="RHI\DefaultAssert.h">
-      <Filter>4_RHI\Utility</Filter>
+      <Filter>4_RHI\old\Utility</Filter>
     </ClInclude>
     <ClInclude Include="RHI\DefaultLog.h">
-      <Filter>4_RHI\Utility</Filter>
+      <Filter>4_RHI\old\Utility</Filter>
     </ClInclude>
     <ClInclude Include="RHI\RHICore.h">
-      <Filter>4_RHI\RHI</Filter>
+      <Filter>4_RHI\old\RHI</Filter>
     </ClInclude>
     <ClInclude Include="RHI\RHIContext.h">
-      <Filter>4_RHI\RHI</Filter>
+      <Filter>4_RHI\old\RHI</Filter>
     </ClInclude>
     <ClInclude Include="RHI\RHITypes.h">
-      <Filter>4_RHI\RHI</Filter>
+      <Filter>4_RHI\old\RHI</Filter>
     </ClInclude>
     <ClInclude Include="RHI\SamplerStateTypes.h">
-      <Filter>4_RHI\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\RootSignatureTypes.h">
-      <Filter>4_RHI\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\TextureTypes.h">
-      <Filter>4_RHI\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\BlendStateTypes.h">
-      <Filter>4_RHI\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\BufferTypes.h">
-      <Filter>4_RHI\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\VertexArrayTypes.h">
-      <Filter>4_RHI\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IndexBufferTypes.h">
-      <Filter>4_RHI\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IndirectBufferTypes.h">
-      <Filter>4_RHI\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\RasterizerStateTypes.h">
-      <Filter>4_RHI\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\DepthStencilStateTypes.h">
-      <Filter>4_RHI\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\PipelineStateTypes.h">
-      <Filter>4_RHI\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ShaderTypes.h">
-      <Filter>4_RHI\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\QueryType.h">
-      <Filter>4_RHI\RHI\ResourceTypes</Filter>
+      <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="Core\MemoryPtr.h">
       <Filter>1_Core</Filter>
     </ClInclude>
     <ClInclude Include="RHI\Capabilities.h">
-      <Filter>4_RHI\RHI</Filter>
+      <Filter>4_RHI\old\RHI</Filter>
     </ClInclude>
     <ClInclude Include="RHI\Statistics.h">
-      <Filter>4_RHI\RHI</Filter>
+      <Filter>4_RHI\old\RHI</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IRhi.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IShaderLanguage.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IResource.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IRootSignature.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IResourceGroup.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IGraphicsProgram.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IRenderPass.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IQueryPool.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IRenderTarget.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ISwapChain.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IFramebuffer.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IBufferManager.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IVertexArray.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IBuffer.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IVertexBuffer.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IIndexBuffer.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITextureBuffer.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IStructuredBuffer.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IIndirectBuffer.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IUniformBuffer.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITextureManager.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITexture.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITexture1D.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITexture1DArray.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITexture2D.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITexture2DArray.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITexture3D.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITextureCube.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITextureCubeArray.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IState.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IPipelineState.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IGraphicsPipelineState.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IComputePipelineState.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ISamplerState.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IShader.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IVertexShader.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITessellationControlShader.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITessellationEvaluationShader.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IGeometryShader.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IFragmentShader.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITaskShader.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IMeshShader.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IComputeShader.h">
-      <Filter>4_RHI\RHI\Interface</Filter>
+      <Filter>4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\CommandBuffer.h">
-      <Filter>4_RHI\RHI</Filter>
+      <Filter>4_RHI\old\RHI</Filter>
     </ClInclude>
     <ClInclude Include="RHI\Rhi.h">
-      <Filter>4_RHI\RHI</Filter>
+      <Filter>4_RHI\old\RHI</Filter>
     </ClInclude>
     <ClInclude Include="RHI\RhiInstance.h">
-      <Filter>4_RHI\RHI</Filter>
+      <Filter>4_RHI\old\RHI</Filter>
     </ClInclude>
     <ClInclude Include="RHI\OpenGLCore.h">
-      <Filter>4_RHI\OpenGL</Filter>
+      <Filter>4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\OpenGLFunc.h">
-      <Filter>4_RHI\OpenGL</Filter>
+      <Filter>4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\OpenGLRhi.h">
-      <Filter>4_RHI\OpenGL</Filter>
+      <Filter>4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\OpenGLRuntimeLinking.h">
-      <Filter>4_RHI\OpenGL</Filter>
+      <Filter>4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\OpenGLExtensions.h">
-      <Filter>4_RHI\OpenGL</Filter>
+      <Filter>4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IOpenGLContext.h">
-      <Filter>4_RHI\OpenGL</Filter>
+      <Filter>4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\OpenGLMapping.h">
-      <Filter>4_RHI\OpenGL</Filter>
+      <Filter>4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ResourceGroup.h">
-      <Filter>4_RHI\OpenGL\Resource</Filter>
+      <Filter>4_RHI\old\OpenGL\Resource</Filter>
     </ClInclude>
     <ClInclude Include="RHI\RootSignature.h">
-      <Filter>4_RHI\OpenGL\Resource</Filter>
+      <Filter>4_RHI\old\OpenGL\Resource</Filter>
     </ClInclude>
     <ClInclude Include="RHI\OpenGLUnsort.h">
-      <Filter>4_RHI\OpenGL</Filter>
+      <Filter>4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\Direct3D12Unsort.h">
-      <Filter>4_RHI\D3D12</Filter>
+      <Filter>4_RHI\old\D3D12</Filter>
     </ClInclude>
     <ClInclude Include="RHI\Direct3D12Rhi.h">
-      <Filter>4_RHI\D3D12</Filter>
+      <Filter>4_RHI\old\D3D12</Filter>
     </ClInclude>
     <ClInclude Include="RHI\Direct3D12Core.h">
-      <Filter>4_RHI\D3D12</Filter>
+      <Filter>4_RHI\old\D3D12</Filter>
     </ClInclude>
     <ClInclude Include="RHI\VulkanCore.h">
-      <Filter>4_RHI\Vulkan</Filter>
+      <Filter>4_RHI\old\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="RHI\VulkanUnsort.h">
-      <Filter>4_RHI\Vulkan</Filter>
+      <Filter>4_RHI\old\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="RHI\VulkanRhi.h">
-      <Filter>4_RHI\Vulkan</Filter>
+      <Filter>4_RHI\old\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="RHI\VulkanRuntimeLinking.h">
-      <Filter>4_RHI\Vulkan</Filter>
+      <Filter>4_RHI\old\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="RHI\VulkanContext.h">
-      <Filter>4_RHI\Vulkan</Filter>
+      <Filter>4_RHI\old\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Context.h">
       <Filter>5_Renderer</Filter>
@@ -1359,6 +1359,9 @@
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_HLSL_D3D11_D3D12.h">
       <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="RHI\RHIDebug.h">
+      <Filter>4_RHI\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
@@ -1378,36 +1381,6 @@
     </Filter>
     <Filter Include="4_RHI">
       <UniqueIdentifier>{2fab659a-bf18-4b6e-bcca-503b118d0b59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="4_RHI\temp">
-      <UniqueIdentifier>{a62fb0f6-3995-4842-a79b-a8ad16b67a37}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="4_RHI\D3D11">
-      <UniqueIdentifier>{44ea876d-907a-44ca-8aca-736d5092507e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="4_RHI\D3D12">
-      <UniqueIdentifier>{5f3e1101-6089-43ee-baca-06f881ece6e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="4_RHI\Utility">
-      <UniqueIdentifier>{2fa7478c-9570-4554-8276-db81f464ad93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="4_RHI\RHI">
-      <UniqueIdentifier>{9c5e9ebd-df77-4f8f-9056-f1331a6275ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="4_RHI\RHI\ResourceTypes">
-      <UniqueIdentifier>{86fab3e2-257a-49cc-b4c1-1ec824d2670a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="4_RHI\RHI\Interface">
-      <UniqueIdentifier>{365a6a36-e0e9-4b82-a866-76cf233456cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="4_RHI\OpenGL">
-      <UniqueIdentifier>{b16f6fcd-5941-410f-9a4b-ec5d1787a81c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="4_RHI\OpenGL\Resource">
-      <UniqueIdentifier>{762a1050-d116-491f-8cbd-825a3808cc41}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="4_RHI\Vulkan">
-      <UniqueIdentifier>{87399581-bcd9-4299-a6ac-65022f3f4f79}</UniqueIdentifier>
     </Filter>
     <Filter Include="6_Graphics">
       <UniqueIdentifier>{e94f0097-25a8-4f5c-94cb-ec3c0e99e0d1}</UniqueIdentifier>
@@ -1618,6 +1591,42 @@
     </Filter>
     <Filter Include="5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader">
       <UniqueIdentifier>{be6bc490-593a-474b-8b9b-800f926a1140}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_RHI\old">
+      <UniqueIdentifier>{304ee7b9-e519-4039-92ef-63dfec5b7fe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_RHI\old\OpenGL">
+      <UniqueIdentifier>{b16f6fcd-5941-410f-9a4b-ec5d1787a81c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_RHI\old\OpenGL\Resource">
+      <UniqueIdentifier>{762a1050-d116-491f-8cbd-825a3808cc41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_RHI\old\RHI">
+      <UniqueIdentifier>{9c5e9ebd-df77-4f8f-9056-f1331a6275ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_RHI\old\RHI\ResourceTypes">
+      <UniqueIdentifier>{86fab3e2-257a-49cc-b4c1-1ec824d2670a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_RHI\old\RHI\Interface">
+      <UniqueIdentifier>{365a6a36-e0e9-4b82-a866-76cf233456cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_RHI\old\temp">
+      <UniqueIdentifier>{a62fb0f6-3995-4842-a79b-a8ad16b67a37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_RHI\old\Utility">
+      <UniqueIdentifier>{2fa7478c-9570-4554-8276-db81f464ad93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_RHI\old\Vulkan">
+      <UniqueIdentifier>{87399581-bcd9-4299-a6ac-65022f3f4f79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_RHI\old\D3D12">
+      <UniqueIdentifier>{5f3e1101-6089-43ee-baca-06f881ece6e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_RHI\old\D3D11">
+      <UniqueIdentifier>{44ea876d-907a-44ca-8aca-736d5092507e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4_RHI\Core">
+      <UniqueIdentifier>{cfbbd14e-bfae-4a63-b19b-898e3ef4cc63}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

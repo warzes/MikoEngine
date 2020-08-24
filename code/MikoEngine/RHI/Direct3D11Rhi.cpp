@@ -15,54 +15,6 @@ namespace Direct3D11Rhi
 }
 
 //[-------------------------------------------------------]
-//[ Macros & definitions                                  ]
-//[-------------------------------------------------------]
-#if SE_DEBUG
-	/*
-	*  @brief
-	*    Check whether or not the given resource is owned by the given RHI
-	*/
-	#define RHI_MATCH_CHECK(rhiReference, resourceReference) \
-		RHI_ASSERT(&rhiReference == &(resourceReference).getRhi(), "Direct3D 11 error: The given resource is owned by another RHI instance")
-
-	/**
-	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
-	*
-	*  @param[in] debugName
-	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
-	*/
-	#define RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER , [[maybe_unused]] const char debugName[] = ""
-
-	/*
-	*  @brief
-	*    Debug break on execution failure, replacement for "ID3D11InfoQueue::SetBreakOnSeverity()" which is creating a confusing callstack
-	*/
-	#define FAILED_DEBUG_BREAK(toExecute) if (FAILED(toExecute)) { SE_DEBUG_BREAK; }
-#else
-	/*
-	*  @brief
-	*    Check whether or not the given resource is owned by the given RHI
-	*/
-	#define RHI_MATCH_CHECK(rhiReference, resourceReference)
-
-	/**
-	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
-	*
-	*  @param[in] debugName
-	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
-	*/
-	#define RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER
-
-	/*
-	*  @brief
-	*    Debug break on execution failure, replacement for "ID3D11InfoQueue::SetBreakOnSeverity()" which is creating a confusing callstack
-	*/
-	#define FAILED_DEBUG_BREAK(toExecute) toExecute;
-#endif
-
-//[-------------------------------------------------------]
 //[ Anonymous detail namespace                            ]
 //[-------------------------------------------------------]
 namespace

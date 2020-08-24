@@ -11,21 +11,6 @@ namespace VulkanRhi
 //[-------------------------------------------------------]
 //[ Macros & definitions                                  ]
 //[-------------------------------------------------------]
-#if SE_DEBUG
-	/*
-	*  @brief
-	*    Check whether or not the given resource is owned by the given RHI
-	*/
-#define RHI_MATCH_CHECK(rhiReference, resourceReference) \
-		RHI_ASSERT(&rhiReference == &(resourceReference).getRhi(), "Vulkan error: The given resource is owned by another RHI instance")
-#else
-	/*
-	*  @brief
-	*    Check whether or not the given resource is owned by the given RHI
-	*/
-#define RHI_MATCH_CHECK(rhiReference, resourceReference)
-#endif
-
 #ifndef FNPTR
 #define FNPTR(name) PFN_##name name;
 #endif

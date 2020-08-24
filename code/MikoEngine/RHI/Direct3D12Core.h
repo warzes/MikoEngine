@@ -14,19 +14,6 @@ namespace Direct3D12Rhi
 	class Direct3D12RuntimeLinking;
 }
 
-#if SE_DEBUG
-// Check whether or not the given resource is owned by the given RHI
-#	define RHI_MATCH_CHECK(rhiReference, resourceReference) \
-		RHI_ASSERT(&rhiReference == &(resourceReference).getRhi(), "Direct3D 12 error: The given resource is owned by another RHI instance")
-// Debug break on execution failure
-#	define FAILED_DEBUG_BREAK(toExecute) if (FAILED(toExecute)) { SE_DEBUG_BREAK; }
-#else
-// Check whether or not the given resource is owned by the given RHI
-#	define RHI_MATCH_CHECK(rhiReference, resourceReference)
-// Debug break on execution failure
-#	define FAILED_DEBUG_BREAK(toExecute) toExecute;
-#endif
-
 namespace
 {
 	namespace detail

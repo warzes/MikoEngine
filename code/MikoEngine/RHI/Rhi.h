@@ -1,6 +1,7 @@
 // rendering hardware interface
 #pragma once
 
+#include "RHIDebug.h"
 #include "RHICore.h"
 #include "RHIContext.h"
 #include "RHITypes.h"

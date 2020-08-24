@@ -8,39 +8,6 @@ namespace NullRhi
 	class RootSignature;
 }
 
-#if SE_DEBUG
-	/*
-	*  @brief
-	*    Check whether or not the given resource is owned by the given RHI
-	*/
-	#define RHI_MATCH_CHECK(rhiReference, resourceReference) \
-		RHI_ASSERT(&rhiReference == &(resourceReference).getRhi(), "Null error: The given resource is owned by another RHI instance")
-
-	/**
-	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
-	*
-	*  @param[in] debugName
-	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
-	*/
-	#define RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER_NO_DEFAULT , [[maybe_unused]] const char debugName[]
-#else
-	/*
-	*  @brief
-	*    Check whether or not the given resource is owned by the given RHI
-	*/
-	#define RHI_MATCH_CHECK(rhiReference, resourceReference)
-
-	/**
-	*  @brief
-	*    Resource name for debugging purposes, ignored when not using "SE_DEBUG"
-	*
-	*  @param[in] debugName
-	*    ASCII name for debugging purposes, must be valid (there's no internal null pointer test)
-	*/
-	#define RHI_RESOURCE_DEBUG_NAME_MAYBE_UNUSED_PARAMETER_NO_DEFAULT
-#endif
-
 namespace
 {
 	namespace detail
