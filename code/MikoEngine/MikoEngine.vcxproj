@@ -384,7 +384,6 @@
     <ClInclude Include="RHI\BufferTypes.h" />
     <ClInclude Include="RHI\Capabilities.h" />
     <ClInclude Include="RHI\CommandBuffer.h" />
-    <ClInclude Include="RHI\D3D11Header.h" />
     <ClInclude Include="RHI\D3D11RuntimeLinking.inl" />
     <ClInclude Include="RHI\DefaultAllocator.h" />
     <ClInclude Include="RHI\DefaultAssert.h" />

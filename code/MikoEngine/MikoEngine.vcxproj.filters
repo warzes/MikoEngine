@@ -486,9 +486,6 @@
     <ClInclude Include="RHI\D3D11RuntimeLinking.inl">
       <Filter>4_RHI\old\D3D11</Filter>
     </ClInclude>
-    <ClInclude Include="RHI\D3D11Header.h">
-      <Filter>4_RHI\old\D3D11</Filter>
-    </ClInclude>
     <ClInclude Include="RHI\DefaultAllocator.h">
       <Filter>4_RHI\old\Utility</Filter>
     </ClInclude>

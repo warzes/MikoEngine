@@ -187,7 +187,7 @@ private:
 			prio = ANDROID_LOG_ERROR;
 			break;
 		}
-		__android_log_write(prio, "Unrimp", fullMessage.c_str());	// TODO(co) Might make sense to make the app-name customizable
+		__android_log_write(prio, "Engine", fullMessage.c_str());	// TODO(co) Might make sense to make the app-name customizable
 #elif LINUX
 	// Write into standard output stream
 		if ( Type::CRITICAL == type )

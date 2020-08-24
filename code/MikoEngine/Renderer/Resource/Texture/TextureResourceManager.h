@@ -68,22 +68,22 @@ namespace Renderer
 		*
 		*  @remarks
 		*    The texture manager automatically generates some dynamic default texture assets one can reference e.g. inside material blueprint resources:
-		*    - "Unrimp/Texture/DynamicByCode/WhiteMap1D"
-		*    - "Unrimp/Texture/DynamicByCode/WhiteMap2D"
-		*    - "Unrimp/Texture/DynamicByCode/WhiteMapCube"
-		*    - "Unrimp/Texture/DynamicByCode/WhiteMap3D"
-		*    - "Unrimp/Texture/DynamicByCode/BlackMap1D"
-		*    - "Unrimp/Texture/DynamicByCode/BlackMap2D"
-		*    - "Unrimp/Texture/DynamicByCode/BlackMapCube"
-		*    - "Unrimp/Texture/DynamicByCode/BlackMap3D"
-		*    - "Unrimp/Texture/DynamicByCode/IdentityAlbedoMap2D"
-		*    - "Unrimp/Texture/DynamicByCode/IdentityAlphaMap2D"
-		*    - "Unrimp/Texture/DynamicByCode/IdentityNormalMap2D"
-		*    - "Unrimp/Texture/DynamicByCode/IdentityRoughnessMap2D"
-		*    - "Unrimp/Texture/DynamicByCode/DielectricMetallicMap2D"
-		*    - "Unrimp/Texture/DynamicByCode/IdentityEmissiveMap2D"
-		*    - "Unrimp/Texture/DynamicByCode/Identity_argb_nxa2D"
-		*    - "Unrimp/Texture/DynamicByCode/Identity_hr_rg_mb_nya2D"
+		*    - "Engine/Texture/DynamicByCode/WhiteMap1D"
+		*    - "Engine/Texture/DynamicByCode/WhiteMap2D"
+		*    - "Engine/Texture/DynamicByCode/WhiteMapCube"
+		*    - "Engine/Texture/DynamicByCode/WhiteMap3D"
+		*    - "Engine/Texture/DynamicByCode/BlackMap1D"
+		*    - "Engine/Texture/DynamicByCode/BlackMap2D"
+		*    - "Engine/Texture/DynamicByCode/BlackMapCube"
+		*    - "Engine/Texture/DynamicByCode/BlackMap3D"
+		*    - "Engine/Texture/DynamicByCode/IdentityAlbedoMap2D"
+		*    - "Engine/Texture/DynamicByCode/IdentityAlphaMap2D"
+		*    - "Engine/Texture/DynamicByCode/IdentityNormalMap2D"
+		*    - "Engine/Texture/DynamicByCode/IdentityRoughnessMap2D"
+		*    - "Engine/Texture/DynamicByCode/DielectricMetallicMap2D"
+		*    - "Engine/Texture/DynamicByCode/IdentityEmissiveMap2D"
+		*    - "Engine/Texture/DynamicByCode/Identity_argb_nxa2D"
+		*    - "Engine/Texture/DynamicByCode/Identity_hr_rg_mb_nya2D"
 		*/
 		static void getDefaultTextureAssetIds(AssetIds& assetIds);
 

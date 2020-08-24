@@ -140,39 +140,11 @@ namespace Direct3D11Rhi
 #define FNPTR(name) funcPtr_##name
 #endif
 
-//[-------------------------------------------------------]
-//[ DXGI core functions                                   ]
-//[-------------------------------------------------------]
-#define FNDEF_DXGI(retType, funcName, args) retType (WINAPI *funcPtr_##funcName) args
-	FNDEF_DXGI(HRESULT, CreateDXGIFactory, (REFIID riid, _COM_Outptr_ void **ppFactory));
-#define CreateDXGIFactory	FNPTR(CreateDXGIFactory)
-
-	//[-------------------------------------------------------]
-	//[ D3D11 core functions                                  ]
-	//[-------------------------------------------------------]
-#define FNDEF_D3D11(retType, funcName, args) retType (WINAPI *funcPtr_##funcName) args
-	FNDEF_D3D11(HRESULT, D3D11CreateDevice, (__in_opt IDXGIAdapter*, D3D_DRIVER_TYPE, HMODULE, UINT, __in_ecount_opt(FeatureLevels) CONST D3D_FEATURE_LEVEL*, UINT, UINT, __out_opt ID3D11Device**, __out_opt D3D_FEATURE_LEVEL*, __out_opt ID3D11DeviceContext**));
-#define D3D11CreateDevice	FNPTR(D3D11CreateDevice)
-
-	//[-------------------------------------------------------]
-	//[ D3DCompiler functions                                 ]
-	//[-------------------------------------------------------]
-#define FNDEF_D3DCOMPILER(retType, funcName, args) retType (WINAPI *funcPtr_##funcName) args
-	typedef __interface ID3D10Blob *LPD3D10BLOB;	// "__interface" is no keyword of the ISO C++ standard, shouldn't be a problem because this in here is Microsoft Windows only and it's also within the Direct3D headers we have to use
-	typedef ID3D10Blob ID3DBlob;
-	FNDEF_D3DCOMPILER(HRESULT, D3DCompile, (LPCVOID, SIZE_T, LPCSTR, CONST D3D_SHADER_MACRO*, ID3DInclude*, LPCSTR, LPCSTR, UINT, UINT, ID3DBlob**, ID3DBlob**));
-	FNDEF_D3DCOMPILER(HRESULT, D3DCreateBlob, (SIZE_T Size, ID3DBlob** ppBlob));
-#define D3DCompile		FNPTR(D3DCompile)
-#define D3DCreateBlob	FNPTR(D3DCreateBlob)
-
 	class Direct3D11RuntimeLinking final
 	{
 	public:
 		inline explicit Direct3D11RuntimeLinking(Direct3D11Rhi& direct3D11Rhi) :
 			mDirect3D11Rhi(direct3D11Rhi),
-			mDxgiSharedLibrary(nullptr),
-			mD3D11SharedLibrary(nullptr),
-			mD3DCompilerSharedLibrary(nullptr),
 #ifdef DYNAMIC_AMD_AGS
 			mAmdAgsSharedLibrary(nullptr),
 #endif
@@ -189,19 +161,6 @@ namespace Direct3D11Rhi
 		*/
 		~Direct3D11RuntimeLinking()
 		{
-			// Destroy the shared library instances
-			if ( nullptr != mDxgiSharedLibrary )
-			{
-				::FreeLibrary(static_cast<HMODULE>(mDxgiSharedLibrary));
-			}
-			if ( nullptr != mD3D11SharedLibrary )
-			{
-				::FreeLibrary(static_cast<HMODULE>(mD3D11SharedLibrary));
-			}
-			if ( nullptr != mD3DCompilerSharedLibrary )
-			{
-				::FreeLibrary(static_cast<HMODULE>(mD3DCompilerSharedLibrary));
-			}
 #ifdef DYNAMIC_AMD_AGS
 			if ( nullptr != mAmdAgsSharedLibrary )
 			{
@@ -266,7 +225,7 @@ namespace Direct3D11Rhi
 							IDXGIAdapter* dxgiAdapter = nullptr;
 							FAILED_DEBUG_BREAK(dxgiFactory->EnumAdapters(0, &dxgiAdapter))
 								DXGI_ADAPTER_DESC dxgiAdapterDesc = {};
-							FAILED_DEBUG_BREAK(dxgiAdapter->GetDesc(&dxgiAdapterDesc))
+							FAILED_DEBUG_BREAK(dxgiAdapter->GetDesc(&dxgiAdapterDesc));
 								if ( 0x1414 == dxgiAdapterDesc.VendorId )	// 0x1414 = "Capture Adapter" when using Visual Studio graphics debugger
 								{
 									RHI_LOG(COMPATIBILITY_WARNING, "Direct3D 11 capture adapter used (e.g. Visual Studio graphics debugger), AMD AGS and NvAPI support disabled")
@@ -389,31 +348,7 @@ namespace Direct3D11Rhi
 		*/
 		[[nodiscard]] bool loadSharedLibraries()
 		{
-			// Load the shared library
-			mDxgiSharedLibrary = ::LoadLibraryExA("dxgi.dll", nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
-			if ( nullptr != mDxgiSharedLibrary )
-			{
-				mD3D11SharedLibrary = ::LoadLibraryExA("d3d11.dll", nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
-				if ( nullptr != mD3D11SharedLibrary )
-				{
-					mD3DCompilerSharedLibrary = ::LoadLibraryExA("D3DCompiler_47.dll", nullptr, LOAD_WITH_ALTERED_SEARCH_PATH);
-					if ( nullptr == mD3DCompilerSharedLibrary )
-					{
-						RHI_LOG(CRITICAL, "Failed to load in the shared Direct3D 11 library \"D3DCompiler_47.dll\"")
-					}
-				}
-				else
-				{
-					RHI_LOG(CRITICAL, "Failed to load in the shared Direct3D 11 library \"d3d11.dll\"")
-				}
-			}
-			else
-			{
-				RHI_LOG(CRITICAL, "Failed to load in the shared Direct3D 11 library \"dxgi.dll\"")
-			}
-
-			// Done
-			return (nullptr != mDxgiSharedLibrary && nullptr != mD3D11SharedLibrary && nullptr != mD3DCompilerSharedLibrary);
+			return true;
 		}
 
 		/**
@@ -426,33 +361,6 @@ namespace Direct3D11Rhi
 		[[nodiscard]] bool loadDxgiEntryPoints()
 		{
 			bool result = true;	// Success by default
-
-			// Define a helper macro
-#define IMPORT_FUNC(funcName)																																						\
-				if (result)																																										\
-				{																																												\
-					void* symbol = ::GetProcAddress(static_cast<HMODULE>(mDxgiSharedLibrary), #funcName);																						\
-					if (nullptr != symbol)																																						\
-					{																																											\
-						*(reinterpret_cast<void**>(&(funcName))) = symbol;																														\
-					}																																											\
-					else																																										\
-					{																																											\
-						wchar_t moduleFilename[MAX_PATH];																																		\
-						moduleFilename[0] = '\0';																																				\
-						::GetModuleFileNameW(static_cast<HMODULE>(mDxgiSharedLibrary), moduleFilename, MAX_PATH);																				\
-						RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the Direct3D 11 DXGI shared library \"%s\"", #funcName, moduleFilename)	\
-						result = false;																																							\
-					}																																											\
-				}
-
-			// Load the entry points
-			IMPORT_FUNC(CreateDXGIFactory)
-
-				// Undefine the helper macro
-#undef IMPORT_FUNC
-
-// Done
 return result;
 		}
 
@@ -466,33 +374,6 @@ return result;
 		[[nodiscard]] bool loadD3D11EntryPoints()
 		{
 			bool result = true;	// Success by default
-
-			// Define a helper macro
-#define IMPORT_FUNC(funcName)																																					\
-				if (result)																																									\
-				{																																											\
-					void* symbol = ::GetProcAddress(static_cast<HMODULE>(mD3D11SharedLibrary), #funcName);																					\
-					if (nullptr != symbol)																																					\
-					{																																										\
-						*(reinterpret_cast<void**>(&(funcName))) = symbol;																													\
-					}																																										\
-					else																																									\
-					{																																										\
-						wchar_t moduleFilename[MAX_PATH];																																	\
-						moduleFilename[0] = '\0';																																			\
-						::GetModuleFileNameW(static_cast<HMODULE>(mD3D11SharedLibrary), moduleFilename, MAX_PATH);																			\
-						RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the Direct3D 11 shared library \"%s\"", #funcName, moduleFilename)	\
-						result = false;																																						\
-					}																																										\
-				}
-
-			// Load the entry points
-			IMPORT_FUNC(D3D11CreateDevice)
-
-				// Undefine the helper macro
-#undef IMPORT_FUNC
-
-// Done
 return result;
 		}
 
@@ -506,34 +387,6 @@ return result;
 		[[nodiscard]] bool loadD3DCompilerEntryPoints()
 		{
 			bool result = true;	// Success by default
-
-			// Define a helper macro
-#define IMPORT_FUNC(funcName)																																					\
-				if (result)																																									\
-				{																																											\
-					void* symbol = ::GetProcAddress(static_cast<HMODULE>(mD3DCompilerSharedLibrary), #funcName);																			\
-					if (nullptr != symbol)																																					\
-					{																																										\
-						*(reinterpret_cast<void**>(&(funcName))) = symbol;																													\
-					}																																										\
-					else																																									\
-					{																																										\
-						wchar_t moduleFilename[MAX_PATH];																																	\
-						moduleFilename[0] = '\0';																																			\
-						::GetModuleFileNameW(static_cast<HMODULE>(mD3DCompilerSharedLibrary), moduleFilename, MAX_PATH);																	\
-						RHI_LOG(CRITICAL, "Failed to locate the entry point \"%s\" within the Direct3D 11 shared library \"%s\"", #funcName, moduleFilename)	\
-						result = false;																																						\
-					}																																										\
-				}
-
-			// Load the entry points
-			IMPORT_FUNC(D3DCompile)
-				IMPORT_FUNC(D3DCreateBlob)
-
-				// Undefine the helper macro
-#undef IMPORT_FUNC
-
-// Done
 return result;
 		}
 
@@ -672,9 +525,6 @@ if ( nullptr != agsInit )
 
 	private:
 		Direct3D11Rhi&	mDirect3D11Rhi;				// Owner Direct3D 11 RHI instance
-		void*			mDxgiSharedLibrary;			// DXGI shared library, can be a null pointer
-		void*			mD3D11SharedLibrary;		// D3D11 shared library, can be a null pointer
-		void*			mD3DCompilerSharedLibrary;	// D3DCompiler shared library, can be a null pointer
 #ifdef DYNAMIC_AMD_AGS
 		void*		mAmdAgsSharedLibrary;		// AMD AGS shared library, can be a null pointer
 #endif

@@ -126,7 +126,7 @@ bool Application::init_base(int argc, const char * argv[])
 	glfwMakeContextCurrent(m_window); // TODO: only opengl? or?
 
 	rhiContext = std::make_unique<Rhi::Context>(glfwNativeWindowHandle(m_window));
-	rhiInstance = std::make_unique<Rhi::RhiInstance>("Direct3D12", *rhiContext.get());
+	rhiInstance = std::make_unique<Rhi::RhiInstance>("Direct3D11", *rhiContext.get());
 	rhi = (nullptr != rhiInstance) ? rhiInstance->getRhi() : nullptr;
 	if ( nullptr == rhi && !rhi->isInitialized() )
 	{
