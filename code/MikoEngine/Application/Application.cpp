@@ -14,22 +14,22 @@ extern "C"
 }
 //-----------------------------------------------------------------------------
 #if SE_RHINULL
-[[nodiscard]] extern Rhi::IRhi* createNullRhiInstance(const Rhi::Context&);
+[[nodiscard]] extern Rhi::IRhi* createNullRhiInstance(const handle&);
 #endif
 #if SE_VULKAN
-[[nodiscard]] extern Rhi::IRhi* createVulkanRhiInstance(const Rhi::Context&);
+[[nodiscard]] extern Rhi::IRhi* createVulkanRhiInstance(const handle&);
 #endif
 #if SE_OPENGL
-[[nodiscard]] extern Rhi::IRhi* createOpenGLRhiInstance(const Rhi::Context&);
+[[nodiscard]] extern Rhi::IRhi* createOpenGLRhiInstance(const handle&);
 #endif
 #if SE_OPENGLES
-[[nodiscard]] extern Rhi::IRhi* createOpenGLES3RhiInstance(const Rhi::Context&);
+[[nodiscard]] extern Rhi::IRhi* createOpenGLES3RhiInstance(const handle&);
 #endif
 #if SE_DIRECT3D11
-[[nodiscard]] extern Rhi::IRhi* createDirect3D11RhiInstance(const Rhi::Context&);
+[[nodiscard]] extern Rhi::IRhi* createDirect3D11RhiInstance(const handle&);
 #endif
 #if SE_DIRECT3D12
-[[nodiscard]] extern Rhi::IRhi* createDirect3D12RhiInstance(const Rhi::Context&);
+[[nodiscard]] extern Rhi::IRhi* createDirect3D12RhiInstance(const handle&);
 #endif
 //-----------------------------------------------------------------------------
 handle glfwNativeWindowHandle(GLFWwindow* _window)
@@ -144,39 +144,35 @@ bool Application::init_base(int argc, const char * argv[])
 
 	glfwMakeContextCurrent(m_window); // TODO: only opengl? or?
 
-	rhiContext = std::make_unique<Rhi::Context>(glfwNativeWindowHandle(m_window));
-
-	const char* rhiName = "Direct3D11";
+	const char* rhiName = "Direct3D12";
 #if SE_RHINULL
 	if ( 0 == strcmp(rhiName, "Null") )
-		rhi = createNullRhiInstance(*rhiContext.get());
+		rhi = createNullRhiInstance(glfwNativeWindowHandle(m_window));
 #endif
 #if SE_VULKAN
 	if ( 0 == strcmp(rhiName, "Vulkan") )
-		rhi = createVulkanRhiInstance(*rhiContext.get());
+		rhi = createVulkanRhiInstance(glfwNativeWindowHandle(m_window));
 #endif
 #if SE_OPENGL
 	if ( 0 == strcmp(rhiName, "OpenGL") )
-		rhi = createOpenGLRhiInstance(*rhiContext.get());
+		rhi = createOpenGLRhiInstance(glfwNativeWindowHandle(m_window));
 #endif
 #if SE_OPENGLES
 	if ( 0 == strcmp(rhiName, "OpenGLES3") )
-		rhi = createOpenGLES3RhiInstance(*rhiContext.get());
+		rhi = createOpenGLES3RhiInstance(glfwNativeWindowHandle(m_window));
 #endif
 #if SE_DIRECT3D11
 	if ( 0 == strcmp(rhiName, "Direct3D11") )
-		rhi = createDirect3D11RhiInstance(*rhiContext.get());
+		rhi = createDirect3D11RhiInstance(glfwNativeWindowHandle(m_window));
 #endif
 #if SE_DIRECT3D12
 	if ( 0 == strcmp(rhiName, "Direct3D12") )
-		rhi = createDirect3D12RhiInstance(*rhiContext.get());
+		rhi = createDirect3D12RhiInstance(glfwNativeWindowHandle(m_window));
 #endif
 
 	if ( nullptr == rhi && !rhi->isInitialized() )
 	{
 		rhi = nullptr;
-		rhiContext.reset();
-		rhiContext = nullptr;
 		return 0;
 	}
 
@@ -273,8 +269,6 @@ void Application::shutdown_base()
 		mainSwapChain = nullptr;
 	}
 	rhi = nullptr;
-	//rhiContext.reset();
-	//rhiContext = nullptr;
 
 	// Shutdown GLFW.
 	glfwDestroyWindow(m_window);

@@ -107,7 +107,7 @@ namespace Direct3D11Rhi
 		*  @note
 		*    - Do never ever use a not properly initialized RHI. Use "Rhi::IRhi::isInitialized()" to check the initialization state.
 		*/
-		explicit Direct3D11Rhi(const Rhi::Context& context);
+		explicit Direct3D11Rhi(const handle& nativeWindowHandle);
 
 		virtual ~Direct3D11Rhi() override;
 
@@ -8937,8 +8937,8 @@ namespace Direct3D11Rhi
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
-	Direct3D11Rhi::Direct3D11Rhi(const Rhi::Context& context) :
-		IRhi(Rhi::NameId::DIRECT3D11, context),
+	Direct3D11Rhi::Direct3D11Rhi(const handle& nativeWindowHandle) :
+		IRhi(Rhi::NameId::DIRECT3D11, nativeWindowHandle),
 		VertexArrayMakeId(),
 		GraphicsPipelineStateMakeId(),
 		ComputePipelineStateMakeId(),
@@ -11877,9 +11877,9 @@ namespace Direct3D11Rhi
 	}
 } // Direct3D11Rhi
 
-Rhi::IRhi* createDirect3D11RhiInstance(const Rhi::Context& context)
+Rhi::IRhi* createDirect3D11RhiInstance(const handle& nativeWindowHandle)
 {
-	return RHI_NEW(Direct3D11Rhi::Direct3D11Rhi)(context);
+	return RHI_NEW(Direct3D11Rhi::Direct3D11Rhi)(nativeWindowHandle);
 }
 
 #endif // SE_DIRECT3D11

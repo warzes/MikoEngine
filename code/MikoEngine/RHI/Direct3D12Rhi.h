@@ -14,7 +14,7 @@ namespace Direct3D12Rhi
 		MakeID GraphicsPipelineStateMakeId;
 		MakeID ComputePipelineStateMakeId;
 
-		explicit Direct3D12Rhi(const Rhi::Context& context);
+		explicit Direct3D12Rhi(const handle& nativeWindowHandle);
 		virtual ~Direct3D12Rhi() override;
 
 		/**

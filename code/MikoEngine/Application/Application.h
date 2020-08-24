@@ -78,9 +78,9 @@ protected:
 #endif
 
 #if SE_PLATFORM_WINDOWS
-	std::unique_ptr<Rhi::Context> rhiContext = nullptr;
+	//std::unique_ptr<Rhi::Context> rhiContext = nullptr;
 #elif SE_PLATFORM_LINUX
-	std::unique_ptr<Rhi::X11Context> rhiContext = nullptr;	
+	//std::unique_ptr<Rhi::X11Context> rhiContext = nullptr;	
 #endif
 	Rhi::IRhiPtr rhi = nullptr;
 	Rhi::ISwapChainPtr mainSwapChain = nullptr;

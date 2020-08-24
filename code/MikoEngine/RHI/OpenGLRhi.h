@@ -11,7 +11,7 @@ namespace OpenGLRhi
 		MakeID ComputePipelineStateMakeId;
 
 
-		explicit OpenGLRhi(const Rhi::Context& context);
+		explicit OpenGLRhi(const handle& nativeWindowHandle);
 		virtual ~OpenGLRhi() override;
 
 		[[nodiscard]] inline const IOpenGLContext& getOpenGLContext() const

@@ -495,12 +495,6 @@
     <ClInclude Include="RHI\DefaultLog.h">
       <Filter>4_RHI\old\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="RHI\RHIContext.h">
-      <Filter>4_RHI\old\RHI</Filter>
-    </ClInclude>
-    <ClInclude Include="RHI\RHITypes.h">
-      <Filter>4_RHI\old\RHI</Filter>
-    </ClInclude>
     <ClInclude Include="RHI\SamplerStateTypes.h">
       <Filter>4_RHI\old\RHI\ResourceTypes</Filter>
     </ClInclude>
@@ -1351,6 +1345,9 @@
       <Filter>4_RHI\Core</Filter>
     </ClInclude>
     <ClInclude Include="RHI\Capabilities.h">
+      <Filter>4_RHI\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RHI\RHITypes.h">
       <Filter>4_RHI\Core</Filter>
     </ClInclude>
   </ItemGroup>

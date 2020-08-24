@@ -8,8 +8,8 @@
 
 namespace Direct3D12Rhi
 {
-	Direct3D12Rhi::Direct3D12Rhi(const Rhi::Context& context) :
-		IRhi(Rhi::NameId::DIRECT3D12, context),
+	Direct3D12Rhi::Direct3D12Rhi(const handle& nativeWindowHandle) :
+		IRhi(Rhi::NameId::DIRECT3D12, nativeWindowHandle),
 		VertexArrayMakeId(),
 		GraphicsPipelineStateMakeId(),
 		ComputePipelineStateMakeId()		
@@ -1941,9 +1941,9 @@ namespace Direct3D12Rhi
 	#endif
 } // Direct3D12Rhi
 
-Rhi::IRhi* createDirect3D12RhiInstance(const Rhi::Context& context)
+Rhi::IRhi* createDirect3D12RhiInstance(const handle& nativeWindowHandle)
 {
-	return RHI_NEW(Direct3D12Rhi::Direct3D12Rhi)(context);
+	return RHI_NEW(Direct3D12Rhi::Direct3D12Rhi)(nativeWindowHandle);
 }
 
 #endif // SE_DIRECT3D12

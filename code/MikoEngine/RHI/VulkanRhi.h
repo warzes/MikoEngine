@@ -28,7 +28,7 @@ namespace VulkanRhi
 		*  @note
 		*    - Do never ever use a not properly initialized RHI. Use "Rhi::IRhi::isInitialized()" to check the initialization state.
 		*/
-		explicit VulkanRhi(const Rhi::Context& context);
+		explicit VulkanRhi(const handle& nativeWindowHandle);
 
 		/**
 		*  @brief

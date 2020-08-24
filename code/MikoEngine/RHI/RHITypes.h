@@ -113,4 +113,11 @@ namespace Rhi
 			COMPUTE_SHADER = 31	// Compute shader (CS)
 	};
 
+	// Holds information about an window into which the rendering should be done
+	struct WindowHandle final
+	{
+		handle nativeWindowHandle; // The native window handle
+		IRenderWindow *renderWindow; // A pointer to an "Rhi::IRenderWindow"-instance, can be a null pointer
+	};
+
 } // namespace Rhi

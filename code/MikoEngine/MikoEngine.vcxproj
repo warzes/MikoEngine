@@ -450,7 +450,6 @@
     <ClInclude Include="RHI\RasterizerStateTypes.h" />
     <ClInclude Include="RHI\ResourceGroup.h" />
     <ClInclude Include="RHI\Rhi.h" />
-    <ClInclude Include="RHI\RHIContext.h" />
     <ClInclude Include="RHI\RHIDebug.h" />
     <ClInclude Include="RHI\RHITypes.h" />
     <ClInclude Include="RHI\IRootSignature.h" />

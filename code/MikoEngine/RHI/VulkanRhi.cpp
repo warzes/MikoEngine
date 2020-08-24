@@ -12,8 +12,8 @@
 
 namespace VulkanRhi
 {
-	VulkanRhi::VulkanRhi(const Rhi::Context& context) :
-		IRhi(Rhi::NameId::VULKAN, context),
+	VulkanRhi::VulkanRhi(const handle& nativeWindowHandle) :
+		IRhi(Rhi::NameId::VULKAN, nativeWindowHandle),
 		VertexArrayMakeId(),
 		GraphicsPipelineStateMakeId(),
 		ComputePipelineStateMakeId(),
@@ -1269,7 +1269,7 @@ namespace VulkanRhi
 		}
 
 		// Preferred swap chain texture format
-		mCapabilities.preferredSwapChainColorTextureFormat = (SwapChain::findColorVkFormat(getContext().getNativeWindowHandle(), mVulkanRuntimeLinking->getVkInstance(), *mVulkanContext) == VK_FORMAT_R8G8B8A8_UNORM) ? Rhi::TextureFormat::Enum::R8G8B8A8 : Rhi::TextureFormat::Enum::B8G8R8A8;
+		mCapabilities.preferredSwapChainColorTextureFormat = (SwapChain::findColorVkFormat(m_nativeWindowHandle, mVulkanRuntimeLinking->getVkInstance(), *mVulkanContext) == VK_FORMAT_R8G8B8A8_UNORM) ? Rhi::TextureFormat::Enum::R8G8B8A8 : Rhi::TextureFormat::Enum::B8G8R8A8;
 
 		{ // Preferred swap chain depth stencil texture format
 			const VkFormat depthVkFormat = SwapChain::findDepthVkFormat(mVulkanContext->getVkPhysicalDevice());
@@ -1442,8 +1442,8 @@ namespace VulkanRhi
 	}
 } // VulkanRhi
 
-Rhi::IRhi* createVulkanRhiInstance(const Rhi::Context& context)
+Rhi::IRhi* createVulkanRhiInstance(const handle& nativeWindowHandle)
 {
-	return RHI_NEW(VulkanRhi::VulkanRhi)(context);
+	return RHI_NEW(VulkanRhi::VulkanRhi)(nativeWindowHandle);
 }
 #endif // SE_VULKAN

@@ -57,11 +57,6 @@ namespace Rhi
 			return mNameId;
 		}
 
-		[[nodiscard]] inline const Context& getContext() const
-		{
-			return mContext;
-		}
-
 		[[nodiscard]] inline const Capabilities& getCapabilities() const
 		{
 			return mCapabilities;
@@ -406,9 +401,9 @@ namespace Rhi
 
 		// Protected methods
 	protected:
-		inline IRhi(NameId nameId, const Context& context) :
+		inline IRhi(NameId nameId, const handle& nativeWindowHandle) :
 			mNameId(nameId),
-			mContext(context)
+			m_nativeWindowHandle(nativeWindowHandle)
 		{
 		}
 
@@ -424,7 +419,7 @@ namespace Rhi
 		// Protected data
 	protected:
 		NameId		   mNameId;
-		const Context& mContext;
+		const handle m_nativeWindowHandle;
 		Capabilities   mCapabilities;
 
 #if SE_RHI_STATISTICS

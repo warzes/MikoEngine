@@ -405,8 +405,8 @@ namespace OpenGLRhi
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
-	OpenGLRhi::OpenGLRhi(const Rhi::Context& context) :
-		IRhi(Rhi::NameId::OPENGL, context),
+	OpenGLRhi::OpenGLRhi(const handle& nativeWindowHandle) :
+		IRhi(Rhi::NameId::OPENGL, nativeWindowHandle),
 		VertexArrayMakeId(),
 		GraphicsPipelineStateMakeId(),
 		ComputePipelineStateMakeId(),
@@ -445,7 +445,6 @@ namespace OpenGLRhi
 		mOpenGLRuntimeLinking = RHI_NEW(OpenGLRuntimeLinking)(*this);
 		if (mOpenGLRuntimeLinking->isOpenGLAvaiable())
 		{
-			const handle nativeWindowHandle = mContext.getNativeWindowHandle();
 			const Rhi::TextureFormat::Enum textureFormat = Rhi::TextureFormat::Enum::R8G8B8A8;
 			const RenderPass renderPass(*this, 1, &textureFormat, Rhi::TextureFormat::Enum::UNKNOWN, 1 RHI_RESOURCE_DEBUG_NAME("OpenGL Unknown"));
 #if SE_PLATFORM_WINDOWS
@@ -3535,8 +3534,8 @@ namespace OpenGLRhi
 	}
 } // OpenGLRhi
 
-Rhi::IRhi* createOpenGLRhiInstance(const Rhi::Context& context)
+Rhi::IRhi* createOpenGLRhiInstance(const handle& nativeWindowHandle)
 {
-	return RHI_NEW(OpenGLRhi::OpenGLRhi)(context);
+	return RHI_NEW(OpenGLRhi::OpenGLRhi)(nativeWindowHandle);
 }
 #endif // SE_OPENGL

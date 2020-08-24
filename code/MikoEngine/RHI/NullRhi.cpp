@@ -35,7 +35,7 @@ namespace NullRhi
 		*  @note
 		*    - Do never ever use a not properly initialized RHI. Use "Rhi::IRhi::isInitialized()" to check the initialization state.
 		*/
-		explicit NullRhi(const Rhi::Context& context);
+		explicit NullRhi(const handle& nativeWindowHandle);
 
 		/**
 		*  @brief
@@ -3347,8 +3347,8 @@ namespace NullRhi
 	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
-	NullRhi::NullRhi(const Rhi::Context& context) :
-		IRhi(Rhi::NameId::NULL_DUMMY, context),
+	NullRhi::NullRhi(const handle& nativeWindowHandle) :
+		IRhi(Rhi::NameId::NULL_DUMMY, nativeWindowHandle),
 		VertexArrayMakeId(),
 		GraphicsPipelineStateMakeId(),
 		ComputePipelineStateMakeId(),
@@ -4075,9 +4075,9 @@ namespace NullRhi
 	}
 } // NullRhi
 
-Rhi::IRhi* createNullRhiInstance(const Rhi::Context& context)
+Rhi::IRhi* createNullRhiInstance(const handle& nativeWindowHandle)
 {
-	return RHI_NEW(NullRhi::NullRhi)(context);
+	return RHI_NEW(NullRhi::NullRhi)(nativeWindowHandle);
 }
 
 #endif // SE_RHINULL
