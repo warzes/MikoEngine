@@ -1,5 +1,6 @@
 #include "VrController.h"
 #include <MikoEngine/MikoHeader.h>
+#if RENDERER_OPENVR
 #include <Renderer/IRenderer.h>
 #include <Renderer/Core/Math/Math.h>
 #include <Renderer/Core/Math/Transform.h>
@@ -346,3 +347,5 @@ void VrController::onUpdate(float, bool)
 		mTeleportIndicationLightSceneItem->setVisible(teleportIndicationLightSceneItemVisible);
 	}
 }
+
+#endif // 

@@ -87,7 +87,7 @@ namespace Renderer
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
 	public:
-		inline RenderDocGraphicsDebugger(Rhi::Context& context) :
+		inline RenderDocGraphicsDebugger() :
 			mRenderDocSharedLibrary(nullptr),
 			mRenderDocApi(nullptr)
 		{

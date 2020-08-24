@@ -39,9 +39,9 @@ namespace Rhi
 	// TODO: тоже что и BlendState
 	struct RasterizerStateBuilder final
 	{
-		[[nodiscard]] static inline constexpr const RasterizerState& getDefaultRasterizerState()
+		[[nodiscard]] static inline const RasterizerState& getDefaultRasterizerState()
 		{
-			constexpr const RasterizerState RASTERIZER_STATE =
+			static constexpr const RasterizerState RASTERIZER_STATE =
 			{
 				FillMode::SOLID,					// fillMode (Rhi::FillMode)	
 				CullMode::BACK,						// cullMode (Rhi::CullMode)	

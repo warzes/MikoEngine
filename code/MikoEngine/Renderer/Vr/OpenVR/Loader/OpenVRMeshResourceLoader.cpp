@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#if RENDERER_OPENVR
 #include "Renderer/Vr/OpenVR/Loader/OpenVRMeshResourceLoader.h"
 #include "Renderer/Vr/OpenVR/Loader/OpenVRTextureResourceLoader.h"
 #include "Renderer/Resource/Mesh/MeshResource.h"
@@ -383,3 +384,4 @@ namespace Renderer
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // Renderer
+#endif // RENDERER_OPENVR

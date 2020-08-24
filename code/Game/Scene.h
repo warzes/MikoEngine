@@ -73,6 +73,7 @@ private:
 	void createCompositorWorkspace();
 	void createDebugGui(Rhi::IRenderTarget& mainRenderTarget);
 	void trySetCustomMaterialResource();
+	void onDraw();
 
 	Renderer::IFileManager*		mFileManager;
 #ifdef RENDERER_PROFILER

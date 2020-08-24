@@ -466,9 +466,9 @@ namespace Renderer
 					if (std::string::npos != index)
 					{
 						// Now that we have all information we need, transform the given virtual filename into an absolute filename
-						// -> Example: The virtual filename "LocalData/EngineImGuiLayout.ini" will result in the absolute filename "c:/MyProject/Binary/LocalData/UnrimpImGuiLayout.ini"
+						// -> Example: The virtual filename "LocalData/EngineImGuiLayout.ini" will result in the absolute filename "c:/MyProject/Binary/LocalData/EngineImGuiLayout.ini"
 						std::string absoluteFilename = virtualFilename;
-						absoluteFilename.erase(index, strlen(mountPoint));	// Example: "LocalData/EngineImGuiLayout.ini" to "UnrimpImGuiLayout.ini"
+						absoluteFilename.erase(index, strlen(mountPoint));	// Example: "LocalData/EngineImGuiLayout.ini" to "EngineImGuiLayout.ini"
 						absoluteFilename = FileSystemHelper::lexicallyNormal(std::string(realDirectory) + '/' + absoluteFilename).generic_string();
 
 						// Done

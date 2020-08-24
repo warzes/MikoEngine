@@ -1472,10 +1472,7 @@ namespace Rhi
 	*/
 #define COMMAND_SCOPED_DEBUG_EVENT(commandBuffer, name) \
 			Rhi::Command::BeginDebugEvent::create(commandBuffer, name); \
-			SE_PRAGMA_WARNING_PUSH \
-				SE_PRAGMA_WARNING_DISABLE_MSVC(4456) \
-				Rhi::CommandScopedDebugEventOnExit commandScopedDebugEventOnExit##__FUNCTION__(commandBuffer); \
-			SE_PRAGMA_WARNING_POP
+			Rhi::CommandScopedDebugEventOnExit commandScopedDebugEventOnExit##__FUNCTION__(commandBuffer);
 
 	/**
 	*  @brief
@@ -1486,10 +1483,7 @@ namespace Rhi
 	*/
 #define COMMAND_SCOPED_DEBUG_EVENT_FUNCTION(commandBuffer) \
 			Rhi::Command::BeginDebugEvent::create(commandBuffer, __FUNCTION__); \
-			SE_PRAGMA_WARNING_PUSH \
-				SE_PRAGMA_WARNING_DISABLE_MSVC(4456) \
-				Rhi::CommandScopedDebugEventOnExit commandScopedDebugEventOnExit##__FUNCTION__(commandBuffer); \
-			SE_PRAGMA_WARNING_POP
+			Rhi::CommandScopedDebugEventOnExit commandScopedDebugEventOnExit##__FUNCTION__(commandBuffer);
 #else
 	/**
 	*  @brief

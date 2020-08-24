@@ -144,7 +144,7 @@ bool Application::init_base(int argc, const char * argv[])
 
 	glfwMakeContextCurrent(m_window); // TODO: only opengl? or?
 
-	const char* rhiName = "Direct3D12";
+	const char* rhiName = "OpenGL";
 #if SE_RHINULL
 	if ( 0 == strcmp(rhiName, "Null") )
 		rhi = createNullRhiInstance(glfwNativeWindowHandle(m_window));

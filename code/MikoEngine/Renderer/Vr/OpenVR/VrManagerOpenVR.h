@@ -1,5 +1,6 @@
 #pragma once
 
+#if RENDERER_OPENVR
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
@@ -227,3 +228,5 @@ namespace Renderer
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // Renderer
+
+#endif // RENDERER_OPENVR

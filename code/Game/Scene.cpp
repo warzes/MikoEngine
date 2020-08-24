@@ -55,8 +55,8 @@
 #include <DeviceInput/DeviceInput.h>
 
 #define INI_IMPLEMENTATION
-#define INI_MALLOC(ctx, size) (static_cast<Rhi::IAllocator*>(ctx)->reallocate(nullptr, 0, size, 1))
-#define INI_FREE(ctx, ptr) (static_cast<Rhi::IAllocator*>(ctx)->reallocate(ptr, 0, 0, 1))
+#define INI_MALLOC(ctx, size) (static_cast<DefaultAllocator*>(ctx)->reallocate(nullptr, 0, size, 1))
+#define INI_FREE(ctx, ptr) (static_cast<DefaultAllocator*>(ctx)->reallocate(ptr, 0, 0, 1))
 #include <ini/ini.h>
 
 #ifdef RENDERER_IMGUI
@@ -135,9 +135,9 @@ Scene::Scene() :
 	mOpenMetricsWindowIniProperty(INI_NOT_FOUND)
 {
 #ifdef RENDERER_IMGUI
-	Renderer::DebugGuiManager::setImGuiAllocatorFunctions(g_DefaultAllocator);
+	Renderer::DebugGuiManager::setImGuiAllocatorFunctions(GetAllocator());
 	mImGuiLog = new Renderer::ImGuiLog();
-	setCustomLog(mImGuiLog);
+	//setCustomLog(mImGuiLog);
 #endif
 }
 
@@ -241,7 +241,7 @@ bool Scene::init(int argc, const char * argv[])
 		{
 			int value[4] = { 0, 0, 1024, 768 };
 			sscanf(propertyValue, "%d %d %d %d", &value[0], &value[1], &value[2], &value[3]);
-			::SetWindowPos(reinterpret_cast<HWND>(renderer.getRhi().getContext().getNativeWindowHandle()), HWND_TOP, static_cast<int>(value[0]), static_cast<int>(value[1]), static_cast<int>(value[2]), static_cast<int>(value[3]), 0);
+			::SetWindowPos(reinterpret_cast<HWND>(renderer.getRhi().getNativeWindowHandle()), HWND_TOP, static_cast<int>(value[0]), static_cast<int>(value[1]), static_cast<int>(value[2]), static_cast<int>(value[3]), 0);
 		}
 	}
 #endif
@@ -256,7 +256,9 @@ bool Scene::init(int argc, const char * argv[])
 			sscanf(propertyValue, "%d", &value);
 			if ( 0 != value )
 			{
+#if RENDERER_IMGUI
 				renderer.getDebugGuiManager().openMetricsWindow();
+#endif
 			}
 		}
 	}
@@ -334,12 +336,8 @@ void Scene::update(double delta)
 		renderer->update();
 	}
 
-
-
-	const Renderer::IRenderer& renderer = *getRenderer();
-
 	{ // Tell the material blueprint resource manager about our global material properties
-		Renderer::MaterialProperties& globalMaterialProperties = renderer.getMaterialBlueprintResourceManager().getGlobalMaterialProperties();
+		Renderer::MaterialProperties& globalMaterialProperties = renderer->getMaterialBlueprintResourceManager().getGlobalMaterialProperties();
 		// Graphics
 		globalMaterialProperties.setPropertyById(STRING_ID("GlobalReceiveShadows"), Renderer::MaterialPropertyValue::fromBoolean(ShadowQuality::NONE != mShadowQuality));
 		globalMaterialProperties.setPropertyById(STRING_ID("GlobalHighQualityRendering"), Renderer::MaterialPropertyValue::fromBoolean(mHighQualityRendering));
@@ -357,7 +355,7 @@ void Scene::update(double delta)
 	if ( nullptr != mSceneNode && mRotationSpeed > 0.0f )
 	{
 		glm::vec3 eulerAngles = Renderer::EulerAngles::matrixToEuler(glm::mat3_cast(mSceneNode->getGlobalTransform().rotation));
-		eulerAngles.x += renderer.getTimeManager().getPastSecondsSinceLastFrame() * mRotationSpeed;
+		eulerAngles.x += renderer->getTimeManager().getPastSecondsSinceLastFrame() * mRotationSpeed;
 		mSceneNode->setRotation(Renderer::EulerAngles::eulerToQuaternion(eulerAngles));
 	}
 
@@ -368,9 +366,9 @@ void Scene::update(double delta)
 		// -> Do only enable input as long as this example application has the operation system window focus
 		// -> While the mouse is hovering over an GUI element, disable the ingame controller
 		// -> Avoid that while looking around with the mouse the mouse is becoming considered hovering over an GUI element
-		// -> Remember: Unrimp is about rendering related topics, it's not an all-in-one-framework including an advanced input framework, so a simple non-generic solution is sufficient in here
+		// -> Remember: engine is about rendering related topics, it's not an all-in-one-framework including an advanced input framework, so a simple non-generic solution is sufficient in here
 #ifdef _WIN32
-		const bool hasWindowFocus = (::GetFocus() == reinterpret_cast<HWND>(renderer.getRhi().getContext().getNativeWindowHandle()));
+		const bool hasWindowFocus = (::GetFocus() == reinterpret_cast<HWND>(renderer->getRhi().getNativeWindowHandle()));
 #else
 		bool hasWindowFocus = true;
 #endif
@@ -379,7 +377,7 @@ void Scene::update(double delta)
 #else
 		const bool isAnyWindowHovered = false;
 #endif
-		mController->onUpdate(renderer.getTimeManager().getPastSecondsSinceLastFrame(), hasWindowFocus && (mController->isMouseControlInProgress() || !isAnyWindowHovered));
+		mController->onUpdate(renderer->getTimeManager().getPastSecondsSinceLastFrame(), hasWindowFocus && (mController->isMouseControlInProgress() || !isAnyWindowHovered));
 	}
 
 	// Scene hot-reloading memory
@@ -399,7 +397,7 @@ void Scene::update(double delta)
 #if defined(_WIN32) && defined(RENDERER_IMGUI)
 	{
 		RECT rect;
-		::GetWindowRect(reinterpret_cast<HWND>(renderer.getRhi().getContext().getNativeWindowHandle()), &rect);
+		::GetWindowRect(reinterpret_cast<HWND>(renderer->getRhi().getNativeWindowHandle()), &rect);
 		char temp[256];
 		sprintf_s(temp, GLM_COUNTOF(temp), "%d %d %d %d", static_cast<int>(rect.left), static_cast<int>(rect.top), static_cast<int>(rect.right - rect.left), static_cast<int>(rect.bottom - rect.top));
 		if ( INI_NOT_FOUND == mMainWindowPositionSizeIniProperty )
@@ -412,6 +410,8 @@ void Scene::update(double delta)
 		}
 	}
 #endif
+
+	onDraw();
 }
 
 void Scene::shutdown()
@@ -498,7 +498,7 @@ Renderer::IRenderer* Scene::getRenderer() const
 
 void Scene::onDraw()
 {
-	Rhi::IRenderTarget* mainRenderTarget = getMainRenderTarget();
+	Rhi::IRenderTarget* mainRenderTarget = mainSwapChain;
 	if ( nullptr != mainRenderTarget && nullptr != mCompositorWorkspaceInstance )
 	{
 		applyCurrentSettings(*mainRenderTarget);
@@ -528,13 +528,13 @@ void Scene::onLoadingStateChange(const Renderer::IResource& resource)
 		if ( Renderer::IResource::LoadingState::LOADED == loadingState )
 		{
 			// Sanity checks
-			RHI_ASSERT(getRendererSafe().getContext(), nullptr == mSceneNode, "Invalid scene node")
-				RHI_ASSERT(getRendererSafe().getContext(), nullptr == mCameraSceneItem, "Invalid camera scene item")
-				RHI_ASSERT(getRendererSafe().getContext(), nullptr == mSunlightSceneItem, "Invalid sunlight scene item")
-				RHI_ASSERT(getRendererSafe().getContext(), nullptr == mSkeletonMeshSceneItem, "Invalid skeleton mesh scene item")
+			RHI_ASSERT(nullptr == mSceneNode, "Invalid scene node");
+			RHI_ASSERT(nullptr == mCameraSceneItem, "Invalid camera scene item");
+			RHI_ASSERT(nullptr == mSunlightSceneItem, "Invalid sunlight scene item");
+			RHI_ASSERT(nullptr == mSkeletonMeshSceneItem, "Invalid skeleton mesh scene item");
 
-				// Loop through all scene nodes and grab the first found camera, directional light and mesh
-				const Renderer::SceneResource& sceneResource = static_cast<const Renderer::SceneResource&>(resource);
+			// Loop through all scene nodes and grab the first found camera, directional light and mesh
+			const Renderer::SceneResource& sceneResource = static_cast<const Renderer::SceneResource&>(resource);
 			for ( Renderer::SceneNode* sceneNode : sceneResource.getSceneNodes() )
 			{
 				// Loop through all scene items attached to the current scene node
@@ -693,9 +693,10 @@ void Scene::saveIni()
 				}
 			}
 #endif
-
+#if RENDERER_IMGUI
 			// Backup open metrics window
 			sprintf_s(temp, GLM_COUNTOF(temp), "%d", renderer.getDebugGuiManager().hasOpenMetricsWindow());
+#endif
 			if ( INI_NOT_FOUND == mOpenMetricsWindowIniProperty )
 			{
 				mOpenMetricsWindowIniProperty = ini_property_add(mIni, INI_GLOBAL_SECTION, "OpenMetricsWindow", 0, temp, 0);
@@ -876,7 +877,7 @@ void Scene::applyCurrentSettings(Rhi::IRenderTarget& mainRenderTarget)
 			materialResource = materialResourceManager.getMaterialResourceByAssetId(ASSET_ID("Example/Blueprint/Compositor/MB_Final"));
 			if ( nullptr != materialResource )
 			{
-				static constexpr uint32_t IDENTITY_TEXTURE_ASSET_ID = ASSET_ID("Unrimp/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D");
+				static constexpr uint32_t IDENTITY_TEXTURE_ASSET_ID = ASSET_ID("Engine/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D");
 				static constexpr uint32_t SEPIA_TEXTURE_ASSET_ID = ASSET_ID("Example/Blueprint/Compositor/T_SepiaColorCorrectionLookupTable16x1");
 				materialResource->setPropertyById(STRING_ID("ColorCorrectionLookupTableMap"), Renderer::MaterialPropertyValue::fromTextureAssetId(mPerformSepiaColorCorrection ? SEPIA_TEXTURE_ASSET_ID : IDENTITY_TEXTURE_ASSET_ID));
 				materialResource->setPropertyById(STRING_ID("Fxaa"), Renderer::MaterialPropertyValue::fromBoolean(mPerformFxaa));

@@ -1,4 +1,4 @@
-#if SE_NULL
+#if SE_RHINULL
 	if (rhi.getNameId() == Rhi::NameId::NULL_DUMMY)
 	{
 		vertexShaderSourceCode = fragmentShaderSourceCode = "42";

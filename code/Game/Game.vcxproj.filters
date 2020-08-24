@@ -20,6 +20,9 @@
     <ClCompile Include="FreeCameraController.cpp">
       <Filter>Example\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="..\3rdparty\DeviceInput\DeviceInput.cpp">
+      <Filter>Example\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Triangle.h">

@@ -42,9 +42,9 @@ namespace Rhi
 	// TODO: тоже что и с BlendState
 	struct DepthStencilStateBuilder final
 	{
-		[[nodiscard]] static inline constexpr const DepthStencilState& getDefaultDepthStencilState()
+		[[nodiscard]] static inline const DepthStencilState& getDefaultDepthStencilState()
 		{
-			constexpr const  DepthStencilState DEPTH_STENCIL_STATE =
+			static constexpr const  DepthStencilState DEPTH_STENCIL_STATE =
 			{
 				true,						// depthEnable (int)
 				DepthWriteMask::ALL,		// depthWriteMask (Rhi::DepthWriteMask)

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#if RENDERER_OPENVR
 #include "Renderer/Vr/OpenVR/VrManagerOpenVR.h"
 #include "Renderer/Vr/OpenVR/OpenVRRuntimeLinking.h"
 #include "Renderer/Vr/OpenVR/IVrManagerOpenVRListener.h"
@@ -805,3 +806,4 @@ namespace Renderer
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // Renderer
+#endif // RENDERER_OPENVR

@@ -54,9 +54,9 @@ namespace Rhi
 	// TODO: BlendStateBuilder::GetDefault() можно перенести в конструктор BlendState. При этом для случаев когда не нужен дефолт, сделать свой конструктор типа BlendState(nodefault); такое решение более правильно - не позволит использовать неинициализованные данные
 	struct BlendStateBuilder final
 	{
-		[[nodiscard]] static inline constexpr const BlendState& GetDefault()
+		[[nodiscard]] static inline const BlendState& GetDefault()
 		{
-			constexpr const BlendState BLEND_STATE =
+			static constexpr const BlendState BLEND_STATE =
 			{
 				false,								// alphaToCoverageEnable (int)	
 				false,								// independentBlendEnable (int)	

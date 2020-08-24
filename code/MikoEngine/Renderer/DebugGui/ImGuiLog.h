@@ -35,7 +35,7 @@ namespace Renderer
 	*    - Designed to be instanced and used inside a single C++ file
 	*    - Basing on "Tip/Demo: Log example as helper class. #300" - https://github.com/ocornut/imgui/issues/300
 	*/
-	class ImGuiLog final : public Rhi::DefaultLog
+	class ImGuiLog final
 	{
 
 
@@ -46,11 +46,6 @@ namespace Renderer
 		inline ImGuiLog() :
 			mScrollToBottom(false),
 			mOpen(false)
-		{
-			// Nothing here
-		}
-
-		inline virtual ~ImGuiLog() override
 		{
 			// Nothing here
 		}
@@ -114,22 +109,22 @@ namespace Renderer
 							const Entry& entry = mEntries[lineNumber];
 							switch (entry.type)
 							{
-								case Rhi::ILog::Type::TRACE:
-								case Rhi::ILog::Type::DEBUG:
+								case DefaultLog::Type::TRACE:
+								case DefaultLog::Type::DEBUG:
 									color = ImVec4(0.5f, 0.5f, 0.5f, 1.0f);
 									break;
 
-								case Rhi::ILog::Type::INFORMATION:
+								case DefaultLog::Type::INFORMATION:
 									color = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 									break;
 
-								case Rhi::ILog::Type::WARNING:
-								case Rhi::ILog::Type::PERFORMANCE_WARNING:
-								case Rhi::ILog::Type::COMPATIBILITY_WARNING:
+								case DefaultLog::Type::WARNING:
+								case DefaultLog::Type::PERFORMANCE_WARNING:
+								case DefaultLog::Type::COMPATIBILITY_WARNING:
 									color = ImVec4(0.5f, 0.5f, 1.0f, 1.0f);
 									break;
 
-								case Rhi::ILog::Type::CRITICAL:
+								case DefaultLog::Type::CRITICAL:
 									color = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
 									if (!entry.attachment.empty())
 									{
@@ -156,10 +151,10 @@ namespace Renderer
 												else
 												{
 													// Error!
-													if (print(Rhi::ILog::Type::CRITICAL, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to open the file \"%s\" for writing", virtualFilename.c_str()))
-													{
-														DEBUG_BREAK;
-													}
+													//if (print(DefaultLog::Type::CRITICAL, nullptr, __FILE__, static_cast<uint32_t>(__LINE__), "Failed to open the file \"%s\" for writing", virtualFilename.c_str()))
+													//{
+													//	SE_DEBUG_BREAK;
+													//}
 												}
 											}
 										}
@@ -195,68 +190,68 @@ namespace Renderer
 	//[ Protected virtual Rhi::DefaultLog methods             ]
 	//[-------------------------------------------------------]
 	protected:
-		[[nodiscard]] inline virtual bool printInternal(Type type, const char* attachment, const char* file, uint32_t line, const char* message, uint32_t numberOfCharacters) override
-		{
-			// Call the base implementation
-			const bool requestDebugBreak = DefaultLog::printInternal(type, attachment, file, line, message, numberOfCharacters);
+		//[[nodiscard]] inline virtual bool printInternal(DefaultLog::Type type, const char* attachment, const char* file, uint32_t line, const char* message, uint32_t numberOfCharacters) override
+		//{
+		//	// Call the base implementation
+		//	const bool requestDebugBreak = DefaultLog::printInternal(type, attachment, file, line, message, numberOfCharacters);
 
-			// Construct the full UTF-8 message text
-			#if SE_DEBUG
-				std::string fullMessage = "File \"" + std::string(file) + "\" | Line " + std::to_string(line) + " | " + std::string(typeToString(type)) + message;
-			#else
-				std::string fullMessage = std::string(typeToString(type)) + message;
-			#endif
-			if ('\n' != fullMessage.back())
-			{
-				fullMessage += '\n';
-			}
+		//	// Construct the full UTF-8 message text
+		//	#if SE_DEBUG
+		//		std::string fullMessage = "File \"" + std::string(file) + "\" | Line " + std::to_string(line) + " | " + std::string(typeToString(type)) + message;
+		//	#else
+		//		std::string fullMessage = std::string(typeToString(type)) + message;
+		//	#endif
+		//	if ('\n' != fullMessage.back())
+		//	{
+		//		fullMessage += '\n';
+		//	}
 
-			// Add to ImGui log
-			int previousSize = mImGuiTextBuffer.size();
-			mImGuiTextBuffer.appendf("%s", fullMessage.c_str());
-			for (int newSize = mImGuiTextBuffer.size(); previousSize < newSize; ++previousSize)
-			{
-				if ('\n' == mImGuiTextBuffer[previousSize])
-				{
-					Entry entry;
-					entry.lineOffsets = previousSize;
-					entry.type = type;
-					if (nullptr != attachment)
-					{
-						entry.attachment = attachment;
+		//	// Add to ImGui log
+		//	int previousSize = mImGuiTextBuffer.size();
+		//	mImGuiTextBuffer.appendf("%s", fullMessage.c_str());
+		//	for (int newSize = mImGuiTextBuffer.size(); previousSize < newSize; ++previousSize)
+		//	{
+		//		if ('\n' == mImGuiTextBuffer[previousSize])
+		//		{
+		//			Entry entry;
+		//			entry.lineOffsets = previousSize;
+		//			entry.type = type;
+		//			if (nullptr != attachment)
+		//			{
+		//				entry.attachment = attachment;
 
-						// Show attachment only once per log entry
-						attachment = nullptr;
-					}
-					mEntries.push_back(entry);
-				}
-			}
-			mScrollToBottom = true;
+		//				// Show attachment only once per log entry
+		//				attachment = nullptr;
+		//			}
+		//			mEntries.push_back(entry);
+		//		}
+		//	}
+		//	mScrollToBottom = true;
 
-			// Open the log automatically on warning or error
-			switch (type)
-			{
-				case Rhi::ILog::Type::TRACE:
-				case Rhi::ILog::Type::DEBUG:
-				case Rhi::ILog::Type::INFORMATION:
-					// Nothing here
-					break;
+		//	// Open the log automatically on warning or error
+		//	switch (type)
+		//	{
+		//		case DefaultLog::Type::TRACE:
+		//		case DefaultLog::Type::DEBUG:
+		//		case DefaultLog::Type::INFORMATION:
+		//			// Nothing here
+		//			break;
 
-				case Rhi::ILog::Type::WARNING:
-				case Rhi::ILog::Type::PERFORMANCE_WARNING:
-				case Rhi::ILog::Type::COMPATIBILITY_WARNING:
-				case Rhi::ILog::Type::CRITICAL:
-					// ImGui might not have been initialized yet
-					if (nullptr != ImGui::GetCurrentContext())
-					{
-						open();
-					}
-					break;
-			}
+		//		case DefaultLog::Type::WARNING:
+		//		case DefaultLog::Type::PERFORMANCE_WARNING:
+		//		case DefaultLog::Type::COMPATIBILITY_WARNING:
+		//		case DefaultLog::Type::CRITICAL:
+		//			// ImGui might not have been initialized yet
+		//			if (nullptr != ImGui::GetCurrentContext())
+		//			{
+		//				open();
+		//			}
+		//			break;
+		//	}
 
-			// Done
-			return requestDebugBreak;
-		}
+		//	// Done
+		//	return requestDebugBreak;
+		//}
 
 
 	//[-------------------------------------------------------]
@@ -274,7 +269,7 @@ namespace Renderer
 		struct Entry final
 		{
 			int			lineOffsets;	// Index to lines offset
-			Type		type;
+			DefaultLog::Type		type;
 			std::string	attachment;		// Optional attachment (for example build shader source code)
 		};
 

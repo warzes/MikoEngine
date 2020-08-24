@@ -57,6 +57,11 @@ namespace Rhi
 			return mNameId;
 		}
 
+		[[nodiscard]] inline handle getNativeWindowHandle() const
+		{
+			return m_nativeWindowHandle;
+		}
+
 		[[nodiscard]] inline const Capabilities& getCapabilities() const
 		{
 			return mCapabilities;
