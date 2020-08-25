@@ -305,10 +305,10 @@ namespace Renderer
 		uniformBuffer(bufferManager.createUniformBuffer(bufferSize, nullptr, Rhi::BufferUsage::DYNAMIC_DRAW RHI_RESOURCE_DEBUG_NAME("Material buffer manager"))),
 		resourceGroup(nullptr)
 	{
-		uniformBuffer->addReference();
+		uniformBuffer->AddReference();
 		Rhi::IResource* resource = static_cast<Rhi::IResource*>(uniformBuffer);
 		resourceGroup = materialBlueprintResource.getRootSignaturePtr()->createResourceGroup(materialBlueprintResource.getMaterialUniformBuffer()->rootParameterIndex, 1, &resource, nullptr RHI_RESOURCE_DEBUG_NAME("Material buffer manager"));
-		resourceGroup->addReference();
+		resourceGroup->AddReference();
 		freeSlots.reserve(slotsPerPool);
 		for (uint32_t i = 0; i < slotsPerPool; ++i)
 		{
@@ -318,8 +318,8 @@ namespace Renderer
 
 	MaterialBufferManager::BufferPool::~BufferPool()
 	{
-		resourceGroup->releaseReference();
-		uniformBuffer->releaseReference();
+		resourceGroup->ReleaseReference();
+		uniformBuffer->ReleaseReference();
 	}
 
 

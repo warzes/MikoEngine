@@ -25,6 +25,8 @@
 // STD C++17 Header
 //-----------------------------------------------------------------------------
 SE_PRAGMA_WARNING_LEVEL(0)
+SE_PRAGMA_WARNING_DISABLE_MSVC(4355); // 
+SE_PRAGMA_WARNING_DISABLE_MSVC(5204); // 
 
 #include <cstring>
 #include <cstdlib>
@@ -178,9 +180,9 @@ SE_PRAGMA_WARNING_LEVEL(0)
 
 //-----------------------------------------------------------------------------
 // Assimp
-#include <assimp/Importer.hpp>
-#include <assimp/postprocess.h>
-#include <assimp/scene.h>
+//#include <assimp/Importer.hpp>
+//#include <assimp/postprocess.h>
+//#include <assimp/scene.h>
 
 //-----------------------------------------------------------------------------
 // STB
@@ -188,7 +190,7 @@ SE_PRAGMA_WARNING_LEVEL(0)
 
 //-----------------------------------------------------------------------------
 // Tiny OBJ Loader
-#include <tiny_obj_loader.h>
+//#include <tiny_obj_loader.h>
 
 //-----------------------------------------------------------------------------
 // Imgui

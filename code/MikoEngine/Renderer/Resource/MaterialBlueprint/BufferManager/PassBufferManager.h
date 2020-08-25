@@ -175,8 +175,8 @@ namespace Renderer
 				uniformBuffer(_uniformBuffer),
 				resourceGroup(_resourceGroup)
 			{
-				uniformBuffer->addReference();
-				resourceGroup->addReference();
+				uniformBuffer->AddReference();
+				resourceGroup->AddReference();
 			}
 		};
 		typedef std::vector<UniformBuffer> UniformBuffers;

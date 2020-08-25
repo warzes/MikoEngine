@@ -172,7 +172,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VulkanRhi, this);
 		}

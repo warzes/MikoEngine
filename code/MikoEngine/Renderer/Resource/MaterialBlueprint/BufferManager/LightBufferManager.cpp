@@ -78,7 +78,7 @@ namespace Renderer
 		// Create texture buffer instance
 		mTextureScratchBuffer.resize(std::min(mRenderer.getRhi().getCapabilities().maximumTextureBufferSize, ::detail::LIGHT_DEFAULT_TEXTURE_BUFFER_NUMBER_OF_BYTES));
 		mTextureBuffer = mRenderer.getBufferManager().createTextureBuffer(static_cast<uint32_t>(mTextureScratchBuffer.size()), nullptr, Rhi::BufferFlag::SHADER_RESOURCE, Rhi::BufferUsage::DYNAMIC_DRAW, Rhi::TextureFormat::R32G32B32A32F RHI_RESOURCE_DEBUG_NAME("Light buffer manager"));
-		mTextureBuffer->addReference();
+		mTextureBuffer->AddReference();
 
 		// Create the clusters 3D texture resource
 		mClusters3DTextureResourceId = mRenderer.getTextureResourceManager().createTextureResourceByAssetId(
@@ -90,9 +90,9 @@ namespace Renderer
 	{
 		if (nullptr != mResourceGroup)
 		{
-			mResourceGroup->releaseReference();
+			mResourceGroup->ReleaseReference();
 		}
-		mTextureBuffer->releaseReference();
+		mTextureBuffer->ReleaseReference();
 		mRenderer.getTextureResourceManager().destroyTextureResource(mClusters3DTextureResourceId);
 	}
 
@@ -119,7 +119,7 @@ namespace Renderer
 				// Rhi::IResource* resources[2] = { mTextureBuffer, mRenderer.getTextureResourceManager().getById(mClusters3DTextureResourceId).getTexturePtr() };
 				Rhi::IResource* resources[1] = { mTextureBuffer };
 				mResourceGroup = materialBlueprintResource.getRootSignaturePtr()->createResourceGroup(lightTextureBuffer->rootParameterIndex, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, nullptr RHI_RESOURCE_DEBUG_NAME("Light buffer manager"));
-				mResourceGroup->addReference();
+				mResourceGroup->AddReference();
 			}
 
 			// Set graphics resource group
@@ -144,7 +144,7 @@ namespace Renderer
 				// Rhi::IResource* resources[2] = { mTextureBuffer, mRenderer.getTextureResourceManager().getById(mClusters3DTextureResourceId).getTexturePtr() };
 				Rhi::IResource* resources[1] = { mTextureBuffer };
 				mResourceGroup = materialBlueprintResource.getRootSignaturePtr()->createResourceGroup(lightTextureBuffer->rootParameterIndex, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, nullptr RHI_RESOURCE_DEBUG_NAME("Light buffer manager"));
-				mResourceGroup->addReference();
+				mResourceGroup->AddReference();
 			}
 
 			// Set compute resource group
@@ -299,9 +299,9 @@ namespace Renderer
 
 		// Upload the cluster data to a volume texture
 		const Rhi::ITexturePtr& texturePtr = mRenderer.getTextureResourceManager().getById(mClusters3DTextureResourceId).getTexturePtr();
-		RHI_ASSERT(nullptr != texturePtr.getPointer(), "Invalid texture pointer")
-		RHI_ASSERT(Rhi::ResourceType::TEXTURE_3D == texturePtr.getPointer()->getResourceType(), "Invalid texture resource type")
-		Rhi::ITexture3D* texture3D = static_cast<Rhi::ITexture3D*>(texturePtr.getPointer());
+		RHI_ASSERT(nullptr != texturePtr.GetPointer(), "Invalid texture pointer")
+		RHI_ASSERT(Rhi::ResourceType::TEXTURE_3D == texturePtr.GetPointer()->getResourceType(), "Invalid texture resource type")
+		Rhi::ITexture3D* texture3D = static_cast<Rhi::ITexture3D*>(texturePtr.GetPointer());
 		Rhi::MappedSubresource mappedSubresource;
 		Rhi::IRhi& rhi = mRenderer.getRhi();
 		if (rhi.map(*texture3D, 0, Rhi::MapType::WRITE_DISCARD, 0, mappedSubresource))

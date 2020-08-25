@@ -168,7 +168,7 @@ namespace Renderer
 			::detail::VolumeVertexArrayPtr = ::detail::createVolumeVertexArray(getSceneResource().getRenderer());
 			RHI_ASSERT(nullptr != ::detail::VolumeVertexArrayPtr, "Invalid volume vertex array")
 		}
-		::detail::VolumeVertexArrayPtr->addReference();
+		::detail::VolumeVertexArrayPtr->AddReference();
 	}
 
 	VolumeSceneItem::~VolumeSceneItem()
@@ -180,7 +180,7 @@ namespace Renderer
 		}
 
 		// Release reference to vertex array object (VAO) shared between all volume instances
-		if (nullptr != ::detail::VolumeVertexArrayPtr && 1 == ::detail::VolumeVertexArrayPtr->releaseReference())	// +1 for reference to global shared pointer
+		if (nullptr != ::detail::VolumeVertexArrayPtr && 1 == ::detail::VolumeVertexArrayPtr->ReleaseReference())	// +1 for reference to global shared pointer
 		{
 			::detail::VolumeVertexArrayPtr = nullptr;
 		}

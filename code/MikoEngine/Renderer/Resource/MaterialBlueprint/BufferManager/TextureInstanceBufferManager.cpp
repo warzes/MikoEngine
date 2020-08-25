@@ -53,10 +53,10 @@ namespace Renderer
 		{
 			if (nullptr != instanceBuffer.resourceGroup)
 			{
-				instanceBuffer.resourceGroup->releaseReference();
+				instanceBuffer.resourceGroup->ReleaseReference();
 			}
-			instanceBuffer.uniformBuffer->releaseReference();
-			instanceBuffer.textureBuffer->releaseReference();
+			instanceBuffer.uniformBuffer->ReleaseReference();
+			instanceBuffer.textureBuffer->ReleaseReference();
 		}
 	}
 
@@ -83,7 +83,7 @@ namespace Renderer
 			{
 				Rhi::IResource* resources[2] = { mCurrentInstanceBuffer->uniformBuffer, mCurrentInstanceBuffer->textureBuffer };
 				mCurrentInstanceBuffer->resourceGroup = materialBlueprintResource.getRootSignaturePtr()->createResourceGroup(instanceUniformBuffer->rootParameterIndex, static_cast<uint32_t>(GLM_COUNTOF(resources)), resources, nullptr RHI_RESOURCE_DEBUG_NAME("Texture instance buffer manager"));
-				mCurrentInstanceBuffer->resourceGroup->addReference();
+				mCurrentInstanceBuffer->resourceGroup->AddReference();
 			}
 
 			// Set graphics resource group
@@ -291,11 +291,11 @@ namespace Renderer
 		{
 			// Create uniform buffer instance
 			Rhi::IUniformBuffer* uniformBuffer = bufferManager.createUniformBuffer(mMaximumUniformBufferSize, nullptr, Rhi::BufferUsage::DYNAMIC_DRAW RHI_RESOURCE_DEBUG_NAME("Texture instance buffer manager"));
-			uniformBuffer->addReference();
+			uniformBuffer->AddReference();
 
 			// Create texture buffer instance
 			Rhi::ITextureBuffer* textureBuffer = bufferManager.createTextureBuffer(mMaximumTextureBufferSize, nullptr, Rhi::BufferFlag::SHADER_RESOURCE, Rhi::BufferUsage::DYNAMIC_DRAW, Rhi::TextureFormat::R32G32B32A32F RHI_RESOURCE_DEBUG_NAME("Texture instance buffer manager"));
-			textureBuffer->addReference();
+			textureBuffer->AddReference();
 
 			// Create instance buffer instance
 			mInstanceBuffers.emplace_back(*uniformBuffer, *textureBuffer);

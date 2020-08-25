@@ -280,7 +280,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Direct3D11Rhi, this);
 		}
@@ -712,7 +712,7 @@ namespace Direct3D11Rhi
 				Rhi::IResource* resource = *resources;
 				RHI_ASSERT(nullptr != resource, "Invalid Direct3D 11 resource")
 				mResources[resourceIndex] = resource;
-				resource->addReference();
+				resource->AddReference();
 			}
 			if (nullptr != samplerStates)
 			{
@@ -722,7 +722,7 @@ namespace Direct3D11Rhi
 					Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex] = samplerStates[resourceIndex];
 					if (nullptr != samplerState)
 					{
-						samplerState->addReference();
+						samplerState->AddReference();
 					}
 				}
 			}
@@ -742,14 +742,14 @@ namespace Direct3D11Rhi
 					Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex];
 					if (nullptr != samplerState)
 					{
-						samplerState->releaseReference();
+						samplerState->ReleaseReference();
 					}
 				}
 				RHI_FREE(mSamplerStates);
 			}
 			for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
 			{
-				mResources[resourceIndex]->releaseReference();
+				mResources[resourceIndex]->ReleaseReference();
 			}
 			RHI_FREE(mResources);
 		}
@@ -783,7 +783,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ResourceGroup, this);
 		}
@@ -928,7 +928,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(RootSignature, this);
 		}
@@ -1148,7 +1148,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexBuffer, this);
 		}
@@ -1389,7 +1389,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(IndexBuffer, this);
 		}
@@ -1462,7 +1462,7 @@ namespace Direct3D11Rhi
 			// Add a reference to the given index buffer
 			if (nullptr != mIndexBuffer)
 			{
-				mIndexBuffer->addReference();
+				mIndexBuffer->AddReference();
 			}
 
 			// Add a reference to the used vertex buffers
@@ -1483,7 +1483,7 @@ namespace Direct3D11Rhi
 						// TODO(co) Add security check: Is the given resource one of the currently used RHI?
 						*currentVertexBuffer = static_cast<VertexBuffer*>(vertexBuffer->vertexBuffer);
 						*currentD3D11Buffer = (*currentVertexBuffer)->getD3D11Buffer();
-						(*currentVertexBuffer)->addReference();
+						(*currentVertexBuffer)->AddReference();
 					}
 				}
 
@@ -1507,7 +1507,7 @@ namespace Direct3D11Rhi
 			// Release the index buffer reference
 			if (nullptr != mIndexBuffer)
 			{
-				mIndexBuffer->releaseReference();
+				mIndexBuffer->ReleaseReference();
 			}
 
 			// Cleanup Direct3D 11 input slot data
@@ -1526,7 +1526,7 @@ namespace Direct3D11Rhi
 				VertexBuffer** vertexBuffersEnd = mVertexBuffers + mNumberOfSlots;
 				for (VertexBuffer** vertexBuffer = mVertexBuffers; vertexBuffer < vertexBuffersEnd; ++vertexBuffer)
 				{
-					(*vertexBuffer)->releaseReference();
+					(*vertexBuffer)->ReleaseReference();
 				}
 
 				// Cleanup
@@ -1582,7 +1582,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexArray, this);
 		}
@@ -1810,7 +1810,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureBuffer, this);
 		}
@@ -2035,7 +2035,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(StructuredBuffer, this);
 		}
@@ -2307,7 +2307,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(IndirectBuffer, this);
 		}
@@ -2457,7 +2457,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(UniformBuffer, this);
 		}
@@ -2560,13 +2560,13 @@ namespace Direct3D11Rhi
 			const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = vertexBuffers + numberOfVertexBuffers;
 			for (const Rhi::VertexArrayVertexBuffer* vertexBuffer = vertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer)
 			{
-				vertexBuffer->vertexBuffer->addReference();
-				vertexBuffer->vertexBuffer->releaseReference();
+				vertexBuffer->vertexBuffer->AddReference();
+				vertexBuffer->vertexBuffer->ReleaseReference();
 			}
 			if (nullptr != indexBuffer)
 			{
-				indexBuffer->addReference();
-				indexBuffer->releaseReference();
+				indexBuffer->AddReference();
+				indexBuffer->ReleaseReference();
 			}
 			return nullptr;
 		}
@@ -2607,7 +2607,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(BufferManager, this);
 		}
@@ -2901,7 +2901,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture1D, this);
 		}
@@ -3227,7 +3227,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture1DArray, this);
 		}
@@ -3587,7 +3587,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture2D, this);
 		}
@@ -3937,7 +3937,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture2DArray, this);
 		}
@@ -4256,7 +4256,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture3D, this);
 		}
@@ -4583,7 +4583,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureCube, this);
 		}
@@ -4915,7 +4915,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureCubeArray, this);
 		}
@@ -5064,7 +5064,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureManager, this);
 		}
@@ -5168,7 +5168,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(SamplerState, this);
 		}
@@ -5598,7 +5598,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(RenderPass, this);
 		}
@@ -5790,7 +5790,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(QueryPool, this);
 		}
@@ -6292,7 +6292,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(SwapChain, this);
 		}
@@ -6488,7 +6488,7 @@ namespace Direct3D11Rhi
 
 					// TODO(co) Add security check: Is the given resource one of the currently used RHI?
 					*colorTexture = colorFramebufferAttachments->texture;
-					(*colorTexture)->addReference();
+					(*colorTexture)->AddReference();
 
 					// Evaluate the color texture type
 					switch ((*colorTexture)->getResourceType())
@@ -6573,7 +6573,7 @@ namespace Direct3D11Rhi
 			{
 				mDepthStencilTexture = depthStencilFramebufferAttachment->texture;
 				RHI_ASSERT(nullptr != mDepthStencilTexture, "Invalid Direct3D 11 depth stencil framebuffer attachment texture")
-				mDepthStencilTexture->addReference();
+				mDepthStencilTexture->AddReference();
 
 				// Evaluate the depth stencil texture type
 				switch (mDepthStencilTexture->getResourceType())
@@ -6713,7 +6713,7 @@ namespace Direct3D11Rhi
 				Rhi::ITexture** colorTexturesEnd = mColorTextures + mNumberOfColorTextures;
 				for (Rhi::ITexture** colorTexture = mColorTextures; colorTexture < colorTexturesEnd; ++colorTexture)
 				{
-					(*colorTexture)->releaseReference();
+					(*colorTexture)->ReleaseReference();
 				}
 
 				// Cleanup
@@ -6729,7 +6729,7 @@ namespace Direct3D11Rhi
 			if (nullptr != mDepthStencilTexture)
 			{
 				// Release reference
-				mDepthStencilTexture->releaseReference();
+				mDepthStencilTexture->ReleaseReference();
 			}
 		}
 
@@ -6810,7 +6810,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Framebuffer, this);
 		}
@@ -6986,7 +6986,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexShaderHlsl, this);
 		}
@@ -7134,7 +7134,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TessellationControlShaderHlsl, this);
 		}
@@ -7281,7 +7281,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TessellationEvaluationShaderHlsl, this);
 		}
@@ -7428,7 +7428,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(GeometryShaderHlsl, this);
 		}
@@ -7575,7 +7575,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(FragmentShaderHlsl, this);
 		}
@@ -7722,7 +7722,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ComputeShaderHlsl, this);
 		}
@@ -7794,23 +7794,23 @@ namespace Direct3D11Rhi
 			// Add references to the provided shaders
 			if (nullptr != mVertexShaderHlsl)
 			{
-				mVertexShaderHlsl->addReference();
+				mVertexShaderHlsl->AddReference();
 			}
 			if (nullptr != mTessellationControlShaderHlsl)
 			{
-				mTessellationControlShaderHlsl->addReference();
+				mTessellationControlShaderHlsl->AddReference();
 			}
 			if (nullptr != mTessellationEvaluationShaderHlsl)
 			{
-				mTessellationEvaluationShaderHlsl->addReference();
+				mTessellationEvaluationShaderHlsl->AddReference();
 			}
 			if (nullptr != mGeometryShaderHlsl)
 			{
-				mGeometryShaderHlsl->addReference();
+				mGeometryShaderHlsl->AddReference();
 			}
 			if (nullptr != mFragmentShaderHlsl)
 			{
-				mFragmentShaderHlsl->addReference();
+				mFragmentShaderHlsl->AddReference();
 			}
 		}
 
@@ -7823,23 +7823,23 @@ namespace Direct3D11Rhi
 			// Release the shader references
 			if (nullptr != mVertexShaderHlsl)
 			{
-				mVertexShaderHlsl->releaseReference();
+				mVertexShaderHlsl->ReleaseReference();
 			}
 			if (nullptr != mTessellationControlShaderHlsl)
 			{
-				mTessellationControlShaderHlsl->releaseReference();
+				mTessellationControlShaderHlsl->ReleaseReference();
 			}
 			if (nullptr != mTessellationEvaluationShaderHlsl)
 			{
-				mTessellationEvaluationShaderHlsl->releaseReference();
+				mTessellationEvaluationShaderHlsl->ReleaseReference();
 			}
 			if (nullptr != mGeometryShaderHlsl)
 			{
-				mGeometryShaderHlsl->releaseReference();
+				mGeometryShaderHlsl->ReleaseReference();
 			}
 			if (nullptr != mFragmentShaderHlsl)
 			{
-				mFragmentShaderHlsl->releaseReference();
+				mFragmentShaderHlsl->ReleaseReference();
 			}
 		}
 
@@ -7908,7 +7908,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(GraphicsProgramHlsl, this);
 		}
@@ -8155,7 +8155,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ShaderLanguageHlsl, this);
 		}
@@ -8211,12 +8211,12 @@ namespace Direct3D11Rhi
 			mBlendState(direct3D11Rhi, graphicsPipelineState.blendState)
 		{
 			// Ensure a correct reference counter behaviour
-			graphicsPipelineState.rootSignature->addReference();
-			graphicsPipelineState.rootSignature->releaseReference();
+			graphicsPipelineState.rootSignature->AddReference();
+			graphicsPipelineState.rootSignature->ReleaseReference();
 
 			// Add a reference to the referenced RHI resources
-			mGraphicsProgram->addReference();
-			mRenderPass->addReference();
+			mGraphicsProgram->AddReference();
+			mRenderPass->AddReference();
 
 			// Create Direct3D 11 input element descriptions with support for attribute-less rendering
 			const uint32_t numberOfAttributes = graphicsPipelineState.vertexAttributes.numberOfAttributes;
@@ -8286,8 +8286,8 @@ namespace Direct3D11Rhi
 		virtual ~GraphicsPipelineState() override
 		{
 			// Release referenced RHI resources
-			mGraphicsProgram->releaseReference();
-			mRenderPass->releaseReference();
+			mGraphicsProgram->ReleaseReference();
+			mRenderPass->ReleaseReference();
 
 			// Release the Direct3D 11 input layout
 			if (nullptr != mD3D11InputLayout)
@@ -8373,7 +8373,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(GraphicsPipelineState, this);
 		}
@@ -8440,8 +8440,8 @@ namespace Direct3D11Rhi
 			{
 				mD3D11ComputeShader->AddRef();
 			}
-			computeShader.addReference();
-			computeShader.releaseReference();
+			computeShader.AddReference();
+			computeShader.ReleaseReference();
 		}
 
 		/**
@@ -8477,7 +8477,7 @@ namespace Direct3D11Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ComputePipelineState, this);
 		}
@@ -9071,21 +9071,21 @@ namespace Direct3D11Rhi
 		// Release instances
 		for (Rhi::ITexture* texture : mGenerateAsynchronousMipmapsForTextures)
 		{
-			texture->releaseReference();
+			texture->ReleaseReference();
 		}
 		if (nullptr != mRenderTarget)
 		{
-			mRenderTarget->releaseReference();
+			mRenderTarget->ReleaseReference();
 			mRenderTarget = nullptr;
 		}
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->releaseReference();
+			mGraphicsRootSignature->ReleaseReference();
 			mGraphicsRootSignature = nullptr;
 		}
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->releaseReference();
+			mComputeRootSignature->ReleaseReference();
 			mComputeRootSignature = nullptr;
 		}
 
@@ -9120,7 +9120,7 @@ namespace Direct3D11Rhi
 		// Release the HLSL shader language instance, in case we have one
 		if (nullptr != mShaderLanguageHlsl)
 		{
-			mShaderLanguageHlsl->releaseReference();
+			mShaderLanguageHlsl->ReleaseReference();
 		}
 
 		// Release the Direct3D 11 device we've created
@@ -9172,12 +9172,12 @@ namespace Direct3D11Rhi
 	{
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->releaseReference();
+			mGraphicsRootSignature->ReleaseReference();
 		}
 		mGraphicsRootSignature = static_cast<RootSignature*>(rootSignature);
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->addReference();
+			mGraphicsRootSignature->AddReference();
 
 			// Sanity check
 			RHI_MATCH_CHECK(*this, *rootSignature)
@@ -9613,12 +9613,12 @@ namespace Direct3D11Rhi
 				if (nullptr != mRenderTarget)
 				{
 					// Release reference
-					mRenderTarget->releaseReference();
+					mRenderTarget->ReleaseReference();
 				}
 
 				// Set new render target and add a reference to it
 				mRenderTarget = renderTarget;
-				mRenderTarget->addReference();
+				mRenderTarget->AddReference();
 
 				// Evaluate the render target type
 				switch (mRenderTarget->getResourceType())
@@ -9687,7 +9687,7 @@ namespace Direct3D11Rhi
 				// Release the render target reference, in case we have one
 				if (nullptr != mRenderTarget)
 				{
-					mRenderTarget->releaseReference();
+					mRenderTarget->ReleaseReference();
 					mRenderTarget = nullptr;
 				}
 			}
@@ -10071,12 +10071,12 @@ namespace Direct3D11Rhi
 	{
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->releaseReference();
+			mComputeRootSignature->ReleaseReference();
 		}
 		mComputeRootSignature = static_cast<RootSignature*>(rootSignature);
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->addReference();
+			mComputeRootSignature->AddReference();
 
 			// Sanity check
 			RHI_MATCH_CHECK(*this, *rootSignature)
@@ -10752,7 +10752,7 @@ namespace Direct3D11Rhi
 		{
 			std::lock_guard<std::mutex> generateAsynchronousMipmapsForTexturesMutexLock(mGenerateAsynchronousMipmapsForTexturesMutex);
 			mGenerateAsynchronousMipmapsForTextures.push_back(&texture);
-			texture.addReference();
+			texture.AddReference();
 		}
 		else
 		{
@@ -10922,7 +10922,7 @@ namespace Direct3D11Rhi
 				if (nullptr == mShaderLanguageHlsl)
 				{
 					mShaderLanguageHlsl = RHI_NEW(ShaderLanguageHlsl)(*this);
-					mShaderLanguageHlsl->addReference();	// Internal RHI reference
+					mShaderLanguageHlsl->AddReference();	// Internal RHI reference
 				}
 
 				// Return the shader language instance
@@ -11001,12 +11001,12 @@ namespace Direct3D11Rhi
 		}
 
 		// Error: Ensure a correct reference counter behaviour
-		graphicsPipelineState.rootSignature->addReference();
-		graphicsPipelineState.rootSignature->releaseReference();
-		graphicsPipelineState.graphicsProgram->addReference();
-		graphicsPipelineState.graphicsProgram->releaseReference();
-		graphicsPipelineState.renderPass->addReference();
-		graphicsPipelineState.renderPass->releaseReference();
+		graphicsPipelineState.rootSignature->AddReference();
+		graphicsPipelineState.rootSignature->ReleaseReference();
+		graphicsPipelineState.graphicsProgram->AddReference();
+		graphicsPipelineState.graphicsProgram->ReleaseReference();
+		graphicsPipelineState.renderPass->AddReference();
+		graphicsPipelineState.renderPass->ReleaseReference();
 		return nullptr;
 	}
 
@@ -11017,8 +11017,8 @@ namespace Direct3D11Rhi
 		RHI_MATCH_CHECK(*this, computeShader)
 
 		// Ensure a correct reference counter behaviour
-		rootSignature.addReference();
-		rootSignature.releaseReference();
+		rootSignature.AddReference();
+		rootSignature.ReleaseReference();
 
 		// Create the compute pipeline state
 		uint16_t id = 0;
@@ -11028,8 +11028,8 @@ namespace Direct3D11Rhi
 		}
 
 		// Error: Ensure a correct reference counter behaviour
-		computeShader.addReference();
-		computeShader.releaseReference();
+		computeShader.AddReference();
+		computeShader.ReleaseReference();
 		return nullptr;
 	}
 
@@ -11379,7 +11379,7 @@ namespace Direct3D11Rhi
 					}
 					RHI_ASSERT(nullptr != d3d11ShaderResourceView, "Direct3D 11: Invalid shader resource view")
 					mD3D11DeviceContext->GenerateMips(d3d11ShaderResourceView);
-					texture->releaseReference();
+					texture->ReleaseReference();
 				}
 				mGenerateAsynchronousMipmapsForTextures.clear();
 			}

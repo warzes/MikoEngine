@@ -152,7 +152,7 @@ namespace Renderer
 			materialBlueprintResourceManager.getGlobalMaterialProperties().setPropertyById(STRING_ID("GlobalNumberOfMultisamples"), MaterialPropertyValue::fromInteger((mNumberOfMultisamples == 1) ? 0 : mNumberOfMultisamples));
 
 			// Add reference to the render target
-			renderTarget.addReference();
+			renderTarget.AddReference();
 			mExecutionRenderTarget = &renderTarget;
 
 			// Get the main render target size
@@ -300,7 +300,7 @@ namespace Renderer
 
 			// Release reference from the render target
 			mExecutionRenderTarget = nullptr;
-			renderTarget.releaseReference();
+			renderTarget.ReleaseReference();
 		}
 	}
 

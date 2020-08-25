@@ -52,7 +52,7 @@ namespace Renderer
 		{
 			if (nullptr != framebufferElement.framebuffer)
 			{
-				framebufferElement.framebuffer->releaseReference();
+				framebufferElement.framebuffer->ReleaseReference();
 				framebufferElement.framebuffer = nullptr;
 			}
 		}
@@ -179,7 +179,7 @@ namespace Renderer
 						// Create the framebuffer object (FBO) instance
 						// -> The framebuffer automatically adds a reference to the provided textures
 						framebufferElement.framebuffer = mRenderTargetTextureManager.getRenderer().getRhi().createFramebuffer(*renderPass, colorFramebufferAttachments, ((nullptr != depthStencilFramebufferAttachment.texture) ? &depthStencilFramebufferAttachment : nullptr) RHI_RESOURCE_DEBUG_NAME("Framebuffer manager"));
-						framebufferElement.framebuffer->addReference();
+						framebufferElement.framebuffer->AddReference();
 					}
 					framebuffer = framebufferElement.framebuffer;
 					break;
@@ -208,7 +208,7 @@ namespace Renderer
 			{
 				if (nullptr != iterator->framebuffer)
 				{
-					iterator->framebuffer->releaseReference();
+					iterator->framebuffer->ReleaseReference();
 				}
 				mSortedFramebufferVector.erase(iterator);
 			}

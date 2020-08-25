@@ -1,382 +1,153 @@
-#pragma once
+﻿#pragma once
 
-//[-------------------------------------------------------]
-	//[ Rhi/RefCount.h                                        ]
-	//[-------------------------------------------------------]
-	/**
-	*  @brief
-	*    Reference counter template
-	*
-	*  @note
-	*    - Initially the reference counter is 0
-	*/
-template <class AType>
+// TODO: от виртуальности RefCount можно избавиться, если передавать функцию деструктора
+// TODO: RefCount возможно не потокобезопасен, можно сделать спец версию (пример из годота - safe_refcount
+// TODO: нужны слабые ссылки (weak ptr)
+
+
+template <class T>
 class RefCount
 {
-
-	// Public methods
 public:
-	/**
-	*  @brief
-	*    Default constructor
-	*/
-	SE_FORCEINLINE RefCount() :
-		mRefCount(0)
+	RefCount() noexcept = default;
+	virtual ~RefCount() noexcept = default;
+
+	[[nodiscard]] SE_FORCEINLINE const T* GetPointer() const noexcept
 	{
+		return static_cast<const T*>(this);
 	}
 
-	/**
-	*  @brief
-	*    Destructor
-	*/
-	inline virtual ~RefCount()
+	[[nodiscard]] SE_FORCEINLINE T* GetPointer() noexcept
 	{
+		return static_cast<T*>(this);
 	}
-
-	/**
-	*  @brief
-	*    Get a pointer to the object
-	*
-	*  @return
-	*    Pointer to the reference counter's object, never a null pointer!
-	*/
-	[[nodiscard]] SE_FORCEINLINE const AType* getPointer() const
-	{
-		return static_cast<const AType*>(this);
-	}
-
-	/**
-	*  @brief
-	*    Get a pointer to the object
-	*
-	*  @return
-	*    Pointer to the reference counter's object, never a null pointer!
-	*/
-	[[nodiscard]] SE_FORCEINLINE AType* getPointer()
-	{
-		return static_cast<AType*>(this);
-	}
-
-	/**
-	*  @brief
-	*    Increases the reference count
-	*
-	*  @return
-	*    Current reference count
-	*/
-	SE_FORCEINLINE uint32_t addReference()
+	SE_FORCEINLINE uint32_t AddReference() noexcept
 	{
 		// Increment reference count
-		++mRefCount;
-
+		++m_refCount;
 		// Return current reference count
-		return mRefCount;
+		return m_refCount;
 	}
 
-	/**
-	*  @brief
-	*    Decreases the reference count
-	*
-	*  @return
-	*    Current reference count
-	*
-	*  @note
-	*    - When the last reference was released, the instance is destroyed automatically
-	*/
-	SE_FORCEINLINE uint32_t releaseReference()
+	SE_FORCEINLINE uint32_t ReleaseReference() noexcept
 	{
 		// Decrement reference count
-		if ( mRefCount > 1 )
+		if (m_refCount > 1)
 		{
-			--mRefCount;
-
+			--m_refCount;
 			// Return current reference count
-			return mRefCount;
+			return m_refCount;
 		}
-
 		// Destroy object when no references are left
 		else
 		{
 			selfDestruct();
-
 			// This object is no longer
 			return 0;
 		}
 	}
 
-	/**
-	*  @brief
-	*    Gets the current reference count
-	*
-	*  @return
-	*    Current reference count
-	*/
-	[[nodiscard]] SE_FORCEINLINE uint32_t getRefCount() const
+	[[nodiscard]] SE_FORCEINLINE uint32_t GetRefCount() const noexcept
 	{
-		// Return current reference count
-		return mRefCount;
+		return m_refCount;
 	}
 
-	// Protected virtual RefCount methods
 protected:
-	/**
-	*  @brief
-	*    Destroy the instance
-	*/
-	virtual void selfDestruct() = 0;
+	virtual void selfDestruct() noexcept = 0;
 
-	// Private data
 private:
-	uint32_t mRefCount; // Reference count
-
+	uint32_t m_refCount = 0;
 };
 
-
-
-
-//[-------------------------------------------------------]
-//[ Rhi/SmartRefCount.h                                   ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Smart reference counter template
-*/
-template <class AType>
+template <class T>
 class SmartRefCount
 {
-
-	// Public methods
 public:
-	/**
-	*  @brief
-	*    Default constructor
-	*/
-	SE_FORCEINLINE SmartRefCount() :
-		mPtr(nullptr)
-	{
-	}
-
-	/**
-	*  @brief
-	*    Constructor
-	*
-	*  @param[in] ptr
-	*    Direct pointer to initialize with, can be a null pointer
-	*/
-	SE_FORCEINLINE SmartRefCount(AType* ptr) :
-		mPtr(nullptr)
+	SmartRefCount() noexcept = default;
+	SE_FORCEINLINE SmartRefCount(T *ptr) noexcept
 	{
 		setPtr(ptr);
 	}
-
-	/**
-	*  @brief
-	*    Copy constructor
-	*
-	*  @param[in] ptr
-	*    Smart pointer to initialize with
-	*/
-	SE_FORCEINLINE SmartRefCount(const SmartRefCount<AType>& ptr) :
-		mPtr(nullptr)
+	SE_FORCEINLINE SmartRefCount(const SmartRefCount<T> &ptr) noexcept
 	{
 		setPtr(ptr.getPtr());
 	}
 
-	/**
-	*  @brief
-	*    Destructor
-	*/
-	inline ~SmartRefCount()
+	inline ~SmartRefCount() noexcept
 	{
 		setPtr(nullptr);
 	}
 
-	/**
-	*  @brief
-	*    Assign a pointer
-	*
-	*  @param[in] ptr
-	*    Direct pointer to assign, can be a null pointer
-	*
-	*  @return
-	*    Reference to the smart pointer
-	*/
-	SE_FORCEINLINE SmartRefCount<AType>& operator =(AType* ptr)
+	SE_FORCEINLINE SmartRefCount<T>& operator=(T *ptr) noexcept
 	{
-		if ( getPointer() != ptr )
-		{
+		if (GetPointer() != ptr)
 			setPtr(ptr);
-		}
 		return *this;
 	}
 
-	/**
-	*  @brief
-	*    Assign a smart pointer
-	*
-	*  @param[in] ptr
-	*    Smart pointer to assign
-	*
-	*  @return
-	*    Reference to the smart pointer
-	*/
-	SE_FORCEINLINE SmartRefCount<AType>& operator =(const SmartRefCount<AType>& ptr)
+	SE_FORCEINLINE SmartRefCount<T>& operator=(const SmartRefCount<T> &ptr) noexcept
 	{
-		if ( getPointer() != ptr.getPointer() )
-		{
+		if (GetPointer() != ptr.GetPointer())
 			setPtr(ptr.getPtr());
-		}
 		return *this;
 	}
 
-	/**
-	*  @brief
-	*    Get a direct pointer to the object
-	*
-	*  @return
-	*    Pointer to the object, can be a null pointer
-	*/
-	[[nodiscard]] SE_FORCEINLINE AType* getPointer() const
+	[[nodiscard]] SE_FORCEINLINE T* GetPointer() const noexcept
 	{
-		return (nullptr != mPtr) ? static_cast<AType*>(mPtr->getPointer()) : nullptr;
+		return (nullptr != m_ptr) ? static_cast<T*>(m_ptr->GetPointer()) : nullptr;
 	}
 
-	/**
-	*  @brief
-	*    Get a pointer to access the object
-	*
-	*  @return
-	*    Pointer to the object, can be a null pointer
-	*/
-	[[nodiscard]] SE_FORCEINLINE AType* operator ->() const
+	[[nodiscard]] SE_FORCEINLINE T* operator->() const noexcept
 	{
-		return getPointer();
+		return GetPointer();
 	}
 
-	/**
-	*  @brief
-	*    Cast to a pointer to the object
-	*
-	*  @return
-	*    Pointer to the object, can be a null pointer
-	*/
-	[[nodiscard]] SE_FORCEINLINE operator AType*() const
+	[[nodiscard]] SE_FORCEINLINE operator T*() const noexcept
 	{
-		return getPointer();
+		return GetPointer();
 	}
 
-	/**
-	*  @brief
-	*    Check if the pointer is not a null pointer
-	*
-	*  @return
-	*    "true" if the pointer is not a null pointer
-	*/
-	[[nodiscard]] SE_FORCEINLINE bool operator !() const
+	[[nodiscard]] SE_FORCEINLINE bool operator!() const noexcept
 	{
-		return (nullptr == getPointer());
+		return (nullptr == GetPointer());
 	}
 
-	/**
-	*  @brief
-	*    Check for equality
-	*
-	*  @param[in] ptr
-	*    Direct pointer to compare with, can be a null pointer
-	*
-	*  @return
-	*    "true" if the two pointers are equal
-	*/
-	[[nodiscard]] SE_FORCEINLINE bool operator ==(AType* ptr) const
+	[[nodiscard]] SE_FORCEINLINE bool operator==(T *ptr) const noexcept
 	{
-		return (getPointer() == ptr);
+		return (GetPointer() == ptr);
 	}
 
-	/**
-	*  @brief
-	*    Check for equality
-	*
-	*  @param[in] ptr
-	*    Smart pointer to compare with
-	*
-	*  @return
-	*    "true" if the two pointers are equal
-	*/
-	[[nodiscard]] SE_FORCEINLINE bool operator ==(const SmartRefCount<AType>& ptr) const
+	[[nodiscard]] SE_FORCEINLINE bool operator==(const SmartRefCount<T> &ptr) const noexcept
 	{
-		return (getPointer() == ptr.getPointer());
+		return (GetPointer() == ptr.GetPointer());
 	}
 
-	/**
-	*  @brief
-	*    Check for equality
-	*
-	*  @param[in] ptr
-	*    Direct pointer to compare with, can be a null pointer
-	*
-	*  @return
-	*    "true" if the two pointers are not equal
-	*/
-	[[nodiscard]] SE_FORCEINLINE bool operator !=(AType* ptr) const
+	[[nodiscard]] SE_FORCEINLINE bool operator!=(T *ptr) const noexcept
 	{
-		return (getPointer() != ptr);
+		return (GetPointer() != ptr);
 	}
 
-	/**
-	*  @brief
-	*    Check for equality
-	*
-	*  @param[in] ptr
-	*    Smart pointer to compare with
-	*
-	*  @return
-	*    "true" if the two pointers are not equal
-	*/
-	[[nodiscard]] SE_FORCEINLINE bool operator !=(const SmartRefCount<AType>& ptr) const
+	[[nodiscard]] SE_FORCEINLINE bool operator!=(const SmartRefCount<T> &ptr) const noexcept
 	{
-		return (getPointer() != ptr.getPointer());
+		return (GetPointer() != ptr.GetPointer());
 	}
 
-	// Private methods
 private:
-	/**
-	*  @brief
-	*    Assign a pointer to an object that implements RefCount
-	*
-	*  @param[in] ptr
-	*    Pointer to assign, can be a null pointer
-	*/
-	SE_FORCEINLINE void setPtr(AType* ptr)
+	SE_FORCEINLINE void setPtr(T *ptr) noexcept
 	{
 		// Release old pointer
-		if ( nullptr != mPtr )
-		{
-			mPtr->releaseReference();
-		}
-
+		if (nullptr != m_ptr)
+			m_ptr->ReleaseReference();
 		// Assign new pointer
-		if ( nullptr != ptr )
-		{
-			ptr->addReference();
-		}
-		mPtr = ptr;
+		if (nullptr != ptr)
+			ptr->AddReference();
+		m_ptr = ptr;
 	}
 
-	/**
-	*  @brief
-	*    Get pointer to the reference counted object
-	*
-	*  @return
-	*    Pointer to the RefCount object, can be a null pointer
-	*/
-	[[nodiscard]] SE_FORCEINLINE AType* getPtr() const
+	[[nodiscard]] SE_FORCEINLINE T* getPtr() const noexcept
 	{
-		// Return pointer
-		return mPtr;
+		return m_ptr;
 	}
 
-	// Private data
-private:
-	AType* mPtr; // Pointer to reference counter, can be a null pointer
-
+	T *m_ptr = nullptr; // Pointer to reference counter, can be a null pointer
 };

@@ -507,7 +507,7 @@ namespace OpenGLRhi
 				// Add references to the default sampler state and set it
 				if (nullptr != mDefaultSamplerState)
 				{
-					mDefaultSamplerState->addReference();
+					mDefaultSamplerState->AddReference();
 					// TODO(co) Set default sampler states
 				}
 			}
@@ -535,12 +535,12 @@ namespace OpenGLRhi
 		// Release instances
 		if (nullptr != mRenderTarget)
 		{
-			mRenderTarget->releaseReference();
+			mRenderTarget->ReleaseReference();
 			mRenderTarget = nullptr;
 		}
 		if (nullptr != mDefaultSamplerState)
 		{
-			mDefaultSamplerState->releaseReference();
+			mDefaultSamplerState->ReleaseReference();
 			mDefaultSamplerState = nullptr;
 		}
 
@@ -555,11 +555,11 @@ namespace OpenGLRhi
 		// Release the graphics and compute root signature instance, in case we have one
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->releaseReference();
+			mGraphicsRootSignature->ReleaseReference();
 		}
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->releaseReference();
+			mComputeRootSignature->ReleaseReference();
 		}
 
 		#if SE_RHI_STATISTICS
@@ -587,7 +587,7 @@ namespace OpenGLRhi
 		// Release the shader language instance, in case we have one
 		if (nullptr != mShaderLanguage)
 		{
-			mShaderLanguage->releaseReference();
+			mShaderLanguage->ReleaseReference();
 		}
 
 		// Destroy the extensions instance
@@ -608,12 +608,12 @@ namespace OpenGLRhi
 	{
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->releaseReference();
+			mGraphicsRootSignature->ReleaseReference();
 		}
 		mGraphicsRootSignature = static_cast<RootSignature*>(rootSignature);
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->addReference();
+			mGraphicsRootSignature->AddReference();
 
 			// Sanity check
 			RHI_MATCH_CHECK(*this, *rootSignature)
@@ -632,10 +632,10 @@ namespace OpenGLRhi
 				// Set new graphics pipeline state and add a reference to it
 				if (nullptr != mGraphicsPipelineState)
 				{
-					mGraphicsPipelineState->releaseReference();
+					mGraphicsPipelineState->ReleaseReference();
 				}
 				mGraphicsPipelineState = static_cast<GraphicsPipelineState*>(graphicsPipelineState);
-				mGraphicsPipelineState->addReference();
+				mGraphicsPipelineState->AddReference();
 
 				// Set OpenGL primitive topology
 				mOpenGLPrimitiveTopology = mGraphicsPipelineState->getOpenGLPrimitiveTopology();
@@ -652,7 +652,7 @@ namespace OpenGLRhi
 			else if (nullptr != mGraphicsPipelineState)
 			{
 				// TODO(co) Handle this situation by resetting OpenGL states?
-				mGraphicsPipelineState->releaseReference();
+				mGraphicsPipelineState->ReleaseReference();
 				mGraphicsPipelineState = nullptr;
 			}
 		}
@@ -718,7 +718,7 @@ namespace OpenGLRhi
 
 				// Set new vertex array and add a reference to it
 				mVertexArray = static_cast<VertexArray*>(vertexArray);
-				mVertexArray->addReference();
+				mVertexArray->AddReference();
 
 				// Evaluate the internal array type of the new vertex array to set
 				switch (static_cast<VertexArray*>(mVertexArray)->getInternalResourceType())
@@ -827,12 +827,12 @@ namespace OpenGLRhi
 					}
 
 					// Release
-					mRenderTarget->releaseReference();
+					mRenderTarget->ReleaseReference();
 				}
 
 				// Set new render target and add a reference to it
 				mRenderTarget = renderTarget;
-				mRenderTarget->addReference();
+				mRenderTarget->AddReference();
 
 				// Evaluate the render target type
 				GLenum clipControlOrigin = GL_UPPER_LEFT;
@@ -935,7 +935,7 @@ namespace OpenGLRhi
 				// TODO(co) Set no active render target
 
 				// Release the render target reference, in case we have one
-				mRenderTarget->releaseReference();
+				mRenderTarget->ReleaseReference();
 				mRenderTarget = nullptr;
 			}
 		}
@@ -1309,12 +1309,12 @@ namespace OpenGLRhi
 	{
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->releaseReference();
+			mComputeRootSignature->ReleaseReference();
 		}
 		mComputeRootSignature = static_cast<RootSignature*>(rootSignature);
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->addReference();
+			mComputeRootSignature->AddReference();
 
 			// Sanity check
 			RHI_MATCH_CHECK(*this, *rootSignature)
@@ -1333,10 +1333,10 @@ namespace OpenGLRhi
 				// Set new compute pipeline state and add a reference to it
 				if (nullptr != mComputePipelineState)
 				{
-					mComputePipelineState->releaseReference();
+					mComputePipelineState->ReleaseReference();
 				}
 				mComputePipelineState = static_cast<ComputePipelineState*>(computePipelineState);
-				mComputePipelineState->addReference();
+				mComputePipelineState->AddReference();
 
 				// Set OpenGL compute pipeline state
 				setOpenGLComputePipelineState(mComputePipelineState);
@@ -1344,7 +1344,7 @@ namespace OpenGLRhi
 			else if (nullptr != mComputePipelineState)
 			{
 				// TODO(co) Handle this situation by resetting OpenGL states?
-				mComputePipelineState->releaseReference();
+				mComputePipelineState->ReleaseReference();
 				mComputePipelineState = nullptr;
 			}
 		}
@@ -1832,7 +1832,7 @@ namespace OpenGLRhi
 						if (nullptr == mShaderLanguage)
 						{
 							mShaderLanguage = RHI_NEW(ShaderLanguageSeparate)(*this);
-							mShaderLanguage->addReference();	// Internal RHI reference
+							mShaderLanguage->AddReference();	// Internal RHI reference
 						}
 
 						// Return the shader language instance
@@ -1844,7 +1844,7 @@ namespace OpenGLRhi
 						if (nullptr == mShaderLanguage)
 						{
 							mShaderLanguage = RHI_NEW(ShaderLanguageMonolithic)(*this);
-							mShaderLanguage->addReference();	// Internal RHI reference
+							mShaderLanguage->AddReference();	// Internal RHI reference
 						}
 
 						// Return the shader language instance
@@ -1973,12 +1973,12 @@ namespace OpenGLRhi
 		}
 
 		// Error: Ensure a correct reference counter behaviour
-		graphicsPipelineState.rootSignature->addReference();
-		graphicsPipelineState.rootSignature->releaseReference();
-		graphicsPipelineState.graphicsProgram->addReference();
-		graphicsPipelineState.graphicsProgram->releaseReference();
-		graphicsPipelineState.renderPass->addReference();
-		graphicsPipelineState.renderPass->releaseReference();
+		graphicsPipelineState.rootSignature->AddReference();
+		graphicsPipelineState.rootSignature->ReleaseReference();
+		graphicsPipelineState.graphicsProgram->AddReference();
+		graphicsPipelineState.graphicsProgram->ReleaseReference();
+		graphicsPipelineState.renderPass->AddReference();
+		graphicsPipelineState.renderPass->ReleaseReference();
 		return nullptr;
 	}
 
@@ -2005,10 +2005,10 @@ namespace OpenGLRhi
 		}
 
 		// Error: Ensure a correct reference counter behaviour
-		rootSignature.addReference();
-		rootSignature.releaseReference();
-		computeShader.addReference();
-		computeShader.releaseReference();
+		rootSignature.AddReference();
+		rootSignature.ReleaseReference();
+		computeShader.AddReference();
+		computeShader.ReleaseReference();
 		return nullptr;
 	}
 
@@ -2813,7 +2813,7 @@ namespace OpenGLRhi
 			}
 
 			// Release reference
-			mVertexArray->releaseReference();
+			mVertexArray->ReleaseReference();
 			mVertexArray = nullptr;
 		}
 	}

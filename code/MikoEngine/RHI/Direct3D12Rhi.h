@@ -223,7 +223,7 @@ namespace Direct3D12Rhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Direct3D12Rhi, this);
 		}

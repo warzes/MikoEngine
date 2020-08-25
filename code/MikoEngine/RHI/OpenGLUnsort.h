@@ -45,7 +45,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexBuffer, this);
 		}
@@ -320,7 +320,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(IndexBuffer, this);
 		}
@@ -581,7 +581,7 @@ namespace OpenGLRhi
 			// Release the index buffer reference
 			if ( nullptr != mIndexBuffer )
 			{
-				mIndexBuffer->releaseReference();
+				mIndexBuffer->ReleaseReference();
 			}
 
 			// Free the unique compact vertex array ID
@@ -617,7 +617,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexArray, this);
 		}
@@ -648,7 +648,7 @@ namespace OpenGLRhi
 			// Add a reference to the given index buffer
 			if ( nullptr != mIndexBuffer )
 			{
-				mIndexBuffer->addReference();
+				mIndexBuffer->AddReference();
 			}
 		}
 
@@ -728,7 +728,7 @@ namespace OpenGLRhi
 			const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = mVertexBuffers + mNumberOfVertexBuffers;
 			for ( const Rhi::VertexArrayVertexBuffer* vertexBuffer = mVertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer )
 			{
-				vertexBuffer->vertexBuffer->addReference();
+				vertexBuffer->vertexBuffer->AddReference();
 			}
 		}
 
@@ -748,7 +748,7 @@ namespace OpenGLRhi
 				const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = mVertexBuffers + mNumberOfVertexBuffers;
 				for ( const Rhi::VertexArrayVertexBuffer* vertexBuffer = mVertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer )
 				{
-					vertexBuffer->vertexBuffer->releaseReference();
+					vertexBuffer->vertexBuffer->ReleaseReference();
 				}
 
 				// Cleanup
@@ -904,7 +904,7 @@ namespace OpenGLRhi
 				VertexBuffer** vertexBuffersEnd = mVertexBuffers + mNumberOfVertexBuffers;
 				for ( VertexBuffer** vertexBuffer = mVertexBuffers; vertexBuffer < vertexBuffersEnd; ++vertexBuffer )
 				{
-					(*vertexBuffer)->releaseReference();
+					(*vertexBuffer)->ReleaseReference();
 				}
 
 				// Cleanup
@@ -962,7 +962,7 @@ namespace OpenGLRhi
 				{
 					// TODO(co) Add security check: Is the given resource one of the currently used RHI?
 					*currentVertexBuffers = static_cast<VertexBuffer*>(vertexBuffer->vertexBuffer);
-					(*currentVertexBuffers)->addReference();
+					(*currentVertexBuffers)->AddReference();
 				}
 			}
 		}
@@ -1412,7 +1412,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureBuffer, this);
 		}
@@ -1733,7 +1733,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(StructuredBuffer, this);
 		}
@@ -1995,7 +1995,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(IndirectBuffer, this);
 		}
@@ -2246,7 +2246,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(UniformBuffer, this);
 		}
@@ -2597,13 +2597,13 @@ namespace OpenGLRhi
 			const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = vertexBuffers + numberOfVertexBuffers;
 			for ( const Rhi::VertexArrayVertexBuffer* vertexBuffer = vertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer )
 			{
-				vertexBuffer->vertexBuffer->addReference();
-				vertexBuffer->vertexBuffer->releaseReference();
+				vertexBuffer->vertexBuffer->AddReference();
+				vertexBuffer->vertexBuffer->ReleaseReference();
 			}
 			if ( nullptr != indexBuffer )
 			{
-				indexBuffer->addReference();
-				indexBuffer->releaseReference();
+				indexBuffer->AddReference();
+				indexBuffer->ReleaseReference();
 			}
 			return nullptr;
 		}
@@ -2736,7 +2736,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(BufferManager, this);
 		}
@@ -2827,7 +2827,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture1D, this);
 		}
@@ -3323,7 +3323,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture1DArray, this);
 		}
@@ -3823,7 +3823,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture2D, this);
 		}
@@ -4470,7 +4470,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture2DArray, this);
 		}
@@ -4977,7 +4977,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture3D, this);
 		}
@@ -5569,7 +5569,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureCube, this);
 		}
@@ -6285,7 +6285,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureManager, this);
 		}
@@ -6339,7 +6339,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(SamplerState, this);
 		}
@@ -7185,7 +7185,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(RenderPass, this);
 		}
@@ -7417,7 +7417,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(OcclusionTimestampQueryPool, this);
 		}
@@ -7603,7 +7603,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(PipelineStatisticsQueryPool, this);
 		}
@@ -7898,7 +7898,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(SwapChain, this);
 		}
@@ -7958,7 +7958,7 @@ namespace OpenGLRhi
 				Rhi::ITexture** colorTexturesEnd = mColorTextures + mNumberOfColorTextures;
 				for ( Rhi::ITexture** colorTexture = mColorTextures; colorTexture < colorTexturesEnd; ++colorTexture )
 				{
-					(*colorTexture)->releaseReference();
+					(*colorTexture)->ReleaseReference();
 				}
 
 				// Cleanup
@@ -7969,7 +7969,7 @@ namespace OpenGLRhi
 			if ( nullptr != mDepthStencilTexture )
 			{
 				// Release reference
-				mDepthStencilTexture->releaseReference();
+				mDepthStencilTexture->ReleaseReference();
 			}
 		}
 
@@ -8036,7 +8036,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Framebuffer, this);
 		}
@@ -8090,7 +8090,7 @@ namespace OpenGLRhi
 
 						// TODO(co) Add security check: Is the given resource one of the currently used RHI?
 						*colorTexture = colorFramebufferAttachments->texture;
-					(*colorTexture)->addReference();
+					(*colorTexture)->AddReference();
 
 					// Evaluate the color texture type
 					switch ( (*colorTexture)->getResourceType() )
@@ -8158,7 +8158,7 @@ namespace OpenGLRhi
 			{
 				mDepthStencilTexture = depthStencilFramebufferAttachment->texture;
 				RHI_ASSERT(nullptr != mDepthStencilTexture, "Invalid OpenGL depth stencil framebuffer attachment texture")
-					mDepthStencilTexture->addReference();
+					mDepthStencilTexture->AddReference();
 
 				// Evaluate the depth stencil texture type
 				switch ( mDepthStencilTexture->getResourceType() )
@@ -8950,7 +8950,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexShaderMonolithic, this);
 		}
@@ -9052,7 +9052,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TessellationControlShaderMonolithic, this);
 		}
@@ -9154,7 +9154,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TessellationEvaluationShaderMonolithic, this);
 		}
@@ -9301,7 +9301,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(GeometryShaderMonolithic, this);
 		}
@@ -9406,7 +9406,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(FragmentShaderMonolithic, this);
 		}
@@ -9508,7 +9508,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TaskShaderMonolithic, this);
 		}
@@ -9610,7 +9610,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(MeshShaderMonolithic, this);
 		}
@@ -9712,7 +9712,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ComputeShaderMonolithic, this);
 		}
@@ -9786,26 +9786,26 @@ namespace OpenGLRhi
 			// -> We don't need to keep a reference to the shader, to add and release at once to ensure a nice behaviour
 			if ( nullptr != vertexShaderMonolithic )
 			{
-				vertexShaderMonolithic->addReference();
+				vertexShaderMonolithic->AddReference();
 				glAttachShader(mOpenGLProgram, vertexShaderMonolithic->getOpenGLShader());
-				vertexShaderMonolithic->releaseReference();
+				vertexShaderMonolithic->ReleaseReference();
 			}
 			if ( nullptr != tessellationControlShaderMonolithic )
 			{
-				tessellationControlShaderMonolithic->addReference();
+				tessellationControlShaderMonolithic->AddReference();
 				glAttachShader(mOpenGLProgram, tessellationControlShaderMonolithic->getOpenGLShader());
-				tessellationControlShaderMonolithic->releaseReference();
+				tessellationControlShaderMonolithic->ReleaseReference();
 			}
 			if ( nullptr != tessellationEvaluationShaderMonolithic )
 			{
-				tessellationEvaluationShaderMonolithic->addReference();
+				tessellationEvaluationShaderMonolithic->AddReference();
 				glAttachShader(mOpenGLProgram, tessellationEvaluationShaderMonolithic->getOpenGLShader());
-				tessellationEvaluationShaderMonolithic->releaseReference();
+				tessellationEvaluationShaderMonolithic->ReleaseReference();
 			}
 			if ( nullptr != geometryShaderMonolithic )
 			{
 				// Add a reference to the shader
-				geometryShaderMonolithic->addReference();
+				geometryShaderMonolithic->AddReference();
 
 				// Attach the monolithic shader to the monolithic program
 				glAttachShader(mOpenGLProgram, geometryShaderMonolithic->getOpenGLShader());
@@ -9825,13 +9825,13 @@ namespace OpenGLRhi
 				glProgramParameteriARB(mOpenGLProgram, GL_GEOMETRY_VERTICES_OUT_ARB, static_cast<GLint>(geometryShaderMonolithic->getNumberOfOutputVertices()));
 
 				// Release the shader
-				geometryShaderMonolithic->releaseReference();
+				geometryShaderMonolithic->ReleaseReference();
 			}
 			if ( nullptr != fragmentShaderMonolithic )
 			{
-				fragmentShaderMonolithic->addReference();
+				fragmentShaderMonolithic->AddReference();
 				glAttachShader(mOpenGLProgram, fragmentShaderMonolithic->getOpenGLShader());
-				fragmentShaderMonolithic->releaseReference();
+				fragmentShaderMonolithic->ReleaseReference();
 			}
 
 			{ // Define the vertex array attribute binding locations ("vertex declaration" in Direct3D 9 terminology, "input layout" in Direct3D 10 & 11 & 12 terminology)
@@ -9882,18 +9882,18 @@ namespace OpenGLRhi
 			// -> We don't need to keep a reference to the shader, to add and release at once to ensure a nice behaviour
 			if ( nullptr != taskShaderMonolithic )
 			{
-				taskShaderMonolithic->addReference();
+				taskShaderMonolithic->AddReference();
 				glAttachShader(mOpenGLProgram, taskShaderMonolithic->getOpenGLShader());
-				taskShaderMonolithic->releaseReference();
+				taskShaderMonolithic->ReleaseReference();
 			}
-			meshShaderMonolithic.addReference();
+			meshShaderMonolithic.AddReference();
 			glAttachShader(mOpenGLProgram, meshShaderMonolithic.getOpenGLShader());
-			meshShaderMonolithic.releaseReference();
+			meshShaderMonolithic.ReleaseReference();
 			if ( nullptr != fragmentShaderMonolithic )
 			{
-				fragmentShaderMonolithic->addReference();
+				fragmentShaderMonolithic->AddReference();
 				glAttachShader(mOpenGLProgram, fragmentShaderMonolithic->getOpenGLShader());
-				fragmentShaderMonolithic->releaseReference();
+				fragmentShaderMonolithic->ReleaseReference();
 			}
 
 			// Link the program
@@ -10141,7 +10141,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(GraphicsProgramMonolithic, this);
 		}
@@ -10559,9 +10559,9 @@ namespace OpenGLRhi
 		{
 			// Attach the compute shader to the program
 			// -> We don't need to keep a reference to the shader, to add and release at once to ensure a nice behaviour
-			computeShaderMonolithic.addReference();
+			computeShaderMonolithic.AddReference();
 			glAttachShader(mOpenGLProgram, computeShaderMonolithic.getOpenGLShader());
-			computeShaderMonolithic.releaseReference();
+			computeShaderMonolithic.ReleaseReference();
 
 			// Link the program
 			glLinkProgram(mOpenGLProgram);
@@ -10721,7 +10721,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ComputePipelineStateMonolithic, this);
 		}
@@ -11039,7 +11039,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ShaderLanguageMonolithic, this);
 		}
@@ -11179,7 +11179,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexShaderSeparate, this);
 		}
@@ -11311,7 +11311,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TessellationControlShaderSeparate, this);
 		}
@@ -11442,7 +11442,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TessellationEvaluationShaderSeparate, this);
 		}
@@ -11593,7 +11593,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(GeometryShaderSeparate, this);
 		}
@@ -11724,7 +11724,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(FragmentShaderSeparate, this);
 		}
@@ -11855,7 +11855,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TaskShaderSeparate, this);
 		}
@@ -11986,7 +11986,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(MeshShaderSeparate, this);
 		}
@@ -12117,7 +12117,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ComputeShaderSeparate, this);
 		}
@@ -12211,7 +12211,7 @@ namespace OpenGLRhi
 			}
 
 			// Add references to the provided shaders
-#define USE_PROGRAM_STAGES(ShaderBit, ShaderSeparate) if (nullptr != ShaderSeparate) { ShaderSeparate->addReference(); glUseProgramStages(mOpenGLProgramPipeline, ShaderBit, ShaderSeparate->getOpenGLShaderProgram()); }
+#define USE_PROGRAM_STAGES(ShaderBit, ShaderSeparate) if (nullptr != ShaderSeparate) { ShaderSeparate->AddReference(); glUseProgramStages(mOpenGLProgramPipeline, ShaderBit, ShaderSeparate->getOpenGLShaderProgram()); }
 			USE_PROGRAM_STAGES(GL_VERTEX_SHADER_BIT, mVertexShaderSeparate)
 				USE_PROGRAM_STAGES(GL_TESS_CONTROL_SHADER_BIT, mTessellationControlShaderSeparate)
 				USE_PROGRAM_STAGES(GL_TESS_EVALUATION_SHADER_BIT, mTessellationEvaluationShaderSeparate)
@@ -12429,7 +12429,7 @@ namespace OpenGLRhi
 			}
 
 			// Add references to the provided shaders
-#define USE_PROGRAM_STAGES(ShaderBit, ShaderSeparate) if (nullptr != ShaderSeparate) { ShaderSeparate->addReference(); glUseProgramStages(mOpenGLProgramPipeline, ShaderBit, ShaderSeparate->getOpenGLShaderProgram()); }
+#define USE_PROGRAM_STAGES(ShaderBit, ShaderSeparate) if (nullptr != ShaderSeparate) { ShaderSeparate->AddReference(); glUseProgramStages(mOpenGLProgramPipeline, ShaderBit, ShaderSeparate->getOpenGLShaderProgram()); }
 			USE_PROGRAM_STAGES(GL_TASK_SHADER_BIT_NV, mTaskShaderSeparate)
 				USE_PROGRAM_STAGES(GL_MESH_SHADER_BIT_NV, mMeshShaderSeparate)
 				USE_PROGRAM_STAGES(GL_FRAGMENT_SHADER_BIT, mFragmentShaderSeparate)
@@ -12590,31 +12590,31 @@ namespace OpenGLRhi
 			// Release the shader references
 			if ( nullptr != mVertexShaderSeparate )
 			{
-				mVertexShaderSeparate->releaseReference();
+				mVertexShaderSeparate->ReleaseReference();
 			}
 			if ( nullptr != mTessellationControlShaderSeparate )
 			{
-				mTessellationControlShaderSeparate->releaseReference();
+				mTessellationControlShaderSeparate->ReleaseReference();
 			}
 			if ( nullptr != mTessellationEvaluationShaderSeparate )
 			{
-				mTessellationEvaluationShaderSeparate->releaseReference();
+				mTessellationEvaluationShaderSeparate->ReleaseReference();
 			}
 			if ( nullptr != mGeometryShaderSeparate )
 			{
-				mGeometryShaderSeparate->releaseReference();
+				mGeometryShaderSeparate->ReleaseReference();
 			}
 			if ( nullptr != mFragmentShaderSeparate )
 			{
-				mFragmentShaderSeparate->releaseReference();
+				mFragmentShaderSeparate->ReleaseReference();
 			}
 			if ( nullptr != mTaskShaderSeparate )
 			{
-				mTaskShaderSeparate->releaseReference();
+				mTaskShaderSeparate->ReleaseReference();
 			}
 			if ( nullptr != mMeshShaderSeparate )
 			{
-				mMeshShaderSeparate->releaseReference();
+				mMeshShaderSeparate->ReleaseReference();
 			}
 		}
 
@@ -12821,7 +12821,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(GraphicsProgramSeparate, this);
 		}
@@ -13074,7 +13074,7 @@ namespace OpenGLRhi
 			}
 
 			// Add reference to the provided compute shader
-			computeShaderSeparate.addReference();
+			computeShaderSeparate.AddReference();
 			glUseProgramStages(mOpenGLProgramPipeline, GL_COMPUTE_SHADER_BIT, computeShaderSeparate.getOpenGLShaderProgram());
 
 			// Validate program pipeline
@@ -13207,7 +13207,7 @@ namespace OpenGLRhi
 			glDeleteProgramPipelines(1, &mOpenGLProgramPipeline);
 
 			// Release the compute shader reference
-			mComputeShaderSeparate.releaseReference();
+			mComputeShaderSeparate.ReleaseReference();
 		}
 
 		/**
@@ -13227,7 +13227,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ComputePipelineStateSeparate, this);
 		}
@@ -13651,28 +13651,28 @@ namespace OpenGLRhi
 			// -> Ensure a correct reference counter behaviour, even in the situation of an error
 			if ( nullptr != vertexShader )
 			{
-				vertexShader->addReference();
-				vertexShader->releaseReference();
+				vertexShader->AddReference();
+				vertexShader->ReleaseReference();
 			}
 			if ( nullptr != tessellationControlShader )
 			{
-				tessellationControlShader->addReference();
-				tessellationControlShader->releaseReference();
+				tessellationControlShader->AddReference();
+				tessellationControlShader->ReleaseReference();
 			}
 			if ( nullptr != tessellationEvaluationShader )
 			{
-				tessellationEvaluationShader->addReference();
-				tessellationEvaluationShader->releaseReference();
+				tessellationEvaluationShader->AddReference();
+				tessellationEvaluationShader->ReleaseReference();
 			}
 			if ( nullptr != geometryShader )
 			{
-				geometryShader->addReference();
-				geometryShader->releaseReference();
+				geometryShader->AddReference();
+				geometryShader->ReleaseReference();
 			}
 			if ( nullptr != fragmentShader )
 			{
-				fragmentShader->addReference();
-				fragmentShader->releaseReference();
+				fragmentShader->AddReference();
+				fragmentShader->ReleaseReference();
 			}
 
 			// Error!
@@ -13716,15 +13716,15 @@ namespace OpenGLRhi
 			// -> Ensure a correct reference counter behaviour, even in the situation of an error
 			if ( nullptr != taskShader )
 			{
-				taskShader->addReference();
-				taskShader->releaseReference();
+				taskShader->AddReference();
+				taskShader->ReleaseReference();
 			}
-			meshShader.addReference();
-			meshShader.releaseReference();
+			meshShader.AddReference();
+			meshShader.ReleaseReference();
 			if ( nullptr != fragmentShader )
 			{
-				fragmentShader->addReference();
-				fragmentShader->releaseReference();
+				fragmentShader->AddReference();
+				fragmentShader->ReleaseReference();
 			}
 
 			// Error!
@@ -13736,7 +13736,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ShaderLanguageSeparate, this);
 		}
@@ -13817,12 +13817,12 @@ namespace OpenGLRhi
 			}
 
 			// Ensure a correct reference counter behaviour
-			graphicsPipelineState.rootSignature->addReference();
-			graphicsPipelineState.rootSignature->releaseReference();
+			graphicsPipelineState.rootSignature->AddReference();
+			graphicsPipelineState.rootSignature->ReleaseReference();
 
 			// Add a reference to the referenced RHI resources
-			mGraphicsProgram->addReference();
-			mRenderPass->addReference();
+			mGraphicsProgram->AddReference();
+			mRenderPass->AddReference();
 		}
 
 		/**
@@ -13832,8 +13832,8 @@ namespace OpenGLRhi
 		virtual ~GraphicsPipelineState() override
 		{
 			// Release referenced RHI resources
-			mGraphicsProgram->releaseReference();
-			mRenderPass->releaseReference();
+			mGraphicsProgram->ReleaseReference();
+			mRenderPass->ReleaseReference();
 
 			// Free the unique compact graphics pipeline state ID
 			static_cast<OpenGLRhi&>(getRhi()).GraphicsPipelineStateMakeId.DestroyID(getId());
@@ -13916,7 +13916,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(GraphicsPipelineState, this);
 		}

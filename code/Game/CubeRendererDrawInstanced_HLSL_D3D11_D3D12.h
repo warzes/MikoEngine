@@ -185,8 +185,7 @@ float4 main(VS_OUTPUT Input) : SV_TARGET
 
 	// Calculate the final fragment color
 	float4 color = (float4(0.2f, 0.2f, 0.2f, 1.0f) + lighting) * AlbedoMap.Sample(SamplerLinear, Input.TexCoord);
-	color.a = 0.8f;
-	color.a = 1.0f;
+	//color.a = 0.8f;
 
 	// Done
 	return color;

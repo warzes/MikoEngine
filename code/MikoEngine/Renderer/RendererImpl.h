@@ -87,7 +87,7 @@ namespace Renderer
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void selfDestruct() override;
+		virtual void selfDestruct() noexcept override;
 
 
 	//[-------------------------------------------------------]

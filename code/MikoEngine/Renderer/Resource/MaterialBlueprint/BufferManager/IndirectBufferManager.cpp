@@ -57,7 +57,7 @@ namespace Renderer
 		// Destroy all indirect buffers
 		for (IndirectBuffer& indirectBuffer : mFreeIndirectBuffers)
 		{
-			indirectBuffer.indirectBuffer->releaseReference();
+			indirectBuffer.indirectBuffer->ReleaseReference();
 		}
 	}
 

@@ -68,7 +68,7 @@ namespace OpenGLRhi
 				Rhi::IResource* resource = *resources;
 				RHI_ASSERT(nullptr != resource, "Invalid OpenGL resource")
 					mResources[resourceIndex] = resource;
-				resource->addReference();
+				resource->AddReference();
 
 				// Uniform block binding index handling
 				const Rhi::DescriptorRange& descriptorRange = reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges)[resourceIndex];
@@ -91,7 +91,7 @@ namespace OpenGLRhi
 					Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex] = samplerStates[resourceIndex];
 					if ( nullptr != samplerState )
 					{
-						samplerState->addReference();
+						samplerState->AddReference();
 					}
 				}
 			}
@@ -111,14 +111,14 @@ namespace OpenGLRhi
 					Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex];
 					if ( nullptr != samplerState )
 					{
-						samplerState->releaseReference();
+						samplerState->ReleaseReference();
 					}
 				}
 				RHI_FREE(mSamplerStates);
 			}
 			for ( uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex )
 			{
-				mResources[resourceIndex]->releaseReference();
+				mResources[resourceIndex]->ReleaseReference();
 			}
 			RHI_FREE(mResources);
 			RHI_FREE(mResourceIndexToUniformBlockBindingIndex);
@@ -177,7 +177,7 @@ namespace OpenGLRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ResourceGroup, this);
 		}

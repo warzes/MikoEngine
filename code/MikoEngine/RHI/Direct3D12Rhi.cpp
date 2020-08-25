@@ -126,7 +126,7 @@ namespace Direct3D12Rhi
 		// Release instances
 		if (nullptr != mRenderTarget)
 		{
-			mRenderTarget->releaseReference();
+			mRenderTarget->ReleaseReference();
 			mRenderTarget = nullptr;
 		}
 
@@ -155,11 +155,11 @@ namespace Direct3D12Rhi
 		// Release the graphics and compute root signature instance, in case we have one
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->releaseReference();
+			mGraphicsRootSignature->ReleaseReference();
 		}
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->releaseReference();
+			mComputeRootSignature->ReleaseReference();
 		}
 
 		// Destroy upload context
@@ -174,7 +174,7 @@ namespace Direct3D12Rhi
 		// Release the HLSL shader language instance, in case we have one
 		if (nullptr != mShaderLanguageHlsl)
 		{
-			mShaderLanguageHlsl->releaseReference();
+			mShaderLanguageHlsl->ReleaseReference();
 		}
 
 		// Release the Direct3D 12 command queue we've created
@@ -217,12 +217,12 @@ namespace Direct3D12Rhi
 	{
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->releaseReference();
+			mGraphicsRootSignature->ReleaseReference();
 		}
 		mGraphicsRootSignature = static_cast<RootSignature*>(rootSignature);
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->addReference();
+			mGraphicsRootSignature->AddReference();
 
 			// Sanity check
 			RHI_MATCH_CHECK(*this, *rootSignature)
@@ -325,7 +325,7 @@ namespace Direct3D12Rhi
 
 				// Set new vertex array and add a reference to it
 				mVertexArray = static_cast<VertexArray*>(vertexArray);
-				mVertexArray->addReference();
+				mVertexArray->AddReference();
 
 				mVertexArray->setDirect3DIASetInputLayoutAndStreamSource(*mD3D12GraphicsCommandList);
 
@@ -451,7 +451,7 @@ namespace Direct3D12Rhi
 				}
 
 				// Release the render target reference, in case we have one
-				mRenderTarget->releaseReference();
+				mRenderTarget->ReleaseReference();
 				mRenderTarget = nullptr;
 			}
 
@@ -463,7 +463,7 @@ namespace Direct3D12Rhi
 
 				// Set new render target and add a reference to it
 				mRenderTarget = renderTarget;
-				mRenderTarget->addReference();
+				mRenderTarget->AddReference();
 
 				// Evaluate the render target type
 				switch (mRenderTarget->getResourceType())
@@ -832,12 +832,12 @@ namespace Direct3D12Rhi
 	{
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->releaseReference();
+			mComputeRootSignature->ReleaseReference();
 		}
 		mComputeRootSignature = static_cast<RootSignature*>(rootSignature);
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->addReference();
+			mComputeRootSignature->AddReference();
 
 			// Sanity check
 			RHI_MATCH_CHECK(*this, *rootSignature)
@@ -1098,7 +1098,7 @@ namespace Direct3D12Rhi
 				if (nullptr == mShaderLanguageHlsl)
 				{
 					mShaderLanguageHlsl = RHI_NEW(ShaderLanguageHlsl)(*this);
-					mShaderLanguageHlsl->addReference();	// Internal RHI reference
+					mShaderLanguageHlsl->AddReference();	// Internal RHI reference
 				}
 
 				// Return the shader language instance
@@ -1177,12 +1177,12 @@ namespace Direct3D12Rhi
 		}
 
 		// Error: Ensure a correct reference counter behaviour
-		graphicsPipelineState.rootSignature->addReference();
-		graphicsPipelineState.rootSignature->releaseReference();
-		graphicsPipelineState.graphicsProgram->addReference();
-		graphicsPipelineState.graphicsProgram->releaseReference();
-		graphicsPipelineState.renderPass->addReference();
-		graphicsPipelineState.renderPass->releaseReference();
+		graphicsPipelineState.rootSignature->AddReference();
+		graphicsPipelineState.rootSignature->ReleaseReference();
+		graphicsPipelineState.graphicsProgram->AddReference();
+		graphicsPipelineState.graphicsProgram->ReleaseReference();
+		graphicsPipelineState.renderPass->AddReference();
+		graphicsPipelineState.renderPass->ReleaseReference();
 		return nullptr;
 	}
 
@@ -1200,10 +1200,10 @@ namespace Direct3D12Rhi
 		}
 
 		// Error: Ensure a correct reference counter behaviour
-		rootSignature.addReference();
-		rootSignature.releaseReference();
-		computeShader.addReference();
-		computeShader.releaseReference();
+		rootSignature.AddReference();
+		rootSignature.ReleaseReference();
+		computeShader.AddReference();
+		computeShader.ReleaseReference();
 		return nullptr;
 	}
 
@@ -1526,12 +1526,12 @@ namespace Direct3D12Rhi
 		// Release the graphics and compute root signature instance, in case we have one
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->releaseReference();
+			mGraphicsRootSignature->ReleaseReference();
 			mGraphicsRootSignature = nullptr;
 		}
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->releaseReference();
+			mComputeRootSignature->ReleaseReference();
 			mComputeRootSignature = nullptr;
 		}
 	}
@@ -1923,7 +1923,7 @@ namespace Direct3D12Rhi
 			mD3D12GraphicsCommandList->IASetVertexBuffers(0, 0, nullptr);
 
 			// Release reference
-			mVertexArray->releaseReference();
+			mVertexArray->ReleaseReference();
 			mVertexArray = nullptr;
 		}
 	}

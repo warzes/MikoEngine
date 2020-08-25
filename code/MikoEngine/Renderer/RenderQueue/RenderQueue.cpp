@@ -327,7 +327,7 @@ namespace Renderer
 													pipelineStateCache.pipelineStatePtr = computePipelineStateCache->getComputePipelineStateObjectPtr();
 												}
 											}
-											foundPipelineState = static_cast<Rhi::IComputePipelineState*>(pipelineStateCache.pipelineStatePtr->getPointer());
+											foundPipelineState = static_cast<Rhi::IComputePipelineState*>(pipelineStateCache.pipelineStatePtr->GetPointer());
 											RHI_ASSERT(nullptr != foundPipelineState, "Invalid found compute pipeline state")
 											break;
 										}
@@ -345,7 +345,7 @@ namespace Renderer
 											}
 											else
 											{
-												foundPipelineState = static_cast<Rhi::IComputePipelineState*>(pipelineStateCaches.emplace_back(materialTechniqueId, generationCounter, computePipelineStateCache->getComputePipelineStateObjectPtr()).pipelineStatePtr.getPointer());
+												foundPipelineState = static_cast<Rhi::IComputePipelineState*>(pipelineStateCaches.emplace_back(materialTechniqueId, generationCounter, computePipelineStateCache->getComputePipelineStateObjectPtr()).pipelineStatePtr.GetPointer());
 											}
 											RHI_ASSERT(nullptr != foundPipelineState, "Invalid found compute pipeline state")
 										}
@@ -376,7 +376,7 @@ namespace Renderer
 													pipelineStateCache.pipelineStatePtr = graphicsPipelineStateCache->getGraphicsPipelineStateObjectPtr();
 												}
 											}
-											foundPipelineState = static_cast<Rhi::IGraphicsPipelineState*>(pipelineStateCache.pipelineStatePtr->getPointer());
+											foundPipelineState = static_cast<Rhi::IGraphicsPipelineState*>(pipelineStateCache.pipelineStatePtr->GetPointer());
 											RHI_ASSERT(nullptr != foundPipelineState, "Invalid found graphics pipeline state")
 											break;
 										}
@@ -394,7 +394,7 @@ namespace Renderer
 											}
 											else
 											{
-												foundPipelineState = static_cast<Rhi::IGraphicsPipelineState*>(pipelineStateCaches.emplace_back(materialTechniqueId, generationCounter, graphicsPipelineStateCache->getGraphicsPipelineStateObjectPtr()).pipelineStatePtr.getPointer());
+												foundPipelineState = static_cast<Rhi::IGraphicsPipelineState*>(pipelineStateCaches.emplace_back(materialTechniqueId, generationCounter, graphicsPipelineStateCache->getGraphicsPipelineStateObjectPtr()).pipelineStatePtr.GetPointer());
 											}
 											RHI_ASSERT(nullptr != foundPipelineState, "Invalid found graphics pipeline state")
 										}

@@ -47,8 +47,8 @@ namespace Renderer
 		// Destroy all uniform buffers
 		for (UniformBuffer& uniformBuffer : mUniformBuffers)
 		{
-			uniformBuffer.resourceGroup->releaseReference();
-			uniformBuffer.uniformBuffer->releaseReference();
+			uniformBuffer.resourceGroup->ReleaseReference();
+			uniformBuffer.uniformBuffer->ReleaseReference();
 		}
 	}
 

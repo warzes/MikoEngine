@@ -63,7 +63,7 @@ namespace Renderer
 			// Release RHI texture reference
 			if (nullptr != renderTargetTextureElement.texture)
 			{
-				renderTargetTextureElement.texture->releaseReference();
+				renderTargetTextureElement.texture->ReleaseReference();
 				renderTargetTextureElement.texture = nullptr;
 			}
 		}
@@ -183,7 +183,7 @@ namespace Renderer
 					// -> Not required for OpenGL and OpenGL ES 3
 					// -> The optimized texture clear value is a Direct3D 12 related option
 					renderTargetTextureElement.texture = mRenderer.getTextureManager().createTexture2D(width, height, renderTargetTextureSignature.getTextureFormat(), nullptr, textureFlags, Rhi::TextureUsage::DEFAULT, (((renderTargetTextureSignature.getFlags() & RenderTargetTextureSignature::Flag::ALLOW_MULTISAMPLE) != 0) ? numberOfMultisamples : 1u), nullptr RHI_RESOURCE_DEBUG_NAME("Render target texture manager"));
-					renderTargetTextureElement.texture->addReference();
+					renderTargetTextureElement.texture->AddReference();
 
 					{ // Tell the texture resource manager about our render target texture so it can be referenced inside e.g. compositor nodes
 						TextureResourceManager& textureResourceManager = mRenderer.getTextureResourceManager();
@@ -239,7 +239,7 @@ namespace Renderer
 				// Release RHI texture reference
 				if (nullptr != iterator->texture)
 				{
-					iterator->texture->releaseReference();
+					iterator->texture->ReleaseReference();
 				}
 
 				// Destroy render target texture instance

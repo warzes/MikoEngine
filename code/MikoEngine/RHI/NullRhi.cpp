@@ -136,7 +136,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void selfDestruct() override;
+		virtual void selfDestruct() noexcept override;
 
 
 	//[-------------------------------------------------------]
@@ -209,7 +209,7 @@ namespace NullRhi
 				Rhi::IResource* resource = *resources;
 				RHI_ASSERT(nullptr != resource, "Invalid null resource")
 				mResources[resourceIndex] = resource;
-				resource->addReference();
+				resource->AddReference();
 			}
 			if (nullptr != samplerStates)
 			{
@@ -219,7 +219,7 @@ namespace NullRhi
 					Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex] = samplerStates[resourceIndex];
 					if (nullptr != samplerState)
 					{
-						samplerState->addReference();
+						samplerState->AddReference();
 					}
 				}
 			}
@@ -239,14 +239,14 @@ namespace NullRhi
 					Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex];
 					if (nullptr != samplerState)
 					{
-						samplerState->releaseReference();
+						samplerState->ReleaseReference();
 					}
 				}
 				RHI_FREE(mSamplerStates);
 			}
 			for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex)
 			{
-				mResources[resourceIndex]->releaseReference();
+				mResources[resourceIndex]->ReleaseReference();
 			}
 			RHI_FREE(mResources);
 		}
@@ -280,7 +280,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ResourceGroup, this);
 		}
@@ -426,7 +426,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(RootSignature, this);
 		}
@@ -490,7 +490,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexBuffer, this);
 		}
@@ -547,7 +547,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(IndexBuffer, this);
 		}
@@ -609,7 +609,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexArray, this);
 		}
@@ -666,7 +666,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureBuffer, this);
 		}
@@ -723,7 +723,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(StructuredBuffer, this);
 		}
@@ -790,7 +790,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(IndirectBuffer, this);
 		}
@@ -847,7 +847,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(UniformBuffer, this);
 		}
@@ -937,16 +937,16 @@ namespace NullRhi
 			const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = vertexBuffers + numberOfVertexBuffers;
 			for (const Rhi::VertexArrayVertexBuffer* vertexBuffer = vertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer)
 			{
-				vertexBuffer->vertexBuffer->addReference();
-				vertexBuffer->vertexBuffer->releaseReference();
+				vertexBuffer->vertexBuffer->AddReference();
+				vertexBuffer->vertexBuffer->ReleaseReference();
 			}
 
 			// We don't keep a reference to the index buffer in here
 			// -> Ensure a correct reference counter behaviour
 			if (nullptr != indexBuffer)
 			{
-				indexBuffer->addReference();
-				indexBuffer->releaseReference();
+				indexBuffer->AddReference();
+				indexBuffer->ReleaseReference();
 			}
 
 			// Create the vertex array instance
@@ -1008,7 +1008,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(BufferManager, this);
 		}
@@ -1067,7 +1067,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture1D, this);
 		}
@@ -1128,7 +1128,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture1DArray, this);
 		}
@@ -1189,7 +1189,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture2D, this);
 		}
@@ -1252,7 +1252,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture2DArray, this);
 		}
@@ -1315,7 +1315,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture3D, this);
 		}
@@ -1374,7 +1374,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureCube, this);
 		}
@@ -1435,7 +1435,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureCubeArray, this);
 		}
@@ -1574,7 +1574,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureManager, this);
 		}
@@ -1631,7 +1631,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(SamplerState, this);
 		}
@@ -1715,7 +1715,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(RenderPass, this);
 		}
@@ -1894,7 +1894,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(SwapChain, this);
 		}
@@ -1970,7 +1970,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Framebuffer, this);
 		}
@@ -2037,7 +2037,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexShader, this);
 		}
@@ -2104,7 +2104,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TessellationControlShader, this);
 		}
@@ -2171,7 +2171,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TessellationEvaluationShader, this);
 		}
@@ -2238,7 +2238,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(GeometryShader, this);
 		}
@@ -2305,7 +2305,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(FragmentShader, this);
 		}
@@ -2372,7 +2372,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TaskShader, this);
 		}
@@ -2439,7 +2439,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(MeshShader, this);
 		}
@@ -2506,7 +2506,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ComputeShader, this);
 		}
@@ -2567,28 +2567,28 @@ namespace NullRhi
 			// -> Ensure a correct reference counter behaviour
 			if (nullptr != vertexShader)
 			{
-				vertexShader->addReference();
-				vertexShader->releaseReference();
+				vertexShader->AddReference();
+				vertexShader->ReleaseReference();
 			}
 			if (nullptr != tessellationControlShader)
 			{
-				tessellationControlShader->addReference();
-				tessellationControlShader->releaseReference();
+				tessellationControlShader->AddReference();
+				tessellationControlShader->ReleaseReference();
 			}
 			if (nullptr != tessellationEvaluationShader)
 			{
-				tessellationEvaluationShader->addReference();
-				tessellationEvaluationShader->releaseReference();
+				tessellationEvaluationShader->AddReference();
+				tessellationEvaluationShader->ReleaseReference();
 			}
 			if (nullptr != geometryShader)
 			{
-				geometryShader->addReference();
-				geometryShader->releaseReference();
+				geometryShader->AddReference();
+				geometryShader->ReleaseReference();
 			}
 			if (nullptr != fragmentShader)
 			{
-				fragmentShader->addReference();
-				fragmentShader->releaseReference();
+				fragmentShader->AddReference();
+				fragmentShader->ReleaseReference();
 			}
 		}
 
@@ -2615,15 +2615,15 @@ namespace NullRhi
 			// -> Ensure a correct reference counter behaviour
 			if (nullptr != taskShader)
 			{
-				taskShader->addReference();
-				taskShader->releaseReference();
+				taskShader->AddReference();
+				taskShader->ReleaseReference();
 			}
-			meshShader.addReference();
-			meshShader.releaseReference();
+			meshShader.AddReference();
+			meshShader.ReleaseReference();
 			if (nullptr != fragmentShader)
 			{
-				fragmentShader->addReference();
-				fragmentShader->releaseReference();
+				fragmentShader->AddReference();
+				fragmentShader->ReleaseReference();
 			}
 		}
 
@@ -2639,7 +2639,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(GraphicsProgram, this);
 		}
@@ -2854,7 +2854,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ShaderLanguage, this);
 		}
@@ -2906,9 +2906,9 @@ namespace NullRhi
 			mRenderPass(graphicsPipelineState.renderPass)
 		{
 			// Add a reference to the referenced RHI resources
-			mRootSignature->addReference();
-			mGraphicsProgram->addReference();
-			mRenderPass->addReference();
+			mRootSignature->AddReference();
+			mGraphicsProgram->AddReference();
+			mRenderPass->AddReference();
 		}
 
 		/**
@@ -2918,9 +2918,9 @@ namespace NullRhi
 		virtual ~GraphicsPipelineState() override
 		{
 			// Release referenced RHI resources
-			mRootSignature->releaseReference();
-			mGraphicsProgram->releaseReference();
-			mRenderPass->releaseReference();
+			mRootSignature->ReleaseReference();
+			mGraphicsProgram->ReleaseReference();
+			mRenderPass->ReleaseReference();
 
 			// Free the unique compact graphics pipeline state ID
 			static_cast<NullRhi&>(getRhi()).GraphicsPipelineStateMakeId.DestroyID(getId());
@@ -2931,7 +2931,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override 
 		{
 			RHI_DELETE(GraphicsPipelineState, this);
 		}
@@ -2993,8 +2993,8 @@ namespace NullRhi
 			mComputeShader(computeShader)
 		{
 			// Add a reference to the given root signature and compute shader
-			rootSignature.addReference();
-			computeShader.addReference();
+			rootSignature.AddReference();
+			computeShader.AddReference();
 		}
 
 		/**
@@ -3004,8 +3004,8 @@ namespace NullRhi
 		virtual ~ComputePipelineState() override
 		{
 			// Release the root signature and compute shader reference
-			mRootSignature.releaseReference();
-			mComputeShader.releaseReference();
+			mRootSignature.ReleaseReference();
+			mComputeShader.ReleaseReference();
 
 			// Free the unique compact compute pipeline state ID
 			static_cast<NullRhi&>(getRhi()).ComputePipelineStateMakeId.DestroyID(getId());
@@ -3016,7 +3016,7 @@ namespace NullRhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ComputePipelineState, this);
 		}
@@ -3369,17 +3369,17 @@ namespace NullRhi
 		// Release instances
 		if (nullptr != mRenderTarget)
 		{
-			mRenderTarget->releaseReference();
+			mRenderTarget->ReleaseReference();
 			mRenderTarget = nullptr;
 		}
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->releaseReference();
+			mGraphicsRootSignature->ReleaseReference();
 			mGraphicsRootSignature = nullptr;
 		}
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->releaseReference();
+			mComputeRootSignature->ReleaseReference();
 			mComputeRootSignature = nullptr;
 		}
 
@@ -3408,7 +3408,7 @@ namespace NullRhi
 		// Release the null shader language instance, in case we have one
 		if (nullptr != mShaderLanguage)
 		{
-			mShaderLanguage->releaseReference();
+			mShaderLanguage->ReleaseReference();
 		}
 	}
 
@@ -3420,12 +3420,12 @@ namespace NullRhi
 	{
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->releaseReference();
+			mGraphicsRootSignature->ReleaseReference();
 		}
 		mGraphicsRootSignature = static_cast<RootSignature*>(rootSignature);
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->addReference();
+			mGraphicsRootSignature->AddReference();
 
 			// Sanity check
 			RHI_MATCH_CHECK(*this, *rootSignature)
@@ -3532,12 +3532,12 @@ namespace NullRhi
 				// Release the render target reference, in case we have one
 				if (nullptr != mRenderTarget)
 				{
-					mRenderTarget->releaseReference();
+					mRenderTarget->ReleaseReference();
 				}
 
 				// Set new render target and add a reference to it
 				mRenderTarget = renderTarget;
-				mRenderTarget->addReference();
+				mRenderTarget->AddReference();
 
 				// That's all folks!
 			}
@@ -3546,7 +3546,7 @@ namespace NullRhi
 				// Release the render target reference, in case we have one
 				if (nullptr != mRenderTarget)
 				{
-					mRenderTarget->releaseReference();
+					mRenderTarget->ReleaseReference();
 					mRenderTarget = nullptr;
 				}
 
@@ -3590,12 +3590,12 @@ namespace NullRhi
 	{
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->releaseReference();
+			mComputeRootSignature->ReleaseReference();
 		}
 		mComputeRootSignature = static_cast<RootSignature*>(rootSignature);
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->addReference();
+			mComputeRootSignature->AddReference();
 
 			// Sanity check
 			RHI_MATCH_CHECK(*this, *rootSignature)
@@ -3755,7 +3755,7 @@ namespace NullRhi
 				if (nullptr == mShaderLanguage)
 				{
 					mShaderLanguage = RHI_NEW(ShaderLanguage)(*this);
-					mShaderLanguage->addReference();	// Internal RHI reference
+					mShaderLanguage->AddReference();	// Internal RHI reference
 				}
 
 				// Return the shader language instance
@@ -3815,8 +3815,8 @@ namespace NullRhi
 				if (nullptr != colorFramebufferAttachment->texture)
 				{
 					// TODO(co) Add security check: Is the given resource one of the currently used RHI?
-					colorFramebufferAttachment->texture->addReference();
-					colorFramebufferAttachment->texture->releaseReference();
+					colorFramebufferAttachment->texture->AddReference();
+					colorFramebufferAttachment->texture->ReleaseReference();
 				}
 			}
 		}
@@ -3824,8 +3824,8 @@ namespace NullRhi
 		// Add a reference to the used depth stencil texture
 		if (nullptr != depthStencilFramebufferAttachment)
 		{
-			depthStencilFramebufferAttachment->texture->addReference();
-			depthStencilFramebufferAttachment->texture->releaseReference();
+			depthStencilFramebufferAttachment->texture->AddReference();
+			depthStencilFramebufferAttachment->texture->ReleaseReference();
 		}
 
 		// Create the framebuffer instance
@@ -3862,12 +3862,12 @@ namespace NullRhi
 		}
 
 		// Error: Ensure a correct reference counter behaviour
-		graphicsPipelineState.rootSignature->addReference();
-		graphicsPipelineState.rootSignature->releaseReference();
-		graphicsPipelineState.graphicsProgram->addReference();
-		graphicsPipelineState.graphicsProgram->releaseReference();
-		graphicsPipelineState.renderPass->addReference();
-		graphicsPipelineState.renderPass->releaseReference();
+		graphicsPipelineState.rootSignature->AddReference();
+		graphicsPipelineState.rootSignature->ReleaseReference();
+		graphicsPipelineState.graphicsProgram->AddReference();
+		graphicsPipelineState.graphicsProgram->ReleaseReference();
+		graphicsPipelineState.renderPass->AddReference();
+		graphicsPipelineState.renderPass->ReleaseReference();
 		return nullptr;
 	}
 
@@ -3885,10 +3885,10 @@ namespace NullRhi
 		}
 
 		// Error: Ensure a correct reference counter behaviour
-		rootSignature.addReference();
-		rootSignature.releaseReference();
-		computeShader.addReference();
-		computeShader.releaseReference();
+		rootSignature.AddReference();
+		rootSignature.ReleaseReference();
+		computeShader.AddReference();
+		computeShader.ReleaseReference();
 		return nullptr;
 	}
 
@@ -3982,7 +3982,7 @@ namespace NullRhi
 	//[-------------------------------------------------------]
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
-	void NullRhi::selfDestruct()
+	void NullRhi::selfDestruct() noexcept
 	{
 		RHI_DELETE(NullRhi, this);
 	}

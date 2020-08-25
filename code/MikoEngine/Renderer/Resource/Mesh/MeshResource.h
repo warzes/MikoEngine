@@ -206,8 +206,8 @@ namespace Renderer
 			RHI_ASSERT(isInvalid(mBoundingSphereRadius), "Invalid bounding sphere")
 			RHI_ASSERT(0 == mNumberOfVertices, "Invalid number of vertices")
 			RHI_ASSERT(0 == mNumberOfIndices, "Invalid number of indices")
-			RHI_ASSERT(nullptr == mVertexArray.getPointer(), "Invalid vertex array")
-			RHI_ASSERT(nullptr == mPositionOnlyVertexArray.getPointer(), "Invalid position only vertex array")
+			RHI_ASSERT(nullptr == mVertexArray.GetPointer(), "Invalid vertex array")
+			RHI_ASSERT(nullptr == mPositionOnlyVertexArray.GetPointer(), "Invalid position only vertex array")
 			RHI_ASSERT(mSubMeshes.empty(), "Invalid sub-meshes")
 			RHI_ASSERT(isInvalid(mSkeletonResourceId), "Invalid skeleton resource ID")
 		}
@@ -227,8 +227,8 @@ namespace Renderer
 			RHI_ASSERT(isInvalid(mBoundingSphereRadius), "Invalid bounding sphere")
 			RHI_ASSERT(0 == mNumberOfVertices, "Invalid number of vertices")
 			RHI_ASSERT(0 == mNumberOfIndices, "Invalid number of indices")
-			RHI_ASSERT(nullptr == mVertexArray.getPointer(), "Invalid vertex array")
-			RHI_ASSERT(nullptr == mPositionOnlyVertexArray.getPointer(), "Invalid position only vertex array")
+			RHI_ASSERT(nullptr == mVertexArray.GetPointer(), "Invalid vertex array")
+			RHI_ASSERT(nullptr == mPositionOnlyVertexArray.GetPointer(), "Invalid position only vertex array")
 			RHI_ASSERT(mSubMeshes.empty(), "Invalid sub-meshes")
 			RHI_ASSERT(isInvalid(mSkeletonResourceId), "Invalid skeleton resource ID")
 

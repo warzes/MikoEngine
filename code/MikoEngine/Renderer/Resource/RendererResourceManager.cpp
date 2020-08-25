@@ -41,7 +41,7 @@ namespace Renderer
 		{
 			// Create RHI resource and add the managers reference
 			Rhi::IResourceGroup* resourceGroup = rootSignature.createResourceGroup(rootParameterIndex, numberOfResources, resources, samplerStates RHI_RESOURCE_DEBUG_PASS_PARAMETER);
-			resourceGroup->addReference();
+			resourceGroup->AddReference();
 			mResourceGroups.emplace(hash, resourceGroup);
 			return resourceGroup;
 		}
@@ -56,9 +56,9 @@ namespace Renderer
 			ResourceGroups::iterator iterator = mResourceGroups.begin();
 			while (iterator != mResourceGroups.end())
 			{
-				if (iterator->second->getRefCount() == 1)
+				if (iterator->second->GetRefCount() == 1)
 				{
-					iterator->second->releaseReference();
+					iterator->second->ReleaseReference();
 					iterator = mResourceGroups.erase(iterator);
 				}
 				else
@@ -79,7 +79,7 @@ namespace Renderer
 		// Release manager RHI resource references
 		for (auto& pair : mResourceGroups)
 		{
-			pair.second->releaseReference();
+			pair.second->ReleaseReference();
 		}
 	}
 

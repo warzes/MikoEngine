@@ -145,13 +145,13 @@ namespace Renderer
 	{
 		// Backup the given RHI and add our reference
 		mRhi = &context.getRhi();
-		mRhi->addReference();
+		mRhi->AddReference();
 
 		// Create the buffer and texture manager instance and add our reference
 		mBufferManager = mRhi->createBufferManager();
-		mBufferManager->addReference();
+		mBufferManager->AddReference();
 		mTextureManager = mRhi->createTextureManager();
-		mTextureManager->addReference();
+		mTextureManager->AddReference();
 
 		// Backup the given file manager instance
 		mFileManager = &context.getFileManager();
@@ -249,12 +249,12 @@ namespace Renderer
 		delete mDefaultThreadPool;
 
 		// Release the texture and buffer manager instance
-		mTextureManager->releaseReference();
-		mBufferManager->releaseReference();
+		mTextureManager->ReleaseReference();
+		mBufferManager->ReleaseReference();
 		delete mRendererResourceManager;
 
 		// Release our RHI reference
-		mRhi->releaseReference();
+		mRhi->ReleaseReference();
 	}
 
 
@@ -358,7 +358,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
-	void RendererImpl::selfDestruct()
+	void RendererImpl::selfDestruct() noexcept
 	{
 		RHI_DELETE(RendererImpl, this);
 	}

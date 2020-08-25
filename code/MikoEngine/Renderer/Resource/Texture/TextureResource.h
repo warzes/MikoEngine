@@ -92,7 +92,7 @@ namespace Renderer
 		inline virtual ~TextureResource() override
 		{
 			// Sanity check
-			RHI_ASSERT(nullptr == mTexture.getPointer(), "Invalid texture")
+			RHI_ASSERT(nullptr == mTexture.GetPointer(), "Invalid texture")
 		}
 
 		explicit TextureResource(const TextureResource&) = delete;
@@ -117,7 +117,7 @@ namespace Renderer
 		inline void initializeElement(TextureResourceId textureResourceId)
 		{
 			// Sanity check
-			RHI_ASSERT(nullptr == mTexture.getPointer(), "Invalid texture")
+			RHI_ASSERT(nullptr == mTexture.GetPointer(), "Invalid texture")
 
 			// Call base implementation
 			IResource::initializeElement(textureResourceId);

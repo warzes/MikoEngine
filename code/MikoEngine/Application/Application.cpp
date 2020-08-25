@@ -186,7 +186,7 @@ bool Application::init_base(int argc, const char * argv[])
 		Rhi::WindowHandle{ (handle)glfwNativeWindowHandle(m_window), nullptr },
 		false
 		RHI_RESOURCE_DEBUG_NAME("Main"));
-	mainSwapChain->addReference();	// Internal RHI reference // TODO:???
+	mainSwapChain->AddReference();	// Internal RHI reference // TODO:???
 	
 	SE_LOG_INFO("Successfully initialized platform!");
 	if ( !init(argc, argv) )
@@ -253,7 +253,7 @@ void Application::shutdown_base()
 	// Delete the RHI instance
 	if ( nullptr != mainSwapChain )
 	{
-		mainSwapChain->releaseReference();
+		mainSwapChain->ReleaseReference();
 		mainSwapChain = nullptr;
 	}
 	rhi = nullptr;

@@ -1740,7 +1740,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(RootSignature, this);
 		}
@@ -1868,7 +1868,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexBuffer, this);
 		}
@@ -2002,7 +2002,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(IndexBuffer, this);
 		}
@@ -2074,7 +2074,7 @@ namespace VulkanRhi
 			// Add a reference to the given index buffer
 			if ( nullptr != mIndexBuffer )
 			{
-				mIndexBuffer->addReference();
+				mIndexBuffer->AddReference();
 			}
 
 			// Add a reference to the used vertex buffers
@@ -2095,7 +2095,7 @@ namespace VulkanRhi
 						// TODO(co) Add security check: Is the given resource one of the currently used RHI?
 						*currentVertexBuffer = static_cast<VertexBuffer*>(vertexBuffer->vertexBuffer);
 						*currentVertexVkBuffer = (*currentVertexBuffer)->getVkBuffer();
-						(*currentVertexBuffer)->addReference();
+						(*currentVertexBuffer)->AddReference();
 					}
 				}
 
@@ -2119,7 +2119,7 @@ namespace VulkanRhi
 			// Release the index buffer reference
 			if ( nullptr != mIndexBuffer )
 			{
-				mIndexBuffer->releaseReference();
+				mIndexBuffer->ReleaseReference();
 			}
 
 			// Cleanup Vulkan input slot data
@@ -2138,7 +2138,7 @@ namespace VulkanRhi
 				VertexBuffer** vertexBuffersEnd = mVertexBuffers + mNumberOfSlots;
 				for ( VertexBuffer** vertexBuffer = mVertexBuffers; vertexBuffer < vertexBuffersEnd; ++vertexBuffer )
 				{
-					(*vertexBuffer)->releaseReference();
+					(*vertexBuffer)->ReleaseReference();
 				}
 
 				// Cleanup
@@ -2194,7 +2194,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexArray, this);
 		}
@@ -2367,7 +2367,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureBuffer, this);
 		}
@@ -2487,7 +2487,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(StructuredBuffer, this);
 		}
@@ -2623,7 +2623,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(IndirectBuffer, this);
 		}
@@ -2735,7 +2735,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(UniformBuffer, this);
 		}
@@ -2841,13 +2841,13 @@ namespace VulkanRhi
 			const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = vertexBuffers + numberOfVertexBuffers;
 			for ( const Rhi::VertexArrayVertexBuffer* vertexBuffer = vertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer )
 			{
-				vertexBuffer->vertexBuffer->addReference();
-				vertexBuffer->vertexBuffer->releaseReference();
+				vertexBuffer->vertexBuffer->AddReference();
+				vertexBuffer->vertexBuffer->ReleaseReference();
 			}
 			if ( nullptr != indexBuffer )
 			{
-				indexBuffer->addReference();
-				indexBuffer->releaseReference();
+				indexBuffer->AddReference();
+				indexBuffer->ReleaseReference();
 			}
 			return nullptr;
 		}
@@ -2889,7 +2889,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(BufferManager, this);
 		}
@@ -2998,7 +2998,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture1D, this);
 		}
@@ -3130,7 +3130,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture1DArray, this);
 		}
@@ -3325,7 +3325,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture2D, this);
 		}
@@ -3459,7 +3459,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture2DArray, this);
 		}
@@ -3583,7 +3583,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture3D, this);
 		}
@@ -3702,7 +3702,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureCube, this);
 		}
@@ -3823,7 +3823,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureCubeArray, this);
 		}
@@ -3981,7 +3981,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureManager, this);
 		}
@@ -4102,7 +4102,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(SamplerState, this);
 		}
@@ -4370,7 +4370,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(RenderPass, this);
 		}
@@ -4548,7 +4548,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(QueryPool, this);
 		}
@@ -4939,7 +4939,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(SwapChain, this);
 		}
@@ -5302,7 +5302,7 @@ namespace VulkanRhi
 
 						// TODO(co) Add security check: Is the given resource one of the currently used RHI?
 						*colorTexture = colorFramebufferAttachments->texture;
-					(*colorTexture)->addReference();
+					(*colorTexture)->AddReference();
 
 					// Evaluate the color texture type
 					VkImageView vkImageView = VK_NULL_HANDLE;
@@ -5379,7 +5379,7 @@ namespace VulkanRhi
 			{
 				mDepthStencilTexture = depthStencilFramebufferAttachment->texture;
 				RHI_ASSERT(nullptr != mDepthStencilTexture, "Invalid Vulkan depth stencil framebuffer attachment texture")
-					mDepthStencilTexture->addReference();
+					mDepthStencilTexture->AddReference();
 
 				// Evaluate the depth stencil texture type
 				VkImageView vkImageView = VK_NULL_HANDLE;
@@ -5513,7 +5513,7 @@ namespace VulkanRhi
 				Rhi::ITexture** colorTexturesEnd = mColorTextures + mNumberOfColorTextures;
 				for ( Rhi::ITexture** colorTexture = mColorTextures; colorTexture < colorTexturesEnd; ++colorTexture )
 				{
-					(*colorTexture)->releaseReference();
+					(*colorTexture)->ReleaseReference();
 				}
 
 				// Cleanup
@@ -5524,7 +5524,7 @@ namespace VulkanRhi
 			if ( nullptr != mDepthStencilTexture )
 			{
 				// Release reference
-				mDepthStencilTexture->releaseReference();
+				mDepthStencilTexture->ReleaseReference();
 			}
 		}
 
@@ -5569,7 +5569,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Framebuffer, this);
 		}
@@ -5700,7 +5700,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexShaderGlsl, this);
 		}
@@ -5825,7 +5825,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TessellationControlShaderGlsl, this);
 		}
@@ -5950,7 +5950,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TessellationEvaluationShaderGlsl, this);
 		}
@@ -6089,7 +6089,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(GeometryShaderGlsl, this);
 		}
@@ -6214,7 +6214,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(FragmentShaderGlsl, this);
 		}
@@ -6339,7 +6339,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TaskShaderGlsl, this);
 		}
@@ -6464,7 +6464,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(MeshShaderGlsl, this);
 		}
@@ -6589,7 +6589,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ComputeShaderGlsl, this);
 		}
@@ -6668,23 +6668,23 @@ namespace VulkanRhi
 			// Add references to the provided shaders
 			if ( nullptr != mVertexShaderGlsl )
 			{
-				mVertexShaderGlsl->addReference();
+				mVertexShaderGlsl->AddReference();
 			}
 			if ( nullptr != mTessellationControlShaderGlsl )
 			{
-				mTessellationControlShaderGlsl->addReference();
+				mTessellationControlShaderGlsl->AddReference();
 			}
 			if ( nullptr != mTessellationEvaluationShaderGlsl )
 			{
-				mTessellationEvaluationShaderGlsl->addReference();
+				mTessellationEvaluationShaderGlsl->AddReference();
 			}
 			if ( nullptr != mGeometryShaderGlsl )
 			{
-				mGeometryShaderGlsl->addReference();
+				mGeometryShaderGlsl->AddReference();
 			}
 			if ( nullptr != mFragmentShaderGlsl )
 			{
-				mFragmentShaderGlsl->addReference();
+				mFragmentShaderGlsl->AddReference();
 			}
 		}
 
@@ -6720,12 +6720,12 @@ namespace VulkanRhi
 			// Add references to the provided shaders
 			if ( nullptr != mTaskShaderGlsl )
 			{
-				mTaskShaderGlsl->addReference();
+				mTaskShaderGlsl->AddReference();
 			}
-			mMeshShaderGlsl->addReference();
+			mMeshShaderGlsl->AddReference();
 			if ( nullptr != mFragmentShaderGlsl )
 			{
-				mFragmentShaderGlsl->addReference();
+				mFragmentShaderGlsl->AddReference();
 			}
 		}
 
@@ -6738,31 +6738,31 @@ namespace VulkanRhi
 			// Release the shader references
 			if ( nullptr != mVertexShaderGlsl )
 			{
-				mVertexShaderGlsl->releaseReference();
+				mVertexShaderGlsl->ReleaseReference();
 			}
 			if ( nullptr != mTessellationControlShaderGlsl )
 			{
-				mTessellationControlShaderGlsl->releaseReference();
+				mTessellationControlShaderGlsl->ReleaseReference();
 			}
 			if ( nullptr != mTessellationEvaluationShaderGlsl )
 			{
-				mTessellationEvaluationShaderGlsl->releaseReference();
+				mTessellationEvaluationShaderGlsl->ReleaseReference();
 			}
 			if ( nullptr != mGeometryShaderGlsl )
 			{
-				mGeometryShaderGlsl->releaseReference();
+				mGeometryShaderGlsl->ReleaseReference();
 			}
 			if ( nullptr != mFragmentShaderGlsl )
 			{
-				mFragmentShaderGlsl->releaseReference();
+				mFragmentShaderGlsl->ReleaseReference();
 			}
 			if ( nullptr != mTaskShaderGlsl )
 			{
-				mTaskShaderGlsl->releaseReference();
+				mTaskShaderGlsl->ReleaseReference();
 			}
 			if ( nullptr != mMeshShaderGlsl )
 			{
-				mMeshShaderGlsl->releaseReference();
+				mMeshShaderGlsl->ReleaseReference();
 			}
 		}
 
@@ -6864,7 +6864,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(GraphicsProgramGlsl, this);
 		}
@@ -7132,7 +7132,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ShaderLanguageGlsl, this);
 		}
@@ -7185,9 +7185,9 @@ namespace VulkanRhi
 			mVkPipeline(VK_NULL_HANDLE)
 		{
 			// Add a reference to the referenced RHI resources
-			mRootSignature->addReference();
-			mGraphicsProgram->addReference();
-			mRenderPass->addReference();
+			mRootSignature->AddReference();
+			mGraphicsProgram->AddReference();
+			mRenderPass->AddReference();
 
 			// Our pipeline state needs to be independent of concrete render targets, so we're using dynamic viewport ("VK_DYNAMIC_STATE_VIEWPORT") and scissor ("VK_DYNAMIC_STATE_SCISSOR") states
 			static constexpr uint32_t WIDTH = 42;
@@ -7463,9 +7463,9 @@ namespace VulkanRhi
 			}
 
 			// Release referenced RHI resources
-			mRootSignature->releaseReference();
-			mGraphicsProgram->releaseReference();
-			mRenderPass->releaseReference();
+			mRootSignature->ReleaseReference();
+			mGraphicsProgram->ReleaseReference();
+			mRenderPass->ReleaseReference();
 
 			// Free the unique compact graphics pipeline state ID
 			vulkanRhi.GraphicsPipelineStateMakeId.DestroyID(getId());
@@ -7488,7 +7488,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(GraphicsPipelineState, this);
 		}
@@ -7552,8 +7552,8 @@ namespace VulkanRhi
 			mVkPipeline(VK_NULL_HANDLE)
 		{
 			// Add a reference to the given root signature and compute shader
-			rootSignature.addReference();
-			computeShader.addReference();
+			rootSignature.AddReference();
+			computeShader.AddReference();
 
 			// Create the Vulkan compute pipeline
 			const VkComputePipelineCreateInfo vkComputePipelineCreateInfo =
@@ -7605,8 +7605,8 @@ namespace VulkanRhi
 			}
 
 			// Release the root signature and compute shader reference
-			mRootSignature.releaseReference();
-			mComputeShader.releaseReference();
+			mRootSignature.ReleaseReference();
+			mComputeShader.ReleaseReference();
 
 			// Free the unique compact compute pipeline state ID
 			vulkanRhi.ComputePipelineStateMakeId.DestroyID(getId());
@@ -7629,7 +7629,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ComputePipelineState, this);
 		}
@@ -7697,7 +7697,7 @@ namespace VulkanRhi
 			mResources(RHI_MALLOC_TYPED(Rhi::IResource*, mNumberOfResources)),
 			mSamplerStates(nullptr)
 		{
-			mRootSignature.addReference();
+			mRootSignature.AddReference();
 
 			// Process all resources and add our reference to the RHI resource
 			const VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
@@ -7710,7 +7710,7 @@ namespace VulkanRhi
 					Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex] = samplerStates[resourceIndex];
 					if ( nullptr != samplerState )
 					{
-						samplerState->addReference();
+						samplerState->AddReference();
 					}
 				}
 			}
@@ -7719,7 +7719,7 @@ namespace VulkanRhi
 				Rhi::IResource* resource = *resources;
 				RHI_ASSERT(nullptr != resource, "Invalid Vulkan resource")
 					mResources[resourceIndex] = resource;
-				resource->addReference();
+				resource->AddReference();
 
 				// Check the type of resource to set
 				// TODO(co) Some additional resource type root signature security checks in debug build?
@@ -8051,14 +8051,14 @@ namespace VulkanRhi
 					Rhi::ISamplerState* samplerState = mSamplerStates[resourceIndex];
 					if ( nullptr != samplerState )
 					{
-						samplerState->releaseReference();
+						samplerState->ReleaseReference();
 					}
 				}
 				RHI_FREE(mSamplerStates);
 			}
 			for ( uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex )
 			{
-				mResources[resourceIndex]->releaseReference();
+				mResources[resourceIndex]->ReleaseReference();
 			}
 			RHI_FREE(mResources);
 
@@ -8067,7 +8067,7 @@ namespace VulkanRhi
 			{
 				vkFreeDescriptorSets(static_cast<VulkanRhi&>(mRootSignature.getRhi()).getVulkanContext().getVkDevice(), mRootSignature.getVkDescriptorPool(), 1, &mVkDescriptorSet);
 			}
-			mRootSignature.releaseReference();
+			mRootSignature.ReleaseReference();
 		}
 
 		/**
@@ -8087,7 +8087,7 @@ namespace VulkanRhi
 		//[ Protected virtual RefCount methods               ]
 		//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ResourceGroup, this);
 		}

@@ -46,7 +46,7 @@ namespace Renderer
 				}
 
 				// Create RHI shader instance using the shader bytecode, if necessary
-				if (nullptr == shaderCache->mShaderPtr.getPointer())
+				if (nullptr == shaderCache->mShaderPtr.GetPointer())
 				{
 					RHI_ASSERT(0 != shaderCache->mShaderBytecode.getNumberOfBytes(), "A shader cache must always have a valid shader bytecode, else it's a pointless shader cache. This might be the result of a shader compilation error.")
 					if (0 != shaderCache->mShaderBytecode.getNumberOfBytes())
@@ -204,7 +204,7 @@ namespace Renderer
 				}
 
 				// Create RHI shader instance using the shader bytecode, if necessary
-				if (nullptr == shaderCache->mShaderPtr.getPointer())
+				if (nullptr == shaderCache->mShaderPtr.GetPointer())
 				{
 					RHI_ASSERT(0 != shaderCache->mShaderBytecode.getNumberOfBytes(), "A shader cache must always have a valid shader bytecode, else it's a pointless shader cache. This might be the result of a shader compilation error.")
 					shaderCache->mShaderPtr = shaderLanguage.createComputeShaderFromBytecode(shaderCache->mShaderBytecode);
@@ -467,7 +467,7 @@ namespace Renderer
 			for (const ShaderCache* shaderCache : shaderCachesWithMaster)
 			{
 				const ShaderCache* masterShaderCache = shaderCache->getMasterShaderCache();
-				RHI_ASSERT(nullptr != masterShaderCache->getShaderPtr().getPointer(), "A shader cache must always have a valid shader instance, else it's a pointless shader cache")
+				RHI_ASSERT(nullptr != masterShaderCache->getShaderPtr().GetPointer(), "A shader cache must always have a valid shader instance, else it's a pointless shader cache")
 				file.write(&shaderCache->mShaderCacheId, sizeof(ShaderCacheId));
 				const uint32_t numberOfBytes = getInvalid<uint32_t>();
 				file.write(&numberOfBytes, sizeof(uint32_t));

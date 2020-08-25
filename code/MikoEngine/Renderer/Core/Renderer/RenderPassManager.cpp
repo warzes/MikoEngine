@@ -13,7 +13,7 @@ namespace Renderer
 	{
 		for (auto& renderPassPair : mRenderPasses)
 		{
-			renderPassPair.second->releaseReference();
+			renderPassPair.second->ReleaseReference();
 		}
 	}
 
@@ -40,7 +40,7 @@ namespace Renderer
 		{
 			// Create the render pass instance
 			Rhi::IRenderPass* renderPass = mRhi.createRenderPass(numberOfColorAttachments, colorAttachmentTextureFormats, depthStencilAttachmentTextureFormat, numberOfMultisamples RHI_RESOURCE_DEBUG_NAME("Render pass manager"));
-			renderPass->addReference();
+			renderPass->AddReference();
 			mRenderPasses.emplace(renderPassSignature, renderPass);
 			return renderPass;
 		}

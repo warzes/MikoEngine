@@ -117,7 +117,7 @@ namespace Renderer
 			::detail::SkyVertexArrayPtr = ::detail::createSkyVertexArray(getSceneResource().getRenderer().getBufferManager());
 			RHI_ASSERT(nullptr != ::detail::SkyVertexArrayPtr, "Invalid sky vertex array")
 		}
-		::detail::SkyVertexArrayPtr->addReference();
+		::detail::SkyVertexArrayPtr->AddReference();
 	}
 
 	SkySceneItem::~SkySceneItem()
@@ -129,7 +129,7 @@ namespace Renderer
 		}
 
 		// Release reference to vertex array object (VAO) shared between all sky instances
-		if (nullptr != ::detail::SkyVertexArrayPtr && 1 == ::detail::SkyVertexArrayPtr->releaseReference())	// +1 for reference to global shared pointer
+		if (nullptr != ::detail::SkyVertexArrayPtr && 1 == ::detail::SkyVertexArrayPtr->ReleaseReference())	// +1 for reference to global shared pointer
 		{
 			::detail::SkyVertexArrayPtr = nullptr;
 		}

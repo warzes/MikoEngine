@@ -367,7 +367,10 @@ void CubeRendererDrawInstanced::setNumberOfCubes(uint32_t numberOfCubes)
 	for ( int remaningNumberOfCubes = static_cast<int>(numberOfTransparentCubes); batch < lastBatch; ++batch, remaningNumberOfCubes -= mMaximumNumberOfInstancesPerBatch )
 	{
 		const uint32_t currentNumberOfCubes = (remaningNumberOfCubes > static_cast<int>(mMaximumNumberOfInstancesPerBatch)) ? mMaximumNumberOfInstancesPerBatch : remaningNumberOfCubes;
-		batch->initialize(*mBufferManager, *mRootSignature, detail::CubeRendererDrawInstancedVertexAttributes, *mGraphicsProgram, mRenderPass, currentNumberOfCubes, true, mNumberOfTextures, mSceneRadius);
+		// TODO: отключил полупрозрачность
+		//batch->initialize(*mBufferManager, *mRootSignature, detail::CubeRendererDrawInstancedVertexAttributes, *mGraphicsProgram, mRenderPass, currentNumberOfCubes, true, mNumberOfTextures, mSceneRadius);
+		batch->initialize(*mBufferManager, *mRootSignature, detail::CubeRendererDrawInstancedVertexAttributes, *mGraphicsProgram, mRenderPass, currentNumberOfCubes, false, mNumberOfTextures, mSceneRadius);
+
 	}
 
 	// Since we're always submitting the same commands to the RHI, we can fill the command buffer once during initialization and then reuse it multiple times during runtime

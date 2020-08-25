@@ -7,7 +7,7 @@ namespace Rhi
 	public:
 		inline virtual ~IRenderTarget() override
 		{
-			mRenderPass.releaseReference();
+			mRenderPass.ReleaseReference();
 		}
 
 		[[nodiscard]] inline IRenderPass& getRenderPass() const
@@ -43,7 +43,7 @@ namespace Rhi
 			IResource(resourceType, renderPass.getRhi() RHI_RESOURCE_DEBUG_PASS_PARAMETER),
 			mRenderPass(renderPass)
 		{
-			mRenderPass.addReference();
+			mRenderPass.AddReference();
 		}
 
 		explicit IRenderTarget(const IRenderTarget& source) = delete;

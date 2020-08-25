@@ -738,7 +738,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(OpenGLES3Rhi, this);
 		}
@@ -3337,7 +3337,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ResourceGroup, this);
 		}
@@ -3488,7 +3488,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(RootSignature, this);
 		}
@@ -3608,7 +3608,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexBuffer, this);
 		}
@@ -3769,7 +3769,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(IndexBuffer, this);
 		}
@@ -4007,7 +4007,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexArray, this);
 		}
@@ -4127,7 +4127,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureBuffer, this);
 		}
@@ -4435,7 +4435,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(IndirectBuffer, this);
 		}
@@ -4559,7 +4559,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(UniformBuffer, this);
 		}
@@ -4735,7 +4735,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(BufferManager, this);
 		}
@@ -4947,7 +4947,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture1D, this);
 		}
@@ -5097,7 +5097,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture1DArray, this);
 		}
@@ -5347,7 +5347,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture2D, this);
 		}
@@ -5497,7 +5497,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture2DArray, this);
 		}
@@ -5726,7 +5726,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Texture3D, this);
 		}
@@ -5971,7 +5971,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureCube, this);
 		}
@@ -6122,7 +6122,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(TextureManager, this);
 		}
@@ -6251,7 +6251,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(SamplerState, this);
 		}
@@ -6739,7 +6739,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(RenderPass, this);
 		}
@@ -6966,7 +6966,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(SwapChain, this);
 		}
@@ -7383,7 +7383,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(Framebuffer, this);
 		}
@@ -7491,7 +7491,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(VertexShaderGlsl, this);
 		}
@@ -7593,7 +7593,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(FragmentShaderGlsl, this);
 		}
@@ -8059,7 +8059,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(GraphicsProgramGlsl, this);
 		}
@@ -8266,7 +8266,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(ShaderLanguageGlsl, this);
 		}
@@ -8396,7 +8396,7 @@ namespace OpenGLES3Rhi
 	//[ Protected virtual RefCount methods               ]
 	//[-------------------------------------------------------]
 	protected:
-		inline virtual void selfDestruct() override
+		inline virtual void selfDestruct() noexcept override
 		{
 			RHI_DELETE(GraphicsPipelineState, this);
 		}

@@ -58,7 +58,7 @@ namespace VulkanRhi
 				// Add references to the default sampler state and set it
 				if (nullptr != mDefaultSamplerState)
 				{
-					mDefaultSamplerState->addReference();
+					mDefaultSamplerState->AddReference();
 					// TODO(co) Set default sampler states
 				}
 			}
@@ -73,23 +73,23 @@ namespace VulkanRhi
 		// Release instances
 		if (nullptr != mRenderTarget)
 		{
-			mRenderTarget->releaseReference();
+			mRenderTarget->ReleaseReference();
 			mRenderTarget = nullptr;
 		}
 		if (nullptr != mDefaultSamplerState)
 		{
-			mDefaultSamplerState->releaseReference();
+			mDefaultSamplerState->ReleaseReference();
 			mDefaultSamplerState = nullptr;
 		}
 
 		// Release the graphics and compute root signature instance, in case we have one
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->releaseReference();
+			mGraphicsRootSignature->ReleaseReference();
 		}
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->releaseReference();
+			mComputeRootSignature->ReleaseReference();
 		}
 
 		#if SE_RHI_STATISTICS
@@ -117,7 +117,7 @@ namespace VulkanRhi
 		// Release the GLSL shader language instance, in case we have one
 		if (nullptr != mShaderLanguageGlsl)
 		{
-			mShaderLanguageGlsl->releaseReference();
+			mShaderLanguageGlsl->ReleaseReference();
 		}
 
 		// Destroy the Vulkan context instance
@@ -135,12 +135,12 @@ namespace VulkanRhi
 	{
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->releaseReference();
+			mGraphicsRootSignature->ReleaseReference();
 		}
 		mGraphicsRootSignature = static_cast<RootSignature*>(rootSignature);
 		if (nullptr != mGraphicsRootSignature)
 		{
-			mGraphicsRootSignature->addReference();
+			mGraphicsRootSignature->AddReference();
 
 			// Sanity check
 			RHI_MATCH_CHECK(*this, *rootSignature)
@@ -229,7 +229,7 @@ namespace VulkanRhi
 
 				// Set new vertex array and add a reference to it
 				mVertexArray = static_cast<VertexArray*>(vertexArray);
-				mVertexArray->addReference();
+				mVertexArray->AddReference();
 
 				// Bind Vulkan buffers
 				mVertexArray->bindVulkanBuffers(getVulkanContext().getVkCommandBuffer());
@@ -300,7 +300,7 @@ namespace VulkanRhi
 				}
 
 				// Release
-				mRenderTarget->releaseReference();
+				mRenderTarget->ReleaseReference();
 				mRenderTarget = nullptr;
 			}
 
@@ -312,7 +312,7 @@ namespace VulkanRhi
 
 				// Set new render target and add a reference to it
 				mRenderTarget = renderTarget;
-				mRenderTarget->addReference();
+				mRenderTarget->AddReference();
 
 				// Set clear color and clear depth stencil values
 				const uint32_t numberOfColorAttachments = static_cast<const RenderPass&>(mRenderTarget->getRenderPass()).getNumberOfColorAttachments();
@@ -518,12 +518,12 @@ namespace VulkanRhi
 	{
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->releaseReference();
+			mComputeRootSignature->ReleaseReference();
 		}
 		mComputeRootSignature = static_cast<RootSignature*>(rootSignature);
 		if (nullptr != mComputeRootSignature)
 		{
-			mComputeRootSignature->addReference();
+			mComputeRootSignature->AddReference();
 
 			// Sanity check
 			RHI_MATCH_CHECK(*this, *rootSignature)
@@ -759,7 +759,7 @@ namespace VulkanRhi
 				if (nullptr == mShaderLanguageGlsl)
 				{
 					mShaderLanguageGlsl = RHI_NEW(ShaderLanguageGlsl(*this));
-					mShaderLanguageGlsl->addReference();	// Internal RHI reference
+					mShaderLanguageGlsl->AddReference();	// Internal RHI reference
 				}
 				return mShaderLanguageGlsl;
 			}
@@ -838,12 +838,12 @@ namespace VulkanRhi
 		}
 
 		// Error: Ensure a correct reference counter behaviour
-		graphicsPipelineState.rootSignature->addReference();
-		graphicsPipelineState.rootSignature->releaseReference();
-		graphicsPipelineState.graphicsProgram->addReference();
-		graphicsPipelineState.graphicsProgram->releaseReference();
-		graphicsPipelineState.renderPass->addReference();
-		graphicsPipelineState.renderPass->releaseReference();
+		graphicsPipelineState.rootSignature->AddReference();
+		graphicsPipelineState.rootSignature->ReleaseReference();
+		graphicsPipelineState.graphicsProgram->AddReference();
+		graphicsPipelineState.graphicsProgram->ReleaseReference();
+		graphicsPipelineState.renderPass->AddReference();
+		graphicsPipelineState.renderPass->ReleaseReference();
 		return nullptr;
 	}
 
@@ -861,10 +861,10 @@ namespace VulkanRhi
 		}
 
 		// Error: Ensure a correct reference counter behaviour
-		rootSignature.addReference();
-		rootSignature.releaseReference();
-		computeShader.addReference();
-		computeShader.releaseReference();
+		rootSignature.AddReference();
+		rootSignature.ReleaseReference();
+		computeShader.AddReference();
+		computeShader.ReleaseReference();
 		return nullptr;
 	}
 
@@ -1374,7 +1374,7 @@ namespace VulkanRhi
 			// vkCmdBindVertexBuffers(getVulkanContext().getVkCommandBuffer(), 0, 0, nullptr, nullptr);
 
 			// Release reference
-			mVertexArray->releaseReference();
+			mVertexArray->ReleaseReference();
 			mVertexArray = nullptr;
 		}
 	}
