@@ -70,7 +70,7 @@ namespace Renderer
 	LightBufferManager::LightBufferManager(IRenderer& renderer) :
 		mRenderer(renderer),
 		mTextureBuffer(nullptr),
-		mClusters3DTextureResourceId(getInvalid<TextureResourceId>()),
+		mClusters3DTextureResourceId(GetInvalid<TextureResourceId>()),
 		mLightClustersAabbMinimum(-50.0f, -1.0f, -50.0f),	// TODO(co) Just for the clusters shading kickoff
 		mLightClustersAabbMaximum( 50.0f, 40.0f,  50.0f),	// TODO(co) Just for the clusters shading kickoff
 		mResourceGroup(nullptr)
@@ -105,7 +105,7 @@ namespace Renderer
 	void LightBufferManager::fillGraphicsCommandBuffer(const MaterialBlueprintResource& materialBlueprintResource, Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity check
-		RHI_ASSERT(isInvalid(materialBlueprintResource.getComputeShaderBlueprintResourceId()), "Invalid compute shader blueprint resource ID")
+		RHI_ASSERT(IsInvalid(materialBlueprintResource.getComputeShaderBlueprintResourceId()), "Invalid compute shader blueprint resource ID")
 
 		// Light texture buffer
 		const MaterialBlueprintResource::TextureBuffer* lightTextureBuffer = materialBlueprintResource.getLightTextureBuffer();
@@ -130,7 +130,7 @@ namespace Renderer
 	void LightBufferManager::fillComputeCommandBuffer(const MaterialBlueprintResource& materialBlueprintResource, Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity check
-		RHI_ASSERT(isValid(materialBlueprintResource.getComputeShaderBlueprintResourceId()), "Invalid compute shader blueprint resource ID")
+		RHI_ASSERT(IsValid(materialBlueprintResource.getComputeShaderBlueprintResourceId()), "Invalid compute shader blueprint resource ID")
 
 		// Light texture buffer
 		const MaterialBlueprintResource::TextureBuffer* lightTextureBuffer = materialBlueprintResource.getLightTextureBuffer();

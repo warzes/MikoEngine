@@ -151,7 +151,7 @@ namespace Renderer
 			const char* debugName = "Volume";
 			mRenderableManager.setDebugName(debugName);
 		#endif
-		mRenderableManager.getRenderables().emplace_back(mRenderableManager, ::detail::VolumeVertexArrayPtr, getSceneResource().getRenderer().getMaterialResourceManager(), getMaterialResourceId(), getInvalid<SkeletonResourceId>(), true, 0, 36, 1 RHI_RESOURCE_DEBUG_NAME(debugName));
+		mRenderableManager.getRenderables().emplace_back(mRenderableManager, ::detail::VolumeVertexArrayPtr, getSceneResource().getRenderer().getMaterialResourceManager(), getMaterialResourceId(), GetInvalid<SkeletonResourceId>(), true, 0, 36, 1 RHI_RESOURCE_DEBUG_NAME(debugName));
 		mRenderableManager.updateCachedRenderablesData();
 	}
 
@@ -173,7 +173,7 @@ namespace Renderer
 
 	VolumeSceneItem::~VolumeSceneItem()
 	{
-		if (isValid(getMaterialResourceId()))
+		if (IsValid(getMaterialResourceId()))
 		{
 			// Clear the renderable manager right now so we have no more references to the shared vertex array
 			mRenderableManager.getRenderables().clear();

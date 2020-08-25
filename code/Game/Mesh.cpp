@@ -86,10 +86,10 @@ bool Mesh::init(int argc, const char * argv[])
 
 
 
-	mMeshResourceId = Renderer::getInvalid<Renderer::MeshResourceId>();
-	m_argb_nxaTextureResourceId = Renderer::getInvalid<Renderer::TextureResourceId>();
-	m_hr_rg_mb_nyaTextureResourceId = Renderer::getInvalid<Renderer::TextureResourceId>();
-	mEmissiveTextureResourceId = Renderer::getInvalid<Renderer::TextureResourceId>();
+	mMeshResourceId = Renderer::GetInvalid<Renderer::MeshResourceId>();
+	m_argb_nxaTextureResourceId = Renderer::GetInvalid<Renderer::TextureResourceId>();
+	m_hr_rg_mb_nyaTextureResourceId = Renderer::GetInvalid<Renderer::TextureResourceId>();
+	mEmissiveTextureResourceId = Renderer::GetInvalid<Renderer::TextureResourceId>();
 	mObjectSpaceToClipSpaceMatrixUniformHandle = NULL_HANDLE;
 	mObjectSpaceToViewSpaceMatrixUniformHandle = NULL_HANDLE;
 	mGlobalTimer = 0.0f;

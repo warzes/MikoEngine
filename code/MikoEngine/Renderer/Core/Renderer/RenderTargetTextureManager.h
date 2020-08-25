@@ -42,7 +42,7 @@ namespace Renderer
 			uint32_t					 numberOfReferences;	// Number of texture references (don't misuse the RHI texture reference counter for this)
 
 			inline RenderTargetTextureElement() :
-				assetId(getInvalid<AssetId>()),
+				assetId(GetInvalid<AssetId>()),
 				texture(nullptr),
 				numberOfReferences(0)
 			{
@@ -50,7 +50,7 @@ namespace Renderer
 			}
 
 			inline explicit RenderTargetTextureElement(const RenderTargetTextureSignature& _renderTargetTextureSignature) :
-				assetId(getInvalid<AssetId>()),
+				assetId(GetInvalid<AssetId>()),
 				renderTargetTextureSignature(_renderTargetTextureSignature),
 				texture(nullptr),
 				numberOfReferences(0)

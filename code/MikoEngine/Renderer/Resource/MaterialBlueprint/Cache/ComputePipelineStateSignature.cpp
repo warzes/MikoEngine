@@ -44,7 +44,7 @@ namespace Renderer
 		mMaterialBlueprintResourceId		= materialBlueprintResource.getId();
 		mShaderProperties					= shaderProperties;
 		mComputePipelineStateSignatureId	= Math::FNV1a_INITIAL_HASH_32;
-		mShaderCombinationId				= getInvalid<ShaderCombinationId>();
+		mShaderCombinationId				= GetInvalid<ShaderCombinationId>();
 
 		// Incorporate primitive hashes
 		mComputePipelineStateSignatureId = Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&mMaterialBlueprintResourceId), sizeof(uint32_t), mComputePipelineStateSignatureId);

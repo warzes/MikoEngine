@@ -63,10 +63,10 @@ namespace Renderer
 		*    Default constructor
 		*/
 		inline GraphicsPipelineStateSignature() :
-			mMaterialBlueprintResourceId(getInvalid<MaterialBlueprintResourceId>()),
-			mSerializedGraphicsPipelineStateHash(getInvalid<uint32_t>()),
-			mGraphicsPipelineStateSignatureId(getInvalid<GraphicsPipelineStateSignatureId>()),
-			mShaderCombinationId{getInvalid<ShaderCombinationId>(), getInvalid<ShaderCombinationId>(), getInvalid<ShaderCombinationId>(), getInvalid<ShaderCombinationId>(), getInvalid<ShaderCombinationId>()}
+			mMaterialBlueprintResourceId(GetInvalid<MaterialBlueprintResourceId>()),
+			mSerializedGraphicsPipelineStateHash(GetInvalid<uint32_t>()),
+			mGraphicsPipelineStateSignatureId(GetInvalid<GraphicsPipelineStateSignatureId>()),
+			mShaderCombinationId{GetInvalid<ShaderCombinationId>(), GetInvalid<ShaderCombinationId>(), GetInvalid<ShaderCombinationId>(), GetInvalid<ShaderCombinationId>(), GetInvalid<ShaderCombinationId>()}
 		{
 			// Nothing here
 		}

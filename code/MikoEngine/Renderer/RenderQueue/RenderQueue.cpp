@@ -167,7 +167,7 @@ namespace
 			}
 
 			// Automatic "UseGpuSkinning"-property setting
-			if (Renderer::isValid(renderable.getSkeletonResourceId()))
+			if (IsValid(renderable.getSkeletonResourceId()))
 			{
 				static constexpr uint32_t USE_GPU_SKINNING = STRING_ID("UseGpuSkinning");
 				if (nullptr != materialBlueprintResource.getMaterialProperties().getPropertyById(USE_GPU_SKINNING))
@@ -302,7 +302,7 @@ namespace Renderer
 							{
 								// Get the pipeline state object (PSO) to use, preferably by using cached information
 								Rhi::IPipelineState* foundPipelineState = nullptr;
-								if (isValid(materialBlueprintResource->getComputeShaderBlueprintResourceId()))
+								if (IsValid(materialBlueprintResource->getComputeShaderBlueprintResourceId()))
 								{
 									// Compute material blueprint resource
 
@@ -524,10 +524,10 @@ namespace Renderer
 			lightBufferManager.fillGraphicsCommandBuffer(materialBlueprintResource, commandBuffer);
 
 			{ // Cheap state change: Bind the material technique to the used RHI
-				uint32_t resourceGroupRootParameterIndex = getInvalid<uint32_t>();
+				uint32_t resourceGroupRootParameterIndex = GetInvalid<uint32_t>();
 				Rhi::IResourceGroup* resourceGroup = nullptr;
 				materialTechnique.fillGraphicsCommandBuffer(mRenderer, commandBuffer, resourceGroupRootParameterIndex, &resourceGroup);
-				if (isValid(resourceGroupRootParameterIndex) && nullptr != resourceGroup)
+				if (IsValid(resourceGroupRootParameterIndex) && nullptr != resourceGroup)
 				{
 					Rhi::Command::SetGraphicsResourceGroup::create(commandBuffer, resourceGroupRootParameterIndex, resourceGroup);
 				}
@@ -684,10 +684,10 @@ namespace Renderer
 						}
 
 						{ // Cheap state change: Bind the material technique to the used RHI
-							uint32_t resourceGroupRootParameterIndex = getInvalid<uint32_t>();
+							uint32_t resourceGroupRootParameterIndex = GetInvalid<uint32_t>();
 							Rhi::IResourceGroup* resourceGroup = nullptr;
 							materialTechnique.fillGraphicsCommandBuffer(mRenderer, mScratchCommandBuffer, resourceGroupRootParameterIndex, &resourceGroup);
-							if (isValid(resourceGroupRootParameterIndex) && nullptr != resourceGroup && currentSetGraphicsResourceGroup[resourceGroupRootParameterIndex] != resourceGroup)
+							if (IsValid(resourceGroupRootParameterIndex) && nullptr != resourceGroup && currentSetGraphicsResourceGroup[resourceGroupRootParameterIndex] != resourceGroup)
 							{
 								currentSetGraphicsResourceGroup[resourceGroupRootParameterIndex] = resourceGroup;
 								Rhi::Command::SetGraphicsResourceGroup::create(mScratchCommandBuffer, resourceGroupRootParameterIndex, resourceGroup);
@@ -980,10 +980,10 @@ namespace Renderer
 			lightBufferManager.fillComputeCommandBuffer(materialBlueprintResource, commandBuffer);
 
 			{ // Cheap state change: Bind the material technique to the used RHI
-				uint32_t resourceGroupRootParameterIndex = getInvalid<uint32_t>();
+				uint32_t resourceGroupRootParameterIndex = GetInvalid<uint32_t>();
 				Rhi::IResourceGroup* resourceGroup = nullptr;
 				queuedRenderable.materialTechnique->fillComputeCommandBuffer(mRenderer, commandBuffer, resourceGroupRootParameterIndex, &resourceGroup);
-				if (isValid(resourceGroupRootParameterIndex) && nullptr != resourceGroup)
+				if (IsValid(resourceGroupRootParameterIndex) && nullptr != resourceGroup)
 				{
 					Rhi::Command::SetComputeResourceGroup::create(commandBuffer, resourceGroupRootParameterIndex, resourceGroup);
 				}

@@ -76,7 +76,7 @@ namespace Renderer
 
 			// Unregister from previous parent material resource
 			const MaterialResourceManager& materialResourceManager = getResourceManager<MaterialResourceManager>();
-			if (isValid(mParentMaterialResourceId))
+			if (IsValid(mParentMaterialResourceId))
 			{
 				MaterialResource& parentMaterialResource = materialResourceManager.getById(mParentMaterialResourceId);
 				SortedChildMaterialResourceIds::const_iterator iterator = std::lower_bound(parentMaterialResource.mSortedChildMaterialResourceIds.cbegin(), parentMaterialResource.mSortedChildMaterialResourceIds.cend(), materialResourceId, ::detail::OrderByMaterialResourceId());
@@ -86,7 +86,7 @@ namespace Renderer
 
 			// Set new parent material resource ID
 			mParentMaterialResourceId = parentMaterialResourceId;
-			if (isValid(mParentMaterialResourceId))
+			if (IsValid(mParentMaterialResourceId))
 			{
 				// Register to new parent material resource
 				MaterialResource& parentMaterialResource = materialResourceManager.getById(mParentMaterialResourceId);
@@ -142,7 +142,7 @@ namespace Renderer
 	MaterialResource::~MaterialResource()
 	{
 		// Sanity checks
-		RHI_ASSERT(isInvalid(mParentMaterialResourceId), "Invalid parent material resource ID")
+		RHI_ASSERT(IsInvalid(mParentMaterialResourceId), "Invalid parent material resource ID")
 		RHI_ASSERT(mSortedChildMaterialResourceIds.empty(), "Invalid sorted child material resource IDs")
 		RHI_ASSERT(mSortedMaterialTechniqueVector.empty(), "Invalid sorted material technique vector")
 		RHI_ASSERT(mMaterialProperties.getSortedPropertyVector().empty(), "Invalid material properties")
@@ -184,7 +184,7 @@ namespace Renderer
 		}
 
 		// Unset parent material resource ID
-		setParentMaterialResourceId(getInvalid<MaterialResourceId>());
+		setParentMaterialResourceId(GetInvalid<MaterialResourceId>());
 
 		// Inform child material resources, if required
 		if (!mSortedChildMaterialResourceIds.empty())
@@ -193,7 +193,7 @@ namespace Renderer
 			while (!mSortedChildMaterialResourceIds.empty())
 			{
 				const MaterialResourceId materialResourceId = mSortedChildMaterialResourceIds.front();
-				materialResourceManager.getById(materialResourceId).setParentMaterialResourceId(getInvalid<MaterialResourceId>());
+				materialResourceManager.getById(materialResourceId).setParentMaterialResourceId(GetInvalid<MaterialResourceId>());
 			}
 			mSortedChildMaterialResourceIds.clear();
 		}

@@ -192,7 +192,7 @@ namespace Renderer
 				{ // Do the work: Building the shader source code for the required combination
 					const ComputePipelineStateSignature& computePipelineStateSignature = compilerRequest.computePipelineStateCache.getComputePipelineStateSignature();
 					const ShaderBlueprintResourceId shaderBlueprintResourceId = materialBlueprintResourceManager.getById(computePipelineStateSignature.getMaterialBlueprintResourceId()).getComputeShaderBlueprintResourceId();
-					if (isValid(shaderBlueprintResourceId))
+					if (IsValid(shaderBlueprintResourceId))
 					{
 						// Get the shader cache identifier, often but not always identical to the shader combination ID
 						const ShaderCacheId shaderCacheId = computePipelineStateSignature.getShaderCombinationId();

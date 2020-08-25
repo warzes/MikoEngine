@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Renderer/RenderQueue/RenderableManager.h"
 #include "Renderer/Core/Math/Transform.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 
 
 //[-------------------------------------------------------]
@@ -43,7 +43,7 @@ namespace Renderer
 		mNumberOfLods(1),
 		mTransform(&::detail::IdentityTransform),
 		mVisible(true),
-		mCachedDistanceToCamera(getInvalid<float>()),
+		mCachedDistanceToCamera(GetInvalid<float>()),
 		mMinimumRenderQueueIndex(0),
 		mMaximumRenderQueueIndex(0),
 		mCastShadows(false)

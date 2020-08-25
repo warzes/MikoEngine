@@ -27,7 +27,7 @@ namespace Renderer
 		{
 			shaderPieceResource->disconnectResourceListener(resourceListener);
 		}
-		setInvalid(shaderPieceResourceId);
+		SetInvalid(shaderPieceResourceId);
 	}
 
 

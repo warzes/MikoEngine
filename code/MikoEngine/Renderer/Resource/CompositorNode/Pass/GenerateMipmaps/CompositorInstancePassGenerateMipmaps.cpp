@@ -33,12 +33,12 @@ namespace Renderer
 
 		// Handle texture mipmap generation via custom material blueprint
 		const CompositorResourcePassGenerateMipmaps& compositorResourcePassGenerateMipmaps = static_cast<const CompositorResourcePassGenerateMipmaps&>(getCompositorResourcePass());
-		RHI_ASSERT(isValid(compositorResourcePassGenerateMipmaps.getTextureAssetId()), "Invalid compositor resource pass generate mipmaps texture asset ID")
+		RHI_ASSERT(IsValid(compositorResourcePassGenerateMipmaps.getTextureAssetId()), "Invalid compositor resource pass generate mipmaps texture asset ID")
 		const AssetId materialBlueprintAssetId = compositorResourcePassGenerateMipmaps.getMaterialBlueprintAssetId();
-		if (isValid(materialBlueprintAssetId))
+		if (IsValid(materialBlueprintAssetId))
 		{
 			// Sanity check
-			RHI_ASSERT(isValid(compositorResourcePassGenerateMipmaps.getTextureMaterialBlueprintProperty()), "Invalid compositor resource pass generate mipmaps texture material blueprint property")
+			RHI_ASSERT(IsValid(compositorResourcePassGenerateMipmaps.getTextureMaterialBlueprintProperty()), "Invalid compositor resource pass generate mipmaps texture material blueprint property")
 
 			{ // Record reusable command buffer, if necessary
 				const TextureResourceManager& textureResourceManager = renderer.getTextureResourceManager();
@@ -130,7 +130,7 @@ namespace Renderer
 		else
 		{
 			// Sanity check
-			RHI_ASSERT(isInvalid(compositorResourcePassGenerateMipmaps.getTextureMaterialBlueprintProperty()), "Invalid compositor resource pass generate mipmaps texture material blueprint property")
+			RHI_ASSERT(IsInvalid(compositorResourcePassGenerateMipmaps.getTextureMaterialBlueprintProperty()), "Invalid compositor resource pass generate mipmaps texture material blueprint property")
 
 			// Generate mipmaps
 			// TODO(co) "Renderer::TextureResourceManager::getTextureResourceByAssetId()" is considered to be inefficient, don't use it in here
@@ -154,15 +154,15 @@ namespace Renderer
 		ICompositorInstancePass(compositorResourcePassGenerateMipmaps, compositorNodeInstance),
 		mCompositorResourcePassCompute(nullptr),
 		mCompositorInstancePassCompute(nullptr),
-		mRenderTargetWidth(getInvalid<uint32_t>()),
-		mRenderTargetHeight(getInvalid<uint32_t>())
+		mRenderTargetWidth(GetInvalid<uint32_t>()),
+		mRenderTargetHeight(GetInvalid<uint32_t>())
 	{
 		// Handle texture mipmap generation via custom material blueprint
 		const AssetId materialBlueprintAssetId = compositorResourcePassGenerateMipmaps.getMaterialBlueprintAssetId();
-		if (isValid(materialBlueprintAssetId))
+		if (IsValid(materialBlueprintAssetId))
 		{
 			// Sanity check
-			RHI_ASSERT(isValid(compositorResourcePassGenerateMipmaps.getTextureMaterialBlueprintProperty()), "Invalid compositor resource pass generate mipmaps texture material blueprint property")
+			RHI_ASSERT(IsValid(compositorResourcePassGenerateMipmaps.getTextureMaterialBlueprintProperty()), "Invalid compositor resource pass generate mipmaps texture material blueprint property")
 
 			// Create compositor pass compute
 			MaterialProperties materialProperties;
@@ -176,7 +176,7 @@ namespace Renderer
 		else
 		{
 			// Sanity check
-			RHI_ASSERT(isInvalid(compositorResourcePassGenerateMipmaps.getTextureMaterialBlueprintProperty()), "Invalid compositor resource pass generate mipmaps texture material blueprint property")
+			RHI_ASSERT(IsInvalid(compositorResourcePassGenerateMipmaps.getTextureMaterialBlueprintProperty()), "Invalid compositor resource pass generate mipmaps texture material blueprint property")
 		}
 	}
 

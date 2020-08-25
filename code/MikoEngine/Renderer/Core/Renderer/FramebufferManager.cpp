@@ -139,7 +139,7 @@ namespace Renderer
 							const AssetId colorTextureAssetId = framebufferSignatureAttachment.textureAssetId;
 							const RenderTargetTextureSignature* colorRenderTargetTextureSignature = nullptr;
 							Rhi::FramebufferAttachment& framebufferAttachment = colorFramebufferAttachments[i];
-							framebufferAttachment.texture = isValid(colorTextureAssetId) ? mRenderTargetTextureManager.getTextureByAssetId(colorTextureAssetId, renderTarget, numberOfMultisamples, resolutionScale, &colorRenderTargetTextureSignature) : nullptr;
+							framebufferAttachment.texture = IsValid(colorTextureAssetId) ? mRenderTargetTextureManager.getTextureByAssetId(colorTextureAssetId, renderTarget, numberOfMultisamples, resolutionScale, &colorRenderTargetTextureSignature) : nullptr;
 							RHI_ASSERT(nullptr != framebufferAttachment.texture, "Invalid framebuffer attachment texture")
 							framebufferAttachment.mipmapIndex = framebufferSignatureAttachment.mipmapIndex;
 							framebufferAttachment.layerIndex = framebufferSignatureAttachment.layerIndex;
@@ -158,7 +158,7 @@ namespace Renderer
 						// Get the depth stencil texture instances
 						const FramebufferSignatureAttachment& depthStencilFramebufferSignatureAttachment = framebufferSignature.getDepthStencilFramebufferSignatureAttachment();
 						const RenderTargetTextureSignature* depthStencilRenderTargetTextureSignature = nullptr;
-						Rhi::FramebufferAttachment depthStencilFramebufferAttachment(isValid(depthStencilFramebufferSignatureAttachment.textureAssetId) ? mRenderTargetTextureManager.getTextureByAssetId(depthStencilFramebufferSignatureAttachment.textureAssetId, renderTarget, numberOfMultisamples, resolutionScale, &depthStencilRenderTargetTextureSignature) : nullptr, depthStencilFramebufferSignatureAttachment.mipmapIndex, depthStencilFramebufferSignatureAttachment.layerIndex);
+						Rhi::FramebufferAttachment depthStencilFramebufferAttachment(IsValid(depthStencilFramebufferSignatureAttachment.textureAssetId) ? mRenderTargetTextureManager.getTextureByAssetId(depthStencilFramebufferSignatureAttachment.textureAssetId, renderTarget, numberOfMultisamples, resolutionScale, &depthStencilRenderTargetTextureSignature) : nullptr, depthStencilFramebufferSignatureAttachment.mipmapIndex, depthStencilFramebufferSignatureAttachment.layerIndex);
 						if (nullptr != depthStencilRenderTargetTextureSignature)
 						{
 							if (0 == usedNumberOfMultisamples)

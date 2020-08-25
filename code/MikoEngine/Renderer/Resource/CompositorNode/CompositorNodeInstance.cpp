@@ -41,11 +41,11 @@ namespace Renderer
 			// Check whether or not to execute the compositor pass instance
 			const ICompositorResourcePass& compositorResourcePass = compositorInstancePass->getCompositorResourcePass();
 			if ((!compositorResourcePass.getSkipFirstExecution() || compositorInstancePass->mNumberOfExecutionRequests > 0) &&
-				(isInvalid(compositorResourcePass.getNumberOfExecutions()) || compositorInstancePass->mNumberOfExecutionRequests < compositorResourcePass.getNumberOfExecutions()))
+				(IsInvalid(compositorResourcePass.getNumberOfExecutions()) || compositorInstancePass->mNumberOfExecutionRequests < compositorResourcePass.getNumberOfExecutions()))
 			{
 				{ // Set the current graphics render target
 					// TODO(co) For now: In case if it's a compositor channel ID (input/output node) use the given render target
-					Rhi::IRenderTarget* newRenderTarget = isValid(compositorResourcePass.getCompositorTarget().getCompositorChannelId()) ? &renderTarget : compositorInstancePass->getRenderTarget();
+					Rhi::IRenderTarget* newRenderTarget = IsValid(compositorResourcePass.getCompositorTarget().getCompositorChannelId()) ? &renderTarget : compositorInstancePass->getRenderTarget();
 					if (newRenderTarget != currentRenderTarget)
 					{
 						currentRenderTarget = newRenderTarget;

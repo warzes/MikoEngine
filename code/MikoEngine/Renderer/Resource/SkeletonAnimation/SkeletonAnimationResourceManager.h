@@ -56,7 +56,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	public:
 		[[nodiscard]] SkeletonAnimationResource* getSkeletonAnimationResourceByAssetId(AssetId assetId) const;	// Considered to be inefficient, avoid method whenever possible
-		void loadSkeletonAnimationResourceByAssetId(AssetId assetId, SkeletonAnimationResourceId& skeletonAnimationResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = getInvalid<ResourceLoaderTypeId>());	// Asynchronous
+		void loadSkeletonAnimationResourceByAssetId(AssetId assetId, SkeletonAnimationResourceId& skeletonAnimationResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = GetInvalid<ResourceLoaderTypeId>());	// Asynchronous
 		[[nodiscard]] SkeletonAnimationResourceId createSkeletonAnimationResourceByAssetId(AssetId assetId);	// Skeleton animation resource is not allowed to exist, yet
 		void setInvalidResourceId(SkeletonAnimationResourceId& skeletonAnimationResourceId, IResourceListener& resourceListener) const;
 

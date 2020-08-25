@@ -2,7 +2,7 @@
 
 
 #include "Renderer/Asset/Asset.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 
 namespace Renderer
 {
@@ -22,7 +22,7 @@ namespace Renderer
 		typedef std::vector<Asset> SortedAssetVector;
 
 		inline AssetPackage() :
-			mAssetPackageId(getInvalid<AssetPackageId>())
+			mAssetPackageId(GetInvalid<AssetPackageId>())
 		{
 			// Nothing here
 		}

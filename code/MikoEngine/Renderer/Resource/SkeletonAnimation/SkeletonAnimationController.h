@@ -5,7 +5,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "Renderer/Core/StringId.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 #include "Renderer/Resource/IResourceListener.h"
 
 
@@ -75,7 +75,7 @@ namespace Renderer
 		inline SkeletonAnimationController(const IRenderer& renderer, SkeletonResourceId skeletonResourceId) :
 			mRenderer(renderer),
 			mSkeletonResourceId(skeletonResourceId),
-			mSkeletonAnimationResourceId(getInvalid<SkeletonAnimationResourceId>()),
+			mSkeletonAnimationResourceId(GetInvalid<SkeletonAnimationResourceId>()),
 			mSkeletonAnimationEvaluator(nullptr),
 			mTimeInSeconds(0.0f)
 		{

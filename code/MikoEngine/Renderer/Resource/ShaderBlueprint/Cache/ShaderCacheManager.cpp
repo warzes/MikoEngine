@@ -29,7 +29,7 @@ namespace Renderer
 
 		// Get the shader blueprint resource ID
 		const ShaderBlueprintResourceId shaderBlueprintResourceId = materialBlueprintResource.getGraphicsShaderBlueprintResourceId(graphicsShaderType);
-		if (isValid(shaderBlueprintResourceId))
+		if (IsValid(shaderBlueprintResourceId))
 		{
 			// Get the shader cache identifier, often but not always identical to the shader combination ID
 			const ShaderCacheId shaderCacheId = graphicsPipelineStateSignature.getShaderCombinationId(graphicsShaderType);
@@ -187,7 +187,7 @@ namespace Renderer
 
 		// Get the shader blueprint resource ID
 		const ShaderBlueprintResourceId shaderBlueprintResourceId = materialBlueprintResource.getComputeShaderBlueprintResourceId();
-		if (isValid(shaderBlueprintResourceId))
+		if (IsValid(shaderBlueprintResourceId))
 		{
 			// Get the shader cache identifier, often but not always identical to the shader combination ID
 			const ShaderCacheId shaderCacheId = computePipelineStateSignature.getShaderCombinationId();
@@ -308,7 +308,7 @@ namespace Renderer
 		const AssetManager& assetManager = mShaderBlueprintResourceManager.getRenderer().getAssetManager();
 
 		{ // Load shader caches
-			uint32_t numberOfShaderCaches = getInvalid<uint32_t>();
+			uint32_t numberOfShaderCaches = GetInvalid<uint32_t>();
 			file.read(&numberOfShaderCaches, sizeof(uint32_t));
 			mShaderCacheByShaderCacheId.reserve(numberOfShaderCaches);
 			std::vector<uint8_t> bytecode;
@@ -318,21 +318,21 @@ namespace Renderer
 				ShaderCache* shaderCache = nullptr;
 
 				// Load shader cache
-				ShaderCacheId shaderCacheId = getInvalid<ShaderCacheId>();
+				ShaderCacheId shaderCacheId = GetInvalid<ShaderCacheId>();
 				file.read(&shaderCacheId, sizeof(ShaderCacheId));
-				uint32_t numberOfBytes = getInvalid<uint32_t>();
+				uint32_t numberOfBytes = GetInvalid<uint32_t>();
 				file.read(&numberOfBytes, sizeof(uint32_t));
-				if (isValid(numberOfBytes))
+				if (IsValid(numberOfBytes))
 				{
 					// Master shader cache
 
 					// Load list of IDs of the assets (shader blueprint, shader piece) which took part in the shader cache creation
-					uint32_t numberOfAssetIds = getInvalid<uint32_t>();
+					uint32_t numberOfAssetIds = GetInvalid<uint32_t>();
 					file.read(&numberOfAssetIds, sizeof(uint32_t));
 					RHI_ASSERT(0 != numberOfAssetIds, "Invalid number of asset IDs")
 					assetIds.resize(numberOfAssetIds);
 					file.read(assetIds.data(), sizeof(uint32_t) * numberOfAssetIds);
-					uint64_t combinedAssetFileHashes = getInvalid<uint64_t>();
+					uint64_t combinedAssetFileHashes = GetInvalid<uint64_t>();
 					file.read(&combinedAssetFileHashes, sizeof(uint64_t));
 
 					// Check whether or not the shader cache is still valid
@@ -372,7 +372,7 @@ namespace Renderer
 				}
 				else
 				{
-					ShaderCacheId masterShaderCacheId = getInvalid<ShaderCacheId>();
+					ShaderCacheId masterShaderCacheId = GetInvalid<ShaderCacheId>();
 					file.read(&masterShaderCacheId, sizeof(ShaderCacheId));
 					if (outOfDateShaderCacheIds.find(masterShaderCacheId) == outOfDateShaderCacheIds.cend())
 					{
@@ -406,14 +406,14 @@ namespace Renderer
 		}
 
 		{ // Load shader source code ID to shader cache ID mapping
-			uint32_t numberOfElements = getInvalid<uint32_t>();
+			uint32_t numberOfElements = GetInvalid<uint32_t>();
 			file.read(&numberOfElements, sizeof(uint32_t));
 			mShaderCacheByShaderSourceCodeId.reserve(numberOfElements);
 			for (uint32_t i = 0; i < numberOfElements; ++i)
 			{
-				ShaderSourceCodeId shaderSourceCodeId = getInvalid<ShaderSourceCodeId>();
+				ShaderSourceCodeId shaderSourceCodeId = GetInvalid<ShaderSourceCodeId>();
 				file.read(&shaderSourceCodeId, sizeof(ShaderSourceCodeId));
-				ShaderCacheId shaderCacheId = getInvalid<ShaderCacheId>();
+				ShaderCacheId shaderCacheId = GetInvalid<ShaderCacheId>();
 				file.read(&shaderCacheId, sizeof(ShaderCacheId));
 				if (outOfDateShaderCacheIds.find(shaderCacheId) == outOfDateShaderCacheIds.cend())
 				{
@@ -469,7 +469,7 @@ namespace Renderer
 				const ShaderCache* masterShaderCache = shaderCache->getMasterShaderCache();
 				RHI_ASSERT(nullptr != masterShaderCache->getShaderPtr().GetPointer(), "A shader cache must always have a valid shader instance, else it's a pointless shader cache")
 				file.write(&shaderCache->mShaderCacheId, sizeof(ShaderCacheId));
-				const uint32_t numberOfBytes = getInvalid<uint32_t>();
+				const uint32_t numberOfBytes = GetInvalid<uint32_t>();
 				file.write(&numberOfBytes, sizeof(uint32_t));
 				file.write(&masterShaderCache->mShaderCacheId, sizeof(ShaderCacheId));
 			}

@@ -119,7 +119,7 @@ namespace Renderer
 			{
 				MaterialBlueprintResource& materialBlueprintResource = materialBlueprintResourceManager.getByIndex(i);
 				const ShaderBlueprintResourceId computeShaderBlueprintResourceId = materialBlueprintResource.getComputeShaderBlueprintResourceId();
-				if (isValid(computeShaderBlueprintResourceId))
+				if (IsValid(computeShaderBlueprintResourceId))
 				{
 					// Compute pipeline state object (PSO)
 					if (shaderBlueprintResourceId == computeShaderBlueprintResourceId)
@@ -161,7 +161,7 @@ namespace Renderer
 		const ShaderPieceResourceManager& shaderPieceResourceManager = mRenderer.getShaderPieceResourceManager();
 		for (ShaderPieceResourceId shaderPieceResourceId : mShaderBlueprintResource->mIncludeShaderPieceResourceIds)
 		{
-			if (isValid(shaderPieceResourceId) && IResource::LoadingState::LOADED != shaderPieceResourceManager.getResourceByResourceId(shaderPieceResourceId).getLoadingState())
+			if (IsValid(shaderPieceResourceId) && IResource::LoadingState::LOADED != shaderPieceResourceManager.getResourceByResourceId(shaderPieceResourceId).getLoadingState())
 			{
 				// Not fully loaded
 				return false;

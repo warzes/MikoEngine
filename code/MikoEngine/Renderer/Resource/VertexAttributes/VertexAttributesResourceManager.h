@@ -54,7 +54,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	public:
 		[[nodiscard]] VertexAttributesResource* getVertexAttributesResourceByAssetId(AssetId assetId) const;	// Considered to be inefficient, avoid method whenever possible
-		void loadVertexAttributesResourceByAssetId(AssetId assetId, VertexAttributesResourceId& vertexAttributesResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = getInvalid<ResourceLoaderTypeId>());	// Asynchronous
+		void loadVertexAttributesResourceByAssetId(AssetId assetId, VertexAttributesResourceId& vertexAttributesResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = GetInvalid<ResourceLoaderTypeId>());	// Asynchronous
 		[[nodiscard]] VertexAttributesResourceId createVertexAttributesResourceByAssetId(AssetId assetId);	// Skeleton animation resource is not allowed to exist, yet
 		void setInvalidResourceId(VertexAttributesResourceId& vertexAttributesResourceId, IResourceListener& resourceListener) const;
 

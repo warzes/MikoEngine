@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Renderer/Core/StringId.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 
 namespace Renderer
 {
@@ -23,7 +23,7 @@ namespace Renderer
 		uint32_t mipmapIndex;
 		uint32_t layerIndex;	// "slice" in Direct3D terminology, depending on the texture type it's a 2D texture array layer, 3D texture slice or cube map face
 		inline FramebufferSignatureAttachment() :
-			textureAssetId(getInvalid<AssetId>()),
+			textureAssetId(GetInvalid<AssetId>()),
 			mipmapIndex(0),
 			layerIndex(0)
 		{
@@ -63,7 +63,7 @@ namespace Renderer
 		*/
 		inline FramebufferSignature() :
 			mNumberOfColorAttachments(0),
-			mFramebufferSignatureId(getInvalid<FramebufferSignatureId>())
+			mFramebufferSignatureId(GetInvalid<FramebufferSignatureId>())
 		{
 			// Nothing here
 		}

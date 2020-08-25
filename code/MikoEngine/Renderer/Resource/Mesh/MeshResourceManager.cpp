@@ -69,7 +69,7 @@ namespace Renderer
 	void MeshResourceManager::loadMeshResourceByAssetId(AssetId assetId, MeshResourceId& meshResourceId, IResourceListener* resourceListener, bool reload, ResourceLoaderTypeId resourceLoaderTypeId)
 	{
 		// Choose default resource loader type ID, if necessary
-		if (isInvalid(resourceLoaderTypeId))
+		if (IsInvalid(resourceLoaderTypeId))
 		{
 			resourceLoaderTypeId = MeshResourceLoader::TYPE_ID;
 		}
@@ -92,7 +92,7 @@ namespace Renderer
 		{
 			meshResource->disconnectResourceListener(resourceListener);
 		}
-		setInvalid(meshResourceId);
+		SetInvalid(meshResourceId);
 	}
 
 

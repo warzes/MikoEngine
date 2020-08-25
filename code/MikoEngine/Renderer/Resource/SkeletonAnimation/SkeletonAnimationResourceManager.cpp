@@ -41,7 +41,7 @@ namespace Renderer
 		{
 			skeletonAnimationResource->disconnectResourceListener(resourceListener);
 		}
-		setInvalid(skeletonAnimationResourceId);
+		SetInvalid(skeletonAnimationResourceId);
 	}
 
 

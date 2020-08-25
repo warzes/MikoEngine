@@ -54,9 +54,9 @@ namespace Renderer
 		*    Default constructor
 		*/
 		inline ComputePipelineStateSignature() :
-			mMaterialBlueprintResourceId(getInvalid<MaterialBlueprintResourceId>()),
-			mComputePipelineStateSignatureId(getInvalid<ComputePipelineStateSignatureId>()),
-			mShaderCombinationId(getInvalid<ShaderCombinationId>())
+			mMaterialBlueprintResourceId(GetInvalid<MaterialBlueprintResourceId>()),
+			mComputePipelineStateSignatureId(GetInvalid<ComputePipelineStateSignatureId>()),
+			mShaderCombinationId(GetInvalid<ShaderCombinationId>())
 		{
 			// Nothing here
 		}

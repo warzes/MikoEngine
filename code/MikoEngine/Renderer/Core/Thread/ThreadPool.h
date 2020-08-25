@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 
 namespace Renderer
 {
@@ -71,9 +71,9 @@ namespace Renderer
 
 	public:
 		/// Invalid number of threads means to use as many threads as there are hardware threads on the system
-		explicit ThreadPool(size_t threads = getInvalid<size_t>())
+		explicit ThreadPool(size_t threads = GetInvalid<size_t>())
 		{
-			if (isInvalid(threads))
+			if (IsInvalid(threads))
 			{
 				threads = std::thread::hardware_concurrency();
 			}

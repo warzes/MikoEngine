@@ -63,7 +63,7 @@ namespace Renderer
 	void MaterialBlueprintResourceManager::loadMaterialBlueprintResourceByAssetId(AssetId assetId, MaterialBlueprintResourceId& materialBlueprintResourceId, IResourceListener* resourceListener, bool reload, ResourceLoaderTypeId resourceLoaderTypeId, bool createInitialPipelineStateCaches)
 	{
 		// Choose default resource loader type ID, if necessary
-		if (isInvalid(resourceLoaderTypeId))
+		if (IsInvalid(resourceLoaderTypeId))
 		{
 			resourceLoaderTypeId = MaterialBlueprintResourceLoader::TYPE_ID;
 		}
@@ -95,7 +95,7 @@ namespace Renderer
 		}
 		else
 		{
-			materialBlueprintResourceId = getInvalid<MaterialBlueprintResourceId>();
+			materialBlueprintResourceId = GetInvalid<MaterialBlueprintResourceId>();
 		}
 
 		// Load the resource, if required
@@ -126,7 +126,7 @@ namespace Renderer
 		{
 			materialBlueprintResource->disconnectResourceListener(resourceListener);
 		}
-		setInvalid(materialBlueprintResourceId);
+		SetInvalid(materialBlueprintResourceId);
 	}
 
 	void MaterialBlueprintResourceManager::setMaterialBlueprintResourceListener(IMaterialBlueprintResourceListener* materialBlueprintResourceListener)
@@ -230,7 +230,7 @@ namespace Renderer
 					{
 						for (MaterialTechnique* materialTechnique : materialResourceManager.getByIndex(materialIndex).getSortedMaterialTechniqueVector())
 						{
-							if (materialTechnique->getMaterialBlueprintResourceId() == materialBlueprintResource.getId() && isValid(materialTechnique->getAssignedMaterialSlot()))
+							if (materialTechnique->getMaterialBlueprintResourceId() == materialBlueprintResource.getId() && IsValid(materialTechnique->getAssignedMaterialSlot()))
 							{
 								materialBufferManager->releaseSlot(*materialTechnique);
 							}
@@ -239,7 +239,7 @@ namespace Renderer
 				}
 
 				// Reload material blueprint resource
-				MaterialBlueprintResourceId materialBlueprintResourceId = getInvalid<MaterialBlueprintResourceId>();
+				MaterialBlueprintResourceId materialBlueprintResourceId = GetInvalid<MaterialBlueprintResourceId>();
 				loadMaterialBlueprintResourceByAssetId(assetId, materialBlueprintResourceId, nullptr, true, materialBlueprintResource.getResourceLoaderTypeId());
 
 				// Clear pipeline state cache manager
@@ -406,12 +406,12 @@ namespace Renderer
 	void MaterialBlueprintResourceManager::loadPipelineStateObjectCache(IFile& file)
 	{
 		{ // Read the serialized graphics pipeline states
-			uint32_t numberOfElements = getInvalid<uint32_t>();
+			uint32_t numberOfElements = GetInvalid<uint32_t>();
 			file.read(&numberOfElements, sizeof(uint32_t));
 			mSerializedGraphicsPipelineStates.reserve(numberOfElements);
 			for (uint32_t i = 0; i < numberOfElements; ++i)
 			{
-				uint32_t key = getInvalid<uint32_t>();
+				uint32_t key = GetInvalid<uint32_t>();
 				file.read(&key, sizeof(uint32_t));
 				Rhi::SerializedGraphicsPipelineState serializedGraphicsPipelineState = {};
 				file.read(&serializedGraphicsPipelineState, sizeof(Rhi::SerializedGraphicsPipelineState));
@@ -433,9 +433,9 @@ namespace Renderer
 				{
 					// TODO(co) Currently material blueprint resource loading is a blocking process
 					const ::detail::MaterialBlueprintCacheEntry& materialBlueprintCacheEntry = materialBlueprintCacheEntries[i];
-					MaterialBlueprintResourceId materialBlueprintResourceId = getInvalid<MaterialBlueprintResourceId>();
-					loadMaterialBlueprintResourceByAssetId(materialBlueprintCacheEntry.materialBlueprintAssetId, materialBlueprintResourceId, nullptr, false, getInvalid<ResourceLoaderTypeId>(), false);
-					if (isValid(materialBlueprintResourceId))
+					MaterialBlueprintResourceId materialBlueprintResourceId = GetInvalid<MaterialBlueprintResourceId>();
+					loadMaterialBlueprintResourceByAssetId(materialBlueprintCacheEntry.materialBlueprintAssetId, materialBlueprintResourceId, nullptr, false, GetInvalid<ResourceLoaderTypeId>(), false);
+					if (IsValid(materialBlueprintResourceId))
 					{
 						mInternalResourceManager->getResources().getElementById(materialBlueprintResourceId).loadPipelineStateObjectCache(file);
 					}

@@ -156,7 +156,7 @@ namespace Renderer
 		mMemoryFile.read(&mComputeShaderBlueprintAssetId, sizeof(AssetId));
 
 		// Read in the graphics pipeline state in case there's no compute pipeline state
-		if (isInvalid(mComputeShaderBlueprintAssetId))
+		if (IsInvalid(mComputeShaderBlueprintAssetId))
 		{
 			// Read vertex attributes asset ID
 			mMemoryFile.read(&mVertexAttributesAssetId, sizeof(AssetId));
@@ -278,7 +278,7 @@ namespace Renderer
 
 			{ // Get the used shader blueprint resources
 				ShaderBlueprintResourceManager& shaderBlueprintResourceManager = mRenderer.getShaderBlueprintResourceManager();
-				if (isValid(mComputeShaderBlueprintAssetId))
+				if (IsValid(mComputeShaderBlueprintAssetId))
 				{
 					// The material blueprint is using a compute pipeline state
 					shaderBlueprintResourceManager.loadShaderBlueprintResourceByAssetId(mComputeShaderBlueprintAssetId, mMaterialBlueprintResource->mComputeShaderBlueprintResourceId);
@@ -288,7 +288,7 @@ namespace Renderer
 					// The material blueprint is using a graphics pipeline state
 					for (uint8_t i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
 					{
-						if (isValid(mGraphicsShaderBlueprintAssetId[i]))
+						if (IsValid(mGraphicsShaderBlueprintAssetId[i]))
 						{
 							shaderBlueprintResourceManager.loadShaderBlueprintResourceByAssetId(mGraphicsShaderBlueprintAssetId[i], mMaterialBlueprintResource->mGraphicsShaderBlueprintResourceId[i]);
 						}
@@ -451,11 +451,11 @@ namespace Renderer
 
 		// We only demand that all referenced shader blueprint resources are loaded, not yet loaded texture resources can be handled during runtime
 		const ShaderBlueprintResourceManager& shaderBlueprintResourceManager = mRenderer.getShaderBlueprintResourceManager();
-		if (isValid(mComputeShaderBlueprintAssetId))
+		if (IsValid(mComputeShaderBlueprintAssetId))
 		{
 			// The material blueprint is using a compute pipeline state
 			const ShaderBlueprintResourceId shaderBlueprintResourceId = mMaterialBlueprintResource->mComputeShaderBlueprintResourceId;
-			if (isValid(shaderBlueprintResourceId) && IResource::LoadingState::LOADED != shaderBlueprintResourceManager.getResourceByResourceId(shaderBlueprintResourceId).getLoadingState())
+			if (IsValid(shaderBlueprintResourceId) && IResource::LoadingState::LOADED != shaderBlueprintResourceManager.getResourceByResourceId(shaderBlueprintResourceId).getLoadingState())
 			{
 				// Not fully loaded
 				return false;
@@ -467,7 +467,7 @@ namespace Renderer
 			for (uint8_t i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
 			{
 				const ShaderBlueprintResourceId shaderBlueprintResourceId = mMaterialBlueprintResource->mGraphicsShaderBlueprintResourceId[i];
-				if (isValid(shaderBlueprintResourceId) && IResource::LoadingState::LOADED != shaderBlueprintResourceManager.getResourceByResourceId(shaderBlueprintResourceId).getLoadingState())
+				if (IsValid(shaderBlueprintResourceId) && IResource::LoadingState::LOADED != shaderBlueprintResourceManager.getResourceByResourceId(shaderBlueprintResourceId).getLoadingState())
 				{
 					// Not fully loaded
 					return false;
@@ -513,7 +513,7 @@ namespace Renderer
 			{
 				materialBlueprintSamplerState->samplerState.filter = defaultTextureFilterMode;
 			}
-			if (isInvalid(materialBlueprintSamplerState->samplerState.maxAnisotropy))
+			if (IsInvalid(materialBlueprintSamplerState->samplerState.maxAnisotropy))
 			{
 				materialBlueprintSamplerState->samplerState.maxAnisotropy = defaultMaximumTextureAnisotropy;
 			}

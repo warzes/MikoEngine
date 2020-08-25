@@ -57,8 +57,8 @@ namespace Renderer
 		// Even if there's no pass uniform buffer, there must still be a pass buffer manager filling "Renderer::PassBufferManager::PassData" which is used to fill the instances texture buffer
 
 		// Sanity checks: The render target to render into must be valid for graphics pipeline and must be a null pointer for compute pipeline
-		RHI_ASSERT(isValid(mMaterialBlueprintResource.getComputeShaderBlueprintResourceId()) || nullptr != renderTarget, "Graphics pipeline used but render target is invalid")
-		RHI_ASSERT(isInvalid(mMaterialBlueprintResource.getComputeShaderBlueprintResourceId()) || nullptr == renderTarget, "Compute pipeline used but render target is valid")
+		RHI_ASSERT(IsValid(mMaterialBlueprintResource.getComputeShaderBlueprintResourceId()) || nullptr != renderTarget, "Graphics pipeline used but render target is invalid")
+		RHI_ASSERT(IsInvalid(mMaterialBlueprintResource.getComputeShaderBlueprintResourceId()) || nullptr == renderTarget, "Compute pipeline used but render target is valid")
 
 		// Tell the material blueprint resource listener that we're about to fill a pass uniform buffer
 		IMaterialBlueprintResourceListener& materialBlueprintResourceListener = mMaterialBlueprintResourceManager.getMaterialBlueprintResourceListener();

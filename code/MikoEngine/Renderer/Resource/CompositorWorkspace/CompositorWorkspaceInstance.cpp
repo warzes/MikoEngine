@@ -49,9 +49,9 @@ namespace Renderer
 		mNumberOfMultisamples(1),
 		mCurrentlyUsedNumberOfMultisamples(1),
 		mResolutionScale(1.0f),
-		mRenderTargetWidth(getInvalid<uint32_t>()),
-		mRenderTargetHeight(getInvalid<uint32_t>()),
-		mCompositorWorkspaceResourceId(getInvalid<CompositorWorkspaceResourceId>()),
+		mRenderTargetWidth(GetInvalid<uint32_t>()),
+		mRenderTargetHeight(GetInvalid<uint32_t>()),
+		mCompositorWorkspaceResourceId(GetInvalid<CompositorWorkspaceResourceId>()),
 		mFramebufferManagerInitialized(false),
 		mExecutionRenderTarget(nullptr),
 		mCompositorInstancePassShadowMap(nullptr)
@@ -333,7 +333,7 @@ namespace Renderer
 			for (size_t nodeIndex = 0; nodeIndex < numberOfCompositorResourceNodes; ++nodeIndex)
 			{
 				// Get the compositor node resource instance
-				CompositorNodeResourceId compositorNodeResourceId = getInvalid<CompositorNodeResourceId>();
+				CompositorNodeResourceId compositorNodeResourceId = GetInvalid<CompositorNodeResourceId>();
 				compositorNodeResourceManager.loadCompositorNodeResourceByAssetId(compositorNodeAssetIds[nodeIndex], compositorNodeResourceId);
 				CompositorNodeResource& compositorNodeResource = compositorNodeResourceManager.getById(compositorNodeResourceId);
 
@@ -465,7 +465,7 @@ namespace Renderer
 				for (ICompositorInstancePass* compositorInstancePass : compositorNodeInstance->mCompositorInstancePasses)
 				{
 					const CompositorFramebufferId compositorFramebufferId = compositorInstancePass->getCompositorResourcePass().getCompositorTarget().getCompositorFramebufferId();
-					if (isValid(compositorFramebufferId))
+					if (IsValid(compositorFramebufferId))
 					{
 						compositorInstancePass->mRenderTarget = framebufferManager.getFramebufferByCompositorFramebufferId(compositorFramebufferId, mainRenderTarget, mCurrentlyUsedNumberOfMultisamples, mResolutionScale);
 					}

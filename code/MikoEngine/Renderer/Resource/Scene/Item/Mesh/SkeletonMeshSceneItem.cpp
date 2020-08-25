@@ -21,7 +21,7 @@ namespace Renderer
 	SkeletonResourceId SkeletonMeshSceneItem::getSkeletonResourceId() const
 	{
 		const MeshResource* meshResource = getSceneResource().getRenderer().getMeshResourceManager().tryGetById(getMeshResourceId());
-		return (nullptr != meshResource) ? meshResource->getSkeletonResourceId() : getInvalid<SkeletonResourceId>();
+		return (nullptr != meshResource) ? meshResource->getSkeletonResourceId() : GetInvalid<SkeletonResourceId>();
 	}
 
 
@@ -62,7 +62,7 @@ namespace Renderer
 		{
 			if (resource.getLoadingState() == IResource::LoadingState::LOADED)
 			{
-				if (isValid(mSkeletonAnimationAssetId))
+				if (IsValid(mSkeletonAnimationAssetId))
 				{
 					RHI_ASSERT(nullptr == mSkeletonAnimationController, "Invalid skeleton animation controller")
 					mSkeletonAnimationController = new SkeletonAnimationController(getSceneResource().getRenderer(), static_cast<const MeshResource&>(resource).getSkeletonResourceId());

@@ -22,7 +22,7 @@
 	#include <imgui/imgui.h>
 #endif
 #include "RHI/Rhi.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 #include "Renderer/Resource/MaterialBlueprint/MaterialBlueprintResource.h"
 
 #include <random>
@@ -320,8 +320,8 @@ namespace Renderer
 	{
 		// Sanity checks: The render target to render into must be valid for graphics pipeline and must be a null pointer for compute pipeline
 		RHI_ASSERT(compositorContextData.getCurrentlyBoundMaterialBlueprintResource() != nullptr, "Invalid currently bound material blueprint resource");
-		RHI_ASSERT(isValid(compositorContextData.getCurrentlyBoundMaterialBlueprintResource()->getComputeShaderBlueprintResourceId()) || nullptr != renderTarget, "Graphics pipeline used but render target is invalid");
-		RHI_ASSERT(isInvalid(compositorContextData.getCurrentlyBoundMaterialBlueprintResource()->getComputeShaderBlueprintResourceId()) || nullptr == renderTarget, "Compute pipeline used but render target is valid");
+		RHI_ASSERT(IsValid(compositorContextData.getCurrentlyBoundMaterialBlueprintResource()->getComputeShaderBlueprintResourceId()) || nullptr != renderTarget, "Graphics pipeline used but render target is invalid");
+		RHI_ASSERT(IsInvalid(compositorContextData.getCurrentlyBoundMaterialBlueprintResource()->getComputeShaderBlueprintResourceId()) || nullptr == renderTarget, "Compute pipeline used but render target is valid");
 
 		// Remember the pass data memory address of the current scope
 		mRenderer = &renderer;

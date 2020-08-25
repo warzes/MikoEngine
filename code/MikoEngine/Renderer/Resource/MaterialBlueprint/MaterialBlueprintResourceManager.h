@@ -96,7 +96,7 @@ namespace Renderer
 			mCreateInitialPipelineStateCaches = createInitialPipelineStateCaches;
 		}
 
-		void loadMaterialBlueprintResourceByAssetId(AssetId assetId, MaterialBlueprintResourceId& materialBlueprintResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = getInvalid<ResourceLoaderTypeId>(), bool createInitialPipelineStateCaches = true);	// Asynchronous
+		void loadMaterialBlueprintResourceByAssetId(AssetId assetId, MaterialBlueprintResourceId& materialBlueprintResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = GetInvalid<ResourceLoaderTypeId>(), bool createInitialPipelineStateCaches = true);	// Asynchronous
 		void setInvalidResourceId(MaterialBlueprintResourceId& materialBlueprintResourceId, IResourceListener& resourceListener) const;
 
 		[[nodiscard]] inline IMaterialBlueprintResourceListener& getMaterialBlueprintResourceListener() const

@@ -38,8 +38,8 @@ namespace Renderer
 		}
 
 		// Sanity checks
-		RHI_ASSERT(isValid(mMaterialAssetId) || isValid(mMaterialBlueprintAssetId), "Invalid data")
-		RHI_ASSERT(!(isValid(mMaterialAssetId) && isValid(mMaterialBlueprintAssetId)), "Invalid data")
+		RHI_ASSERT(IsValid(mMaterialAssetId) || IsValid(mMaterialBlueprintAssetId), "Invalid data")
+		RHI_ASSERT(!(IsValid(mMaterialAssetId) && IsValid(mMaterialBlueprintAssetId)), "Invalid data")
 	}
 
 	void MaterialSceneItem::onAttachedToSceneNode(SceneNode& sceneNode)
@@ -52,7 +52,7 @@ namespace Renderer
 
 	const RenderableManager* MaterialSceneItem::getRenderableManager() const
 	{
-		if (!isValid(getMaterialResourceId()))
+		if (!IsValid(getMaterialResourceId()))
 		{
 			// TODO(co) Get rid of the nasty delayed initialization in here, including the evil const-cast. For this, full asynchronous material blueprint loading must work. See "TODO(co) Currently material blueprint resource loading is a blocking process.".
 			const_cast<MaterialSceneItem*>(this)->initialize();
@@ -67,25 +67,25 @@ namespace Renderer
 	void MaterialSceneItem::initialize()
 	{
 		// Sanity checks
-		RHI_ASSERT(isValid(mMaterialAssetId) || isValid(mMaterialBlueprintAssetId), "Invalid data")
-		RHI_ASSERT(!(isValid(mMaterialAssetId) && isValid(mMaterialBlueprintAssetId)), "Invalid data")
+		RHI_ASSERT(IsValid(mMaterialAssetId) || IsValid(mMaterialBlueprintAssetId), "Invalid data")
+		RHI_ASSERT(!(IsValid(mMaterialAssetId) && IsValid(mMaterialBlueprintAssetId)), "Invalid data")
 
 		// Get parent material resource ID and initiate creating the material resource
 		MaterialResourceManager& materialResourceManager = getSceneResource().getRenderer().getMaterialResourceManager();
-		if (isValid(mMaterialAssetId))
+		if (IsValid(mMaterialAssetId))
 		{
 			// Get or load material resource
-			MaterialResourceId materialResourceId = getInvalid<MaterialResourceId>();
+			MaterialResourceId materialResourceId = GetInvalid<MaterialResourceId>();
 			materialResourceManager.loadMaterialResourceByAssetId(mMaterialAssetId, materialResourceId, this);
 		}
 		else
 		{
 			// Get or load material blueprint resource
 			const AssetId materialBlueprintAssetId = mMaterialBlueprintAssetId;
-			if (isValid(materialBlueprintAssetId))
+			if (IsValid(materialBlueprintAssetId))
 			{
 				MaterialResourceId parentMaterialResourceId = materialResourceManager.getMaterialResourceIdByAssetId(materialBlueprintAssetId);
-				if (isInvalid(parentMaterialResourceId))
+				if (IsInvalid(parentMaterialResourceId))
 				{
 					parentMaterialResourceId = materialResourceManager.createMaterialResourceByAssetId(materialBlueprintAssetId, materialBlueprintAssetId, mMaterialTechniqueId);
 				}
@@ -106,10 +106,10 @@ namespace Renderer
 			mRenderableManager.getRenderables().clear();
 
 			// Destroy the material resource we created
-			if (isValid(mMaterialResourceId))
+			if (IsValid(mMaterialResourceId))
 			{
 				getSceneResource().getRenderer().getMaterialResourceManager().destroyMaterialResource(mMaterialResourceId);
-				setInvalid(mMaterialResourceId);
+				SetInvalid(mMaterialResourceId);
 			}
 
 			// Create material resource
@@ -123,7 +123,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	MaterialSceneItem::~MaterialSceneItem()
 	{
-		if (isValid(mMaterialResourceId))
+		if (IsValid(mMaterialResourceId))
 		{
 			// Clear the renderable manager right now
 			mRenderableManager.getRenderables().clear();
@@ -136,8 +136,8 @@ namespace Renderer
 	void MaterialSceneItem::createMaterialResource(MaterialResourceId parentMaterialResourceId)
 	{
 		// Sanity checks
-		RHI_ASSERT(isInvalid(mMaterialResourceId), "Invalid data")
-		RHI_ASSERT(isValid(parentMaterialResourceId), "Invalid data")
+		RHI_ASSERT(IsInvalid(mMaterialResourceId), "Invalid data")
+		RHI_ASSERT(IsValid(parentMaterialResourceId), "Invalid data")
 
 		// Each material user instance must have its own material resource since material property values might vary
 		MaterialResourceManager& materialResourceManager = getSceneResource().getRenderer().getMaterialResourceManager();

@@ -30,7 +30,7 @@ namespace Renderer
 		{
 			compositorWorkspaceResource->disconnectResourceListener(resourceListener);
 		}
-		setInvalid(compositorWorkspaceResourceId);
+		SetInvalid(compositorWorkspaceResourceId);
 	}
 
 

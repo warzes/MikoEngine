@@ -68,7 +68,7 @@ namespace Renderer
 		}
 
 		[[nodiscard]] MeshResource* getMeshResourceByAssetId(AssetId assetId) const;	// Considered to be inefficient, avoid method whenever possible
-		void loadMeshResourceByAssetId(AssetId assetId, MeshResourceId& meshResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = getInvalid<ResourceLoaderTypeId>());	// Asynchronous
+		void loadMeshResourceByAssetId(AssetId assetId, MeshResourceId& meshResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = GetInvalid<ResourceLoaderTypeId>());	// Asynchronous
 		[[nodiscard]] MeshResourceId createEmptyMeshResourceByAssetId(AssetId assetId);	// Mesh resource is not allowed to exist, yet, prefer asynchronous mesh resource loading over this method
 		void setInvalidResourceId(MeshResourceId& textureResourceId, IResourceListener& resourceListener) const;
 

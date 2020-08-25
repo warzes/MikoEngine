@@ -5,7 +5,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 #include "RHI/Rhi.h"
 
 //[-------------------------------------------------------]
@@ -59,13 +59,13 @@ namespace Renderer
 		*    Default constructor
 		*/
 		inline RenderTargetTextureSignature() :
-			mWidth(getInvalid<uint32_t>()),
-			mHeight(getInvalid<uint32_t>()),
+			mWidth(GetInvalid<uint32_t>()),
+			mHeight(GetInvalid<uint32_t>()),
 			mTextureFormat(Rhi::TextureFormat::UNKNOWN),
 			mFlags(Flag::SHADER_RESOURCE | Flag::RENDER_TARGET | Flag::ALLOW_RESOLUTION_SCALE),
 			mWidthScale(1.0f),
 			mHeightScale(1.0f),
-			mRenderTargetTextureSignatureId(getInvalid<RenderTargetTextureSignatureId>())
+			mRenderTargetTextureSignatureId(GetInvalid<RenderTargetTextureSignatureId>())
 		{
 			// Nothing here
 		}

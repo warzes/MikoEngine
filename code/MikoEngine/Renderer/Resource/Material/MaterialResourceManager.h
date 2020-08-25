@@ -64,9 +64,9 @@ namespace Renderer
 
 		[[nodiscard]] MaterialResource* getMaterialResourceByAssetId(AssetId assetId) const;		// Considered to be inefficient, avoid method whenever possible
 		[[nodiscard]] MaterialResourceId getMaterialResourceIdByAssetId(AssetId assetId) const;	// Considered to be inefficient, avoid method whenever possible
-		void loadMaterialResourceByAssetId(AssetId assetId, MaterialResourceId& materialResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = getInvalid<ResourceLoaderTypeId>());	// Asynchronous
+		void loadMaterialResourceByAssetId(AssetId assetId, MaterialResourceId& materialResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = GetInvalid<ResourceLoaderTypeId>());	// Asynchronous
 		[[nodiscard]] MaterialResourceId createMaterialResourceByAssetId(AssetId assetId, AssetId materialBlueprintAssetId, MaterialTechniqueId materialTechniqueId);	// Material resource is not allowed to exist, yet
-		[[nodiscard]] MaterialResourceId createMaterialResourceByCloning(MaterialResourceId parentMaterialResourceId, AssetId assetId = getInvalid<AssetId>());	// Parent material resource must be fully loaded
+		[[nodiscard]] MaterialResourceId createMaterialResourceByCloning(MaterialResourceId parentMaterialResourceId, AssetId assetId = GetInvalid<AssetId>());	// Parent material resource must be fully loaded
 		void destroyMaterialResource(MaterialResourceId materialResourceId);
 		void setInvalidResourceId(MaterialResourceId& materialResourceId, IResourceListener& resourceListener) const;
 

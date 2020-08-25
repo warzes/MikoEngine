@@ -59,7 +59,7 @@ namespace Renderer
 	SceneResourceId SceneResourceManager::getSceneResourceIdByAssetId(AssetId assetId) const
 	{
 		const SceneResource* sceneResource = getSceneResourceByAssetId(assetId);
-		return (nullptr != sceneResource) ? sceneResource->getId() : getInvalid<SceneResourceId>();
+		return (nullptr != sceneResource) ? sceneResource->getId() : GetInvalid<SceneResourceId>();
 	}
 
 	void SceneResourceManager::loadSceneResourceByAssetId(AssetId assetId, SceneResourceId& sceneResourceId, IResourceListener* resourceListener, bool reload, ResourceLoaderTypeId resourceLoaderTypeId)
@@ -79,7 +79,7 @@ namespace Renderer
 		{
 			sceneResource->disconnectResourceListener(resourceListener);
 		}
-		setInvalid(sceneResourceId);
+		SetInvalid(sceneResourceId);
 	}
 
 

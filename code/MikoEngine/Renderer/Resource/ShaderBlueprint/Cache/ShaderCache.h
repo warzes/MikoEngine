@@ -5,7 +5,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "Renderer/Core/StringId.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 #include "RHI/Rhi.h"
 
 
@@ -97,7 +97,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	private:
 		inline ShaderCache() :
-			mShaderCacheId(getInvalid<ShaderCacheId>()),
+			mShaderCacheId(GetInvalid<ShaderCacheId>()),
 			mMasterShaderCache(nullptr)
 		{
 			// Nothing here

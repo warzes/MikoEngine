@@ -5,7 +5,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "Renderer/Core/StringId.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 
 
 //[-------------------------------------------------------]
@@ -47,7 +47,7 @@ namespace Renderer
 
 			struct Technique final
 			{
-				MaterialTechniqueId materialTechniqueId = getInvalid<MaterialTechniqueId>();
+				MaterialTechniqueId materialTechniqueId = GetInvalid<MaterialTechniqueId>();
 				AssetId				materialBlueprintAssetId;
 			};
 		#pragma pack(pop)

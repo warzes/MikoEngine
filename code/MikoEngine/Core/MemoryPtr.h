@@ -4,7 +4,6 @@
 // TODO: RefCount возможно не потокобезопасен, можно сделать спец версию (пример из годота - safe_refcount
 // TODO: нужны слабые ссылки (weak ptr)
 
-
 template <class T>
 class RefCount
 {
@@ -59,11 +58,14 @@ private:
 	uint32_t m_refCount = 0;
 };
 
+//-----------------------------------------------------------------------------
+// TODO: не хватает move семантики в конструкторах/операторе копирования (посмотреть в urho)
 template <class T>
 class SmartRefCount
 {
 public:
 	SmartRefCount() noexcept = default;
+	SmartRefCount(std::nullptr_t) noexcept {}
 	SE_FORCEINLINE SmartRefCount(T *ptr) noexcept
 	{
 		setPtr(ptr);

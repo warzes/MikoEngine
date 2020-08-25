@@ -52,7 +52,7 @@ namespace Renderer
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
 	public:
-		void loadCompositorWorkspaceResourceByAssetId(AssetId assetId, CompositorWorkspaceResourceId& compositorWorkspaceResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = getInvalid<ResourceLoaderTypeId>());	// Asynchronous
+		void loadCompositorWorkspaceResourceByAssetId(AssetId assetId, CompositorWorkspaceResourceId& compositorWorkspaceResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = GetInvalid<ResourceLoaderTypeId>());	// Asynchronous
 		void setInvalidResourceId(CompositorWorkspaceResourceId& compositorWorkspaceResourceId, IResourceListener& resourceListener) const;
 
 		[[nodiscard]] inline RenderTargetTextureManager& getRenderTargetTextureManager()

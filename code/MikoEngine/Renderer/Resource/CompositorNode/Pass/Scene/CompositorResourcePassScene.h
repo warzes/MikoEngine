@@ -87,7 +87,7 @@ namespace Renderer
 			mMinimumRenderQueueIndex(0),
 			mMaximumRenderQueueIndex(255),
 			mTransparentPass(false),
-			mMaterialTechniqueId(getInvalid<MaterialTechniqueId>())
+			mMaterialTechniqueId(GetInvalid<MaterialTechniqueId>())
 		{
 			// Nothing here
 		}

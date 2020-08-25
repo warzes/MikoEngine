@@ -28,7 +28,7 @@ namespace Renderer
 		mTextureMaterialBlueprintProperty = passGenerateMipmaps->textureMaterialBlueprintProperty;
 
 		// Sanity check
-		RHI_ASSERT((isInvalid(mMaterialBlueprintAssetId) && isInvalid(mTextureMaterialBlueprintProperty)) || (isValid(mMaterialBlueprintAssetId) && isValid(mTextureMaterialBlueprintProperty)), "Invalid material blueprint asset")
+		RHI_ASSERT((IsInvalid(mMaterialBlueprintAssetId) && IsInvalid(mTextureMaterialBlueprintProperty)) || (IsValid(mMaterialBlueprintAssetId) && IsValid(mTextureMaterialBlueprintProperty)), "Invalid material blueprint asset")
 	}
 
 

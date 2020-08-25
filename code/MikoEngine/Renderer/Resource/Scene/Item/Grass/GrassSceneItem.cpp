@@ -47,7 +47,7 @@ namespace Renderer
 		const IRenderer& renderer = getSceneResource().getRenderer();
 		const MaterialResourceManager& materialResourceManager = renderer.getMaterialResourceManager();
 		const MaterialResourceId materialResourceId = getMaterialResourceId();
-		mRenderableManager.getRenderables().emplace_back(mRenderableManager, renderer.getMeshResourceManager().getDrawIdVertexArrayPtr(), materialResourceManager, materialResourceId, getInvalid<SkeletonResourceId>(), false, mIndirectBufferPtr, 0, 1 RHI_RESOURCE_DEBUG_NAME(debugName));
+		mRenderableManager.getRenderables().emplace_back(mRenderableManager, renderer.getMeshResourceManager().getDrawIdVertexArrayPtr(), materialResourceManager, materialResourceId, GetInvalid<SkeletonResourceId>(), false, mIndirectBufferPtr, 0, 1 RHI_RESOURCE_DEBUG_NAME(debugName));
 		mRenderableManager.updateCachedRenderablesData();
 
 		// Tell the used material resource about our structured buffer

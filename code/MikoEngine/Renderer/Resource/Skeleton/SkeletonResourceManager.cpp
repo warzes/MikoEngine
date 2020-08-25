@@ -39,7 +39,7 @@ namespace Renderer
 		{
 			skeletonResource->disconnectResourceListener(resourceListener);
 		}
-		setInvalid(skeletonResourceId);
+		SetInvalid(skeletonResourceId);
 	}
 
 

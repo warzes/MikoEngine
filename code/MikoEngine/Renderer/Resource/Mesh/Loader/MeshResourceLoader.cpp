@@ -167,14 +167,14 @@ namespace Renderer
 				const v1Mesh::SubMesh& v1SubMesh = mSubMeshes[i];
 
 				// Setup sub-mesh
-				MaterialResourceId materialResourceId = getInvalid<MaterialResourceId>();
+				MaterialResourceId materialResourceId = GetInvalid<MaterialResourceId>();
 				materialResourceManager.loadMaterialResourceByAssetId(v1SubMesh.materialAssetId, materialResourceId);
 				subMesh.setMaterialResourceId(materialResourceId);
 				subMesh.setStartIndexLocation(v1SubMesh.startIndexLocation);
 				subMesh.setNumberOfIndices(v1SubMesh.numberOfIndices);
 
 				// Sanity check
-				RHI_ASSERT(isValid(subMesh.getMaterialResourceId()), "Invalid sub mesh material resource ID")
+				RHI_ASSERT(IsValid(subMesh.getMaterialResourceId()), "Invalid sub mesh material resource ID")
 			}
 		}
 
@@ -185,7 +185,7 @@ namespace Renderer
 
 			// Get/create skeleton resource
 			SkeletonResource* skeletonResource = nullptr;
-			if (isValid(mMeshResource->getSkeletonResourceId()))
+			if (IsValid(mMeshResource->getSkeletonResourceId()))
 			{
 				// Reuse existing skeleton resource
 				skeletonResource = &skeletonResourceManager.getById(mMeshResource->getSkeletonResourceId());

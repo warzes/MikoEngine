@@ -86,7 +86,7 @@ namespace Renderer
 		mGraphicsPipelineStateSignatureId	 = Math::FNV1a_INITIAL_HASH_32;
 		for (uint8_t i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
 		{
-			mShaderCombinationId[i] = getInvalid<ShaderCombinationId>();
+			mShaderCombinationId[i] = GetInvalid<ShaderCombinationId>();
 		}
 
 		// Incorporate primitive hashes

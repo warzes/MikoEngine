@@ -196,7 +196,7 @@ namespace Renderer
 					// First at all, check whether or not the graphics program cache entry we need already exists, if so we can take a shortcut and only have to care about creating the graphics pipeline state
 					GraphicsProgramCacheManager& graphicsProgramCacheManager = materialBlueprintResource.getGraphicsPipelineStateCacheManager().getGraphicsProgramCacheManager();
 					GraphicsProgramCacheId graphicsProgramCacheId = compilerRequest.graphicsProgramCacheId;
-					if (isInvalid(graphicsProgramCacheId))
+					if (IsInvalid(graphicsProgramCacheId))
 					{
 						graphicsProgramCacheId = compilerRequest.graphicsProgramCacheId = GraphicsProgramCacheManager::generateGraphicsProgramCacheId(graphicsPipelineStateSignature);
 					}
@@ -232,7 +232,7 @@ namespace Renderer
 								// Get the shader blueprint resource ID
 								const GraphicsShaderType graphicsShaderType = static_cast<GraphicsShaderType>(i);
 								const ShaderBlueprintResourceId shaderBlueprintResourceId = materialBlueprintResource.getGraphicsShaderBlueprintResourceId(graphicsShaderType);
-								if (isValid(shaderBlueprintResourceId))
+								if (IsValid(shaderBlueprintResourceId))
 								{
 									// Get the shader cache identifier, often but not always identical to the shader combination ID
 									const ShaderCacheId shaderCacheId = graphicsPipelineStateSignature.getShaderCombinationId(graphicsShaderType);
@@ -431,7 +431,7 @@ namespace Renderer
 						{ // Graphics program cache entry
 							GraphicsProgramCacheManager& graphicsProgramCacheManager = materialBlueprintResource.getGraphicsPipelineStateCacheManager().getGraphicsProgramCacheManager();
 							const GraphicsProgramCacheId graphicsProgramCacheId = compilerRequest.graphicsProgramCacheId;
-							RHI_ASSERT(isValid(graphicsProgramCacheId), "Invalid graphics program cache ID")
+							RHI_ASSERT(IsValid(graphicsProgramCacheId), "Invalid graphics program cache ID")
 							std::unique_lock<std::mutex> mutexLock(graphicsProgramCacheManager.mMutex);
 							RHI_ASSERT(graphicsProgramCacheManager.mGraphicsProgramCacheById.find(graphicsProgramCacheId) == graphicsProgramCacheManager.mGraphicsProgramCacheById.cend(), "Invalid graphics program cache ID")	// TODO(co) Error handling
 							graphicsProgramCacheManager.mGraphicsProgramCacheById.emplace(graphicsProgramCacheId, new GraphicsProgramCache(graphicsProgramCacheId, *graphicsProgram));

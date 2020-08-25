@@ -5,7 +5,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "Renderer/Core/StringId.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 
 
 //[-------------------------------------------------------]
@@ -118,7 +118,7 @@ namespace Renderer
 					char	 name[MAXIMUM_PASS_NAME_LENGTH] = { "Compositor pass" };	// Human readable ASCII pass name for debugging and profiling, contains terminating zero
 					float	 minimumDepth					= 0.0f;
 					float	 maximumDepth					= 1.0f;
-					uint32_t numberOfExecutions				= getInvalid<uint32_t>();
+					uint32_t numberOfExecutions				= GetInvalid<uint32_t>();
 					bool	 skipFirstExecution				= false;
 				};
 			#pragma pack(pop)
@@ -172,7 +172,7 @@ namespace Renderer
 			mMinimumDepth(0.0f),
 			mMaximumDepth(1.0f),
 			mSkipFirstExecution(false),
-			mNumberOfExecutions(getInvalid<uint32_t>())
+			mNumberOfExecutions(GetInvalid<uint32_t>())
 		{
 			// Nothing here
 		}

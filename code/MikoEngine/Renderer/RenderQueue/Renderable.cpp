@@ -45,8 +45,8 @@ namespace Renderer
 		mStartIndexLocation(0),
 		mNumberOfIndices(0),
 		mInstanceCount(1),
-		mMaterialResourceId(getInvalid<MaterialResourceId>()),
-		mSkeletonResourceId(getInvalid<SkeletonResourceId>()),
+		mMaterialResourceId(GetInvalid<MaterialResourceId>()),
+		mSkeletonResourceId(GetInvalid<SkeletonResourceId>()),
 		mDrawIndexed(false),
 		// Cached material data
 		mRenderQueueIndex(0),
@@ -54,7 +54,7 @@ namespace Renderer
 		mUseAlphaMap(false),
 		// Internal data
 		mMaterialResourceManager(nullptr),
-		mMaterialResourceAttachmentIndex(getInvalid<int>())
+		mMaterialResourceAttachmentIndex(GetInvalid<int>())
 	{
 		// Nothing here
 	}
@@ -70,7 +70,7 @@ namespace Renderer
 		mStartIndexLocation(startIndexLocation),
 		mNumberOfIndices(numberOfIndices),
 		mInstanceCount(instanceCount),
-		mMaterialResourceId(getInvalid<MaterialResourceId>()),
+		mMaterialResourceId(GetInvalid<MaterialResourceId>()),
 		mSkeletonResourceId(skeletonResourceId),
 		mDrawIndexed(drawIndexed),
 		// Cached material data
@@ -79,7 +79,7 @@ namespace Renderer
 		mUseAlphaMap(false),
 		// Internal data
 		mMaterialResourceManager(nullptr),
-		mMaterialResourceAttachmentIndex(getInvalid<int>())
+		mMaterialResourceAttachmentIndex(GetInvalid<int>())
 	{
 		#if SE_DEBUG
 			if ('\0' != debugName[0])
@@ -87,7 +87,7 @@ namespace Renderer
 				setDebugName(debugName);
 			}
 		#endif
-		if (isValid(materialResourceId))
+		if (IsValid(materialResourceId))
 		{
 			setMaterialResourceId(materialResourceManager, materialResourceId);
 		}
@@ -105,7 +105,7 @@ namespace Renderer
 		mIndirectBufferOffset(indirectBufferOffset),	// Indirect buffer used
 		mNumberOfIndices(~0u),							// Invalid since read from the indirect buffer
 		mNumberOfDraws(numberOfDraws),					// Indirect buffer used
-		mMaterialResourceId(getInvalid<MaterialResourceId>()),
+		mMaterialResourceId(GetInvalid<MaterialResourceId>()),
 		mSkeletonResourceId(skeletonResourceId),
 		mDrawIndexed(drawIndexed),
 		// Cached material data
@@ -114,7 +114,7 @@ namespace Renderer
 		mUseAlphaMap(false),
 		// Internal data
 		mMaterialResourceManager(nullptr),
-		mMaterialResourceAttachmentIndex(getInvalid<int>())
+		mMaterialResourceAttachmentIndex(GetInvalid<int>())
 	{
 		#if SE_DEBUG
 			if ('\0' != debugName[0])
@@ -122,7 +122,7 @@ namespace Renderer
 				setDebugName(debugName);
 			}
 		#endif
-		if (isValid(materialResourceId))
+		if (IsValid(materialResourceId))
 		{
 			setMaterialResourceId(materialResourceManager, materialResourceId);
 		}
@@ -140,7 +140,7 @@ namespace Renderer
 		mStartIndexLocation(startIndexLocation),
 		mNumberOfIndices(numberOfIndices),
 		mInstanceCount(instanceCount),
-		mMaterialResourceId(getInvalid<MaterialResourceId>()),
+		mMaterialResourceId(GetInvalid<MaterialResourceId>()),
 		mSkeletonResourceId(skeletonResourceId),
 		mDrawIndexed(drawIndexed),
 		// Cached material data
@@ -149,7 +149,7 @@ namespace Renderer
 		mUseAlphaMap(false),
 		// Internal data
 		mMaterialResourceManager(nullptr),
-		mMaterialResourceAttachmentIndex(getInvalid<int>())
+		mMaterialResourceAttachmentIndex(GetInvalid<int>())
 	{
 		#if SE_DEBUG
 			if ('\0' != debugName[0])
@@ -157,7 +157,7 @@ namespace Renderer
 				setDebugName(debugName);
 			}
 		#endif
-		if (isValid(materialResourceId))
+		if (IsValid(materialResourceId))
 		{
 			setMaterialResourceId(materialResourceManager, materialResourceId);
 		}
@@ -176,7 +176,7 @@ namespace Renderer
 		mIndirectBufferOffset(indirectBufferOffset),	// Indirect buffer used
 		mNumberOfIndices(~0u),							// Invalid since read from the indirect buffer
 		mNumberOfDraws(numberOfDraws),					// Indirect buffer used
-		mMaterialResourceId(getInvalid<MaterialResourceId>()),
+		mMaterialResourceId(GetInvalid<MaterialResourceId>()),
 		mSkeletonResourceId(skeletonResourceId),
 		mDrawIndexed(drawIndexed),
 		// Cached material data
@@ -185,7 +185,7 @@ namespace Renderer
 		mUseAlphaMap(false),
 		// Internal data
 		mMaterialResourceManager(nullptr),
-		mMaterialResourceAttachmentIndex(getInvalid<int>())
+		mMaterialResourceAttachmentIndex(GetInvalid<int>())
 	{
 		#if SE_DEBUG
 			if ('\0' != debugName[0])
@@ -193,7 +193,7 @@ namespace Renderer
 				setDebugName(debugName);
 			}
 		#endif
-		if (isValid(materialResourceId))
+		if (IsValid(materialResourceId))
 		{
 			setMaterialResourceId(materialResourceManager, materialResourceId);
 		}
@@ -212,7 +212,7 @@ namespace Renderer
 			if (nullptr != materialResource)
 			{
 				// Sanity checks
-				RHI_ASSERT(isInvalid(mMaterialResourceAttachmentIndex), "Invalid material resource attachment index")
+				RHI_ASSERT(IsInvalid(mMaterialResourceAttachmentIndex), "Invalid material resource attachment index")
 				RHI_ASSERT(nullptr == mMaterialResourceManager, "Invalid material resource manager instance")
 
 				// Attach the renderable from the material resource
@@ -281,7 +281,7 @@ namespace Renderer
 		else
 		{
 			// Sanity check
-			RHI_ASSERT((isValid(mMaterialResourceId) && &materialResourceManager == mMaterialResourceManager) || (isInvalid(mMaterialResourceId) && nullptr == mMaterialResourceManager), "Invalid renderable configuration")
+			RHI_ASSERT((IsValid(mMaterialResourceId) && &materialResourceManager == mMaterialResourceManager) || (IsInvalid(mMaterialResourceId) && nullptr == mMaterialResourceManager), "Invalid renderable configuration")
 		}
 	}
 
@@ -291,11 +291,11 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	void Renderable::unsetMaterialResourceIdInternal()
 	{
-		if (isValid(mMaterialResourceId))
+		if (IsValid(mMaterialResourceId))
 		{
 			// Sanity checks
 			RHI_ASSERT(nullptr != mMaterialResourceManager, "Invalid material resource manager")
-			RHI_ASSERT(isValid(mMaterialResourceAttachmentIndex), "Invalid material resource attachment index")
+			RHI_ASSERT(IsValid(mMaterialResourceAttachmentIndex), "Invalid material resource attachment index")
 
 			// Get the material resource we're going to detach from
 			MaterialResource& materialResource = mMaterialResourceManager->getById(mMaterialResourceId);
@@ -313,9 +313,9 @@ namespace Renderer
 				// The node that was at the end got swapped and has now a different index
 				(*iterator)->mMaterialResourceAttachmentIndex = static_cast<int>(iterator - materialResource.mAttachedRenderables.begin());
 			}
-			setInvalid(mMaterialResourceId);
+			SetInvalid(mMaterialResourceId);
 			mMaterialResourceManager = nullptr;
-			setInvalid(mMaterialResourceAttachmentIndex);
+			SetInvalid(mMaterialResourceAttachmentIndex);
 		}
 	}
 

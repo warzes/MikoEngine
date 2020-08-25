@@ -121,7 +121,7 @@ namespace Renderer
 		inline void loadResourceByAssetId(AssetId assetId, ID_TYPE& resourceId, IResourceListener* resourceListener, bool reload, ResourceLoaderTypeId resourceLoaderTypeId)	// Asynchronous
 		{
 			// Choose default resource loader type ID, if necessary
-			if (isInvalid(resourceLoaderTypeId))
+			if (IsInvalid(resourceLoaderTypeId))
 			{
 				resourceLoaderTypeId = LOADER_TYPE::TYPE_ID;
 			}
@@ -153,7 +153,7 @@ namespace Renderer
 			}
 			else
 			{
-				resourceId = getInvalid<ID_TYPE>();
+				resourceId = GetInvalid<ID_TYPE>();
 			}
 
 			// Load the resource, if required
@@ -173,7 +173,7 @@ namespace Renderer
 				const TYPE& resource = mResources.getElementByIndex(i);
 				if (resource.getAssetId() == assetId)
 				{
-					ID_TYPE resourceId = getInvalid<ID_TYPE>();
+					ID_TYPE resourceId = GetInvalid<ID_TYPE>();
 					loadResourceByAssetId(assetId, resourceId, nullptr, true, resource.getResourceLoaderTypeId());
 					break;
 				}

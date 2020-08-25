@@ -4,7 +4,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 
 
 //[-------------------------------------------------------]
@@ -36,7 +36,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	public:
 		inline SubMesh() :
-			mMaterialResourceId(getInvalid<MaterialResourceId>()),
+			mMaterialResourceId(GetInvalid<MaterialResourceId>()),
 			mStartIndexLocation(0),
 			mNumberOfIndices(0)
 		{

@@ -108,7 +108,7 @@ namespace Renderer
 		inline explicit CompositorResourcePassCompute(const CompositorTarget& compositorTarget) :
 			ICompositorResourcePass(compositorTarget),
 			mMaterialDefinitionMandatory(true),
-			mMaterialTechniqueId(getInvalid<MaterialTechniqueId>())
+			mMaterialTechniqueId(GetInvalid<MaterialTechniqueId>())
 		{
 			// Nothing here
 		}
@@ -116,7 +116,7 @@ namespace Renderer
 		inline CompositorResourcePassCompute(const CompositorTarget& compositorTarget, bool materialDefinitionMandatory) :
 			ICompositorResourcePass(compositorTarget),
 			mMaterialDefinitionMandatory(materialDefinitionMandatory),
-			mMaterialTechniqueId(getInvalid<MaterialTechniqueId>())
+			mMaterialTechniqueId(GetInvalid<MaterialTechniqueId>())
 		{
 			// Nothing here
 		}

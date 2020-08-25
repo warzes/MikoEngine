@@ -123,7 +123,7 @@ namespace Renderer
 			MaterialPropertyValue materialPropertyValue;
 
 			TextureBuffer() :
-				rootParameterIndex(getInvalid<uint32_t>()),
+				rootParameterIndex(GetInvalid<uint32_t>()),
 				bufferUsage(BufferUsage::UNKNOWN),
 				materialPropertyValue(MaterialPropertyValue::fromUnknown())
 			{
@@ -133,7 +133,7 @@ namespace Renderer
 			TextureBuffer(uint32_t rootParameterIndex, BufferUsage bufferUsage, const MaterialPropertyValue& _materialPropertyValue) :
 				rootParameterIndex(rootParameterIndex),
 				bufferUsage(bufferUsage),
-				materialPropertyValue(MaterialProperty(getInvalid<MaterialPropertyId>(), getMaterialPropertyUsageFromBufferUsage(bufferUsage), _materialPropertyValue))
+				materialPropertyValue(MaterialProperty(GetInvalid<MaterialPropertyId>(), getMaterialPropertyUsageFromBufferUsage(bufferUsage), _materialPropertyValue))
 			{
 				// Nothing here
 			}
@@ -163,10 +163,10 @@ namespace Renderer
 
 			// Constructors
 			Texture() :
-				rootParameterIndex(getInvalid<uint32_t>()),
+				rootParameterIndex(GetInvalid<uint32_t>()),
 				rgbHardwareGammaCorrection(false),
-				samplerStateIndex(getInvalid<uint32_t>()),
-				textureResourceId(getInvalid<TextureResourceId>())
+				samplerStateIndex(GetInvalid<uint32_t>()),
+				textureResourceId(GetInvalid<TextureResourceId>())
 			{
 				// Nothing here
 			}

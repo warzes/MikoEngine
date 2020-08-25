@@ -807,9 +807,6 @@
     <ClInclude Include="Renderer\Asset\Loader\AssetPackageLoader.h">
       <Filter>5_Renderer\Asset\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\Core\GetInvalid.h">
-      <Filter>5_Renderer\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer\Core\IGraphicsDebugger.h">
       <Filter>5_Renderer\Core</Filter>
     </ClInclude>
@@ -1353,6 +1350,9 @@
     <ClInclude Include="Core\AssertMacros.h">
       <Filter>1_Core\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Core\GetInvalid.h">
+      <Filter>1_Core\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
@@ -1621,6 +1621,9 @@
     </Filter>
     <Filter Include="1_Core\Debug">
       <UniqueIdentifier>{65f9552f-068e-413e-85c5-d138a2ec3130}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1_Core\Object">
+      <UniqueIdentifier>{69205f8a-10ad-45b3-93ba-2d1294e86aea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

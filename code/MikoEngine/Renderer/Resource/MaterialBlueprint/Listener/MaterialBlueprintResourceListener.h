@@ -6,7 +6,7 @@
 //[-------------------------------------------------------]
 
 #include "Renderer/Core/StringId.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 #include "Renderer/Resource/MaterialBlueprint/Listener/IMaterialBlueprintResourceListener.h"
 
 // Disable warnings in external headers, we can't fix them
@@ -89,9 +89,9 @@ namespace Renderer
 		*    Default constructor
 		*/
 		inline MaterialBlueprintResourceListener() :
-			mIdentityColorCorrectionLookupTable3D(getInvalid<TextureResourceId>()),
-			mSsaoSampleKernelTextureResourceId(getInvalid<TextureResourceId>()),
-			mSsaoNoiseTexture4x4ResourceId(getInvalid<TextureResourceId>()),
+			mIdentityColorCorrectionLookupTable3D(GetInvalid<TextureResourceId>()),
+			mSsaoSampleKernelTextureResourceId(GetInvalid<TextureResourceId>()),
+			mSsaoNoiseTexture4x4ResourceId(GetInvalid<TextureResourceId>()),
 			mRenderer(nullptr),
 			mPassData(nullptr),
 			mCompositorContextData(nullptr),
@@ -102,7 +102,7 @@ namespace Renderer
 			mNearZ(0.0f),
 			mFarZ(0.0f),
 			mPreviousJitter(0.0f, 0.0f),
-			mPreviousNumberOfRenderedFrames(getInvalid<uint64_t>()),
+			mPreviousNumberOfRenderedFrames(GetInvalid<uint64_t>()),
 			mHosekWilkieSky(nullptr),
 			#if SE_DEBUG
 				mIsComputePipeline(false),

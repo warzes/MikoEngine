@@ -58,7 +58,7 @@ namespace Renderer
 			return mRenderer;
 		}
 
-		void loadCompositorNodeResourceByAssetId(AssetId assetId, CompositorNodeResourceId& compositorNodeResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = getInvalid<ResourceLoaderTypeId>());	// Asynchronous
+		void loadCompositorNodeResourceByAssetId(AssetId assetId, CompositorNodeResourceId& compositorNodeResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = GetInvalid<ResourceLoaderTypeId>());	// Asynchronous
 		void setInvalidResourceId(CompositorNodeResourceId& compositorNodeResourceId, IResourceListener& resourceListener) const;
 
 		[[nodiscard]] inline const ICompositorPassFactory& getCompositorPassFactory() const

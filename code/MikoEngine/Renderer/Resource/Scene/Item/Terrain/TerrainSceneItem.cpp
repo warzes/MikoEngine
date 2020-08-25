@@ -119,7 +119,7 @@ namespace Renderer
 		for (int i = 0; i != mNumberOfTerrainTileRings; ++i)
 		{
 			const TerrainTileRing& terrainTileRing = mTerrainTileRings[i];
-			renderables.emplace_back(mRenderableManager, terrainTileRing.vertexArrayPtr, materialResourceManager, getMaterialResourceId(), getInvalid<SkeletonResourceId>(), true, 0, ::detail::NUMBER_OF_INDICES, terrainTileRing.numberOfTiles RHI_RESOURCE_DEBUG_NAME((std::string("Terrain tile ring ") + std::to_string(i)).c_str()));
+			renderables.emplace_back(mRenderableManager, terrainTileRing.vertexArrayPtr, materialResourceManager, getMaterialResourceId(), GetInvalid<SkeletonResourceId>(), true, 0, ::detail::NUMBER_OF_INDICES, terrainTileRing.numberOfTiles RHI_RESOURCE_DEBUG_NAME((std::string("Terrain tile ring ") + std::to_string(i)).c_str()));
 		}
 		mRenderableManager.updateCachedRenderablesData();
 	}

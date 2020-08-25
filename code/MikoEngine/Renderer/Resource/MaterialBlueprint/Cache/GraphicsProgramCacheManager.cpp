@@ -27,7 +27,7 @@ namespace Renderer
 		for (uint8_t i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)
 		{
 			const ShaderCombinationId shaderCombinationId = graphicsPipelineStateSignature.getShaderCombinationId(static_cast<GraphicsShaderType>(i));
-			if (isValid(shaderCombinationId))
+			if (IsValid(shaderCombinationId))
 			{
 				graphicsProgramCacheId = Math::calculateFNV1a32(reinterpret_cast<const uint8_t*>(&shaderCombinationId), sizeof(ShaderCombinationId), graphicsProgramCacheId);
 			}

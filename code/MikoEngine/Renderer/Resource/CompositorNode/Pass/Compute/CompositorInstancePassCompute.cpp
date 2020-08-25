@@ -26,30 +26,30 @@ namespace Renderer
 		ICompositorInstancePass(compositorResourcePassCompute, compositorNodeInstance),
 		mComputeMaterialBlueprint(true),
 		mRenderQueue(compositorNodeInstance.getCompositorWorkspaceInstance().getRenderer().getMaterialBlueprintResourceManager().getIndirectBufferManager(), 0, 0, false, false, false),
-		mMaterialResourceId(getInvalid<MaterialResourceId>())
+		mMaterialResourceId(GetInvalid<MaterialResourceId>())
 	{
 		const IRenderer& renderer = compositorNodeInstance.getCompositorWorkspaceInstance().getRenderer();
 
 		// Sanity checks
-		RHI_ASSERT(!compositorResourcePassCompute.isMaterialDefinitionMandatory() || isValid(compositorResourcePassCompute.getMaterialAssetId()) || isValid(compositorResourcePassCompute.getMaterialBlueprintAssetId()), "Invalid compositor resource pass compute configuration")
-		RHI_ASSERT(!(isValid(compositorResourcePassCompute.getMaterialAssetId()) && isValid(compositorResourcePassCompute.getMaterialBlueprintAssetId())), "Invalid compositor resource pass compute configuration")
+		RHI_ASSERT(!compositorResourcePassCompute.isMaterialDefinitionMandatory() || IsValid(compositorResourcePassCompute.getMaterialAssetId()) || IsValid(compositorResourcePassCompute.getMaterialBlueprintAssetId()), "Invalid compositor resource pass compute configuration")
+		RHI_ASSERT(!(IsValid(compositorResourcePassCompute.getMaterialAssetId()) && IsValid(compositorResourcePassCompute.getMaterialBlueprintAssetId())), "Invalid compositor resource pass compute configuration")
 
 		// Get parent material resource ID and initiate creating the compositor instance pass compute material resource
 		MaterialResourceManager& materialResourceManager = renderer.getMaterialResourceManager();
-		if (isValid(compositorResourcePassCompute.getMaterialAssetId()))
+		if (IsValid(compositorResourcePassCompute.getMaterialAssetId()))
 		{
 			// Get or load material resource
-			MaterialResourceId materialResourceId = getInvalid<MaterialResourceId>();
+			MaterialResourceId materialResourceId = GetInvalid<MaterialResourceId>();
 			materialResourceManager.loadMaterialResourceByAssetId(compositorResourcePassCompute.getMaterialAssetId(), materialResourceId, this);
 		}
 		else
 		{
 			// Get or load material blueprint resource
 			const AssetId materialBlueprintAssetId = compositorResourcePassCompute.getMaterialBlueprintAssetId();
-			if (isValid(materialBlueprintAssetId))
+			if (IsValid(materialBlueprintAssetId))
 			{
 				MaterialResourceId parentMaterialResourceId = materialResourceManager.getMaterialResourceIdByAssetId(materialBlueprintAssetId);
-				if (isInvalid(parentMaterialResourceId))
+				if (IsInvalid(parentMaterialResourceId))
 				{
 					parentMaterialResourceId = materialResourceManager.createMaterialResourceByAssetId(materialBlueprintAssetId, materialBlueprintAssetId, compositorResourcePassCompute.getMaterialTechniqueId());
 				}
@@ -60,7 +60,7 @@ namespace Renderer
 
 	CompositorInstancePassCompute::~CompositorInstancePassCompute()
 	{
-		if (isValid(mMaterialResourceId))
+		if (IsValid(mMaterialResourceId))
 		{
 			// Clear the renderable manager
 			mRenderableManager.getRenderables().clear();
@@ -76,7 +76,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	void CompositorInstancePassCompute::onFillCommandBuffer(const Rhi::IRenderTarget* renderTarget, const CompositorContextData& compositorContextData, Rhi::CommandBuffer& commandBuffer)
 	{
-		if (isValid(mMaterialResourceId))
+		if (IsValid(mMaterialResourceId))
 		{
 			// Sanity check
 			RHI_ASSERT(!mRenderableManager.getRenderables().empty(), "No renderables")
@@ -127,8 +127,8 @@ namespace Renderer
 		const IRenderer& renderer = getCompositorNodeInstance().getCompositorWorkspaceInstance().getRenderer();
 
 		// Sanity checks
-		RHI_ASSERT(isInvalid(mMaterialResourceId), "Invalid material resource ID")
-		RHI_ASSERT(isValid(parentMaterialResourceId), "Invalid material resource ID")
+		RHI_ASSERT(IsInvalid(mMaterialResourceId), "Invalid material resource ID")
+		RHI_ASSERT(IsValid(parentMaterialResourceId), "Invalid material resource ID")
 
 		// Each compositor instance pass compute must have its own material resource since material property values might vary
 		MaterialResourceManager& materialResourceManager = renderer.getMaterialResourceManager();
@@ -142,7 +142,7 @@ namespace Renderer
 			RHI_ASSERT(nullptr != materialTechnique, "Invalid material technique")
 			MaterialBlueprintResource* materialBlueprintResource = renderer.getMaterialBlueprintResourceManager().tryGetById(materialTechnique->getMaterialBlueprintResourceId());
 			RHI_ASSERT(nullptr != materialBlueprintResource, "Invalid material blueprint resource")
-			mComputeMaterialBlueprint = isValid(materialBlueprintResource->getComputeShaderBlueprintResourceId());
+			mComputeMaterialBlueprint = IsValid(materialBlueprintResource->getComputeShaderBlueprintResourceId());
 		}
 
 		{ // Set compositor resource pass compute material properties
@@ -163,7 +163,7 @@ namespace Renderer
 		#if SE_DEBUG
 			mRenderableManager.setDebugName(materialResource.getDebugName());
 		#endif
-		mRenderableManager.getRenderables().emplace_back(mRenderableManager, Rhi::IVertexArrayPtr(), materialResourceManager, mMaterialResourceId, getInvalid<SkeletonResourceId>(), false, 0, 3, 1 RHI_RESOURCE_DEBUG_NAME(materialResource.getDebugName()));
+		mRenderableManager.getRenderables().emplace_back(mRenderableManager, Rhi::IVertexArrayPtr(), materialResourceManager, mMaterialResourceId, GetInvalid<SkeletonResourceId>(), false, 0, 3, 1 RHI_RESOURCE_DEBUG_NAME(materialResource.getDebugName()));
 	}
 
 

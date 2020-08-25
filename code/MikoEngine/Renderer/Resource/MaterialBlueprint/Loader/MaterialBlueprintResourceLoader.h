@@ -6,7 +6,7 @@
 //[-------------------------------------------------------]
 #include "Renderer/Resource/ShaderBlueprint/GraphicsShaderType.h"
 #include "Renderer/Resource/IResourceLoader.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 #include "Renderer/Core/File/MemoryFile.h"
 
 
@@ -97,9 +97,9 @@ namespace Renderer
 			mMaterialBlueprintResource(nullptr),
 			mMaximumNumberOfRootParameters(0),
 			mMaximumNumberOfDescriptorRanges(0),
-			mVertexAttributesAssetId(getInvalid<AssetId>()),
-			mGraphicsShaderBlueprintAssetId{getInvalid<AssetId>(), getInvalid<AssetId>(), getInvalid<AssetId>(), getInvalid<AssetId>(), getInvalid<AssetId>()},
-			mComputeShaderBlueprintAssetId(getInvalid<AssetId>()),
+			mVertexAttributesAssetId(GetInvalid<AssetId>()),
+			mGraphicsShaderBlueprintAssetId{GetInvalid<AssetId>(), GetInvalid<AssetId>(), GetInvalid<AssetId>(), GetInvalid<AssetId>(), GetInvalid<AssetId>()},
+			mComputeShaderBlueprintAssetId(GetInvalid<AssetId>()),
 			mMaximumNumberOfMaterialBlueprintSamplerStates(0),
 			mMaterialBlueprintSamplerStates(nullptr),
 			mMaximumNumberOfMaterialBlueprintTextures(0),

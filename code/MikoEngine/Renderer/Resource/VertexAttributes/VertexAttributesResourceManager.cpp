@@ -39,7 +39,7 @@ namespace Renderer
 		{
 			vertexAttributesResource->disconnectResourceListener(resourceListener);
 		}
-		setInvalid(vertexAttributesResourceId);
+		SetInvalid(vertexAttributesResourceId);
 	}
 
 

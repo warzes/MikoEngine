@@ -7,7 +7,7 @@
 #include "Renderer/Resource/Scene/Item/ISceneItem.h"
 #include "Renderer/Resource/IResourceListener.h"
 #include "Renderer/RenderQueue/RenderableManager.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 
 
 //[-------------------------------------------------------]
@@ -116,7 +116,7 @@ namespace Renderer
 	protected:
 		inline explicit MeshSceneItem(SceneResource& sceneResource) :
 			ISceneItem(sceneResource),
-			mMeshResourceId(getInvalid<MeshResourceId>())
+			mMeshResourceId(GetInvalid<MeshResourceId>())
 		{
 			// Nothing here
 		}

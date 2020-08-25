@@ -422,9 +422,9 @@ namespace Renderer
 		// Internal
 		mSettingsGenerationCounter(0),
 		mUsedSettingsGenerationCounter(0),
-		mDepthTextureResourceId(getInvalid<TextureResourceId>()),
-		mVarianceTextureResourceId(getInvalid<TextureResourceId>()),
-		mIntermediateDepthBlurTextureResourceId(getInvalid<TextureResourceId>()),
+		mDepthTextureResourceId(GetInvalid<TextureResourceId>()),
+		mVarianceTextureResourceId(GetInvalid<TextureResourceId>()),
+		mIntermediateDepthBlurTextureResourceId(GetInvalid<TextureResourceId>()),
 		mDepthToExponentialVarianceCompositorResourcePassCompute(nullptr),
 		mDepthToExponentialVarianceCompositorInstancePassCompute(nullptr),
 		mHorizontalBlurCompositorResourcePassCompute(nullptr),
@@ -564,7 +564,7 @@ namespace Renderer
 
 	void CompositorInstancePassShadowMap::destroyShadowMapRenderTarget()
 	{
-		RHI_ASSERT(isValid(mVarianceTextureResourceId), "Invalid compositor instance pass resource")
+		RHI_ASSERT(IsValid(mVarianceTextureResourceId), "Invalid compositor instance pass resource")
 
 		// Depth to exponential variance
 		delete mDepthToExponentialVarianceCompositorInstancePassCompute;
@@ -594,17 +594,17 @@ namespace Renderer
 
 		// Inform the texture resource manager that our render target texture is gone now
 		TextureResourceManager& textureResourceManager = getCompositorNodeInstance().getCompositorWorkspaceInstance().getRenderer().getTextureResourceManager();
-		if (isValid(mDepthTextureResourceId))
+		if (IsValid(mDepthTextureResourceId))
 		{
 			textureResourceManager.destroyTextureResource(mDepthTextureResourceId);
-			setInvalid(mDepthTextureResourceId);
+			SetInvalid(mDepthTextureResourceId);
 		}
 		textureResourceManager.destroyTextureResource(mVarianceTextureResourceId);
-		setInvalid(mVarianceTextureResourceId);
-		if (isValid(mIntermediateDepthBlurTextureResourceId))
+		SetInvalid(mVarianceTextureResourceId);
+		if (IsValid(mIntermediateDepthBlurTextureResourceId))
 		{
 			textureResourceManager.destroyTextureResource(mIntermediateDepthBlurTextureResourceId);
-			setInvalid(mIntermediateDepthBlurTextureResourceId);
+			SetInvalid(mIntermediateDepthBlurTextureResourceId);
 		}
 	}
 

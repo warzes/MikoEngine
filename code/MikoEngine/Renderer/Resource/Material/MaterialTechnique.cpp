@@ -51,7 +51,7 @@ namespace Renderer
 		MaterialBufferSlot(materialResource),
 		mMaterialTechniqueId(materialTechniqueId),
 		mMaterialBlueprintResourceId(materialBlueprintResourceId),
-		mSerializedGraphicsPipelineStateHash(getInvalid<uint32_t>())
+		mSerializedGraphicsPipelineStateHash(GetInvalid<uint32_t>())
 	{
 		MaterialBufferManager* materialBufferManager = getMaterialBufferManager();
 		if (nullptr != materialBufferManager)
@@ -66,7 +66,7 @@ namespace Renderer
 	MaterialTechnique::~MaterialTechnique()
 	{
 		// Due to hot-reloading it's possible that there's no assigned material slot, so we need to do a check here
-		if (isValid(getAssignedMaterialSlot()))
+		if (IsValid(getAssignedMaterialSlot()))
 		{
 			MaterialBufferManager* materialBufferManager = getMaterialBufferManager();
 			RHI_ASSERT(nullptr != materialBufferManager, "Invalid material buffer manager")
@@ -77,7 +77,7 @@ namespace Renderer
 	void MaterialTechnique::fillGraphicsCommandBuffer(const IRenderer& renderer, Rhi::CommandBuffer& commandBuffer, uint32_t& resourceGroupRootParameterIndex, Rhi::IResourceGroup** resourceGroup)
 	{
 		// Sanity check
-		RHI_ASSERT(isValid(mMaterialBlueprintResourceId), "Invalid material blueprint resource ID")
+		RHI_ASSERT(IsValid(mMaterialBlueprintResourceId), "Invalid material blueprint resource ID")
 		RHI_ASSERT(nullptr != resourceGroup, "The RHI resource group pointer must be valid")
 
 		{ // Bind the material buffer manager
@@ -95,7 +95,7 @@ namespace Renderer
 	void MaterialTechnique::fillComputeCommandBuffer(const IRenderer& renderer, Rhi::CommandBuffer& commandBuffer, uint32_t& resourceGroupRootParameterIndex, Rhi::IResourceGroup** resourceGroup)
 	{
 		// Sanity check
-		RHI_ASSERT(isValid(mMaterialBlueprintResourceId), "Invalid material blueprint resource ID")
+		RHI_ASSERT(IsValid(mMaterialBlueprintResourceId), "Invalid material blueprint resource ID")
 		RHI_ASSERT(nullptr != resourceGroup, "The RHI resource group pointer must be valid")
 
 		{ // Bind the material buffer manager
@@ -155,7 +155,7 @@ namespace Renderer
 
 					// Apply material specific modifications
 					const MaterialPropertyId materialPropertyId = texture.materialProperty.getMaterialPropertyId();
-					if (isValid(materialPropertyId))
+					if (IsValid(materialPropertyId))
 					{
 						// Figure out the material property value
 						const MaterialProperty* materialProperty = materialResource.getPropertyById(materialPropertyId);
@@ -245,7 +245,7 @@ namespace Renderer
 		}
 		else
 		{
-			setInvalid(mSerializedGraphicsPipelineStateHash);
+			SetInvalid(mSerializedGraphicsPipelineStateHash);
 		}
 	}
 
@@ -264,7 +264,7 @@ namespace Renderer
 		const Textures& textures = getTextures(renderer);
 		if (textures.empty())
 		{
-			setInvalid(resourceGroupRootParameterIndex);
+			SetInvalid(resourceGroupRootParameterIndex);
 			*resourceGroup = nullptr;
 		}
 		else
@@ -331,7 +331,7 @@ namespace Renderer
 					RHI_ASSERT(nullptr != resources[i + textureStartIndex], "Invalid resource")
 
 					// Set sampler state, if there's one (e.g. texel fetch instead of sampling might be used)
-					if (isValid(materialBlueprintResourceTextures[i].samplerStateIndex))
+					if (IsValid(materialBlueprintResourceTextures[i].samplerStateIndex))
 					{
 						RHI_ASSERT(materialBlueprintResourceTextures[i].samplerStateIndex < materialBlueprintResourceSamplerStates.size(), "Invalid sampler state index")
 						samplerStates[i + textureStartIndex] = materialBlueprintResourceSamplerStates[materialBlueprintResourceTextures[i].samplerStateIndex].samplerStatePtr;

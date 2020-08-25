@@ -5,7 +5,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "Renderer/Core/Manager.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 
 
 //[-------------------------------------------------------]
@@ -67,7 +67,7 @@ namespace Renderer
 
 		[[nodiscard]] inline bool isElementIdValid(ID_TYPE id) const
 		{
-			if (isValid(id))
+			if (IsValid(id))
 			{
 				const Index& index = mIndices[id & INDEX_MASK];
 				return (index.id == id && index.index != USHRT_MAX);
@@ -83,7 +83,7 @@ namespace Renderer
 
 		[[nodiscard]] inline ELEMENT_TYPE* tryGetElementById(ID_TYPE id) const
 		{
-			if (isValid(id))
+			if (IsValid(id))
 			{
 				const Index& index = mIndices[id & INDEX_MASK];
 				return (index.id == id && index.index != USHRT_MAX) ? &mElements[index.index] : nullptr;

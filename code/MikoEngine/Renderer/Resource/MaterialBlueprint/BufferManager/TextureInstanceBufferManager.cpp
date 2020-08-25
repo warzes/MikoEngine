@@ -34,7 +34,7 @@ namespace Renderer
 		mMaximumUniformBufferSize(std::min(renderer.getRhi().getCapabilities().maximumUniformBufferSize, 64u * 1024u)),		// Default uniform buffer number of bytes: 64 KiB
 		mMaximumTextureBufferSize(std::min(renderer.getRhi().getCapabilities().maximumTextureBufferSize, 512u * 1024u)),	// Default texture buffer number of bytes: 512 KiB
 		// Current instance buffer related data
-		mCurrentInstanceBufferIndex(getInvalid<size_t>()),
+		mCurrentInstanceBufferIndex(GetInvalid<size_t>()),
 		mCurrentInstanceBuffer(nullptr),
 		mStartUniformBufferPointer(nullptr),
 		mCurrentUniformBufferPointer(nullptr),
@@ -64,7 +64,7 @@ namespace Renderer
 	{
 		// Sanity checks
 		RHI_ASSERT(nullptr != mCurrentInstanceBuffer, "Invalid current instance buffer")
-		RHI_ASSERT(isInvalid(materialBlueprintResource.getComputeShaderBlueprintResourceId()), "Invalid compute shader blueprint resource ID")
+		RHI_ASSERT(IsInvalid(materialBlueprintResource.getComputeShaderBlueprintResourceId()), "Invalid compute shader blueprint resource ID")
 
 		// Map the current instance buffer
 		mapCurrentInstanceBuffer();
@@ -110,7 +110,7 @@ namespace Renderer
 		const MaterialBlueprintResource::UniformBufferElementProperties& uniformBufferElementProperties = instanceUniformBuffer.uniformBufferElementProperties;
 		const size_t numberOfUniformBufferElementProperties = uniformBufferElementProperties.size();
 		const SkeletonResourceId skeletonResourceId = renderable.getSkeletonResourceId();
-		const SkeletonResource* skeletonResource = isValid(skeletonResourceId) ? &mRenderer.getSkeletonResourceManager().getById(skeletonResourceId) : nullptr;
+		const SkeletonResource* skeletonResource = IsValid(skeletonResourceId) ? &mRenderer.getSkeletonResourceManager().getById(skeletonResourceId) : nullptr;
 		static const PassBufferManager::PassData passData = {};
 		materialBlueprintResourceListener.beginFillInstance((nullptr != passBufferManager) ? passBufferManager->getPassData() : passData, objectSpaceToWorldSpaceTransform, materialTechnique);
 
@@ -266,7 +266,7 @@ namespace Renderer
 	void TextureInstanceBufferManager::onPreCommandBufferExecution()
 	{
 		// Unmap the current instance buffer and reset the current instance buffer to the first instance
-		if (isValid(mCurrentInstanceBufferIndex))
+		if (IsValid(mCurrentInstanceBufferIndex))
 		{
 			unmapCurrentInstanceBuffer();
 			mCurrentInstanceBufferIndex = 0;
@@ -286,7 +286,7 @@ namespace Renderer
 		unmapCurrentInstanceBuffer();
 
 		// Update current instance buffer
-		mCurrentInstanceBufferIndex = isValid(mCurrentInstanceBufferIndex) ? (mCurrentInstanceBufferIndex + 1) : 0;
+		mCurrentInstanceBufferIndex = IsValid(mCurrentInstanceBufferIndex) ? (mCurrentInstanceBufferIndex + 1) : 0;
 		if (mCurrentInstanceBufferIndex >= mInstanceBuffers.size())
 		{
 			// Create uniform buffer instance

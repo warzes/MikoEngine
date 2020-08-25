@@ -27,7 +27,7 @@ namespace Renderer
 	MaterialResourceId MaterialResourceManager::getMaterialResourceIdByAssetId(AssetId assetId) const
 	{
 		const MaterialResource* materialResource = getMaterialResourceByAssetId(assetId);
-		return (nullptr != materialResource) ? materialResource->getId() : getInvalid<MaterialResourceId>();
+		return (nullptr != materialResource) ? materialResource->getId() : GetInvalid<MaterialResourceId>();
 	}
 
 	void MaterialResourceManager::loadMaterialResourceByAssetId(AssetId assetId, MaterialResourceId& materialResourceId, IResourceListener* resourceListener, bool reload, ResourceLoaderTypeId resourceLoaderTypeId)
@@ -69,7 +69,7 @@ namespace Renderer
 		{ // Setup material resource instance
 			// Copy over the material properties of the material blueprint resource
 			MaterialBlueprintResourceManager& materialBlueprintResourceManager = mRenderer.getMaterialBlueprintResourceManager();
-			MaterialBlueprintResourceId materialBlueprintResourceId = getInvalid<MaterialBlueprintResourceId>();
+			MaterialBlueprintResourceId materialBlueprintResourceId = GetInvalid<MaterialBlueprintResourceId>();
 			materialBlueprintResourceManager.loadMaterialBlueprintResourceByAssetId(materialBlueprintAssetId, materialBlueprintResourceId);
 			MaterialBlueprintResource* materialBlueprintResource = materialBlueprintResourceManager.tryGetById(materialBlueprintResourceId);
 			if (nullptr != materialBlueprintResource)
@@ -124,7 +124,7 @@ namespace Renderer
 		{
 			materialResource->disconnectResourceListener(resourceListener);
 		}
-		setInvalid(materialResourceId);
+		SetInvalid(materialResourceId);
 	}
 
 

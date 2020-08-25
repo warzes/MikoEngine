@@ -18,8 +18,8 @@ namespace Renderer
 		mMaterialResourceManager(&materialResource.getResourceManager<MaterialResourceManager>()),
 		mMaterialResourceId(materialResource.getId()),
 		mAssignedMaterialPool(nullptr),
-		mAssignedMaterialSlot(getInvalid<uint32_t>()),
-		mGlobalIndex(getInvalid<int>()),
+		mAssignedMaterialSlot(GetInvalid<uint32_t>()),
+		mGlobalIndex(GetInvalid<int>()),
 		mDirty(false)
 	{
 		// Nothing here

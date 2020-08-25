@@ -75,7 +75,7 @@ namespace Renderer
 			struct TextureBufferHeader final
 			{
 				MaterialPropertyValue				   materialPropertyValue = MaterialPropertyValue::fromUnknown();
-				uint32_t							   rootParameterIndex	 = getInvalid<uint32_t>();	// Root parameter index = resource group index
+				uint32_t							   rootParameterIndex	 = GetInvalid<uint32_t>();	// Root parameter index = resource group index
 				MaterialBlueprintResource::BufferUsage bufferUsage			 = MaterialBlueprintResource::BufferUsage::UNKNOWN;
 			};
 
@@ -94,9 +94,9 @@ namespace Renderer
 				uint32_t		 samplerStateIndex;		// Index of the material blueprint sampler state resource to use, can be invalid (e.g. texel fetch instead of sampling might be used)
 
 				Texture() :
-					rootParameterIndex(getInvalid<uint32_t>()),
+					rootParameterIndex(GetInvalid<uint32_t>()),
 					rgbHardwareGammaCorrection(false),
-					samplerStateIndex(getInvalid<uint32_t>())
+					samplerStateIndex(GetInvalid<uint32_t>())
 				{
 					// Nothing here
 				}

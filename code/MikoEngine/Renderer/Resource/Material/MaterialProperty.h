@@ -4,7 +4,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 #include "Renderer/Resource/Material/MaterialPropertyValue.h"
 
 
@@ -102,7 +102,7 @@ namespace Renderer
 		*/
 		inline MaterialProperty() :
 			MaterialPropertyValue(fromUnknown()),
-			mMaterialPropertyId(getInvalid<MaterialPropertyId>()),
+			mMaterialPropertyId(GetInvalid<MaterialPropertyId>()),
 			mUsage(Usage::UNKNOWN),
 			mOverwritten(false)
 		{

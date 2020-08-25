@@ -32,7 +32,7 @@ namespace Renderer
 		{
 			shaderBlueprintResource->disconnectResourceListener(resourceListener);
 		}
-		setInvalid(shaderBlueprintResourceId);
+		SetInvalid(shaderBlueprintResourceId);
 	}
 
 

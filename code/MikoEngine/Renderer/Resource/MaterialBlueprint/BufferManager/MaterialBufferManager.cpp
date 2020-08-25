@@ -52,7 +52,7 @@ namespace Renderer
 	void MaterialBufferManager::requestSlot(MaterialBufferSlot& materialBufferSlot)
 	{
 		// Release slot, if required
-		if (isValid(materialBufferSlot.mAssignedMaterialPool))
+		if (IsValid(materialBufferSlot.mAssignedMaterialPool))
 		{
 			releaseSlot(materialBufferSlot);
 		}
@@ -85,8 +85,8 @@ namespace Renderer
 		BufferPool* bufferPool = static_cast<BufferPool*>(materialBufferSlot.mAssignedMaterialPool);
 
 		// Sanity checks
-		RHI_ASSERT(isValid(materialBufferSlot.mAssignedMaterialPool), "Invalid assigned material pool")
-		RHI_ASSERT(isValid(materialBufferSlot.mAssignedMaterialSlot), "Invalid assigned material slot")
+		RHI_ASSERT(IsValid(materialBufferSlot.mAssignedMaterialPool), "Invalid assigned material pool")
+		RHI_ASSERT(IsValid(materialBufferSlot.mAssignedMaterialSlot), "Invalid assigned material slot")
 		RHI_ASSERT(materialBufferSlot.mAssignedMaterialSlot < mSlotsPerPool, "Invalid assigned material slot")
 		RHI_ASSERT(std::find(bufferPool->freeSlots.begin(), bufferPool->freeSlots.end(), materialBufferSlot.mAssignedMaterialSlot) == bufferPool->freeSlots.end(), "Invalid assigned material slot")
 		RHI_ASSERT(materialBufferSlot.mGlobalIndex < static_cast<int>(mMaterialBufferSlots.size()), "Invalid global index")
@@ -105,7 +105,7 @@ namespace Renderer
 		// Put the slot back to the list of free slots
 		bufferPool->freeSlots.push_back(materialBufferSlot.mAssignedMaterialSlot);
 		materialBufferSlot.mAssignedMaterialPool = nullptr;
-		materialBufferSlot.mAssignedMaterialSlot = getInvalid<uint32_t>();
+		materialBufferSlot.mAssignedMaterialSlot = GetInvalid<uint32_t>();
 		materialBufferSlot.mDirty				 = false;
 		MaterialBufferSlots::iterator iterator = mMaterialBufferSlots.begin() + materialBufferSlot.mGlobalIndex;
 		iterator = ::detail::swizzleVectorElementRemove(mMaterialBufferSlots, iterator);

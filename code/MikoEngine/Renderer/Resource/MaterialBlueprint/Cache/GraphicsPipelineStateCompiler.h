@@ -5,7 +5,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "Renderer/Resource/ShaderBlueprint/GraphicsShaderType.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 
 // Disable warnings in external headers, we can't fix them
 SE_PRAGMA_WARNING_PUSH
@@ -145,7 +145,7 @@ namespace Renderer
 
 			inline explicit CompilerRequest(GraphicsPipelineStateCache& _graphicsPipelineStateCache) :
 				graphicsPipelineStateCache(_graphicsPipelineStateCache),
-				graphicsProgramCacheId(getInvalid<GraphicsProgramCacheId>()),
+				graphicsProgramCacheId(GetInvalid<GraphicsProgramCacheId>()),
 				graphicsPipelineStateObject(nullptr)
 			{
 				for (uint8_t i = 0; i < NUMBER_OF_GRAPHICS_SHADER_TYPES; ++i)

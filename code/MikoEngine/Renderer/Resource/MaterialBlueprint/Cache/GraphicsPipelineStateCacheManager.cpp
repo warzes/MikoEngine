@@ -52,7 +52,7 @@ namespace Renderer
 			//    might not involve our first born.
 			if (!allowEmergencySynchronousCompilation && nullptr == fallbackGraphicsPipelineStateCache && !mGraphicsPipelineStateCacheByGraphicsPipelineStateSignatureId.empty())
 			{
-				fallbackGraphicsPipelineStateCache = getFallbackGraphicsPipelineStateCache(getInvalid<uint32_t>(), shaderProperties);
+				fallbackGraphicsPipelineStateCache = getFallbackGraphicsPipelineStateCache(GetInvalid<uint32_t>(), shaderProperties);
 			}
 		}
 		else
@@ -118,7 +118,7 @@ namespace Renderer
 			{ // Remove a fallback shader property
 				// Find the most useless shader property, we're going to sacrifice it
 				ShaderProperties::SortedPropertyVector::iterator worstHitShaderPropertyIterator = sortedFallbackPropertyVector.end();
-				int32_t worstHitVisualImportanceOfShaderProperty = getInvalid<int32_t>();
+				int32_t worstHitVisualImportanceOfShaderProperty = GetInvalid<int32_t>();
 				ShaderProperties::SortedPropertyVector::iterator iterator = sortedFallbackPropertyVector.begin();
 				while (iterator != sortedFallbackPropertyVector.end())
 				{
@@ -126,7 +126,7 @@ namespace Renderer
 					const int32_t visualImportanceOfShaderProperty = mMaterialBlueprintResource.getVisualImportanceOfShaderProperty(iterator->shaderPropertyId);
 					if (MaterialBlueprintResource::MANDATORY_SHADER_PROPERTY != visualImportanceOfShaderProperty)
 					{
-						if (isValid(worstHitVisualImportanceOfShaderProperty))
+						if (IsValid(worstHitVisualImportanceOfShaderProperty))
 						{
 							// Lower visual importance value = lower probability that someone will miss the shader property
 							if (worstHitVisualImportanceOfShaderProperty > visualImportanceOfShaderProperty)
@@ -172,12 +172,12 @@ namespace Renderer
 	void GraphicsPipelineStateCacheManager::loadPipelineStateObjectCache(IFile& file)
 	{
 		// Material blueprint resource ID, all graphics pipeline state cache share the same material blueprint resource ID
-		MaterialBlueprintResourceId materialBlueprintResourceId = getInvalid<MaterialBlueprintResourceId>();
+		MaterialBlueprintResourceId materialBlueprintResourceId = GetInvalid<MaterialBlueprintResourceId>();
 		file.read(&materialBlueprintResourceId, sizeof(uint32_t));
 		RHI_ASSERT(mMaterialBlueprintResource.getId() == materialBlueprintResourceId, "Invalid material blueprint resource ID")
 
 		// TODO(co) Currently only the graphics pipeline state signature ID is loaded, not the resulting binary pipeline state cache
-		uint32_t numberOfGraphicsPipelineStateCaches = getInvalid<uint32_t>();
+		uint32_t numberOfGraphicsPipelineStateCaches = GetInvalid<uint32_t>();
 		file.read(&numberOfGraphicsPipelineStateCaches, sizeof(uint32_t));
 		mGraphicsPipelineStateCacheByGraphicsPipelineStateSignatureId.reserve(numberOfGraphicsPipelineStateCaches);
 		ShaderProperties shaderProperties;
@@ -187,11 +187,11 @@ namespace Renderer
 		for (uint32_t graphicsPipelineStateCacheIndex = 0; graphicsPipelineStateCacheIndex < numberOfGraphicsPipelineStateCaches; ++graphicsPipelineStateCacheIndex)
 		{
 			// Read serialized graphics pipeline state hash
-			uint32_t serializedGraphicsPipelineStateHash = getInvalid<uint32_t>();
+			uint32_t serializedGraphicsPipelineStateHash = GetInvalid<uint32_t>();
 			file.read(&serializedGraphicsPipelineStateHash, sizeof(uint32_t));
 
 			// Read shader properties
-			uint32_t numberOfShaderProperties = getInvalid<uint32_t>();
+			uint32_t numberOfShaderProperties = GetInvalid<uint32_t>();
 			file.read(&numberOfShaderProperties, sizeof(uint32_t));
 			sortedPropertyVector.resize(numberOfShaderProperties);
 			if (numberOfShaderProperties > 0)

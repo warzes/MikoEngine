@@ -55,7 +55,7 @@ namespace Renderer
 		{
 			compositorNodeResource->disconnectResourceListener(resourceListener);
 		}
-		setInvalid(compositorNodeResourceId);
+		SetInvalid(compositorNodeResourceId);
 	}
 
 	void CompositorNodeResourceManager::setCompositorPassFactory(const ICompositorPassFactory* compositorPassFactory)
@@ -97,7 +97,7 @@ namespace Renderer
 			const CompositorNodeResource& compositorNodeResource = mInternalResourceManager->getResources().getElementByIndex(i);
 			if (compositorNodeResource.getAssetId() == assetId)
 			{
-				CompositorNodeResourceId compositorNodeResourceId = getInvalid<CompositorNodeResourceId>();
+				CompositorNodeResourceId compositorNodeResourceId = GetInvalid<CompositorNodeResourceId>();
 				loadCompositorNodeResourceByAssetId(assetId, compositorNodeResourceId, nullptr, true, compositorNodeResource.getResourceLoaderTypeId());
 
 				{ // Reload all compositor workspace resources using this compositor node resource

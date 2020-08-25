@@ -182,17 +182,17 @@ namespace Renderer
 	private:
 		inline MeshResource() :
 			// Bounding
-			mMinimumBoundingBoxPosition(getInvalid<float>()),
-			mMaximumBoundingBoxPosition(getInvalid<float>()),
-			mBoundingSpherePosition(getInvalid<float>()),
-			mBoundingSphereRadius(getInvalid<float>()),
+			mMinimumBoundingBoxPosition(GetInvalid<float>()),
+			mMaximumBoundingBoxPosition(GetInvalid<float>()),
+			mBoundingSpherePosition(GetInvalid<float>()),
+			mBoundingSphereRadius(GetInvalid<float>()),
 			// Vertex and index data
 			mNumberOfVertices(0),
 			mNumberOfIndices(0),
 			// Sub-meshes and LODs
 			mNumberOfLods(0),
 			// Optional skeleton
-			mSkeletonResourceId(getInvalid<SkeletonResourceId>())
+			mSkeletonResourceId(GetInvalid<SkeletonResourceId>())
 		{
 			// Nothing here
 		}
@@ -200,16 +200,16 @@ namespace Renderer
 		inline virtual ~MeshResource() override
 		{
 			// Sanity checks
-			RHI_ASSERT(isInvalid(mMinimumBoundingBoxPosition.x) && isInvalid(mMinimumBoundingBoxPosition.y) && isInvalid(mMinimumBoundingBoxPosition.z), "Invalid bounding box")
-			RHI_ASSERT(isInvalid(mMaximumBoundingBoxPosition.x) && isInvalid(mMaximumBoundingBoxPosition.y) && isInvalid(mMaximumBoundingBoxPosition.z), "Invalid bounding box")
-			RHI_ASSERT(isInvalid(mBoundingSpherePosition.x) && isInvalid(mBoundingSpherePosition.y) && isInvalid(mBoundingSpherePosition.z), "Invalid bounding sphere")
-			RHI_ASSERT(isInvalid(mBoundingSphereRadius), "Invalid bounding sphere")
+			RHI_ASSERT(IsInvalid(mMinimumBoundingBoxPosition.x) && IsInvalid(mMinimumBoundingBoxPosition.y) && IsInvalid(mMinimumBoundingBoxPosition.z), "Invalid bounding box")
+			RHI_ASSERT(IsInvalid(mMaximumBoundingBoxPosition.x) && IsInvalid(mMaximumBoundingBoxPosition.y) && IsInvalid(mMaximumBoundingBoxPosition.z), "Invalid bounding box")
+			RHI_ASSERT(IsInvalid(mBoundingSpherePosition.x) && IsInvalid(mBoundingSpherePosition.y) && IsInvalid(mBoundingSpherePosition.z), "Invalid bounding sphere")
+			RHI_ASSERT(IsInvalid(mBoundingSphereRadius), "Invalid bounding sphere")
 			RHI_ASSERT(0 == mNumberOfVertices, "Invalid number of vertices")
 			RHI_ASSERT(0 == mNumberOfIndices, "Invalid number of indices")
 			RHI_ASSERT(nullptr == mVertexArray.GetPointer(), "Invalid vertex array")
 			RHI_ASSERT(nullptr == mPositionOnlyVertexArray.GetPointer(), "Invalid position only vertex array")
 			RHI_ASSERT(mSubMeshes.empty(), "Invalid sub-meshes")
-			RHI_ASSERT(isInvalid(mSkeletonResourceId), "Invalid skeleton resource ID")
+			RHI_ASSERT(IsInvalid(mSkeletonResourceId), "Invalid skeleton resource ID")
 		}
 
 		explicit MeshResource(const MeshResource&) = delete;
@@ -221,16 +221,16 @@ namespace Renderer
 		inline void initializeElement(MeshResourceId meshResourceId)
 		{
 			// Sanity checks
-			RHI_ASSERT(isInvalid(mMinimumBoundingBoxPosition.x) && isInvalid(mMinimumBoundingBoxPosition.y) && isInvalid(mMinimumBoundingBoxPosition.z), "Invalid bounding box")
-			RHI_ASSERT(isInvalid(mMaximumBoundingBoxPosition.x) && isInvalid(mMaximumBoundingBoxPosition.y) && isInvalid(mMaximumBoundingBoxPosition.z), "Invalid bounding box")
-			RHI_ASSERT(isInvalid(mBoundingSpherePosition.x) && isInvalid(mBoundingSpherePosition.y) && isInvalid(mBoundingSpherePosition.z), "Invalid bounding sphere")
-			RHI_ASSERT(isInvalid(mBoundingSphereRadius), "Invalid bounding sphere")
+			RHI_ASSERT(IsInvalid(mMinimumBoundingBoxPosition.x) && IsInvalid(mMinimumBoundingBoxPosition.y) && IsInvalid(mMinimumBoundingBoxPosition.z), "Invalid bounding box")
+			RHI_ASSERT(IsInvalid(mMaximumBoundingBoxPosition.x) && IsInvalid(mMaximumBoundingBoxPosition.y) && IsInvalid(mMaximumBoundingBoxPosition.z), "Invalid bounding box")
+			RHI_ASSERT(IsInvalid(mBoundingSpherePosition.x) && IsInvalid(mBoundingSpherePosition.y) && IsInvalid(mBoundingSpherePosition.z), "Invalid bounding sphere")
+			RHI_ASSERT(IsInvalid(mBoundingSphereRadius), "Invalid bounding sphere")
 			RHI_ASSERT(0 == mNumberOfVertices, "Invalid number of vertices")
 			RHI_ASSERT(0 == mNumberOfIndices, "Invalid number of indices")
 			RHI_ASSERT(nullptr == mVertexArray.GetPointer(), "Invalid vertex array")
 			RHI_ASSERT(nullptr == mPositionOnlyVertexArray.GetPointer(), "Invalid position only vertex array")
 			RHI_ASSERT(mSubMeshes.empty(), "Invalid sub-meshes")
-			RHI_ASSERT(isInvalid(mSkeletonResourceId), "Invalid skeleton resource ID")
+			RHI_ASSERT(IsInvalid(mSkeletonResourceId), "Invalid skeleton resource ID")
 
 			// Call base implementation
 			IResource::initializeElement(meshResourceId);
@@ -239,23 +239,23 @@ namespace Renderer
 		inline void deinitializeElement()
 		{
 			// Reset everything
-			setInvalid(mMinimumBoundingBoxPosition.x);
-			setInvalid(mMinimumBoundingBoxPosition.y);
-			setInvalid(mMinimumBoundingBoxPosition.z);
-			setInvalid(mMaximumBoundingBoxPosition.x);
-			setInvalid(mMaximumBoundingBoxPosition.y);
-			setInvalid(mMaximumBoundingBoxPosition.z);
-			setInvalid(mBoundingSpherePosition.x);
-			setInvalid(mBoundingSpherePosition.y);
-			setInvalid(mBoundingSpherePosition.z);
-			setInvalid(mBoundingSphereRadius);
+			SetInvalid(mMinimumBoundingBoxPosition.x);
+			SetInvalid(mMinimumBoundingBoxPosition.y);
+			SetInvalid(mMinimumBoundingBoxPosition.z);
+			SetInvalid(mMaximumBoundingBoxPosition.x);
+			SetInvalid(mMaximumBoundingBoxPosition.y);
+			SetInvalid(mMaximumBoundingBoxPosition.z);
+			SetInvalid(mBoundingSpherePosition.x);
+			SetInvalid(mBoundingSpherePosition.y);
+			SetInvalid(mBoundingSpherePosition.z);
+			SetInvalid(mBoundingSphereRadius);
 			mNumberOfVertices = 0;
 			mNumberOfIndices = 0;
 			mVertexArray = nullptr;
 			mPositionOnlyVertexArray = nullptr;
 			mSubMeshes.clear();
 			mNumberOfIndices = 0;
-			setInvalid(mSkeletonResourceId);
+			SetInvalid(mSkeletonResourceId);
 
 			// Call base implementation
 			IResource::deinitializeElement();

@@ -15,7 +15,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	void IResourceListener::disconnectFromResourceById(ResourceId resourceId)
 	{
-		RHI_ASSERT(isValid(resourceId), "Invalid resource ID")
+		RHI_ASSERT(IsValid(resourceId), "Invalid resource ID")
 		ResourceConnections resourceConnectionsToDisconnect;
 		resourceConnectionsToDisconnect.reserve(mResourceConnections.size());
 		for (const ResourceConnection& resourceConnection : mResourceConnections)

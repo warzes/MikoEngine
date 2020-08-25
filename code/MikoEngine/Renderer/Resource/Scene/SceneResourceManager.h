@@ -67,7 +67,7 @@ namespace Renderer
 		void setSceneFactory(const ISceneFactory* sceneFactory);
 		[[nodiscard]] SceneResource* getSceneResourceByAssetId(AssetId assetId) const;		// Considered to be inefficient, avoid method whenever possible
 		[[nodiscard]] SceneResourceId getSceneResourceIdByAssetId(AssetId assetId) const;	// Considered to be inefficient, avoid method whenever possible
-		void loadSceneResourceByAssetId(AssetId assetId, SceneResourceId& sceneResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = getInvalid<ResourceLoaderTypeId>());	// Asynchronous
+		void loadSceneResourceByAssetId(AssetId assetId, SceneResourceId& sceneResourceId, IResourceListener* resourceListener = nullptr, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = GetInvalid<ResourceLoaderTypeId>());	// Asynchronous
 		void destroySceneResource(SceneResourceId sceneResourceId);
 		void setInvalidResourceId(SceneResourceId& sceneResourceId, IResourceListener& resourceListener) const;
 

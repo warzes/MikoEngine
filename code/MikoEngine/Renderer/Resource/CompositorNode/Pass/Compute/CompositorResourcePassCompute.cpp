@@ -51,8 +51,8 @@ namespace Renderer
 		}
 
 		// Sanity checks
-		RHI_ASSERT(!mMaterialDefinitionMandatory || isValid(mMaterialAssetId) || isValid(mMaterialBlueprintAssetId), "Invalid material asset")
-		RHI_ASSERT(!(isValid(mMaterialAssetId) && isValid(mMaterialBlueprintAssetId)), "Invalid material asset")
+		RHI_ASSERT(!mMaterialDefinitionMandatory || IsValid(mMaterialAssetId) || IsValid(mMaterialBlueprintAssetId), "Invalid material asset")
+		RHI_ASSERT(!(IsValid(mMaterialAssetId) && IsValid(mMaterialBlueprintAssetId)), "Invalid material asset")
 	}
 
 

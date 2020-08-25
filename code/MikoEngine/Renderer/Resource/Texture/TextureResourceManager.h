@@ -100,7 +100,7 @@ namespace Renderer
 		void setNumberOfTopMipmapsToRemove(uint8_t numberOfTopMipmapsToRemove);
 		[[nodiscard]] TextureResource* getTextureResourceByAssetId(AssetId assetId) const;		// Considered to be inefficient, avoid method whenever possible
 		[[nodiscard]] TextureResourceId getTextureResourceIdByAssetId(AssetId assetId) const;	// Considered to be inefficient, avoid method whenever possible
-		void loadTextureResourceByAssetId(AssetId assetId, AssetId fallbackTextureAssetId, TextureResourceId& textureResourceId, IResourceListener* resourceListener = nullptr, bool rgbHardwareGammaCorrection = false, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = getInvalid<ResourceLoaderTypeId>());	// Asynchronous
+		void loadTextureResourceByAssetId(AssetId assetId, AssetId fallbackTextureAssetId, TextureResourceId& textureResourceId, IResourceListener* resourceListener = nullptr, bool rgbHardwareGammaCorrection = false, bool reload = false, ResourceLoaderTypeId resourceLoaderTypeId = GetInvalid<ResourceLoaderTypeId>());	// Asynchronous
 		TextureResourceId createTextureResourceByAssetId(AssetId assetId, Rhi::ITexture& texture, bool rgbHardwareGammaCorrection = false);	// Texture resource is not allowed to exist, yet
 		void destroyTextureResource(TextureResourceId textureResourceId);
 		void setInvalidResourceId(TextureResourceId& textureResourceId, IResourceListener& resourceListener) const;

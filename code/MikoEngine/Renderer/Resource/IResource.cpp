@@ -126,9 +126,9 @@ namespace Renderer
 			mDebugName[0] = '\0';	// This isn't a security relevant use-case, so the most simple solution is sufficient here
 		#endif
 		mResourceManager = nullptr;
-		setInvalid(mResourceId);
-		setInvalid(mAssetId);
-		setInvalid(mResourceLoaderTypeId);
+		SetInvalid(mResourceId);
+		SetInvalid(mAssetId);
+		SetInvalid(mResourceLoaderTypeId);
 		mSortedResourceListeners.clear();
 	}
 

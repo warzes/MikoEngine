@@ -7,7 +7,7 @@
 #include "Renderer/Core/StringId.h"
 #include "Renderer/Core/Math/Transform.h"
 #include "Renderer/Resource/Scene/Item/Light/LightSceneItem.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 
 
 //[-------------------------------------------------------]
@@ -101,7 +101,7 @@ namespace Renderer
 			struct MaterialItem
 			{
 				AssetId				materialAssetId;												// If material blueprint asset ID is set, material asset ID must be invalid
-				MaterialTechniqueId	materialTechniqueId		   = getInvalid<MaterialTechniqueId>();	// Must always be valid
+				MaterialTechniqueId	materialTechniqueId		   = GetInvalid<MaterialTechniqueId>();	// Must always be valid
 				AssetId				materialBlueprintAssetId;										// If material asset ID is set, material blueprint asset ID must be invalid
 				uint32_t			numberOfMaterialProperties = 0;
 			};

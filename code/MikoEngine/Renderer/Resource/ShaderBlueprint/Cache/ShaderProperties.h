@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Renderer/Core/StringId.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 
 namespace Renderer
 {
@@ -16,8 +16,8 @@ namespace Renderer
 			int32_t			 value;
 
 			inline Property() :
-				shaderPropertyId(getInvalid<ShaderPropertyId>()),
-				value(getInvalid<int32_t>())
+				shaderPropertyId(GetInvalid<ShaderPropertyId>()),
+				value(GetInvalid<int32_t>())
 			{
 				// Nothing here
 			}

@@ -409,13 +409,13 @@ namespace Renderer
 				}
 
 				// Create the current pipeline state cache instances for the material blueprint
-				if (isValid(mComputeShaderBlueprintResourceId))
+				if (IsValid(mComputeShaderBlueprintResourceId))
 				{
 					[[maybe_unused]] const ComputePipelineStateCache* computePipelineStateCache = mComputePipelineStateCacheManager.getComputePipelineStateCacheByCombination(shaderProperties, false);
 				}
 				else
 				{
-					[[maybe_unused]] const GraphicsPipelineStateCache* graphicsPipelineStateCache = mGraphicsPipelineStateCacheManager.getGraphicsPipelineStateCacheByCombination(getInvalid<uint32_t>(), shaderProperties, false);
+					[[maybe_unused]] const GraphicsPipelineStateCache* graphicsPipelineStateCache = mGraphicsPipelineStateCacheManager.getGraphicsPipelineStateCacheByCombination(GetInvalid<uint32_t>(), shaderProperties, false);
 				}
 			}
 			while (shaderCombinationIterator.iterate());
@@ -430,9 +430,9 @@ namespace Renderer
 		mGraphicsPipelineStateCacheManager(*this),
 		mComputePipelineStateCacheManager(*this),
 		mGraphicsPipelineState(Rhi::GraphicsPipelineStateBuilder()),
-		mVertexAttributesResourceId(getInvalid<VertexAttributesResourceId>()),
-		mGraphicsShaderBlueprintResourceId{getInvalid<ShaderBlueprintResourceId>(), getInvalid<ShaderBlueprintResourceId>(), getInvalid<ShaderBlueprintResourceId>(), getInvalid<ShaderBlueprintResourceId>(), getInvalid<ShaderBlueprintResourceId>()},
-		mComputeShaderBlueprintResourceId(getInvalid<ShaderBlueprintResourceId>()),
+		mVertexAttributesResourceId(GetInvalid<VertexAttributesResourceId>()),
+		mGraphicsShaderBlueprintResourceId{GetInvalid<ShaderBlueprintResourceId>(), GetInvalid<ShaderBlueprintResourceId>(), GetInvalid<ShaderBlueprintResourceId>(), GetInvalid<ShaderBlueprintResourceId>(), GetInvalid<ShaderBlueprintResourceId>()},
+		mComputeShaderBlueprintResourceId(GetInvalid<ShaderBlueprintResourceId>()),
 		mPassUniformBuffer(nullptr),
 		mMaterialUniformBuffer(nullptr),
 		mInstanceUniformBuffer(nullptr),
@@ -485,7 +485,7 @@ namespace Renderer
 		{
 			for (SamplerState& samplerState : mSamplerStates)
 			{
-				if (Rhi::FilterMode::UNKNOWN == samplerState.rhiSamplerState.filter || isInvalid(samplerState.rhiSamplerState.maxAnisotropy))
+				if (Rhi::FilterMode::UNKNOWN == samplerState.rhiSamplerState.filter || IsInvalid(samplerState.rhiSamplerState.maxAnisotropy))
 				{
 					mSamplerStateGroup = nullptr;
 					Rhi::SamplerState rhiSamplerState = samplerState.rhiSamplerState;
@@ -493,7 +493,7 @@ namespace Renderer
 					{
 						rhiSamplerState.filter = defaultFilterMode;
 					}
-					if (isInvalid(rhiSamplerState.maxAnisotropy))
+					if (IsInvalid(rhiSamplerState.maxAnisotropy))
 					{
 						rhiSamplerState.maxAnisotropy = maximumDefaultAnisotropy;
 					}
@@ -537,9 +537,9 @@ namespace Renderer
 	void MaterialBlueprintResource::deinitializeElement()
 	{
 		// TODO(co) Reset everything
-		setInvalid(mVertexAttributesResourceId);
-		memset(mGraphicsShaderBlueprintResourceId, static_cast<int>(getInvalid<ShaderBlueprintResourceId>()), sizeof(ShaderBlueprintResourceId) * NUMBER_OF_GRAPHICS_SHADER_TYPES);
-		setInvalid(mComputeShaderBlueprintResourceId);
+		SetInvalid(mVertexAttributesResourceId);
+		memset(mGraphicsShaderBlueprintResourceId, static_cast<int>(GetInvalid<ShaderBlueprintResourceId>()), sizeof(ShaderBlueprintResourceId) * NUMBER_OF_GRAPHICS_SHADER_TYPES);
+		SetInvalid(mComputeShaderBlueprintResourceId);
 
 		// Call base implementation
 		IResource::deinitializeElement();

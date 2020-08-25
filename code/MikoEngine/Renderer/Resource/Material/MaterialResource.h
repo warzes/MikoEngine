@@ -222,7 +222,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	private:
 		inline MaterialResource() :
-			mParentMaterialResourceId(getInvalid<MaterialResourceId>())
+			mParentMaterialResourceId(GetInvalid<MaterialResourceId>())
 		{
 			// Nothing here
 		}
@@ -238,7 +238,7 @@ namespace Renderer
 		inline void initializeElement(MaterialResourceId materialResourceId)
 		{
 			// Sanity checks
-			RHI_ASSERT(isInvalid(mParentMaterialResourceId), "Invalid parent material resource ID")
+			RHI_ASSERT(IsInvalid(mParentMaterialResourceId), "Invalid parent material resource ID")
 			RHI_ASSERT(mSortedChildMaterialResourceIds.empty(), "Invalid sorted child material resource IDs")
 			RHI_ASSERT(mSortedMaterialTechniqueVector.empty(), "Invalid sorted material technique vector")
 			RHI_ASSERT(mMaterialProperties.getSortedPropertyVector().empty(), "Invalid material properties")

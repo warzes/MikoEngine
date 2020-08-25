@@ -78,9 +78,9 @@ Scene::Scene() :
 	mImGuiLog(nullptr),
 	mCompositorWorkspaceInstance(nullptr),
 	mFirstFrame(true),
-	mSceneResourceId(Renderer::getInvalid<Renderer::SceneResourceId>()),
-	mMaterialResourceId(Renderer::getInvalid<Renderer::MaterialResourceId>()),
-	mCloneMaterialResourceId(Renderer::getInvalid<Renderer::MaterialResourceId>()),
+	mSceneResourceId(Renderer::GetInvalid<Renderer::SceneResourceId>()),
+	mMaterialResourceId(Renderer::GetInvalid<Renderer::MaterialResourceId>()),
+	mCloneMaterialResourceId(Renderer::GetInvalid<Renderer::MaterialResourceId>()),
 	mCustomMaterialResourceSet(false),
 	mController(nullptr),
 	// Crazy raw-pointers to point-of-interest scene stuff
@@ -423,7 +423,7 @@ void Scene::shutdown()
 	delete mCompositorWorkspaceInstance;
 	mCompositorWorkspaceInstance = nullptr;
 	getRenderer()->getSceneResourceManager().destroySceneResource(mSceneResourceId);
-	Renderer::setInvalid(mSceneResourceId);
+	Renderer::SetInvalid(mSceneResourceId);
 
 	// Destroy controller instance
 	if ( nullptr != mController )
@@ -729,7 +729,7 @@ void Scene::destroyIni()
 
 void Scene::applyCurrentSettings(Rhi::IRenderTarget& mainRenderTarget)
 {
-	if ( nullptr != mCompositorWorkspaceInstance && Renderer::isValid(mSceneResourceId) )
+	if ( nullptr != mCompositorWorkspaceInstance && Renderer::IsValid(mSceneResourceId) )
 	{
 		// Changes in main swap chain?
 		if ( mCurrentFullscreen != mFullscreen )
@@ -916,7 +916,7 @@ void Scene::createCompositorWorkspace()
 void Scene::createDebugGui([[maybe_unused]] Rhi::IRenderTarget& mainRenderTarget)
 {
 #ifdef RENDERER_IMGUI
-	if ( nullptr != mCompositorWorkspaceInstance && Renderer::isValid(mSceneResourceId) )
+	if ( nullptr != mCompositorWorkspaceInstance && Renderer::IsValid(mSceneResourceId) )
 	{
 		// Get the render target the debug GUI is rendered into, use the provided main render target as fallback
 		const Renderer::ICompositorInstancePass* compositorInstancePass = mCompositorWorkspaceInstance->getFirstCompositorInstancePassByCompositorPassTypeId(Renderer::CompositorResourcePassDebugGui::TYPE_ID);
@@ -1139,7 +1139,7 @@ void Scene::createDebugGui([[maybe_unused]] Rhi::IRenderTarget& mainRenderTarget
 
 void Scene::trySetCustomMaterialResource()
 {
-	if ( !mCustomMaterialResourceSet && nullptr != mSceneNode && Renderer::isValid(mCloneMaterialResourceId) )
+	if ( !mCustomMaterialResourceSet && nullptr != mSceneNode && Renderer::IsValid(mCloneMaterialResourceId) )
 	{
 		for ( Renderer::ISceneItem* sceneItem : mSceneNode->getAttachedSceneItems() )
 		{

@@ -6,7 +6,7 @@
 //[-------------------------------------------------------]
 
 #include "Renderer/Core/StringId.h"
-#include "Renderer/Core/GetInvalid.h"
+#include "Core/GetInvalid.h"
 
 // Disable warnings in external headers, we can't fix them
 SE_PRAGMA_WARNING_PUSH
@@ -144,9 +144,9 @@ namespace Renderer
 				mDebugName{},
 			#endif
 			mResourceManager(nullptr),
-			mResourceId(getInvalid<ResourceId>()),
-			mAssetId(getInvalid<AssetId>()),
-			mResourceLoaderTypeId(getInvalid<ResourceLoaderTypeId>()),
+			mResourceId(GetInvalid<ResourceId>()),
+			mAssetId(GetInvalid<AssetId>()),
+			mResourceLoaderTypeId(GetInvalid<ResourceLoaderTypeId>()),
 			mLoadingState(LoadingState::UNLOADED)
 		{
 			// Nothing here
@@ -157,9 +157,9 @@ namespace Renderer
 			// Sanity checks
 			RHI_ASSERT('\0' == mDebugName[0], "Invalid debug name")
 			RHI_ASSERT(nullptr == mResourceManager, "Invalid resource manager")
-			RHI_ASSERT(isInvalid(mResourceId), "Invalid resource ID")
-			RHI_ASSERT(isInvalid(mAssetId), "Invalid asset ID")
-			RHI_ASSERT(isInvalid(mResourceLoaderTypeId), "Invalid resource loader type ID")
+			RHI_ASSERT(IsInvalid(mResourceId), "Invalid resource ID")
+			RHI_ASSERT(IsInvalid(mAssetId), "Invalid asset ID")
+			RHI_ASSERT(IsInvalid(mResourceLoaderTypeId), "Invalid resource loader type ID")
 			RHI_ASSERT(LoadingState::UNLOADED == mLoadingState || LoadingState::FAILED == mLoadingState, "Invalid loading state")
 			RHI_ASSERT(mSortedResourceListeners.empty(), "Invalid sorted resource listeners")
 		}
@@ -193,9 +193,9 @@ namespace Renderer
 			// Sanity checks
 			RHI_ASSERT('\0' == mDebugName[0], "Invalid debug name")
 			RHI_ASSERT(nullptr == mResourceManager, "Invalid resource manager")
-			RHI_ASSERT(isInvalid(mResourceId), "Invalid resource ID")
-			RHI_ASSERT(isInvalid(mAssetId), "Invalid asset ID")
-			RHI_ASSERT(isInvalid(mResourceLoaderTypeId), "Invalid resource loader type ID")
+			RHI_ASSERT(IsInvalid(mResourceId), "Invalid resource ID")
+			RHI_ASSERT(IsInvalid(mAssetId), "Invalid asset ID")
+			RHI_ASSERT(IsInvalid(mResourceLoaderTypeId), "Invalid resource loader type ID")
 			RHI_ASSERT(LoadingState::UNLOADED == mLoadingState, "Invalid loading state")
 			RHI_ASSERT(mSortedResourceListeners.empty(), "Invalid sorted resource listeners")
 

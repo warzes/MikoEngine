@@ -83,7 +83,7 @@ namespace Renderer
 			for (size_t i = 0; i < mNumberOfTechniques; ++i, ++v1MaterialTechnique)
 			{
 				materialBlueprintResourceManager.loadMaterialBlueprintResourceByAssetId(v1MaterialTechnique->materialBlueprintAssetId, mMaterialBlueprintResourceIds[i]);
-				RHI_ASSERT(isValid(mMaterialBlueprintResourceIds[i]), "Invalid material blueprint resource ID")
+				RHI_ASSERT(IsValid(mMaterialBlueprintResourceIds[i]), "Invalid material blueprint resource ID")
 			}
 		}
 
