@@ -12,7 +12,7 @@ int main(
 {
 	try
 	{
-		Scene app;
+		Triangle app;
 		return app.Run(argc, argv);
 	}
 	catch ( const std::exception &e )

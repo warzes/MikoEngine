@@ -57,6 +57,13 @@ protected:
 	virtual void update(double delta);
 	virtual void shutdown();
 
+	// Return if the examples does the drawing completely on its own; thus no draw handling in frontend 
+	[[nodiscard]] inline virtual bool doesCompleteOwnDrawing() const
+	{
+		// Default implementation does not complete own drawing
+		return false;
+	}
+
 	uint32_t                            m_width = 0;
 	uint32_t                            m_height = 0;
 	double                              m_mouse_x = 0.0;
@@ -77,11 +84,6 @@ protected:
 	_CrtMemState m_crtMemState = { };
 #endif
 
-#if SE_PLATFORM_WINDOWS
-	//std::unique_ptr<Rhi::Context> rhiContext = nullptr;
-#elif SE_PLATFORM_LINUX
-	//std::unique_ptr<Rhi::X11Context> rhiContext = nullptr;	
-#endif
 	Rhi::IRhiPtr rhi = nullptr;
 	Rhi::ISwapChainPtr mainSwapChain = nullptr;
 	Rhi::CommandBuffer commandBuffer;	// Command buffer
@@ -98,6 +100,4 @@ private:
 	bool init_base(int argc, const char* argv[]);
 	void update_base(double delta);
 	void shutdown_base();
-
-
 };

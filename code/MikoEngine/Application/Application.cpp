@@ -83,12 +83,12 @@ void Application::RunFrame(void* arg)
 }
 #endif
 //-----------------------------------------------------------------------------
-bool Application::init(int argc, const char *argv[])
+bool Application::init([[maybe_unused]] int argc, [[maybe_unused]] const char *argv[])
 {
 	return true;
 }
 //-----------------------------------------------------------------------------
-void Application::update(double delta)
+void Application::update([[maybe_unused]] double delta)
 {
 }
 //-----------------------------------------------------------------------------
@@ -144,29 +144,28 @@ bool Application::init_base(int argc, const char * argv[])
 
 	glfwMakeContextCurrent(m_window); // TODO: only opengl? or?
 
-	const char* rhiName = "OpenGL";
 #if SE_RHINULL
-	if ( 0 == strcmp(rhiName, "Null") )
+	if ( settings.rhiApi == RHIApi::Null )
 		rhi = createNullRhiInstance(glfwNativeWindowHandle(m_window));
 #endif
 #if SE_VULKAN
-	if ( 0 == strcmp(rhiName, "Vulkan") )
+	if ( settings.rhiApi == RHIApi::Vulkan )
 		rhi = createVulkanRhiInstance(glfwNativeWindowHandle(m_window));
 #endif
 #if SE_OPENGL
-	if ( 0 == strcmp(rhiName, "OpenGL") )
+	if ( settings.rhiApi == RHIApi::OpenGL )
 		rhi = createOpenGLRhiInstance(glfwNativeWindowHandle(m_window));
 #endif
 #if SE_OPENGLES
-	if ( 0 == strcmp(rhiName, "OpenGLES3") )
+	if ( settings.rhiApi == RHIApi::OpenGLES )
 		rhi = createOpenGLES3RhiInstance(glfwNativeWindowHandle(m_window));
 #endif
 #if SE_DIRECT3D11
-	if ( 0 == strcmp(rhiName, "Direct3D11") )
+	if ( settings.rhiApi == RHIApi::Direct3D11 )
 		rhi = createDirect3D11RhiInstance(glfwNativeWindowHandle(m_window));
 #endif
 #if SE_DIRECT3D12
-	if ( 0 == strcmp(rhiName, "Direct3D12") )
+	if ( settings.rhiApi == RHIApi::Direct3D12 )
 		rhi = createDirect3D12RhiInstance(glfwNativeWindowHandle(m_window));
 #endif
 
@@ -175,30 +174,6 @@ bool Application::init_base(int argc, const char * argv[])
 		rhi = nullptr;
 		return 0;
 	}
-
-#if !SE_DEBUG
-	// By using
-	//   "Rhi::IRhi::isDebugEnabled()"
-	// in here its possible to check whether or not your application is currently running
-	// within a known debug/profile tool like e.g. Direct3D PIX (also works directly within VisualStudio
-	// 2017 out-of-the-box). In case you want at least try to protect your asset, you might want to stop
-	// the execution of your application when a debug/profile tool is used which can e.g. record your data.
-	// Please be aware that this will only make it a little bit harder to debug and e.g. while doing so
-	// reading out your asset data. Public articles like
-	// "PIX: How to circumvent D3DPERF_SetOptions" at
-	//   http://www.gamedev.net/blog/1323/entry-2250952-pix-how-to-circumvent-d3dperf-setoptions/
-	// describe how to "hack around" this security measurement, so, don't rely on it. Those debug
-	// methods work fine when using a Direct3D RHI implementation. OpenGL on the other hand
-	// has no Direct3D PIX like functions or extensions, use for instance "gDEBugger" (http://www.gremedy.com/)
-	// instead.
-	if ( nullptr != rhi && rhi->isDebugEnabled() )
-	{
-		// We don't allow debugging in case debugging is disabled
-		//"Debugging with debug/profile tools like e.g. Direct3D PIX is disabled within this application";
-		//delete rhi;
-		//rhi = nullptr;
-	}
-#endif
 
 	// Create render pass using the preferred swap chain texture format
 	const Rhi::Capabilities& capabilities = rhi->getCapabilities();
@@ -224,36 +199,49 @@ void Application::update_base(double delta)
 {
 	begin_frame();
 
-	// TODO: ??????
-#if 1
-	{ // Scene rendering
-				// Scoped debug event
-		COMMAND_SCOPED_DEBUG_EVENT_FUNCTION(commandBuffer)
-
-			// Make the graphics main swap chain to the current render target
-			Rhi::Command::SetGraphicsRenderTarget::create(commandBuffer, mainSwapChain);
-
-		{ // Since Direct3D 12 is command list based, the viewport and scissor rectangle must be set in every draw call to work with all supported RHI implementations
-			// Get the window size
-			uint32_t width = 1;
-			uint32_t height = 1;
-			mainSwapChain->getWidthAndHeight(width, height);
-
-			// Set the graphics viewport and scissor rectangle
-			Rhi::Command::SetGraphicsViewportAndScissorRectangle::create(commandBuffer, 0, 0, width, height);
-		}
-
-		// Submit command buffer to the RHI implementation
-		commandBuffer.submitToRhiAndClear(*rhi);
-
-		// Call the draw method
+	if ( doesCompleteOwnDrawing() )
+	{
 		update(delta);
 	}
-	// Submit command buffer to the RHI implementation
-	commandBuffer.submitToRhiAndClear(*rhi);
-#else
-	update(delta);
-#endif	
+	else
+	{
+		if ( rhi->beginScene() )
+		{
+			{ // Scene rendering
+				// Scoped debug event
+				COMMAND_SCOPED_DEBUG_EVENT_FUNCTION(commandBuffer);
+
+				// Make the graphics main swap chain to the current render target
+				Rhi::Command::SetGraphicsRenderTarget::create(commandBuffer, mainSwapChain);
+
+				{ // Since Direct3D 12 is command list based, the viewport and scissor rectangle must be set in every draw call to work with all supported RHI implementations
+					// Get the window size
+					uint32_t width = 1;
+					uint32_t height = 1;
+					mainSwapChain->getWidthAndHeight(width, height);
+
+					// Set the graphics viewport and scissor rectangle
+					Rhi::Command::SetGraphicsViewportAndScissorRectangle::create(commandBuffer, 0, 0, width, height);
+				}
+
+				// Submit command buffer to the RHI implementation
+				commandBuffer.submitToRhiAndClear(*rhi);
+
+				// Call the draw method
+				update(delta);
+			}
+
+			// Submit command buffer to the RHI implementation
+			commandBuffer.submitToRhiAndClear(*rhi);
+
+			// End scene rendering
+			rhi->endScene();
+		}
+
+		// Present the content of the current back buffer
+		mainSwapChain->present();
+	}
+
 	end_frame();
 }
 //-----------------------------------------------------------------------------
@@ -291,27 +279,17 @@ void Application::begin_frame()
 
 	m_mouse_delta_x = m_mouse_x - m_last_mouse_x;
 	m_mouse_delta_y = m_mouse_y - m_last_mouse_y;
-
 	m_last_mouse_x = m_mouse_x;
 	m_last_mouse_y = m_mouse_y;
 
-	// Is there a RHI and main swap chain instance?
-	// TODO: перенести в update???
-	if ( nullptr == rhi || nullptr == mainSwapChain )
-		return;
-
 	if ( m_window_resized && mainSwapChain )
 	{
-		// Inform the swap chain that the size of the native window was changed
-		// -> Required for Direct3D 11
-		// -> Not required for OpenGL and OpenGL ES 3
 		mainSwapChain->resizeBuffers();
 		m_window_resized = false;
 	}
-	//if (ALT + ENTER) != 0)
-	//	mainSwapChain->setFullscreenState(!mainSwapChain->getFullscreenState());
 
-	m_endFrame = rhi->beginScene();
+	// Toggle the fullscreen state
+	//mMainSwapChain->setFullscreenState(!mMainSwapChain->getFullscreenState());
 }
 //-----------------------------------------------------------------------------
 void Application::end_frame()
@@ -319,17 +297,6 @@ void Application::end_frame()
 	m_timer.Stop();
 	m_delta = m_timer.ElapsedTimeMilisec();
 	m_delta_seconds = m_timer.ElapsedTimeSec();
-
-	// Is there a RHI and main swap chain instance?
-	// TODO: перенести в update???
-	if ( nullptr == rhi || nullptr == mainSwapChain )
-		return;
-
-	if ( m_endFrame )
-		rhi->endScene();
-
-	// Present the content of the current back buffer
-	mainSwapChain->present();
 }
 //-----------------------------------------------------------------------------
 void Application::request_exit() const
