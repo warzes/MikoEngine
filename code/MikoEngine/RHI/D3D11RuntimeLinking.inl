@@ -2,6 +2,8 @@
 //[ AMD AGS functions                                     ]
 //[-------------------------------------------------------]
 
+#define RHI_DIRECT3D11_EXPORTS
+
 extern "C" {
 	// -> Using AMD AGS v5.3.0 - November 22, 2018
 	// -> From https://github.com/GPUOpen-LibrariesAndSDKs/AGS_SDK and https://raw.githubusercontent.com/GPUOpen-LibrariesAndSDKs/Barycentrics12/master/ags_lib/inc/amd_ags.h

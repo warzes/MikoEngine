@@ -15,7 +15,7 @@
 *    - Graphics pipeline state object (PSO)
 *    - Debug methods
 */
-class Triangle : public Application
+class Queries : public Application
 {
 public:
     bool init(int argc, const char* argv[]) override;
@@ -33,4 +33,8 @@ private:
     Rhi::IGraphicsPipelineStatePtr m_graphicsPipelineState;
     Rhi::IVertexArrayPtr m_vertexArray;
     Rhi::CommandBuffer m_commandBuffer;
+
+    Rhi::IQueryPoolPtr mOcclusionQueryPool;				///< Asynchronous occlusion query pool, can be a null pointer
+    Rhi::IQueryPoolPtr mPipelineStatisticsQueryPool;	///< Asynchronous pipeline statistics query pool, can be a null pointer
+    Rhi::IQueryPoolPtr mTimestampQueryPool;				///< Asynchronous timestamp query pool, can be a null pointer
 };

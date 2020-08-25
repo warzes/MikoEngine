@@ -1,6 +1,6 @@
-#include "Triangle.h"
+#include "Queries.h"
 
-bool Triangle::init(int argc, const char * argv[])
+bool Queries::init(int argc, const char * argv[])
 {
 	// Create the buffer manager
 	m_bufferManager = rhi->createBufferManager();
@@ -84,19 +84,56 @@ bool Triangle::init(int argc, const char * argv[])
 		}
 	}
 
+	// Create the queries
+	mOcclusionQueryPool = rhi->createQueryPool(Rhi::QueryType::OCCLUSION);
+	mPipelineStatisticsQueryPool = rhi->createQueryPool(Rhi::QueryType::PIPELINE_STATISTICS);
+	mTimestampQueryPool = rhi->createQueryPool(Rhi::QueryType::TIMESTAMP, 2);
+
 	// Since we're always submitting the same commands to the RHI, we can fill the command buffer once during initialization and then reuse it multiple times during runtime
 	fillCommandBuffer();
 	return true;
 }
 
-void Triangle::update(double delta)
+void Queries::update(double delta)
 {
 	// Submit command buffer to the RHI implementation
 	m_commandBuffer.submitToRhi(*rhi);
+	// Sanity checks
+	RHI_ASSERT(nullptr != mOcclusionQueryPool, "Invalid occlusion query pool");
+	RHI_ASSERT(nullptr != mPipelineStatisticsQueryPool, "Invalid pipeline statistics query pool");
+	RHI_ASSERT(nullptr != mTimestampQueryPool, "Invalid timestamp query pool");
+
+	{ // Occlusion query pool
+		uint64_t numberOfSamples = 0;
+		if ( rhi->getQueryPoolResults(*mOcclusionQueryPool, sizeof(uint64_t), reinterpret_cast<uint8_t*>(&numberOfSamples)) )
+		{
+			//NOP;	// TODO(co) Process result
+		}
+	}
+
+	{ // Pipeline statistics query pool
+		Rhi::PipelineStatisticsQueryResult pipelineStatisticsQueryResult = {};
+		if ( rhi->getQueryPoolResults(*mPipelineStatisticsQueryPool, sizeof(Rhi::PipelineStatisticsQueryResult), reinterpret_cast<uint8_t*>(&pipelineStatisticsQueryResult)) )
+		{
+			//NOP;	// TODO(co) Process result
+		}
+	}
+
+	{ // Timestamp query pool
+		uint64_t timestamp[2] = {};
+		if ( rhi->getQueryPoolResults(*mTimestampQueryPool, sizeof(uint64_t) * 2, reinterpret_cast<uint8_t*>(&timestamp), 0, 2, sizeof(uint64_t)) )
+		{
+			//NOP;	// TODO(co) Process result
+		}
+	}
 }
 
-void Triangle::shutdown()
+void Queries::shutdown()
 {
+	// Release the used resources
+	mOcclusionQueryPool = nullptr;
+	mPipelineStatisticsQueryPool = nullptr;
+	mTimestampQueryPool = nullptr;
 	m_vertexArray = nullptr;
 	m_graphicsPipelineState = nullptr;
 	m_rootSignature = nullptr;
@@ -104,30 +141,39 @@ void Triangle::shutdown()
 	m_bufferManager = nullptr;
 }
 
-ApplicationSetting Triangle::intial_app_settings()
+ApplicationSetting Queries::intial_app_settings()
 {
-    ApplicationSetting settings;
-    settings.width = 1280;
-    settings.height = 720;
-    settings.title = "Triangle";
-	settings.rhiApi = RHIApi::Direct3D11;
-    return settings;
+	ApplicationSetting settings;
+	settings.width = 1280;
+	settings.height = 720;
+	settings.title = "Queries";
+	settings.rhiApi = RHIApi::Direct3D12;
+	return settings;
 }
 
-void Triangle::window_resized(int width, int height)
+void Queries::window_resized(int width, int height)
 {
 }
 
-void Triangle::fillCommandBuffer()
+void Queries::fillCommandBuffer()
 {
 	// Sanity checks
 	RHI_ASSERT(m_commandBuffer.isEmpty(), "The command buffer is already filled");
 	RHI_ASSERT(nullptr != m_rootSignature, "Invalid root signature");
 	RHI_ASSERT(nullptr != m_graphicsPipelineState, "Invalid graphics pipeline state");
 	RHI_ASSERT(nullptr != m_vertexArray, "Invalid vertex array");
+	RHI_ASSERT(nullptr != mOcclusionQueryPool, "Invalid occlusion query pool");
+	RHI_ASSERT(nullptr != mPipelineStatisticsQueryPool, "Invalid pipeline statistics query pool");
+	RHI_ASSERT(nullptr != mTimestampQueryPool, "Invalid timestamp query pool");
 
 	// Scoped debug event
 	COMMAND_SCOPED_DEBUG_EVENT_FUNCTION(m_commandBuffer);
+
+	// Reset and begin queries
+	Rhi::Command::ResetQueryPool::create(m_commandBuffer, *mTimestampQueryPool, 0, 2);
+	Rhi::Command::WriteTimestampQuery::create(m_commandBuffer, *mTimestampQueryPool, 0);
+	Rhi::Command::ResetAndBeginQuery::create(m_commandBuffer, *mOcclusionQueryPool);
+	Rhi::Command::ResetAndBeginQuery::create(m_commandBuffer, *mPipelineStatisticsQueryPool, 0, Rhi::QueryControlFlags::PRECISE);
 
 	// Clear the graphics color buffer of the current render target with gray, do also clear the depth buffer
 	const float color[4] = { 0.6f, 0.8f, 1.0f, 1.0f };
@@ -151,4 +197,9 @@ void Triangle::fillCommandBuffer()
 		// Render the specified geometric primitive, based on an array of vertices
 		Rhi::Command::DrawGraphics::create(m_commandBuffer, 3);
 	}
+
+	// End queries
+	Rhi::Command::EndQuery::create(m_commandBuffer, *mOcclusionQueryPool);
+	Rhi::Command::EndQuery::create(m_commandBuffer, *mPipelineStatisticsQueryPool);
+	Rhi::Command::WriteTimestampQuery::create(m_commandBuffer, *mTimestampQueryPool, 1);
 }

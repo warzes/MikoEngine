@@ -47,7 +47,7 @@ bool Texture::init(int argc, const char * argv[])
 		{ // Create the texture group
 			Rhi::IResource* resources[2];
 
-			{ // Create the 1D texture
+			{ // Create the 1D texture (Gradient)
 				static constexpr uint32_t TEXTURE_WIDTH = 256;
 				static constexpr uint32_t TEXEL_ELEMENTS = 1;
 				static constexpr uint32_t NUMBER_OF_BYTES = TEXTURE_WIDTH;
@@ -63,7 +63,7 @@ bool Texture::init(int argc, const char * argv[])
 				resources[0] = mTextureManager->createTexture1D(TEXTURE_WIDTH, Rhi::TextureFormat::R8, data, Rhi::TextureFlag::GENERATE_MIPMAPS | Rhi::TextureFlag::SHADER_RESOURCE);
 			}
 
-			{ // Create the 2D texture
+			{ // Create the 2D texture (Color albedo)
 				static constexpr uint32_t TEXTURE_WIDTH = 64;
 				static constexpr uint32_t TEXTURE_HEIGHT = 64;
 				static constexpr uint32_t TEXEL_ELEMENTS = 4;
@@ -81,22 +81,11 @@ bool Texture::init(int argc, const char * argv[])
 						const uint32_t i = x / cellPitch;
 						const uint32_t j = y / cellHeight;
 
-						if ( i % 2 == j % 2 )
-						{
-							// Black
-							data[n + 0] = 0;	// R
-							data[n + 1] = 0;	// G
-							data[n + 2] = 0;	// B
-							data[n + 3] = 255;	// A
-						}
-						else
-						{
-							// Add some color fun instead of just boring white
-							data[n + 0] = static_cast<uint8_t>(rand() % 255);	// R
-							data[n + 1] = static_cast<uint8_t>(rand() % 255);	// G
-							data[n + 2] = static_cast<uint8_t>(rand() % 255);	// B
-							data[n + 3] = static_cast<uint8_t>(rand() % 255);	// A
-						}
+						// Add some color fun instead of just boring white
+						data[n + 0] = static_cast<uint8_t>(rand() % 255);	// R
+						data[n + 1] = static_cast<uint8_t>(rand() % 255);	// G
+						data[n + 2] = static_cast<uint8_t>(rand() % 255);	// B
+						data[n + 3] = static_cast<uint8_t>(rand() % 255);	// A
 					}
 				}
 
@@ -132,9 +121,9 @@ bool Texture::init(int argc, const char * argv[])
 			// -> Clip space vertex positions, left/bottom is (-1,-1) and right/top is (1,1)
 			static constexpr float VERTEX_POSITION[] =
 			{					// Vertex ID	Triangle on screen
-				 0.0f, 1.0f,	// 0				0
-				 1.0f, 0.0f,	// 1			   .   .
-				-0.5f, 0.0f		// 2			  2.......1
+				 0.0f, 1.0f,	// 0			      0
+				 1.0f, 0.0f,	// 1			    .   .
+				-1.0f, 0.0f	    // 2			  2.......1
 			};
 			Rhi::IVertexBufferPtr vertexBuffer(mBufferManager->createVertexBuffer(sizeof(VERTEX_POSITION), VERTEX_POSITION));
 

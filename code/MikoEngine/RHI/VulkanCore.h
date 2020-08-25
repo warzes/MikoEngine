@@ -927,15 +927,15 @@ namespace
 			uint32_t presentModeCount = 0;
 			if ( (vkGetPhysicalDeviceSurfacePresentModesKHR(vkPhysicalDevice, vkSurfaceKHR, &presentModeCount, nullptr) != VK_SUCCESS) || (0 == presentModeCount) )
 			{
-				RHI_LOG(CRITICAL, "Failed to get physical Vulkan device surface present modes")
-					return VK_PRESENT_MODE_MAX_ENUM_KHR;
+				RHI_LOG(CRITICAL, "Failed to get physical Vulkan device surface present modes");
+				return VK_PRESENT_MODE_MAX_ENUM_KHR;
 			}
 
 			std::vector<VkPresentModeKHR> presentModes(presentModeCount);
 			if ( vkGetPhysicalDeviceSurfacePresentModesKHR(vkPhysicalDevice, vkSurfaceKHR, &presentModeCount, presentModes.data()) != VK_SUCCESS )
 			{
-				RHI_LOG(CRITICAL, "Failed to get physical Vulkan device surface present modes")
-					return VK_PRESENT_MODE_MAX_ENUM_KHR;
+				RHI_LOG(CRITICAL, "Failed to get physical Vulkan device surface present modes");
+				return VK_PRESENT_MODE_MAX_ENUM_KHR;
 			}
 
 			// - FIFO present mode is always available
@@ -956,8 +956,8 @@ namespace
 			}
 
 			// Error!
-			RHI_LOG(CRITICAL, "FIFO present mode is not supported by the Vulkan swap chain")
-				return VK_PRESENT_MODE_MAX_ENUM_KHR;
+			RHI_LOG(CRITICAL, "FIFO present mode is not supported by the Vulkan swap chain");
+			return VK_PRESENT_MODE_MAX_ENUM_KHR;
 		}
 
 		[[nodiscard]] VkRenderPass createRenderPass(const VkAllocationCallbacks* vkAllocationCallbacks, VkDevice vkDevice, VkFormat colorVkFormat, VkFormat depthVkFormat, VkSampleCountFlagBits vkSampleCountFlagBits)

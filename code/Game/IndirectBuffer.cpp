@@ -1,6 +1,6 @@
-#include "Triangle.h"
+#include "IndirectBuffer.h"
 
-bool Triangle::init(int argc, const char * argv[])
+bool IndirectBuffer::init(int argc, const char * argv[])
 {
 	// Create the buffer manager
 	m_bufferManager = rhi->createBufferManager();
@@ -84,19 +84,32 @@ bool Triangle::init(int argc, const char * argv[])
 		}
 	}
 
+	{ // Create the indirect buffer
+		const Rhi::DrawArguments drawArguments =
+		{
+			3,	// vertexCountPerInstance (uint32_t)
+			1,	// instanceCount (uint32_t)
+			0,	// startVertexLocation (uint32_t)
+			0	// startInstanceLocation (uint32_t)
+		};
+		m_indirectBuffer = m_bufferManager->createIndirectBuffer(sizeof(Rhi::DrawArguments), &drawArguments, Rhi::IndirectBufferFlag::DRAW_ARGUMENTS);
+	}
+
 	// Since we're always submitting the same commands to the RHI, we can fill the command buffer once during initialization and then reuse it multiple times during runtime
 	fillCommandBuffer();
 	return true;
 }
 
-void Triangle::update(double delta)
+void IndirectBuffer::update(double delta)
 {
 	// Submit command buffer to the RHI implementation
 	m_commandBuffer.submitToRhi(*rhi);
 }
 
-void Triangle::shutdown()
+void IndirectBuffer::shutdown()
 {
+	// Release the used resources
+	m_indirectBuffer = nullptr;
 	m_vertexArray = nullptr;
 	m_graphicsPipelineState = nullptr;
 	m_rootSignature = nullptr;
@@ -104,27 +117,28 @@ void Triangle::shutdown()
 	m_bufferManager = nullptr;
 }
 
-ApplicationSetting Triangle::intial_app_settings()
+ApplicationSetting IndirectBuffer::intial_app_settings()
 {
-    ApplicationSetting settings;
-    settings.width = 1280;
-    settings.height = 720;
-    settings.title = "Triangle";
+	ApplicationSetting settings;
+	settings.width = 1280;
+	settings.height = 720;
+	settings.title = "IndirectBuffer";
 	settings.rhiApi = RHIApi::Direct3D11;
-    return settings;
+	return settings;
 }
 
-void Triangle::window_resized(int width, int height)
+void IndirectBuffer::window_resized(int width, int height)
 {
 }
 
-void Triangle::fillCommandBuffer()
+void IndirectBuffer::fillCommandBuffer()
 {
 	// Sanity checks
 	RHI_ASSERT(m_commandBuffer.isEmpty(), "The command buffer is already filled");
 	RHI_ASSERT(nullptr != m_rootSignature, "Invalid root signature");
 	RHI_ASSERT(nullptr != m_graphicsPipelineState, "Invalid graphics pipeline state");
 	RHI_ASSERT(nullptr != m_vertexArray, "Invalid vertex array");
+	RHI_ASSERT(nullptr != m_indirectBuffer, "Invalid indirect buffer");
 
 	// Scoped debug event
 	COMMAND_SCOPED_DEBUG_EVENT_FUNCTION(m_commandBuffer);
@@ -149,6 +163,6 @@ void Triangle::fillCommandBuffer()
 		COMMAND_SCOPED_DEBUG_EVENT(m_commandBuffer, "Drawing the fancy triangle");
 
 		// Render the specified geometric primitive, based on an array of vertices
-		Rhi::Command::DrawGraphics::create(m_commandBuffer, 3);
+		Rhi::Command::DrawGraphics::create(m_commandBuffer, *m_indirectBuffer);
 	}
 }

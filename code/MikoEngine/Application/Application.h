@@ -64,6 +64,8 @@ protected:
 		return false;
 	}
 
+	[[nodiscard]] Rhi::IRenderTarget* getMainRenderTarget() const;
+
 	uint32_t                            m_width = 0;
 	uint32_t                            m_height = 0;
 	double                              m_mouse_x = 0.0;

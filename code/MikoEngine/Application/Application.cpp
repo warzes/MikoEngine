@@ -432,3 +432,8 @@ void Application::window_size_callback_glfw(GLFWwindow* window, int width, int h
 	app->window_size_callback(window, width, height);
 }
 //-----------------------------------------------------------------------------
+[[nodiscard]] Rhi::IRenderTarget* Application::getMainRenderTarget() const
+{
+	return mainSwapChain;
+}
+//-----------------------------------------------------------------------------

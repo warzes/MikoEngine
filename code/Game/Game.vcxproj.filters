@@ -6,7 +6,7 @@
       <Filter>Example\1_triangle</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
-      <Filter>Example\2_texture</Filter>
+      <Filter>Example\5_texture</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Example\Mesh</Filter>
@@ -22,6 +22,36 @@
     </ClCompile>
     <ClCompile Include="..\3rdparty\DeviceInput\DeviceInput.cpp">
       <Filter>Example\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="IndirectBuffer.cpp">
+      <Filter>Example\2_IndirectBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Queries.cpp">
+      <Filter>Example\3_Queries</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>Example\4_VertexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeTexture.cpp">
+      <Filter>Example\6_CubeTexture</Filter>
+    </ClCompile>
+    <ClCompile Include="InstancedCubes.cpp">
+      <Filter>Example\X_InstancedCubes</Filter>
+    </ClCompile>
+    <ClCompile Include="Color4.cpp">
+      <Filter>Example</Filter>
+    </ClCompile>
+    <ClCompile Include="BatchDrawInstanced.cpp">
+      <Filter>Example\X_InstancedCubes\CubeRendererDrawInstanced</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeRendererDrawInstanced.cpp">
+      <Filter>Example\X_InstancedCubes\CubeRendererDrawInstanced</Filter>
+    </ClCompile>
+    <ClCompile Include="BatchInstancedArrays.cpp">
+      <Filter>Example\X_InstancedCubes\CubeRendererInstancedArrays</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeRendererInstancedArrays.cpp">
+      <Filter>Example\X_InstancedCubes\CubeRendererInstancedArrays</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -44,22 +74,22 @@
       <Filter>Example\1_triangle</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>Example\2_texture</Filter>
+      <Filter>Example\5_texture</Filter>
     </ClInclude>
     <ClInclude Include="Texture_GLSL_450.h">
-      <Filter>Example\2_texture</Filter>
+      <Filter>Example\5_texture</Filter>
     </ClInclude>
     <ClInclude Include="Texture_GLSL_410.h">
-      <Filter>Example\2_texture</Filter>
+      <Filter>Example\5_texture</Filter>
     </ClInclude>
     <ClInclude Include="Texture_GLSL_ES3.h">
-      <Filter>Example\2_texture</Filter>
+      <Filter>Example\5_texture</Filter>
     </ClInclude>
     <ClInclude Include="Texture_HLSL_D3D11_D3D12.h">
-      <Filter>Example\2_texture</Filter>
+      <Filter>Example\5_texture</Filter>
     </ClInclude>
     <ClInclude Include="Texture_Null.h">
-      <Filter>Example\2_texture</Filter>
+      <Filter>Example\5_texture</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Example\Mesh</Filter>
@@ -91,6 +121,105 @@
     <ClInclude Include="FreeCameraController.h">
       <Filter>Example\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="IndirectBuffer.h">
+      <Filter>Example\2_IndirectBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Queries.h">
+      <Filter>Example\3_Queries</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>Example\4_VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer_GLSL_450.h">
+      <Filter>Example\4_VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer_GLSL_410.h">
+      <Filter>Example\4_VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer_GLSL_ES3.h">
+      <Filter>Example\4_VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer_HLSL_D3D11_D3D12.h">
+      <Filter>Example\4_VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer_Null.h">
+      <Filter>Example\4_VertexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeTexture.h">
+      <Filter>Example\6_CubeTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeTexture_GLSL_450.h">
+      <Filter>Example\6_CubeTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeTexture_GLSL_410.h">
+      <Filter>Example\6_CubeTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeTexture_GLSL_ES3.h">
+      <Filter>Example\6_CubeTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeTexture_HLSL_D3D12.h">
+      <Filter>Example\6_CubeTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeTexture_HLSL_D3D11.h">
+      <Filter>Example\6_CubeTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeTexture_Null.h">
+      <Filter>Example\6_CubeTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="InstancedCubes.h">
+      <Filter>Example\X_InstancedCubes</Filter>
+    </ClInclude>
+    <ClInclude Include="ICubeRenderer.h">
+      <Filter>Example\X_InstancedCubes</Filter>
+    </ClInclude>
+    <ClInclude Include="Color4.h">
+      <Filter>Example</Filter>
+    </ClInclude>
+    <ClInclude Include="BatchDrawInstanced.h">
+      <Filter>Example\X_InstancedCubes\CubeRendererDrawInstanced</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeRendererDrawInstanced.h">
+      <Filter>Example\X_InstancedCubes\CubeRendererDrawInstanced</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeRendererDrawInstanced_GLSL_410.h">
+      <Filter>Example\X_InstancedCubes\CubeRendererDrawInstanced</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeRendererDrawInstanced_GLSL_450.h">
+      <Filter>Example\X_InstancedCubes\CubeRendererDrawInstanced</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeRendererDrawInstanced_GLSL_ES3.h">
+      <Filter>Example\X_InstancedCubes\CubeRendererDrawInstanced</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeRendererDrawInstanced_HLSL_D3D11_D3D12.h">
+      <Filter>Example\X_InstancedCubes\CubeRendererDrawInstanced</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeRendererDrawInstanced_Null.h">
+      <Filter>Example\X_InstancedCubes\CubeRendererDrawInstanced</Filter>
+    </ClInclude>
+    <ClInclude Include="BatchInstancedArrays.h">
+      <Filter>Example\X_InstancedCubes\CubeRendererInstancedArrays</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeRendererInstancedArrays.h">
+      <Filter>Example\X_InstancedCubes\CubeRendererInstancedArrays</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeRendererInstancedArrays_GLSL_130.h">
+      <Filter>Example\X_InstancedCubes\CubeRendererInstancedArrays</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeRendererInstancedArrays_GLSL_140.h">
+      <Filter>Example\X_InstancedCubes\CubeRendererInstancedArrays</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeRendererInstancedArrays_GLSL_450.h">
+      <Filter>Example\X_InstancedCubes\CubeRendererInstancedArrays</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeRendererInstancedArrays_GLSL_ES3.h">
+      <Filter>Example\X_InstancedCubes\CubeRendererInstancedArrays</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeRendererInstancedArrays_Null.h">
+      <Filter>Example\X_InstancedCubes\CubeRendererInstancedArrays</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeRendererInstancedArrays_HLSL_D3D11_D3D12.h">
+      <Filter>Example\X_InstancedCubes\CubeRendererInstancedArrays</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Example">
@@ -99,14 +228,35 @@
     <Filter Include="Example\1_triangle">
       <UniqueIdentifier>{e9f8a838-e8c4-4cca-ac22-7e686d0d6d07}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Example\2_texture">
-      <UniqueIdentifier>{7e7ee91f-fcf7-444c-b7c9-c7faf4af7a96}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Example\Mesh">
       <UniqueIdentifier>{29c2f4f6-2f2d-4f7e-b34e-e0c880ff4f20}</UniqueIdentifier>
     </Filter>
     <Filter Include="Example\Scene">
       <UniqueIdentifier>{11a030e9-1860-429f-b827-79361f8b0138}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\2_IndirectBuffer">
+      <UniqueIdentifier>{89133c19-3ef6-4c15-940f-611c8cbf6b07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\3_Queries">
+      <UniqueIdentifier>{7f4f3676-4392-4790-9bec-9e21174cf051}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\4_VertexBuffer">
+      <UniqueIdentifier>{fd1032a0-1fd9-4a38-88eb-4153520b61ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\5_texture">
+      <UniqueIdentifier>{7e7ee91f-fcf7-444c-b7c9-c7faf4af7a96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\6_CubeTexture">
+      <UniqueIdentifier>{30332f3d-5275-455d-958a-9031a25cbb27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\X_InstancedCubes">
+      <UniqueIdentifier>{aceeb284-9a62-4b86-b129-e3cb970b530f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\X_InstancedCubes\CubeRendererDrawInstanced">
+      <UniqueIdentifier>{895a0bb7-2b4e-4e38-a729-1ad70879a933}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\X_InstancedCubes\CubeRendererInstancedArrays">
+      <UniqueIdentifier>{6de9ffd3-13f5-4436-9db4-42134c7fc9f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

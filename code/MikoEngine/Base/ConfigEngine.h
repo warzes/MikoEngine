@@ -29,6 +29,6 @@
 //- Set "RENDERER_PROFILER" as preprocessor definition to enable profiler support
 #define RENDERER_PROFILER 1
 //- Set "RENDERER_IMGUI" as preprocessor definition to enable ImGui support
-//#define RENDERER_IMGUI 1
+#define RENDERER_IMGUI 1
 //- Set "RENDERER_OPENVR" as preprocessor definition to enable OpenVR support
 //#define RENDERER_OPENVR 1

@@ -1,5 +1,10 @@
 #include "Triangle.h"
+#include "IndirectBuffer.h"
+#include "Queries.h"
+#include "VertexBuffer.h"
 #include "Texture.h"
+#include "CubeTexture.h"
+#include "InstancedCubes.h"
 #include "Mesh.h"
 #include "Scene.h"
 //-----------------------------------------------------------------------------
@@ -12,7 +17,7 @@ int main(
 {
 	try
 	{
-		Triangle app;
+		InstancedCubes app;
 		return app.Run(argc, argv);
 	}
 	catch ( const std::exception &e )

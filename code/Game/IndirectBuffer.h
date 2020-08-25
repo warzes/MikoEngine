@@ -4,18 +4,14 @@
 
 /**
 *  @brief
-*    Shows how to bring a triangle onto the screen
+*    Shows how to use indirect buffer
 *
 *  @remarks
 *    Demonstrates:
-*    - Vertex buffer object (VBO)
-*    - Vertex array object (VAO)
-*    - Vertex shader (VS) and fragment shader (FS)
-*    - Root signature
-*    - Graphics pipeline state object (PSO)
-*    - Debug methods
+*    - Everything from "Triangle"
+*    - Indirect buffer
 */
-class Triangle : public Application
+class IndirectBuffer : public Application
 {
 public:
     bool init(int argc, const char* argv[]) override;
@@ -33,4 +29,6 @@ private:
     Rhi::IGraphicsPipelineStatePtr m_graphicsPipelineState;
     Rhi::IVertexArrayPtr m_vertexArray;
     Rhi::CommandBuffer m_commandBuffer;
+
+    Rhi::IIndirectBufferPtr m_indirectBuffer;	// Indirect buffer, can be a null pointer
 };
