@@ -3,8 +3,8 @@
 //=============================================================================
 // Macros Utility
 //=============================================================================
-#define SE_STRINGIZE( _n )   SE_STRINGIZE_2( _n )
-#define SE_STRINGIZE_2( _n ) #_n
+#define SE_STRINGIZE__(x) #x
+#define SE_STRINGIZE(x) SE_STRINGIZE__(x)
 
 //=============================================================================
 // Macros TODO
@@ -41,17 +41,6 @@
 #	define RESTRICT __restrict__
 #	define RESTRICT_RETURN
 #endif // SE_PLATFORM_*
-
-
-// TODO: http://cnicholson.net/2009/02/stupid-c-tricks-adventures-in-assert/
-//=============================================================================
-// Assert Macros
-//=============================================================================
-#if SE_DEBUG
-#	define SE_ASSERT(expression, message) SE_DEBUG_BREAK; assert((expression) && message);
-#else
-#	define SE_ASSERT(expression, message)
-#endif
 
 
 //=============================================================================

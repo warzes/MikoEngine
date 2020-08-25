@@ -1,4 +1,6 @@
-﻿- noexcept - https://habr.com/ru/post/164221/
+﻿- для обертки исключений в STL можно взять пример - _CATCH / _CATCH_ALL / _THROW
+- noexcept - https://habr.com/ru/post/164221/
+	- сделать тест - сколько весит бинарник с noexcept и без
 - удалить d3dx11.h - просто взять оттуда нужное, чтобы быстрее компилировалось
 - spdlog
 - убрать /bigobj

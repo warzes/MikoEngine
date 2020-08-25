@@ -15,11 +15,29 @@
 //-----------------------------------------------------------------------------
 // Header config
 //-----------------------------------------------------------------------------
-//#define _CRT_SECURE_NO_WARNINGS // TODO: удалить
+#define _STL_WARNING_LEVEL 3
 
 #if SE_PLATFORM_WINDOWS
 #	include "Base/Win32PlatformDefinitions.h"
 #endif // SE_PLATFORM_WINDOWS
+
+//-----------------------------------------------------------------------------
+// Disable warning
+//-----------------------------------------------------------------------------
+SE_PRAGMA_WARNING_DISABLE_MSVC(4514); // unreferenced inline function has been removed;
+SE_PRAGMA_WARNING_DISABLE_MSVC(4710); // function not inlined;
+SE_PRAGMA_WARNING_DISABLE_MSVC(4711); // function selected for inline expansion;
+SE_PRAGMA_WARNING_DISABLE_MSVC(4820); // 'bytes' bytes padding added after construct 'member_name';
+
+// TEMP WARN DISABLE
+SE_PRAGMA_WARNING_DISABLE_MSVC(4100); // unreferenced formal parameter
+SE_PRAGMA_WARNING_DISABLE_MSVC(4625); // copy constructor was implicitly defined as deleted
+SE_PRAGMA_WARNING_DISABLE_MSVC(4626); // assignment operator was implicitly defined as deleted
+SE_PRAGMA_WARNING_DISABLE_MSVC(4996); // This function or variable may be unsafe.To disable deprecation, use _CRT_SECURE_NO_WARNINGS.
+SE_PRAGMA_WARNING_DISABLE_MSVC(5026); // move constructor was implicitly defined as deleted
+SE_PRAGMA_WARNING_DISABLE_MSVC(5027); // move assignment operator was implicitly defined as deleted
+SE_PRAGMA_WARNING_DISABLE_MSVC(5039); // pointer or reference to potentially throwing function passed to 'extern "C"' function under -EHc. Undefined behavior may occur if this function throws an exception.
+SE_PRAGMA_WARNING_DISABLE_MSVC(5045); // Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified
 
 //-----------------------------------------------------------------------------
 // STD C++17 Header
@@ -55,7 +73,7 @@ SE_PRAGMA_WARNING_DISABLE_MSVC(5204); //
 #include <thread>
 #include <future>
 
-SE_PRAGMA_WARNING_POP
+//SE_PRAGMA_WARNING_POP
 
 //-----------------------------------------------------------------------------
 // 3rd-party Header
@@ -213,21 +231,3 @@ SE_PRAGMA_WARNING_LEVEL(0);
 #	include <sys/time.h>
 #endif // SE_PLATFORM_*
 SE_PRAGMA_WARNING_POP
-
-//-----------------------------------------------------------------------------
-// Disable warning
-//-----------------------------------------------------------------------------
-SE_PRAGMA_WARNING_DISABLE_MSVC(4514); //
-SE_PRAGMA_WARNING_DISABLE_MSVC(4820); //'4' bytes padding added after data member
-
-// TEMP WARN DISABLE
-SE_PRAGMA_WARNING_DISABLE_MSVC(4100); // unreferenced formal parameter
-SE_PRAGMA_WARNING_DISABLE_MSVC(4625); // copy constructor was implicitly defined as deleted
-SE_PRAGMA_WARNING_DISABLE_MSVC(4626); // assignment operator was implicitly defined as deleted
-SE_PRAGMA_WARNING_DISABLE_MSVC(4710); // function not inlined
-
-SE_PRAGMA_WARNING_DISABLE_MSVC(4996); // This function or variable may be unsafe.To disable deprecation, use _CRT_SECURE_NO_WARNINGS.
-SE_PRAGMA_WARNING_DISABLE_MSVC(5026); // move constructor was implicitly defined as deleted
-SE_PRAGMA_WARNING_DISABLE_MSVC(5027); // move assignment operator was implicitly defined as deleted
-SE_PRAGMA_WARNING_DISABLE_MSVC(5039); // pointer or reference to potentially throwing function passed to 'extern "C"' function under -EHc. Undefined behavior may occur if this function throws an exception.
-SE_PRAGMA_WARNING_DISABLE_MSVC(5045); // Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified

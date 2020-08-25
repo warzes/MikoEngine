@@ -173,6 +173,7 @@
     <ClInclude Include="Base\PlatformTypes.h" />
     <ClInclude Include="Base\VersionOSConst.h" />
     <ClInclude Include="Base\Win32PlatformDefinitions.h" />
+    <ClInclude Include="Core\AssertMacros.h" />
     <ClInclude Include="Core\Logger.h" />
     <ClInclude Include="Core\MemoryPtr.h" />
     <ClInclude Include="MikoHeader.h" />

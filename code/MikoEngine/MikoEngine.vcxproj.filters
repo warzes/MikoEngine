@@ -1350,6 +1350,9 @@
     <ClInclude Include="RHI\RHITypes.h">
       <Filter>4_RHI\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Core\AssertMacros.h">
+      <Filter>1_Core\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
@@ -1615,6 +1618,9 @@
     </Filter>
     <Filter Include="4_RHI\ResourceTypes">
       <UniqueIdentifier>{86fab3e2-257a-49cc-b4c1-1ec824d2670a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1_Core\Debug">
+      <UniqueIdentifier>{65f9552f-068e-413e-85c5-d138a2ec3130}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
