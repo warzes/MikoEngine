@@ -181,6 +181,8 @@
     <ClCompile Include="InstancedCubes.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="minimalRenderer.cpp" />
+    <ClCompile Include="minimalRHI.cpp" />
     <ClCompile Include="Queries.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -223,6 +225,8 @@
     <ClInclude Include="Mesh_GLSL_ES3.h" />
     <ClInclude Include="Mesh_HLSL_D3D11_D3D12.h" />
     <ClInclude Include="Mesh_Null.h" />
+    <ClInclude Include="minimalRenderer.h" />
+    <ClInclude Include="minimalRHI.h" />
     <ClInclude Include="Queries.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Texture.h" />

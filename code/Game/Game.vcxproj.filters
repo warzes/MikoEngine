@@ -53,6 +53,12 @@
     <ClCompile Include="CubeRendererInstancedArrays.cpp">
       <Filter>Example\X_InstancedCubes\CubeRendererInstancedArrays</Filter>
     </ClCompile>
+    <ClCompile Include="minimalRHI.cpp">
+      <Filter>Example\0.1_minimalRHI</Filter>
+    </ClCompile>
+    <ClCompile Include="minimalRenderer.cpp">
+      <Filter>Example\0.2_minimalRenderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Triangle.h">
@@ -220,6 +226,12 @@
     <ClInclude Include="CubeRendererInstancedArrays_HLSL_D3D11_D3D12.h">
       <Filter>Example\X_InstancedCubes\CubeRendererInstancedArrays</Filter>
     </ClInclude>
+    <ClInclude Include="minimalRHI.h">
+      <Filter>Example\0.1_minimalRHI</Filter>
+    </ClInclude>
+    <ClInclude Include="minimalRenderer.h">
+      <Filter>Example\0.2_minimalRenderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Example">
@@ -257,6 +269,12 @@
     </Filter>
     <Filter Include="Example\X_InstancedCubes\CubeRendererInstancedArrays">
       <UniqueIdentifier>{6de9ffd3-13f5-4436-9db4-42134c7fc9f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\0.2_minimalRenderer">
+      <UniqueIdentifier>{df98a254-8078-44f0-bd7e-3fae22b6a25a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Example\0.1_minimalRHI">
+      <UniqueIdentifier>{ea26ced8-f9e3-4e22-b429-7605407a29d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
