@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Core/StringId.h"
+#include "Utility/StringId.h"
 #include "Rhi/Rhi.h"
 #include "Core/MemoryPtr.h"
 

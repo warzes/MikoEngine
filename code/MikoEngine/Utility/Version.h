@@ -3,14 +3,14 @@
 struct Version
 {
 	Version() = delete;
-	Version(unsigned major, unsigned minor, unsigned revision, const char *name)
+	Version(unsigned major, unsigned minor, unsigned revision, const char *name) noexcept
 		: Major(major)
 		, Minor(minor)
 		, Revision(revision)
 		, Name(name)
 	{
 	}
-	Version(const Version &v)
+	Version(const Version &v) noexcept
 		: Major(v.Major)
 		, Minor(v.Minor)
 		, Revision(v.Revision)
@@ -23,12 +23,12 @@ struct Version
 		return Version(v);
 	}
 
-	unsigned GetVersion() const
+	unsigned GetVersion() const noexcept
 	{
 		return Major * 1000000 + Minor * 1000 + Revision;
 	}
 
-	const std::string& GetVersionString() const
+	const std::string& GetVersionString() const noexcept
 	{
 		return std::to_string(Major) + "." + std::to_string(Minor) + "." + std::to_string(Revision);
 	}

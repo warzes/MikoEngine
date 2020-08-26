@@ -210,7 +210,6 @@
     <ClInclude Include="Renderer\Core\Renderer\RenderPassManager.h" />
     <ClInclude Include="Renderer\Core\Renderer\RenderTargetTextureManager.h" />
     <ClInclude Include="Renderer\Core\Renderer\RenderTargetTextureSignature.h" />
-    <ClInclude Include="Renderer\Core\StringId.h" />
     <ClInclude Include="Renderer\Core\SwizzleVectorElementRemove.h" />
     <ClInclude Include="Renderer\Core\Thread\ThreadPool.h" />
     <ClInclude Include="Renderer\Core\Time\Stopwatch.h" />
@@ -467,6 +466,7 @@
     <ClInclude Include="RHI\VulkanRuntimeLinking.h" />
     <ClInclude Include="RHI\VulkanUnsort.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Utility\StringId.h" />
     <ClInclude Include="Utility\Timer.h" />
     <ClInclude Include="Utility\Version.h" />
   </ItemGroup>

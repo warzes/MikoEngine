@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Renderer/Core/Manager.h"
-#include "Renderer/Core/StringId.h"
+#include "Utility/StringId.h"
 #include "RHI/Rhi.h"
 
 struct ImGuiContext;

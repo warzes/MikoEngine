@@ -4,7 +4,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "Renderer/Core/Manager.h"
-#include "Renderer/Core/StringId.h"
+#include "Utility/StringId.h"
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]

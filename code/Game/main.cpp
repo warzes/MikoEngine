@@ -18,9 +18,6 @@ int main(
 {
 	try
 	{
-		SE_ASSERT(1 == 2, "hell%s", "sss");
-
-
 		Texture app;
 		return app.Run(argc, argv);
 	}

@@ -4,7 +4,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "Renderer/Core/StringId.h"
+#include "Utility/StringId.h"
 #include "Renderer/Core/Renderer/RenderTargetTextureSignature.h"
 
 

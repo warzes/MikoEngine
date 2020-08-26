@@ -822,9 +822,6 @@
     <ClInclude Include="Renderer\Core\RenderDocGraphicsDebugger.h">
       <Filter>5_Renderer\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\Core\StringId.h">
-      <Filter>5_Renderer\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer\Core\SwizzleVectorElementRemove.h">
       <Filter>5_Renderer\Core</Filter>
     </ClInclude>
@@ -1349,6 +1346,9 @@
     </ClInclude>
     <ClInclude Include="Core\DefaultAssert.h">
       <Filter>1_Core\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\StringId.h">
+      <Filter>2_Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

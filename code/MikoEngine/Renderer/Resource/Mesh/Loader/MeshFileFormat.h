@@ -4,7 +4,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "Renderer/Core/StringId.h"
+#include "Utility/StringId.h"
 
 // Disable warnings in external headers, we can't fix them
 SE_PRAGMA_WARNING_PUSH

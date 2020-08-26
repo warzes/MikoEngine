@@ -543,7 +543,7 @@ namespace
 				else if (EXPR_VAR == exp.type)
 				{
 					int32_t propertyValue = 0;
-					shaderProperties.getPropertyValue(Renderer::StringId(exp.value.c_str()), propertyValue);
+					shaderProperties.getPropertyValue(StringId(exp.value.c_str()), propertyValue);
 					exp.result = (propertyValue != 0);
 					lastExpWasOperator = false;
 				}

@@ -1,35 +1,14 @@
 #pragma once
 
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-
-#include "Renderer/Core/StringId.h"
+#include "Utility/StringId.h"
 #include "Core/GetInvalid.h"
 
-// Disable warnings in external headers, we can't fix them
-SE_PRAGMA_WARNING_PUSH
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'argument': conversion from 'long' to 'unsigned int', signed/unsigned mismatch
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4571)	// warning C4571: Informational: catch(...) semantics changed since Visual C++ 7.1; structured exceptions (SEH) are no longer caught
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668: '_M_HYBRID_X86_ARM64' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
-	#include <vector>
-SE_PRAGMA_WARNING_POP
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
 namespace Renderer
 {
 	class IResourceManager;
 	class IResourceListener;
 }
 
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 namespace Renderer
 {
 
