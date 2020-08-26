@@ -23,18 +23,6 @@
     <ClCompile Include="Renderer\RendererImpl.cpp">
       <Filter>5_Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\Vr\OpenVR\OpenVRRuntimeLinking.cpp">
-      <Filter>5_Renderer\Vr\OpenVR</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\Vr\OpenVR\VrManagerOpenVR.cpp">
-      <Filter>5_Renderer\Vr\OpenVR</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\Vr\OpenVR\Loader\OpenVRMeshResourceLoader.cpp">
-      <Filter>5_Renderer\Vr\OpenVR\Loader</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\Vr\OpenVR\Loader\OpenVRTextureResourceLoader.cpp">
-      <Filter>5_Renderer\Vr\OpenVR\Loader</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer\RenderQueue\Renderable.cpp">
       <Filter>5_Renderer\RenderQueue</Filter>
     </ClCompile>
@@ -732,24 +720,6 @@
     <ClInclude Include="Renderer\RendererInstance.h">
       <Filter>5_Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\Vr\IVrManager.h">
-      <Filter>5_Renderer\Vr</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Vr\OpenVR\IVrManagerOpenVRListener.h">
-      <Filter>5_Renderer\Vr\OpenVR</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Vr\OpenVR\OpenVRRuntimeLinking.h">
-      <Filter>5_Renderer\Vr\OpenVR</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Vr\OpenVR\VrManagerOpenVR.h">
-      <Filter>5_Renderer\Vr\OpenVR</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Vr\OpenVR\Loader\OpenVRMeshResourceLoader.h">
-      <Filter>5_Renderer\Vr\OpenVR\Loader</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Vr\OpenVR\Loader\OpenVRTextureResourceLoader.h">
-      <Filter>5_Renderer\Vr\OpenVR\Loader</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer\RenderQueue\Renderable.h">
       <Filter>5_Renderer\RenderQueue</Filter>
     </ClInclude>
@@ -1393,15 +1363,6 @@
     </Filter>
     <Filter Include="5_Renderer\Resource">
       <UniqueIdentifier>{2df4e050-f606-44cc-b4f2-7ad4def76654}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Vr">
-      <UniqueIdentifier>{147c6bb2-197d-401f-8355-fe3e68581352}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Vr\OpenVR">
-      <UniqueIdentifier>{fe23114d-b0c3-4671-b676-e17099e970ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Vr\OpenVR\Loader">
-      <UniqueIdentifier>{b2864866-63e8-4f0e-a749-f312845c3bfe}</UniqueIdentifier>
     </Filter>
     <Filter Include="5_Renderer\DebugGui\Detail">
       <UniqueIdentifier>{5bb16557-e7f6-4fec-b738-0b0913674209}</UniqueIdentifier>

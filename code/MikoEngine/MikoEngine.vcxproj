@@ -375,12 +375,6 @@
     <ClInclude Include="Renderer\Resource\VertexAttributes\Loader\VertexAttributesResourceLoader.h" />
     <ClInclude Include="Renderer\Resource\VertexAttributes\VertexAttributesResource.h" />
     <ClInclude Include="Renderer\Resource\VertexAttributes\VertexAttributesResourceManager.h" />
-    <ClInclude Include="Renderer\Vr\IVrManager.h" />
-    <ClInclude Include="Renderer\Vr\OpenVR\IVrManagerOpenVRListener.h" />
-    <ClInclude Include="Renderer\Vr\OpenVR\Loader\OpenVRMeshResourceLoader.h" />
-    <ClInclude Include="Renderer\Vr\OpenVR\Loader\OpenVRTextureResourceLoader.h" />
-    <ClInclude Include="Renderer\Vr\OpenVR\OpenVRRuntimeLinking.h" />
-    <ClInclude Include="Renderer\Vr\OpenVR\VrManagerOpenVR.h" />
     <ClInclude Include="RHI\BlendStateTypes.h" />
     <ClInclude Include="RHI\BufferTypes.h" />
     <ClInclude Include="RHI\Capabilities.h" />
@@ -610,10 +604,6 @@
     <ClCompile Include="Renderer\Resource\Texture\TextureResourceManager.cpp" />
     <ClCompile Include="Renderer\Resource\VertexAttributes\Loader\VertexAttributesResourceLoader.cpp" />
     <ClCompile Include="Renderer\Resource\VertexAttributes\VertexAttributesResourceManager.cpp" />
-    <ClCompile Include="Renderer\Vr\OpenVR\Loader\OpenVRMeshResourceLoader.cpp" />
-    <ClCompile Include="Renderer\Vr\OpenVR\Loader\OpenVRTextureResourceLoader.cpp" />
-    <ClCompile Include="Renderer\Vr\OpenVR\OpenVRRuntimeLinking.cpp" />
-    <ClCompile Include="Renderer\Vr\OpenVR\VrManagerOpenVR.cpp" />
     <ClCompile Include="RHI\DefaultAllocator.cpp" />
     <ClCompile Include="RHI\DefaultLog.cpp" />
     <ClCompile Include="RHI\Direct3D11Rhi.cpp" />
