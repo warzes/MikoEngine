@@ -2,7 +2,7 @@
 #include "Renderer/Resource/Skeleton/Loader/SkeletonResourceLoader.h"
 #include "Renderer/Resource/Skeleton/Loader/SkeletonFileFormat.h"
 #include "Renderer/Resource/Skeleton/SkeletonResource.h"
-#include "Renderer/Core/File/IFile.h"
+#include "Core/File/IFile.h"
 
 
 //[-------------------------------------------------------]

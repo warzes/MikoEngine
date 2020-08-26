@@ -2,8 +2,8 @@
 #include "Renderer/Asset/AssetManager.h"
 #include "Renderer/Asset/AssetPackage.h"
 #include "Renderer/Asset/Loader/AssetPackageLoader.h"
-#include "Renderer/Core/File/IFileManager.h"
-#include "Renderer/Core/File/FileSystemHelper.h"
+#include "Core/File/IFileManager.h"
+#include "Core/File/FileSystemHelper.h"
 #include "Renderer/IRenderer.h"
 #include "Renderer/Context.h"
 

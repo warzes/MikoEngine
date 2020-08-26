@@ -2,19 +2,11 @@
 #include "Renderer/Core/Platform/PlatformManager.h"
 #include "Core/AssertMacros.h"
 
-//[-------------------------------------------------------]
-//[ Anonymous detail namespace                            ]
-//[-------------------------------------------------------]
 namespace
 {
 	namespace detail
 	{
-
-
-		//[-------------------------------------------------------]
-		//[ Windows                                               ]
-		//[-------------------------------------------------------]
-		#ifdef _WIN32
+#ifdef _WIN32
 			const DWORD MS_VC_EXCEPTION = 0x406D1388;
 
 			#pragma pack(push, 8)
@@ -48,25 +40,11 @@ namespace
 		#else
 			#error "Unsupported platform"
 		#endif
-
-
-//[-------------------------------------------------------]
-//[ Anonymous detail namespace                            ]
-//[-------------------------------------------------------]
 	} // detail
 }
 
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 namespace Renderer
 {
-
-
-	//[-------------------------------------------------------]
-	//[ Public static methods                                 ]
-	//[-------------------------------------------------------]
 	void PlatformManager::setCurrentThreadName([[maybe_unused]] const char* shortName, [[maybe_unused]] const char* descriptiveName)
 	{
 		// "pthread_setname_np()" support only up to 16 characters (including the terminating zero), so this is our limiting factor

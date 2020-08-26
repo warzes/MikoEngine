@@ -3,7 +3,7 @@
 #include "Renderer/Resource/IResourceLoader.h"
 #include "Renderer/Resource/IResourceManager.h"
 #include "Renderer/Core/Platform/PlatformManager.h"
-#include "Renderer/Core/File/IFileManager.h"
+#include "Core/File/IFileManager.h"
 #include "Renderer/IRenderer.h"
 
 // TODO(co) Can we do something about the warning which does not involve using "std::thread"-pointers?

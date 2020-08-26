@@ -21,7 +21,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
-		void nodeTargetDeserialization(Renderer::IFile& file, Renderer::CompositorNodeResource& compositorNodeResource, const Renderer::ICompositorPassFactory& compositorPassFactory)
+		void nodeTargetDeserialization(IFile& file, Renderer::CompositorNodeResource& compositorNodeResource, const Renderer::ICompositorPassFactory& compositorPassFactory)
 		{
 			// Read in the compositor node resource target
 			Renderer::v1CompositorNode::Target target;
@@ -62,7 +62,7 @@ namespace
 			}
 		}
 
-		void nodeDeserialization(Renderer::IFile& file, const Renderer::v1CompositorNode::CompositorNodeHeader& compositorNodeHeader, Renderer::CompositorNodeResource& compositorNodeResource, const Renderer::ICompositorPassFactory& compositorPassFactory)
+		void nodeDeserialization(IFile& file, const Renderer::v1CompositorNode::CompositorNodeHeader& compositorNodeHeader, Renderer::CompositorNodeResource& compositorNodeResource, const Renderer::ICompositorPassFactory& compositorPassFactory)
 		{
 			// Read in the compositor resource node input channels
 			// TODO(co) Read all input channels in a single burst? (need to introduce a maximum number of input channels for this)

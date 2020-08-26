@@ -7,7 +7,7 @@
 #include "Renderer/Resource/ShaderBlueprint/GraphicsShaderType.h"
 #include "Renderer/Resource/IResourceLoader.h"
 #include "Core/GetInvalid.h"
-#include "Renderer/Core/File/MemoryFile.h"
+#include "Core/File/MemoryFile.h"
 
 
 //[-------------------------------------------------------]

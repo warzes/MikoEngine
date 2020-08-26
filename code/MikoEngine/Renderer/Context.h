@@ -2,9 +2,10 @@
 
 #include "RHI/Rhi.h"
 
+	class IFileManager;
 namespace Renderer
 {
-	class IFileManager;
+
 	#ifdef RENDERER_GRAPHICS_DEBUGGER
 		class IGraphicsDebugger;
 	#endif

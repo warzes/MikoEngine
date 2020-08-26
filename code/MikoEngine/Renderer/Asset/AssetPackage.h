@@ -4,10 +4,10 @@
 #include "Renderer/Asset/Asset.h"
 #include "Core/GetInvalid.h"
 
+class IFileManager;
 namespace Renderer
 {
 	class Context;
-	class IFileManager;
 }
 
 namespace Renderer

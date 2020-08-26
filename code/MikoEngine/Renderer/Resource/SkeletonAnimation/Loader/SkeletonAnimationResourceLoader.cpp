@@ -2,7 +2,7 @@
 #include "Renderer/Resource/SkeletonAnimation/Loader/SkeletonAnimationResourceLoader.h"
 #include "Renderer/Resource/SkeletonAnimation/Loader/SkeletonAnimationFileFormat.h"
 #include "Renderer/Resource/SkeletonAnimation/SkeletonAnimationResource.h"
-#include "Renderer/Core/File/IFile.h"
+#include "Core/File/IFile.h"
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

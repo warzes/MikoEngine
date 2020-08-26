@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Math/Math.h"
-#include "Renderer/Core/File/IFile.h"
-#include "Renderer/Core/File/IFileManager.h"
+#include "Core/File/IFile.h"
+#include "Core/File/IFileManager.h"
 #include "RHI/Rhi.h"
 
 //[-------------------------------------------------------]
@@ -136,12 +136,12 @@ uint64_t Math::calculateFNV1a64(const uint8_t* content, uint32_t numberOfBytes, 
 	return hash;
 }
 
-uint64_t Math::calculateFileFNV1a64ByVirtualFilename(const Renderer::IFileManager& fileManager, VirtualFilename virtualFilename)
+uint64_t Math::calculateFileFNV1a64ByVirtualFilename(const IFileManager& fileManager, VirtualFilename virtualFilename)
 {
 	uint64_t hash = FNV1a_INITIAL_HASH_64;
 
 	// Try open file
-	Renderer::IFile* file = fileManager.openFile(Renderer::IFileManager::FileMode::READ, virtualFilename);
+	IFile* file = fileManager.openFile(IFileManager::FileMode::READ, virtualFilename);
 	if ( nullptr != file )
 	{
 		// Read the file content into chunks and process them

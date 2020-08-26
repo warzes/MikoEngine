@@ -5,7 +5,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "Renderer/Resource/Texture/Loader/CrnTextureResourceLoader.h"
-#include "Renderer/Core/File/MemoryFile.h"
+#include "Core/File/MemoryFile.h"
 
 
 //[-------------------------------------------------------]

@@ -6,7 +6,7 @@
 #include "Renderer/Resource/MaterialBlueprint/MaterialBlueprintResourceManager.h"
 #include "Renderer/Resource/MaterialBlueprint/MaterialBlueprintResource.h"
 #include "Renderer/Resource/ResourceManagerTemplate.h"
-#include "Renderer/Core/File/IFileManager.h"
+#include "Core/File/IFileManager.h"
 
 
 //[-------------------------------------------------------]

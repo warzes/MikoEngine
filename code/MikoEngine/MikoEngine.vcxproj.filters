@@ -77,12 +77,6 @@
     <ClCompile Include="Renderer\Core\Platform\PlatformManager.cpp">
       <Filter>5_Renderer\Core\Platform</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\Core\File\FileSystemHelper.cpp">
-      <Filter>5_Renderer\Core\File</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\Core\File\MemoryFile.cpp">
-      <Filter>5_Renderer\Core\File</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer\Resource\IResource.cpp">
       <Filter>5_Renderer\Resource</Filter>
     </ClCompile>
@@ -416,6 +410,12 @@
     <ClCompile Include="Math\Transform.cpp">
       <Filter>3_Math</Filter>
     </ClCompile>
+    <ClCompile Include="Core\File\FileSystemHelper.cpp">
+      <Filter>1_Core\File</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\File\MemoryFile.cpp">
+      <Filter>1_Core\File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -735,9 +735,6 @@
     <ClInclude Include="Renderer\DebugGui\DebugGuiManager.h">
       <Filter>5_Renderer\DebugGui</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\DebugGui\ImGuiLog.h">
-      <Filter>5_Renderer\DebugGui</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer\DebugGui\Detail\DebugGuiManagerLinux.h">
       <Filter>5_Renderer\DebugGui\Detail</Filter>
     </ClInclude>
@@ -815,27 +812,6 @@
     </ClInclude>
     <ClInclude Include="Renderer\Core\Platform\PlatformManager.h">
       <Filter>5_Renderer\Core\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Core\File\AndroidFileManager.h">
-      <Filter>5_Renderer\Core\File</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Core\File\DefaultFileManager.h">
-      <Filter>5_Renderer\Core\File</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Core\File\FileSystemHelper.h">
-      <Filter>5_Renderer\Core\File</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Core\File\IFile.h">
-      <Filter>5_Renderer\Core\File</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Core\File\IFileManager.h">
-      <Filter>5_Renderer\Core\File</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Core\File\MemoryFile.h">
-      <Filter>5_Renderer\Core\File</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Core\File\PhysicsFSFileManager.h">
-      <Filter>5_Renderer\Core\File</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\IResource.h">
       <Filter>5_Renderer\Resource</Filter>
@@ -1314,6 +1290,30 @@
     <ClInclude Include="Math\Transform.h">
       <Filter>3_Math</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\DebugGui\ImGuiLog.h">
+      <Filter>5_Renderer\DebugGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\File\AndroidFileManager.h">
+      <Filter>1_Core\File</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\File\DefaultFileManager.h">
+      <Filter>1_Core\File</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\File\FileSystemHelper.h">
+      <Filter>1_Core\File</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\File\IFile.h">
+      <Filter>1_Core\File</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\File\IFileManager.h">
+      <Filter>1_Core\File</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\File\MemoryFile.h">
+      <Filter>1_Core\File</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\File\PhysicsFSFileManager.h">
+      <Filter>1_Core\File</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
@@ -1366,9 +1366,6 @@
     </Filter>
     <Filter Include="5_Renderer\Asset\Loader">
       <UniqueIdentifier>{812da4d2-ba56-486e-8e5e-c1d0e73b99bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Core\File">
-      <UniqueIdentifier>{9203352e-9de2-40d7-8022-84f33c4f71b7}</UniqueIdentifier>
     </Filter>
     <Filter Include="5_Renderer\Core\Platform">
       <UniqueIdentifier>{98a19945-da62-4964-8592-4ae50f86fae1}</UniqueIdentifier>
@@ -1573,6 +1570,9 @@
     </Filter>
     <Filter Include="1_Core\Object">
       <UniqueIdentifier>{69205f8a-10ad-45b3-93ba-2d1294e86aea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1_Core\File">
+      <UniqueIdentifier>{206c46d4-2074-48ba-b68f-a4095af835e7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

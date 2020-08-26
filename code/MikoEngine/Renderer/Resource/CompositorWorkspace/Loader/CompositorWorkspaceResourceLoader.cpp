@@ -19,7 +19,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
-		void nodesDeserialization(Renderer::IFile& file, Renderer::CompositorWorkspaceResource& compositorWorkspaceResource)
+		void nodesDeserialization(IFile& file, Renderer::CompositorWorkspaceResource& compositorWorkspaceResource)
 		{
 			// Read in the compositor workspace resource nodes
 			Renderer::v1CompositorWorkspace::Nodes nodes;

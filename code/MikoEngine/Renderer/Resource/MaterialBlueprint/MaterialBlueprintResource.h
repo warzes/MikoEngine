@@ -15,9 +15,10 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+class IFile;
 namespace Renderer
 {
-	class IFile;
+	
 	class PassBufferManager;
 	class MaterialBufferManager;
 	template <class ELEMENT_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS> class PackedElementManager;

@@ -55,36 +55,20 @@ namespace Renderer
 	};
 } // Renderer
 
-//[-------------------------------------------------------]
-//[ Debug                                                 ]
-//[-------------------------------------------------------]
-// Debug macros
+/**
+*  @brief
+*    Set the name of the current thread
+*
+*  @param[in] shortName
+*    Short ASCII name to set, up to 16 characters (including the terminating zero)
+*  @param[in] descriptiveName
+*    Descriptive ASCII name to set, not supported on some platforms, preferred name
+*
+*  @note
+*    - Use this macro for debugging helpers only to make it possible to optimize it out in retail builds
+*/
 #if SE_DEBUG
-	/**
-	*  @brief
-	*    Set the name of the current thread
-	*
-	*  @param[in] shortName
-	*    Short ASCII name to set, up to 16 characters (including the terminating zero)
-	*  @param[in] descriptiveName
-	*    Descriptive ASCII name to set, not supported on some platforms, preferred name
-	*
-	*  @note
-	*    - Use this macro for debugging helpers only to make it possible to optimize it out in retail builds
-	*/
-	#define RENDERER_SET_CURRENT_THREAD_DEBUG_NAME(shortName, descriptiveName) Renderer::PlatformManager::setCurrentThreadName(shortName, descriptiveName);
+#	define RENDERER_SET_CURRENT_THREAD_DEBUG_NAME(shortName, descriptiveName) Renderer::PlatformManager::setCurrentThreadName(shortName, descriptiveName);
 #else
-	/**
-	*  @brief
-	*    Set the name of the current thread
-	*
-	*  @param[in] shortName
-	*    Short ASCII name to set, up to 16 characters (including the terminating zero)
-	*  @param[in] descriptiveName
-	*    Descriptive ASCII name to set, not supported on some platforms, preferred name
-	*
-	*  @note
-	*    - Use this macro for debugging helpers only to make it possible to optimize it out in retail builds
-	*/
-	#define RENDERER_SET_CURRENT_THREAD_DEBUG_NAME(shortName, descriptiveName)
+#d	efine RENDERER_SET_CURRENT_THREAD_DEBUG_NAME(shortName, descriptiveName)
 #endif

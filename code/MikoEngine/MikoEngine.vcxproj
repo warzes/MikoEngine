@@ -175,6 +175,13 @@
     <ClInclude Include="Base\Win32PlatformDefinitions.h" />
     <ClInclude Include="Core\AssertMacros.h" />
     <ClInclude Include="Core\DefaultAssert.h" />
+    <ClInclude Include="Core\File\AndroidFileManager.h" />
+    <ClInclude Include="Core\File\DefaultFileManager.h" />
+    <ClInclude Include="Core\File\FileSystemHelper.h" />
+    <ClInclude Include="Core\File\IFile.h" />
+    <ClInclude Include="Core\File\IFileManager.h" />
+    <ClInclude Include="Core\File\MemoryFile.h" />
+    <ClInclude Include="Core\File\PhysicsFSFileManager.h" />
     <ClInclude Include="Core\GetInvalid.h" />
     <ClInclude Include="Core\Logger.h" />
     <ClInclude Include="Core\MemoryPtr.h" />
@@ -190,13 +197,6 @@
     <ClInclude Include="Renderer\Asset\Loader\AssetPackageFileFormat.h" />
     <ClInclude Include="Renderer\Asset\Loader\AssetPackageLoader.h" />
     <ClInclude Include="Renderer\Context.h" />
-    <ClInclude Include="Renderer\Core\File\AndroidFileManager.h" />
-    <ClInclude Include="Renderer\Core\File\DefaultFileManager.h" />
-    <ClInclude Include="Renderer\Core\File\FileSystemHelper.h" />
-    <ClInclude Include="Renderer\Core\File\IFile.h" />
-    <ClInclude Include="Renderer\Core\File\IFileManager.h" />
-    <ClInclude Include="Renderer\Core\File\MemoryFile.h" />
-    <ClInclude Include="Renderer\Core\File\PhysicsFSFileManager.h" />
     <ClInclude Include="Renderer\Core\IGraphicsDebugger.h" />
     <ClInclude Include="Renderer\Core\IProfiler.h" />
     <ClInclude Include="Renderer\Core\PackedElementManager.h" />
@@ -464,6 +464,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
+    <ClCompile Include="Core\File\FileSystemHelper.cpp" />
+    <ClCompile Include="Core\File\MemoryFile.cpp" />
     <ClCompile Include="Core\Logger.cpp" />
     <ClCompile Include="Math\EulerAngles.cpp" />
     <ClCompile Include="Math\Frustum.cpp" />
@@ -473,8 +475,6 @@
     <ClCompile Include="Renderer\Asset\AssetPackage.cpp" />
     <ClCompile Include="Renderer\Asset\Loader\AssetPackageLoader.cpp" />
     <ClCompile Include="Renderer\Context.cpp" />
-    <ClCompile Include="Renderer\Core\File\FileSystemHelper.cpp" />
-    <ClCompile Include="Renderer\Core\File\MemoryFile.cpp" />
     <ClCompile Include="Renderer\Core\Platform\PlatformManager.cpp" />
     <ClCompile Include="Renderer\Core\Renderer\FramebufferManager.cpp" />
     <ClCompile Include="Renderer\Core\Renderer\FramebufferSignature.cpp" />

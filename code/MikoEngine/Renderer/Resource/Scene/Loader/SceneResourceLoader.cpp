@@ -21,7 +21,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
-		void itemDeserialization(Renderer::IFile& file, Renderer::SceneResource& sceneResource, Renderer::SceneNode& sceneNode)
+		void itemDeserialization(IFile& file, Renderer::SceneResource& sceneResource, Renderer::SceneNode& sceneNode)
 		{
 			// Read the scene item header
 			Renderer::v1Scene::ItemHeader itemHeader;
@@ -48,7 +48,7 @@ namespace
 			}
 		}
 
-		void nodeDeserialization(Renderer::IFile& file, Renderer::SceneResource& sceneResource)
+		void nodeDeserialization(IFile& file, Renderer::SceneResource& sceneResource)
 		{
 			// Read in the scene node
 			Renderer::v1Scene::Node node;
@@ -70,7 +70,7 @@ namespace
 			}
 		}
 
-		void nodesDeserialization(Renderer::IFile& file, Renderer::SceneResource& sceneResource)
+		void nodesDeserialization(IFile& file, Renderer::SceneResource& sceneResource)
 		{
 			// Read in the scene nodes
 			Renderer::v1Scene::Nodes nodes;

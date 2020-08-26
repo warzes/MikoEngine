@@ -1,7 +1,7 @@
 #include "Mesh.h"
 #include "MikoEngine/Core/GetInvalid.h"
 #include "MikoEngine/Renderer/IRenderer.h"
-#include "MikoEngine/Renderer/Core/File/PhysicsFSFileManager.h"
+#include "MikoEngine/Core/File/PhysicsFSFileManager.h"
 #include "MikoEngine/Renderer/Core/RemoteryProfiler.h"
 #include "MikoEngine/Renderer/Asset/AssetManager.h"
 #include "MikoEngine/Renderer/Resource/MaterialBlueprint/MaterialBlueprintResourceManager.h"
@@ -23,7 +23,7 @@ bool Mesh::init(int argc, const char * argv[])
 	SE_ASSERT(rhi->getContext(), nullptr != androidApp.activity->assetManager, "Invalid Android asset manager instance")
 		mFileManager = new Renderer::AndroidFileManager(rhi->getContext().getLog(), rhi->getContext().getAssert(), rhi->getContext().getAllocator(), std_filesystem::canonical(std_filesystem::current_path() / "..").generic_string(), *androidApp.activity->assetManager);
 #else
-	mFileManager = new Renderer::PhysicsFSFileManager(std::filesystem::canonical(std::filesystem::current_path() / "..").generic_string());
+	mFileManager = new PhysicsFSFileManager(std::filesystem::canonical(std::filesystem::current_path() / "..").generic_string());
 #endif
 #if defined(RENDERER_GRAPHICS_DEBUGGER) && defined(RENDERER_PROFILER)
 	mProfiler = new Renderer::RemoteryProfiler(*rhi);
@@ -357,7 +357,7 @@ void Mesh::shutdown()
 #ifdef __ANDROID__
 	delete static_cast<Renderer::AndroidFileManager*>(mFileManager);
 #else
-	delete static_cast<Renderer::PhysicsFSFileManager*>(mFileManager);
+	delete static_cast<PhysicsFSFileManager*>(mFileManager);
 #endif
 	mFileManager = nullptr;
 #ifdef RENDERER_TOOLKIT

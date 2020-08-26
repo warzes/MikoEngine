@@ -6,7 +6,7 @@
 //[-------------------------------------------------------]
 #include "Renderer/Resource/MaterialBlueprint/Cache/GraphicsPipelineStateSignature.h"
 #include "Renderer/Resource/MaterialBlueprint/Cache/GraphicsProgramCacheManager.h"
-#include "Renderer/Core/File/IFile.h"
+#include "Core/File/IFile.h"
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]

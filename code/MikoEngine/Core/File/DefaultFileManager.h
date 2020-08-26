@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Renderer/Core/File/IFile.h"
-#include "Renderer/Core/File/IFileManager.h"
-#include "Renderer/Core/File/FileSystemHelper.h"
+#include "Core/File/IFile.h"
+#include "Core/File/IFileManager.h"
+#include "Core/File/FileSystemHelper.h"
 
 namespace
 {
@@ -10,7 +10,7 @@ namespace
 	{
 		static constexpr const char* DEFAULT_LOCAL_DATA_MOUNT_POINT = "LocalData";
 
-		class DefaultFile : public Renderer::IFile
+		class DefaultFile : public IFile
 		{
 		public:
 			inline DefaultFile()
@@ -570,7 +570,6 @@ namespace Renderer
 		//[ Private data                                          ]
 		//[-------------------------------------------------------]
 	private:
-		Rhi::ILog&			   mLog;
 		Rhi::IAssert&		   mAssert;
 		DefaultAllocator&	   mAllocator;
 		AbsoluteDirectoryNames mAbsoluteBaseDirectory;	// Absolute UTF-8 base directory, without "/" at the end

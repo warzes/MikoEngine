@@ -4,10 +4,7 @@ namespace Rhi
 {
 	class IRhi;
 }
-namespace Renderer
-{
-	class IFileManager;
-}
+class IFileManager;
 
 //[-------------------------------------------------------]
 //[ Global definitions                                    ]
@@ -155,7 +152,7 @@ public:
 	//[-------------------------------------------------------]
 	[[nodiscard]] static uint32_t calculateFNV1a32(const uint8_t* content, uint32_t numberOfBytes, uint32_t hash = FNV1a_INITIAL_HASH_32);
 	[[nodiscard]] static uint64_t calculateFNV1a64(const uint8_t* content, uint32_t numberOfBytes, uint64_t hash = FNV1a_INITIAL_HASH_64);
-	[[nodiscard]] static uint64_t calculateFileFNV1a64ByVirtualFilename(const Renderer::IFileManager& fileManager, VirtualFilename virtualFilename);
+	[[nodiscard]] static uint64_t calculateFileFNV1a64ByVirtualFilename(const IFileManager& fileManager, VirtualFilename virtualFilename);
 
 
 	//[-------------------------------------------------------]

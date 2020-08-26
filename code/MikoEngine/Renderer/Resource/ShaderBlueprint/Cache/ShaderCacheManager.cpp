@@ -8,7 +8,7 @@
 #include "Renderer/Resource/VertexAttributes/VertexAttributesResource.h"
 #include "Renderer/Resource/MaterialBlueprint/MaterialBlueprintResource.h"
 #include "Renderer/Asset/AssetManager.h"
-#include "Renderer/Core/File/MemoryFile.h"
+#include "Core/File/MemoryFile.h"
 #include "Math/Math.h"
 #include "Renderer/IRenderer.h"
 

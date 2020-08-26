@@ -5,9 +5,10 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+	class IFile;
 namespace Renderer
 {
-	class IFile;
+
 	class IResource;
 	class IResourceManager;
 }

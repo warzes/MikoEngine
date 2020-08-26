@@ -25,10 +25,12 @@ SE_PRAGMA_WARNING_POP
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace Renderer
-{
 	class IFile;
 	class MemoryFile;
+namespace Renderer
+{
+
+
 	class IRenderer;
 	class LightBufferManager;
 	class IndirectBufferManager;

@@ -6,7 +6,7 @@
 #include <Renderer/Resource/IResourceListener.h>
 #include "MikoEngine/Renderer/Core/Time/Stopwatch.h"
 #include "MikoEngine/Renderer/Resource/IResourceListener.h"
-#include "MikoEngine/Renderer/Core/File/IFileManager.h"
+#include "MikoEngine/Core/File/IFileManager.h"
 #include "MikoEngine/Renderer/RendererInstance.h"
 #include "MikoEngine/Renderer/Core/IProfiler.h"
 
@@ -75,7 +75,7 @@ private:
 	void trySetCustomMaterialResource();
 	void onDraw();
 
-	Renderer::IFileManager*		mFileManager;
+	IFileManager*		mFileManager;
 #ifdef RENDERER_PROFILER
 	Renderer::IProfiler*	mProfiler;			///< Profiler instance, can be a null pointer
 #endif

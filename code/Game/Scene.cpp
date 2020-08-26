@@ -1,7 +1,7 @@
 #include "Scene.h"
 #include "MikoEngine/Core/GetInvalid.h"
 #include "MikoEngine/Renderer/IRenderer.h"
-#include "MikoEngine/Renderer/Core/File/PhysicsFSFileManager.h"
+#include "MikoEngine/Core/File/PhysicsFSFileManager.h"
 #include "MikoEngine/Renderer/Core/RemoteryProfiler.h"
 #include "MikoEngine/Renderer/Asset/AssetManager.h"
 #include "MikoEngine/Renderer/Resource/MaterialBlueprint/MaterialBlueprintResourceManager.h"
@@ -156,7 +156,7 @@ bool Scene::init(int argc, const char * argv[])
 	SE_ASSERT(rhi->getContext(), nullptr != androidApp.activity->assetManager, "Invalid Android asset manager instance")
 		mFileManager = new Renderer::AndroidFileManager(rhi->getContext().getLog(), rhi->getContext().getAssert(), rhi->getContext().getAllocator(), std_filesystem::canonical(std_filesystem::current_path() / "..").generic_string(), *androidApp.activity->assetManager);
 #else
-	mFileManager = new Renderer::PhysicsFSFileManager(std::filesystem::canonical(std::filesystem::current_path() / "..").generic_string());
+	mFileManager = new PhysicsFSFileManager(std::filesystem::canonical(std::filesystem::current_path() / "..").generic_string());
 #endif
 #if defined(RENDERER_GRAPHICS_DEBUGGER) && defined(RENDERER_PROFILER)
 	mProfiler = new Renderer::RemoteryProfiler(*rhi);
@@ -411,7 +411,7 @@ void Scene::shutdown()
 #ifdef __ANDROID__
 	delete static_cast<Renderer::AndroidFileManager*>(mFileManager);
 #else
-	delete static_cast<Renderer::PhysicsFSFileManager*>(mFileManager);
+	delete static_cast<PhysicsFSFileManager*>(mFileManager);
 #endif
 	mFileManager = nullptr;
 #ifdef RENDERER_TOOLKIT
@@ -597,10 +597,10 @@ void Scene::loadIni()
 
 	// Try to load ini settings from file
 	Renderer::IRenderer& renderer = *getRenderer();
-	const Renderer::IFileManager& fileManager = renderer.getFileManager();
+	const IFileManager& fileManager = renderer.getFileManager();
 	if ( fileManager.doesFileExist(::detail::VIRTUAL_SETTINGS_FILENAME) )
 	{
-		Renderer::IFile* file = fileManager.openFile(Renderer::IFileManager::FileMode::READ, ::detail::VIRTUAL_SETTINGS_FILENAME);
+		IFile* file = fileManager.openFile(IFileManager::FileMode::READ, ::detail::VIRTUAL_SETTINGS_FILENAME);
 		if ( nullptr != file )
 		{
 			mIniFileContent.resize(file->getNumberOfBytes());
@@ -622,8 +622,8 @@ void Scene::saveIni()
 {
 	if ( nullptr != mIni )
 	{
-		const Renderer::IFileManager& fileManager = getRenderer()->getFileManager();
-		Renderer::IFile* file = fileManager.openFile(Renderer::IFileManager::FileMode::WRITE, ::detail::VIRTUAL_SETTINGS_FILENAME);
+		const IFileManager& fileManager = getRenderer()->getFileManager();
+		IFile* file = fileManager.openFile(IFileManager::FileMode::WRITE, ::detail::VIRTUAL_SETTINGS_FILENAME);
 		if ( nullptr != file )
 		{
 			Renderer::IRenderer& renderer = *getRenderer();

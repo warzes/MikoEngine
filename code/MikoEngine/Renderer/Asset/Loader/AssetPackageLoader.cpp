@@ -2,7 +2,7 @@
 #include "Renderer/Asset/Loader/AssetPackageLoader.h"
 #include "Renderer/Asset/Loader/AssetPackageFileFormat.h"
 #include "Renderer/Asset/AssetPackage.h"
-#include "Renderer/Core/File/MemoryFile.h"
+#include "Core/File/MemoryFile.h"
 
 namespace Renderer
 {

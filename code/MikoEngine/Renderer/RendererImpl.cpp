@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Renderer/RendererImpl.h"
 #include "Renderer/Asset/AssetManager.h"
-#include "Renderer/Core/File/MemoryFile.h"
+#include "Core/File/MemoryFile.h"
 #include "Renderer/Core/Time/TimeManager.h"
-#include "Renderer/Core/File/IFileManager.h"
+#include "Core/File/IFileManager.h"
 #include "Renderer/Core/Thread/ThreadPool.h"
 #include "Renderer/Resource/ResourceStreamer.h"
 #include "Renderer/Resource/RendererResourceManager.h"
@@ -73,13 +73,13 @@ namespace
 			virtualFilename = virtualDirectoryName + '/' + renderer.getRhi().getName() + ".pso_cache";
 		}
 
-		[[nodiscard]] bool loadPipelineStateObjectCacheFile(const Renderer::IRenderer& renderer, Renderer::MemoryFile& memoryFile)
+		[[nodiscard]] bool loadPipelineStateObjectCacheFile(const Renderer::IRenderer& renderer, MemoryFile& memoryFile)
 		{
 			// Tell the memory mapped file about the LZ4 compressed data and decompress it at once
 			std::string virtualDirectoryName;
 			std::string virtualFilename;
 			getPipelineStateObjectCacheFilename(renderer, virtualDirectoryName, virtualFilename);
-			const Renderer::IFileManager& fileManager = renderer.getFileManager();
+			const IFileManager& fileManager = renderer.getFileManager();
 			if (fileManager.doesFileExist(virtualFilename.c_str()) && memoryFile.loadLz4CompressedDataByVirtualFilename(PipelineStateCache::FORMAT_TYPE, PipelineStateCache::FORMAT_VERSION, fileManager, virtualFilename.c_str()))
 			{
 				memoryFile.decompress();
@@ -93,12 +93,12 @@ namespace
 			return false;
 		}
 
-		void savePipelineStateObjectCacheFile(const Renderer::IRenderer& renderer, const Renderer::MemoryFile& memoryFile)
+		void savePipelineStateObjectCacheFile(const Renderer::IRenderer& renderer, const MemoryFile& memoryFile)
 		{
 			std::string virtualDirectoryName;
 			std::string virtualFilename;
 			getPipelineStateObjectCacheFilename(renderer, virtualDirectoryName, virtualFilename);
-			Renderer::IFileManager& fileManager = renderer.getFileManager();
+			IFileManager& fileManager = renderer.getFileManager();
 			if (fileManager.createDirectories(virtualDirectoryName.c_str()) && !memoryFile.writeLz4CompressedDataByVirtualFilename(PipelineStateCache::FORMAT_TYPE, PipelineStateCache::FORMAT_VERSION, fileManager, virtualFilename.c_str()))
 			{
 				RHI_LOG(CRITICAL, "The renderer failed to save the pipeline state object cache to \"%s\"", virtualFilename.c_str())

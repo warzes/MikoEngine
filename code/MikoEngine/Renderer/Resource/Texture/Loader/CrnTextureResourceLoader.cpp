@@ -2,7 +2,7 @@
 #include "Renderer/Resource/Texture/Loader/CrnTextureResourceLoader.h"
 #include "Renderer/Resource/Texture/TextureResourceManager.h"
 #include "Renderer/Resource/Texture/TextureResource.h"
-#include "Renderer/Core/File/IFile.h"
+#include "Core/File/IFile.h"
 #include "Renderer/IRenderer.h"
 #include "Renderer/Context.h"
 

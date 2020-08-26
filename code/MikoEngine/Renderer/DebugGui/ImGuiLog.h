@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Renderer/Core/File/IFile.h>
-#include <Renderer/Core/File/IFileManager.h>
+#include <Core/File/IFile.h>
+#include <Core/File/IFileManager.h>
 #include <Renderer/Core/Platform/PlatformManager.h>
 
 #include <Rhi/DefaultLog.h>
@@ -11,10 +11,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace Renderer
-{
-	class IFileManager;
-}
+class IFileManager;
 
 
 //[-------------------------------------------------------]

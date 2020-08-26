@@ -2,7 +2,7 @@
 
 #include <MikoEngine/MikoHeader.h>
 #include "MikoEngine/Renderer/Resource/IResourceListener.h"
-#include "MikoEngine/Renderer/Core/File/IFileManager.h"
+#include "MikoEngine/Core/File/IFileManager.h"
 #include "MikoEngine/Renderer/RendererInstance.h"
 #include "MikoEngine/Renderer/Core/IProfiler.h"
 
@@ -22,7 +22,7 @@ private:
 
     Renderer::IRenderer* getRenderer() const;
 
-    Renderer::IFileManager*		mFileManager;
+    IFileManager*		mFileManager;
 #ifdef RENDERER_PROFILER
     Renderer::IProfiler*	mProfiler;			///< Profiler instance, can be a null pointer
 #endif

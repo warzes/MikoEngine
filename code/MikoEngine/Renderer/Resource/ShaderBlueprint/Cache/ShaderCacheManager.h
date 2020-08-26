@@ -10,9 +10,10 @@ namespace Rhi
 {
 	class IShaderLanguage;
 }
+class IFile;
 namespace Renderer
 {
-	class IFile;
+	
 	class ShaderCache;
 	class MaterialBlueprintResource;
 	class ComputePipelineStateSignature;

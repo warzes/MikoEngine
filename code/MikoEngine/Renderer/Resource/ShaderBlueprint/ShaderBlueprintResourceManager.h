@@ -12,9 +12,10 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+	class IFile;
 namespace Renderer
 {
-	class IFile;
+
 	class IRenderer;
 	class ShaderBlueprintResource;
 	class ShaderBlueprintResourceLoader;

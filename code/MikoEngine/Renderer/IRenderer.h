@@ -7,11 +7,11 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+	class IFileManager;
 namespace Renderer
 {
 	class Context;
 	class TimeManager;
-	class IFileManager;
 	class AssetManager;
 	class IRenderer;
 	class ResourceStreamer;

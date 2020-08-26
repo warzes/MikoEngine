@@ -131,11 +131,8 @@ namespace Renderer
 	class AndroidFileManager final : public IFileManager
 	{
 	public:
-		inline AndroidFileManager(Rhi::ILog& log, Rhi::IAssert& assert, DefaultAllocator& allocator, const std::string& absoluteRootDirectory, AAssetManager& aAssetManager) :
+		inline AndroidFileManager(const std::string& absoluteRootDirectory, AAssetManager& aAssetManager) :
 			IFileManager(absoluteRootDirectory),
-			mLog(log),
-			mAssert(assert),
-			mAllocator(allocator),
 			mAAssetManager(aAssetManager)
 		{
 			// Setup local data mount point
@@ -434,9 +431,6 @@ namespace Renderer
 
 	private:
 		AAssetManager&		   mAAssetManager;			// Android asset manager
-		Rhi::ILog&			   mLog;
-		Rhi::IAssert&		   mAssert;
-		DefaultAllocator&	   mAllocator;
 		AbsoluteDirectoryNames mAbsoluteBaseDirectory;	// Absolute UTF-8 base directory, without "/" at the end
 		MountedDirectories	   mMountedDirectories;
 #if SE_DEBUG

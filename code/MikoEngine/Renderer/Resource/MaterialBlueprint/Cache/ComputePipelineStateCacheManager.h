@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Renderer/Resource/MaterialBlueprint/Cache/ComputePipelineStateSignature.h"
-#include "Renderer/Core/File/IFile.h"
+#include "Core/File/IFile.h"
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
