@@ -66,7 +66,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	void SkeletonAnimationController::createSkeletonAnimationEvaluator()
 	{
-		RHI_ASSERT(nullptr == mSkeletonAnimationEvaluator, "No useless update calls, please")
+		SE_ASSERT(nullptr == mSkeletonAnimationEvaluator, "No useless update calls, please")
 		SkeletonAnimationResourceManager& skeletonAnimationResourceManager = mRenderer.getSkeletonAnimationResourceManager();
 		mSkeletonAnimationEvaluator = new SkeletonAnimationEvaluator(skeletonAnimationResourceManager, mSkeletonAnimationResourceId);
 
@@ -81,7 +81,7 @@ namespace Renderer
 			{ // Unregister skeleton animation controller
 				SkeletonAnimationResourceManager::SkeletonAnimationControllers& skeletonAnimationControllers = mRenderer.getSkeletonAnimationResourceManager().mSkeletonAnimationControllers;
 				SkeletonAnimationResourceManager::SkeletonAnimationControllers::iterator iterator = std::find(skeletonAnimationControllers.begin(), skeletonAnimationControllers.end(), this);
-				RHI_ASSERT(iterator != skeletonAnimationControllers.end(), "Invalid skeleton animation controller")
+				SE_ASSERT(iterator != skeletonAnimationControllers.end(), "Invalid skeleton animation controller")
 				skeletonAnimationControllers.erase(iterator);
 			}
 
@@ -94,8 +94,8 @@ namespace Renderer
 	void SkeletonAnimationController::update(float pastSecondsSinceLastFrame)
 	{
 		// Sanity check
-		RHI_ASSERT(pastSecondsSinceLastFrame > 0.0f, "No negative time, please")
-		RHI_ASSERT(nullptr != mSkeletonAnimationEvaluator, "No useless update calls, please")
+		SE_ASSERT(pastSecondsSinceLastFrame > 0.0f, "No negative time, please")
+		SE_ASSERT(nullptr != mSkeletonAnimationEvaluator, "No useless update calls, please")
 
 		// Advance time and evaluate state
 		mTimeInSeconds += pastSecondsSinceLastFrame;

@@ -54,7 +54,7 @@ namespace Renderer
 
 			// Read CRN array
 			mMemoryFile.read(&mNumberOfSlices, sizeof(uint32_t));
-			RHI_ASSERT(mNumberOfSlices > 0, "Invalid number of slices")
+			SE_ASSERT(mNumberOfSlices > 0, "Invalid number of slices")
 			mAssetIds.resize(mNumberOfSlices);
 			mMemoryFile.read(mAssetIds.data(), sizeof(AssetId) * mNumberOfSlices);
 
@@ -68,7 +68,7 @@ namespace Renderer
 			{
 				const Asset& asset = assetManager.getAssetByAssetId(mAssetIds[i]);	// TODO(co) Usually considered to be multithreading safe, but better review this
 				const int64_t fileSize = fileManager.getFileSize(asset.virtualFilename);
-				RHI_ASSERT(fileSize > 0, "Invalid file size")
+				SE_ASSERT(fileSize > 0, "Invalid file size")
 				mSliceFileMetadata.emplace_back(asset, mNumberOfUsedFileDataBytes, static_cast<uint32_t>(fileSize));
 				mNumberOfUsedFileDataBytes += static_cast<uint32_t>(fileSize);
 			}
@@ -91,7 +91,7 @@ namespace Renderer
 				else
 				{
 					// Error! This is horrible, now we've got a zombie inside the resource streamer. We could let it crash, but maybe the zombie won't directly eat brains.
-					RHI_ASSERT(false, "We should never end up in here")
+					SE_ASSERT(false, "We should never end up in here")
 				}
 			}
 
@@ -114,7 +114,7 @@ namespace Renderer
 		crnd::crn_texture_info masterCrnTextureInfo;
 		if (!crnd::crnd_get_texture_info(mFileData + masterSliceFileMetadata.offset, masterSliceFileMetadata.numberOfBytes, &masterCrnTextureInfo))
 		{
-			RHI_ASSERT(false, "crnd_get_texture_info() failed")
+			SE_ASSERT(false, "crnd_get_texture_info() failed")
 			return;
 		}
 		mWidth  = masterCrnTextureInfo.m_width;
@@ -123,7 +123,7 @@ namespace Renderer
 		mCubeMap = (numberOfFaces > 1);
 
 		// Sanity check
-		RHI_ASSERT(!mCubeMap || mWidth == mHeight, "The width and height of a cube map must be identical")
+		SE_ASSERT(!mCubeMap || mWidth == mHeight, "The width and height of a cube map must be identical")
 
 		// Get the RHI texture format
 		switch (masterCrnTextureInfo.m_format)
@@ -164,7 +164,7 @@ namespace Renderer
 			default:
 				// Error!
 				// TODO(co)
-				RHI_ASSERT(false, "Invalid format")
+				SE_ASSERT(false, "Invalid format")
 				return;
 		}
 
@@ -175,7 +175,7 @@ namespace Renderer
 		crnd::crnd_unpack_context crndUnpackContext = crnd::crnd_unpack_begin(mFileData + masterSliceFileMetadata.offset, masterSliceFileMetadata.numberOfBytes);
 		if (nullptr == crndUnpackContext)
 		{
-			RHI_ASSERT(false, "crnd_unpack_begin() failed")
+			SE_ASSERT(false, "crnd_unpack_begin() failed")
 			return;
 		}
 
@@ -242,10 +242,10 @@ namespace Renderer
 					crnd::crn_texture_info crnTextureInfo;
 					if (!crnd::crnd_get_texture_info(mFileData + sliceFileMetadata.offset, sliceFileMetadata.numberOfBytes, &crnTextureInfo))
 					{
-						RHI_ASSERT(false, "crnd_get_texture_info() failed")
+						SE_ASSERT(false, "crnd_get_texture_info() failed")
 						return;
 					}
-					RHI_ASSERT(memcmp(&masterCrnTextureInfo, &crnTextureInfo, sizeof(crnd::crn_texture_info)) == 0, "CRN texture information mismatch")
+					SE_ASSERT(memcmp(&masterCrnTextureInfo, &crnTextureInfo, sizeof(crnd::crn_texture_info)) == 0, "CRN texture information mismatch")
 				}
 				#endif
 
@@ -253,7 +253,7 @@ namespace Renderer
 				crndUnpackContext = crnd::crnd_unpack_begin(mFileData + sliceFileMetadata.offset, sliceFileMetadata.numberOfBytes);
 				if (nullptr == crndUnpackContext)
 				{
-					RHI_ASSERT(false, "crnd_unpack_begin() failed")
+					SE_ASSERT(false, "crnd_unpack_begin() failed")
 					return;
 				}
 			}
@@ -283,7 +283,7 @@ namespace Renderer
 				{
 					// Free allocated memory
 					crnd::crnd_unpack_end(crndUnpackContext);
-					RHI_ASSERT(false, "Failed transcoding texture")
+					SE_ASSERT(false, "Failed transcoding texture")
 					return;
 				}
 			}
@@ -316,13 +316,13 @@ namespace Renderer
 		if (mCubeMap)
 		{
 			// TODO(co) Cube array texture
-			RHI_ASSERT(false, "Renderer CRN array cube texture isn't implemented, yet")
+			SE_ASSERT(false, "Renderer CRN array cube texture isn't implemented, yet")
 			return nullptr;
 		}
 		else if (1 == mWidth || 1 == mHeight)
 		{
 			// TODO(co) 1D array texture
-			RHI_ASSERT(false, "Renderer CRN array 1D texture isn't implemented, yet")
+			SE_ASSERT(false, "Renderer CRN array 1D texture isn't implemented, yet")
 			return nullptr;
 		}
 		else

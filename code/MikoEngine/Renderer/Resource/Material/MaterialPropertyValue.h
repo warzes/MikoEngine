@@ -402,55 +402,55 @@ namespace Renderer
 
 		[[nodiscard]] inline bool getBooleanValue() const
 		{
-			RHI_ASSERT(ValueType::BOOLEAN == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::BOOLEAN == mValueType, "Invalid value type")
 			return mValue.Boolean;
 		}
 
 		[[nodiscard]] inline int getIntegerValue() const
 		{
-			RHI_ASSERT(ValueType::INTEGER == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::INTEGER == mValueType, "Invalid value type")
 			return mValue.Integer;
 		}
 
 		[[nodiscard]] inline const int* getInteger2Value() const
 		{
-			RHI_ASSERT(ValueType::INTEGER_2 == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::INTEGER_2 == mValueType, "Invalid value type")
 			return &mValue.Integer2[0];
 		}
 
 		[[nodiscard]] inline const int* getInteger3Value() const
 		{
-			RHI_ASSERT(ValueType::INTEGER_3 == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::INTEGER_3 == mValueType, "Invalid value type")
 			return &mValue.Integer3[0];
 		}
 
 		[[nodiscard]] inline const int* getInteger4Value() const
 		{
-			RHI_ASSERT(ValueType::INTEGER_4 == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::INTEGER_4 == mValueType, "Invalid value type")
 			return &mValue.Integer4[0];
 		}
 
 		[[nodiscard]] inline float getFloatValue() const
 		{
-			RHI_ASSERT(ValueType::FLOAT == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::FLOAT == mValueType, "Invalid value type")
 			return mValue.Float;
 		}
 
 		[[nodiscard]] inline const float* getFloat2Value() const
 		{
-			RHI_ASSERT(ValueType::FLOAT_2 == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::FLOAT_2 == mValueType, "Invalid value type")
 			return &mValue.Float2[0];
 		}
 
 		[[nodiscard]] inline const float* getFloat3Value() const
 		{
-			RHI_ASSERT(ValueType::FLOAT_3 == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::FLOAT_3 == mValueType, "Invalid value type")
 			return &mValue.Float3[0];
 		}
 
 		[[nodiscard]] inline const float* getFloat4Value() const
 		{
-			RHI_ASSERT(ValueType::FLOAT_4 == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::FLOAT_4 == mValueType, "Invalid value type")
 			return &mValue.Float4[0];
 		}
 
@@ -460,79 +460,79 @@ namespace Renderer
 		// For graphics pipeline rasterizer state property usage
 		[[nodiscard]] inline Rhi::FillMode getFillModeValue() const
 		{
-			RHI_ASSERT(ValueType::FILL_MODE == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::FILL_MODE == mValueType, "Invalid value type")
 			return mValue.FillMode;
 		}
 
 		[[nodiscard]] inline Rhi::CullMode getCullModeValue() const
 		{
-			RHI_ASSERT(ValueType::CULL_MODE == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::CULL_MODE == mValueType, "Invalid value type")
 			return mValue.CullMode;
 		}
 
 		[[nodiscard]] inline Rhi::ConservativeRasterizationMode getConservativeRasterizationModeValue() const
 		{
-			RHI_ASSERT(ValueType::CONSERVATIVE_RASTERIZATION_MODE == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::CONSERVATIVE_RASTERIZATION_MODE == mValueType, "Invalid value type")
 			return mValue.ConservativeRasterizationMode;
 		}
 
 		// For graphics pipeline depth stencil state property usage
 		[[nodiscard]] inline Rhi::DepthWriteMask getDepthWriteMaskValue() const
 		{
-			RHI_ASSERT(ValueType::DEPTH_WRITE_MASK == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::DEPTH_WRITE_MASK == mValueType, "Invalid value type")
 			return mValue.DepthWriteMask;
 		}
 
 		[[nodiscard]] inline Rhi::StencilOp getStencilOpValue() const
 		{
-			RHI_ASSERT(ValueType::STENCIL_OP == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::STENCIL_OP == mValueType, "Invalid value type")
 			return mValue.StencilOp;
 		}
 
 		// For graphics pipeline depth stencil state and sampler state property usage
 		[[nodiscard]] inline Rhi::ComparisonFunc getComparisonFuncValue() const
 		{
-			RHI_ASSERT(ValueType::COMPARISON_FUNC == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::COMPARISON_FUNC == mValueType, "Invalid value type")
 			return mValue.ComparisonFunc;
 		}
 
 		// For graphics pipeline blend state property usage
 		[[nodiscard]] inline Rhi::Blend getBlendValue() const
 		{
-			RHI_ASSERT(ValueType::BLEND == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::BLEND == mValueType, "Invalid value type")
 			return mValue.Blend;
 		}
 
 		[[nodiscard]] inline Rhi::BlendOp getBlendOpValue() const
 		{
-			RHI_ASSERT(ValueType::BLEND_OP == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::BLEND_OP == mValueType, "Invalid value type")
 			return mValue.BlendOp;
 		}
 
 		// For sampler state property usage
 		[[nodiscard]] inline Rhi::FilterMode getFilterMode() const
 		{
-			RHI_ASSERT(ValueType::FILTER_MODE == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::FILTER_MODE == mValueType, "Invalid value type")
 			return mValue.FilterMode;
 		}
 
 		[[nodiscard]] inline Rhi::TextureAddressMode getTextureAddressModeValue() const
 		{
-			RHI_ASSERT(ValueType::TEXTURE_ADDRESS_MODE == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::TEXTURE_ADDRESS_MODE == mValueType, "Invalid value type")
 			return mValue.TextureAddressMode;
 		}
 
 		// For texture property usage
 		[[nodiscard]] inline AssetId getTextureAssetIdValue() const
 		{
-			RHI_ASSERT(ValueType::TEXTURE_ASSET_ID == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::TEXTURE_ASSET_ID == mValueType, "Invalid value type")
 			return mValue.TextureAssetId;
 		}
 
 		// For shader combination property usage
 		[[nodiscard]] inline MaterialPropertyId getGlobalMaterialPropertyId() const
 		{
-			RHI_ASSERT(ValueType::GLOBAL_MATERIAL_PROPERTY_ID == mValueType, "Invalid value type")
+			SE_ASSERT(ValueType::GLOBAL_MATERIAL_PROPERTY_ID == mValueType, "Invalid value type")
 			return mValue.GlobalMaterialPropertyId;
 		}
 

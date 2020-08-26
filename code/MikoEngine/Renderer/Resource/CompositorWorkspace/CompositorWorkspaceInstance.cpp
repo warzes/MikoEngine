@@ -74,8 +74,8 @@ namespace Renderer
 	void CompositorWorkspaceInstance::setNumberOfMultisamples(uint8_t numberOfMultisamples)
 	{
 		// Sanity checks
-		RHI_ASSERT(numberOfMultisamples == 1 || numberOfMultisamples == 2 || numberOfMultisamples == 4 || numberOfMultisamples == 8, "Invalid number of multisamples")
-		RHI_ASSERT(numberOfMultisamples <= mRenderer.getRhi().getCapabilities().maximumNumberOfMultisamples, "Invalid number of multisamples")
+		SE_ASSERT(numberOfMultisamples == 1 || numberOfMultisamples == 2 || numberOfMultisamples == 4 || numberOfMultisamples == 8, "Invalid number of multisamples")
+		SE_ASSERT(numberOfMultisamples <= mRenderer.getRhi().getCapabilities().maximumNumberOfMultisamples, "Invalid number of multisamples")
 
 		// Set the value
 		mNumberOfMultisamples = numberOfMultisamples;
@@ -377,7 +377,7 @@ namespace Renderer
 									ICompositorInstancePass* compositorInstancePass = compositorPassFactory.createCompositorInstancePass(*compositorResourcePass, *compositorNodeInstance);
 									if (compositorResourcePass->getTypeId() == CompositorResourcePassShadowMap::TYPE_ID)
 									{
-										RHI_ASSERT(nullptr == mCompositorInstancePassShadowMap, "Invalid compositor instance pass shadow map")
+										SE_ASSERT(nullptr == mCompositorInstancePassShadowMap, "Invalid compositor instance pass shadow map")
 										mCompositorInstancePassShadowMap = static_cast<CompositorInstancePassShadowMap*>(compositorInstancePass);
 									}
 									compositorNodeInstance->mCompositorInstancePasses.push_back(compositorInstancePass);
@@ -455,7 +455,7 @@ namespace Renderer
 
 	void CompositorWorkspaceInstance::createFramebuffersAndRenderTargetTextures(const Rhi::IRenderTarget& mainRenderTarget)
 	{
-		RHI_ASSERT(!mFramebufferManagerInitialized, "Framebuffer manager is already initialized")
+		SE_ASSERT(!mFramebufferManagerInitialized, "Framebuffer manager is already initialized")
 		CompositorWorkspaceResourceManager& compositorWorkspaceResourceManager = mRenderer.getCompositorWorkspaceResourceManager();
 
 		{ // Framebuffers

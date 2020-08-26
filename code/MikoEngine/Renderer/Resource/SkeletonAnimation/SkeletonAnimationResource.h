@@ -95,9 +95,9 @@ namespace Renderer
 		inline virtual ~SkeletonAnimationResource() override
 		{
 			// Sanity checks
-			RHI_ASSERT(0 == mNumberOfChannels, "Invalid number of channels")
-			RHI_ASSERT(0.0f == mDurationInTicks, "Invalid duration in ticks")
-			RHI_ASSERT(0.0f == mTicksPerSecond, "Invalid ticks per second")
+			SE_ASSERT(0 == mNumberOfChannels, "Invalid number of channels")
+			SE_ASSERT(0.0f == mDurationInTicks, "Invalid duration in ticks")
+			SE_ASSERT(0.0f == mTicksPerSecond, "Invalid ticks per second")
 		}
 
 		explicit SkeletonAnimationResource(const SkeletonAnimationResource&) = delete;
@@ -116,9 +116,9 @@ namespace Renderer
 		inline void initializeElement(SkeletonAnimationResourceId skeletonAnimationResourceId)
 		{
 			// Sanity checks
-			RHI_ASSERT(0 == mNumberOfChannels, "Invalid number of channels")
-			RHI_ASSERT(0.0f == mDurationInTicks, "Invalid duration in ticks")
-			RHI_ASSERT(0.0f == mTicksPerSecond, "Invalid ticks per second")
+			SE_ASSERT(0 == mNumberOfChannels, "Invalid number of channels")
+			SE_ASSERT(0.0f == mDurationInTicks, "Invalid duration in ticks")
+			SE_ASSERT(0.0f == mTicksPerSecond, "Invalid ticks per second")
 
 			// Call base implementation
 			IResource::initializeElement(skeletonAnimationResourceId);

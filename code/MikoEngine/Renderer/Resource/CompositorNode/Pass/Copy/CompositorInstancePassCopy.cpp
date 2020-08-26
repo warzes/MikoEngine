@@ -27,7 +27,7 @@ namespace Renderer
 		const IRenderer& renderer = getCompositorNodeInstance().getCompositorWorkspaceInstance().getRenderer();
 
 		// Sanity check
-		RHI_ASSERT(nullptr == renderTarget, "The copy compositor instance pass needs an invalid render target")
+		SE_ASSERT(nullptr == renderTarget, "The copy compositor instance pass needs an invalid render target")
 
 		// Combined scoped profiler CPU and GPU sample as well as renderer debug event command
 		RENDERER_SCOPED_PROFILER_EVENT_DYNAMIC(renderer.getContext(), commandBuffer, compositorResourcePassCopy.getDebugName())
@@ -48,13 +48,13 @@ namespace Renderer
 			else
 			{
 				// Error!
-				RHI_ASSERT(false, "We should never end up in here")
+				SE_ASSERT(false, "We should never end up in here")
 			}
 		}
 		else
 		{
 			// Error!
-			RHI_ASSERT(false, "We should never end up in here")
+			SE_ASSERT(false, "We should never end up in here")
 		}
 	}
 

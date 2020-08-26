@@ -115,7 +115,7 @@ namespace Renderer
 		if (nullptr == ::detail::SkyVertexArrayPtr)
 		{
 			::detail::SkyVertexArrayPtr = ::detail::createSkyVertexArray(getSceneResource().getRenderer().getBufferManager());
-			RHI_ASSERT(nullptr != ::detail::SkyVertexArrayPtr, "Invalid sky vertex array")
+			SE_ASSERT(nullptr != ::detail::SkyVertexArrayPtr, "Invalid sky vertex array")
 		}
 		::detail::SkyVertexArrayPtr->AddReference();
 	}

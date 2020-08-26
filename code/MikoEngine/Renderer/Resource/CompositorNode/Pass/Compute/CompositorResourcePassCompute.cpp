@@ -31,14 +31,14 @@ namespace Renderer
 	void CompositorResourcePassCompute::deserialize([[maybe_unused]] uint32_t numberOfBytes, const uint8_t* data)
 	{
 		// Sanity check
-		RHI_ASSERT(sizeof(v1CompositorNode::PassCompute) <= numberOfBytes, "Invalid number of bytes")
+		SE_ASSERT(sizeof(v1CompositorNode::PassCompute) <= numberOfBytes, "Invalid number of bytes")
 
 		// Call the base implementation
 		ICompositorResourcePass::deserialize(sizeof(v1CompositorNode::Pass), data);
 
 		// Read data
 		const v1CompositorNode::PassCompute* passCompute = reinterpret_cast<const v1CompositorNode::PassCompute*>(data);
-		RHI_ASSERT(sizeof(v1CompositorNode::PassCompute) + sizeof(MaterialProperty) * passCompute->numberOfMaterialProperties == numberOfBytes, "Invalid number of bytes")
+		SE_ASSERT(sizeof(v1CompositorNode::PassCompute) + sizeof(MaterialProperty) * passCompute->numberOfMaterialProperties == numberOfBytes, "Invalid number of bytes")
 		mMaterialAssetId = passCompute->materialAssetId;
 		mMaterialTechniqueId = passCompute->materialTechniqueId;
 		mMaterialBlueprintAssetId = passCompute->materialBlueprintAssetId;
@@ -51,8 +51,8 @@ namespace Renderer
 		}
 
 		// Sanity checks
-		RHI_ASSERT(!mMaterialDefinitionMandatory || IsValid(mMaterialAssetId) || IsValid(mMaterialBlueprintAssetId), "Invalid material asset")
-		RHI_ASSERT(!(IsValid(mMaterialAssetId) && IsValid(mMaterialBlueprintAssetId)), "Invalid material asset")
+		SE_ASSERT(!mMaterialDefinitionMandatory || IsValid(mMaterialAssetId) || IsValid(mMaterialBlueprintAssetId), "Invalid material asset")
+		SE_ASSERT(!(IsValid(mMaterialAssetId) && IsValid(mMaterialBlueprintAssetId)), "Invalid material asset")
 	}
 
 

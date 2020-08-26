@@ -184,7 +184,7 @@ namespace VulkanRhi
 		void setupDebugCallback()
 		{
 			// Sanity check
-			RHI_ASSERT(mValidationEnabled, "Do only call this Vulkan method if validation is enabled");
+			SE_ASSERT(mValidationEnabled, "Do only call this Vulkan method if validation is enabled");
 
 			// The report flags determine what type of messages for the layers will be displayed
 			// -> Use "VK_DEBUG_REPORT_FLAG_BITS_MAX_ENUM_EXT" to get everything, quite verbose

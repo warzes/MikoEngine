@@ -365,7 +365,7 @@ void CubeRendererInstancedArrays::setNumberOfCubes(uint32_t numberOfCubes)
 void CubeRendererInstancedArrays::fillCommandBuffer(float globalTimer, float globalScale, float lightPositionX, float lightPositionY, float lightPositionZ, Rhi::CommandBuffer& commandBuffer)
 {
 	// Sanity check
-	RHI_ASSERT(nullptr != mGraphicsProgram, "Invalid graphics program");
+	SE_ASSERT(nullptr != mGraphicsProgram, "Invalid graphics program");
 
 	{ // Update graphics program uniform data
 		// Some counting timer, we don't want to touch the buffers on the GPU
@@ -430,14 +430,14 @@ void CubeRendererInstancedArrays::fillCommandBuffer(float globalTimer, float glo
 void CubeRendererInstancedArrays::fillReusableCommandBuffer()
 {
 	// Sanity checks
-	RHI_ASSERT(mCommandBuffer.isEmpty(), "The command buffer is already filled");
-	RHI_ASSERT(nullptr != mRootSignature, "Invalid root signature");
-	RHI_ASSERT(nullptr != mTexture2D, "Invalid texture 2D");
-	RHI_ASSERT(0 == mRhi->getCapabilities().maximumUniformBufferSize || nullptr != mUniformBufferStaticVs, "Invalid uniform buffer static VS");
-	RHI_ASSERT(0 == mRhi->getCapabilities().maximumUniformBufferSize || nullptr != mUniformBufferDynamicVs, "Invalid uniform buffer dynamic VS");
-	RHI_ASSERT(0 == mRhi->getCapabilities().maximumUniformBufferSize || nullptr != mUniformBufferDynamicFs, "Invalid uniform buffer dynamic FS");
-	RHI_ASSERT(nullptr != mResourceGroupVs && nullptr != mResourceGroupFs, "Invalid resource group");
-	RHI_ASSERT(nullptr != mSamplerStateGroup, "Invalid sampler state group");
+	SE_ASSERT(mCommandBuffer.isEmpty(), "The command buffer is already filled");
+	SE_ASSERT(nullptr != mRootSignature, "Invalid root signature");
+	SE_ASSERT(nullptr != mTexture2D, "Invalid texture 2D");
+	SE_ASSERT(0 == mRhi->getCapabilities().maximumUniformBufferSize || nullptr != mUniformBufferStaticVs, "Invalid uniform buffer static VS");
+	SE_ASSERT(0 == mRhi->getCapabilities().maximumUniformBufferSize || nullptr != mUniformBufferDynamicVs, "Invalid uniform buffer dynamic VS");
+	SE_ASSERT(0 == mRhi->getCapabilities().maximumUniformBufferSize || nullptr != mUniformBufferDynamicFs, "Invalid uniform buffer dynamic FS");
+	SE_ASSERT(nullptr != mResourceGroupVs && nullptr != mResourceGroupFs, "Invalid resource group");
+	SE_ASSERT(nullptr != mSamplerStateGroup, "Invalid sampler state group");
 
 	// Scoped debug event
 	COMMAND_SCOPED_DEBUG_EVENT_FUNCTION(mCommandBuffer)

@@ -91,7 +91,7 @@ namespace Renderer
 		inline virtual ~ShaderPieceResource() override
 		{
 			// Sanity check
-			RHI_ASSERT(mShaderSourceCode.empty(), "Invalid shader source code")
+			SE_ASSERT(mShaderSourceCode.empty(), "Invalid shader source code")
 		}
 
 		explicit ShaderPieceResource(const ShaderPieceResource&) = delete;
@@ -103,7 +103,7 @@ namespace Renderer
 		inline void initializeElement(ShaderPieceResourceId shaderPieceResourceId)
 		{
 			// Sanity check
-			RHI_ASSERT(mShaderSourceCode.empty(), "Invalid shader source code")
+			SE_ASSERT(mShaderSourceCode.empty(), "Invalid shader source code")
 
 			// Call base implementation
 			IResource::initializeElement(shaderPieceResourceId);

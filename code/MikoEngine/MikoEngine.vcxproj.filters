@@ -14,9 +14,6 @@
     <ClCompile Include="RHI\DefaultAllocator.cpp">
       <Filter>4_RHI\old\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="RHI\DefaultAssert.cpp">
-      <Filter>4_RHI\old\Utility</Filter>
-    </ClCompile>
     <ClCompile Include="RHI\DefaultLog.cpp">
       <Filter>4_RHI\old\Utility</Filter>
     </ClCompile>
@@ -487,9 +484,6 @@
       <Filter>4_RHI\old\D3D11</Filter>
     </ClInclude>
     <ClInclude Include="RHI\DefaultAllocator.h">
-      <Filter>4_RHI\old\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="RHI\DefaultAssert.h">
       <Filter>4_RHI\old\Utility</Filter>
     </ClInclude>
     <ClInclude Include="RHI\DefaultLog.h">
@@ -1352,6 +1346,9 @@
     </ClInclude>
     <ClInclude Include="Core\GetInvalid.h">
       <Filter>1_Core\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DefaultAssert.h">
+      <Filter>1_Core\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

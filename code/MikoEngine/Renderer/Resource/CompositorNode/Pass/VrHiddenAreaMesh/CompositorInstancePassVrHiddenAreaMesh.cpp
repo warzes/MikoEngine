@@ -232,7 +232,7 @@ namespace Renderer
 	void CompositorInstancePassVrHiddenAreaMesh::onFillCommandBuffer([[maybe_unused]] const Rhi::IRenderTarget* renderTarget, [[maybe_unused]] const CompositorContextData& compositorContextData, [[maybe_unused]] Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity check
-		RHI_ASSERT(nullptr != renderTarget, "The VR hidden area mesh compositor instance pass needs a valid render target")
+		SE_ASSERT(nullptr != renderTarget, "The VR hidden area mesh compositor instance pass needs a valid render target")
 
 		#ifdef RENDERER_OPENVR
 			if (nullptr != ::detail::g_MeshPtr)
@@ -245,7 +245,7 @@ namespace Renderer
 				::detail::g_MeshPtr->onFillCommandBuffer(commandBuffer);
 			}
 		#else
-			RHI_ASSERT(false, "OpenVR support is disabled")
+			SE_ASSERT(false, "OpenVR support is disabled")
 		#endif
 	}
 

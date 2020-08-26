@@ -336,7 +336,7 @@ namespace Renderer
 			else
 			{
 				// TODO(co) As soon as everything is in place, we might want to enable this assert
-				// RHI_ASSERT(false, "Renderer is unable to load the pipeline state object cache. This will possibly result decreased runtime performance up to runtime hiccups. You might want to create the pipeline state object cache via the renderer toolkit.")
+				// SE_ASSERT(false, "Renderer is unable to load the pipeline state object cache. This will possibly result decreased runtime performance up to runtime hiccups. You might want to create the pipeline state object cache via the renderer toolkit.")
 			}
 		}
 	}

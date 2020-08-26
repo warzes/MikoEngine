@@ -109,7 +109,7 @@ namespace Rhi
 				case ResourceType::TASK_SHADER:
 				case ResourceType::MESH_SHADER:
 				case ResourceType::COMPUTE_SHADER:
-					RHI_ASSERT(false, "Invalid resource type")
+					SE_ASSERT(false, "Invalid resource type")
 						break;
 				}
 			}
@@ -124,7 +124,7 @@ namespace Rhi
 			strcpy(range.baseShaderRegisterName, _baseShaderRegisterName);
 			range.shaderVisibility = _shaderVisibility;
 			range.resourceType = _resourceType;
-			RHI_ASSERT(ResourceType::UNIFORM_BUFFER != range.resourceType || DescriptorRangeType::UAV != range.rangeType, "Uniform buffer doesn't support UAV")
+			SE_ASSERT(ResourceType::UNIFORM_BUFFER != range.resourceType || DescriptorRangeType::UAV != range.rangeType, "Uniform buffer doesn't support UAV")
 		}
 		DescriptorRangeBuilder() = default;
 

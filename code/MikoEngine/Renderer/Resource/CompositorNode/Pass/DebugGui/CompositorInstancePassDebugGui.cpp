@@ -23,7 +23,7 @@ namespace Renderer
 	void CompositorInstancePassDebugGui::onFillCommandBuffer([[maybe_unused]] const Rhi::IRenderTarget* renderTarget, [[maybe_unused]] const CompositorContextData& compositorContextData, [[maybe_unused]] Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity check
-		RHI_ASSERT(nullptr != renderTarget, "The debug GUI compositor instance pass needs a valid render target")
+		SE_ASSERT(nullptr != renderTarget, "The debug GUI compositor instance pass needs a valid render target")
 
 		#ifdef RENDERER_IMGUI
 			// Combined scoped profiler CPU and GPU sample as well as renderer debug event command
@@ -62,7 +62,7 @@ namespace Renderer
 				}
 			}
 		#else
-			RHI_ASSERT(false, "ImGui support is disabled")
+			SE_ASSERT(false, "ImGui support is disabled")
 		#endif
 	}
 

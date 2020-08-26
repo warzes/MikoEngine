@@ -61,7 +61,7 @@ namespace Renderer
 				IResourceListener::ResourceConnections::iterator connectionIterator = std::find_if(resourceListener.mResourceConnections.begin(), resourceListener.mResourceConnections.end(),
 					[resourceConnection](const IResourceListener::ResourceConnection& currentResourceConnection) { return (currentResourceConnection.resourceManager == resourceConnection.resourceManager && currentResourceConnection.resourceId == resourceConnection.resourceId); }
 					);
-				RHI_ASSERT(connectionIterator != resourceListener.mResourceConnections.end(), "Invalid connection iterator")
+				SE_ASSERT(connectionIterator != resourceListener.mResourceConnections.end(), "Invalid connection iterator")
 				resourceListener.mResourceConnections.erase(connectionIterator);
 			}
 			mSortedResourceListeners.erase(iterator);
@@ -101,7 +101,7 @@ namespace Renderer
 	void IResource::deinitializeElement()
 	{
 		// Sanity check
-		RHI_ASSERT(LoadingState::LOADING != mLoadingState || LoadingState::UNLOADING != mLoadingState, "Resource deinitialized while in-flight inside the resource streamer")
+		SE_ASSERT(LoadingState::LOADING != mLoadingState || LoadingState::UNLOADING != mLoadingState, "Resource deinitialized while in-flight inside the resource streamer")
 
 		// Update loading state, if necessary
 		if (LoadingState::UNLOADED != mLoadingState && LoadingState::FAILED != mLoadingState)
@@ -117,7 +117,7 @@ namespace Renderer
 			IResourceListener::ResourceConnections::iterator connectionIterator = std::find_if(resourceListener->mResourceConnections.begin(), resourceListener->mResourceConnections.end(),
 				[resourceConnection](const IResourceListener::ResourceConnection& currentResourceConnection) { return (currentResourceConnection.resourceManager == resourceConnection.resourceManager && currentResourceConnection.resourceId == resourceConnection.resourceId); }
 				);
-			RHI_ASSERT(connectionIterator != resourceListener->mResourceConnections.end(), "Invalid connection iterator")
+			SE_ASSERT(connectionIterator != resourceListener->mResourceConnections.end(), "Invalid connection iterator")
 			resourceListener->mResourceConnections.erase(connectionIterator);
 		}
 

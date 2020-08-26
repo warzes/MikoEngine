@@ -50,9 +50,9 @@ namespace Renderer
 	IndirectBufferManager::~IndirectBufferManager()
 	{
 		// At this point in time, no indirect buffers should be in use anymore
-		RHI_ASSERT(mUsedIndirectBuffers.empty(), "Invalid used indirect buffers")
-		RHI_ASSERT(nullptr == mCurrentIndirectBuffer, "Invalid current indirect buffer")
-		RHI_ASSERT(0 == mPreviouslyRequestedNumberOfBytes, "Invalid previously requested number of bytes")
+		SE_ASSERT(mUsedIndirectBuffers.empty(), "Invalid used indirect buffers")
+		SE_ASSERT(nullptr == mCurrentIndirectBuffer, "Invalid current indirect buffer")
+		SE_ASSERT(0 == mPreviouslyRequestedNumberOfBytes, "Invalid previously requested number of bytes")
 
 		// Destroy all indirect buffers
 		for (IndirectBuffer& indirectBuffer : mFreeIndirectBuffers)
@@ -64,8 +64,8 @@ namespace Renderer
 	IndirectBufferManager::IndirectBuffer* IndirectBufferManager::getIndirectBuffer(uint32_t numberOfBytes)
 	{
 		// Sanity check
-		RHI_ASSERT(numberOfBytes > 0, "Don't call this method if there's no work to be done")
-		RHI_ASSERT(numberOfBytes <= mMaximumIndirectBufferSize, "Maximum indirect buffer size exceeded")
+		SE_ASSERT(numberOfBytes > 0, "Don't call this method if there's no work to be done")
+		SE_ASSERT(numberOfBytes <= mMaximumIndirectBufferSize, "Maximum indirect buffer size exceeded")
 
 		// Is there enough space left inside the current indirect buffer?
 		if (nullptr != mCurrentIndirectBuffer)
@@ -98,9 +98,9 @@ namespace Renderer
 
 			{ // Map
 				// Sanity checks
-				RHI_ASSERT(nullptr != mCurrentIndirectBuffer->indirectBuffer, "Invalid current indirect buffer")
-				RHI_ASSERT(0 == mCurrentIndirectBuffer->indirectBufferOffset, "Invalid current indirect buffer")
-				RHI_ASSERT(nullptr == mCurrentIndirectBuffer->mappedData, "Invalid current indirect buffer")
+				SE_ASSERT(nullptr != mCurrentIndirectBuffer->indirectBuffer, "Invalid current indirect buffer")
+				SE_ASSERT(0 == mCurrentIndirectBuffer->indirectBufferOffset, "Invalid current indirect buffer")
+				SE_ASSERT(nullptr == mCurrentIndirectBuffer->mappedData, "Invalid current indirect buffer")
 
 				// Map
 				Rhi::MappedSubresource mappedSubresource;
@@ -108,7 +108,7 @@ namespace Renderer
 				{
 					mCurrentIndirectBuffer->mappedData = static_cast<uint8_t*>(mappedSubresource.data);
 				}
-				RHI_ASSERT(nullptr != mCurrentIndirectBuffer->mappedData, "Invalid current indirect buffer")
+				SE_ASSERT(nullptr != mCurrentIndirectBuffer->mappedData, "Invalid current indirect buffer")
 			}
 		}
 
@@ -136,8 +136,8 @@ namespace Renderer
 	void IndirectBufferManager::unmapCurrentIndirectBuffer()
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != mCurrentIndirectBuffer, "Invalid current indirect buffer")
-		RHI_ASSERT(nullptr != mCurrentIndirectBuffer->mappedData, "Invalid current indirect buffer")
+		SE_ASSERT(nullptr != mCurrentIndirectBuffer, "Invalid current indirect buffer")
+		SE_ASSERT(nullptr != mCurrentIndirectBuffer->mappedData, "Invalid current indirect buffer")
 
 		// Unmap
 		mRenderer.getRhi().unmap(*mCurrentIndirectBuffer->indirectBuffer, 0);

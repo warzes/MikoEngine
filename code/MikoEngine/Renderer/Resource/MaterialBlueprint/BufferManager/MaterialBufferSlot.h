@@ -73,7 +73,7 @@ namespace Renderer
 		*/
 		[[nodiscard]] inline MaterialResourceManager& getMaterialResourceManager() const
 		{
-			RHI_ASSERT(nullptr != mMaterialResourceManager, "Invalid material resource manager")
+			SE_ASSERT(nullptr != mMaterialResourceManager, "Invalid material resource manager")
 			return *mMaterialResourceManager;
 		}
 

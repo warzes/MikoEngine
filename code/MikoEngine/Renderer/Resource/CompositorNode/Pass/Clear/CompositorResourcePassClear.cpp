@@ -15,7 +15,7 @@ namespace Renderer
 	void CompositorResourcePassClear::deserialize([[maybe_unused]] uint32_t numberOfBytes, const uint8_t* data)
 	{
 		// Sanity check
-		RHI_ASSERT(sizeof(v1CompositorNode::PassClear) == numberOfBytes, "Invalid number of bytes")
+		SE_ASSERT(sizeof(v1CompositorNode::PassClear) == numberOfBytes, "Invalid number of bytes")
 
 		// Call the base implementation
 		ICompositorResourcePass::deserialize(sizeof(v1CompositorNode::Pass), data);
@@ -28,7 +28,7 @@ namespace Renderer
 		mStencil = passClear->stencil;
 
 		// Sanity check
-		RHI_ASSERT(0 != mFlags, "The clear compositor resource pass flags must not be null")
+		SE_ASSERT(0 != mFlags, "The clear compositor resource pass flags must not be null")
 	}
 
 

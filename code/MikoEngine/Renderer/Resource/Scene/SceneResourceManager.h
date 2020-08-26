@@ -60,7 +60,7 @@ namespace Renderer
 		[[nodiscard]] inline const ISceneFactory& getSceneFactory() const
 		{
 			// We know that this pointer is always valid
-			RHI_ASSERT(nullptr != mSceneFactory, "Invalid scene factory")
+			SE_ASSERT(nullptr != mSceneFactory, "Invalid scene factory")
 			return *mSceneFactory;
 		}
 

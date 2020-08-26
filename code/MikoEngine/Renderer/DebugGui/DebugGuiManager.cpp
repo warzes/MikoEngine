@@ -165,8 +165,8 @@ namespace Renderer
 				}
 				if (nullptr == mVertexArrayPtr)
 				{
-					RHI_ASSERT(nullptr != mVertexBufferPtr, "Invalid vertex buffer")
-					RHI_ASSERT(nullptr != mIndexBufferPtr, "Invalid index buffer")
+					SE_ASSERT(nullptr != mVertexBufferPtr, "Invalid vertex buffer")
+					SE_ASSERT(nullptr != mIndexBufferPtr, "Invalid index buffer")
 
 					// Create vertex array object (VAO)
 					const Rhi::VertexArrayVertexBuffer vertexArrayVertexBuffers[] = { mVertexBufferPtr };
@@ -311,7 +311,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	void DebugGuiManager::startup()
 	{
-		RHI_ASSERT(!mIsRunning, "The debug GUI manager is already running")
+		SE_ASSERT(!mIsRunning, "The debug GUI manager is already running")
 
 		{ // Create texture instance
 			// Build texture atlas
@@ -375,7 +375,7 @@ namespace Renderer
 	void DebugGuiManager::createFixedBuildInRhiConfigurationResources()
 	{
 		Rhi::IRhi& rhi = mRenderer.getRhi();
-		RHI_ASSERT(nullptr == mRootSignature, "The debug GUI manager has already root signature")
+		SE_ASSERT(nullptr == mRootSignature, "The debug GUI manager has already root signature")
 
 		{ // Create the root signature instance
 			// Create the root signature

@@ -22,7 +22,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	void LightSceneItem::deserialize([[maybe_unused]] uint32_t numberOfBytes, const uint8_t* data)
 	{
-		RHI_ASSERT(sizeof(v1Scene::LightItem) == numberOfBytes, "Invalid number of bytes")
+		SE_ASSERT(sizeof(v1Scene::LightItem) == numberOfBytes, "Invalid number of bytes")
 
 		// Read data
 		const v1Scene::LightItem* lightItem = reinterpret_cast<const v1Scene::LightItem*>(data);
@@ -34,13 +34,13 @@ namespace Renderer
 		mPackedShaderData.iesLightProfileIndex = static_cast<float>(lightItem->iesLightProfileIndex);
 
 		// Sanity checks
-		RHI_ASSERT(mPackedShaderData.color.x >= 0.0f && mPackedShaderData.color.y >= 0.0f && mPackedShaderData.color.z >= 0.0f, "Invalid data")
-		RHI_ASSERT(lightItem->lightType == LightType::DIRECTIONAL || mPackedShaderData.radius > 0.0f, "Invalid data")
-		RHI_ASSERT(lightItem->lightType != LightType::DIRECTIONAL || 0.0f == mPackedShaderData.radius, "Invalid data")
-		RHI_ASSERT(mInnerAngle >= 0.0f, "Invalid data")
-		RHI_ASSERT(mOuterAngle < glm::radians(90.0f), "Invalid data")
-		RHI_ASSERT(mInnerAngle < mOuterAngle, "Invalid data")
-		RHI_ASSERT(mPackedShaderData.nearClipDistance >= 0.0f, "Invalid data")
+		SE_ASSERT(mPackedShaderData.color.x >= 0.0f && mPackedShaderData.color.y >= 0.0f && mPackedShaderData.color.z >= 0.0f, "Invalid data")
+		SE_ASSERT(lightItem->lightType == LightType::DIRECTIONAL || mPackedShaderData.radius > 0.0f, "Invalid data")
+		SE_ASSERT(lightItem->lightType != LightType::DIRECTIONAL || 0.0f == mPackedShaderData.radius, "Invalid data")
+		SE_ASSERT(mInnerAngle >= 0.0f, "Invalid data")
+		SE_ASSERT(mOuterAngle < glm::radians(90.0f), "Invalid data")
+		SE_ASSERT(mInnerAngle < mOuterAngle, "Invalid data")
+		SE_ASSERT(mPackedShaderData.nearClipDistance >= 0.0f, "Invalid data")
 	}
 
 

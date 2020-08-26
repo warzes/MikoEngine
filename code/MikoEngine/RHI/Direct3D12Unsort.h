@@ -24,8 +24,8 @@ namespace Direct3D12Rhi
 	[[nodiscard]] ID3DBlob* loadShaderFromSourcecode(const char* shaderModel, const char* sourceCode, const char* entryPoint, Rhi::IShaderLanguage::OptimizationLevel optimizationLevel)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != shaderModel, "Invalid Direct3D 12 shader model")
-			RHI_ASSERT(nullptr != sourceCode, "Invalid Direct3D 12 shader source code")
+		SE_ASSERT(nullptr != shaderModel, "Invalid Direct3D 12 shader model")
+			SE_ASSERT(nullptr != sourceCode, "Invalid Direct3D 12 shader source code")
 
 			// Get compile flags
 			// -> "DX12 Do's And Don'ts" ( https://developer.nvidia.com/dx12-dos-and-donts ) "Use the /all_resources_bound / D3DCOMPILE_ALL_RESOURCES_BOUND compile flag if possible"
@@ -340,7 +340,7 @@ namespace Direct3D12Rhi
 				numberOfRows = (numberOfRows + 3) >> 2;
 			}
 			numberOfRows *= depth;
-			RHI_ASSERT(pitch * numberOfRows == size, "Direct3D 12: Invalid size")
+			SE_ASSERT(pitch * numberOfRows == size, "Direct3D 12: Invalid size")
 
 				// Grab upload buffer space
 				const uint32_t destinationPitch = ::detail::align(pitch, D3D12_TEXTURE_DATA_PITCH_ALIGNMENT);
@@ -1193,7 +1193,7 @@ namespace Direct3D12Rhi
 			mD3D12Resource(nullptr)
 		{
 			// Sanity check
-			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat)) == 0, "The Direct3D 12 texture buffer size must be a multiple of the selected texture format bytes per texel")
+			SE_ASSERT((numberOfBytes % Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat)) == 0, "The Direct3D 12 texture buffer size must be a multiple of the selected texture format bytes per texel")
 
 				// TODO(co) This is only meant for the Direct3D 12 RHI implementation kickoff.
 				// Note: using upload heaps to transfer static data like vert buffers is not 
@@ -1358,8 +1358,8 @@ namespace Direct3D12Rhi
 		//	mD3D12ShaderResourceViewTexture(nullptr)
 		{
 			// Sanity checks
-			RHI_ASSERT((numberOfBytes % numberOfStructureBytes) == 0, "The Direct3D 12 structured buffer size must be a multiple of the given number of structure bytes")
-				RHI_ASSERT((numberOfBytes % (sizeof(float) * 4)) == 0, "Performance: The Direct3D 12 structured buffer should be aligned to a 128-bit stride, see \"Understanding Structured Buffer Performance\" by Evan Hart, posted Apr 17 2015 at 11:33AM - https://developer.nvidia.com/content/understanding-structured-buffer-performance")
+			SE_ASSERT((numberOfBytes % numberOfStructureBytes) == 0, "The Direct3D 12 structured buffer size must be a multiple of the given number of structure bytes")
+				SE_ASSERT((numberOfBytes % (sizeof(float) * 4)) == 0, "Performance: The Direct3D 12 structured buffer should be aligned to a 128-bit stride, see \"Understanding Structured Buffer Performance\" by Evan Hart, posted Apr 17 2015 at 11:33AM - https://developer.nvidia.com/content/understanding-structured-buffer-performance")
 
 				// TODO(co) Direct3D 12 update
 				/*
@@ -1511,10 +1511,10 @@ namespace Direct3D12Rhi
 			mD3D12Resource(nullptr)
 		{
 			// Sanity checks
-			RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 || (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0, "Invalid Direct3D 12 flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" is missing")
-				RHI_ASSERT(!((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 && (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0), "Invalid Direct3D 12 flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" must be set, but not both at one and the same time")
-				RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawArguments)) == 0, "Direct3D 12 indirect buffer element type flags specification is \"DRAW_ARGUMENTS\" but the given number of bytes don't align to this")
-				RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawIndexedArguments)) == 0, "Direct3D 12 indirect buffer element type flags specification is \"DRAW_INDEXED_ARGUMENTS\" but the given number of bytes don't align to this")
+			SE_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 || (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0, "Invalid Direct3D 12 flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" is missing")
+				SE_ASSERT(!((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 && (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0), "Invalid Direct3D 12 flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" must be set, but not both at one and the same time")
+				SE_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawArguments)) == 0, "Direct3D 12 indirect buffer element type flags specification is \"DRAW_ARGUMENTS\" but the given number of bytes don't align to this")
+				SE_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawIndexedArguments)) == 0, "Direct3D 12 indirect buffer element type flags specification is \"DRAW_INDEXED_ARGUMENTS\" but the given number of bytes don't align to this")
 
 				// TODO(co) This is only meant for the Direct3D 12 RHI implementation kickoff.
 				// Note: using upload heaps to transfer static data like vert buffers is not 
@@ -1867,11 +1867,11 @@ namespace Direct3D12Rhi
 				const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = vertexBuffers + numberOfVertexBuffers;
 				for ( const Rhi::VertexArrayVertexBuffer* vertexBuffer = vertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer )
 				{
-					RHI_ASSERT(&direct3D12Rhi == &vertexBuffer->vertexBuffer->getRhi(), "Direct3D 12 error: The given vertex buffer resource is owned by another RHI instance")
+					SE_ASSERT(&direct3D12Rhi == &vertexBuffer->vertexBuffer->getRhi(), "Direct3D 12 error: The given vertex buffer resource is owned by another RHI instance")
 				}
 			}
 #endif
-			RHI_ASSERT(nullptr == indexBuffer || &direct3D12Rhi == &indexBuffer->getRhi(), "Direct3D 12 error: The given index buffer resource is owned by another RHI instance")
+			SE_ASSERT(nullptr == indexBuffer || &direct3D12Rhi == &indexBuffer->getRhi(), "Direct3D 12 error: The given index buffer resource is owned by another RHI instance")
 
 				// Create vertex array
 				uint16_t id = 0;
@@ -1918,8 +1918,8 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Don't remove this reminder comment block: There are no buffer flags by intent since an uniform buffer can't be used for unordered access and as a consequence an uniform buffer must always used as shader resource to not be pointless
-			// RHI_ASSERT((bufferFlags & Rhi::BufferFlag::UNORDERED_ACCESS) == 0, "Invalid Direct3D 12 buffer flags, uniform buffer can't be used for unordered access")
-			// RHI_ASSERT((bufferFlags & Rhi::BufferFlag::SHADER_RESOURCE) != 0, "Invalid Direct3D 12 buffer flags, uniform buffer must be used as shader resource")
+			// SE_ASSERT((bufferFlags & Rhi::BufferFlag::UNORDERED_ACCESS) == 0, "Invalid Direct3D 12 buffer flags, uniform buffer can't be used for unordered access")
+			// SE_ASSERT((bufferFlags & Rhi::BufferFlag::SHADER_RESOURCE) != 0, "Invalid Direct3D 12 buffer flags, uniform buffer must be used as shader resource")
 
 			// Create the uniform buffer
 			return RHI_NEW(UniformBuffer)(direct3D12Rhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -1989,7 +1989,7 @@ namespace Direct3D12Rhi
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
 			mNumberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? Rhi::ITexture::getNumberOfMipmaps(width) : 1;
-			RHI_ASSERT(!generateMipmaps, "TODO(co) Direct3D 12 texture mipmap generation isn't implemented, yet")
+			SE_ASSERT(!generateMipmaps, "TODO(co) Direct3D 12 texture mipmap generation isn't implemented, yet")
 				if ( generateMipmaps )
 				{
 					mNumberOfMipmaps = 1;
@@ -2149,7 +2149,7 @@ namespace Direct3D12Rhi
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
 			mNumberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? Rhi::ITexture::getNumberOfMipmaps(width) : 1;
-			RHI_ASSERT(!generateMipmaps, "TODO(co) Direct3D 12 texture mipmap generation isn't implemented, yet")
+			SE_ASSERT(!generateMipmaps, "TODO(co) Direct3D 12 texture mipmap generation isn't implemented, yet")
 				if ( generateMipmaps )
 				{
 					mNumberOfMipmaps = 1;
@@ -2334,13 +2334,13 @@ namespace Direct3D12Rhi
 			mD3D12Resource(nullptr)
 		{
 			// Sanity checks
-			RHI_ASSERT(numberOfMultisamples == 1 || numberOfMultisamples == 2 || numberOfMultisamples == 4 || numberOfMultisamples == 8, "Invalid Direct3D 12 texture parameters")
-				RHI_ASSERT(numberOfMultisamples == 1 || nullptr == data, "Invalid Direct3D 12 texture parameters")
-				RHI_ASSERT(numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS), "Invalid Direct3D 12 texture parameters")
-				RHI_ASSERT(numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS), "Invalid Direct3D 12 texture parameters")
-				RHI_ASSERT(numberOfMultisamples == 1 || 0 != (textureFlags & Rhi::TextureFlag::RENDER_TARGET), "Invalid Direct3D 12 texture parameters")
-				RHI_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid Direct3D 12 texture parameters")
-				RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 12 render target textures can't be filled using provided data")
+			SE_ASSERT(numberOfMultisamples == 1 || numberOfMultisamples == 2 || numberOfMultisamples == 4 || numberOfMultisamples == 8, "Invalid Direct3D 12 texture parameters")
+				SE_ASSERT(numberOfMultisamples == 1 || nullptr == data, "Invalid Direct3D 12 texture parameters")
+				SE_ASSERT(numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS), "Invalid Direct3D 12 texture parameters")
+				SE_ASSERT(numberOfMultisamples == 1 || 0 == (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS), "Invalid Direct3D 12 texture parameters")
+				SE_ASSERT(numberOfMultisamples == 1 || 0 != (textureFlags & Rhi::TextureFlag::RENDER_TARGET), "Invalid Direct3D 12 texture parameters")
+				SE_ASSERT(0 == (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS) || nullptr != data, "Invalid Direct3D 12 texture parameters")
+				SE_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Direct3D 12 render target textures can't be filled using provided data")
 
 				// TODO(co) Add "Rhi::TextureFlag::GENERATE_MIPMAPS" support, also for render target textures
 
@@ -2348,7 +2348,7 @@ namespace Direct3D12Rhi
 				const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
 			mNumberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? Rhi::ITexture::getNumberOfMipmaps(width, height) : 1;
-			RHI_ASSERT(!generateMipmaps, "TODO(co) Direct3D 12 texture mipmap generation isn't implemented, yet")
+			SE_ASSERT(!generateMipmaps, "TODO(co) Direct3D 12 texture mipmap generation isn't implemented, yet")
 				if ( generateMipmaps )
 				{
 					mNumberOfMipmaps = 1;
@@ -2525,7 +2525,7 @@ namespace Direct3D12Rhi
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
 			mNumberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? Rhi::ITexture::getNumberOfMipmaps(width, height) : 1;
-			RHI_ASSERT(!generateMipmaps, "TODO(co) Direct3D 12 texture mipmap generation isn't implemented, yet")
+			SE_ASSERT(!generateMipmaps, "TODO(co) Direct3D 12 texture mipmap generation isn't implemented, yet")
 				if ( generateMipmaps )
 				{
 					mNumberOfMipmaps = 1;
@@ -2714,7 +2714,7 @@ namespace Direct3D12Rhi
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
 			mNumberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? Rhi::ITexture::getNumberOfMipmaps(width, height) : 1;
-			RHI_ASSERT(!generateMipmaps, "TODO(co) Direct3D 12 texture mipmap generation isn't implemented, yet")
+			SE_ASSERT(!generateMipmaps, "TODO(co) Direct3D 12 texture mipmap generation isn't implemented, yet")
 				if ( generateMipmaps )
 				{
 					mNumberOfMipmaps = 1;
@@ -2879,7 +2879,7 @@ namespace Direct3D12Rhi
 			const bool dataContainsMipmaps = (textureFlags & Rhi::TextureFlag::DATA_CONTAINS_MIPMAPS);
 			const bool generateMipmaps = (!dataContainsMipmaps && (textureFlags & Rhi::TextureFlag::GENERATE_MIPMAPS));
 			mNumberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? Rhi::ITexture::getNumberOfMipmaps(width) : 1;
-			RHI_ASSERT(!generateMipmaps, "TODO(co) Direct3D 12 texture mipmap generation isn't implemented, yet")
+			SE_ASSERT(!generateMipmaps, "TODO(co) Direct3D 12 texture mipmap generation isn't implemented, yet")
 				if ( generateMipmaps )
 				{
 					mNumberOfMipmaps = 1;
@@ -3054,7 +3054,7 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0, "Direct3D 12 create texture 1D was called with invalid parameters")
+			SE_ASSERT(width > 0, "Direct3D 12 create texture 1D was called with invalid parameters")
 
 				// Create 1D texture resource, texture usage isn't supported
 				return RHI_NEW(Texture1D)(direct3D12Rhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -3065,7 +3065,7 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0 && numberOfSlices > 0, "Direct3D 12 create texture 1D array was called with invalid parameters")
+			SE_ASSERT(width > 0 && numberOfSlices > 0, "Direct3D 12 create texture 1D array was called with invalid parameters")
 
 				// Create 1D texture array resource, texture usage isn't supported
 				return RHI_NEW(Texture1DArray)(direct3D12Rhi, width, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -3076,7 +3076,7 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0 && height > 0, "Direct3D 12 create texture 2D was called with invalid parameters")
+			SE_ASSERT(width > 0 && height > 0, "Direct3D 12 create texture 2D was called with invalid parameters")
 
 				// Create 2D texture resource, texture usage isn't supported
 				return RHI_NEW(Texture2D)(direct3D12Rhi, width, height, textureFormat, data, textureFlags, numberOfMultisamples, optimizedTextureClearValue RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -3087,7 +3087,7 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0 && height > 0 && numberOfSlices > 0, "Direct3D 12 create texture 2D array was called with invalid parameters")
+			SE_ASSERT(width > 0 && height > 0 && numberOfSlices > 0, "Direct3D 12 create texture 2D array was called with invalid parameters")
 
 				// Create 2D texture array resource, texture usage isn't supported
 				return RHI_NEW(Texture2DArray)(direct3D12Rhi, width, height, numberOfSlices, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -3098,7 +3098,7 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0 && height > 0 && depth > 0, "Direct3D 12 create texture 3D was called with invalid parameters")
+			SE_ASSERT(width > 0 && height > 0 && depth > 0, "Direct3D 12 create texture 3D was called with invalid parameters")
 
 				// Create 3D texture resource, texture usage isn't supported
 				return RHI_NEW(Texture3D)(direct3D12Rhi, width, height, depth, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -3109,7 +3109,7 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0, "Direct3D 12 create texture cube was called with invalid parameters")
+			SE_ASSERT(width > 0, "Direct3D 12 create texture cube was called with invalid parameters")
 
 				// Create cube texture resource, texture usage isn't supported
 				return RHI_NEW(TextureCube)(direct3D12Rhi, width, textureFormat, data, textureFlags RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -3177,8 +3177,8 @@ namespace Direct3D12Rhi
 			mSamplerState(samplerState)
 		{
 			// Sanity checks
-			RHI_ASSERT(samplerState.filter != Rhi::FilterMode::UNKNOWN, "Direct3D 12 filter mode must not be unknown")
-				RHI_ASSERT(samplerState.maxAnisotropy <= direct3D12Rhi.getCapabilities().maximumAnisotropy, "Maximum Direct3D 12 anisotropy value violated")
+			SE_ASSERT(samplerState.filter != Rhi::FilterMode::UNKNOWN, "Direct3D 12 filter mode must not be unknown")
+				SE_ASSERT(samplerState.maxAnisotropy <= direct3D12Rhi.getCapabilities().maximumAnisotropy, "Maximum Direct3D 12 anisotropy value violated")
 		}
 
 		/**
@@ -3267,7 +3267,7 @@ namespace Direct3D12Rhi
 			mNumberOfColorAttachments(numberOfColorAttachments),
 			mDepthStencilAttachmentTextureFormat(depthStencilAttachmentTextureFormat)
 		{
-			RHI_ASSERT(mNumberOfColorAttachments < 8, "Invalid number of Direct3D 12 color attachments")
+			SE_ASSERT(mNumberOfColorAttachments < 8, "Invalid number of Direct3D 12 color attachments")
 				memcpy(mColorAttachmentTextureFormats, colorAttachmentTextureFormats, sizeof(Rhi::TextureFormat::Enum) * mNumberOfColorAttachments);
 		}
 
@@ -3315,7 +3315,7 @@ namespace Direct3D12Rhi
 		*/
 		[[nodiscard]] inline Rhi::TextureFormat::Enum getColorAttachmentTextureFormat(uint32_t colorAttachmentIndex) const
 		{
-			RHI_ASSERT(colorAttachmentIndex < mNumberOfColorAttachments, "Invalid Direct3D 12 color attachment index")
+			SE_ASSERT(colorAttachmentIndex < mNumberOfColorAttachments, "Invalid Direct3D 12 color attachment index")
 				return mColorAttachmentTextureFormats[colorAttachmentIndex];
 		}
 
@@ -3556,15 +3556,15 @@ namespace Direct3D12Rhi
 		{
 			// Query pool type dependent processing
 			// -> We don't support "Rhi::QueryResultFlags::WAIT"
-			RHI_ASSERT(firstQueryIndex < mNumberOfQueries, "Direct3D 12 out-of-bounds query index")
-				RHI_ASSERT((firstQueryIndex + numberOfQueries) <= mNumberOfQueries, "Direct3D 12 out-of-bounds query index")
+			SE_ASSERT(firstQueryIndex < mNumberOfQueries, "Direct3D 12 out-of-bounds query index")
+				SE_ASSERT((firstQueryIndex + numberOfQueries) <= mNumberOfQueries, "Direct3D 12 out-of-bounds query index")
 				D3D12_QUERY_TYPE d3d12QueryType = D3D12_QUERY_TYPE_OCCLUSION;
 			uint32_t numberOfBytesPerQuery = 0;
 			switch ( mQueryType )
 			{
 			case Rhi::QueryType::OCCLUSION:
 				{
-					RHI_ASSERT(1 == numberOfQueries || sizeof(uint64_t) == strideInBytes, "Direct3D 12 stride in bytes must be 8 bytes for occlusion query type")
+					SE_ASSERT(1 == numberOfQueries || sizeof(uint64_t) == strideInBytes, "Direct3D 12 stride in bytes must be 8 bytes for occlusion query type")
 						d3d12QueryType = D3D12_QUERY_TYPE_OCCLUSION;
 					numberOfBytesPerQuery = sizeof(uint64_t);
 					break;
@@ -3573,9 +3573,9 @@ namespace Direct3D12Rhi
 			case Rhi::QueryType::PIPELINE_STATISTICS:
 				{
 					static_assert(sizeof(Rhi::PipelineStatisticsQueryResult) == sizeof(D3D12_QUERY_DATA_PIPELINE_STATISTICS), "Direct3D 12 structure mismatch detected");
-					RHI_ASSERT(numberOfDataBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "Direct3D 12 out-of-memory query access")
-						RHI_ASSERT(1 == numberOfQueries || strideInBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "Direct3D 12 out-of-memory query access")
-						RHI_ASSERT(1 == numberOfQueries || sizeof(D3D12_QUERY_DATA_PIPELINE_STATISTICS) == strideInBytes, "Direct3D 12 stride in bytes must be 88 bytes for pipeline statistics query type")
+					SE_ASSERT(numberOfDataBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "Direct3D 12 out-of-memory query access")
+						SE_ASSERT(1 == numberOfQueries || strideInBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "Direct3D 12 out-of-memory query access")
+						SE_ASSERT(1 == numberOfQueries || sizeof(D3D12_QUERY_DATA_PIPELINE_STATISTICS) == strideInBytes, "Direct3D 12 stride in bytes must be 88 bytes for pipeline statistics query type")
 						d3d12QueryType = D3D12_QUERY_TYPE_PIPELINE_STATISTICS;
 					numberOfBytesPerQuery = sizeof(D3D12_QUERY_DATA_PIPELINE_STATISTICS);
 					break;
@@ -3583,7 +3583,7 @@ namespace Direct3D12Rhi
 
 			case Rhi::QueryType::TIMESTAMP:	// TODO(co) Convert time to nanoseconds, see e.g. http://reedbeta.com/blog/gpu-profiling-101/
 				{
-					RHI_ASSERT(1 == numberOfQueries || sizeof(uint64_t) == strideInBytes, "Direct3D 12 stride in bytes must be 8 bytes for timestamp query type")
+					SE_ASSERT(1 == numberOfQueries || sizeof(uint64_t) == strideInBytes, "Direct3D 12 stride in bytes must be 8 bytes for timestamp query type")
 						d3d12QueryType = D3D12_QUERY_TYPE_TIMESTAMP;
 					numberOfBytesPerQuery = sizeof(uint64_t);
 					break;
@@ -3684,7 +3684,7 @@ namespace Direct3D12Rhi
 			const RenderPass& d3d12RenderPass = static_cast<RenderPass&>(renderPass);
 
 			// Sanity check
-			RHI_ASSERT(1 == d3d12RenderPass.getNumberOfColorAttachments(), "There must be exactly one Direct3D 12 render pass color attachment")
+			SE_ASSERT(1 == d3d12RenderPass.getNumberOfColorAttachments(), "There must be exactly one Direct3D 12 render pass color attachment")
 
 				// Get the native window handle
 				const HWND hWnd = reinterpret_cast<HWND>(windowHandle.nativeWindowHandle);
@@ -4174,7 +4174,7 @@ namespace Direct3D12Rhi
 		void createDirect3D12Views()
 		{
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			RHI_ASSERT(nullptr != mDxgiSwapChain3, "Invalid Direct3D 12 DXGI swap chain 3")
+			SE_ASSERT(nullptr != mDxgiSwapChain3, "Invalid Direct3D 12 DXGI swap chain 3")
 
 				// TODO(co) Debug name gets lost when resizing a window, fix this
 
@@ -4310,7 +4310,7 @@ namespace Direct3D12Rhi
 		void waitForPreviousFrame()
 		{
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			RHI_ASSERT(nullptr != mDxgiSwapChain3, "Invalid Direct3D 12 DXGI swap chain 3")
+			SE_ASSERT(nullptr != mDxgiSwapChain3, "Invalid Direct3D 12 DXGI swap chain 3")
 
 				// TODO(co) This is the most simple but least effective approach and only meant for the Direct3D 12 RHI implementation kickoff.
 
@@ -4421,7 +4421,7 @@ namespace Direct3D12Rhi
 				for ( Rhi::ITexture** colorTexture = mColorTextures; colorTexture < colorTexturesEnd; ++colorTexture, ++colorFramebufferAttachments, ++d3d12DescriptorHeapRenderTargetView )
 				{
 					// Sanity check
-					RHI_ASSERT(nullptr != colorFramebufferAttachments->texture, "Invalid Direct3D 12 color framebuffer attachment texture")
+					SE_ASSERT(nullptr != colorFramebufferAttachments->texture, "Invalid Direct3D 12 color framebuffer attachment texture")
 
 						// TODO(co) Add security check: Is the given resource one of the currently used RHI?
 						*colorTexture = colorFramebufferAttachments->texture;
@@ -4435,8 +4435,8 @@ namespace Direct3D12Rhi
 							const Texture2D* texture2D = static_cast<Texture2D*>(*colorTexture);
 
 							// Sanity checks
-							RHI_ASSERT(colorFramebufferAttachments->mipmapIndex < Rhi::ITexture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid Direct3D 12 color framebuffer attachment mipmap index")
-								RHI_ASSERT(0 == colorFramebufferAttachments->layerIndex, "Invalid Direct3D 12 color framebuffer attachment layer index")
+							SE_ASSERT(colorFramebufferAttachments->mipmapIndex < Rhi::ITexture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid Direct3D 12 color framebuffer attachment mipmap index")
+								SE_ASSERT(0 == colorFramebufferAttachments->layerIndex, "Invalid Direct3D 12 color framebuffer attachment layer index")
 
 								// Update the framebuffer width and height if required
 								::detail::updateWidthHeight(colorFramebufferAttachments->mipmapIndex, texture2D->getWidth(), texture2D->getHeight(), mWidth, mHeight);
@@ -4528,7 +4528,7 @@ namespace Direct3D12Rhi
 			if ( nullptr != depthStencilFramebufferAttachment )
 			{
 				mDepthStencilTexture = depthStencilFramebufferAttachment->texture;
-				RHI_ASSERT(nullptr != mDepthStencilTexture, "Invalid Direct3D 12 depth stencil framebuffer attachment texture")
+				SE_ASSERT(nullptr != mDepthStencilTexture, "Invalid Direct3D 12 depth stencil framebuffer attachment texture")
 					mDepthStencilTexture->AddReference();
 
 				// Evaluate the depth stencil texture type
@@ -4539,8 +4539,8 @@ namespace Direct3D12Rhi
 						const Texture2D* texture2D = static_cast<Texture2D*>(mDepthStencilTexture);
 
 						// Sanity checks
-						RHI_ASSERT(depthStencilFramebufferAttachment->mipmapIndex < Rhi::ITexture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid Direct3D 12 depth stencil framebuffer attachment mipmap index")
-							RHI_ASSERT(0 == depthStencilFramebufferAttachment->layerIndex, "Invalid Direct3D 12 depth stencil framebuffer attachment layer index")
+						SE_ASSERT(depthStencilFramebufferAttachment->mipmapIndex < Rhi::ITexture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid Direct3D 12 depth stencil framebuffer attachment mipmap index")
+							SE_ASSERT(0 == depthStencilFramebufferAttachment->layerIndex, "Invalid Direct3D 12 depth stencil framebuffer attachment layer index")
 
 							// Update the framebuffer width and height if required
 							::detail::updateWidthHeight(depthStencilFramebufferAttachment->mipmapIndex, texture2D->getWidth(), texture2D->getHeight(), mWidth, mHeight);
@@ -4629,12 +4629,12 @@ namespace Direct3D12Rhi
 			// Validate the framebuffer width and height
 			if ( 0 == mWidth || UINT_MAX == mWidth )
 			{
-				RHI_ASSERT(false, "Invalid Direct3D 12 framebuffer width")
+				SE_ASSERT(false, "Invalid Direct3D 12 framebuffer width")
 					mWidth = 1;
 			}
 			if ( 0 == mHeight || UINT_MAX == mHeight )
 			{
-				RHI_ASSERT(false, "Invalid Direct3D 12 framebuffer height")
+				SE_ASSERT(false, "Invalid Direct3D 12 framebuffer height")
 					mHeight = 1;
 			}
 
@@ -6120,7 +6120,7 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 vertex shader bytecode is invalid")
+			SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 vertex shader bytecode is invalid")
 
 				// There's no need to check for "Rhi::Capabilities::vertexShader", we know there's vertex shader support
 				return RHI_NEW(VertexShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -6139,7 +6139,7 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 tessellation control shader bytecode is invalid")
+			SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 tessellation control shader bytecode is invalid")
 
 				// There's no need to check for "Rhi::Capabilities::maximumNumberOfPatchVertices", we know there's tessellation control shader support
 				return RHI_NEW(TessellationControlShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -6160,7 +6160,7 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 tessellation evaluation shader bytecode is invalid")
+			SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 tessellation evaluation shader bytecode is invalid")
 
 				// There's no need to check for "Rhi::Capabilities::maximumNumberOfPatchVertices", we know there's tessellation evaluation shader support
 				return RHI_NEW(TessellationEvaluationShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -6180,7 +6180,7 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 geometry shader bytecode is invalid")
+			SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 geometry shader bytecode is invalid")
 
 				// There's no need to check for "Rhi::Capabilities::maximumNumberOfGsOutputVertices", we know there's geometry shader support
 				// Ignore "gsInputPrimitiveTopology", it's directly set within HLSL
@@ -6204,7 +6204,7 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 fragment shader bytecode is invalid")
+			SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 fragment shader bytecode is invalid")
 
 				// There's no need to check for "Rhi::Capabilities::fragmentShader", we know there's fragment shader support
 				return RHI_NEW(FragmentShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -6222,8 +6222,8 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity checks
-			RHI_ASSERT(direct3D12Rhi.getCapabilities().meshShader, "Direct3D 12 task shader support is unavailable, DirectX 12 Ultimate needed")
-				RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 task shader bytecode is invalid")
+			SE_ASSERT(direct3D12Rhi.getCapabilities().meshShader, "Direct3D 12 task shader support is unavailable, DirectX 12 Ultimate needed")
+				SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 task shader bytecode is invalid")
 
 				// Create the task shader
 				return RHI_NEW(TaskShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -6234,7 +6234,7 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(direct3D12Rhi.getCapabilities().meshShader, "Direct3D 12 task shader support is unavailable, DirectX 12 Ultimate needed")
+			SE_ASSERT(direct3D12Rhi.getCapabilities().meshShader, "Direct3D 12 task shader support is unavailable, DirectX 12 Ultimate needed")
 
 				// Create the task shader
 				return RHI_NEW(TaskShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -6245,8 +6245,8 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity checks
-			RHI_ASSERT(direct3D12Rhi.getCapabilities().meshShader, "Direct3D 12 mesh shader support is unavailable, DirectX 12 Ultimate needed")
-				RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 mesh shader bytecode is invalid")
+			SE_ASSERT(direct3D12Rhi.getCapabilities().meshShader, "Direct3D 12 mesh shader support is unavailable, DirectX 12 Ultimate needed")
+				SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 mesh shader bytecode is invalid")
 
 				// Create the task shader
 				return RHI_NEW(MeshShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -6257,7 +6257,7 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity checks
-			RHI_ASSERT(direct3D12Rhi.getCapabilities().meshShader, "Direct3D 12 mesh shader support is unavailable, DirectX 12 Ultimate needed")
+			SE_ASSERT(direct3D12Rhi.getCapabilities().meshShader, "Direct3D 12 mesh shader support is unavailable, DirectX 12 Ultimate needed")
 
 				// Create the task shader
 				return RHI_NEW(MeshShaderHlsl)(direct3D12Rhi, shaderSourceCode.sourceCode, getOptimizationLevel(), shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -6268,7 +6268,7 @@ namespace Direct3D12Rhi
 			Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 compute shader bytecode is invalid")
+			SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Direct3D 12 compute shader bytecode is invalid")
 
 				// There's no need to check for "Rhi::Capabilities::computeShader", we know there's compute shader support
 				return RHI_NEW(ComputeShaderHlsl)(direct3D12Rhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -6290,11 +6290,11 @@ namespace Direct3D12Rhi
 			// -> Optimization: Comparing the shader language name by directly comparing the pointer address of
 			//    the name is safe because we know that we always reference to one and the same name address
 			// TODO(co) Add security check: Is the given resource one of the currently used RHI?
-			RHI_ASSERT(nullptr == vertexShader || vertexShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 vertex shader language mismatch")
-				RHI_ASSERT(nullptr == tessellationControlShader || tessellationControlShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 tessellation control shader language mismatch")
-				RHI_ASSERT(nullptr == tessellationEvaluationShader || tessellationEvaluationShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 tessellation evaluation shader language mismatch")
-				RHI_ASSERT(nullptr == geometryShader || geometryShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 geometry shader language mismatch")
-				RHI_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 fragment shader language mismatch")
+			SE_ASSERT(nullptr == vertexShader || vertexShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 vertex shader language mismatch")
+				SE_ASSERT(nullptr == tessellationControlShader || tessellationControlShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 tessellation control shader language mismatch")
+				SE_ASSERT(nullptr == tessellationEvaluationShader || tessellationEvaluationShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 tessellation evaluation shader language mismatch")
+				SE_ASSERT(nullptr == geometryShader || geometryShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 geometry shader language mismatch")
+				SE_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 fragment shader language mismatch")
 
 				// Create the graphics program
 				return RHI_NEW(GraphicsProgramHlsl)(direct3D12Rhi, static_cast<VertexShaderHlsl*>(vertexShader), static_cast<TessellationControlShaderHlsl*>(tessellationControlShader), static_cast<TessellationEvaluationShaderHlsl*>(tessellationEvaluationShader), static_cast<GeometryShaderHlsl*>(geometryShader), static_cast<FragmentShaderHlsl*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -6309,9 +6309,9 @@ namespace Direct3D12Rhi
 			// -> Optimization: Comparing the shader language name by directly comparing the pointer address of
 			//    the name is safe because we know that we always reference to one and the same name address
 			// TODO(co) Add security check: Is the given resource one of the currently used RHI?
-			RHI_ASSERT(nullptr == taskShader || taskShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 task shader language mismatch")
-				RHI_ASSERT(meshShader.getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 mesh shader language mismatch")
-				RHI_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 fragment shader language mismatch")
+			SE_ASSERT(nullptr == taskShader || taskShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 task shader language mismatch")
+				SE_ASSERT(meshShader.getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 mesh shader language mismatch")
+				SE_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::HLSL_NAME, "Direct3D 12 fragment shader language mismatch")
 
 				// Create the graphics program
 				return RHI_NEW(GraphicsProgramHlsl)(direct3D12Rhi, static_cast<TaskShaderHlsl*>(taskShader), static_cast<MeshShaderHlsl&>(meshShader), static_cast<FragmentShaderHlsl*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -6817,7 +6817,7 @@ namespace Direct3D12Rhi
 
 			// Sanity check
 			const Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-			RHI_ASSERT(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV == mD3D12DescriptorHeapType || D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER == mD3D12DescriptorHeapType, "Invalid Direct3D 12 descriptor heap type, must be \"D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV\" or \"D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER\"")
+			SE_ASSERT(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV == mD3D12DescriptorHeapType || D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER == mD3D12DescriptorHeapType, "Invalid Direct3D 12 descriptor heap type, must be \"D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV\" or \"D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER\"")
 
 				// Process all resources and add our reference to the RHI resource
 				if ( nullptr != samplerStates )
@@ -6843,7 +6843,7 @@ namespace Direct3D12Rhi
 				for ( uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources )
 				{
 					Rhi::IResource* resource = *resources;
-					RHI_ASSERT(nullptr != resource, "Invalid Direct3D 12 resource")
+					SE_ASSERT(nullptr != resource, "Invalid Direct3D 12 resource")
 						mResources[resourceIndex] = resource;
 					resource->AddReference();
 
@@ -6855,10 +6855,10 @@ namespace Direct3D12Rhi
 					case Rhi::ResourceType::INDEX_BUFFER:
 						{
 							// TODO(co)
-							RHI_ASSERT(false, "TODO(co) Implement me")
+							SE_ASSERT(false, "TODO(co) Implement me")
 								/*
 								const IndexBuffer* indexBuffer = static_cast<IndexBuffer*>(resource);
-								RHI_ASSERT(nullptr != indexBuffer->getD3D12Resource(), "Invalid Direct3D 12 index buffer resource")
+								SE_ASSERT(nullptr != indexBuffer->getD3D12Resource(), "Invalid Direct3D 12 index buffer resource")
 								const D3D12_CONSTANT_BUFFER_VIEW_DESC d3d12ConstantBufferViewDesc = { indexBuffer->getD3D12Resource()->GetGPUVirtualAddress(), indexBuffer->getNumberOfBytesOnGpu() };
 								d3d12Device.CreateConstantBufferView(&d3d12ConstantBufferViewDesc, d3d12CpuDescriptorHandle);
 								*/
@@ -6868,10 +6868,10 @@ namespace Direct3D12Rhi
 					case Rhi::ResourceType::VERTEX_BUFFER:
 						{
 							// TODO(co)
-							RHI_ASSERT(false, "TODO(co) Implement me")
+							SE_ASSERT(false, "TODO(co) Implement me")
 								/*
 								const VertexBuffer* vertexBuffer = static_cast<VertexBuffer*>(resource);
-								RHI_ASSERT(nullptr != vertexBuffer->getD3D12Resource(), "Invalid Direct3D 12 vertex buffer resource")
+								SE_ASSERT(nullptr != vertexBuffer->getD3D12Resource(), "Invalid Direct3D 12 vertex buffer resource")
 								const D3D12_CONSTANT_BUFFER_VIEW_DESC d3d12ConstantBufferViewDesc = { vertexBuffer->getD3D12Resource()->GetGPUVirtualAddress(), vertexBuffer->getNumberOfBytesOnGpu() };
 								d3d12Device.CreateConstantBufferView(&d3d12ConstantBufferViewDesc, d3d12CpuDescriptorHandle);
 								*/
@@ -6881,7 +6881,7 @@ namespace Direct3D12Rhi
 					case Rhi::ResourceType::TEXTURE_BUFFER:
 						{
 							const TextureBuffer* textureBuffer = static_cast<TextureBuffer*>(resource);
-							RHI_ASSERT(nullptr != textureBuffer->getD3D12Resource(), "Invalid Direct3D 12 texture buffer resource")
+							SE_ASSERT(nullptr != textureBuffer->getD3D12Resource(), "Invalid Direct3D 12 texture buffer resource")
 								const Rhi::TextureFormat::Enum textureFormat = textureBuffer->getTextureFormat();
 							D3D12_SHADER_RESOURCE_VIEW_DESC d3d12ShaderResourceViewDesc = {};
 							d3d12ShaderResourceViewDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
@@ -6896,10 +6896,10 @@ namespace Direct3D12Rhi
 					case Rhi::ResourceType::STRUCTURED_BUFFER:
 						{
 							// TODO(co)
-							RHI_ASSERT(false, "TODO(co) Implement me")
+							SE_ASSERT(false, "TODO(co) Implement me")
 								/*
 								const StructuredBuffer* structuredBuffer = static_cast<StructuredBuffer*>(resource);
-								RHI_ASSERT(nullptr != structuredBuffer->getD3D12Resource(), "Invalid Direct3D 12 structured buffer resource")
+								SE_ASSERT(nullptr != structuredBuffer->getD3D12Resource(), "Invalid Direct3D 12 structured buffer resource")
 								const D3D12_CONSTANT_BUFFER_VIEW_DESC d3d12ConstantBufferViewDesc = { structuredBuffer->getD3D12Resource()->GetGPUVirtualAddress(), structuredBuffer->getNumberOfBytesOnGpu() };
 								d3d12Device.CreateConstantBufferView(&d3d12ConstantBufferViewDesc, d3d12CpuDescriptorHandle);
 								*/
@@ -6909,10 +6909,10 @@ namespace Direct3D12Rhi
 					case Rhi::ResourceType::INDIRECT_BUFFER:
 						{
 							// TODO(co)
-							RHI_ASSERT(false, "TODO(co) Implement me")
+							SE_ASSERT(false, "TODO(co) Implement me")
 								/*
 								const IndirectBuffer* indirectBuffer = static_cast<IndirectBuffer*>(resource);
-								RHI_ASSERT(nullptr != indirectBuffer->getD3D12Resource(), "Invalid Direct3D 12 indirect buffer resource")
+								SE_ASSERT(nullptr != indirectBuffer->getD3D12Resource(), "Invalid Direct3D 12 indirect buffer resource")
 								const D3D12_CONSTANT_BUFFER_VIEW_DESC d3d12ConstantBufferViewDesc = { indirectBuffer->getD3D12Resource()->GetGPUVirtualAddress(), indirectBuffer->getNumberOfBytesOnGpu() };
 								d3d12Device.CreateConstantBufferView(&d3d12ConstantBufferViewDesc, d3d12CpuDescriptorHandle);
 								*/
@@ -6922,7 +6922,7 @@ namespace Direct3D12Rhi
 					case Rhi::ResourceType::UNIFORM_BUFFER:
 						{
 							const UniformBuffer* uniformBuffer = static_cast<UniformBuffer*>(resource);
-							RHI_ASSERT(nullptr != uniformBuffer->getD3D12Resource(), "Invalid Direct3D 12 uniform buffer resource")
+							SE_ASSERT(nullptr != uniformBuffer->getD3D12Resource(), "Invalid Direct3D 12 uniform buffer resource")
 								const D3D12_CONSTANT_BUFFER_VIEW_DESC d3d12ConstantBufferViewDesc = { uniformBuffer->getD3D12Resource()->GetGPUVirtualAddress(), uniformBuffer->getNumberOfBytesOnGpu() };
 							d3d12Device.CreateConstantBufferView(&d3d12ConstantBufferViewDesc, d3d12CpuDescriptorHandle);
 							break;
@@ -7045,7 +7045,7 @@ namespace Direct3D12Rhi
 								RHI_LOG(CRITICAL, "Invalid Direct3D 12 RHI implementation resource type")
 									break;
 							}
-							RHI_ASSERT(nullptr != d3d12Resource, "Invalid Direct3D 12 resource")
+							SE_ASSERT(nullptr != d3d12Resource, "Invalid Direct3D 12 resource")
 								d3d12Device.CreateShaderResourceView(d3d12Resource, &d3d12ShaderResourceViewDesc, d3d12CpuDescriptorHandle);
 							break;
 						}
@@ -7074,7 +7074,7 @@ namespace Direct3D12Rhi
 					}
 					d3d12CpuDescriptorHandle.ptr += descriptorSize;
 				}
-				RHI_ASSERT(d3d12CpuDescriptorHandle.ptr == descriptorHeap.getD3D12CpuDescriptorHandleForHeapStart().ptr + (mDescriptorHeapOffset + mNumberOfResources) * descriptorSize, "Direct3D 12 descriptor heap invalid")
+				SE_ASSERT(d3d12CpuDescriptorHandle.ptr == descriptorHeap.getD3D12CpuDescriptorHandleForHeapStart().ptr + (mDescriptorHeapOffset + mNumberOfResources) * descriptorSize, "Direct3D 12 descriptor heap invalid")
 			}
 			else
 			{
@@ -7086,7 +7086,7 @@ namespace Direct3D12Rhi
 				for ( uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources )
 				{
 					Rhi::IResource* resource = *resources;
-					RHI_ASSERT(nullptr != resource, "Invalid Direct3D 12 resource")
+					SE_ASSERT(nullptr != resource, "Invalid Direct3D 12 resource")
 						mResources[resourceIndex] = resource;
 					resource->AddReference();
 
@@ -7134,7 +7134,7 @@ namespace Direct3D12Rhi
 					}
 					d3d12CpuDescriptorHandle.ptr += descriptorSize;
 				}
-				RHI_ASSERT(d3d12CpuDescriptorHandle.ptr == descriptorHeap.getD3D12CpuDescriptorHandleForHeapStart().ptr + (mDescriptorHeapOffset + mNumberOfResources) * descriptorSize, "Direct3D 12 descriptor heap invalid")
+				SE_ASSERT(d3d12CpuDescriptorHandle.ptr == descriptorHeap.getD3D12CpuDescriptorHandleForHeapStart().ptr + (mDescriptorHeapOffset + mNumberOfResources) * descriptorSize, "Direct3D 12 descriptor heap invalid")
 			}
 		}
 
@@ -7243,24 +7243,24 @@ namespace Direct3D12Rhi
 	{
 		// Sanity checks
 		Direct3D12Rhi& direct3D12Rhi = static_cast<Direct3D12Rhi&>(getRhi());
-		RHI_ASSERT(numberOfResources > 0, "The number of Direct3D 12 resources must not be zero")
-			RHI_ASSERT(nullptr != resources, "The Direct3D 12 resource pointers must be valid")
+		SE_ASSERT(numberOfResources > 0, "The number of Direct3D 12 resources must not be zero")
+			SE_ASSERT(nullptr != resources, "The Direct3D 12 resource pointers must be valid")
 
 			// Figure out the Direct3D 12 descriptor heap type
 			D3D12_DESCRIPTOR_HEAP_TYPE d3d12DescriptorHeapType = D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES;
 		for ( uint32_t resourceIndex = 0; resourceIndex < numberOfResources; ++resourceIndex )
 		{
 			Rhi::IResource* resource = *resources;
-			RHI_ASSERT(nullptr != resource, "Invalid Direct3D 12 resource")
+			SE_ASSERT(nullptr != resource, "Invalid Direct3D 12 resource")
 				const Rhi::ResourceType resourceType = resource->getResourceType();
 			if ( Rhi::ResourceType::SAMPLER_STATE == resourceType )
 			{
-				RHI_ASSERT(D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES == d3d12DescriptorHeapType || D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER == d3d12DescriptorHeapType, "Direct3D 12 resource groups can't mix samplers with other resource types")
+				SE_ASSERT(D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES == d3d12DescriptorHeapType || D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER == d3d12DescriptorHeapType, "Direct3D 12 resource groups can't mix samplers with other resource types")
 					d3d12DescriptorHeapType = D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER;
 			}
 			else
 			{
-				RHI_ASSERT(D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES == d3d12DescriptorHeapType || D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV == d3d12DescriptorHeapType, "Direct3D 12 resource groups can't mix samplers with other resource types")
+				SE_ASSERT(D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES == d3d12DescriptorHeapType || D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV == d3d12DescriptorHeapType, "Direct3D 12 resource groups can't mix samplers with other resource types")
 					d3d12DescriptorHeapType = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 			}
 		}
@@ -7295,7 +7295,7 @@ namespace
 			void ExecuteCommandBuffer(const void* data, Rhi::IRhi& rhi)
 			{
 				const Rhi::Command::ExecuteCommandBuffer* realData = static_cast<const Rhi::Command::ExecuteCommandBuffer*>(data);
-				RHI_ASSERT(nullptr != realData->commandBufferToExecute, "The Direct3D 12 command buffer to execute must be valid")
+				SE_ASSERT(nullptr != realData->commandBufferToExecute, "The Direct3D 12 command buffer to execute must be valid")
 					rhi.submitCommandBuffer(*realData->commandBufferToExecute);
 			}
 

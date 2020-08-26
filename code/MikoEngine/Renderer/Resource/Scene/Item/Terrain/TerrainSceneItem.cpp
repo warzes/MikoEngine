@@ -140,7 +140,7 @@ namespace Renderer
 			// This array defines the outer width of each successive ring
 			static constexpr int WIDTHS[] = { 0, 16, 16, 16, 16, 16 };
 			mNumberOfTerrainTileRings = sizeof(WIDTHS) / sizeof(WIDTHS[0]) - 1;	// "WIDTHS[0]" doesn't define a ring hence -1
-			RHI_ASSERT(mNumberOfTerrainTileRings <= MAXIMUM_NUMBER_OF_TERRAIN_TILE_RINGS, "Invalid number of terrain tile rings")
+			SE_ASSERT(mNumberOfTerrainTileRings <= MAXIMUM_NUMBER_OF_TERRAIN_TILE_RINGS, "Invalid number of terrain tile rings")
 			Rhi::IBufferManager& bufferManager = renderer.getBufferManager();
 			createIndexBuffer(bufferManager);
 			float tileWidth = 0.125f;
@@ -176,7 +176,7 @@ namespace Renderer
 				indices[index++] = static_cast<uint16_t>(rowStart + x + 1);
 			}
 		}
-		RHI_ASSERT(::detail::NUMBER_OF_INDICES == index, "Invalid index")
+		SE_ASSERT(::detail::NUMBER_OF_INDICES == index, "Invalid index")
 
 		// Create the index buffer object (IBO)
 		mIndexBufferPtr = bufferManager.createIndexBuffer(sizeof(uint16_t) * ::detail::NUMBER_OF_INDICES, indices, 0, Rhi::BufferUsage::STATIC_DRAW, Rhi::IndexBufferFormat::UNSIGNED_SHORT RHI_RESOURCE_DEBUG_NAME("Terrain tile ring"));
@@ -185,8 +185,8 @@ namespace Renderer
 	void TerrainSceneItem::createTerrainTileRing(TerrainTileRing& terrainTileRing, Rhi::IBufferManager& bufferManager, int holeWidth, int outerWidth, float tileSize) const
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != mIndexBufferPtr, "The index buffer must be created before this method is called")
-		RHI_ASSERT((outerWidth - holeWidth) % 2 == 0, "Invalid outer/hole width")
+		SE_ASSERT(nullptr != mIndexBufferPtr, "The index buffer must be created before this method is called")
+		SE_ASSERT((outerWidth - holeWidth) % 2 == 0, "Invalid outer/hole width")
 
 		// Derive data
 		const int ringWidth = (outerWidth - holeWidth) / 2;	// No remainder - see assert above
@@ -204,8 +204,8 @@ namespace Renderer
 				for (int x = 0; x < outerWidth; ++x)
 				{
 					// Is in ring?
-					RHI_ASSERT(x >= 0 && x < outerWidth, "Invalid x")
-					RHI_ASSERT(y >= 0 && y < outerWidth, "Invalid y")
+					SE_ASSERT(x >= 0 && x < outerWidth, "Invalid x")
+					SE_ASSERT(y >= 0 && y < outerWidth, "Invalid y")
 					if (x < ringWidth || y < ringWidth || x >= outerWidth - ringWidth || y >= outerWidth - ringWidth)
 					{
 						::detail::InstanceData& instanceData = vertexBufferData[index];
@@ -275,7 +275,7 @@ namespace Renderer
 					}
 				}
 			}
-			RHI_ASSERT(index == numberOfTiles, "Invalid index")
+			SE_ASSERT(index == numberOfTiles, "Invalid index")
 
 			// Create the vertex buffer object (VBO)
 			vertexBuffer = bufferManager.createVertexBuffer(sizeof(::detail::InstanceData) * numberOfTiles, vertexBufferData, 0, Rhi::BufferUsage::STATIC_DRAW RHI_RESOURCE_DEBUG_NAME("Terrain tile ring"));

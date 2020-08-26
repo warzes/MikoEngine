@@ -70,8 +70,8 @@ namespace Renderer
 		[[nodiscard]] inline MaterialResourceId getMaterialResourceIdOfSubMeshLod(uint32_t subMeshIndex, uint8_t lodIndex) const
 		{
 			// The renderables contain all LODs, each LOD has the same number of renderables
-			RHI_ASSERT(subMeshIndex < getNumberOfSubMeshes(), "Invalid sub mesh index")
-			RHI_ASSERT(lodIndex < mRenderableManager.getNumberOfLods(), "Invalid LOD index")
+			SE_ASSERT(subMeshIndex < getNumberOfSubMeshes(), "Invalid sub mesh index")
+			SE_ASSERT(lodIndex < mRenderableManager.getNumberOfLods(), "Invalid LOD index")
 			return mRenderableManager.getRenderables()[subMeshIndex + lodIndex * getNumberOfSubMeshes()].getMaterialResourceId();
 		}
 

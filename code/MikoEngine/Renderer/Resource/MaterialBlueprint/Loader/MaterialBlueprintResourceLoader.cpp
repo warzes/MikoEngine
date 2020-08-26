@@ -87,7 +87,7 @@ namespace Renderer
 			// Read in the root signature header
 			v1MaterialBlueprint::RootSignatureHeader rootSignatureHeader;
 			mMemoryFile.read(&rootSignatureHeader, sizeof(v1MaterialBlueprint::RootSignatureHeader));
-			RHI_ASSERT(rootSignatureHeader.numberOfRootParameters > 0 || 0 == rootSignatureHeader.numberOfDescriptorRanges, "Invalid root signature without root parameters but with descriptor ranges detected")
+			SE_ASSERT(rootSignatureHeader.numberOfRootParameters > 0 || 0 == rootSignatureHeader.numberOfDescriptorRanges, "Invalid root signature without root parameters but with descriptor ranges detected")
 
 			// Load in root signature data
 			if (rootSignatureHeader.numberOfRootParameters > 0)
@@ -188,7 +188,7 @@ namespace Renderer
 				uniformBuffer.uniformBufferNumberOfBytes = uniformBufferHeader.uniformBufferNumberOfBytes;
 
 				// Sanity check
-				RHI_ASSERT(uniformBufferHeader.numberOfElementProperties > 0, "Invalid uniform buffer without any element properties detected")
+				SE_ASSERT(uniformBufferHeader.numberOfElementProperties > 0, "Invalid uniform buffer without any element properties detected")
 
 				// Read in the uniform buffer property elements
 				MaterialBlueprintResource::UniformBufferElementProperties& uniformBufferElementProperties = uniformBuffer.uniformBufferElementProperties;
@@ -323,7 +323,7 @@ namespace Renderer
 
 					case MaterialBlueprintResource::BufferUsage::LIGHT:
 						// Error!
-						RHI_ASSERT(false, "Invalid buffer usage")
+						SE_ASSERT(false, "Invalid buffer usage")
 						break;
 				}
 			}
@@ -428,7 +428,7 @@ namespace Renderer
 						// Sanity check
 						#if SE_DEBUG
 							GET_MATERIAL_PROPERTY_USAGE
-							RHI_ASSERT(globalMaterialProperty->getValueType() == materialProperty.getValueType() && globalMaterialProperty->getUsage() == materialPropertyUsage, "Invalid property")
+							SE_ASSERT(globalMaterialProperty->getValueType() == materialProperty.getValueType() && globalMaterialProperty->getUsage() == materialPropertyUsage, "Invalid property")
 						#endif
 					}
 				}

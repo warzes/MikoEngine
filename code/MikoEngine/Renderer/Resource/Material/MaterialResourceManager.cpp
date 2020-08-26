@@ -38,7 +38,7 @@ namespace Renderer
 	MaterialResourceId MaterialResourceManager::createMaterialResourceByAssetId(AssetId assetId, AssetId materialBlueprintAssetId, MaterialTechniqueId materialTechniqueId)
 	{
 		// Sanity check
-		RHI_ASSERT(nullptr == getMaterialResourceByAssetId(assetId), "Material resource is not allowed to exist, yet")
+		SE_ASSERT(nullptr == getMaterialResourceByAssetId(assetId), "Material resource is not allowed to exist, yet")
 
 		// Create the material resource instance
 		MaterialResource& materialResource = mInternalResourceManager->getResources().addElement();
@@ -85,7 +85,7 @@ namespace Renderer
 			else
 			{
 				// Error!
-				RHI_ASSERT(false, "Invalid material blueprint resource")
+				SE_ASSERT(false, "Invalid material blueprint resource")
 			}
 		}
 
@@ -96,7 +96,7 @@ namespace Renderer
 
 	MaterialResourceId MaterialResourceManager::createMaterialResourceByCloning(MaterialResourceId parentMaterialResourceId, AssetId assetId)
 	{
-		RHI_ASSERT(mInternalResourceManager->getResources().getElementById(parentMaterialResourceId).getLoadingState() == IResource::LoadingState::LOADED, "Invalid parent material resource ID")
+		SE_ASSERT(mInternalResourceManager->getResources().getElementById(parentMaterialResourceId).getLoadingState() == IResource::LoadingState::LOADED, "Invalid parent material resource ID")
 
 		// Create the material resource instance
 		MaterialResource& materialResource = mInternalResourceManager->getResources().addElement();

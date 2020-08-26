@@ -148,7 +148,7 @@ namespace
 
 			void setValue(uint32_t position, bool bValue)
 			{
-				RHI_ASSERT(position < _N, "Invalid position")
+				SE_ASSERT(position < _N, "Invalid position")
 				const uint32_t idx  = (position >> _bits);
 				const uint32_t mask = (1u << (position & _mask));
 				if (bValue)
@@ -163,7 +163,7 @@ namespace
 
 			void set(uint32_t position)
 			{
-				RHI_ASSERT(position < _N, "Invalid position")
+				SE_ASSERT(position < _N, "Invalid position")
 				const uint32_t idx  = (position >> _bits);
 				const uint32_t mask = (1u << (position & _mask));
 				mValues[idx] |= mask;
@@ -171,7 +171,7 @@ namespace
 
 			void unset(uint32_t position)
 			{
-				RHI_ASSERT(position < _N, "Invalid position")
+				SE_ASSERT(position < _N, "Invalid position")
 				const uint32_t idx  = (position >> _bits);
 				const uint32_t mask = (1u << (position & _mask));
 				mValues[idx] &= ~mask;
@@ -179,7 +179,7 @@ namespace
 
 			bool test(uint32_t position) const
 			{
-				RHI_ASSERT(position < _N, "Invalid position")
+				SE_ASSERT(position < _N, "Invalid position")
 				const uint32_t idx  = (position >> _bits);
 				const uint32_t mask = (1u << (position & _mask));
 				return (mValues[idx] & mask) != 0u;
@@ -205,7 +205,7 @@ namespace
 				mStart(start),
 				mEnd(original->size())
 			{
-				RHI_ASSERT(start <= original->size(), "Invalid start")
+				SE_ASSERT(start <= original->size(), "Invalid start")
 			}
 
 			SubStringRef(const std::string* original, size_t _start, size_t _end) :
@@ -213,8 +213,8 @@ namespace
 				mStart(_start),
 				mEnd(_end)
 			{
-				RHI_ASSERT(_start <= _end, "Invalid start")
-				RHI_ASSERT(_end <= original->size(), "Invalid end")
+				SE_ASSERT(_start <= _end, "Invalid start")
+				SE_ASSERT(_end <= original->size(), "Invalid end")
 			}
 
 			SubStringRef(const std::string* original, std::string::const_iterator _start) :
@@ -443,7 +443,7 @@ namespace
 				++it;
 			}
 
-			RHI_ASSERT(nesting >= -1, "Invalid nesting")
+			SE_ASSERT(nesting >= -1, "Invalid nesting")
 
 			if (it != en && nesting < 0)
 			{
@@ -481,7 +481,7 @@ namespace
 				++it;
 			}
 
-			RHI_ASSERT(nesting >= -1, "Invalid nesting")
+			SE_ASSERT(nesting >= -1, "Invalid nesting")
 
 			size_t returnValue = std::string::npos;
 			if (it != en && nesting < 0)
@@ -865,7 +865,7 @@ namespace Renderer
 				else
 				{
 					// TODO(co) Error handling
-					RHI_ASSERT(false, "Unknown shader piece resource")
+					SE_ASSERT(false, "Unknown shader piece resource")
 				}
 			}
 		}

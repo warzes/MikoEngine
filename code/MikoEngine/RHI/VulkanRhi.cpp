@@ -247,7 +247,7 @@ namespace VulkanRhi
 		// Rasterizer (RS) stage
 
 		// Sanity check
-		RHI_ASSERT(numberOfViewports > 0 && nullptr != viewports, "Invalid Vulkan rasterizer state viewports")
+		SE_ASSERT(numberOfViewports > 0 && nullptr != viewports, "Invalid Vulkan rasterizer state viewports")
 
 		// Set Vulkan viewport
 		// -> We're using the "VK_KHR_maintenance1"-extension ("VK_KHR_MAINTENANCE1_EXTENSION_NAME"-definition) to be able to specify a negative viewport height,
@@ -264,7 +264,7 @@ namespace VulkanRhi
 		// Rasterizer (RS) stage
 
 		// Sanity check
-		RHI_ASSERT(numberOfScissorRectangles > 0 && nullptr != scissorRectangles, "Invalid Vulkan rasterizer state scissor rectangles")
+		SE_ASSERT(numberOfScissorRectangles > 0 && nullptr != scissorRectangles, "Invalid Vulkan rasterizer state scissor rectangles")
 
 		// Set Vulkan scissor
 		// TODO(co) Add support for multiple scissor rectangles. Change "Rhi::ScissorRectangle" to Vulkan style to make it the primary API on the long run?
@@ -316,7 +316,7 @@ namespace VulkanRhi
 
 				// Set clear color and clear depth stencil values
 				const uint32_t numberOfColorAttachments = static_cast<const RenderPass&>(mRenderTarget->getRenderPass()).getNumberOfColorAttachments();
-				RHI_ASSERT(numberOfColorAttachments < 8, "Vulkan only supports 7 render pass color attachments")
+				SE_ASSERT(numberOfColorAttachments < 8, "Vulkan only supports 7 render pass color attachments")
 				for (uint32_t i = 0; i < numberOfColorAttachments; ++i)
 				{
 					mVkClearValues[i] = VkClearValue{0.0f, 0.0f, 0.0f, 1.0f};
@@ -329,13 +329,13 @@ namespace VulkanRhi
 	void VulkanRhi::clearGraphics(uint32_t clearFlags, const float color[4], float z, uint32_t stencil)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != mRenderTarget, "Can't execute Vulkan clear command without a render target set")
-		RHI_ASSERT(!mInsideVulkanRenderPass, "Can't execute clear command inside a Vulkan render pass")
-		RHI_ASSERT(z >= 0.0f && z <= 1.0f, "The Vulkan clear graphics z value must be between [0, 1] (inclusive)")
+		SE_ASSERT(nullptr != mRenderTarget, "Can't execute Vulkan clear command without a render target set")
+		SE_ASSERT(!mInsideVulkanRenderPass, "Can't execute clear command inside a Vulkan render pass")
+		SE_ASSERT(z >= 0.0f && z <= 1.0f, "The Vulkan clear graphics z value must be between [0, 1] (inclusive)")
 
 		// Clear color
 		const uint32_t numberOfColorAttachments = static_cast<const RenderPass&>(mRenderTarget->getRenderPass()).getNumberOfColorAttachments();
-		RHI_ASSERT(numberOfColorAttachments < 8, "Vulkan only supports 7 render pass color attachments")
+		SE_ASSERT(numberOfColorAttachments < 8, "Vulkan only supports 7 render pass color attachments")
 		if (clearFlags & Rhi::ClearFlag::COLOR)
 		{
 			for (uint32_t i = 0; i < numberOfColorAttachments; ++i)
@@ -356,7 +356,7 @@ namespace VulkanRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, indirectBuffer)
-		RHI_ASSERT(numberOfDraws > 0, "Number of Vulkan draws must not be zero")
+		SE_ASSERT(numberOfDraws > 0, "Number of Vulkan draws must not be zero")
 		// It's possible to draw without "mVertexArray"
 
 		// Start Vulkan render pass, if necessary
@@ -372,8 +372,8 @@ namespace VulkanRhi
 	void VulkanRhi::drawGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != emulationData, "The Vulkan emulation data must be valid")
-		RHI_ASSERT(numberOfDraws > 0, "The number of Vulkan draws must not be zero")
+		SE_ASSERT(nullptr != emulationData, "The Vulkan emulation data must be valid")
+		SE_ASSERT(numberOfDraws > 0, "The number of Vulkan draws must not be zero")
 		// It's possible to draw without "mVertexArray"
 
 		// TODO(co) Currently no buffer overflow check due to lack of interface provided data
@@ -412,9 +412,9 @@ namespace VulkanRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, indirectBuffer)
-		RHI_ASSERT(numberOfDraws > 0, "Number of Vulkan draws must not be zero")
-		RHI_ASSERT(nullptr != mVertexArray, "Vulkan draw indexed needs a set vertex array")
-		RHI_ASSERT(nullptr != mVertexArray->getIndexBuffer(), "Vulkan draw indexed needs a set vertex array which contains an index buffer")
+		SE_ASSERT(numberOfDraws > 0, "Number of Vulkan draws must not be zero")
+		SE_ASSERT(nullptr != mVertexArray, "Vulkan draw indexed needs a set vertex array")
+		SE_ASSERT(nullptr != mVertexArray->getIndexBuffer(), "Vulkan draw indexed needs a set vertex array which contains an index buffer")
 
 		// Start Vulkan render pass, if necessary
 		if (!mInsideVulkanRenderPass)
@@ -429,10 +429,10 @@ namespace VulkanRhi
 	void VulkanRhi::drawIndexedGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != emulationData, "The Vulkan emulation data must be valid")
-		RHI_ASSERT(numberOfDraws > 0, "The number of Vulkan draws must not be zero")
-		RHI_ASSERT(nullptr != mVertexArray, "Vulkan draw indexed needs a set vertex array")
-		RHI_ASSERT(nullptr != mVertexArray->getIndexBuffer(), "Vulkan draw indexed needs a set vertex array which contains an index buffer")
+		SE_ASSERT(nullptr != emulationData, "The Vulkan emulation data must be valid")
+		SE_ASSERT(numberOfDraws > 0, "The number of Vulkan draws must not be zero")
+		SE_ASSERT(nullptr != mVertexArray, "Vulkan draw indexed needs a set vertex array")
+		SE_ASSERT(nullptr != mVertexArray->getIndexBuffer(), "Vulkan draw indexed needs a set vertex array which contains an index buffer")
 
 		// TODO(co) Currently no buffer overflow check due to lack of interface provided data
 		emulationData += indirectBufferOffset;
@@ -469,7 +469,7 @@ namespace VulkanRhi
 	void VulkanRhi::drawMeshTasks([[maybe_unused]] const Rhi::IIndirectBuffer& indirectBuffer, [[maybe_unused]] uint32_t indirectBufferOffset, [[maybe_unused]] uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
+		SE_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
 
 		// TODO(co) Implement me
 		// vkCmdDrawMeshTasksIndirectNV
@@ -479,8 +479,8 @@ namespace VulkanRhi
 	void VulkanRhi::drawMeshTasksEmulated([[maybe_unused]] const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != emulationData, "The Vulkan emulation data must be valid")
-		RHI_ASSERT(numberOfDraws > 0, "The number of Vulkan draws must not be zero")
+		SE_ASSERT(nullptr != emulationData, "The Vulkan emulation data must be valid")
+		SE_ASSERT(numberOfDraws > 0, "The number of Vulkan draws must not be zero")
 
 		// TODO(co) Currently no buffer overflow check due to lack of interface provided data
 		emulationData += indirectBufferOffset;
@@ -662,7 +662,7 @@ namespace VulkanRhi
 		{
 			if (nullptr != vkCmdDebugMarkerInsertEXT)
 			{
-				RHI_ASSERT(nullptr != name, "Vulkan debug marker names must not be a null pointer")
+				SE_ASSERT(nullptr != name, "Vulkan debug marker names must not be a null pointer")
 				const VkDebugMarkerMarkerInfoEXT vkDebugMarkerMarkerInfoEXT =
 				{
 					VK_STRUCTURE_TYPE_DEBUG_MARKER_MARKER_INFO_EXT,	// sType (VkStructureType)
@@ -683,7 +683,7 @@ namespace VulkanRhi
 		{
 			if (nullptr != vkCmdDebugMarkerBeginEXT)
 			{
-				RHI_ASSERT(nullptr != name, "Vulkan debug event names must not be a null pointer")
+				SE_ASSERT(nullptr != name, "Vulkan debug event names must not be a null pointer")
 				const VkDebugMarkerMarkerInfoEXT vkDebugMarkerMarkerInfoEXT =
 				{
 					VK_STRUCTURE_TYPE_DEBUG_MARKER_MARKER_INFO_EXT,	// sType (VkStructureType)
@@ -742,7 +742,7 @@ namespace VulkanRhi
 
 	const char* VulkanRhi::getShaderLanguageName([[maybe_unused]] uint32_t index) const
 	{
-		RHI_ASSERT(index < getNumberOfShaderLanguages(), "Vulkan: Shader language index is out-of-bounds")
+		SE_ASSERT(index < getNumberOfShaderLanguages(), "Vulkan: Shader language index is out-of-bounds")
 		return ::detail::GLSL_NAME;
 	}
 
@@ -785,7 +785,7 @@ namespace VulkanRhi
 
 	Rhi::IQueryPool* VulkanRhi::createQueryPool(Rhi::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		RHI_ASSERT(numberOfQueries > 0, "Vulkan: Number of queries mustn't be zero")
+		SE_ASSERT(numberOfQueries > 0, "Vulkan: Number of queries mustn't be zero")
 		return RHI_NEW(QueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
@@ -793,7 +793,7 @@ namespace VulkanRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, renderPass)
-		RHI_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "Vulkan: The provided native window handle or render window must not be a null handle / null pointer")
+		SE_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "Vulkan: The provided native window handle or render window must not be a null handle / null pointer")
 
 		// Create the swap chain
 		return RHI_NEW(SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -826,9 +826,9 @@ namespace VulkanRhi
 	Rhi::IGraphicsPipelineState* VulkanRhi::createGraphicsPipelineState(const Rhi::GraphicsPipelineState& graphicsPipelineState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != graphicsPipelineState.rootSignature, "Vulkan: Invalid graphics pipeline state root signature")
-		RHI_ASSERT(nullptr != graphicsPipelineState.graphicsProgram, "Vulkan: Invalid graphics pipeline state graphics program")
-		RHI_ASSERT(nullptr != graphicsPipelineState.renderPass, "Vulkan: Invalid graphics pipeline state render pass")
+		SE_ASSERT(nullptr != graphicsPipelineState.rootSignature, "Vulkan: Invalid graphics pipeline state root signature")
+		SE_ASSERT(nullptr != graphicsPipelineState.graphicsProgram, "Vulkan: Invalid graphics pipeline state graphics program")
+		SE_ASSERT(nullptr != graphicsPipelineState.renderPass, "Vulkan: Invalid graphics pipeline state render pass")
 
 		// Create graphics pipeline state
 		uint16_t id = 0;
@@ -1169,7 +1169,7 @@ namespace VulkanRhi
 	{
 		// Sanity check
 		#if SE_DEBUG
-			RHI_ASSERT(false == mDebugBetweenBeginEndScene, "Vulkan: Begin scene was called while scene rendering is already in progress, missing end scene call?")
+			SE_ASSERT(false == mDebugBetweenBeginEndScene, "Vulkan: Begin scene was called while scene rendering is already in progress, missing end scene call?")
 			mDebugBetweenBeginEndScene = true;
 		#endif
 
@@ -1198,7 +1198,7 @@ namespace VulkanRhi
 	void VulkanRhi::submitCommandBuffer(const Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity check
-		RHI_ASSERT(!commandBuffer.isEmpty(), "The Vulkan command buffer to execute mustn't be empty")
+		SE_ASSERT(!commandBuffer.isEmpty(), "The Vulkan command buffer to execute mustn't be empty")
 
 		// Loop through all commands
 		const uint8_t* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
@@ -1222,7 +1222,7 @@ namespace VulkanRhi
 	{
 		// Sanity check
 		#if SE_DEBUG
-			RHI_ASSERT(true == mDebugBetweenBeginEndScene, "Vulkan: End scene was called while scene rendering isn't in progress, missing start scene call?")
+			SE_ASSERT(true == mDebugBetweenBeginEndScene, "Vulkan: End scene was called while scene rendering isn't in progress, missing start scene call?")
 			mDebugBetweenBeginEndScene = false;
 		#endif
 
@@ -1382,12 +1382,12 @@ namespace VulkanRhi
 	void VulkanRhi::beginVulkanRenderPass()
 	{
 		// Sanity checks
-		RHI_ASSERT(!mInsideVulkanRenderPass, "We're already inside a Vulkan render pass")
-		RHI_ASSERT(nullptr != mRenderTarget, "Can't begin a Vulkan render pass without a render target set")
+		SE_ASSERT(!mInsideVulkanRenderPass, "We're already inside a Vulkan render pass")
+		SE_ASSERT(nullptr != mRenderTarget, "Can't begin a Vulkan render pass without a render target set")
 
 		// Start Vulkan render pass
 		const uint32_t numberOfAttachments = static_cast<const RenderPass&>(mRenderTarget->getRenderPass()).getNumberOfAttachments();
-		RHI_ASSERT(numberOfAttachments < 9, "Vulkan only supports 8 render pass attachments")
+		SE_ASSERT(numberOfAttachments < 9, "Vulkan only supports 8 render pass attachments")
 		switch (mRenderTarget->getResourceType())
 		{
 			case Rhi::ResourceType::SWAP_CHAIN:

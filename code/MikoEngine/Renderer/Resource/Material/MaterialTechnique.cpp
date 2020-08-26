@@ -69,7 +69,7 @@ namespace Renderer
 		if (IsValid(getAssignedMaterialSlot()))
 		{
 			MaterialBufferManager* materialBufferManager = getMaterialBufferManager();
-			RHI_ASSERT(nullptr != materialBufferManager, "Invalid material buffer manager")
+			SE_ASSERT(nullptr != materialBufferManager, "Invalid material buffer manager")
 			materialBufferManager->releaseSlot(*this);
 		}
 	}
@@ -77,8 +77,8 @@ namespace Renderer
 	void MaterialTechnique::fillGraphicsCommandBuffer(const IRenderer& renderer, Rhi::CommandBuffer& commandBuffer, uint32_t& resourceGroupRootParameterIndex, Rhi::IResourceGroup** resourceGroup)
 	{
 		// Sanity check
-		RHI_ASSERT(IsValid(mMaterialBlueprintResourceId), "Invalid material blueprint resource ID")
-		RHI_ASSERT(nullptr != resourceGroup, "The RHI resource group pointer must be valid")
+		SE_ASSERT(IsValid(mMaterialBlueprintResourceId), "Invalid material blueprint resource ID")
+		SE_ASSERT(nullptr != resourceGroup, "The RHI resource group pointer must be valid")
 
 		{ // Bind the material buffer manager
 			MaterialBufferManager* materialBufferManager = getMaterialBufferManager();
@@ -95,8 +95,8 @@ namespace Renderer
 	void MaterialTechnique::fillComputeCommandBuffer(const IRenderer& renderer, Rhi::CommandBuffer& commandBuffer, uint32_t& resourceGroupRootParameterIndex, Rhi::IResourceGroup** resourceGroup)
 	{
 		// Sanity check
-		RHI_ASSERT(IsValid(mMaterialBlueprintResourceId), "Invalid material blueprint resource ID")
-		RHI_ASSERT(nullptr != resourceGroup, "The RHI resource group pointer must be valid")
+		SE_ASSERT(IsValid(mMaterialBlueprintResourceId), "Invalid material blueprint resource ID")
+		SE_ASSERT(nullptr != resourceGroup, "The RHI resource group pointer must be valid")
 
 		{ // Bind the material buffer manager
 			MaterialBufferManager* materialBufferManager = getMaterialBufferManager();
@@ -300,7 +300,7 @@ namespace Renderer
 
 				// Get material blueprint resource
 				const MaterialBlueprintResource* materialBlueprintResource = getMaterialResourceManager().getRenderer().getMaterialBlueprintResourceManager().tryGetById(mMaterialBlueprintResourceId);
-				RHI_ASSERT(nullptr != materialBlueprintResource, "Invalid material blueprint resource")
+				SE_ASSERT(nullptr != materialBlueprintResource, "Invalid material blueprint resource")
 
 				// Create texture resource group
 				std::vector<Rhi::IResource*> resources;
@@ -326,14 +326,14 @@ namespace Renderer
 				{
 					// Set texture resource
 					TextureResource* textureResource = textureResourceManager.tryGetById(textures[i].textureResourceId);
-					RHI_ASSERT(nullptr != textureResource, "Invalid texture resource")
+					SE_ASSERT(nullptr != textureResource, "Invalid texture resource")
 					resources[i + textureStartIndex] = textureResource->getTexturePtr();
-					RHI_ASSERT(nullptr != resources[i + textureStartIndex], "Invalid resource")
+					SE_ASSERT(nullptr != resources[i + textureStartIndex], "Invalid resource")
 
 					// Set sampler state, if there's one (e.g. texel fetch instead of sampling might be used)
 					if (IsValid(materialBlueprintResourceTextures[i].samplerStateIndex))
 					{
-						RHI_ASSERT(materialBlueprintResourceTextures[i].samplerStateIndex < materialBlueprintResourceSamplerStates.size(), "Invalid sampler state index")
+						SE_ASSERT(materialBlueprintResourceTextures[i].samplerStateIndex < materialBlueprintResourceSamplerStates.size(), "Invalid sampler state index")
 						samplerStates[i + textureStartIndex] = materialBlueprintResourceSamplerStates[materialBlueprintResourceTextures[i].samplerStateIndex].samplerStatePtr;
 					}
 					else

@@ -1,4 +1,6 @@
-#pragma once
+﻿#pragma once
+
+// TODO: логгер взять старый, с многопоточностью
 
 #define SE_LOG_INFO(x)    logger::Log(x, std::string(__FILE__), __LINE__, logger::LEVEL_INFO)
 #define SE_LOG_WARNING(x) logger::Log(x, std::string(__FILE__), __LINE__, logger::LEVEL_WARNING)

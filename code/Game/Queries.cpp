@@ -99,9 +99,9 @@ void Queries::update(double delta)
 	// Submit command buffer to the RHI implementation
 	m_commandBuffer.submitToRhi(*rhi);
 	// Sanity checks
-	RHI_ASSERT(nullptr != mOcclusionQueryPool, "Invalid occlusion query pool");
-	RHI_ASSERT(nullptr != mPipelineStatisticsQueryPool, "Invalid pipeline statistics query pool");
-	RHI_ASSERT(nullptr != mTimestampQueryPool, "Invalid timestamp query pool");
+	SE_ASSERT(nullptr != mOcclusionQueryPool, "Invalid occlusion query pool");
+	SE_ASSERT(nullptr != mPipelineStatisticsQueryPool, "Invalid pipeline statistics query pool");
+	SE_ASSERT(nullptr != mTimestampQueryPool, "Invalid timestamp query pool");
 
 	{ // Occlusion query pool
 		uint64_t numberOfSamples = 0;
@@ -158,13 +158,13 @@ void Queries::window_resized(int width, int height)
 void Queries::fillCommandBuffer()
 {
 	// Sanity checks
-	RHI_ASSERT(m_commandBuffer.isEmpty(), "The command buffer is already filled");
-	RHI_ASSERT(nullptr != m_rootSignature, "Invalid root signature");
-	RHI_ASSERT(nullptr != m_graphicsPipelineState, "Invalid graphics pipeline state");
-	RHI_ASSERT(nullptr != m_vertexArray, "Invalid vertex array");
-	RHI_ASSERT(nullptr != mOcclusionQueryPool, "Invalid occlusion query pool");
-	RHI_ASSERT(nullptr != mPipelineStatisticsQueryPool, "Invalid pipeline statistics query pool");
-	RHI_ASSERT(nullptr != mTimestampQueryPool, "Invalid timestamp query pool");
+	SE_ASSERT(m_commandBuffer.isEmpty(), "The command buffer is already filled");
+	SE_ASSERT(nullptr != m_rootSignature, "Invalid root signature");
+	SE_ASSERT(nullptr != m_graphicsPipelineState, "Invalid graphics pipeline state");
+	SE_ASSERT(nullptr != m_vertexArray, "Invalid vertex array");
+	SE_ASSERT(nullptr != mOcclusionQueryPool, "Invalid occlusion query pool");
+	SE_ASSERT(nullptr != mPipelineStatisticsQueryPool, "Invalid pipeline statistics query pool");
+	SE_ASSERT(nullptr != mTimestampQueryPool, "Invalid timestamp query pool");
 
 	// Scoped debug event
 	COMMAND_SCOPED_DEBUG_EVENT_FUNCTION(m_commandBuffer);

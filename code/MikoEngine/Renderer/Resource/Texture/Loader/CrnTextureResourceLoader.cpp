@@ -86,7 +86,7 @@ namespace Renderer
 		crnd::crn_texture_info crnTextureInfo;
 		if (!crnd::crnd_get_texture_info(mFileData, mNumberOfUsedFileDataBytes, &crnTextureInfo))
 		{
-			RHI_ASSERT(false, "crnd_get_texture_info() failed")
+			SE_ASSERT(false, "crnd_get_texture_info() failed")
 			return;
 		}
 		mWidth  = crnTextureInfo.m_width;
@@ -94,7 +94,7 @@ namespace Renderer
 		mCubeMap = (crnTextureInfo.m_faces > 1);
 
 		// Sanity check
-		RHI_ASSERT(!mCubeMap || mWidth == mHeight, "The width and height of a cube map must be identical")
+		SE_ASSERT(!mCubeMap || mWidth == mHeight, "The width and height of a cube map must be identical")
 
 		// Get the RHI texture format
 		switch (crnTextureInfo.m_format)
@@ -135,7 +135,7 @@ namespace Renderer
 			default:
 				// Error!
 				// TODO(co)
-				RHI_ASSERT(false, "Invalid format")
+				SE_ASSERT(false, "Invalid format")
 				return;
 		}
 
@@ -145,7 +145,7 @@ namespace Renderer
 		crnd::crnd_unpack_context crndUnpackContext = crnd::crnd_unpack_begin(mFileData, mNumberOfUsedFileDataBytes);
 		if (nullptr == crndUnpackContext)
 		{
-			RHI_ASSERT(false, "crnd_unpack_begin() failed")
+			SE_ASSERT(false, "crnd_unpack_begin() failed")
 			return;
 		}
 
@@ -223,7 +223,7 @@ namespace Renderer
 				{
 					// Free allocated memory
 					crnd::crnd_unpack_end(crndUnpackContext);
-					RHI_ASSERT(false, "Failed transcoding texture")
+					SE_ASSERT(false, "Failed transcoding texture")
 					return;
 				}
 			}
@@ -256,7 +256,7 @@ namespace Renderer
 		if (mCubeMap)
 		{
 			// Cube texture
-			RHI_ASSERT(mWidth == mHeight, "Cube texture width and height must be identical")
+			SE_ASSERT(mWidth == mHeight, "Cube texture width and height must be identical")
 			return mRenderer.getTextureManager().createTextureCube(mWidth, static_cast<Rhi::TextureFormat::Enum>(mTextureFormat), mImageData, flags, Rhi::TextureUsage::IMMUTABLE RHI_RESOURCE_DEBUG_NAME(getAsset().virtualFilename));
 		}
 		else if (1 == mWidth || 1 == mHeight)

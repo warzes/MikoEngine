@@ -77,7 +77,7 @@ namespace OpenGLRhi
 				return GL_LINEAR;	// There's no special setting in OpenGL
 
 			case Rhi::FilterMode::UNKNOWN:
-				RHI_ASSERT(false, "OpenGL filter mode must not be unknown")
+				SE_ASSERT(false, "OpenGL filter mode must not be unknown")
 					return GL_NEAREST;
 
 			default:
@@ -156,7 +156,7 @@ namespace OpenGLRhi
 				return hasMipmaps ? GL_LINEAR_MIPMAP_LINEAR : GL_LINEAR;	// There's no special setting in OpenGL
 
 			case Rhi::FilterMode::UNKNOWN:
-				RHI_ASSERT(false, "OpenGL filter mode must not be unknown")
+				SE_ASSERT(false, "OpenGL filter mode must not be unknown")
 					return GL_NEAREST;
 
 			default:
@@ -201,7 +201,7 @@ namespace OpenGLRhi
 				return GL_COMPARE_REF_TO_TEXTURE;
 
 			case Rhi::FilterMode::UNKNOWN:
-				RHI_ASSERT(false, "OpenGL filter mode must not be unknown")
+				SE_ASSERT(false, "OpenGL filter mode must not be unknown")
 					return GL_NEAREST;
 
 			default:

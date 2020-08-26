@@ -79,7 +79,7 @@ namespace Renderer
 		} while (!everythingFlushed);
 
 		// Sanity check
-		RHI_ASSERT(0 == mNumberOfInFlightLoadRequests, "Invalid number of in flight load requests")
+		SE_ASSERT(0 == mNumberOfInFlightLoadRequests, "Invalid number of in flight load requests")
 	}
 
 	void ResourceStreamer::dispatch()
@@ -209,7 +209,7 @@ namespace Renderer
 							if (resourceLoaderType.numberOfInstances < 5)
 							{
 								loadRequest.resourceLoader = loadRequest.resourceManager->createResourceLoaderInstance(resourceLoaderTypeId);
-								RHI_ASSERT(nullptr != loadRequest.resourceLoader, "Invalid load request resource loader")
+								SE_ASSERT(nullptr != loadRequest.resourceLoader, "Invalid load request resource loader")
 								++resourceLoaderType.numberOfInstances;
 							}
 							else
@@ -270,7 +270,7 @@ namespace Renderer
 						else
 						{
 							// Error! This is horrible, now we've got a zombie inside the resource streamer. We could let it crash, but maybe the zombie won't directly eat brains.
-							RHI_ASSERT(false, "We should never end up in here")
+							SE_ASSERT(false, "We should never end up in here")
 						}
 					}
 					else
@@ -343,7 +343,7 @@ namespace Renderer
 					// Get the waiting resource streamer load request and immediately release our resource manager mutex
 					LoadRequest waitingLoadRequest = waitingLoadRequests.front();
 					waitingLoadRequests.pop_front();
-					RHI_ASSERT(0 != mDeserializationWaitingQueueRequests, "Invalid deserialization waiting queue requests")
+					SE_ASSERT(0 != mDeserializationWaitingQueueRequests, "Invalid deserialization waiting queue requests")
 					--mDeserializationWaitingQueueRequests;
 					resourceManagerMutexLock.unlock();
 
@@ -357,13 +357,13 @@ namespace Renderer
 			else
 			{
 				// Error! This shouldn't be possible if we're in here
-				RHI_ASSERT(false, "We should never end up in here")
+				SE_ASSERT(false, "We should never end up in here")
 			}
 		}
 
 		// The last thing we do: Update the resource loading state
 		loadRequest.getResource().setLoadingState(loadRequest.loadingFailed ? IResource::LoadingState::FAILED : IResource::LoadingState::LOADED);
-		RHI_ASSERT(0 != mNumberOfInFlightLoadRequests, "Invalid number of in flight load requests")
+		SE_ASSERT(0 != mNumberOfInFlightLoadRequests, "Invalid number of in flight load requests")
 		--mNumberOfInFlightLoadRequests;
 	}
 

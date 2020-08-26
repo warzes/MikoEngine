@@ -93,24 +93,24 @@ namespace Renderer
 
 		inline virtual void read(void* destinationBuffer, size_t numberOfBytes) override
 		{
-			RHI_ASSERT(nullptr != destinationBuffer, "Letting a file read into a null destination buffer is not allowed")
-			RHI_ASSERT(0 != numberOfBytes, "Letting a file read zero bytes is not allowed")
-			RHI_ASSERT((mCurrentDataPointer - mDecompressedData.data()) + numberOfBytes <= mDecompressedData.size(), "Invalid number of bytes")
+			SE_ASSERT(nullptr != destinationBuffer, "Letting a file read into a null destination buffer is not allowed")
+			SE_ASSERT(0 != numberOfBytes, "Letting a file read zero bytes is not allowed")
+			SE_ASSERT((mCurrentDataPointer - mDecompressedData.data()) + numberOfBytes <= mDecompressedData.size(), "Invalid number of bytes")
 			memcpy(destinationBuffer, mCurrentDataPointer, numberOfBytes);
 			mCurrentDataPointer += numberOfBytes;
 		}
 
 		inline virtual void skip(size_t numberOfBytes) override
 		{
-			RHI_ASSERT(0 != numberOfBytes, "Letting a file skip zero bytes is not allowed")
-			RHI_ASSERT((mCurrentDataPointer - mDecompressedData.data()) + numberOfBytes <= mDecompressedData.size(), "Invalid number of bytes")
+			SE_ASSERT(0 != numberOfBytes, "Letting a file skip zero bytes is not allowed")
+			SE_ASSERT((mCurrentDataPointer - mDecompressedData.data()) + numberOfBytes <= mDecompressedData.size(), "Invalid number of bytes")
 			mCurrentDataPointer += numberOfBytes;
 		}
 
 		inline virtual void write(const void* sourceBuffer, size_t numberOfBytes) override
 		{
-			RHI_ASSERT(nullptr != sourceBuffer, "Letting a file write from a null source buffer is not allowed")
-			RHI_ASSERT(0 != numberOfBytes, "Letting a file write zero bytes is not allowed")
+			SE_ASSERT(nullptr != sourceBuffer, "Letting a file write from a null source buffer is not allowed")
+			SE_ASSERT(0 != numberOfBytes, "Letting a file write zero bytes is not allowed")
 			std::copy(static_cast<const uint8_t*>(sourceBuffer), static_cast<const uint8_t*>(sourceBuffer) + numberOfBytes, std::back_inserter(mDecompressedData));
 		}
 

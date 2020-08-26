@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RHI/DefaultAssert.h"
+#include "Core/AssertMacros.h"
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
@@ -100,7 +100,7 @@ namespace Renderer
 		[[nodiscard]] static inline uint32_t calculateFNV(const char* string)
 		{
 			// Sanity check
-			RHI_ASSERT(nullptr != string, "The string must be valid to be able to calculate a FNV1a32 hash")
+			SE_ASSERT(nullptr != string, "The string must be valid to be able to calculate a FNV1a32 hash")
 
 			// 32-bit FNV-1a implementation basing on http://www.isthe.com/chongo/tech/comp/fnv/
 			uint32_t hash = FNV1a_INITIAL_HASH_32;

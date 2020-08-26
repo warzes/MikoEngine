@@ -63,8 +63,8 @@ namespace Renderer
 	void TextureInstanceBufferManager::startupBufferFilling(const MaterialBlueprintResource& materialBlueprintResource, Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != mCurrentInstanceBuffer, "Invalid current instance buffer")
-		RHI_ASSERT(IsInvalid(materialBlueprintResource.getComputeShaderBlueprintResourceId()), "Invalid compute shader blueprint resource ID")
+		SE_ASSERT(nullptr != mCurrentInstanceBuffer, "Invalid current instance buffer")
+		SE_ASSERT(IsInvalid(materialBlueprintResource.getComputeShaderBlueprintResourceId()), "Invalid compute shader blueprint resource ID")
 
 		// Map the current instance buffer
 		mapCurrentInstanceBuffer();
@@ -75,8 +75,8 @@ namespace Renderer
 		if (nullptr != instanceUniformBuffer)
 		{
 			// Sanity checks
-			RHI_ASSERT(nullptr != instanceTextureBuffer, "Invalid instance texture buffer")
-			RHI_ASSERT(instanceUniformBuffer->rootParameterIndex == instanceTextureBuffer->rootParameterIndex, "Invalid root parameter index")
+			SE_ASSERT(nullptr != instanceTextureBuffer, "Invalid instance texture buffer")
+			SE_ASSERT(instanceUniformBuffer->rootParameterIndex == instanceTextureBuffer->rootParameterIndex, "Invalid root parameter index")
 
 			// Create resource group, if needed
 			if (nullptr == mCurrentInstanceBuffer->resourceGroup)
@@ -94,13 +94,13 @@ namespace Renderer
 	uint32_t TextureInstanceBufferManager::fillBuffer(const glm::dvec3& worldSpaceCameraPosition, const MaterialBlueprintResource& materialBlueprintResource, PassBufferManager* passBufferManager, const MaterialBlueprintResource::UniformBuffer& instanceUniformBuffer, const Renderable& renderable, MaterialTechnique& materialTechnique, Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != mCurrentInstanceBuffer, "Invalid current instance buffer")
-		RHI_ASSERT(nullptr != mStartUniformBufferPointer, "Invalid start uniform buffer pointer")
-		RHI_ASSERT(nullptr != mCurrentUniformBufferPointer, "Invalid current uniform buffer pointer")
-		RHI_ASSERT(nullptr != mStartTextureBufferPointer, "Invalid start texture buffer pointer")
-		RHI_ASSERT(nullptr != mCurrentTextureBufferPointer, "Invalid current texture buffer pointer")
-		// RHI_ASSERT(0 == mStartInstanceLocation, "Invalid start instance location")	// Not done by intent
-		RHI_ASSERT(MaterialBlueprintResource::BufferUsage::INSTANCE == instanceUniformBuffer.bufferUsage, "Currently only the uniform buffer instance buffer usage is supported")
+		SE_ASSERT(nullptr != mCurrentInstanceBuffer, "Invalid current instance buffer")
+		SE_ASSERT(nullptr != mStartUniformBufferPointer, "Invalid start uniform buffer pointer")
+		SE_ASSERT(nullptr != mCurrentUniformBufferPointer, "Invalid current uniform buffer pointer")
+		SE_ASSERT(nullptr != mStartTextureBufferPointer, "Invalid start texture buffer pointer")
+		SE_ASSERT(nullptr != mCurrentTextureBufferPointer, "Invalid current texture buffer pointer")
+		// SE_ASSERT(0 == mStartInstanceLocation, "Invalid start instance location")	// Not done by intent
+		SE_ASSERT(MaterialBlueprintResource::BufferUsage::INSTANCE == instanceUniformBuffer.bufferUsage, "Currently only the uniform buffer instance buffer usage is supported")
 
 		// Get relevant data
 		const Transform& objectSpaceToWorldSpaceTransform = renderable.getRenderableManager().getTransform();
@@ -142,7 +142,7 @@ namespace Renderer
 			if (nullptr != skeletonResource)
 			{
 				const uint32_t numberOfBytes = skeletonResource->getTotalNumberOfBoneSpaceDataBytes();
-				RHI_ASSERT(numberOfBytes <= mMaximumTextureBufferSize, "The skeleton has too many bones for the available maximum texture buffer size")
+				SE_ASSERT(numberOfBytes <= mMaximumTextureBufferSize, "The skeleton has too many bones for the available maximum texture buffer size")
 				newNeededTextureBufferSize += numberOfBytes;
 			}
 
@@ -181,7 +181,7 @@ namespace Renderer
 				if (!materialBlueprintResourceListener.fillInstanceValue(uniformBufferElementProperty.getReferenceValue(), mCurrentUniformBufferPointer, valueTypeNumberOfBytes, instanceTextureBufferStartIndex))
 				{
 					// Error!
-					RHI_ASSERT(false, "Can't resolve reference")
+					SE_ASSERT(false, "Can't resolve reference")
 				}
 			}
 			else if (MaterialProperty::Usage::GLOBAL_REFERENCE == usage)
@@ -207,7 +207,7 @@ namespace Renderer
 					else
 					{
 						// Error!
-						RHI_ASSERT(false, "Can't resolve reference")
+						SE_ASSERT(false, "Can't resolve reference")
 					}
 				}
 			}
@@ -221,7 +221,7 @@ namespace Renderer
 			else
 			{
 				// Error!
-				RHI_ASSERT(false, "Invalid property")
+				SE_ASSERT(false, "Invalid property")
 			}
 
 			// Next property
@@ -250,9 +250,9 @@ namespace Renderer
 			if (nullptr != skeletonResource)
 			{
 				const size_t numberOfBytes = skeletonResource->getTotalNumberOfBoneSpaceDataBytes();
-				RHI_ASSERT(numberOfBytes <= mMaximumTextureBufferSize, "The skeleton has too many bones for the available maximum texture buffer size")
+				SE_ASSERT(numberOfBytes <= mMaximumTextureBufferSize, "The skeleton has too many bones for the available maximum texture buffer size")
 				const uint8_t* boneSpaceData = skeletonResource->getBoneSpaceData();
-				RHI_ASSERT(nullptr != boneSpaceData, "Invalid bone space data")
+				SE_ASSERT(nullptr != boneSpaceData, "Invalid bone space data")
 				memcpy(mCurrentTextureBufferPointer, boneSpaceData, numberOfBytes);
 				mCurrentTextureBufferPointer += numberOfBytes / sizeof(float);
 			}
@@ -308,11 +308,11 @@ namespace Renderer
 		if (nullptr != mCurrentInstanceBuffer && !mCurrentInstanceBuffer->mapped)
 		{
 			// Sanity checks: Only one mapped instance buffer at a time
-			RHI_ASSERT(nullptr == mStartUniformBufferPointer, "Invalid start uniform buffer pointer")
-			RHI_ASSERT(nullptr == mCurrentUniformBufferPointer, "Invalid current uniform buffer pointer")
-			RHI_ASSERT(nullptr == mStartTextureBufferPointer, "Invalid start texture buffer pointer")
-			RHI_ASSERT(nullptr == mCurrentTextureBufferPointer, "Invalid current texture buffer pointer")
-			RHI_ASSERT(0 == mStartInstanceLocation, "Invalid start instance location")
+			SE_ASSERT(nullptr == mStartUniformBufferPointer, "Invalid start uniform buffer pointer")
+			SE_ASSERT(nullptr == mCurrentUniformBufferPointer, "Invalid current uniform buffer pointer")
+			SE_ASSERT(nullptr == mStartTextureBufferPointer, "Invalid start texture buffer pointer")
+			SE_ASSERT(nullptr == mCurrentTextureBufferPointer, "Invalid current texture buffer pointer")
+			SE_ASSERT(0 == mStartInstanceLocation, "Invalid start instance location")
 
 			// Map instance buffer
 			Rhi::IRhi& rhi = mRenderer.getRhi();
@@ -321,13 +321,13 @@ namespace Renderer
 			{
 				mStartUniformBufferPointer = mCurrentUniformBufferPointer = static_cast<uint8_t*>(mappedSubresource.data);
 			}
-			RHI_ASSERT(nullptr != mStartUniformBufferPointer, "Invalid start uniform buffer pointer")
+			SE_ASSERT(nullptr != mStartUniformBufferPointer, "Invalid start uniform buffer pointer")
 			if (rhi.map(*mCurrentInstanceBuffer->textureBuffer, 0, Rhi::MapType::WRITE_DISCARD, 0, mappedSubresource))
 			{
 				mStartTextureBufferPointer = mCurrentTextureBufferPointer = static_cast<float*>(mappedSubresource.data);
 				mCurrentInstanceBuffer->mapped = true;
 			}
-			RHI_ASSERT(nullptr != mStartTextureBufferPointer, "Invalid start texture buffer pointer")
+			SE_ASSERT(nullptr != mStartTextureBufferPointer, "Invalid start texture buffer pointer")
 		}
 	}
 
@@ -336,11 +336,11 @@ namespace Renderer
 		if (nullptr != mCurrentInstanceBuffer && mCurrentInstanceBuffer->mapped)
 		{
 			// Sanity checks
-			RHI_ASSERT(nullptr != mStartUniformBufferPointer, "Invalid start uniform buffer pointer")
-			RHI_ASSERT(nullptr != mCurrentUniformBufferPointer, "Invalid current uniform buffer pointer")
-			RHI_ASSERT(nullptr != mStartTextureBufferPointer, "Invalid start texture buffer pointer")
-			RHI_ASSERT(nullptr != mCurrentTextureBufferPointer, "Invalid current texture buffer pointer")
-			// RHI_ASSERT(0 == mStartInstanceLocation, "Invalid start instance location")	// Not done by intent
+			SE_ASSERT(nullptr != mStartUniformBufferPointer, "Invalid start uniform buffer pointer")
+			SE_ASSERT(nullptr != mCurrentUniformBufferPointer, "Invalid current uniform buffer pointer")
+			SE_ASSERT(nullptr != mStartTextureBufferPointer, "Invalid start texture buffer pointer")
+			SE_ASSERT(nullptr != mCurrentTextureBufferPointer, "Invalid current texture buffer pointer")
+			// SE_ASSERT(0 == mStartInstanceLocation, "Invalid start instance location")	// Not done by intent
 
 			// Unmap instance buffer
 			Rhi::IRhi& rhi = mRenderer.getRhi();

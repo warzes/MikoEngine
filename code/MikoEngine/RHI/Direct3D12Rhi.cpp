@@ -345,7 +345,7 @@ namespace Direct3D12Rhi
 		// Rasterizer (RS) stage
 
 		// Sanity check
-		RHI_ASSERT(numberOfViewports > 0 && nullptr != viewports, "Invalid Direct3D 12 rasterizer state viewports")
+		SE_ASSERT(numberOfViewports > 0 && nullptr != viewports, "Invalid Direct3D 12 rasterizer state viewports")
 
 		// Set the Direct3D 12 viewports
 		// -> "Rhi::Viewport" directly maps to Direct3D 12, do not change it
@@ -358,7 +358,7 @@ namespace Direct3D12Rhi
 		// Rasterizer (RS) stage
 
 		// Sanity check
-		RHI_ASSERT(numberOfScissorRectangles > 0 && nullptr != scissorRectangles, "Invalid Direct3D 12 rasterizer state scissor rectangles")
+		SE_ASSERT(numberOfScissorRectangles > 0 && nullptr != scissorRectangles, "Invalid Direct3D 12 rasterizer state scissor rectangles")
 
 		// Set the Direct3D 12 scissor rectangles
 		// -> "Rhi::ScissorRectangle" directly maps to Direct3D 9 & 10 & 11 & 12, do not change it
@@ -577,7 +577,7 @@ namespace Direct3D12Rhi
 		// -> No resource transition required in here, it's handled inside "Direct3D12Rhi::omSetRenderTarget()"
 
 		// Sanity check
-		RHI_ASSERT(z >= 0.0f && z <= 1.0f, "The Direct3D 12 clear graphics z value must be between [0, 1] (inclusive)")
+		SE_ASSERT(z >= 0.0f && z <= 1.0f, "The Direct3D 12 clear graphics z value must be between [0, 1] (inclusive)")
 
 		// Begin debug event
 		RHI_BEGIN_DEBUG_EVENT_FUNCTION(this)
@@ -707,7 +707,7 @@ namespace Direct3D12Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, indirectBuffer)
-		RHI_ASSERT(numberOfDraws > 0, "Number of Direct3D 12 draws must not be zero")
+		SE_ASSERT(numberOfDraws > 0, "Number of Direct3D 12 draws must not be zero")
 		// It's possible to draw without "mVertexArray"
 
 		// Execute Direct3D 12 indirect
@@ -718,8 +718,8 @@ namespace Direct3D12Rhi
 	void Direct3D12Rhi::drawGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != emulationData, "The Direct3D 12 emulation data must be valid")
-		RHI_ASSERT(numberOfDraws > 0, "The number of Direct3D 12 draws must not be zero")
+		SE_ASSERT(nullptr != emulationData, "The Direct3D 12 emulation data must be valid")
+		SE_ASSERT(numberOfDraws > 0, "The number of Direct3D 12 draws must not be zero")
 
 		// TODO(co) Currently no buffer overflow check due to lack of interface provided data
 		emulationData += indirectBufferOffset;
@@ -758,9 +758,9 @@ namespace Direct3D12Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, indirectBuffer)
-		RHI_ASSERT(numberOfDraws > 0, "Number of Direct3D 12 draws must not be zero")
-		RHI_ASSERT(nullptr != mVertexArray, "Direct3D 12 draw indexed needs a set vertex array")
-		RHI_ASSERT(nullptr != mVertexArray->getIndexBuffer(), "Direct3D 12 draw indexed needs a set vertex array which contains an index buffer")
+		SE_ASSERT(numberOfDraws > 0, "Number of Direct3D 12 draws must not be zero")
+		SE_ASSERT(nullptr != mVertexArray, "Direct3D 12 draw indexed needs a set vertex array")
+		SE_ASSERT(nullptr != mVertexArray->getIndexBuffer(), "Direct3D 12 draw indexed needs a set vertex array which contains an index buffer")
 
 		// Execute Direct3D 12 indirect
 		const IndirectBuffer& d3d12IndirectBuffer = static_cast<const IndirectBuffer&>(indirectBuffer);
@@ -770,8 +770,8 @@ namespace Direct3D12Rhi
 	void Direct3D12Rhi::drawIndexedGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != emulationData, "The Direct3D 12 emulation data must be valid")
-		RHI_ASSERT(numberOfDraws > 0, "The number of Direct3D 12 draws must not be zero")
+		SE_ASSERT(nullptr != emulationData, "The Direct3D 12 emulation data must be valid")
+		SE_ASSERT(numberOfDraws > 0, "The number of Direct3D 12 draws must not be zero")
 
 		// TODO(co) Currently no buffer overflow check due to lack of interface provided data
 		emulationData += indirectBufferOffset;
@@ -810,7 +810,7 @@ namespace Direct3D12Rhi
 	void Direct3D12Rhi::drawMeshTasks([[maybe_unused]] const Rhi::IIndirectBuffer& indirectBuffer, [[maybe_unused]] uint32_t indirectBufferOffset, [[maybe_unused]] uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
+		SE_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
 
 		// TODO(co) Implement me
 	}
@@ -818,8 +818,8 @@ namespace Direct3D12Rhi
 	void Direct3D12Rhi::drawMeshTasksEmulated([[maybe_unused]] const uint8_t* emulationData, uint32_t, [[maybe_unused]] uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != emulationData, "The null emulation data must be valid")
-		RHI_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
+		SE_ASSERT(nullptr != emulationData, "The null emulation data must be valid")
+		SE_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
 
 		// TODO(co) Implement me
 	}
@@ -943,8 +943,8 @@ namespace Direct3D12Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, queryPool)
-		RHI_ASSERT(firstQueryIndex < static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "Direct3D 12 out-of-bounds query index")
-		RHI_ASSERT((firstQueryIndex + numberOfQueries) <= static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "Direct3D 12 out-of-bounds query index")
+		SE_ASSERT(firstQueryIndex < static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "Direct3D 12 out-of-bounds query index")
+		SE_ASSERT((firstQueryIndex + numberOfQueries) <= static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "Direct3D 12 out-of-bounds query index")
 
 		// Nothing to do in here for Direct3D 12
 	}
@@ -956,7 +956,7 @@ namespace Direct3D12Rhi
 
 		// Query pool type dependent processing
 		const QueryPool& d3d12QueryPool = static_cast<const QueryPool&>(queryPool);
-		RHI_ASSERT(queryIndex < d3d12QueryPool.getNumberOfQueries(), "Direct3D 12 out-of-bounds query index")
+		SE_ASSERT(queryIndex < d3d12QueryPool.getNumberOfQueries(), "Direct3D 12 out-of-bounds query index")
 		switch (d3d12QueryPool.getQueryType())
 		{
 			case Rhi::QueryType::OCCLUSION:
@@ -968,7 +968,7 @@ namespace Direct3D12Rhi
 				break;
 
 			case Rhi::QueryType::TIMESTAMP:
-				RHI_ASSERT(false, "Direct3D 12 begin query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
+				SE_ASSERT(false, "Direct3D 12 begin query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
 				break;
 		}
 	}
@@ -980,7 +980,7 @@ namespace Direct3D12Rhi
 
 		// Query pool type dependent processing
 		const QueryPool& d3d12QueryPool = static_cast<const QueryPool&>(queryPool);
-		RHI_ASSERT(queryIndex < d3d12QueryPool.getNumberOfQueries(), "Direct3D 12 out-of-bounds query index")
+		SE_ASSERT(queryIndex < d3d12QueryPool.getNumberOfQueries(), "Direct3D 12 out-of-bounds query index")
 		switch (d3d12QueryPool.getQueryType())
 		{
 			case Rhi::QueryType::OCCLUSION:
@@ -992,7 +992,7 @@ namespace Direct3D12Rhi
 				break;
 
 			case Rhi::QueryType::TIMESTAMP:
-				RHI_ASSERT(false, "Direct3D 12 end query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
+				SE_ASSERT(false, "Direct3D 12 end query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
 				break;
 		}
 	}
@@ -1004,15 +1004,15 @@ namespace Direct3D12Rhi
 
 		// Query pool type dependent processing
 		const QueryPool& d3d12QueryPool = static_cast<const QueryPool&>(queryPool);
-		RHI_ASSERT(queryIndex < d3d12QueryPool.getNumberOfQueries(), "Direct3D 12 out-of-bounds query index")
+		SE_ASSERT(queryIndex < d3d12QueryPool.getNumberOfQueries(), "Direct3D 12 out-of-bounds query index")
 		switch (d3d12QueryPool.getQueryType())
 		{
 			case Rhi::QueryType::OCCLUSION:
-				RHI_ASSERT(false, "Direct3D 12 write timestamp query isn't allowed for occlusion queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
+				SE_ASSERT(false, "Direct3D 12 write timestamp query isn't allowed for occlusion queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
 				break;
 
 			case Rhi::QueryType::PIPELINE_STATISTICS:
-				RHI_ASSERT(false, "Direct3D 12 write timestamp query isn't allowed for pipeline statistics queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
+				SE_ASSERT(false, "Direct3D 12 write timestamp query isn't allowed for pipeline statistics queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
 				break;
 
 			case Rhi::QueryType::TIMESTAMP:
@@ -1030,7 +1030,7 @@ namespace Direct3D12Rhi
 		{
 			if (nullptr != mD3D12GraphicsCommandList)
 			{
-				RHI_ASSERT(nullptr != name, "Direct3D 12 debug marker names must not be a null pointer")
+				SE_ASSERT(nullptr != name, "Direct3D 12 debug marker names must not be a null pointer")
 				const UINT size = static_cast<UINT>((strlen(name) + 1) * sizeof(name[0]));
 				mD3D12GraphicsCommandList->SetMarker(DirectX::Detail::PIX_EVENT_ANSI_VERSION, name, size);
 			}
@@ -1040,7 +1040,7 @@ namespace Direct3D12Rhi
 		{
 			if (nullptr != mD3D12GraphicsCommandList)
 			{
-				RHI_ASSERT(nullptr != name, "Direct3D 12 debug event names must not be a null pointer")
+				SE_ASSERT(nullptr != name, "Direct3D 12 debug event names must not be a null pointer")
 				const UINT size = static_cast<UINT>((strlen(name) + 1) * sizeof(name[0]));
 				mD3D12GraphicsCommandList->BeginEvent(DirectX::Detail::PIX_EVENT_ANSI_VERSION, name, size);
 			}
@@ -1082,7 +1082,7 @@ namespace Direct3D12Rhi
 
 	const char* Direct3D12Rhi::getShaderLanguageName([[maybe_unused]] uint32_t index) const
 	{
-		RHI_ASSERT(index < getNumberOfShaderLanguages(), "Direct3D 12: Shader language index is out-of-bounds")
+		SE_ASSERT(index < getNumberOfShaderLanguages(), "Direct3D 12: Shader language index is out-of-bounds")
 		return ::detail::HLSL_NAME;
 	}
 
@@ -1124,7 +1124,7 @@ namespace Direct3D12Rhi
 
 	Rhi::IQueryPool* Direct3D12Rhi::createQueryPool([[maybe_unused]] Rhi::QueryType queryType, [[maybe_unused]] uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		RHI_ASSERT(numberOfQueries > 0, "Direct3D 12: Number of queries mustn't be zero")
+		SE_ASSERT(numberOfQueries > 0, "Direct3D 12: Number of queries mustn't be zero")
 		return RHI_NEW(QueryPool)(*this, queryType, numberOfQueries RHI_RESOURCE_DEBUG_PASS_PARAMETER);
 	}
 
@@ -1132,7 +1132,7 @@ namespace Direct3D12Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, renderPass)
-		RHI_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle, "Direct3D 12: The provided native window handle must not be a null handle")
+		SE_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle, "Direct3D 12: The provided native window handle must not be a null handle")
 
 		// Create the swap chain
 		return RHI_NEW(SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -1165,9 +1165,9 @@ namespace Direct3D12Rhi
 	Rhi::IGraphicsPipelineState* Direct3D12Rhi::createGraphicsPipelineState(const Rhi::GraphicsPipelineState& graphicsPipelineState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != graphicsPipelineState.rootSignature, "Direct3D 12: Invalid graphics pipeline state root signature")
-		RHI_ASSERT(nullptr != graphicsPipelineState.graphicsProgram, "Direct3D 12: Invalid graphics pipeline state graphics program")
-		RHI_ASSERT(nullptr != graphicsPipelineState.renderPass, "Direct3D 12: Invalid graphics pipeline state render pass")
+		SE_ASSERT(nullptr != graphicsPipelineState.rootSignature, "Direct3D 12: Invalid graphics pipeline state root signature")
+		SE_ASSERT(nullptr != graphicsPipelineState.graphicsProgram, "Direct3D 12: Invalid graphics pipeline state graphics program")
+		SE_ASSERT(nullptr != graphicsPipelineState.renderPass, "Direct3D 12: Invalid graphics pipeline state render pass")
 
 		// Create graphics pipeline state
 		uint16_t id = 0;
@@ -1407,11 +1407,11 @@ namespace Direct3D12Rhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, queryPool)
-		RHI_ASSERT(numberOfDataBytes >= sizeof(UINT64), "Direct3D 12 out-of-memory query access")
-		RHI_ASSERT(1 == numberOfQueries || strideInBytes > 0, "Direct3D 12 invalid stride in bytes")
-		RHI_ASSERT(numberOfDataBytes >= strideInBytes * numberOfQueries, "Direct3D 12 out-of-memory query access")
-		RHI_ASSERT(nullptr != data, "Direct3D 12 out-of-memory query access")
-		RHI_ASSERT(numberOfQueries > 0, "Direct3D 12 number of queries mustn't be zero")
+		SE_ASSERT(numberOfDataBytes >= sizeof(UINT64), "Direct3D 12 out-of-memory query access")
+		SE_ASSERT(1 == numberOfQueries || strideInBytes > 0, "Direct3D 12 invalid stride in bytes")
+		SE_ASSERT(numberOfDataBytes >= strideInBytes * numberOfQueries, "Direct3D 12 out-of-memory query access")
+		SE_ASSERT(nullptr != data, "Direct3D 12 out-of-memory query access")
+		SE_ASSERT(numberOfQueries > 0, "Direct3D 12 number of queries mustn't be zero")
 
 		// Get query pool results
 		static_cast<QueryPool&>(queryPool).getQueryPoolResults(numberOfDataBytes, data, firstQueryIndex, numberOfQueries, strideInBytes, *mD3D12GraphicsCommandList);
@@ -1430,7 +1430,7 @@ namespace Direct3D12Rhi
 
 		// Sanity check
 		#if SE_DEBUG
-			RHI_ASSERT(false == mDebugBetweenBeginEndScene, "Direct3D 12: Begin scene was called while scene rendering is already in progress, missing end scene call?")
+			SE_ASSERT(false == mDebugBetweenBeginEndScene, "Direct3D 12: Begin scene was called while scene rendering is already in progress, missing end scene call?")
 			mDebugBetweenBeginEndScene = true;
 		#endif
 
@@ -1464,7 +1464,7 @@ namespace Direct3D12Rhi
 	void Direct3D12Rhi::submitCommandBuffer(const Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity check
-		RHI_ASSERT(!commandBuffer.isEmpty(), "The Direct3D 12 command buffer to execute mustn't be empty")
+		SE_ASSERT(!commandBuffer.isEmpty(), "The Direct3D 12 command buffer to execute mustn't be empty")
 
 		// Loop through all commands
 		const uint8_t* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
@@ -1488,7 +1488,7 @@ namespace Direct3D12Rhi
 	{
 		// Sanity check
 		#if SE_DEBUG
-			RHI_ASSERT(true == mDebugBetweenBeginEndScene, "Direct3D 12: End scene was called while scene rendering isn't in progress, missing start scene call?")
+			SE_ASSERT(true == mDebugBetweenBeginEndScene, "Direct3D 12: End scene was called while scene rendering isn't in progress, missing start scene call?")
 			mDebugBetweenBeginEndScene = false;
 		#endif
 

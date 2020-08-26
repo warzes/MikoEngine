@@ -78,7 +78,7 @@ namespace Renderer
 		}
 
 		// Sanity check
-		RHI_ASSERT(nullptr != currentRenderTarget, "At least for now a compositor node must end with a valid current render target")
+		SE_ASSERT(nullptr != currentRenderTarget, "At least for now a compositor node must end with a valid current render target")
 
 		// Done
 		return *currentRenderTarget;

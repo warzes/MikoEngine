@@ -22,21 +22,21 @@ namespace Renderer
 	{
 		// Cache render queue index range instance, we know it must exist when we're in here
 		mRenderQueueIndexRange = getCompositorNodeInstance().getCompositorWorkspaceInstance().getRenderQueueIndexRangeByRenderQueueIndex(mRenderQueue.getMinimumRenderQueueIndex());
-		RHI_ASSERT(nullptr != mRenderQueueIndexRange, "Invalid render queue index range")
-		RHI_ASSERT(mRenderQueueIndexRange->minimumRenderQueueIndex <= mRenderQueue.getMinimumRenderQueueIndex(), "Invalid minimum render queue index")
-		RHI_ASSERT(mRenderQueueIndexRange->maximumRenderQueueIndex >= mRenderQueue.getMaximumRenderQueueIndex(), "Invalid maximum render queue index")
+		SE_ASSERT(nullptr != mRenderQueueIndexRange, "Invalid render queue index range")
+		SE_ASSERT(mRenderQueueIndexRange->minimumRenderQueueIndex <= mRenderQueue.getMinimumRenderQueueIndex(), "Invalid minimum render queue index")
+		SE_ASSERT(mRenderQueueIndexRange->maximumRenderQueueIndex >= mRenderQueue.getMaximumRenderQueueIndex(), "Invalid maximum render queue index")
 	}
 
 	void CompositorInstancePassScene::onFillCommandBuffer(const Rhi::IRenderTarget* renderTarget, const CompositorContextData& compositorContextData, Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity check
-		RHI_ASSERT(nullptr != renderTarget, "The scene compositor instance pass needs a valid render target")
+		SE_ASSERT(nullptr != renderTarget, "The scene compositor instance pass needs a valid render target")
 
 		// Combined scoped profiler CPU and GPU sample as well as renderer debug event command
 		RENDERER_SCOPED_PROFILER_EVENT_DYNAMIC(getCompositorNodeInstance().getCompositorWorkspaceInstance().getRenderer().getContext(), commandBuffer, getCompositorResourcePass().getDebugName())
 
 		// Fill command buffer
-		RHI_ASSERT(nullptr != mRenderQueueIndexRange, "Invalid render queue index range")
+		SE_ASSERT(nullptr != mRenderQueueIndexRange, "Invalid render queue index range")
 		const MaterialTechniqueId materialTechniqueId = static_cast<const CompositorResourcePassScene&>(getCompositorResourcePass()).getMaterialTechniqueId();
 		for (const RenderableManager* renderableManager : mRenderQueueIndexRange->renderableManagers)
 		{

@@ -70,7 +70,7 @@ namespace Rhi
 		[[nodiscard]] inline IShaderLanguage& getDefaultShaderLanguage()
 		{
 			IShaderLanguage* shaderLanguage = getShaderLanguage();
-			RHI_ASSERT(nullptr != shaderLanguage, "There's no default shader language");
+			SE_ASSERT(nullptr != shaderLanguage, "There's no default shader language");
 			return *shaderLanguage;
 		}
 

@@ -107,9 +107,9 @@ namespace OpenGLRhi
 			Rhi::IRhi& rhi = getRhi();
 
 			// Sanity checks
-			RHI_ASSERT(rootParameterIndex < mRootSignature.numberOfParameters, "The OpenGL root parameter index is out-of-bounds")
-				RHI_ASSERT(numberOfResources > 0, "The number of OpenGL resources must not be zero")
-				RHI_ASSERT(nullptr != resources, "The OpenGL resource pointers must be valid")
+			SE_ASSERT(rootParameterIndex < mRootSignature.numberOfParameters, "The OpenGL root parameter index is out-of-bounds")
+				SE_ASSERT(numberOfResources > 0, "The number of OpenGL resources must not be zero")
+				SE_ASSERT(nullptr != resources, "The OpenGL resource pointers must be valid")
 
 				// Create resource group
 				return RHI_NEW(ResourceGroup)(rhi, mRootSignature, rootParameterIndex, numberOfResources, resources, samplerStates RHI_RESOURCE_DEBUG_PASS_PARAMETER);

@@ -80,7 +80,7 @@ namespace Renderer
 			{
 				MaterialResource& parentMaterialResource = materialResourceManager.getById(mParentMaterialResourceId);
 				SortedChildMaterialResourceIds::const_iterator iterator = std::lower_bound(parentMaterialResource.mSortedChildMaterialResourceIds.cbegin(), parentMaterialResource.mSortedChildMaterialResourceIds.cend(), materialResourceId, ::detail::OrderByMaterialResourceId());
-				RHI_ASSERT(iterator != parentMaterialResource.mSortedChildMaterialResourceIds.end() && *iterator == materialResourceId, "Invalid material resource ID")
+				SE_ASSERT(iterator != parentMaterialResource.mSortedChildMaterialResourceIds.end() && *iterator == materialResourceId, "Invalid material resource ID")
 				parentMaterialResource.mSortedChildMaterialResourceIds.erase(iterator);
 			}
 
@@ -90,9 +90,9 @@ namespace Renderer
 			{
 				// Register to new parent material resource
 				MaterialResource& parentMaterialResource = materialResourceManager.getById(mParentMaterialResourceId);
-				RHI_ASSERT(parentMaterialResource.getLoadingState() == IResource::LoadingState::LOADED, "Invalid parent material resource loading state")
+				SE_ASSERT(parentMaterialResource.getLoadingState() == IResource::LoadingState::LOADED, "Invalid parent material resource loading state")
 				SortedChildMaterialResourceIds::const_iterator iterator = std::lower_bound(parentMaterialResource.mSortedChildMaterialResourceIds.cbegin(), parentMaterialResource.mSortedChildMaterialResourceIds.cend(), materialResourceId, ::detail::OrderByMaterialResourceId());
-				RHI_ASSERT(iterator == parentMaterialResource.mSortedChildMaterialResourceIds.end() || *iterator != materialResourceId, "Invalid material resource ID")
+				SE_ASSERT(iterator == parentMaterialResource.mSortedChildMaterialResourceIds.end() || *iterator != materialResourceId, "Invalid material resource ID")
 				parentMaterialResource.mSortedChildMaterialResourceIds.insert(iterator, materialResourceId);
 
 				// Setup material resource
@@ -142,11 +142,11 @@ namespace Renderer
 	MaterialResource::~MaterialResource()
 	{
 		// Sanity checks
-		RHI_ASSERT(IsInvalid(mParentMaterialResourceId), "Invalid parent material resource ID")
-		RHI_ASSERT(mSortedChildMaterialResourceIds.empty(), "Invalid sorted child material resource IDs")
-		RHI_ASSERT(mSortedMaterialTechniqueVector.empty(), "Invalid sorted material technique vector")
-		RHI_ASSERT(mMaterialProperties.getSortedPropertyVector().empty(), "Invalid material properties")
-		RHI_ASSERT(mAttachedRenderables.empty(), "Invalid attached renderables")
+		SE_ASSERT(IsInvalid(mParentMaterialResourceId), "Invalid parent material resource ID")
+		SE_ASSERT(mSortedChildMaterialResourceIds.empty(), "Invalid sorted child material resource IDs")
+		SE_ASSERT(mSortedMaterialTechniqueVector.empty(), "Invalid sorted material technique vector")
+		SE_ASSERT(mMaterialProperties.getSortedPropertyVector().empty(), "Invalid material properties")
+		SE_ASSERT(mAttachedRenderables.empty(), "Invalid attached renderables")
 
 		// Avoid crash in case of failed sanity check
 		while (!mAttachedRenderables.empty())
@@ -175,7 +175,7 @@ namespace Renderer
 	void MaterialResource::deinitializeElement()
 	{
 		// Sanity check
-		RHI_ASSERT(mAttachedRenderables.empty(), "Invalid attached renderables")
+		SE_ASSERT(mAttachedRenderables.empty(), "Invalid attached renderables")
 
 		// Avoid crash in case of failed sanity check
 		while (!mAttachedRenderables.empty())
@@ -252,8 +252,8 @@ namespace Renderer
 						const int renderQueueIndex = materialProperty->getIntegerValue();
 
 						// Sanity checks
-						RHI_ASSERT(renderQueueIndex >= 0, "Invalid render queue index")
-						RHI_ASSERT(renderQueueIndex <= 255, "Invalid render queue index")
+						SE_ASSERT(renderQueueIndex >= 0, "Invalid render queue index")
+						SE_ASSERT(renderQueueIndex <= 255, "Invalid render queue index")
 
 						// Update the cached material data of all attached renderables
 						for (Renderable* renderable : mAttachedRenderables)

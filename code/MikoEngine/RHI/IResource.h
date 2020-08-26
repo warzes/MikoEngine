@@ -62,7 +62,7 @@ namespace Rhi
 			mResourceType(resourceType),
 			mRhi(nullptr)	// Only used for rare border cases, use the constructor with the RHI reference whenever possible. Normally the RHI pointer should never ever be a null pointer. So if you're in here, you're considered to be evil.
 		{
-			RHI_ASSERT(strlen(debugName) < 256, "Resource debug name is not allowed to exceed 255 characters")
+			SE_ASSERT(strlen(debugName) < 256, "Resource debug name is not allowed to exceed 255 characters")
 				strncpy(mDebugName, debugName, 256);
 			mDebugName[255] = '\0';
 		}
@@ -71,7 +71,7 @@ namespace Rhi
 			mResourceType(resourceType),
 			mRhi(&rhi)
 		{
-			RHI_ASSERT(strlen(debugName) < 256, "Resource debug name is not allowed to exceed 255 characters")
+			SE_ASSERT(strlen(debugName) < 256, "Resource debug name is not allowed to exceed 255 characters")
 				strncpy(mDebugName, debugName, 256);
 			mDebugName[255] = '\0';
 		}

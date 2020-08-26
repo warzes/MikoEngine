@@ -134,11 +134,11 @@ void IndirectBuffer::window_resized(int width, int height)
 void IndirectBuffer::fillCommandBuffer()
 {
 	// Sanity checks
-	RHI_ASSERT(m_commandBuffer.isEmpty(), "The command buffer is already filled");
-	RHI_ASSERT(nullptr != m_rootSignature, "Invalid root signature");
-	RHI_ASSERT(nullptr != m_graphicsPipelineState, "Invalid graphics pipeline state");
-	RHI_ASSERT(nullptr != m_vertexArray, "Invalid vertex array");
-	RHI_ASSERT(nullptr != m_indirectBuffer, "Invalid indirect buffer");
+	SE_ASSERT(m_commandBuffer.isEmpty(), "The command buffer is already filled");
+	SE_ASSERT(nullptr != m_rootSignature, "Invalid root signature");
+	SE_ASSERT(nullptr != m_graphicsPipelineState, "Invalid graphics pipeline state");
+	SE_ASSERT(nullptr != m_vertexArray, "Invalid vertex array");
+	SE_ASSERT(nullptr != m_indirectBuffer, "Invalid indirect buffer");
 
 	// Scoped debug event
 	COMMAND_SCOPED_DEBUG_EVENT_FUNCTION(m_commandBuffer);

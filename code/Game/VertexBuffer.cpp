@@ -204,12 +204,12 @@ void VertexBuffer::window_resized(int width, int height)
 
 void VertexBuffer::fillCommandBuffer()
 {
-	RHI_ASSERT(mCommandBuffer.isEmpty(), "The command buffer is already filled");
-	RHI_ASSERT(nullptr != mRootSignature, "Invalid root signature");
-	RHI_ASSERT(nullptr != mGraphicsPipelineStateVbo, "Invalid graphics pipeline state VBO");
-	RHI_ASSERT(nullptr != mVertexArrayVbo, "Invalid vertex array VBO");
-	RHI_ASSERT(nullptr != mGraphicsPipelineStateVbos, "Invalid graphics pipeline state VBOs");
-	RHI_ASSERT(nullptr != mVertexArrayVbos, "Invalid vertex array VBOs");
+	SE_ASSERT(mCommandBuffer.isEmpty(), "The command buffer is already filled");
+	SE_ASSERT(nullptr != mRootSignature, "Invalid root signature");
+	SE_ASSERT(nullptr != mGraphicsPipelineStateVbo, "Invalid graphics pipeline state VBO");
+	SE_ASSERT(nullptr != mVertexArrayVbo, "Invalid vertex array VBO");
+	SE_ASSERT(nullptr != mGraphicsPipelineStateVbos, "Invalid graphics pipeline state VBOs");
+	SE_ASSERT(nullptr != mVertexArrayVbos, "Invalid vertex array VBOs");
 
 	// Scoped debug event
 	COMMAND_SCOPED_DEBUG_EVENT_FUNCTION(mCommandBuffer);

@@ -100,7 +100,7 @@ namespace Renderer
 			rmt_CreateGlobalInstance(&mRemotery);
 
 			// Bind Remotery RHI implementation
-			RHI_ASSERT(nullptr != mRemotery, "Failed to create global Remotery profiler instance")
+			SE_ASSERT(nullptr != mRemotery, "Failed to create global Remotery profiler instance")
 			#if RMT_USE_D3D11
 				if (enableGpuProfiling && rhi.getD3D11DevicePointer() != nullptr && rhi.getD3D11ImmediateContextPointer() != nullptr)
 				{
@@ -119,7 +119,7 @@ namespace Renderer
 
 		inline virtual ~RemoteryProfiler() override
 		{
-			RHI_ASSERT(0 == mNumberOfCurrentlyBegunCpuSamples && 0 == mNumberOfCurrentlyBegunGpuSamples, "Profiler sampling leak detected, not all begun samples were ended")
+			SE_ASSERT(0 == mNumberOfCurrentlyBegunCpuSamples && 0 == mNumberOfCurrentlyBegunGpuSamples, "Profiler sampling leak detected, not all begun samples were ended")
 			#if RMT_USE_D3D11
 				if (mUseD3D11)
 				{

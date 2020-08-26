@@ -124,9 +124,9 @@ namespace Renderer
 		inline virtual ~ShaderBlueprintResource() override
 		{
 			// Sanity checks
-			RHI_ASSERT(mIncludeShaderPieceResourceIds.empty(), "Invalid include shader piece resource IDs")
-			RHI_ASSERT(mReferencedShaderProperties.getSortedPropertyVector().empty(), "Invalid referenced shader properties")
-			RHI_ASSERT(mShaderSourceCode.empty(), "Invalid shader source code")
+			SE_ASSERT(mIncludeShaderPieceResourceIds.empty(), "Invalid include shader piece resource IDs")
+			SE_ASSERT(mReferencedShaderProperties.getSortedPropertyVector().empty(), "Invalid referenced shader properties")
+			SE_ASSERT(mShaderSourceCode.empty(), "Invalid shader source code")
 		}
 
 		explicit ShaderBlueprintResource(const ShaderBlueprintResource&) = delete;
@@ -138,9 +138,9 @@ namespace Renderer
 		inline void initializeElement(ShaderBlueprintResourceId shaderBlueprintResourceId)
 		{
 			// Sanity checks
-			RHI_ASSERT(mIncludeShaderPieceResourceIds.empty(), "Invalid include shader piece resource IDs")
-			RHI_ASSERT(mReferencedShaderProperties.getSortedPropertyVector().empty(), "Invalid referenced shader properties")
-			RHI_ASSERT(mShaderSourceCode.empty(), "Invalid shader source code")
+			SE_ASSERT(mIncludeShaderPieceResourceIds.empty(), "Invalid include shader piece resource IDs")
+			SE_ASSERT(mReferencedShaderProperties.getSortedPropertyVector().empty(), "Invalid referenced shader properties")
+			SE_ASSERT(mShaderSourceCode.empty(), "Invalid shader source code")
 
 			// Call base implementation
 			IResource::initializeElement(shaderBlueprintResourceId);

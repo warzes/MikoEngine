@@ -12,8 +12,6 @@
 #include "Utility/Version.h"
 #include "Utility/Timer.h"
 
-#include "RHI/DefaultAssert.h"
-#include "RHI/DefaultAssert.h"
 #include "RHI/DefaultAllocator.h"
 #include "RHI/Rhi.h"
 

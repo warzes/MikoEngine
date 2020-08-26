@@ -21,7 +21,7 @@ namespace Renderer
 
 	AssetPackage& AssetManager::addAssetPackage(AssetPackageId assetPackageId)
 	{
-		RHI_ASSERT(nullptr == tryGetAssetPackageById(assetPackageId), "Renderer asset package ID is already used")
+		SE_ASSERT(nullptr == tryGetAssetPackageById(assetPackageId), "Renderer asset package ID is already used")
 			AssetPackage* assetPackage = new AssetPackage(assetPackageId);
 		mAssetPackageVector.push_back(assetPackage);
 		return *assetPackage;
@@ -40,7 +40,7 @@ namespace Renderer
 		else
 		{
 			// Error!
-			RHI_ASSERT(false, "Renderer failed to mount the asset package")
+			SE_ASSERT(false, "Renderer failed to mount the asset package")
 				return nullptr;
 		}
 	}
@@ -58,7 +58,7 @@ namespace Renderer
 		AssetPackageVector::const_iterator iterator = std::find_if(mAssetPackageVector.cbegin(), mAssetPackageVector.cend(),
 			[assetPackageId](const AssetPackage* assetPackage) { return (assetPackage->getAssetPackageId() == assetPackageId); }
 		);
-		RHI_ASSERT(iterator != mAssetPackageVector.cend(), "Unknown renderer asset package ID")
+		SE_ASSERT(iterator != mAssetPackageVector.cend(), "Unknown renderer asset package ID")
 			return **iterator;
 	}
 
@@ -67,7 +67,7 @@ namespace Renderer
 		AssetPackageVector::const_iterator iterator = std::find_if(mAssetPackageVector.cbegin(), mAssetPackageVector.cend(),
 			[assetPackageId](const AssetPackage* assetPackage) { return (assetPackage->getAssetPackageId() == assetPackageId); }
 		);
-		RHI_ASSERT(iterator != mAssetPackageVector.cend(), "Unknown renderer asset package ID")
+		SE_ASSERT(iterator != mAssetPackageVector.cend(), "Unknown renderer asset package ID")
 			delete *iterator;
 		mAssetPackageVector.erase(iterator);
 	}
@@ -91,7 +91,7 @@ namespace Renderer
 
 	AssetPackage* AssetManager::addAssetPackageByVirtualFilename(AssetPackageId assetPackageId, VirtualFilename virtualFilename)
 	{
-		RHI_ASSERT(nullptr == tryGetAssetPackageById(assetPackageId), "Renderer asset package ID is already used")
+		SE_ASSERT(nullptr == tryGetAssetPackageById(assetPackageId), "Renderer asset package ID is already used")
 			IFileManager& fileManager = mRenderer.getFileManager();
 		IFile* file = fileManager.openFile(IFileManager::FileMode::READ, virtualFilename);
 		if ( nullptr != file )
@@ -107,7 +107,7 @@ namespace Renderer
 		else
 		{
 			// Error! This is horrible. No assets.
-			RHI_ASSERT(false, "Renderer failed to add asset package")
+			SE_ASSERT(false, "Renderer failed to add asset package")
 				return nullptr;
 		}
 	}

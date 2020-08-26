@@ -16,7 +16,7 @@ namespace Renderer
 	void CompositorResourcePassScene::deserialize([[maybe_unused]] uint32_t numberOfBytes, const uint8_t* data)
 	{
 		// Sanity check
-		RHI_ASSERT(sizeof(v1CompositorNode::PassScene) == numberOfBytes, "Invalid number of bytes")
+		SE_ASSERT(sizeof(v1CompositorNode::PassScene) == numberOfBytes, "Invalid number of bytes")
 
 		// Call the base implementation
 		ICompositorResourcePass::deserialize(sizeof(v1CompositorNode::Pass), data);
@@ -29,7 +29,7 @@ namespace Renderer
 		mMaterialTechniqueId	 = passScene->materialTechniqueId;
 
 		// Sanity check
-		RHI_ASSERT(mMaximumRenderQueueIndex >= mMinimumRenderQueueIndex, "Invalid maximum render queue index")
+		SE_ASSERT(mMaximumRenderQueueIndex >= mMinimumRenderQueueIndex, "Invalid maximum render queue index")
 	}
 
 	bool CompositorResourcePassScene::getRenderQueueIndexRange(uint8_t& minimumRenderQueueIndex, uint8_t& maximumRenderQueueIndex) const

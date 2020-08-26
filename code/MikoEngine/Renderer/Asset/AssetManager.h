@@ -39,7 +39,7 @@ namespace Renderer
 		[[nodiscard]] inline const Asset& getAssetByAssetId(AssetId assetId) const
 		{
 			const Asset* asset = tryGetAssetByAssetId(assetId);
-			RHI_ASSERT(nullptr != asset, "Invalid asset")
+			SE_ASSERT(nullptr != asset, "Invalid asset")
 				return *asset;
 		}
 

@@ -167,7 +167,7 @@ namespace Renderer
 		}
 		else
 		{
-			RHI_ASSERT(false, "Unknown vertex attributes asset")
+			SE_ASSERT(false, "Unknown vertex attributes asset")
 		}
 	}
 

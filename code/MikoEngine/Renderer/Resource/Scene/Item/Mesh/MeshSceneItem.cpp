@@ -52,8 +52,8 @@ namespace Renderer
 
 	void MeshSceneItem::setMaterialResourceIdOfSubMeshLod(uint32_t subMeshIndex, uint8_t lodIndex, MaterialResourceId materialResourceId)
 	{
-		RHI_ASSERT(subMeshIndex < getNumberOfSubMeshes(), "Invalid sub mesh index")
-		RHI_ASSERT(lodIndex < mRenderableManager.getNumberOfLods(), "Invalid LOD index")
+		SE_ASSERT(subMeshIndex < getNumberOfSubMeshes(), "Invalid sub mesh index")
+		SE_ASSERT(lodIndex < mRenderableManager.getNumberOfLods(), "Invalid LOD index")
 		mRenderableManager.getRenderables()[subMeshIndex + lodIndex * getNumberOfSubMeshes()].setMaterialResourceId(getSceneResource().getRenderer().getMaterialResourceManager(), materialResourceId);
 	}
 
@@ -74,9 +74,9 @@ namespace Renderer
 	void MeshSceneItem::deserialize([[maybe_unused]] uint32_t numberOfBytes, const uint8_t* data)
 	{
 		// Sanity checks
-		RHI_ASSERT(sizeof(v1Scene::MeshItem) <= numberOfBytes, "Invalid number of bytes")
+		SE_ASSERT(sizeof(v1Scene::MeshItem) <= numberOfBytes, "Invalid number of bytes")
 		const v1Scene::MeshItem* meshItem = reinterpret_cast<const v1Scene::MeshItem*>(data);
-		RHI_ASSERT((sizeof(v1Scene::MeshItem) + sizeof(AssetId) * meshItem->numberOfSubMeshMaterialAssetIds) == numberOfBytes, "Invalid number of bytes")
+		SE_ASSERT((sizeof(v1Scene::MeshItem) + sizeof(AssetId) * meshItem->numberOfSubMeshMaterialAssetIds) == numberOfBytes, "Invalid number of bytes")
 
 		// Read data
 		setMeshResourceIdByAssetId(meshItem->meshAssetId);

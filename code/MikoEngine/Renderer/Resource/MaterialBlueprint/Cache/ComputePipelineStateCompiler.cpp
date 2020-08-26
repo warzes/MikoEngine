@@ -86,7 +86,7 @@ namespace Renderer
 			ComputePipelineStateCache& computePipelineStateCache = compilerRequest.computePipelineStateCache;
 			computePipelineStateCache.mComputePipelineStateObjectPtr = compilerRequest.computePipelineStateObject;
 			computePipelineStateCache.mIsUsingFallback = false;
-			RHI_ASSERT(0 != mNumberOfInFlightCompilerRequests, "Invalid number of in flight compiler requests")
+			SE_ASSERT(0 != mNumberOfInFlightCompilerRequests, "Invalid number of in flight compiler requests")
 			--mNumberOfInFlightCompilerRequests;
 		}
 	}
@@ -122,7 +122,7 @@ namespace Renderer
 	void ComputePipelineStateCompiler::addAsynchronousCompilerRequest(ComputePipelineStateCache& computePipelineStateCache)
 	{
 		// Push the load request into the builder queue
-		RHI_ASSERT(mAsynchronousCompilationEnabled, "Asynchronous compilation isn't enabled")
+		SE_ASSERT(mAsynchronousCompilationEnabled, "Asynchronous compilation isn't enabled")
 		++mNumberOfInFlightCompilerRequests;
 		std::unique_lock<std::mutex> builderMutexLock(mBuilderMutex);
 		mBuilderQueue.emplace_back(CompilerRequest(computePipelineStateCache));
@@ -218,7 +218,7 @@ namespace Renderer
 								if (sourceCode.empty())
 								{
 									// TODO(co) Error handling
-									RHI_ASSERT(false, "Invalid source code")
+									SE_ASSERT(false, "Invalid source code")
 								}
 								else
 								{
@@ -252,7 +252,7 @@ namespace Renderer
 							else
 							{
 								// TODO(co) Error handling
-								RHI_ASSERT(false, "Invalid shader blueprint resource")
+								SE_ASSERT(false, "Invalid shader blueprint resource")
 							}
 						}
 						compilerRequest.shaderCache = shaderCache;
@@ -302,14 +302,14 @@ namespace Renderer
 						if (shaderSourceCode.empty())
 						{
 							// We're not aware of any shader source code but we need a shader cache, so, there must be a shader cache master we need to wait for
-							// RHI_ASSERT(nullptr != shaderCache->getMasterShaderCache(), "Invalid master shader cache")	// No assert by intent
+							// SE_ASSERT(nullptr != shaderCache->getMasterShaderCache(), "Invalid master shader cache")	// No assert by intent
 							needToWaitForShaderCache = true;
 						}
 						else
 						{
 							// Create the shader instance
 							shader = shaderLanguage.createComputeShaderFromSourceCode(shaderSourceCode.c_str(), &shaderCache->mShaderBytecode RHI_RESOURCE_DEBUG_NAME("Compute pipeline state compiler"));
-							RHI_ASSERT(nullptr != shader, "Invalid shader")	// TODO(co) Error handling
+							SE_ASSERT(nullptr != shader, "Invalid shader")	// TODO(co) Error handling
 							shaderCache->mShaderPtr = shader;
 
 							// Create the compute pipeline state object (PSO)
@@ -337,7 +337,7 @@ namespace Renderer
 	{
 		// Create the compute pipeline state object (PSO)
 		const Rhi::IRootSignaturePtr& rootSignaturePtr = materialBlueprintResource.getRootSignaturePtr();
-		RHI_ASSERT(shader.getResourceType() == Rhi::ResourceType::COMPUTE_SHADER, "Invalid shader resource type")
+		SE_ASSERT(shader.getResourceType() == Rhi::ResourceType::COMPUTE_SHADER, "Invalid shader resource type")
 		return rootSignaturePtr->getRhi().createComputePipelineState(*rootSignaturePtr, static_cast<Rhi::IComputeShader&>(shader) RHI_RESOURCE_DEBUG_NAME("Compute pipeline state compiler"));
 	}
 

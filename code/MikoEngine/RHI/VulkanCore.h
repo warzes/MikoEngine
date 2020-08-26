@@ -737,7 +737,7 @@ namespace
 				vkSurfaceKHR = VK_NULL_HANDLE;
 			}
 #elif defined VK_USE_PLATFORM_XLIB_KHR || defined VK_USE_PLATFORM_WAYLAND_KHR
-			RHI_ASSERT(context.getType() == Rhi::Context::ContextType::X11 || context.getType() == Rhi::Context::ContextType::WAYLAND, "Invalid Vulkan context type")
+			SE_ASSERT(context.getType() == Rhi::Context::ContextType::X11 || context.getType() == Rhi::Context::ContextType::WAYLAND, "Invalid Vulkan context type")
 
 				// If the given RHI context is an X11 context use the display connection object provided by the context
 				if ( context.getType() == Rhi::Context::ContextType::X11 )
@@ -1179,7 +1179,7 @@ namespace
 			}
 			else
 			{
-				RHI_ASSERT(false, "Invalid Vulkan shader stage flag bits")
+				SE_ASSERT(false, "Invalid Vulkan shader stage flag bits")
 			}
 			glslang::TShader shader(shLanguage);
 			shader.setEnvInput(glslang::EShSourceGlsl, shLanguage, glslang::EShClientVulkan, glslVersion);

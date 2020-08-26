@@ -62,7 +62,7 @@ namespace Renderer
 	{
 		if (mNumberOfShadowCascades != numberOfShadowCascades)
 		{
-			RHI_ASSERT(numberOfShadowCascades <= CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES, "Invalid number of shadow cascades")
+			SE_ASSERT(numberOfShadowCascades <= CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES, "Invalid number of shadow cascades")
 			mNumberOfShadowCascades = numberOfShadowCascades;
 			++mSettingsGenerationCounter;
 		}
@@ -72,8 +72,8 @@ namespace Renderer
 	{
 		if (mNumberOfShadowMultisamples != numberOfShadowMultisamples)
 		{
-			RHI_ASSERT(numberOfShadowMultisamples >= 1, "Invalid number of shadow multisamples")
-			RHI_ASSERT(numberOfShadowMultisamples <= getCompositorNodeInstance().getCompositorWorkspaceInstance().getRenderer().getRhi().getCapabilities().maximumNumberOfMultisamples, "Invalid number of shadow multisamples")
+			SE_ASSERT(numberOfShadowMultisamples >= 1, "Invalid number of shadow multisamples")
+			SE_ASSERT(numberOfShadowMultisamples <= getCompositorNodeInstance().getCompositorWorkspaceInstance().getRenderer().getRhi().getCapabilities().maximumNumberOfMultisamples, "Invalid number of shadow multisamples")
 			mNumberOfShadowMultisamples = numberOfShadowMultisamples;
 			++mSettingsGenerationCounter;
 		}
@@ -89,7 +89,7 @@ namespace Renderer
 		const IRenderer& renderer = compositorWorkspaceInstance.getRenderer();
 
 		// Sanity check
-		RHI_ASSERT(nullptr == renderTarget, "The shadow map compositor instance pass needs an invalid render target")
+		SE_ASSERT(nullptr == renderTarget, "The shadow map compositor instance pass needs an invalid render target")
 
 		// Settings update handling
 		if (mUsedSettingsGenerationCounter != mSettingsGenerationCounter)
@@ -164,7 +164,7 @@ namespace Renderer
 			{
 				uint32_t renderTargetWidth = 0;
 				uint32_t renderTargetHeight = 0;
-				RHI_ASSERT(nullptr != compositorWorkspaceInstance.getExecutionRenderTarget(), "Invalid compositor workspace instance execution render target")
+				SE_ASSERT(nullptr != compositorWorkspaceInstance.getExecutionRenderTarget(), "Invalid compositor workspace instance execution render target")
 				compositorWorkspaceInstance.getExecutionRenderTarget()->getWidthAndHeight(renderTargetWidth, renderTargetHeight);
 				if (compositorContextData.getSinglePassStereoInstancing())
 				{
@@ -310,7 +310,7 @@ namespace Renderer
 
 					// Render shadow casters
 					// TODO(co) Optimization: Do only render stuff which calls into the current shadow cascade
-					RHI_ASSERT(nullptr != mRenderQueueIndexRange, "Invalid render queue index range")
+					SE_ASSERT(nullptr != mRenderQueueIndexRange, "Invalid render queue index range")
 					const MaterialTechniqueId materialTechniqueId = static_cast<const CompositorResourcePassScene&>(getCompositorResourcePass()).getMaterialTechniqueId();
 					for (const RenderableManager* renderableManager : mRenderQueueIndexRange->renderableManagers)
 					{
@@ -370,7 +370,7 @@ namespace Renderer
 				if (filterSizeX > 1.0f || filterSizeY > 1.0f)
 				{
 					// Execute compositor instance pass compute, use cascade index three as intermediate render target
-					RHI_ASSERT(nullptr != mVarianceFramebufferPtr[::detail::INTERMEDIATE_CASCADE_INDEX], "Invalid variance framebuffer")
+					SE_ASSERT(nullptr != mVarianceFramebufferPtr[::detail::INTERMEDIATE_CASCADE_INDEX], "Invalid variance framebuffer")
 					Rhi::Command::SetGraphicsRenderTarget::create(commandBuffer, mVarianceFramebufferPtr[::detail::INTERMEDIATE_CASCADE_INDEX]);
 					mDepthToExponentialVarianceCompositorInstancePassCompute->onFillCommandBuffer(mVarianceFramebufferPtr[::detail::INTERMEDIATE_CASCADE_INDEX], shadowCompositorContextData, commandBuffer);
 					mDepthToExponentialVarianceCompositorInstancePassCompute->onPostCommandBufferExecution();
@@ -383,7 +383,7 @@ namespace Renderer
 
 					// Vertical blur
 					mPassData.shadowFilterSize = filterSizeY;
-					RHI_ASSERT(nullptr != mVarianceFramebufferPtr[cascadeIndex], "Invalid variance framebuffer")
+					SE_ASSERT(nullptr != mVarianceFramebufferPtr[cascadeIndex], "Invalid variance framebuffer")
 					Rhi::Command::SetGraphicsRenderTarget::create(commandBuffer, mVarianceFramebufferPtr[cascadeIndex]);
 					mVerticalBlurCompositorInstancePassCompute->onFillCommandBuffer(mVarianceFramebufferPtr[cascadeIndex], shadowCompositorContextData, commandBuffer);
 					mVerticalBlurCompositorInstancePassCompute->onPostCommandBufferExecution();
@@ -391,7 +391,7 @@ namespace Renderer
 				else
 				{
 					// Execute compositor instance pass compute
-					RHI_ASSERT(nullptr != mVarianceFramebufferPtr[cascadeIndex], "Invalid variance framebuffer")
+					SE_ASSERT(nullptr != mVarianceFramebufferPtr[cascadeIndex], "Invalid variance framebuffer")
 					Rhi::Command::SetGraphicsRenderTarget::create(commandBuffer, mVarianceFramebufferPtr[cascadeIndex]);
 					mDepthToExponentialVarianceCompositorInstancePassCompute->onFillCommandBuffer(mVarianceFramebufferPtr[cascadeIndex], shadowCompositorContextData, commandBuffer);
 					mDepthToExponentialVarianceCompositorInstancePassCompute->onPostCommandBufferExecution();
@@ -401,7 +401,7 @@ namespace Renderer
 		else
 		{
 			// Error!
-			RHI_ASSERT(false, "We should never end up in here")
+			SE_ASSERT(false, "We should never end up in here")
 		}
 	}
 
@@ -455,14 +455,14 @@ namespace Renderer
 			if (mEnabled)
 			{
 				// Check shadow map settings
-				RHI_ASSERT(mNumberOfShadowCascades <= CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES, "Invalid number of shadow cascades")
-				RHI_ASSERT(mNumberOfShadowMultisamples >= 1, "Invalid number of shadow multisamples")
+				SE_ASSERT(mNumberOfShadowCascades <= CompositorResourcePassShadowMap::MAXIMUM_NUMBER_OF_SHADOW_CASCADES, "Invalid number of shadow cascades")
+				SE_ASSERT(mNumberOfShadowMultisamples >= 1, "Invalid number of shadow multisamples")
 				uint8_t numberOfShadowMultisamples = mNumberOfShadowMultisamples;
 				{ // Multisamples sanity check
 					const uint8_t maximumNumberOfMultisamples = rhi.getCapabilities().maximumNumberOfMultisamples;
 					if (numberOfShadowMultisamples > maximumNumberOfMultisamples)
 					{
-						RHI_ASSERT(false, "Number of shadow multisamples not supported by the RHI implementation")
+						SE_ASSERT(false, "Number of shadow multisamples not supported by the RHI implementation")
 						numberOfShadowMultisamples = maximumNumberOfMultisamples;
 					}
 				}
@@ -558,13 +558,13 @@ namespace Renderer
 		else
 		{
 			// This is not allowed to happen
-			RHI_ASSERT(false, "We should never end up in here")
+			SE_ASSERT(false, "We should never end up in here")
 		}
 	}
 
 	void CompositorInstancePassShadowMap::destroyShadowMapRenderTarget()
 	{
-		RHI_ASSERT(IsValid(mVarianceTextureResourceId), "Invalid compositor instance pass resource")
+		SE_ASSERT(IsValid(mVarianceTextureResourceId), "Invalid compositor instance pass resource")
 
 		// Depth to exponential variance
 		delete mDepthToExponentialVarianceCompositorInstancePassCompute;

@@ -26,8 +26,8 @@ namespace Renderer
 {
 	void AssetPackage::addAsset([[maybe_unused]] const Context& context, AssetId assetId, VirtualFilename virtualFilename)
 	{
-		RHI_ASSERT(nullptr == tryGetAssetByAssetId(assetId), "Renderer asset ID is already used");
-		RHI_ASSERT(strlen(virtualFilename) < Asset::MAXIMUM_ASSET_FILENAME_LENGTH, "The renderer asset filename is too long");
+		SE_ASSERT(nullptr == tryGetAssetByAssetId(assetId), "Renderer asset ID is already used");
+		SE_ASSERT(strlen(virtualFilename) < Asset::MAXIMUM_ASSET_FILENAME_LENGTH, "The renderer asset filename is too long");
 		SortedAssetVector::const_iterator iterator = std::lower_bound(mSortedAssetVector.cbegin(), mSortedAssetVector.cend(), assetId, ::detail::OrderByAssetId());
 		Asset& asset = *mSortedAssetVector.insert(iterator, Asset());
 		asset.assetId = assetId;

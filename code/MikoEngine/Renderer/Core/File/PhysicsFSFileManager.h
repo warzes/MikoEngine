@@ -47,7 +47,7 @@ namespace
 			}
 			else
 			{
-				RHI_ASSERT(false, "Failed to map PhysicsFS error code to error as string")
+				SE_ASSERT(false, "Failed to map PhysicsFS error code to error as string")
 			}
 		}
 
@@ -105,7 +105,7 @@ namespace
 					, mDebugName(virtualFilename)
 				#endif
 			{
-				RHI_ASSERT(nullptr != mPhysicsFSFile, "Failed to open PhysicsFS file for reading")
+				SE_ASSERT(nullptr != mPhysicsFSFile, "Failed to open PhysicsFS file for reading")
 			}
 
 			inline virtual ~PhysicsFSReadFile() override
@@ -113,7 +113,7 @@ namespace
 				if (nullptr != mPhysicsFSFile)
 				{
 					[[maybe_unused]] const int result = PHYSFS_close(mPhysicsFSFile);
-					RHI_ASSERT(0 != result, "Failed to close read PhysicsFS file")
+					SE_ASSERT(0 != result, "Failed to close read PhysicsFS file")
 				}
 			}
 
@@ -134,37 +134,37 @@ namespace
 		public:
 			[[nodiscard]] inline virtual size_t getNumberOfBytes() override
 			{
-				RHI_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
+				SE_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
 				const PHYSFS_sint64 fileLength = PHYSFS_fileLength(mPhysicsFSFile);
-				RHI_ASSERT(-1 != fileLength, "PhysicsFS failed to determine the file size")
+				SE_ASSERT(-1 != fileLength, "PhysicsFS failed to determine the file size")
 				return static_cast<size_t>(fileLength);
 			}
 
 			inline virtual void read(void* destinationBuffer, size_t numberOfBytes) override
 			{
-				RHI_ASSERT(nullptr != destinationBuffer, "Letting a file read into a null destination buffer is not allowed")
-				RHI_ASSERT(0 != numberOfBytes, "Letting a file read zero bytes is not allowed")
-				RHI_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
+				SE_ASSERT(nullptr != destinationBuffer, "Letting a file read into a null destination buffer is not allowed")
+				SE_ASSERT(0 != numberOfBytes, "Letting a file read zero bytes is not allowed")
+				SE_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
 				[[maybe_unused]] const PHYSFS_sint64 numberOfReadBytes = PHYSFS_readBytes(mPhysicsFSFile, destinationBuffer, numberOfBytes);
-				RHI_ASSERT(static_cast<size_t>(numberOfReadBytes) == numberOfBytes, "PhysicsFS failed to read all requested bytes")	// We're restrictive by intent
+				SE_ASSERT(static_cast<size_t>(numberOfReadBytes) == numberOfBytes, "PhysicsFS failed to read all requested bytes")	// We're restrictive by intent
 			}
 
 			inline virtual void skip(size_t numberOfBytes) override
 			{
-				RHI_ASSERT(0 != numberOfBytes, "Letting a file skip zero bytes is not allowed")
-				RHI_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
+				SE_ASSERT(0 != numberOfBytes, "Letting a file skip zero bytes is not allowed")
+				SE_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
 				const PHYSFS_sint64 currentOffset = PHYSFS_tell(mPhysicsFSFile);
-				RHI_ASSERT(-1 != currentOffset, "PhysicsFS failed to retrieve the current file offset")
+				SE_ASSERT(-1 != currentOffset, "PhysicsFS failed to retrieve the current file offset")
 				[[maybe_unused]] const int result = PHYSFS_seek(mPhysicsFSFile, static_cast<PHYSFS_uint64>(currentOffset + numberOfBytes));
-				RHI_ASSERT(0 != result, "PhysicsFS failed seek file")
+				SE_ASSERT(0 != result, "PhysicsFS failed seek file")
 			}
 
 			inline virtual void write([[maybe_unused]] const void* sourceBuffer, [[maybe_unused]] size_t numberOfBytes) override
 			{
-				RHI_ASSERT(nullptr != sourceBuffer, "Letting a file write from a null source buffer is not allowed")
-				RHI_ASSERT(0 != numberOfBytes, "Letting a file write zero bytes is not allowed")
-				RHI_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
-				RHI_ASSERT(false, "File write method not supported by the PhysicsFS implementation")
+				SE_ASSERT(nullptr != sourceBuffer, "Letting a file write from a null source buffer is not allowed")
+				SE_ASSERT(0 != numberOfBytes, "Letting a file write zero bytes is not allowed")
+				SE_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
+				SE_ASSERT(false, "File write method not supported by the PhysicsFS implementation")
 			}
 
 			#if SE_DEBUG
@@ -209,7 +209,7 @@ namespace
 					, mDebugName(virtualFilename)
 				#endif
 			{
-				RHI_ASSERT(nullptr != mPhysicsFSFile, "Failed to open PhysicsFS file for writing")
+				SE_ASSERT(nullptr != mPhysicsFSFile, "Failed to open PhysicsFS file for writing")
 			}
 
 			inline virtual ~PhysicsFSWriteFile() override
@@ -217,7 +217,7 @@ namespace
 				if (nullptr != mPhysicsFSFile)
 				{
 					[[maybe_unused]] const int result = PHYSFS_close(mPhysicsFSFile);
-					RHI_ASSERT(0 != result, "Failed to close written PhysicsFS file")
+					SE_ASSERT(0 != result, "Failed to close written PhysicsFS file")
 				}
 			}
 
@@ -238,28 +238,28 @@ namespace
 		public:
 			[[nodiscard]] inline virtual size_t getNumberOfBytes() override
 			{
-				RHI_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
-				RHI_ASSERT(false, "File get number of bytes method not supported by the PhysicsFS implementation")
+				SE_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
+				SE_ASSERT(false, "File get number of bytes method not supported by the PhysicsFS implementation")
 				return 0;
 			}
 
 			inline virtual void read(void*, size_t) override
 			{
-				RHI_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
-				RHI_ASSERT(false, "File read method not supported by the PhysicsFS implementation")
+				SE_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
+				SE_ASSERT(false, "File read method not supported by the PhysicsFS implementation")
 			}
 
 			inline virtual void skip(size_t) override
 			{
-				RHI_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
-				RHI_ASSERT(false, "File skip method not supported by the PhysicsFS implementation")
+				SE_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
+				SE_ASSERT(false, "File skip method not supported by the PhysicsFS implementation")
 			}
 
 			inline virtual void write(const void* sourceBuffer, size_t numberOfBytes) override
 			{
-				RHI_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
+				SE_ASSERT(nullptr != mPhysicsFSFile, "Invalid PhysicsFS file access")
 				[[maybe_unused]] const PHYSFS_sint64 numberOfWrittenBytes = PHYSFS_writeBytes(mPhysicsFSFile, sourceBuffer, numberOfBytes);
-				RHI_ASSERT(static_cast<size_t>(numberOfWrittenBytes) == numberOfBytes, "PhysicsFS failed to write all requested bytes")	// We're restrictive by intent
+				SE_ASSERT(static_cast<size_t>(numberOfWrittenBytes) == numberOfBytes, "PhysicsFS failed to write all requested bytes")	// We're restrictive by intent
 			}
 
 			#if SE_DEBUG
@@ -350,7 +350,7 @@ namespace Renderer
 
 		inline virtual ~PhysicsFSFileManager() override
 		{
-			RHI_ASSERT(0 == mNumberOfCurrentlyOpenedFiles, "File leak detected, not all opened files were closed")
+			SE_ASSERT(0 == mNumberOfCurrentlyOpenedFiles, "File leak detected, not all opened files were closed")
 
 			// Deinitialize the PhysicsFS library
 			if (mOwnsPhysicsFSInstance && 0 == PHYSFS_deinit())
@@ -372,15 +372,15 @@ namespace Renderer
 
 		[[nodiscard]] inline virtual const char* getMountPoint(const char* mountPoint) const override
 		{
-			RHI_ASSERT(nullptr != mountPoint, "Invalid mount point")
+			SE_ASSERT(nullptr != mountPoint, "Invalid mount point")
 			return PHYSFS_getMountPoint(mountPoint);
 		}
 
 		inline virtual bool mountDirectory(AbsoluteDirectoryName absoluteDirectoryName, const char* mountPoint, bool appendToPath = false) override
 		{
 			// Sanity check
-			RHI_ASSERT(nullptr != absoluteDirectoryName, "Invalid absolute directory name")
-			RHI_ASSERT(nullptr != mountPoint, "Invalid mount point")
+			SE_ASSERT(nullptr != absoluteDirectoryName, "Invalid absolute directory name")
+			SE_ASSERT(nullptr != mountPoint, "Invalid mount point")
 
 			// Mount directory
 			if (0 == PHYSFS_mount(absoluteDirectoryName, mountPoint, appendToPath))
@@ -397,7 +397,7 @@ namespace Renderer
 		[[nodiscard]] inline virtual bool doesFileExist(VirtualFilename virtualFilename) const override
 		{
 			// Sanity check
-			RHI_ASSERT(nullptr != virtualFilename, "Invalid virtual filename")
+			SE_ASSERT(nullptr != virtualFilename, "Invalid virtual filename")
 
 			// Check for file existence
 			return (0 != PHYSFS_exists(virtualFilename));
@@ -492,21 +492,21 @@ namespace Renderer
 			}
 
 			// Error!
-			RHI_ASSERT(false, "Failed to map virtual to PhysicsFS absolute filename")
+			SE_ASSERT(false, "Failed to map virtual to PhysicsFS absolute filename")
 			return "";
 		}
 
 		[[nodiscard]] inline virtual int64_t getLastModificationTime(VirtualFilename virtualFilename) const override
 		{
 			// Sanity check
-			RHI_ASSERT(nullptr != virtualFilename, "Invalid virtual filename")
+			SE_ASSERT(nullptr != virtualFilename, "Invalid virtual filename")
 
 			// Ask PhysicsFS
 			PHYSFS_Stat physicsFSStat = {};
 			if (0 == PHYSFS_stat(virtualFilename, &physicsFSStat))
 			{
 				// Error!
-				RHI_ASSERT(false, "Failed to get PhysicsFS last file modification time")
+				SE_ASSERT(false, "Failed to get PhysicsFS last file modification time")
 				::detail::writePhysicsFSErrorToLog();
 				return 0;
 			}
@@ -519,14 +519,14 @@ namespace Renderer
 		[[nodiscard]] inline virtual int64_t getFileSize(VirtualFilename virtualFilename) const override
 		{
 			// Sanity check
-			RHI_ASSERT(nullptr != virtualFilename, "Invalid virtual filename")
+			SE_ASSERT(nullptr != virtualFilename, "Invalid virtual filename")
 
 			// Ask PhysicsFS
 			PHYSFS_Stat physicsFSStat = {};
 			if (0 == PHYSFS_stat(virtualFilename, &physicsFSStat))
 			{
 				// Error!
-				RHI_ASSERT(false, "Failed to get PhysicsFS file size")
+				SE_ASSERT(false, "Failed to get PhysicsFS file size")
 				::detail::writePhysicsFSErrorToLog();
 				return 0;
 			}
@@ -539,18 +539,18 @@ namespace Renderer
 		inline virtual bool createDirectories(VirtualDirectoryName virtualDirectoryName) const override
 		{
 			// Sanity check
-			RHI_ASSERT(nullptr != virtualDirectoryName, "Invalid virtual directory name")
+			SE_ASSERT(nullptr != virtualDirectoryName, "Invalid virtual directory name")
 
 			// Create directories
 			const int result = PHYSFS_mkdir(virtualDirectoryName);
-			RHI_ASSERT(0 != result, "PhysicsFS failed to create the directories")
+			SE_ASSERT(0 != result, "PhysicsFS failed to create the directories")
 			return (result != 0);
 		}
 
 		[[nodiscard]] inline virtual IFile* openFile(FileMode fileMode, VirtualFilename virtualFilename) const override
 		{
 			// Sanity check
-			RHI_ASSERT(nullptr != virtualFilename, "Invalid virtual filename")
+			SE_ASSERT(nullptr != virtualFilename, "Invalid virtual filename")
 
 			// Open file
 			::detail::PhysicsFSFile* file = nullptr;
@@ -575,7 +575,7 @@ namespace Renderer
 			{
 				#if SE_DEBUG
 					++mNumberOfCurrentlyOpenedFiles;
-					RHI_ASSERT(mNumberOfCurrentlyOpenedFiles < 256, "Too many simultaneously opened files. The default limit on Microsoft Windows is 512 (can be changed via _setmaxstdio()) and on Mac OS X 256.")
+					SE_ASSERT(mNumberOfCurrentlyOpenedFiles < 256, "Too many simultaneously opened files. The default limit on Microsoft Windows is 512 (can be changed via _setmaxstdio()) and on Mac OS X 256.")
 				#endif
 			}
 			return file;
@@ -585,7 +585,7 @@ namespace Renderer
 		{
 			#if SE_DEBUG
 				--mNumberOfCurrentlyOpenedFiles;
-				RHI_ASSERT(mNumberOfCurrentlyOpenedFiles >= 0, "Error, more files closed as opened")
+				SE_ASSERT(mNumberOfCurrentlyOpenedFiles >= 0, "Error, more files closed as opened")
 			#endif
 			delete static_cast< ::detail::PhysicsFSFile*>(&file);
 		}

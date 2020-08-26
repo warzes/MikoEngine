@@ -354,7 +354,7 @@ namespace Renderer
 
 	bool VrManagerOpenVR::startup(AssetId vrDeviceMaterialAssetId)
 	{
-		RHI_ASSERT(nullptr == mVrSystem, "The VR system is already running")
+		SE_ASSERT(nullptr == mVrSystem, "The VR system is already running")
 		if (nullptr == mVrSystem)
 		{
 			// TODO(co) Add support for "vr::TextureType_DirectX12" as soon as the RHI implementation is ready
@@ -477,7 +477,7 @@ namespace Renderer
 						::detail::registerRenderModel(context, renderModelName, mRenderModelNames, assetPackage);
 					}
 				}
-				RHI_ASSERT(assetPackage.getSortedAssetVector().size() == mRenderModelNames.size(), "Size mismatch")
+				SE_ASSERT(assetPackage.getSortedAssetVector().size() == mRenderModelNames.size(), "Size mismatch")
 
 				// Register render model textures
 				// -> Sadly, there's no way to determine all available albedo texture IDs upfront without loading the render models
@@ -517,7 +517,7 @@ namespace Renderer
 	void VrManagerOpenVR::updateHmdMatrixPose(CameraSceneItem* cameraSceneItem)
 	{
 		// Sanity check
-		RHI_ASSERT(nullptr != mVrSystem, "The VR system isn't running")
+		SE_ASSERT(nullptr != mVrSystem, "The VR system isn't running")
 
 		// Process OpenVR events
 		if (mVrDeviceMaterialResourceLoaded)
@@ -598,9 +598,9 @@ namespace Renderer
 					vr::IVRRenderModels* vrRenderModels = vr::VRRenderModels();
 					for (const Component& component : trackedDeviceInformation.components)
 					{
-						RHI_ASSERT(!component.name.empty(), "The component name mustn't be empty")
+						SE_ASSERT(!component.name.empty(), "The component name mustn't be empty")
 						SceneNode* sceneNode = component.sceneNode;
-						RHI_ASSERT(nullptr != sceneNode, "Invalid scene node")
+						SE_ASSERT(nullptr != sceneNode, "Invalid scene node")
 						vr::RenderModel_ControllerMode_State_t renderModelControllerModeState;
 						renderModelControllerModeState.bScrollWheelVisible = false;
 						vr::RenderModel_ComponentState_t renderModelComponentState;
@@ -642,7 +642,7 @@ namespace Renderer
 	glm::mat4 VrManagerOpenVR::getHmdViewSpaceToClipSpaceMatrix(VrEye vrEye, float nearZ, float farZ) const
 	{
 		// Sanity check
-		RHI_ASSERT(nullptr != mVrSystem, "The VR system isn't running")
+		SE_ASSERT(nullptr != mVrSystem, "The VR system isn't running")
 
 		// Transform the OpenGL style projection matrix into a Direct3D style projection matrix as described at http://cv4mar.blogspot.de/2009/03/transformation-matrices-between-opengl.html
 		// -> Direct3D: Left-handed coordinate system with clip space depth value range 0..1
@@ -658,7 +658,7 @@ namespace Renderer
 
 	glm::mat4 VrManagerOpenVR::getHmdEyeSpaceToHeadSpaceMatrix(VrEye vrEye) const
 	{
-		RHI_ASSERT(nullptr != mVrSystem, "The VR system isn't running")
+		SE_ASSERT(nullptr != mVrSystem, "The VR system isn't running")
 		return ::detail::convertOpenVrMatrixToGlmMat34(mVrSystem->GetEyeToHeadTransform(static_cast<vr::Hmd_Eye>(vrEye)));
 	}
 
@@ -669,7 +669,7 @@ namespace Renderer
 	void VrManagerOpenVR::executeCompositorWorkspaceInstance(CompositorWorkspaceInstance& compositorWorkspaceInstance, Rhi::IRenderTarget&, CameraSceneItem* cameraSceneItem, const LightSceneItem* lightSceneItem)
 	{
 		// Sanity check
-		RHI_ASSERT(nullptr != mVrSystem, "The VR system isn't running")
+		SE_ASSERT(nullptr != mVrSystem, "The VR system isn't running")
 
 		// Execute the compositor workspace instance
 		// -> Using single pass stereo rendering via instancing as described in "High Performance Stereo Rendering For VR", Timothy Wilson, San Diego, Virtual Reality Meetup
@@ -742,7 +742,7 @@ namespace Renderer
 
 	void VrManagerOpenVR::setupRenderModelForTrackedDevice(vr::TrackedDeviceIndex_t trackedDeviceIndex)
 	{
-		RHI_ASSERT(trackedDeviceIndex < vr::k_unMaxTrackedDeviceCount, "Maximum tracked device count exceeded")
+		SE_ASSERT(trackedDeviceIndex < vr::k_unMaxTrackedDeviceCount, "Maximum tracked device count exceeded")
 
 		// Create and setup scene node with mesh item, this is what's controlled during runtime
 		SceneResource* sceneResource = mRenderer.getSceneResourceManager().tryGetById(mSceneResourceId);

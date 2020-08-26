@@ -245,7 +245,7 @@ namespace Renderer
 				if (genTangSpaceDefault(&mikktspace::g_MikkTSpaceContext) == 0)
 				{
 					// TODO(co) Error handling
-					RHI_ASSERT(false, "mikktspace for semi-standard tangent space generation failed")
+					SE_ASSERT(false, "mikktspace for semi-standard tangent space generation failed")
 				}
 				for (uint32_t i = 0; i < numberOfVertices; ++i, ++currentVrRenderModelVertex)
 				{
@@ -375,7 +375,7 @@ namespace Renderer
 		// OpenVR render model names can get awful long due to absolute path information, so, we need to store them inside a separate list and tell the asset just about the render model name index
 		const VrManagerOpenVR::RenderModelNames& renderModelNames = static_cast<const VrManagerOpenVR&>(mRenderer.getVrManager()).getRenderModelNames();
 		const uint32_t renderModelNameIndex = static_cast<uint32_t>(std::atoi(getAsset().virtualFilename));
-		RHI_ASSERT(renderModelNameIndex < static_cast<uint32_t>(renderModelNames.size()), "Invalid model name index")
+		SE_ASSERT(renderModelNameIndex < static_cast<uint32_t>(renderModelNames.size()), "Invalid model name index")
 		return renderModelNames[renderModelNameIndex];
 	}
 

@@ -268,7 +268,7 @@ namespace Renderer
 
 						default:
 							// Error!
-							RHI_ASSERT(false, "Unsupported format")
+							SE_ASSERT(false, "Unsupported format")
 							return;
 					}
 				}
@@ -376,7 +376,7 @@ namespace Renderer
 									else
 									{
 										// Error
-										RHI_ASSERT(false, "Unsupported format")
+										SE_ASSERT(false, "Unsupported format")
 										return;
 									}
 									break;
@@ -399,14 +399,14 @@ namespace Renderer
 									else
 									{
 										// Error
-										RHI_ASSERT(false, "Unsupported format")
+										SE_ASSERT(false, "Unsupported format")
 										return;
 									}
 									break;
 
 								default:
 									// Error
-									RHI_ASSERT(false, "Unsupported format")
+									SE_ASSERT(false, "Unsupported format")
 									return;
 							}
 					}

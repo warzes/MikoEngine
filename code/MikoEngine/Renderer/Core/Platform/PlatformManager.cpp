@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Renderer/Core/Platform/PlatformManager.h"
-#include "RHI/DefaultAssert.h"
+#include "Core/AssertMacros.h"
 
 //[-------------------------------------------------------]
 //[ Anonymous detail namespace                            ]
@@ -70,8 +70,8 @@ namespace Renderer
 	void PlatformManager::setCurrentThreadName([[maybe_unused]] const char* shortName, [[maybe_unused]] const char* descriptiveName)
 	{
 		// "pthread_setname_np()" support only up to 16 characters (including the terminating zero), so this is our limiting factor
-		RHI_ASSERT((strlen(shortName) + 1) <= 16, "Invalid short name")	// +1 for the terminating zero
-		RHI_ASSERT(strlen(descriptiveName) >= strlen(shortName), "Invalid descriptive name")
+		SE_ASSERT((strlen(shortName) + 1) <= 16, "Invalid short name")	// +1 for the terminating zero
+		SE_ASSERT(strlen(descriptiveName) >= strlen(shortName), "Invalid descriptive name")
 
 		// Platform specific part
 		#ifdef _WIN32
@@ -89,10 +89,10 @@ namespace Renderer
 	bool PlatformManager::execute([[maybe_unused]] const char* command, [[maybe_unused]] const char* parameters, [[maybe_unused]] AbsoluteDirectoryName workingDirectory)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != command, "Invalid command")
-		RHI_ASSERT(strlen(command) != 0, "Invalid command")
-		RHI_ASSERT(nullptr != parameters, "Invalid parameters")
-		RHI_ASSERT(nullptr != workingDirectory, "Invalid working directory")
+		SE_ASSERT(nullptr != command, "Invalid command")
+		SE_ASSERT(strlen(command) != 0, "Invalid command")
+		SE_ASSERT(nullptr != parameters, "Invalid parameters")
+		SE_ASSERT(nullptr != workingDirectory, "Invalid working directory")
 
 		// Platform specific part
 		#ifdef _WIN32
@@ -126,8 +126,8 @@ namespace Renderer
 	bool PlatformManager::openUrlExternal([[maybe_unused]] const char* url)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != url, "Invalid URL");
-		RHI_ASSERT(strlen(url) != 0, "Invalid URL");
+		SE_ASSERT(nullptr != url, "Invalid URL");
+		SE_ASSERT(strlen(url) != 0, "Invalid URL");
 
 		// Platform specific part
 		#ifdef _WIN32

@@ -79,7 +79,7 @@ namespace Renderer
 		[[nodiscard]] inline SceneCullingManager& getSceneCullingManager() const
 		{
 			// We know that this pointer is always valid
-			RHI_ASSERT(nullptr != mSceneCullingManager, "Invalid scene culling manager")
+			SE_ASSERT(nullptr != mSceneCullingManager, "Invalid scene culling manager")
 			return *mSceneCullingManager;
 		}
 
@@ -131,10 +131,10 @@ namespace Renderer
 		inline virtual ~SceneResource() override
 		{
 			// Sanity checks
-			RHI_ASSERT(nullptr == mSceneFactory, "Invalid scene factory")
-			RHI_ASSERT(nullptr == mSceneCullingManager, "Invalid scene culling manager")
-			RHI_ASSERT(mSceneNodes.empty(), "Invalid scene nodes")
-			RHI_ASSERT(mSceneItems.empty(), "Invalid scene items")
+			SE_ASSERT(nullptr == mSceneFactory, "Invalid scene factory")
+			SE_ASSERT(nullptr == mSceneCullingManager, "Invalid scene culling manager")
+			SE_ASSERT(mSceneNodes.empty(), "Invalid scene nodes")
+			SE_ASSERT(mSceneItems.empty(), "Invalid scene items")
 		}
 
 		explicit SceneResource(const SceneResource&) = delete;

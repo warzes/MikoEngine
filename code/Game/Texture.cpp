@@ -208,12 +208,12 @@ void Texture::window_resized(int width, int height)
 void Texture::fillCommandBuffer()
 {
 	// Sanity checks
-	RHI_ASSERT(mCommandBuffer.isEmpty(), "The command buffer is already filled");
-	RHI_ASSERT(nullptr != mRootSignature, "Invalid root signature");
-	RHI_ASSERT(nullptr != mTextureGroup, "Invalid texture group");
-	RHI_ASSERT(nullptr != mSamplerStateGroup, "Invalid sampler state group");
-	RHI_ASSERT(nullptr != mGraphicsPipelineState, "Invalid graphics pipeline state");
-	RHI_ASSERT(nullptr != mVertexArray, "Invalid vertex array");
+	SE_ASSERT(mCommandBuffer.isEmpty(), "The command buffer is already filled");
+	SE_ASSERT(nullptr != mRootSignature, "Invalid root signature");
+	SE_ASSERT(nullptr != mTextureGroup, "Invalid texture group");
+	SE_ASSERT(nullptr != mSamplerStateGroup, "Invalid sampler state group");
+	SE_ASSERT(nullptr != mGraphicsPipelineState, "Invalid graphics pipeline state");
+	SE_ASSERT(nullptr != mVertexArray, "Invalid vertex array");
 
 	// Scoped debug event
 	COMMAND_SCOPED_DEBUG_EVENT_FUNCTION(mCommandBuffer);

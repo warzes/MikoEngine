@@ -20,7 +20,7 @@ namespace Renderer
 	void CompositorInstancePassClear::onFillCommandBuffer([[maybe_unused]] const Rhi::IRenderTarget* renderTarget, const CompositorContextData&, Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity check
-		RHI_ASSERT(nullptr != renderTarget, "The clear compositor instance pass needs a valid render target")
+		SE_ASSERT(nullptr != renderTarget, "The clear compositor instance pass needs a valid render target")
 
 		// Combined scoped profiler CPU and GPU sample as well as renderer debug event command
 		const CompositorResourcePassClear& compositorResourcePassClear = static_cast<const CompositorResourcePassClear&>(getCompositorResourcePass());

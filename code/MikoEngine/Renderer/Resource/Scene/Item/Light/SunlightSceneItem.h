@@ -58,7 +58,7 @@ namespace Renderer
 			if (mSunriseTime != sunriseTime)
 			{
 				// Sanity check (unit in O'clock)
-				RHI_ASSERT(sunriseTime >= 00.00f && sunriseTime < 24.00f, "Invalid data")
+				SE_ASSERT(sunriseTime >= 00.00f && sunriseTime < 24.00f, "Invalid data")
 
 				// Set new value and calculate derived sunlight properties
 				mSunriseTime = sunriseTime;
@@ -76,7 +76,7 @@ namespace Renderer
 			if (mSunsetTime != sunsetTime)
 			{
 				// Sanity check (unit in O'clock)
-				RHI_ASSERT(sunsetTime >= 00.00f && sunsetTime < 24.00f, "Invalid data")
+				SE_ASSERT(sunsetTime >= 00.00f && sunsetTime < 24.00f, "Invalid data")
 
 				// Set new value and calculate derived sunlight properties
 				mSunsetTime = sunsetTime;
@@ -125,7 +125,7 @@ namespace Renderer
 			if (mTimeOfDay != timeOfDay)
 			{
 				// Sanity check (unit in O'clock)
-				RHI_ASSERT(timeOfDay >= 00.00f && timeOfDay < 24.00f, "Invalid data")
+				SE_ASSERT(timeOfDay >= 00.00f && timeOfDay < 24.00f, "Invalid data")
 
 				// Set new value and calculate derived sunlight properties
 				mTimeOfDay = timeOfDay;

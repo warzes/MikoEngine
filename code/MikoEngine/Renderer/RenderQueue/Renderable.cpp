@@ -212,8 +212,8 @@ namespace Renderer
 			if (nullptr != materialResource)
 			{
 				// Sanity checks
-				RHI_ASSERT(IsInvalid(mMaterialResourceAttachmentIndex), "Invalid material resource attachment index")
-				RHI_ASSERT(nullptr == mMaterialResourceManager, "Invalid material resource manager instance")
+				SE_ASSERT(IsInvalid(mMaterialResourceAttachmentIndex), "Invalid material resource attachment index")
+				SE_ASSERT(nullptr == mMaterialResourceManager, "Invalid material resource manager instance")
 
 				// Attach the renderable from the material resource
 				mMaterialResourceId = materialResourceId;
@@ -229,9 +229,9 @@ namespace Renderer
 						const int renderQueueIndex = materialProperty->getIntegerValue();
 
 						// Sanity checks
-						RHI_ASSERT(materialProperty->getUsage() == MaterialProperty::Usage::STATIC, "Invalid material property usage")
-						RHI_ASSERT(renderQueueIndex >= 0, "Invalid render queue index")
-						RHI_ASSERT(renderQueueIndex <= 255, "Invalid render queue index")
+						SE_ASSERT(materialProperty->getUsage() == MaterialProperty::Usage::STATIC, "Invalid material property usage")
+						SE_ASSERT(renderQueueIndex >= 0, "Invalid render queue index")
+						SE_ASSERT(renderQueueIndex <= 255, "Invalid render queue index")
 
 						// Set value
 						mRenderQueueIndex = static_cast<uint8_t>(renderQueueIndex);
@@ -246,7 +246,7 @@ namespace Renderer
 					if (nullptr != materialProperty)
 					{
 						// Sanity checks
-						RHI_ASSERT(materialProperty->getUsage() == MaterialProperty::Usage::STATIC, "Invalid material property usage")
+						SE_ASSERT(materialProperty->getUsage() == MaterialProperty::Usage::STATIC, "Invalid material property usage")
 
 						// Set value
 						mCastShadows = materialProperty->getBooleanValue();
@@ -261,7 +261,7 @@ namespace Renderer
 					if (nullptr != materialProperty)
 					{
 						// Sanity checks
-						RHI_ASSERT(materialProperty->getUsage() == MaterialProperty::Usage::SHADER_COMBINATION, "Invalid material property usage")
+						SE_ASSERT(materialProperty->getUsage() == MaterialProperty::Usage::SHADER_COMBINATION, "Invalid material property usage")
 
 						// Set value
 						mUseAlphaMap = materialProperty->getBooleanValue();
@@ -275,13 +275,13 @@ namespace Renderer
 			else
 			{
 				// Error!
-				RHI_ASSERT(false, "We should never end up in here")
+				SE_ASSERT(false, "We should never end up in here")
 			}
 		}
 		else
 		{
 			// Sanity check
-			RHI_ASSERT((IsValid(mMaterialResourceId) && &materialResourceManager == mMaterialResourceManager) || (IsInvalid(mMaterialResourceId) && nullptr == mMaterialResourceManager), "Invalid renderable configuration")
+			SE_ASSERT((IsValid(mMaterialResourceId) && &materialResourceManager == mMaterialResourceManager) || (IsInvalid(mMaterialResourceId) && nullptr == mMaterialResourceManager), "Invalid renderable configuration")
 		}
 	}
 
@@ -294,16 +294,16 @@ namespace Renderer
 		if (IsValid(mMaterialResourceId))
 		{
 			// Sanity checks
-			RHI_ASSERT(nullptr != mMaterialResourceManager, "Invalid material resource manager")
-			RHI_ASSERT(IsValid(mMaterialResourceAttachmentIndex), "Invalid material resource attachment index")
+			SE_ASSERT(nullptr != mMaterialResourceManager, "Invalid material resource manager")
+			SE_ASSERT(IsValid(mMaterialResourceAttachmentIndex), "Invalid material resource attachment index")
 
 			// Get the material resource we're going to detach from
 			MaterialResource& materialResource = mMaterialResourceManager->getById(mMaterialResourceId);
 
 			// Sanity checks
-			RHI_ASSERT(mMaterialResourceAttachmentIndex < static_cast<int>(materialResource.mAttachedRenderables.size()), "Invalid material resource attachment index")
-			RHI_ASSERT(this == *(materialResource.mAttachedRenderables.begin() + mMaterialResourceAttachmentIndex), "Invalid material resource attachment index")
-			RHI_ASSERT(materialResource.getId() == mMaterialResourceId, "Invalid material resource ID")
+			SE_ASSERT(mMaterialResourceAttachmentIndex < static_cast<int>(materialResource.mAttachedRenderables.size()), "Invalid material resource attachment index")
+			SE_ASSERT(this == *(materialResource.mAttachedRenderables.begin() + mMaterialResourceAttachmentIndex), "Invalid material resource attachment index")
+			SE_ASSERT(materialResource.getId() == mMaterialResourceId, "Invalid material resource ID")
 
 			// Detach the renderable from the material resource
 			MaterialResource::AttachedRenderables::iterator iterator = materialResource.mAttachedRenderables.begin() + mMaterialResourceAttachmentIndex;

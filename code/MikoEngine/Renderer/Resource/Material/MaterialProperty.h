@@ -206,7 +206,7 @@ namespace Renderer
 		//[-------------------------------------------------------]
 		[[nodiscard]] inline uint32_t getReferenceValue() const
 		{
-			RHI_ASSERT(isReferenceUsage(), "Must be reference usage")
+			SE_ASSERT(isReferenceUsage(), "Must be reference usage")
 			return static_cast<uint32_t>(mValue.Integer);
 		}
 

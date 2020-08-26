@@ -26,7 +26,7 @@ namespace Direct3D12Rhi
 		*/
 		[[nodiscard]] inline IDXGIFactory4& getDxgiFactory4() const
 		{
-			RHI_ASSERT(nullptr != mDxgiFactory4, "Invalid Direct3D 12 DXGI factory 4")
+			SE_ASSERT(nullptr != mDxgiFactory4, "Invalid Direct3D 12 DXGI factory 4")
 				return *mDxgiFactory4;
 		}
 
@@ -39,7 +39,7 @@ namespace Direct3D12Rhi
 		*/
 		[[nodiscard]] inline ID3D12Device& getD3D12Device() const
 		{
-			RHI_ASSERT(nullptr != mD3D12Device, "Invalid Direct3D 12 device")
+			SE_ASSERT(nullptr != mD3D12Device, "Invalid Direct3D 12 device")
 				return *mD3D12Device;
 		}
 
@@ -96,25 +96,25 @@ namespace Direct3D12Rhi
 		//[-------------------------------------------------------]
 		[[nodiscard]] inline ::detail::DescriptorHeap& getShaderResourceViewDescriptorHeap() const
 		{
-			RHI_ASSERT(nullptr != mShaderResourceViewDescriptorHeap, "Invalid Direct3D 12 shader resource view descriptor heap")
+			SE_ASSERT(nullptr != mShaderResourceViewDescriptorHeap, "Invalid Direct3D 12 shader resource view descriptor heap")
 				return *mShaderResourceViewDescriptorHeap;
 		}
 
 		[[nodiscard]] inline ::detail::DescriptorHeap& getRenderTargetViewDescriptorHeap() const
 		{
-			RHI_ASSERT(nullptr != mShaderResourceViewDescriptorHeap, "Invalid Direct3D 12 render target view descriptor heap")
+			SE_ASSERT(nullptr != mShaderResourceViewDescriptorHeap, "Invalid Direct3D 12 render target view descriptor heap")
 				return *mRenderTargetViewDescriptorHeap;
 		}
 
 		[[nodiscard]] inline ::detail::DescriptorHeap& getDepthStencilViewDescriptorHeap() const
 		{
-			RHI_ASSERT(nullptr != mShaderResourceViewDescriptorHeap, "Invalid Direct3D 12 depth stencil target view descriptor heap")
+			SE_ASSERT(nullptr != mShaderResourceViewDescriptorHeap, "Invalid Direct3D 12 depth stencil target view descriptor heap")
 				return *mDepthStencilViewDescriptorHeap;
 		}
 
 		[[nodiscard]] inline ::detail::DescriptorHeap& getSamplerDescriptorHeap() const
 		{
-			RHI_ASSERT(nullptr != mSamplerDescriptorHeap, "Invalid Direct3D 12 sampler descriptor heap")
+			SE_ASSERT(nullptr != mSamplerDescriptorHeap, "Invalid Direct3D 12 sampler descriptor heap")
 				return *mSamplerDescriptorHeap;
 		}
 

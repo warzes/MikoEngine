@@ -81,7 +81,7 @@ namespace Renderer
 
 			inline void setDebugName(const char debugName[])
 			{
-				RHI_ASSERT(strlen(debugName) < 256, "Renderable debug name is not allowed to exceed 255 characters")
+				SE_ASSERT(strlen(debugName) < 256, "Renderable debug name is not allowed to exceed 255 characters")
 				strncpy(mDebugName, debugName, 256);
 				mDebugName[255] = '\0';
 			}

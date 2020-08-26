@@ -79,13 +79,13 @@ namespace Renderer
 
 		[[nodiscard]] inline SceneNode& getParentSceneNodeSafe()	// Just safe in context known as safe
 		{
-			RHI_ASSERT(nullptr != mParentSceneNode, "Invalid parent scene node")
+			SE_ASSERT(nullptr != mParentSceneNode, "Invalid parent scene node")
 			return *mParentSceneNode;
 		}
 
 		[[nodiscard]] inline const SceneNode& getParentSceneNodeSafe() const	// Just safe in context known as safe
 		{
-			RHI_ASSERT(nullptr != mParentSceneNode, "Invalid parent scene node")
+			SE_ASSERT(nullptr != mParentSceneNode, "Invalid parent scene node")
 			return *mParentSceneNode;
 		}
 
@@ -104,13 +104,13 @@ namespace Renderer
 
 		inline virtual void onAttachedToSceneNode(SceneNode& sceneNode)
 		{
-			RHI_ASSERT(nullptr == mParentSceneNode, "Invalid parent scene node")
+			SE_ASSERT(nullptr == mParentSceneNode, "Invalid parent scene node")
 			mParentSceneNode = &sceneNode;
 		}
 
 		inline virtual void onDetachedFromSceneNode([[maybe_unused]] SceneNode& sceneNode)
 		{
-			RHI_ASSERT(nullptr != mParentSceneNode, "Invalid parent scene node")
+			SE_ASSERT(nullptr != mParentSceneNode, "Invalid parent scene node")
 			mParentSceneNode = nullptr;
 		}
 
@@ -132,7 +132,7 @@ namespace Renderer
 		// Only called if "Renderer::ISceneItem::getCallExecuteOnRendering()" returns "true", the default implementation is empty and shouldn't be called
 		[[nodiscard]] inline virtual void onExecuteOnRendering([[maybe_unused]] const Rhi::IRenderTarget& renderTarget, [[maybe_unused]] const CompositorContextData& compositorContextData, [[maybe_unused]] Rhi::CommandBuffer& commandBuffer) const
 		{
-			RHI_ASSERT(true, "Don't call the base implementation of \"Renderer::ISceneItem::getCallExecuteOnRendering()\"");
+			SE_ASSERT(true, "Don't call the base implementation of \"Renderer::ISceneItem::getCallExecuteOnRendering()\"");
 		}
 
 

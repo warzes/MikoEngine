@@ -197,7 +197,7 @@ namespace Renderer
 		}
 
 		// Not identical
-		RHI_ASSERT(false, "Invalid value type")
+		SE_ASSERT(false, "Invalid value type")
 		return false;
 	}
 

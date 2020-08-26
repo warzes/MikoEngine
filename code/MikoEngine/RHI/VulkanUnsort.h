@@ -80,7 +80,7 @@ namespace VulkanRhi
 				return VK_FILTER_LINEAR;	// There's no special setting in Vulkan
 
 			case Rhi::FilterMode::UNKNOWN:
-				RHI_ASSERT(false, "Vulkan filter mode must not be unknown")
+				SE_ASSERT(false, "Vulkan filter mode must not be unknown")
 					return VK_FILTER_NEAREST;
 
 			default:
@@ -157,7 +157,7 @@ namespace VulkanRhi
 				return VK_FILTER_LINEAR;	// There's no special setting in Vulkan
 
 			case Rhi::FilterMode::UNKNOWN:
-				RHI_ASSERT(false, "Vulkan filter mode must not be unknown")
+				SE_ASSERT(false, "Vulkan filter mode must not be unknown")
 					return VK_FILTER_NEAREST;
 
 			default:
@@ -234,7 +234,7 @@ namespace VulkanRhi
 				return VK_SAMPLER_MIPMAP_MODE_LINEAR;	// There's no special setting in Vulkan
 
 			case Rhi::FilterMode::UNKNOWN:
-				RHI_ASSERT(false, "Vulkan filter mode must not be unknown")
+				SE_ASSERT(false, "Vulkan filter mode must not be unknown")
 					return VK_SAMPLER_MIPMAP_MODE_NEAREST;
 
 			default:
@@ -405,7 +405,7 @@ namespace VulkanRhi
 		*/
 		[[nodiscard]] static VkIndexType getVulkanType(Rhi::IndexBufferFormat::Enum indexBufferFormat)
 		{
-			RHI_ASSERT(Rhi::IndexBufferFormat::UNSIGNED_CHAR != indexBufferFormat, "One byte per element index buffer format isn't supported by Vulkan")
+			SE_ASSERT(Rhi::IndexBufferFormat::UNSIGNED_CHAR != indexBufferFormat, "One byte per element index buffer format isn't supported by Vulkan")
 				static constexpr VkIndexType MAPPING[] =
 			{
 				VK_INDEX_TYPE_MAX_ENUM,	// Rhi::IndexBufferFormat::UNSIGNED_CHAR  - One byte per element, uint8_t (may not be supported by each API) - Not supported by Vulkan
@@ -507,7 +507,7 @@ namespace VulkanRhi
 		*/
 		[[nodiscard]] static VkSampleCountFlagBits getVulkanSampleCountFlagBits(uint8_t numberOfMultisamples)
 		{
-			RHI_ASSERT(numberOfMultisamples <= 8, "Invalid number of Vulkan multisamples")
+			SE_ASSERT(numberOfMultisamples <= 8, "Invalid number of Vulkan multisamples")
 				static constexpr VkSampleCountFlagBits MAPPING[] =
 			{
 				VK_SAMPLE_COUNT_1_BIT,
@@ -921,7 +921,7 @@ namespace VulkanRhi
 			uint32_t numberOfMipmaps = (dataContainsMipmaps || generateMipmaps) ? Rhi::ITexture::getNumberOfMipmaps(vkExtent3D.width, vkExtent3D.height) : 1;
 
 			// Get Vulkan image usage flags
-			RHI_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Vulkan render target textures can't be filled using provided data")
+			SE_ASSERT((textureFlags & Rhi::TextureFlag::RENDER_TARGET) == 0 || nullptr == data, "Vulkan render target textures can't be filled using provided data")
 				const bool isDepthTextureFormat = Rhi::TextureFormat::isDepth(textureFormat);
 			VkImageUsageFlags vkImageUsageFlags = VK_IMAGE_USAGE_TRANSFER_DST_BIT;
 			if ( textureFlags & Rhi::TextureFlag::SHADER_RESOURCE )
@@ -1078,8 +1078,8 @@ namespace VulkanRhi
 						vkGetPhysicalDeviceFormatProperties(vulkanRhi.getVulkanContext().getVkPhysicalDevice(), vkFormat, &vkFormatProperties);
 
 						// Mip-chain generation requires support for blit source and destination
-						RHI_ASSERT(vkFormatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_BLIT_SRC_BIT, "Invalid Vulkan optimal tiling features")
-							RHI_ASSERT(vkFormatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_BLIT_DST_BIT, "Invalid Vulkan optimal tiling features")
+						SE_ASSERT(vkFormatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_BLIT_SRC_BIT, "Invalid Vulkan optimal tiling features")
+							SE_ASSERT(vkFormatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_BLIT_DST_BIT, "Invalid Vulkan optimal tiling features")
 					}
 #endif
 
@@ -1380,7 +1380,7 @@ namespace VulkanRhi
 							switch ( descriptorRange->resourceType )
 							{
 							case Rhi::ResourceType::TEXTURE_BUFFER:
-								RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange->rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange->rangeType, "Vulkan RHI implementation: Invalid descriptor range type")
+								SE_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange->rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange->rangeType, "Vulkan RHI implementation: Invalid descriptor range type")
 									if ( Rhi::DescriptorRangeType::SRV == descriptorRange->rangeType )
 									{
 										vkDescriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER;
@@ -1397,13 +1397,13 @@ namespace VulkanRhi
 							case Rhi::ResourceType::INDEX_BUFFER:
 							case Rhi::ResourceType::STRUCTURED_BUFFER:
 							case Rhi::ResourceType::INDIRECT_BUFFER:
-								RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange->rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange->rangeType, "Vulkan RHI implementation: Invalid descriptor range type")
+								SE_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange->rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange->rangeType, "Vulkan RHI implementation: Invalid descriptor range type")
 									vkDescriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
 								++numberOfStorageBuffers;
 								break;
 
 							case Rhi::ResourceType::UNIFORM_BUFFER:
-								RHI_ASSERT(Rhi::DescriptorRangeType::UBV == descriptorRange->rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange->rangeType, "Vulkan RHI implementation: Invalid descriptor range type")
+								SE_ASSERT(Rhi::DescriptorRangeType::UBV == descriptorRange->rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange->rangeType, "Vulkan RHI implementation: Invalid descriptor range type")
 									vkDescriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 								++numberOfUniformBuffers;
 								break;
@@ -1415,7 +1415,7 @@ namespace VulkanRhi
 							case Rhi::ResourceType::TEXTURE_3D:
 							case Rhi::ResourceType::TEXTURE_CUBE:
 							case Rhi::ResourceType::TEXTURE_CUBE_ARRAY:
-								RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange->rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange->rangeType, "Vulkan RHI implementation: Invalid descriptor range type")
+								SE_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange->rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange->rangeType, "Vulkan RHI implementation: Invalid descriptor range type")
 									if ( Rhi::DescriptorRangeType::SRV == descriptorRange->rangeType )
 									{
 										vkDescriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
@@ -1430,7 +1430,7 @@ namespace VulkanRhi
 
 							case Rhi::ResourceType::SAMPLER_STATE:
 								// Nothing here due to usage of "VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER"
-								RHI_ASSERT(Rhi::DescriptorRangeType::SAMPLER == descriptorRange->rangeType, "Vulkan RHI implementation: Invalid descriptor range type")
+								SE_ASSERT(Rhi::DescriptorRangeType::SAMPLER == descriptorRange->rangeType, "Vulkan RHI implementation: Invalid descriptor range type")
 									break;
 
 							case Rhi::ResourceType::ROOT_SIGNATURE:
@@ -1451,7 +1451,7 @@ namespace VulkanRhi
 							case Rhi::ResourceType::TASK_SHADER:
 							case Rhi::ResourceType::MESH_SHADER:
 							case Rhi::ResourceType::COMPUTE_SHADER:
-								RHI_ASSERT(false, "Vulkan RHI implementation: Invalid resource type")
+								SE_ASSERT(false, "Vulkan RHI implementation: Invalid resource type")
 									break;
 							}
 
@@ -2266,7 +2266,7 @@ namespace VulkanRhi
 			mVkBufferView(VK_NULL_HANDLE)
 		{
 			// Sanity check
-			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat)) == 0, "The Vulkan texture buffer size must be a multiple of the selected texture format bytes per texel")
+			SE_ASSERT((numberOfBytes % Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat)) == 0, "The Vulkan texture buffer size must be a multiple of the selected texture format bytes per texel")
 
 				// Create the texture buffer
 				uint32_t vkBufferUsageFlagBits = 0;
@@ -2431,8 +2431,8 @@ namespace VulkanRhi
 			mVkDeviceMemory(VK_NULL_HANDLE)
 		{
 			// Sanity checks
-			RHI_ASSERT((numberOfBytes % numberOfStructureBytes) == 0, "The Vulkan structured buffer size must be a multiple of the given number of structure bytes")
-				RHI_ASSERT((numberOfBytes % (sizeof(float) * 4)) == 0, "Performance: The Vulkan structured buffer should be aligned to a 128-bit stride, see \"Understanding Structured Buffer Performance\" by Evan Hart, posted Apr 17 2015 at 11:33AM - https://developer.nvidia.com/content/understanding-structured-buffer-performance")
+			SE_ASSERT((numberOfBytes % numberOfStructureBytes) == 0, "The Vulkan structured buffer size must be a multiple of the given number of structure bytes")
+				SE_ASSERT((numberOfBytes % (sizeof(float) * 4)) == 0, "Performance: The Vulkan structured buffer should be aligned to a 128-bit stride, see \"Understanding Structured Buffer Performance\" by Evan Hart, posted Apr 17 2015 at 11:33AM - https://developer.nvidia.com/content/understanding-structured-buffer-performance")
 
 				// Create the structured buffer
 				Helper::createAndAllocateVkBuffer(vulkanRhi, VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, numberOfBytes, data, mVkBuffer, mVkDeviceMemory);
@@ -2550,10 +2550,10 @@ namespace VulkanRhi
 			mVkDeviceMemory(VK_NULL_HANDLE)
 		{
 			// Sanity checks
-			RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 || (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0, "Invalid Vulkan flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" is missing")
-				RHI_ASSERT(!((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 && (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0), "Invalid Vulkan flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" must be set, but not both at one and the same time")
-				RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawArguments)) == 0, "Vulkan indirect buffer element type flags specification is \"DRAW_ARGUMENTS\" but the given number of bytes don't align to this")
-				RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawIndexedArguments)) == 0, "Vulkan indirect buffer element type flags specification is \"DRAW_INDEXED_ARGUMENTS\" but the given number of bytes don't align to this")
+			SE_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 || (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0, "Invalid Vulkan flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" is missing")
+				SE_ASSERT(!((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 && (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0), "Invalid Vulkan flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" must be set, but not both at one and the same time")
+				SE_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawArguments)) == 0, "Vulkan indirect buffer element type flags specification is \"DRAW_ARGUMENTS\" but the given number of bytes don't align to this")
+				SE_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawIndexedArguments)) == 0, "Vulkan indirect buffer element type flags specification is \"DRAW_INDEXED_ARGUMENTS\" but the given number of bytes don't align to this")
 
 				// Create indirect buffer
 				int vkBufferUsageFlagBits = VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT;
@@ -2824,11 +2824,11 @@ namespace VulkanRhi
 				const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = vertexBuffers + numberOfVertexBuffers;
 				for ( const Rhi::VertexArrayVertexBuffer* vertexBuffer = vertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer )
 				{
-					RHI_ASSERT(&vulkanRhi == &vertexBuffer->vertexBuffer->getRhi(), "Vulkan error: The given vertex buffer resource is owned by another RHI instance")
+					SE_ASSERT(&vulkanRhi == &vertexBuffer->vertexBuffer->getRhi(), "Vulkan error: The given vertex buffer resource is owned by another RHI instance")
 				}
 			}
 #endif
-			RHI_ASSERT(nullptr == indexBuffer || &vulkanRhi == &indexBuffer->getRhi(), "Vulkan error: The given index buffer resource is owned by another RHI instance")
+			SE_ASSERT(nullptr == indexBuffer || &vulkanRhi == &indexBuffer->getRhi(), "Vulkan error: The given index buffer resource is owned by another RHI instance")
 
 				// Create vertex array
 				uint16_t id = 0;
@@ -2877,8 +2877,8 @@ namespace VulkanRhi
 			// Don't remove this reminder comment block: There are no buffer flags by intent since an uniform buffer can't be used for unordered access and as a consequence an uniform buffer must always used as shader resource to not be pointless
 			// -> Inside GLSL "layout(binding = 0, std140) writeonly uniform OutputUniformBuffer" will result in the GLSL compiler error "Failed to parse the GLSL shader source code: ERROR: 0:85: 'assign' :  l-value required "anon@6" (can't modify a uniform)"
 			// -> Inside GLSL "layout(binding = 0, std430) writeonly buffer  OutputUniformBuffer" will work in OpenGL but will fail in Vulkan with "Vulkan debug report callback: Object type: "VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT" Object: "0" Location: "0" Message code: "13" Layer prefix: "Validation" Message: "Object: VK_NULL_HANDLE (Type = 0) | Type mismatch on descriptor slot 0.0 (used as type `ptr to uniform struct of (vec4 of float32)`) but descriptor of type VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER""
-			// RHI_ASSERT((bufferFlags & Rhi::BufferFlag::UNORDERED_ACCESS) == 0, "Invalid Vulkan buffer flags, uniform buffer can't be used for unordered access")
-			// RHI_ASSERT((bufferFlags & Rhi::BufferFlag::SHADER_RESOURCE) != 0, "Invalid Vulkan buffer flags, uniform buffer must be used as shader resource")
+			// SE_ASSERT((bufferFlags & Rhi::BufferFlag::UNORDERED_ACCESS) == 0, "Invalid Vulkan buffer flags, uniform buffer can't be used for unordered access")
+			// SE_ASSERT((bufferFlags & Rhi::BufferFlag::SHADER_RESOURCE) != 0, "Invalid Vulkan buffer flags, uniform buffer must be used as shader resource")
 
 			// Create the uniform buffer
 			return RHI_NEW(UniformBuffer)(vulkanRhi, numberOfBytes, data, bufferUsage RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -3897,7 +3897,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0, "Vulkan create texture 1D was called with invalid parameters")
+			SE_ASSERT(width > 0, "Vulkan create texture 1D was called with invalid parameters")
 
 				// Create 1D texture resource
 				// -> The indication of the texture usage is only relevant for Direct3D, Vulkan has no texture usage indication
@@ -3909,7 +3909,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0 && numberOfSlices > 0, "Vulkan create texture 1D array was called with invalid parameters")
+			SE_ASSERT(width > 0 && numberOfSlices > 0, "Vulkan create texture 1D array was called with invalid parameters")
 
 				// Create 1D texture array resource
 				// -> The indication of the texture usage is only relevant for Direct3D, Vulkan has no texture usage indication
@@ -3921,7 +3921,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0 && height > 0, "Vulkan create texture 2D was called with invalid parameters")
+			SE_ASSERT(width > 0 && height > 0, "Vulkan create texture 2D was called with invalid parameters")
 
 				// Create 2D texture resource
 				// -> The indication of the texture usage is only relevant for Direct3D, Vulkan has no texture usage indication
@@ -3933,7 +3933,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0 && height > 0 && numberOfSlices > 0, "Vulkan create texture 2D array was called with invalid parameters")
+			SE_ASSERT(width > 0 && height > 0 && numberOfSlices > 0, "Vulkan create texture 2D array was called with invalid parameters")
 
 				// Create 2D texture array resource
 				// -> The indication of the texture usage is only relevant for Direct3D, Vulkan has no texture usage indication
@@ -3945,7 +3945,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0 && height > 0 && depth > 0, "Vulkan create texture 3D was called with invalid parameters")
+			SE_ASSERT(width > 0 && height > 0 && depth > 0, "Vulkan create texture 3D was called with invalid parameters")
 
 				// Create 3D texture resource
 				// -> The indication of the texture usage is only relevant for Direct3D, Vulkan has no texture usage indication
@@ -3957,7 +3957,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0, "Vulkan create texture cube was called with invalid parameters")
+			SE_ASSERT(width > 0, "Vulkan create texture cube was called with invalid parameters")
 
 				// Create cube texture resource
 				// -> The indication of the texture usage is only relevant for Direct3D, Vulkan has no texture usage indication
@@ -3969,7 +3969,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0 && numberOfSlices > 0, "Vulkan create texture cube was called with invalid parameters")
+			SE_ASSERT(width > 0 && numberOfSlices > 0, "Vulkan create texture cube was called with invalid parameters")
 
 				// Create cube texture resource
 				// -> The indication of the texture usage is only relevant for Direct3D, Vulkan has no texture usage indication
@@ -4029,8 +4029,8 @@ namespace VulkanRhi
 			mVkSampler(VK_NULL_HANDLE)
 		{
 			// Sanity checks
-			RHI_ASSERT(samplerState.filter != Rhi::FilterMode::UNKNOWN, "Vulkan filter mode must not be unknown")
-				RHI_ASSERT(samplerState.maxAnisotropy <= vulkanRhi.getCapabilities().maximumAnisotropy, "Maximum Vulkan anisotropy value violated")
+			SE_ASSERT(samplerState.filter != Rhi::FilterMode::UNKNOWN, "Vulkan filter mode must not be unknown")
+				SE_ASSERT(samplerState.maxAnisotropy <= vulkanRhi.getCapabilities().maximumAnisotropy, "Maximum Vulkan anisotropy value violated")
 
 				// TODO(co) Map "Rhi::SamplerState" to VkSamplerCreateInfo
 				const bool anisotropyEnable = (Rhi::FilterMode::ANISOTROPIC == samplerState.filter || Rhi::FilterMode::COMPARISON_ANISOTROPIC == samplerState.filter);
@@ -4693,8 +4693,8 @@ namespace VulkanRhi
 		*/
 		[[nodiscard]] inline VkImage getColorCurrentVkImage() const
 		{
-			RHI_ASSERT(~0u != mCurrentImageIndex, "Invalid index of the current Vulkan swap chain image to render into (Vulkan swap chain creation failed?)")
-				RHI_ASSERT(mCurrentImageIndex < mSwapChainBuffer.size(), "Out-of-bounds index of the current Vulkan swap chain image to render into")
+			SE_ASSERT(~0u != mCurrentImageIndex, "Invalid index of the current Vulkan swap chain image to render into (Vulkan swap chain creation failed?)")
+				SE_ASSERT(mCurrentImageIndex < mSwapChainBuffer.size(), "Out-of-bounds index of the current Vulkan swap chain image to render into")
 				return mSwapChainBuffer[mCurrentImageIndex].vkImage;
 		}
 
@@ -4719,8 +4719,8 @@ namespace VulkanRhi
 		*/
 		[[nodiscard]] inline VkFramebuffer getCurrentVkFramebuffer() const
 		{
-			RHI_ASSERT(~0u != mCurrentImageIndex, "Invalid index of the current Vulkan swap chain image to render into (Vulkan swap chain creation failed?)")
-				RHI_ASSERT(mCurrentImageIndex < mSwapChainBuffer.size(), "Out-of-bounds index of the current Vulkan swap chain image to render into")
+			SE_ASSERT(~0u != mCurrentImageIndex, "Invalid index of the current Vulkan swap chain image to render into (Vulkan swap chain creation failed?)")
+				SE_ASSERT(mCurrentImageIndex < mSwapChainBuffer.size(), "Out-of-bounds index of the current Vulkan swap chain image to render into")
 				return mSwapChainBuffer[mCurrentImageIndex].vkFramebuffer;
 		}
 
@@ -4961,8 +4961,8 @@ namespace VulkanRhi
 			const VkDevice		   vkDevice = vulkanContext.getVkDevice();
 
 			// Sanity checks
-			RHI_ASSERT(VK_NULL_HANDLE != vkPhysicalDevice, "Invalid physical Vulkan device")
-				RHI_ASSERT(VK_NULL_HANDLE != vkDevice, "Invalid Vulkan device")
+			SE_ASSERT(VK_NULL_HANDLE != vkPhysicalDevice, "Invalid physical Vulkan device")
+				SE_ASSERT(VK_NULL_HANDLE != vkDevice, "Invalid Vulkan device")
 
 				// Wait for the Vulkan device to become idle
 				vkDeviceWaitIdle(vkDevice);
@@ -5193,8 +5193,8 @@ namespace VulkanRhi
 		{
 			if ( VK_NULL_HANDLE != mDepthVkImage )
 			{
-				RHI_ASSERT(VK_NULL_HANDLE != mDepthVkDeviceMemory, "Invalid Vulkan depth device memory")
-					RHI_ASSERT(VK_NULL_HANDLE != mDepthVkImageView, "Invalid Vulkan depth image view")
+				SE_ASSERT(VK_NULL_HANDLE != mDepthVkDeviceMemory, "Invalid Vulkan depth device memory")
+					SE_ASSERT(VK_NULL_HANDLE != mDepthVkImageView, "Invalid Vulkan depth image view")
 					Helper::destroyAndFreeVkImage(static_cast<VulkanRhi&>(getRhi()), mDepthVkImage, mDepthVkDeviceMemory, mDepthVkImageView);
 			}
 		}
@@ -5298,7 +5298,7 @@ namespace VulkanRhi
 				for ( Rhi::ITexture** colorTexture = mColorTextures; colorTexture < colorTexturesEnd; ++colorTexture, ++colorFramebufferAttachments )
 				{
 					// Sanity check
-					RHI_ASSERT(nullptr != colorFramebufferAttachments->texture, "Invalid Vulkan color framebuffer attachment texture")
+					SE_ASSERT(nullptr != colorFramebufferAttachments->texture, "Invalid Vulkan color framebuffer attachment texture")
 
 						// TODO(co) Add security check: Is the given resource one of the currently used RHI?
 						*colorTexture = colorFramebufferAttachments->texture;
@@ -5313,8 +5313,8 @@ namespace VulkanRhi
 							const Texture2D* texture2D = static_cast<Texture2D*>(*colorTexture);
 
 							// Sanity checks
-							RHI_ASSERT(colorFramebufferAttachments->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid Vulkan color framebuffer attachment mipmap index")
-								RHI_ASSERT(0 == colorFramebufferAttachments->layerIndex, "Invalid Vulkan color framebuffer attachment layer index")
+							SE_ASSERT(colorFramebufferAttachments->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid Vulkan color framebuffer attachment mipmap index")
+								SE_ASSERT(0 == colorFramebufferAttachments->layerIndex, "Invalid Vulkan color framebuffer attachment layer index")
 
 								// Update the framebuffer width and height if required
 								vkImageView = texture2D->getVkImageView();
@@ -5378,7 +5378,7 @@ namespace VulkanRhi
 			if ( nullptr != depthStencilFramebufferAttachment )
 			{
 				mDepthStencilTexture = depthStencilFramebufferAttachment->texture;
-				RHI_ASSERT(nullptr != mDepthStencilTexture, "Invalid Vulkan depth stencil framebuffer attachment texture")
+				SE_ASSERT(nullptr != mDepthStencilTexture, "Invalid Vulkan depth stencil framebuffer attachment texture")
 					mDepthStencilTexture->AddReference();
 
 				// Evaluate the depth stencil texture type
@@ -5390,8 +5390,8 @@ namespace VulkanRhi
 						const Texture2D* texture2D = static_cast<Texture2D*>(mDepthStencilTexture);
 
 						// Sanity checks
-						RHI_ASSERT(depthStencilFramebufferAttachment->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid Vulkan depth stencil framebuffer attachment mipmap index")
-							RHI_ASSERT(0 == depthStencilFramebufferAttachment->layerIndex, "Invalid Vulkan depth stencil framebuffer attachment layer index")
+						SE_ASSERT(depthStencilFramebufferAttachment->mipmapIndex < Texture2D::getNumberOfMipmaps(texture2D->getWidth(), texture2D->getHeight()), "Invalid Vulkan depth stencil framebuffer attachment mipmap index")
+							SE_ASSERT(0 == depthStencilFramebufferAttachment->layerIndex, "Invalid Vulkan depth stencil framebuffer attachment layer index")
 
 							// Update the framebuffer width and height if required
 							vkImageView = texture2D->getVkImageView();
@@ -5450,12 +5450,12 @@ namespace VulkanRhi
 			// Validate the framebuffer width and height
 			if ( 0 == mWidth || UINT_MAX == mWidth )
 			{
-				RHI_ASSERT(false, "Invalid Vulkan framebuffer width")
+				SE_ASSERT(false, "Invalid Vulkan framebuffer width")
 					mWidth = 1;
 			}
 			if ( 0 == mHeight || UINT_MAX == mHeight )
 			{
-				RHI_ASSERT(false, "Invalid Vulkan framebuffer height")
+				SE_ASSERT(false, "Invalid Vulkan framebuffer height")
 					mHeight = 1;
 			}
 
@@ -6960,7 +6960,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan vertex shader bytecode is invalid")
+			SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan vertex shader bytecode is invalid")
 
 				// Create shader instance
 				return RHI_NEW(VertexShaderGlsl)(vulkanRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -6977,7 +6977,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan tessellation control shader bytecode is invalid")
+			SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan tessellation control shader bytecode is invalid")
 
 				// Create shader instance
 				return RHI_NEW(TessellationControlShaderGlsl)(vulkanRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -6994,7 +6994,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan tessellation evaluation shader bytecode is invalid")
+			SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan tessellation evaluation shader bytecode is invalid")
 
 				// Create shader instance
 				return RHI_NEW(TessellationEvaluationShaderGlsl)(vulkanRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -7011,7 +7011,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan geometry shader bytecode is invalid")
+			SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan geometry shader bytecode is invalid")
 
 				// Create shader instance
 				return RHI_NEW(GeometryShaderGlsl)(vulkanRhi, shaderBytecode, gsInputPrimitiveTopology, gsOutputPrimitiveTopology, numberOfOutputVertices RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -7028,7 +7028,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan fragment shader bytecode is invalid")
+			SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan fragment shader bytecode is invalid")
 
 				// Create shader instance
 				return RHI_NEW(FragmentShaderGlsl)(vulkanRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -7045,7 +7045,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan task shader bytecode is invalid")
+			SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan task shader bytecode is invalid")
 
 				// Create shader instance
 				return RHI_NEW(TaskShaderGlsl)(vulkanRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -7062,7 +7062,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan mesh shader bytecode is invalid")
+			SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan mesh shader bytecode is invalid")
 
 				// Create shader instance
 				return RHI_NEW(MeshShaderGlsl)(vulkanRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -7079,7 +7079,7 @@ namespace VulkanRhi
 			VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan compute shader bytecode is invalid")
+			SE_ASSERT(shaderBytecode.getNumberOfBytes() > 0 && nullptr != shaderBytecode.getBytecode(), "Vulkan compute shader bytecode is invalid")
 
 				// Create shader instance
 				return RHI_NEW(ComputeShaderGlsl)(vulkanRhi, shaderBytecode RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -7100,11 +7100,11 @@ namespace VulkanRhi
 			// -> Optimization: Comparing the shader language name by directly comparing the pointer address of
 			//    the name is safe because we know that we always reference to one and the same name address
 			// TODO(co) Add security check: Is the given resource one of the currently used RHI?
-			RHI_ASSERT(nullptr == vertexShader || vertexShader->getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan vertex shader language mismatch")
-				RHI_ASSERT(nullptr == tessellationControlShader || tessellationControlShader->getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan tessellation control shader language mismatch")
-				RHI_ASSERT(nullptr == tessellationEvaluationShader || tessellationEvaluationShader->getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan tessellation evaluation shader language mismatch")
-				RHI_ASSERT(nullptr == geometryShader || geometryShader->getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan geometry shader language mismatch")
-				RHI_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan fragment shader language mismatch")
+			SE_ASSERT(nullptr == vertexShader || vertexShader->getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan vertex shader language mismatch")
+				SE_ASSERT(nullptr == tessellationControlShader || tessellationControlShader->getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan tessellation control shader language mismatch")
+				SE_ASSERT(nullptr == tessellationEvaluationShader || tessellationEvaluationShader->getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan tessellation evaluation shader language mismatch")
+				SE_ASSERT(nullptr == geometryShader || geometryShader->getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan geometry shader language mismatch")
+				SE_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan fragment shader language mismatch")
 
 				// Create the graphics program
 				return RHI_NEW(GraphicsProgramGlsl)(vulkanRhi, static_cast<VertexShaderGlsl*>(vertexShader), static_cast<TessellationControlShaderGlsl*>(tessellationControlShader), static_cast<TessellationEvaluationShaderGlsl*>(tessellationEvaluationShader), static_cast<GeometryShaderGlsl*>(geometryShader), static_cast<FragmentShaderGlsl*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -7119,9 +7119,9 @@ namespace VulkanRhi
 			// -> Optimization: Comparing the shader language name by directly comparing the pointer address of
 			//    the name is safe because we know that we always reference to one and the same name address
 			// TODO(co) Add security check: Is the given resource one of the currently used RHI?
-			RHI_ASSERT(nullptr == taskShader || taskShader->getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan task shader language mismatch")
-				RHI_ASSERT(meshShader.getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan mesh shader language mismatch")
-				RHI_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan fragment shader language mismatch")
+			SE_ASSERT(nullptr == taskShader || taskShader->getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan task shader language mismatch")
+				SE_ASSERT(meshShader.getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan mesh shader language mismatch")
+				SE_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::GLSL_NAME, "Vulkan fragment shader language mismatch")
 
 				// Create the graphics program
 				return RHI_NEW(GraphicsProgramGlsl)(vulkanRhi, static_cast<TaskShaderGlsl*>(taskShader), static_cast<MeshShaderGlsl&>(meshShader), static_cast<FragmentShaderGlsl*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -7370,8 +7370,8 @@ namespace VulkanRhi
 				1.0f																										// maxDepthBounds (float)
 			};
 			const uint32_t numberOfColorAttachments = renderPass->getNumberOfColorAttachments();
-			RHI_ASSERT(numberOfColorAttachments < 8, "Invalid number of Vulkan color attachments")
-				RHI_ASSERT(numberOfColorAttachments == graphicsPipelineState.numberOfRenderTargets, "Invalid number of Vulkan color attachments")
+			SE_ASSERT(numberOfColorAttachments < 8, "Invalid number of Vulkan color attachments")
+				SE_ASSERT(numberOfColorAttachments == graphicsPipelineState.numberOfRenderTargets, "Invalid number of Vulkan color attachments")
 				std::array<VkPipelineColorBlendAttachmentState, 8> vkPipelineColorBlendAttachmentStates;
 			for ( uint8_t i = 0; i < numberOfColorAttachments; ++i )
 			{
@@ -7717,7 +7717,7 @@ namespace VulkanRhi
 			for ( uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources )
 			{
 				Rhi::IResource* resource = *resources;
-				RHI_ASSERT(nullptr != resource, "Invalid Vulkan resource")
+				SE_ASSERT(nullptr != resource, "Invalid Vulkan resource")
 					mResources[resourceIndex] = resource;
 				resource->AddReference();
 
@@ -7779,7 +7779,7 @@ namespace VulkanRhi
 				case Rhi::ResourceType::TEXTURE_BUFFER:
 					{
 						const Rhi::DescriptorRange& descriptorRange = reinterpret_cast<const Rhi::DescriptorRange*>(rootSignature.getRootSignature().parameters[rootParameterIndex].descriptorTable.descriptorRanges)[resourceIndex];
-						RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "Vulkan texture buffer must bound at SRV or UAV descriptor range type")
+						SE_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "Vulkan texture buffer must bound at SRV or UAV descriptor range type")
 							const VkBufferView vkBufferView = static_cast<TextureBuffer*>(resource)->getVkBufferView();
 						const VkWriteDescriptorSet vkWriteDescriptorSet =
 						{
@@ -7801,7 +7801,7 @@ namespace VulkanRhi
 				case Rhi::ResourceType::STRUCTURED_BUFFER:
 					{
 						[[maybe_unused]] const Rhi::DescriptorRange& descriptorRange = reinterpret_cast<const Rhi::DescriptorRange*>(rootSignature.getRootSignature().parameters[rootParameterIndex].descriptorTable.descriptorRanges)[resourceIndex];
-						RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "Vulkan structured buffer must bound at SRV or UAV descriptor range type")
+						SE_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "Vulkan structured buffer must bound at SRV or UAV descriptor range type")
 							const VkDescriptorBufferInfo vkDescriptorBufferInfo =
 						{
 							static_cast<StructuredBuffer*>(resource)->getVkBuffer(),	// buffer (VkBuffer)
@@ -8120,10 +8120,10 @@ namespace VulkanRhi
 		VulkanRhi& vulkanRhi = static_cast<VulkanRhi&>(getRhi());
 
 		// Sanity checks
-		RHI_ASSERT(VK_NULL_HANDLE != mVkDescriptorPool, "The Vulkan descriptor pool instance must be valid")
-			RHI_ASSERT(rootParameterIndex < mVkDescriptorSetLayouts.size(), "The Vulkan root parameter index is out-of-bounds")
-			RHI_ASSERT(numberOfResources > 0, "The number of Vulkan resources must not be zero")
-			RHI_ASSERT(nullptr != resources, "The Vulkan resource pointers must be valid")
+		SE_ASSERT(VK_NULL_HANDLE != mVkDescriptorPool, "The Vulkan descriptor pool instance must be valid")
+			SE_ASSERT(rootParameterIndex < mVkDescriptorSetLayouts.size(), "The Vulkan root parameter index is out-of-bounds")
+			SE_ASSERT(numberOfResources > 0, "The number of Vulkan resources must not be zero")
+			SE_ASSERT(nullptr != resources, "The Vulkan resource pointers must be valid")
 
 			// Allocate Vulkan descriptor set
 			VkDescriptorSet vkDescriptorSet = VK_NULL_HANDLE;
@@ -8199,7 +8199,7 @@ namespace
 			void ExecuteCommandBuffer(const void* data, Rhi::IRhi& rhi)
 			{
 				const Rhi::Command::ExecuteCommandBuffer* realData = static_cast<const Rhi::Command::ExecuteCommandBuffer*>(data);
-				RHI_ASSERT(nullptr != realData->commandBufferToExecute, "The Vulkan command buffer to execute must be valid")
+				SE_ASSERT(nullptr != realData->commandBufferToExecute, "The Vulkan command buffer to execute must be valid")
 					rhi.submitCommandBuffer(*realData->commandBufferToExecute);
 			}
 

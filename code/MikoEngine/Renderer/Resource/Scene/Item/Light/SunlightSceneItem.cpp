@@ -110,7 +110,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	void SunlightSceneItem::deserialize([[maybe_unused]] uint32_t numberOfBytes, const uint8_t* data)
 	{
-		RHI_ASSERT(sizeof(v1Scene::SunlightItem) == numberOfBytes, "Invalid number of bytes")
+		SE_ASSERT(sizeof(v1Scene::SunlightItem) == numberOfBytes, "Invalid number of bytes")
 
 		// Read data
 		const v1Scene::SunlightItem* sunlightItem = reinterpret_cast<const v1Scene::SunlightItem*>(data);
@@ -121,9 +121,9 @@ namespace Renderer
 		mTimeOfDay		  = sunlightItem->timeOfDay;
 
 		// Sanity checks (units in O'clock)
-		RHI_ASSERT(mSunriseTime >= 00.00f && mSunriseTime < 24.00f, "Invalid sunrise time")
-		RHI_ASSERT(mSunsetTime >= 00.00f && mSunsetTime < 24.00f, "Invalid sunset time")
-		RHI_ASSERT(mTimeOfDay >= 00.00f && mTimeOfDay < 24.00f, "Invalid time of day")
+		SE_ASSERT(mSunriseTime >= 00.00f && mSunriseTime < 24.00f, "Invalid sunrise time")
+		SE_ASSERT(mSunsetTime >= 00.00f && mSunsetTime < 24.00f, "Invalid sunset time")
+		SE_ASSERT(mTimeOfDay >= 00.00f && mTimeOfDay < 24.00f, "Invalid time of day")
 
 		// Calculated derived sunlight properties
 		calculatedDerivedSunlightProperties();

@@ -49,7 +49,7 @@ namespace OpenGLRhi
 				const Rhi::RootParameter& rootParameter = rootSignature.parameters[currentRootParameterIndex];
 				if ( Rhi::RootParameterType::DESCRIPTOR_TABLE == rootParameter.parameterType )
 				{
-					RHI_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
+					SE_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
 						const uint32_t numberOfDescriptorRanges = rootParameter.descriptorTable.numberOfDescriptorRanges;
 					for ( uint32_t descriptorRangeIndex = 0; descriptorRangeIndex < numberOfDescriptorRanges; ++descriptorRangeIndex )
 					{
@@ -66,7 +66,7 @@ namespace OpenGLRhi
 			for ( uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources )
 			{
 				Rhi::IResource* resource = *resources;
-				RHI_ASSERT(nullptr != resource, "Invalid OpenGL resource")
+				SE_ASSERT(nullptr != resource, "Invalid OpenGL resource")
 					mResources[resourceIndex] = resource;
 				resource->AddReference();
 

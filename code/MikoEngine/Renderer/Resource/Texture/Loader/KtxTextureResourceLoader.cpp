@@ -237,7 +237,7 @@ namespace Renderer
 			::detail::KTX_texinfo ktxTexinfo;
 			if (!checkHeader(ktxHeader, ktxTexinfo))
 			{
-				RHI_ASSERT(false, "Invalid KTX header")
+				SE_ASSERT(false, "Invalid KTX header")
 			}
 		}
 		file.skip(ktxHeader.bytesOfKeyValueData);
@@ -249,7 +249,7 @@ namespace Renderer
 		// Check if the file contains data for one texture or for 6 textures
 		if (1 != ktxHeader.numberOfFaces && 6 != ktxHeader.numberOfFaces)
 		{
-			RHI_ASSERT(false, "The number of faces must be one or six")
+			SE_ASSERT(false, "The number of faces must be one or six")
 		}
 
 		// Texture format
@@ -259,7 +259,7 @@ namespace Renderer
 			// -> For now we only support ETC1 compression
 			if (GL_ETC1_RGB8_OES != ktxHeader.glInternalFormat)
 			{
-				RHI_ASSERT(false, "Unsupported compressed \"glInternalFormat\"")
+				SE_ASSERT(false, "Unsupported compressed \"glInternalFormat\"")
 			}
 			mTextureFormat = Rhi::TextureFormat::ETC1;
 		}
@@ -273,7 +273,7 @@ namespace Renderer
 			}
 			else
 			{
-				RHI_ASSERT(false, "Unsupported uncompressed \"glInternalFormat\"")
+				SE_ASSERT(false, "Unsupported uncompressed \"glInternalFormat\"")
 			}
 		}
 
@@ -378,7 +378,7 @@ namespace Renderer
 		if (mCubeMap)
 		{
 			// Cube texture
-			RHI_ASSERT(mWidth == mHeight, "Cube texture width and height must be identical")
+			SE_ASSERT(mWidth == mHeight, "Cube texture width and height must be identical")
 			return mRenderer.getTextureManager().createTextureCube(mWidth, static_cast<Rhi::TextureFormat::Enum>(mTextureFormat), mImageData, flags, Rhi::TextureUsage::IMMUTABLE RHI_RESOURCE_DEBUG_NAME(getAsset().virtualFilename));
 		}
 		else if (1 == mWidth || 1 == mHeight)

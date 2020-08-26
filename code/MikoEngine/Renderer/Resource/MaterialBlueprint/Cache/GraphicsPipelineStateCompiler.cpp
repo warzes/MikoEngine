@@ -87,7 +87,7 @@ namespace Renderer
 			GraphicsPipelineStateCache& graphicsPipelineStateCache = compilerRequest.graphicsPipelineStateCache;
 			graphicsPipelineStateCache.mGraphicsPipelineStateObjectPtr = compilerRequest.graphicsPipelineStateObject;
 			graphicsPipelineStateCache.mIsUsingFallback = false;
-			RHI_ASSERT(0 != mNumberOfInFlightCompilerRequests, "Invalid number of in flight compiler requests")
+			SE_ASSERT(0 != mNumberOfInFlightCompilerRequests, "Invalid number of in flight compiler requests")
 			--mNumberOfInFlightCompilerRequests;
 		}
 	}
@@ -123,7 +123,7 @@ namespace Renderer
 	void GraphicsPipelineStateCompiler::addAsynchronousCompilerRequest(GraphicsPipelineStateCache& graphicsPipelineStateCache)
 	{
 		// Push the load request into the builder queue
-		RHI_ASSERT(mAsynchronousCompilationEnabled, "Asynchronous compilation isn't enabled")
+		SE_ASSERT(mAsynchronousCompilationEnabled, "Asynchronous compilation isn't enabled")
 		++mNumberOfInFlightCompilerRequests;
 		std::unique_lock<std::mutex> builderMutexLock(mBuilderMutex);
 		mBuilderQueue.emplace_back(CompilerRequest(graphicsPipelineStateCache));
@@ -258,7 +258,7 @@ namespace Renderer
 											if (sourceCode.empty())
 											{
 												// TODO(co) Error handling
-												RHI_ASSERT(false, "Invalid source code")
+												SE_ASSERT(false, "Invalid source code")
 											}
 											else
 											{
@@ -292,7 +292,7 @@ namespace Renderer
 										else
 										{
 											// TODO(co) Error handling
-											RHI_ASSERT(false, "Invalid shader blueprint resource")
+											SE_ASSERT(false, "Invalid shader blueprint resource")
 										}
 									}
 									compilerRequest.shaderCache[i] = shaderCache;
@@ -366,7 +366,7 @@ namespace Renderer
 							if (shaderSourceCode.empty())
 							{
 								// We're not aware of any shader source code but we need a shader cache, so, there must be a shader cache master we need to wait for
-								// RHI_ASSERT(nullptr != shaderCache->getMasterShaderCache(), "Invalid master shader cache")	// No assert by intent
+								// SE_ASSERT(nullptr != shaderCache->getMasterShaderCache(), "Invalid master shader cache")	// No assert by intent
 								needToWaitForShaderCache = true;
 							}
 							else
@@ -400,7 +400,7 @@ namespace Renderer
 										shader = shaderLanguage.createFragmentShaderFromSourceCode(shaderSourceCode.c_str(), &shaderCache->mShaderBytecode RHI_RESOURCE_DEBUG_NAME("Pipeline state compiler"));
 										break;
 								}
-								RHI_ASSERT(nullptr != shader, "Invalid shader")	// TODO(co) Error handling
+								SE_ASSERT(nullptr != shader, "Invalid shader")	// TODO(co) Error handling
 								shaderCache->mShaderPtr = shaders[i] = shader;
 							}
 						}
@@ -431,15 +431,15 @@ namespace Renderer
 						{ // Graphics program cache entry
 							GraphicsProgramCacheManager& graphicsProgramCacheManager = materialBlueprintResource.getGraphicsPipelineStateCacheManager().getGraphicsProgramCacheManager();
 							const GraphicsProgramCacheId graphicsProgramCacheId = compilerRequest.graphicsProgramCacheId;
-							RHI_ASSERT(IsValid(graphicsProgramCacheId), "Invalid graphics program cache ID")
+							SE_ASSERT(IsValid(graphicsProgramCacheId), "Invalid graphics program cache ID")
 							std::unique_lock<std::mutex> mutexLock(graphicsProgramCacheManager.mMutex);
-							RHI_ASSERT(graphicsProgramCacheManager.mGraphicsProgramCacheById.find(graphicsProgramCacheId) == graphicsProgramCacheManager.mGraphicsProgramCacheById.cend(), "Invalid graphics program cache ID")	// TODO(co) Error handling
+							SE_ASSERT(graphicsProgramCacheManager.mGraphicsProgramCacheById.find(graphicsProgramCacheId) == graphicsProgramCacheManager.mGraphicsProgramCacheById.cend(), "Invalid graphics program cache ID")	// TODO(co) Error handling
 							graphicsProgramCacheManager.mGraphicsProgramCacheById.emplace(graphicsProgramCacheId, new GraphicsProgramCache(graphicsProgramCacheId, *graphicsProgram));
 
 							{ // The graphics program cache is no longer in flight
 								std::unique_lock<std::mutex> inFlightGraphicsProgramCachesMutexLock(mInFlightGraphicsProgramCachesMutex);
 								const InFlightGraphicsProgramCaches::const_iterator iterator = mInFlightGraphicsProgramCaches.find(graphicsProgramCacheId);
-								RHI_ASSERT(mInFlightGraphicsProgramCaches.end() != iterator, "Invalid graphics program cache ID")
+								SE_ASSERT(mInFlightGraphicsProgramCaches.end() != iterator, "Invalid graphics program cache ID")
 								mInFlightGraphicsProgramCaches.erase(iterator);
 							}
 							mBuilderConditionVariable.notify_one();

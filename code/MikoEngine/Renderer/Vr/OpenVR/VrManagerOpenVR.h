@@ -83,7 +83,7 @@ namespace Renderer
 		[[nodiscard]] inline IVrManagerOpenVRListener& getVrManagerOpenVRListener() const
 		{
 			// We know this pointer must always be valid
-			RHI_ASSERT(nullptr != mVrManagerOpenVRListener, "Invalid VR manager OpenVR listener")
+			SE_ASSERT(nullptr != mVrManagerOpenVRListener, "Invalid VR manager OpenVR listener")
 			return *mVrManagerOpenVRListener;
 		}
 
@@ -106,13 +106,13 @@ namespace Renderer
 
 		[[nodiscard]] inline const vr::TrackedDevicePose_t& getVrTrackedDevicePose(vr::TrackedDeviceIndex_t trackedDeviceIndex) const
 		{
-			RHI_ASSERT(trackedDeviceIndex < vr::k_unMaxTrackedDeviceCount, "Maximum tracked device count exceeded")
+			SE_ASSERT(trackedDeviceIndex < vr::k_unMaxTrackedDeviceCount, "Maximum tracked device count exceeded")
 			return mVrTrackedDevicePose[trackedDeviceIndex];
 		}
 
 		[[nodiscard]] inline const glm::mat4& getDevicePoseMatrix(vr::TrackedDeviceIndex_t trackedDeviceIndex) const
 		{
-			RHI_ASSERT(trackedDeviceIndex < vr::k_unMaxTrackedDeviceCount, "Maximum tracked device count exceeded")
+			SE_ASSERT(trackedDeviceIndex < vr::k_unMaxTrackedDeviceCount, "Maximum tracked device count exceeded")
 			return mDevicePoseMatrix[trackedDeviceIndex];
 		}
 

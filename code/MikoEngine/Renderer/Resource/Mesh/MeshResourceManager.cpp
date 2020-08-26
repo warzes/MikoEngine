@@ -147,7 +147,7 @@ namespace Renderer
 
 			default:
 				// TODO(co) Error handling
-				RHI_ASSERT(false, "Invalid resource loader type ID")
+				SE_ASSERT(false, "Invalid resource loader type ID")
 				return nullptr;
 		}
 	}

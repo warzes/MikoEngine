@@ -111,7 +111,7 @@ namespace Renderer
 
 		[[nodiscard]] inline uint32_t getTotalNumberOfBoneSpaceDataBytes() const
 		{
-			RHI_ASSERT(0 != mNumberOfBones, "Each skeleton must have at least one bone")
+			SE_ASSERT(0 != mNumberOfBones, "Each skeleton must have at least one bone")
 			return static_cast<uint32_t>(NUMBER_OF_BONE_SPACE_DATA_BYTES * mNumberOfBones);
 		}
 
@@ -143,13 +143,13 @@ namespace Renderer
 		inline virtual ~SkeletonResource() override
 		{
 			// Sanity checks
-			RHI_ASSERT(0 == mNumberOfBones, "Invalid number of bones")
-			RHI_ASSERT(nullptr == mBoneParentIndices, "Invalid bone parent indices")
-			RHI_ASSERT(nullptr == mBoneIds, "Invalid bone IDs")
-			RHI_ASSERT(nullptr == mLocalBoneMatrices, "Invalid local bone matrices")
-			RHI_ASSERT(nullptr == mBoneOffsetMatrices, "Invalid bone offset matrices")
-			RHI_ASSERT(nullptr == mGlobalBoneMatrices, "Invalid global bone matrices")
-			RHI_ASSERT(nullptr == mBoneSpaceData, "Invalid bone space data")
+			SE_ASSERT(0 == mNumberOfBones, "Invalid number of bones")
+			SE_ASSERT(nullptr == mBoneParentIndices, "Invalid bone parent indices")
+			SE_ASSERT(nullptr == mBoneIds, "Invalid bone IDs")
+			SE_ASSERT(nullptr == mLocalBoneMatrices, "Invalid local bone matrices")
+			SE_ASSERT(nullptr == mBoneOffsetMatrices, "Invalid bone offset matrices")
+			SE_ASSERT(nullptr == mGlobalBoneMatrices, "Invalid global bone matrices")
+			SE_ASSERT(nullptr == mBoneSpaceData, "Invalid bone space data")
 		}
 
 		explicit SkeletonResource(const SkeletonResource&) = delete;
@@ -178,13 +178,13 @@ namespace Renderer
 		inline void initializeElement(SkeletonResourceId skeletonResourceId)
 		{
 			// Sanity checks
-			RHI_ASSERT(0 == mNumberOfBones, "Invalid number of bones")
-			RHI_ASSERT(nullptr == mBoneParentIndices, "Invalid bone parent indices")
-			RHI_ASSERT(nullptr == mBoneIds, "Invalid bone IDs")
-			RHI_ASSERT(nullptr == mLocalBoneMatrices, "Invalid local bone matrices")
-			RHI_ASSERT(nullptr == mBoneOffsetMatrices, "Invalid bone offset matrices")
-			RHI_ASSERT(nullptr == mGlobalBoneMatrices, "Invalid global bone matrices")
-			RHI_ASSERT(nullptr == mBoneSpaceData, "Invalid bone space data")
+			SE_ASSERT(0 == mNumberOfBones, "Invalid number of bones")
+			SE_ASSERT(nullptr == mBoneParentIndices, "Invalid bone parent indices")
+			SE_ASSERT(nullptr == mBoneIds, "Invalid bone IDs")
+			SE_ASSERT(nullptr == mLocalBoneMatrices, "Invalid local bone matrices")
+			SE_ASSERT(nullptr == mBoneOffsetMatrices, "Invalid bone offset matrices")
+			SE_ASSERT(nullptr == mGlobalBoneMatrices, "Invalid global bone matrices")
+			SE_ASSERT(nullptr == mBoneSpaceData, "Invalid bone space data")
 
 			// Call base implementation
 			IResource::initializeElement(skeletonResourceId);

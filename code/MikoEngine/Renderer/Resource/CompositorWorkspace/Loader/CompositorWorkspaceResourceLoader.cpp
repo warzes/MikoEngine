@@ -26,7 +26,7 @@ namespace
 			file.read(&nodes, sizeof(Renderer::v1CompositorWorkspace::Nodes));
 
 			// Sanity check
-			RHI_ASSERT(nodes.numberOfNodes > 0, "Invalid compositor workspace asset without any nodes detected")
+			SE_ASSERT(nodes.numberOfNodes > 0, "Invalid compositor workspace asset without any nodes detected")
 
 			// Read in the compositor node asset IDs
 			compositorWorkspaceResource.reserveCompositorNodes(nodes.numberOfNodes);

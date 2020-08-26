@@ -138,7 +138,7 @@ namespace Renderer
 
 		[[nodiscard]] inline const PassBufferManager::PassData& getPassData() const	// Memory address received via "Renderer::MaterialBlueprintResourceListener::beginFillPass()", can be invalid outside the correct scope, don't destroy the memory
 		{
-			RHI_ASSERT(nullptr != mPassData, "Invalid pass data")
+			SE_ASSERT(nullptr != mPassData, "Invalid pass data")
 			return *mPassData;
 		}
 

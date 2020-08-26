@@ -193,7 +193,7 @@ namespace Renderer
 		// -> Please note that the fallback texture asset ID is intentionally only used if the texture asset ID is valid, it's a fallback as long as the real texture data has not been loaded yet
 		const IRenderer& renderer = mInternalResourceManager->getRenderer();
 		const Asset* asset = renderer.getAssetManager().tryGetAssetByAssetId(assetId);
-		// RHI_ASSERT(nullptr != asset, "Unknown asset ID")	// For texture assets there's no assert by intent since it's not unusual that e.g. referenced compositor texture assets get created later on
+		// SE_ASSERT(nullptr != asset, "Unknown asset ID")	// For texture assets there's no assert by intent since it's not unusual that e.g. referenced compositor texture assets get created later on
 		bool load = (reload && nullptr != asset);
 		if (nullptr == textureResource && nullptr != asset)
 		{
@@ -234,7 +234,7 @@ namespace Renderer
 				else
 				{
 					// Error!
-					RHI_ASSERT(false, "We should never ever be able to be in here, it's the renderer toolkit responsible to ensure the renderer only works with sane data")
+					SE_ASSERT(false, "We should never ever be able to be in here, it's the renderer toolkit responsible to ensure the renderer only works with sane data")
 				}
 			}
 			if (IsValid(resourceLoaderTypeId))
@@ -257,20 +257,20 @@ namespace Renderer
 						else
 						{
 							// Error! 
-							RHI_ASSERT(false, "Fallback texture asset ID not found")
+							SE_ASSERT(false, "Fallback texture asset ID not found")
 						}
 					}
 					else
 					{
 						// Hiccups / lags warning
-						RHI_ASSERT(false, "There should always be a fallback texture asset ID (better be safe than sorry)")
+						SE_ASSERT(false, "There should always be a fallback texture asset ID (better be safe than sorry)")
 					}
 				}
 			}
 			else
 			{
 				// Error!
-				RHI_ASSERT(false, "We should never ever be able to be in here, it's the renderer toolkit responsible to ensure the renderer only works with sane data")
+				SE_ASSERT(false, "We should never ever be able to be in here, it's the renderer toolkit responsible to ensure the renderer only works with sane data")
 			}
 		}
 	}
@@ -278,7 +278,7 @@ namespace Renderer
 	TextureResourceId TextureResourceManager::createTextureResourceByAssetId(AssetId assetId, Rhi::ITexture& texture, bool rgbHardwareGammaCorrection)
 	{
 		// Sanity check
-		RHI_ASSERT(nullptr == getTextureResourceByAssetId(assetId), "The texture resource isn't allowed to exist, yet")
+		SE_ASSERT(nullptr == getTextureResourceByAssetId(assetId), "The texture resource isn't allowed to exist, yet")
 
 		// Create the texture resource instance
 		TextureResource& textureResource = mInternalResourceManager->getResources().addElement();
@@ -373,7 +373,7 @@ namespace Renderer
 
 			default:
 				// TODO(co) Error handling
-				RHI_ASSERT(false, "Invalid resource loader type ID")
+				SE_ASSERT(false, "Invalid resource loader type ID")
 				return nullptr;
 		}
 	}

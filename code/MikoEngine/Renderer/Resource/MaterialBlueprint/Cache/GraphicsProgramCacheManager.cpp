@@ -96,7 +96,7 @@ namespace Renderer
 			else
 			{
 				// TODO(co) Error handling
-				RHI_ASSERT(false, "Invalid graphics program")
+				SE_ASSERT(false, "Invalid graphics program")
 			}
 		}
 

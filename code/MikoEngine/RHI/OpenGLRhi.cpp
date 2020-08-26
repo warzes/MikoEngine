@@ -72,7 +72,7 @@ namespace
 			}
 
 			// Done
-			RHI_ASSERT(nullptr != mappedSubresource.data, "Mapping of OpenGL buffer failed")
+			SE_ASSERT(nullptr != mappedSubresource.data, "Mapping of OpenGL buffer failed")
 			return (nullptr != mappedSubresource.data);
 		}
 
@@ -121,7 +121,7 @@ namespace
 			void ExecuteCommandBuffer(const void* data, Rhi::IRhi& rhi)
 			{
 				const Rhi::Command::ExecuteCommandBuffer* realData = static_cast<const Rhi::Command::ExecuteCommandBuffer*>(data);
-				RHI_ASSERT(nullptr != realData->commandBufferToExecute, "The OpenGL command buffer to execute must be valid")
+				SE_ASSERT(nullptr != realData->commandBufferToExecute, "The OpenGL command buffer to execute must be valid")
 				rhi.submitCommandBuffer(*realData->commandBufferToExecute);
 			}
 
@@ -747,7 +747,7 @@ namespace OpenGLRhi
 		// Rasterizer (RS) stage
 
 		// Sanity check
-		RHI_ASSERT(numberOfViewports > 0 && nullptr != viewports, "Invalid OpenGL rasterizer state viewports")
+		SE_ASSERT(numberOfViewports > 0 && nullptr != viewports, "Invalid OpenGL rasterizer state viewports")
 
 		// In OpenGL, the origin of the viewport is left bottom while Direct3D is using a left top origin. To make the
 		// Direct3D 11 implementation as efficient as possible the Direct3D convention is used and we have to convert in here.
@@ -764,7 +764,7 @@ namespace OpenGLRhi
 		// Set the OpenGL viewport
 		// TODO(co) "GL_ARB_viewport_array" support ("OpenGLRhi::setGraphicsViewports()")
 		// TODO(co) Check for "numberOfViewports" out of range or are the debug events good enough?
-		RHI_ASSERT(numberOfViewports <= 1, "OpenGL supports only one viewport")
+		SE_ASSERT(numberOfViewports <= 1, "OpenGL supports only one viewport")
 		glViewport(static_cast<GLint>(viewports->topLeftX), static_cast<GLint>(renderTargetHeight - viewports->topLeftY - viewports->height), static_cast<GLsizei>(viewports->width), static_cast<GLsizei>(viewports->height));
 		glDepthRange(static_cast<GLclampd>(viewports->minDepth), static_cast<GLclampd>(viewports->maxDepth));
 	}
@@ -774,7 +774,7 @@ namespace OpenGLRhi
 		// Rasterizer (RS) stage
 
 		// Sanity check
-		RHI_ASSERT(numberOfScissorRectangles > 0 && nullptr != scissorRectangles, "Invalid OpenGL rasterizer state scissor rectangles")
+		SE_ASSERT(numberOfScissorRectangles > 0 && nullptr != scissorRectangles, "Invalid OpenGL rasterizer state scissor rectangles")
 
 		// In OpenGL, the origin of the scissor rectangle is left bottom while Direct3D is using a left top origin. To make the
 		// Direct3D 9 & 10 & 11 implementation as efficient as possible the Direct3D convention is used and we have to convert in here.
@@ -791,7 +791,7 @@ namespace OpenGLRhi
 		// Set the OpenGL scissor rectangle
 		// TODO(co) "GL_ARB_viewport_array" support ("OpenGLRhi::setGraphicsViewports()")
 		// TODO(co) Check for "numberOfViewports" out of range or are the debug events good enough?
-		RHI_ASSERT(numberOfScissorRectangles <= 1, "OpenGL supports only one scissor rectangle")
+		SE_ASSERT(numberOfScissorRectangles <= 1, "OpenGL supports only one scissor rectangle")
 		const GLsizei width  = scissorRectangles->bottomRightX - scissorRectangles->topLeftX;
 		const GLsizei height = scissorRectangles->bottomRightY - scissorRectangles->topLeftY;
 		glScissor(static_cast<GLint>(scissorRectangles->topLeftX), static_cast<GLint>(renderTargetHeight - static_cast<uint32_t>(scissorRectangles->topLeftY) - height), width, height);
@@ -944,7 +944,7 @@ namespace OpenGLRhi
 	void OpenGLRhi::clearGraphics(uint32_t clearFlags, const float color[4], float z, uint32_t stencil)
 	{
 		// Sanity check
-		RHI_ASSERT(z >= 0.0f && z <= 1.0f, "The OpenGL clear graphics z value must be between [0, 1] (inclusive)")
+		SE_ASSERT(z >= 0.0f && z <= 1.0f, "The OpenGL clear graphics z value must be between [0, 1] (inclusive)")
 
 		// Get API flags
 		uint32_t flagsApi = 0;
@@ -1010,8 +1010,8 @@ namespace OpenGLRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, indirectBuffer)
-		RHI_ASSERT(numberOfDraws > 0, "Number of OpenGL draws must not be zero")
-		RHI_ASSERT(mExtensions->isGL_ARB_draw_indirect(), "The GL_ARB_draw_indirect OpenGL extension isn't supported")
+		SE_ASSERT(numberOfDraws > 0, "Number of OpenGL draws must not be zero")
+		SE_ASSERT(mExtensions->isGL_ARB_draw_indirect(), "The GL_ARB_draw_indirect OpenGL extension isn't supported")
 		// It's possible to draw without "mVertexArray"
 
 		// Tessellation support: "glPatchParameteri()" is called within "OpenGLRhi::iaSetPrimitiveTopology()"
@@ -1057,8 +1057,8 @@ namespace OpenGLRhi
 	void OpenGLRhi::drawGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != emulationData, "The OpenGL emulation data must be valid")
-		RHI_ASSERT(numberOfDraws > 0, "The number of OpenGL draws must not be zero")
+		SE_ASSERT(nullptr != emulationData, "The OpenGL emulation data must be valid")
+		SE_ASSERT(numberOfDraws > 0, "The number of OpenGL draws must not be zero")
 		// It's possible to draw without "mVertexArray"
 
 		// TODO(co) Currently no buffer overflow check due to lack of interface provided data
@@ -1092,7 +1092,7 @@ namespace OpenGLRhi
 			else
 			{
 				// Without instancing
-				RHI_ASSERT(drawArguments.instanceCount <= 1, "Invalid OpenGL instance count")
+				SE_ASSERT(drawArguments.instanceCount <= 1, "Invalid OpenGL instance count")
 				glDrawArrays(mOpenGLPrimitiveTopology, static_cast<GLint>(drawArguments.startVertexLocation), static_cast<GLsizei>(drawArguments.vertexCountPerInstance));
 			}
 			emulationData += sizeof(Rhi::DrawArguments);
@@ -1109,10 +1109,10 @@ namespace OpenGLRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, indirectBuffer)
-		RHI_ASSERT(numberOfDraws > 0, "Number of OpenGL draws must not be zero")
-		RHI_ASSERT(nullptr != mVertexArray, "OpenGL draw indexed needs a set vertex array")
-		RHI_ASSERT(nullptr != mVertexArray->getIndexBuffer(), "OpenGL draw indexed needs a set vertex array which contains an index buffer")
-		RHI_ASSERT(mExtensions->isGL_ARB_draw_indirect(), "The GL_ARB_draw_indirect OpenGL extension isn't supported")
+		SE_ASSERT(numberOfDraws > 0, "Number of OpenGL draws must not be zero")
+		SE_ASSERT(nullptr != mVertexArray, "OpenGL draw indexed needs a set vertex array")
+		SE_ASSERT(nullptr != mVertexArray->getIndexBuffer(), "OpenGL draw indexed needs a set vertex array which contains an index buffer")
+		SE_ASSERT(mExtensions->isGL_ARB_draw_indirect(), "The GL_ARB_draw_indirect OpenGL extension isn't supported")
 
 		// Tessellation support: "glPatchParameteri()" is called within "OpenGLRhi::iaSetPrimitiveTopology()"
 
@@ -1158,10 +1158,10 @@ namespace OpenGLRhi
 	void OpenGLRhi::drawIndexedGraphicsEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != emulationData, "The OpenGL emulation data must be valid")
-		RHI_ASSERT(numberOfDraws > 0, "The number of OpenGL draws must not be zero")
-		RHI_ASSERT(nullptr != mVertexArray, "OpenGL draw indexed needs a set vertex array")
-		RHI_ASSERT(nullptr != mVertexArray->getIndexBuffer(), "OpenGL draw indexed needs a set vertex array which contains an index buffer")
+		SE_ASSERT(nullptr != emulationData, "The OpenGL emulation data must be valid")
+		SE_ASSERT(numberOfDraws > 0, "The number of OpenGL draws must not be zero")
+		SE_ASSERT(nullptr != mVertexArray, "OpenGL draw indexed needs a set vertex array")
+		SE_ASSERT(nullptr != mVertexArray->getIndexBuffer(), "OpenGL draw indexed needs a set vertex array which contains an index buffer")
 
 		// TODO(co) Currently no buffer overflow check due to lack of interface provided data
 		emulationData += indirectBufferOffset;
@@ -1201,7 +1201,7 @@ namespace OpenGLRhi
 					else
 					{
 						// Error!
-						RHI_ASSERT(false, "Failed to OpenGL draw indexed emulated")
+						SE_ASSERT(false, "Failed to OpenGL draw indexed emulated")
 					}
 				}
 				else if (drawIndexedArguments.startInstanceLocation > 0 && mExtensions->isGL_ARB_base_instance())
@@ -1218,7 +1218,7 @@ namespace OpenGLRhi
 			else
 			{
 				// Without instancing
-				RHI_ASSERT(drawIndexedArguments.instanceCount <= 1, "Invalid OpenGL instance count")
+				SE_ASSERT(drawIndexedArguments.instanceCount <= 1, "Invalid OpenGL instance count")
 
 				// Use base vertex location?
 				if (drawIndexedArguments.baseVertexLocation > 0)
@@ -1232,7 +1232,7 @@ namespace OpenGLRhi
 					else
 					{
 						// Error!
-						RHI_ASSERT(false, "Failed to OpenGL draw indexed emulated")
+						SE_ASSERT(false, "Failed to OpenGL draw indexed emulated")
 					}
 				}
 				else
@@ -1254,7 +1254,7 @@ namespace OpenGLRhi
 	void OpenGLRhi::drawMeshTasks([[maybe_unused]] const Rhi::IIndirectBuffer& indirectBuffer, [[maybe_unused]] uint32_t indirectBufferOffset, [[maybe_unused]] uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
+		SE_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
 
 		// TODO(co) Implement me
 		/*
@@ -1272,8 +1272,8 @@ namespace OpenGLRhi
 	void OpenGLRhi::drawMeshTasksEmulated(const uint8_t* emulationData, uint32_t indirectBufferOffset, uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != emulationData, "The OpenGL emulation data must be valid")
-		RHI_ASSERT(numberOfDraws > 0, "The number of OpenGL draws must not be zero")
+		SE_ASSERT(nullptr != emulationData, "The OpenGL emulation data must be valid")
+		SE_ASSERT(numberOfDraws > 0, "The number of OpenGL draws must not be zero")
 
 		// TODO(co) Currently no buffer overflow check due to lack of interface provided data
 		emulationData += indirectBufferOffset;
@@ -1501,8 +1501,8 @@ namespace OpenGLRhi
 					// Get the OpenGL texture 2D instances
 					const Texture2D& openGlDestinationTexture2D = static_cast<const Texture2D&>(destinationResource);
 					const Texture2D& openGlSourceTexture2D = static_cast<const Texture2D&>(sourceResource);
-					RHI_ASSERT(openGlDestinationTexture2D.getWidth() == openGlSourceTexture2D.getWidth(), "OpenGL source and destination width must be identical for resource copy")
-					RHI_ASSERT(openGlDestinationTexture2D.getHeight() == openGlSourceTexture2D.getHeight(), "OpenGL source and destination height must be identical for resource copy")
+					SE_ASSERT(openGlDestinationTexture2D.getWidth() == openGlSourceTexture2D.getWidth(), "OpenGL source and destination width must be identical for resource copy")
+					SE_ASSERT(openGlDestinationTexture2D.getHeight() == openGlSourceTexture2D.getHeight(), "OpenGL source and destination height must be identical for resource copy")
 
 					// Copy resource, but only the top-level mipmap
 					const GLsizei width = static_cast<GLsizei>(openGlDestinationTexture2D.getWidth());
@@ -1545,7 +1545,7 @@ namespace OpenGLRhi
 				else
 				{
 					// Error!
-					RHI_ASSERT(false, "Failed to copy OpenGL resource")
+					SE_ASSERT(false, "Failed to copy OpenGL resource")
 				}
 				break;
 
@@ -1590,7 +1590,7 @@ namespace OpenGLRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, resource)
-		RHI_ASSERT(resource.getResourceType() == Rhi::ResourceType::TEXTURE_2D, "TODO(co) Mipmaps can only be generated for OpenGL 2D texture resources")
+		SE_ASSERT(resource.getResourceType() == Rhi::ResourceType::TEXTURE_2D, "TODO(co) Mipmaps can only be generated for OpenGL 2D texture resources")
 
 		Texture2D& texture2D = static_cast<Texture2D&>(resource);
 
@@ -1636,8 +1636,8 @@ namespace OpenGLRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, queryPool)
-		RHI_ASSERT(firstQueryIndex < static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "OpenGL out-of-bounds query index")
-		RHI_ASSERT((firstQueryIndex + numberOfQueries) <= static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "OpenGL out-of-bounds query index")
+		SE_ASSERT(firstQueryIndex < static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "OpenGL out-of-bounds query index")
+		SE_ASSERT((firstQueryIndex + numberOfQueries) <= static_cast<const QueryPool&>(queryPool).getNumberOfQueries(), "OpenGL out-of-bounds query index")
 
 		// Nothing to do in here for OpenGL
 	}
@@ -1649,7 +1649,7 @@ namespace OpenGLRhi
 
 		// Query pool type dependent processing
 		const QueryPool& openGLQueryPool = static_cast<const QueryPool&>(queryPool);
-		RHI_ASSERT(queryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
+		SE_ASSERT(queryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
 		switch (openGLQueryPool.getQueryType())
 		{
 			case Rhi::QueryType::OCCLUSION:
@@ -1663,7 +1663,7 @@ namespace OpenGLRhi
 				break;
 
 			case Rhi::QueryType::TIMESTAMP:
-				RHI_ASSERT(false, "OpenGL begin query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
+				SE_ASSERT(false, "OpenGL begin query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
 				break;
 		}
 	}
@@ -1675,7 +1675,7 @@ namespace OpenGLRhi
 
 		// Query pool type dependent processing
 		const QueryPool& openGLQueryPool = static_cast<const QueryPool&>(queryPool);
-		RHI_ASSERT(queryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
+		SE_ASSERT(queryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
 		switch (openGLQueryPool.getQueryType())
 		{
 			case Rhi::QueryType::OCCLUSION:
@@ -1689,7 +1689,7 @@ namespace OpenGLRhi
 				break;
 
 			case Rhi::QueryType::TIMESTAMP:
-				RHI_ASSERT(false, "OpenGL end query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
+				SE_ASSERT(false, "OpenGL end query isn't allowed for timestamp queries, use \"Rhi::Command::WriteTimestampQuery\" instead")
 				break;
 		}
 	}
@@ -1701,15 +1701,15 @@ namespace OpenGLRhi
 
 		// Query pool type dependent processing
 		const QueryPool& openGLQueryPool = static_cast<const QueryPool&>(queryPool);
-		RHI_ASSERT(queryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
+		SE_ASSERT(queryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
 		switch (openGLQueryPool.getQueryType())
 		{
 			case Rhi::QueryType::OCCLUSION:
-				RHI_ASSERT(false, "OpenGL write timestamp query isn't allowed for occlusion queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
+				SE_ASSERT(false, "OpenGL write timestamp query isn't allowed for occlusion queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
 				break;
 
 			case Rhi::QueryType::PIPELINE_STATISTICS:
-				RHI_ASSERT(false, "OpenGL write timestamp query isn't allowed for pipeline statistics queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
+				SE_ASSERT(false, "OpenGL write timestamp query isn't allowed for pipeline statistics queries, use \"Rhi::Command::BeginQuery\" and \"Rhi::Command::EndQuery\" instead")
 				break;
 
 			case Rhi::QueryType::TIMESTAMP:
@@ -1729,7 +1729,7 @@ namespace OpenGLRhi
 			// "GL_KHR_debug"-extension required
 			if (mExtensions->isGL_KHR_debug())
 			{
-				RHI_ASSERT(nullptr != name, "OpenGL debug marker names must not be a null pointer")
+				SE_ASSERT(nullptr != name, "OpenGL debug marker names must not be a null pointer")
 				glDebugMessageInsert(GL_DEBUG_SOURCE_APPLICATION, GL_DEBUG_TYPE_MARKER, 1, GL_DEBUG_SEVERITY_NOTIFICATION, -1, name);
 			}
 		}
@@ -1739,7 +1739,7 @@ namespace OpenGLRhi
 			// "GL_KHR_debug"-extension required
 			if (mExtensions->isGL_KHR_debug())
 			{
-				RHI_ASSERT(nullptr != name, "OpenGL debug event names must not be a null pointer")
+				SE_ASSERT(nullptr != name, "OpenGL debug event names must not be a null pointer")
 				glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 1, -1, name);
 			}
 		}
@@ -1798,7 +1798,7 @@ namespace OpenGLRhi
 
 	const char* OpenGLRhi::getShaderLanguageName(uint32_t index) const
 	{
-		RHI_ASSERT(index < getNumberOfShaderLanguages(), "OpenGL: Shader language index is out-of-bounds")
+		SE_ASSERT(index < getNumberOfShaderLanguages(), "OpenGL: Shader language index is out-of-bounds")
 
 		// "GL_ARB_shader_objects" or "GL_ARB_separate_shader_objects" required
 		if (mExtensions->isGL_ARB_shader_objects() || mExtensions->isGL_ARB_separate_shader_objects())
@@ -1874,7 +1874,7 @@ namespace OpenGLRhi
 
 	Rhi::IQueryPool* OpenGLRhi::createQueryPool(Rhi::QueryType queryType, uint32_t numberOfQueries RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
-		RHI_ASSERT(numberOfQueries > 0, "OpenGL: Number of queries mustn't be zero")
+		SE_ASSERT(numberOfQueries > 0, "OpenGL: Number of queries mustn't be zero")
 		switch (queryType)
 		{
 			case Rhi::QueryType::OCCLUSION:
@@ -1908,7 +1908,7 @@ namespace OpenGLRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, renderPass)
-		RHI_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "OpenGL: The provided native window handle or render window must not be a null handle / null pointer")
+		SE_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle || nullptr != windowHandle.renderWindow, "OpenGL: The provided native window handle or render window must not be a null handle / null pointer")
 
 		// Create the swap chain
 		return RHI_NEW(SwapChain)(renderPass, windowHandle, useExternalContext RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -1961,9 +1961,9 @@ namespace OpenGLRhi
 	Rhi::IGraphicsPipelineState* OpenGLRhi::createGraphicsPipelineState(const Rhi::GraphicsPipelineState& graphicsPipelineState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != graphicsPipelineState.rootSignature, "OpenGL: Invalid graphics pipeline state root signature")
-		RHI_ASSERT(nullptr != graphicsPipelineState.graphicsProgram, "OpenGL: Invalid graphics pipeline state graphics program")
-		RHI_ASSERT(nullptr != graphicsPipelineState.renderPass, "OpenGL: Invalid graphics pipeline state render pass")
+		SE_ASSERT(nullptr != graphicsPipelineState.rootSignature, "OpenGL: Invalid graphics pipeline state root signature")
+		SE_ASSERT(nullptr != graphicsPipelineState.graphicsProgram, "OpenGL: Invalid graphics pipeline state graphics program")
+		SE_ASSERT(nullptr != graphicsPipelineState.renderPass, "OpenGL: Invalid graphics pipeline state render pass")
 
 		// Create graphics pipeline state
 		uint16_t id = 0;
@@ -2357,17 +2357,17 @@ namespace OpenGLRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, queryPool)
-		RHI_ASSERT(numberOfDataBytes >= sizeof(UINT64), "OpenGL out-of-memory query access")
-		RHI_ASSERT(1 == numberOfQueries || strideInBytes > 0, "OpenGL invalid stride in bytes")
-		RHI_ASSERT(numberOfDataBytes >= strideInBytes * numberOfQueries, "OpenGL out-of-memory query access")
-		RHI_ASSERT(nullptr != data, "OpenGL out-of-memory query access")
-		RHI_ASSERT(numberOfQueries > 0, "OpenGL number of queries mustn't be zero")
+		SE_ASSERT(numberOfDataBytes >= sizeof(UINT64), "OpenGL out-of-memory query access")
+		SE_ASSERT(1 == numberOfQueries || strideInBytes > 0, "OpenGL invalid stride in bytes")
+		SE_ASSERT(numberOfDataBytes >= strideInBytes * numberOfQueries, "OpenGL out-of-memory query access")
+		SE_ASSERT(nullptr != data, "OpenGL out-of-memory query access")
+		SE_ASSERT(numberOfQueries > 0, "OpenGL number of queries mustn't be zero")
 
 		// Query pool type dependent processing
 		bool resultAvailable = true;
 		const QueryPool& openGLQueryPool = static_cast<const QueryPool&>(queryPool);
-		RHI_ASSERT(firstQueryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
-		RHI_ASSERT((firstQueryIndex + numberOfQueries) <= openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
+		SE_ASSERT(firstQueryIndex < openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
+		SE_ASSERT((firstQueryIndex + numberOfQueries) <= openGLQueryPool.getNumberOfQueries(), "OpenGL out-of-bounds query index")
 		const bool waitForResult = ((queryResultFlags & Rhi::QueryResultFlags::WAIT) != 0);
 		switch (openGLQueryPool.getQueryType())
 		{
@@ -2402,8 +2402,8 @@ namespace OpenGLRhi
 			}
 
 			case Rhi::QueryType::PIPELINE_STATISTICS:
-				RHI_ASSERT(numberOfDataBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "OpenGL out-of-memory query access")
-				RHI_ASSERT(1 == numberOfQueries || strideInBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "OpenGL out-of-memory query access")
+				SE_ASSERT(numberOfDataBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "OpenGL out-of-memory query access")
+				SE_ASSERT(1 == numberOfQueries || strideInBytes >= sizeof(Rhi::PipelineStatisticsQueryResult), "OpenGL out-of-memory query access")
 				resultAvailable = static_cast<const PipelineStatisticsQueryPool&>(openGLQueryPool).getQueryPoolResults(data, firstQueryIndex, numberOfQueries, strideInBytes, waitForResult);
 				break;
 		}
@@ -2422,7 +2422,7 @@ namespace OpenGLRhi
 
 		// Sanity check
 		#if SE_DEBUG
-			RHI_ASSERT(false == mDebugBetweenBeginEndScene, "OpenGL: Begin scene was called while scene rendering is already in progress, missing end scene call?")
+			SE_ASSERT(false == mDebugBetweenBeginEndScene, "OpenGL: Begin scene was called while scene rendering is already in progress, missing end scene call?")
 			mDebugBetweenBeginEndScene = true;
 		#endif
 
@@ -2433,7 +2433,7 @@ namespace OpenGLRhi
 	void OpenGLRhi::submitCommandBuffer(const Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity check
-		RHI_ASSERT(!commandBuffer.isEmpty(), "The OpenGL command buffer to execute mustn't be empty")
+		SE_ASSERT(!commandBuffer.isEmpty(), "The OpenGL command buffer to execute mustn't be empty")
 
 		// Loop through all commands
 		const uint8_t* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
@@ -2457,7 +2457,7 @@ namespace OpenGLRhi
 	{
 		// Sanity check
 		#if SE_DEBUG
-			RHI_ASSERT(true == mDebugBetweenBeginEndScene, "OpenGL: End scene was called while scene rendering isn't in progress, missing start scene call?")
+			SE_ASSERT(true == mDebugBetweenBeginEndScene, "OpenGL: End scene was called while scene rendering isn't in progress, missing start scene call?")
 			mDebugBetweenBeginEndScene = false;
 		#endif
 
@@ -2833,7 +2833,7 @@ namespace OpenGLRhi
 			for (uint32_t resourceIndex = 0; resourceIndex < numberOfResources; ++resourceIndex, ++resources)
 			{
 				Rhi::IResource* resource = *resources;
-				RHI_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
+				SE_ASSERT(nullptr != reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges), "Invalid OpenGL descriptor ranges")
 				const Rhi::DescriptorRange& descriptorRange = reinterpret_cast<const Rhi::DescriptorRange*>(rootParameter.descriptorTable.descriptorRanges)[resourceIndex];
 
 				// Check the type of resource to set
@@ -3133,7 +3133,7 @@ namespace OpenGLRhi
 										// Set the OpenGL sampler states, if required (texture buffer has no sampler state), it's valid that there's no sampler state (e.g. texel fetch instead of sampling might be used)
 										if (Rhi::ResourceType::TEXTURE_BUFFER != resourceType)
 										{
-											RHI_ASSERT(nullptr != openGLResourceGroup->getSamplerState(), "Invalid OpenGL sampler state")
+											SE_ASSERT(nullptr != openGLResourceGroup->getSamplerState(), "Invalid OpenGL sampler state")
 											const SamplerState* samplerState = static_cast<const SamplerState*>(openGLResourceGroup->getSamplerState()[resourceIndex]);
 											if (nullptr != samplerState)
 											{
@@ -3277,8 +3277,8 @@ namespace OpenGLRhi
 
 					case Rhi::ResourceType::VERTEX_BUFFER:
 					{
-						RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL vertex buffer must bound at SRV or UAV descriptor range type")
-						RHI_ASSERT(Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "OpenGL descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
+						SE_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL vertex buffer must bound at SRV or UAV descriptor range type")
+						SE_ASSERT(Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "OpenGL descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
 
 						// "GL_ARB_uniform_buffer_object" required
 						if (mExtensions->isGL_ARB_uniform_buffer_object())
@@ -3294,8 +3294,8 @@ namespace OpenGLRhi
 
 					case Rhi::ResourceType::INDEX_BUFFER:
 					{
-						RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL index buffer must bound at SRV or UAV descriptor range type")
-						RHI_ASSERT(Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "OpenGL descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
+						SE_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL index buffer must bound at SRV or UAV descriptor range type")
+						SE_ASSERT(Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "OpenGL descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
 
 						// "GL_ARB_uniform_buffer_object" required
 						if (mExtensions->isGL_ARB_uniform_buffer_object())
@@ -3311,7 +3311,7 @@ namespace OpenGLRhi
 
 					case Rhi::ResourceType::STRUCTURED_BUFFER:
 					{
-						RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL structured buffer must bound at SRV or UAV descriptor range type")
+						SE_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL structured buffer must bound at SRV or UAV descriptor range type")
 
 						// "GL_ARB_uniform_buffer_object" required
 						if (mExtensions->isGL_ARB_uniform_buffer_object())
@@ -3327,8 +3327,8 @@ namespace OpenGLRhi
 
 					case Rhi::ResourceType::INDIRECT_BUFFER:
 					{
-						RHI_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL indirect buffer must bound at SRV or UAV descriptor range type")
-						RHI_ASSERT(Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "OpenGL descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
+						SE_ASSERT(Rhi::DescriptorRangeType::SRV == descriptorRange.rangeType || Rhi::DescriptorRangeType::UAV == descriptorRange.rangeType, "OpenGL indirect buffer must bound at SRV or UAV descriptor range type")
+						SE_ASSERT(Rhi::ShaderVisibility::ALL == descriptorRange.shaderVisibility || Rhi::ShaderVisibility::COMPUTE == descriptorRange.shaderVisibility, "OpenGL descriptor range shader visibility must be \"ALL\" or \"COMPUTE\"")
 
 						// "GL_ARB_uniform_buffer_object" required
 						if (mExtensions->isGL_ARB_uniform_buffer_object())
@@ -3349,8 +3349,8 @@ namespace OpenGLRhi
 							// Attach the buffer to the given UBO binding point
 							// -> Explicit binding points ("layout(binding = 0)" in GLSL shader) requires OpenGL 4.2 or the "GL_ARB_explicit_uniform_location"-extension
 							// -> Direct3D 10 and Direct3D 11 have explicit binding points
-							RHI_ASSERT(Rhi::DescriptorRangeType::UBV == descriptorRange.rangeType, "OpenGL uniform buffer must bound at UBV descriptor range type")
-							RHI_ASSERT(nullptr != openGLResourceGroup->getResourceIndexToUniformBlockBindingIndex(), "Invalid OpenGL resource index to uniform block binding index")
+							SE_ASSERT(Rhi::DescriptorRangeType::UBV == descriptorRange.rangeType, "OpenGL uniform buffer must bound at UBV descriptor range type")
+							SE_ASSERT(nullptr != openGLResourceGroup->getResourceIndexToUniformBlockBindingIndex(), "Invalid OpenGL resource index to uniform block binding index")
 							glBindBufferBase(GL_UNIFORM_BUFFER, openGLResourceGroup->getResourceIndexToUniformBlockBindingIndex()[resourceIndex], static_cast<UniformBuffer*>(resource)->getOpenGLUniformBuffer());
 						}
 						break;

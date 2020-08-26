@@ -30,7 +30,7 @@ namespace Renderer
 		mLastComputeBoundPool(nullptr)
 	{
 		const MaterialBlueprintResource::UniformBuffer* materialUniformBuffer = mMaterialBlueprintResource.getMaterialUniformBuffer();
-		RHI_ASSERT(nullptr != materialUniformBuffer, "Invalid material uniform buffer")
+		SE_ASSERT(nullptr != materialUniformBuffer, "Invalid material uniform buffer")
 
 		// Get the buffer size
 		mBufferSize = std::min<uint32_t>(renderer.getRhi().getCapabilities().maximumUniformBufferSize, 64 * 1024);
@@ -85,12 +85,12 @@ namespace Renderer
 		BufferPool* bufferPool = static_cast<BufferPool*>(materialBufferSlot.mAssignedMaterialPool);
 
 		// Sanity checks
-		RHI_ASSERT(IsValid(materialBufferSlot.mAssignedMaterialPool), "Invalid assigned material pool")
-		RHI_ASSERT(IsValid(materialBufferSlot.mAssignedMaterialSlot), "Invalid assigned material slot")
-		RHI_ASSERT(materialBufferSlot.mAssignedMaterialSlot < mSlotsPerPool, "Invalid assigned material slot")
-		RHI_ASSERT(std::find(bufferPool->freeSlots.begin(), bufferPool->freeSlots.end(), materialBufferSlot.mAssignedMaterialSlot) == bufferPool->freeSlots.end(), "Invalid assigned material slot")
-		RHI_ASSERT(materialBufferSlot.mGlobalIndex < static_cast<int>(mMaterialBufferSlots.size()), "Invalid global index")
-		RHI_ASSERT(&materialBufferSlot == *(mMaterialBufferSlots.begin() + materialBufferSlot.mGlobalIndex), "Invalid global index")
+		SE_ASSERT(IsValid(materialBufferSlot.mAssignedMaterialPool), "Invalid assigned material pool")
+		SE_ASSERT(IsValid(materialBufferSlot.mAssignedMaterialSlot), "Invalid assigned material slot")
+		SE_ASSERT(materialBufferSlot.mAssignedMaterialSlot < mSlotsPerPool, "Invalid assigned material slot")
+		SE_ASSERT(std::find(bufferPool->freeSlots.begin(), bufferPool->freeSlots.end(), materialBufferSlot.mAssignedMaterialSlot) == bufferPool->freeSlots.end(), "Invalid assigned material slot")
+		SE_ASSERT(materialBufferSlot.mGlobalIndex < static_cast<int>(mMaterialBufferSlots.size()), "Invalid global index")
+		SE_ASSERT(&materialBufferSlot == *(mMaterialBufferSlots.begin() + materialBufferSlot.mGlobalIndex), "Invalid global index")
 
 		// If the slot is dirty, remove it from the list of dirty slots
 		if (materialBufferSlot.mDirty)
@@ -148,11 +148,11 @@ namespace Renderer
 		if (mLastGraphicsBoundPool != materialBufferSlot.mAssignedMaterialPool)
 		{
 			mLastGraphicsBoundPool = static_cast<BufferPool*>(materialBufferSlot.mAssignedMaterialPool);
-			RHI_ASSERT(nullptr != mLastGraphicsBoundPool, "Invalid last graphics bound pool")
+			SE_ASSERT(nullptr != mLastGraphicsBoundPool, "Invalid last graphics bound pool")
 
 			// Set resource group
 			const MaterialBlueprintResource::UniformBuffer* materialUniformBuffer = mMaterialBlueprintResource.getMaterialUniformBuffer();
-			RHI_ASSERT(nullptr != materialUniformBuffer, "Invalid material uniform buffer")
+			SE_ASSERT(nullptr != materialUniformBuffer, "Invalid material uniform buffer")
 			Rhi::Command::SetGraphicsResourceGroup::create(commandBuffer, materialUniformBuffer->rootParameterIndex, mLastGraphicsBoundPool->resourceGroup);
 		}
 	}
@@ -162,11 +162,11 @@ namespace Renderer
 		if (mLastComputeBoundPool != materialBufferSlot.mAssignedMaterialPool)
 		{
 			mLastComputeBoundPool = static_cast<BufferPool*>(materialBufferSlot.mAssignedMaterialPool);
-			RHI_ASSERT(nullptr != mLastComputeBoundPool, "Invalid last compute bound pool")
+			SE_ASSERT(nullptr != mLastComputeBoundPool, "Invalid last compute bound pool")
 
 			// Set resource group
 			const MaterialBlueprintResource::UniformBuffer* materialUniformBuffer = mMaterialBlueprintResource.getMaterialUniformBuffer();
-			RHI_ASSERT(nullptr != materialUniformBuffer, "Invalid material uniform buffer")
+			SE_ASSERT(nullptr != materialUniformBuffer, "Invalid material uniform buffer")
 			Rhi::Command::SetComputeResourceGroup::create(commandBuffer, materialUniformBuffer->rootParameterIndex, mLastComputeBoundPool->resourceGroup);
 		}
 	}
@@ -177,9 +177,9 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	void MaterialBufferManager::uploadDirtySlots()
 	{
-		RHI_ASSERT(!mDirtyMaterialBufferSlots.empty(), "Invalid dirty material buffer slots")
+		SE_ASSERT(!mDirtyMaterialBufferSlots.empty(), "Invalid dirty material buffer slots")
 		const MaterialBlueprintResource::UniformBuffer* materialUniformBuffer = mMaterialBlueprintResource.getMaterialUniformBuffer();
-		RHI_ASSERT(nullptr != materialUniformBuffer, "Invalid material uniform buffer")
+		SE_ASSERT(nullptr != materialUniformBuffer, "Invalid material uniform buffer")
 		const MaterialBlueprintResourceManager& materialBlueprintResourceManager = mMaterialBlueprintResource.getResourceManager<MaterialBlueprintResourceManager>();
 		const MaterialProperties& globalMaterialProperties = materialBlueprintResourceManager.getGlobalMaterialProperties();
 		IMaterialBlueprintResourceListener& materialBlueprintResourceListener = materialBlueprintResourceManager.getMaterialBlueprintResourceListener();
@@ -229,7 +229,7 @@ namespace Renderer
 						else if (!materialBlueprintResourceListener.fillMaterialValue(uniformBufferElementProperty.getReferenceValue(), scratchBufferPointer, valueTypeNumberOfBytes))
 						{
 							// Error!
-							RHI_ASSERT(false, "Can't resolve reference")
+							SE_ASSERT(false, "Can't resolve reference")
 						}
 					}
 					else if (MaterialProperty::Usage::GLOBAL_REFERENCE == usage)
@@ -255,7 +255,7 @@ namespace Renderer
 							else
 							{
 								// Error
-								RHI_ASSERT(false, "Can't resolve reference")
+								SE_ASSERT(false, "Can't resolve reference")
 							}
 						}
 					}
@@ -269,7 +269,7 @@ namespace Renderer
 					else
 					{
 						// Error!
-						RHI_ASSERT(false, "Invalid property")
+						SE_ASSERT(false, "Invalid property")
 					}
 
 					// Next property

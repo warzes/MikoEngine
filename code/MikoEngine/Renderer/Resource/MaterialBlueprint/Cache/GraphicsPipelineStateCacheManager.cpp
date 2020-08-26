@@ -20,7 +20,7 @@ namespace Renderer
 	const GraphicsPipelineStateCache* GraphicsPipelineStateCacheManager::getGraphicsPipelineStateCacheByCombination(uint32_t serializedGraphicsPipelineStateHash, const ShaderProperties& shaderProperties, bool allowEmergencySynchronousCompilation)
 	{
 		// TODO(co) Asserts whether or not e.g. the material resource is using the owning material resource blueprint
-		RHI_ASSERT(IResource::LoadingState::LOADED == mMaterialBlueprintResource.getLoadingState(), "Invalid loading state")
+		SE_ASSERT(IResource::LoadingState::LOADED == mMaterialBlueprintResource.getLoadingState(), "Invalid loading state")
 
 		// Generate the graphics pipeline state signature
 		mTemporaryGraphicsPipelineStateSignature.set(mMaterialBlueprintResource, serializedGraphicsPipelineStateHash, shaderProperties);
@@ -174,7 +174,7 @@ namespace Renderer
 		// Material blueprint resource ID, all graphics pipeline state cache share the same material blueprint resource ID
 		MaterialBlueprintResourceId materialBlueprintResourceId = GetInvalid<MaterialBlueprintResourceId>();
 		file.read(&materialBlueprintResourceId, sizeof(uint32_t));
-		RHI_ASSERT(mMaterialBlueprintResource.getId() == materialBlueprintResourceId, "Invalid material blueprint resource ID")
+		SE_ASSERT(mMaterialBlueprintResource.getId() == materialBlueprintResourceId, "Invalid material blueprint resource ID")
 
 		// TODO(co) Currently only the graphics pipeline state signature ID is loaded, not the resulting binary pipeline state cache
 		uint32_t numberOfGraphicsPipelineStateCaches = GetInvalid<uint32_t>();
@@ -224,7 +224,7 @@ namespace Renderer
 			const GraphicsPipelineStateSignature& graphicsPipelineStateSignature = elementPair.second->getGraphicsPipelineStateSignature();
 
 			// Sanity check: All graphics pipeline state cache share the same material blueprint resource ID
-			RHI_ASSERT(graphicsPipelineStateSignature.getMaterialBlueprintResourceId() == materialBlueprintResourceId, "Invalid material blueprint resource ID")
+			SE_ASSERT(graphicsPipelineStateSignature.getMaterialBlueprintResourceId() == materialBlueprintResourceId, "Invalid material blueprint resource ID")
 
 			{ // Write serialized graphics pipeline state hash
 				const uint32_t serializedGraphicsPipelineStateHash = graphicsPipelineStateSignature.getSerializedGraphicsPipelineStateHash();

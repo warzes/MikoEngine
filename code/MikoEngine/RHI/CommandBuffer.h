@@ -246,7 +246,7 @@ namespace Rhi
 
 			// 4294967295 is the maximum value of an "uint32_t"-type: Check for overflow
 			// -> We use the magic number here to avoid "std::numeric_limits::max()" usage
-			RHI_ASSERT((static_cast<uint64_t>(mCurrentCommandPacketByteIndex) + numberOfCommandBytes) < 4294967295u, "Invalid current command packet byte index")
+			SE_ASSERT((static_cast<uint64_t>(mCurrentCommandPacketByteIndex) + numberOfCommandBytes) < 4294967295u, "Invalid current command packet byte index")
 
 				// Grow command packet buffer, if required
 				if ( mCommandPacketBufferNumberOfBytes < mCurrentCommandPacketByteIndex + numberOfCommandBytes )
@@ -322,15 +322,15 @@ namespace Rhi
 		inline void submitToCommandBuffer(CommandBuffer& commandBuffer) const
 		{
 			// Sanity checks
-			RHI_ASSERT(this != &commandBuffer, "Can't submit a command buffer to itself");
-			RHI_ASSERT(!isEmpty(), "Can't submit empty command buffers");
+			SE_ASSERT(this != &commandBuffer, "Can't submit a command buffer to itself");
+			SE_ASSERT(!isEmpty(), "Can't submit empty command buffers");
 
 				// How many command package buffer bytes are consumed by the command to add?
 				const uint32_t numberOfCommandBytes = mCurrentCommandPacketByteIndex;
 
 			// 4294967295 is the maximum value of an "uint32_t"-type: Check for overflow
 			// -> We use the magic number here to avoid "std::numeric_limits::max()" usage
-			RHI_ASSERT((static_cast<uint64_t>(commandBuffer.mCurrentCommandPacketByteIndex) + numberOfCommandBytes) < 4294967295u, "Invalid current command packet byte index");
+			SE_ASSERT((static_cast<uint64_t>(commandBuffer.mCurrentCommandPacketByteIndex) + numberOfCommandBytes) < 4294967295u, "Invalid current command packet byte index");
 
 			// Grow command packet buffer, if required
 			if ( commandBuffer.mCommandPacketBufferNumberOfBytes < commandBuffer.mCurrentCommandPacketByteIndex + numberOfCommandBytes )
@@ -421,7 +421,7 @@ namespace Rhi
 			// Static methods
 			static inline void create(CommandBuffer& commandBuffer, CommandBuffer* commandBufferToExecute)
 			{
-				RHI_ASSERT(nullptr != commandBufferToExecute, "Invalid command buffer to execute");
+				SE_ASSERT(nullptr != commandBufferToExecute, "Invalid command buffer to execute");
 				*commandBuffer.addCommand<ExecuteCommandBuffer>() = ExecuteCommandBuffer(commandBufferToExecute);
 			}
 			// Constructor
@@ -1322,7 +1322,7 @@ namespace Rhi
 			// Constructor
 			inline explicit SetDebugMarker(const char* _name)
 			{
-				RHI_ASSERT(strlen(_name) < 128, "Invalid name")
+				SE_ASSERT(strlen(_name) < 128, "Invalid name")
 					strncpy(name, _name, 128);
 				name[127] = '\0';
 			}
@@ -1352,7 +1352,7 @@ namespace Rhi
 			// Constructor
 			inline explicit BeginDebugEvent(const char* _name)
 			{
-				RHI_ASSERT(strlen(_name) < 128, "Invalid name")
+				SE_ASSERT(strlen(_name) < 128, "Invalid name")
 					strncpy(name, _name, 128);
 				name[127] = '\0';
 			}

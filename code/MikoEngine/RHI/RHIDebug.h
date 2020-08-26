@@ -50,7 +50,7 @@
 	*    - Traditional C-string on the runtime stack used for efficiency reasons (just for debugging, but must still be some kind of usable)
 	*/
 #	define RHI_DECORATED_DEBUG_NAME(name, detailedName, decoration, numberOfDecorationCharacters) \
-		RHI_ASSERT(strlen(name) < 256, "Name is not allowed to exceed 255 characters"); \
+		SE_ASSERT(strlen(name) < 256, "Name is not allowed to exceed 255 characters"); \
 		char detailedName[256 + numberOfDecorationCharacters] = decoration; \
 		if (name[0] != '\0') \
 		{ \
@@ -69,7 +69,7 @@
 #if SE_DEBUG
 // Check whether or not the given resource is owned by the given RHI
 #	define RHI_MATCH_CHECK(rhiReference, resourceReference) \
-		RHI_ASSERT(&rhiReference == &(resourceReference).getRhi(), "RHI error: The given resource is owned by another RHI instance");
+		SE_ASSERT(&rhiReference == &(resourceReference).getRhi(), "RHI error: The given resource is owned by another RHI instance");
 // Debug break on execution failure
 #	define FAILED_DEBUG_BREAK(toExecute) if (FAILED(toExecute)) { SE_DEBUG_BREAK; }
 #else

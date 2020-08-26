@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DefaultAssert.h"
+#include "Core/AssertMacros.h"
 
 namespace
 {
@@ -9,7 +9,7 @@ namespace
 		[[nodiscard]] void* reallocate(void* oldPointer, size_t, size_t newNumberOfBytes, size_t alignment)
 		{
 			// Sanity check
-			RHI_ASSERT(0 != alignment && !(alignment & (alignment - 1)), "The alignment must be a power of two")
+			SE_ASSERT(0 != alignment && !(alignment & (alignment - 1)), "The alignment must be a power of two")
 
 				// Do the work
 				if ( nullptr != oldPointer && 0 != newNumberOfBytes )
@@ -108,7 +108,7 @@ public:
 	*/
 	inline void* reallocate(void* oldPointer, size_t oldNumberOfBytes, size_t newNumberOfBytes, size_t alignment)
 	{
-		RHI_ASSERT(nullptr != oldPointer || 0 == oldNumberOfBytes, "Invalid old pointer");
+		SE_ASSERT(nullptr != oldPointer || 0 == oldNumberOfBytes, "Invalid old pointer");
 		return ::detail::reallocate(oldPointer, oldNumberOfBytes, newNumberOfBytes, alignment);
 	}
 

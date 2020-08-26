@@ -271,7 +271,7 @@ namespace
 					// Execute scene item on rendering?
 					if (sceneItem.getCallExecuteOnRendering())
 					{
-						RHI_ASSERT(std::find(executeOnRenderingSceneItems.cbegin(), executeOnRenderingSceneItems.cend(), &sceneItem) == executeOnRenderingSceneItems.cend(), "Execute on rendering scene items contains duplicates")
+						SE_ASSERT(std::find(executeOnRenderingSceneItems.cbegin(), executeOnRenderingSceneItems.cend(), &sceneItem) == executeOnRenderingSceneItems.cend(), "Execute on rendering scene items contains duplicates")
 						executeOnRenderingSceneItems.push_back(&sceneItem);
 					}
 				}
@@ -554,10 +554,10 @@ namespace Renderer
 
 		// Get the camera scene item
 		const CameraSceneItem* cameraSceneItem = compositorContextData.getCameraSceneItem();
-		RHI_ASSERT(nullptr != cameraSceneItem, "Invalid camera")
+		SE_ASSERT(nullptr != cameraSceneItem, "Invalid camera")
 
 		// Get view space to clip space matrix
-		RHI_ASSERT(nullptr != compositorContextData.getCompositorWorkspaceInstance(), "Invalid compositor workspace instance")
+		SE_ASSERT(nullptr != compositorContextData.getCompositorWorkspaceInstance(), "Invalid compositor workspace instance")
 		glm::mat4 viewSpaceToClipSpaceMatrix;
 		{
 			#ifdef RENDERER_OPENVR

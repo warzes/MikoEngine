@@ -64,15 +64,15 @@ namespace
 			{
 				mD3D12Device = &d3d12Device;
 				[[maybe_unused]] HRESULT result = d3d12Device.CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, __uuidof(ID3D12CommandAllocator), reinterpret_cast<void**>(&mD3D12CommandAllocator));
-				RHI_ASSERT(SUCCEEDED(result), "Direct3D 12 create command allocator failed")
+				SE_ASSERT(SUCCEEDED(result), "Direct3D 12 create command allocator failed")
 
 					// Create the command list
 					result = d3d12Device.CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, mD3D12CommandAllocator, nullptr, IID_PPV_ARGS(&mD3D12GraphicsCommandList));
-				RHI_ASSERT(SUCCEEDED(result), "Direct3D 12 create command list failed")
+				SE_ASSERT(SUCCEEDED(result), "Direct3D 12 create command list failed")
 
 					// Command lists are created in the recording state, but there is nothing to record yet. The main loop expects it to be closed, so close it now.
 					result = mD3D12GraphicsCommandList->Close();
-				RHI_ASSERT(SUCCEEDED(result), "Direct3D 12 close command list failed")
+				SE_ASSERT(SUCCEEDED(result), "Direct3D 12 close command list failed")
 			}
 
 			void destroy()
@@ -87,7 +87,7 @@ namespace
 
 			void begin(uint32_t numberOfUploadBufferBytes)
 			{
-				RHI_ASSERT(nullptr != mD3D12Device, "Invalid Direct3D 12 device")
+				SE_ASSERT(nullptr != mD3D12Device, "Invalid Direct3D 12 device")
 					mD3D12CommandAllocator->Reset();
 				mD3D12GraphicsCommandList->Reset(mD3D12CommandAllocator, nullptr);
 				if ( numberOfUploadBufferBytes != mNumberOfUploadBufferBytes )
@@ -111,7 +111,7 @@ namespace
 					mD3D12ResourceUploadBuffer->Unmap(0, &d3d12Range);
 				}
 				[[maybe_unused]] HRESULT result = mD3D12GraphicsCommandList->Close();
-				RHI_ASSERT(SUCCEEDED(result), "Direct3D 12 close command list failed")
+				SE_ASSERT(SUCCEEDED(result), "Direct3D 12 close command list failed")
 			}
 
 			uint32_t allocateUploadBuffer(uint32_t size, uint32_t alignment)
@@ -120,14 +120,14 @@ namespace
 				if ( alignedOffset + size > mNumberOfUploadBufferBytes )
 				{
 					// TODO(co) Reallocate
-					RHI_ASSERT(false, "Direct3D 12 allocate upload buffer failed")
+					SE_ASSERT(false, "Direct3D 12 allocate upload buffer failed")
 				}
 				if ( nullptr == mData )
 				{
 					mD3D12GpuVirtualAddress = mD3D12ResourceUploadBuffer->GetGPUVirtualAddress();
 					const D3D12_RANGE d3d12Range = { 0, 0 };
 					[[maybe_unused]] HRESULT result = mD3D12ResourceUploadBuffer->Map(0, &d3d12Range, reinterpret_cast<void**>(&mData));
-					RHI_ASSERT(SUCCEEDED(result), "Direct3D 12 map buffer failed")
+					SE_ASSERT(SUCCEEDED(result), "Direct3D 12 map buffer failed")
 				}
 				mOffset = alignedOffset + size;
 				return alignedOffset;
@@ -151,7 +151,7 @@ namespace
 				ID3D12Resource* d3d12Resource = nullptr;
 				const D3D12_RESOURCE_STATES d3d12ResourceStates = (d3dHeapType == D3D12_HEAP_TYPE_READBACK) ? D3D12_RESOURCE_STATE_COPY_DEST : D3D12_RESOURCE_STATE_GENERIC_READ;
 				[[maybe_unused]] HRESULT result = d3d12Device.CreateCommittedResource(&d3d12HeapProperties, D3D12_HEAP_FLAG_NONE, &d3d12ResourceDesc, d3d12ResourceStates, nullptr, __uuidof(ID3D12Resource), reinterpret_cast<void**>(&d3d12Resource));
-				RHI_ASSERT(SUCCEEDED(result), "Direct3D 12 create committed resource failed")
+				SE_ASSERT(SUCCEEDED(result), "Direct3D 12 create committed resource failed")
 
 					return d3d12Resource;
 			}
@@ -248,14 +248,14 @@ namespace
 			{
 				uint16_t index = 0;
 				[[maybe_unused]] const bool result = mMakeIDAllocator.CreateRangeID(index, count);
-				RHI_ASSERT(result, "Direct3D 12 create range ID failed")
+				SE_ASSERT(result, "Direct3D 12 create range ID failed")
 					return index;
 			}
 
 			inline void release(uint16_t offset, uint16_t count)
 			{
 				[[maybe_unused]] const bool result = mMakeIDAllocator.DestroyRangeID(offset, count);
-				RHI_ASSERT(result, "Direct3D 12 destroy range ID failed")
+				SE_ASSERT(result, "Direct3D 12 destroy range ID failed")
 			}
 
 			inline ID3D12DescriptorHeap* getD3D12DescriptorHeap() const

@@ -105,7 +105,7 @@ namespace Renderer
 	void LightBufferManager::fillGraphicsCommandBuffer(const MaterialBlueprintResource& materialBlueprintResource, Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity check
-		RHI_ASSERT(IsInvalid(materialBlueprintResource.getComputeShaderBlueprintResourceId()), "Invalid compute shader blueprint resource ID")
+		SE_ASSERT(IsInvalid(materialBlueprintResource.getComputeShaderBlueprintResourceId()), "Invalid compute shader blueprint resource ID")
 
 		// Light texture buffer
 		const MaterialBlueprintResource::TextureBuffer* lightTextureBuffer = materialBlueprintResource.getLightTextureBuffer();
@@ -130,7 +130,7 @@ namespace Renderer
 	void LightBufferManager::fillComputeCommandBuffer(const MaterialBlueprintResource& materialBlueprintResource, Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity check
-		RHI_ASSERT(IsValid(materialBlueprintResource.getComputeShaderBlueprintResourceId()), "Invalid compute shader blueprint resource ID")
+		SE_ASSERT(IsValid(materialBlueprintResource.getComputeShaderBlueprintResourceId()), "Invalid compute shader blueprint resource ID")
 
 		// Light texture buffer
 		const MaterialBlueprintResource::TextureBuffer* lightTextureBuffer = materialBlueprintResource.getLightTextureBuffer();
@@ -236,7 +236,7 @@ namespace Renderer
 			// Loop through all scene items attached to the current scene node
 			for (ISceneItem* sceneItem : sceneNode->getAttachedSceneItems())
 			{
-				RHI_ASSERT(currentLightIndex < 32, "The current light index is out-of-bounds")
+				SE_ASSERT(currentLightIndex < 32, "The current light index is out-of-bounds")
 				if (sceneItem->getSceneItemTypeId() == LightSceneItem::TYPE_ID && currentLightIndex < 32)
 				{
 					LightSceneItem* lightSceneItem = static_cast<LightSceneItem*>(sceneItem);
@@ -299,8 +299,8 @@ namespace Renderer
 
 		// Upload the cluster data to a volume texture
 		const Rhi::ITexturePtr& texturePtr = mRenderer.getTextureResourceManager().getById(mClusters3DTextureResourceId).getTexturePtr();
-		RHI_ASSERT(nullptr != texturePtr.GetPointer(), "Invalid texture pointer")
-		RHI_ASSERT(Rhi::ResourceType::TEXTURE_3D == texturePtr.GetPointer()->getResourceType(), "Invalid texture resource type")
+		SE_ASSERT(nullptr != texturePtr.GetPointer(), "Invalid texture pointer")
+		SE_ASSERT(Rhi::ResourceType::TEXTURE_3D == texturePtr.GetPointer()->getResourceType(), "Invalid texture resource type")
 		Rhi::ITexture3D* texture3D = static_cast<Rhi::ITexture3D*>(texturePtr.GetPointer());
 		Rhi::MappedSubresource mappedSubresource;
 		Rhi::IRhi& rhi = mRenderer.getRhi();

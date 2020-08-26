@@ -273,9 +273,9 @@ VrController::VrController(Renderer::CameraSceneItem& cameraSceneItem) :
 	{ // Create the teleport indication light scene item
 		Renderer::SceneResource& sceneResource = cameraSceneItem.getSceneResource();
 		Renderer::SceneNode* sceneNode = sceneResource.createSceneNode(Renderer::Transform::IDENTITY);
-		RHI_ASSERT(nullptr != sceneNode, "Invalid scene node");
+		SE_ASSERT(nullptr != sceneNode, "Invalid scene node");
 		mTeleportIndicationLightSceneItem = sceneResource.createSceneItem<Renderer::LightSceneItem>(*sceneNode);
-		RHI_ASSERT(nullptr != mTeleportIndicationLightSceneItem, "Invalid teleport indication light scene item");
+		SE_ASSERT(nullptr != mTeleportIndicationLightSceneItem, "Invalid teleport indication light scene item");
 		mTeleportIndicationLightSceneItem->setColor(glm::vec3(0.0f, 1.0f, 0.0f));
 		mTeleportIndicationLightSceneItem->setVisible(false);
 	}
@@ -295,7 +295,7 @@ VrController::~VrController()
 
 const Renderer::LightSceneItem& VrController::getTeleportIndicationLightSceneItemSafe() const
 {
-	RHI_ASSERT(nullptr != mTeleportIndicationLightSceneItem, "Invalid teleport indication light scene item");
+	SE_ASSERT(nullptr != mTeleportIndicationLightSceneItem, "Invalid teleport indication light scene item");
 	return *mTeleportIndicationLightSceneItem;
 }
 

@@ -200,16 +200,16 @@ namespace Renderer
 		inline virtual ~MeshResource() override
 		{
 			// Sanity checks
-			RHI_ASSERT(IsInvalid(mMinimumBoundingBoxPosition.x) && IsInvalid(mMinimumBoundingBoxPosition.y) && IsInvalid(mMinimumBoundingBoxPosition.z), "Invalid bounding box")
-			RHI_ASSERT(IsInvalid(mMaximumBoundingBoxPosition.x) && IsInvalid(mMaximumBoundingBoxPosition.y) && IsInvalid(mMaximumBoundingBoxPosition.z), "Invalid bounding box")
-			RHI_ASSERT(IsInvalid(mBoundingSpherePosition.x) && IsInvalid(mBoundingSpherePosition.y) && IsInvalid(mBoundingSpherePosition.z), "Invalid bounding sphere")
-			RHI_ASSERT(IsInvalid(mBoundingSphereRadius), "Invalid bounding sphere")
-			RHI_ASSERT(0 == mNumberOfVertices, "Invalid number of vertices")
-			RHI_ASSERT(0 == mNumberOfIndices, "Invalid number of indices")
-			RHI_ASSERT(nullptr == mVertexArray.GetPointer(), "Invalid vertex array")
-			RHI_ASSERT(nullptr == mPositionOnlyVertexArray.GetPointer(), "Invalid position only vertex array")
-			RHI_ASSERT(mSubMeshes.empty(), "Invalid sub-meshes")
-			RHI_ASSERT(IsInvalid(mSkeletonResourceId), "Invalid skeleton resource ID")
+			SE_ASSERT(IsInvalid(mMinimumBoundingBoxPosition.x) && IsInvalid(mMinimumBoundingBoxPosition.y) && IsInvalid(mMinimumBoundingBoxPosition.z), "Invalid bounding box")
+			SE_ASSERT(IsInvalid(mMaximumBoundingBoxPosition.x) && IsInvalid(mMaximumBoundingBoxPosition.y) && IsInvalid(mMaximumBoundingBoxPosition.z), "Invalid bounding box")
+			SE_ASSERT(IsInvalid(mBoundingSpherePosition.x) && IsInvalid(mBoundingSpherePosition.y) && IsInvalid(mBoundingSpherePosition.z), "Invalid bounding sphere")
+			SE_ASSERT(IsInvalid(mBoundingSphereRadius), "Invalid bounding sphere")
+			SE_ASSERT(0 == mNumberOfVertices, "Invalid number of vertices")
+			SE_ASSERT(0 == mNumberOfIndices, "Invalid number of indices")
+			SE_ASSERT(nullptr == mVertexArray.GetPointer(), "Invalid vertex array")
+			SE_ASSERT(nullptr == mPositionOnlyVertexArray.GetPointer(), "Invalid position only vertex array")
+			SE_ASSERT(mSubMeshes.empty(), "Invalid sub-meshes")
+			SE_ASSERT(IsInvalid(mSkeletonResourceId), "Invalid skeleton resource ID")
 		}
 
 		explicit MeshResource(const MeshResource&) = delete;
@@ -221,16 +221,16 @@ namespace Renderer
 		inline void initializeElement(MeshResourceId meshResourceId)
 		{
 			// Sanity checks
-			RHI_ASSERT(IsInvalid(mMinimumBoundingBoxPosition.x) && IsInvalid(mMinimumBoundingBoxPosition.y) && IsInvalid(mMinimumBoundingBoxPosition.z), "Invalid bounding box")
-			RHI_ASSERT(IsInvalid(mMaximumBoundingBoxPosition.x) && IsInvalid(mMaximumBoundingBoxPosition.y) && IsInvalid(mMaximumBoundingBoxPosition.z), "Invalid bounding box")
-			RHI_ASSERT(IsInvalid(mBoundingSpherePosition.x) && IsInvalid(mBoundingSpherePosition.y) && IsInvalid(mBoundingSpherePosition.z), "Invalid bounding sphere")
-			RHI_ASSERT(IsInvalid(mBoundingSphereRadius), "Invalid bounding sphere")
-			RHI_ASSERT(0 == mNumberOfVertices, "Invalid number of vertices")
-			RHI_ASSERT(0 == mNumberOfIndices, "Invalid number of indices")
-			RHI_ASSERT(nullptr == mVertexArray.GetPointer(), "Invalid vertex array")
-			RHI_ASSERT(nullptr == mPositionOnlyVertexArray.GetPointer(), "Invalid position only vertex array")
-			RHI_ASSERT(mSubMeshes.empty(), "Invalid sub-meshes")
-			RHI_ASSERT(IsInvalid(mSkeletonResourceId), "Invalid skeleton resource ID")
+			SE_ASSERT(IsInvalid(mMinimumBoundingBoxPosition.x) && IsInvalid(mMinimumBoundingBoxPosition.y) && IsInvalid(mMinimumBoundingBoxPosition.z), "Invalid bounding box")
+			SE_ASSERT(IsInvalid(mMaximumBoundingBoxPosition.x) && IsInvalid(mMaximumBoundingBoxPosition.y) && IsInvalid(mMaximumBoundingBoxPosition.z), "Invalid bounding box")
+			SE_ASSERT(IsInvalid(mBoundingSpherePosition.x) && IsInvalid(mBoundingSpherePosition.y) && IsInvalid(mBoundingSpherePosition.z), "Invalid bounding sphere")
+			SE_ASSERT(IsInvalid(mBoundingSphereRadius), "Invalid bounding sphere")
+			SE_ASSERT(0 == mNumberOfVertices, "Invalid number of vertices")
+			SE_ASSERT(0 == mNumberOfIndices, "Invalid number of indices")
+			SE_ASSERT(nullptr == mVertexArray.GetPointer(), "Invalid vertex array")
+			SE_ASSERT(nullptr == mPositionOnlyVertexArray.GetPointer(), "Invalid position only vertex array")
+			SE_ASSERT(mSubMeshes.empty(), "Invalid sub-meshes")
+			SE_ASSERT(IsInvalid(mSkeletonResourceId), "Invalid skeleton resource ID")
 
 			// Call base implementation
 			IResource::initializeElement(meshResourceId);

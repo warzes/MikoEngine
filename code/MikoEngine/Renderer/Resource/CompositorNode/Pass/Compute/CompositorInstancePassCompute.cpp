@@ -31,8 +31,8 @@ namespace Renderer
 		const IRenderer& renderer = compositorNodeInstance.getCompositorWorkspaceInstance().getRenderer();
 
 		// Sanity checks
-		RHI_ASSERT(!compositorResourcePassCompute.isMaterialDefinitionMandatory() || IsValid(compositorResourcePassCompute.getMaterialAssetId()) || IsValid(compositorResourcePassCompute.getMaterialBlueprintAssetId()), "Invalid compositor resource pass compute configuration")
-		RHI_ASSERT(!(IsValid(compositorResourcePassCompute.getMaterialAssetId()) && IsValid(compositorResourcePassCompute.getMaterialBlueprintAssetId())), "Invalid compositor resource pass compute configuration")
+		SE_ASSERT(!compositorResourcePassCompute.isMaterialDefinitionMandatory() || IsValid(compositorResourcePassCompute.getMaterialAssetId()) || IsValid(compositorResourcePassCompute.getMaterialBlueprintAssetId()), "Invalid compositor resource pass compute configuration")
+		SE_ASSERT(!(IsValid(compositorResourcePassCompute.getMaterialAssetId()) && IsValid(compositorResourcePassCompute.getMaterialBlueprintAssetId())), "Invalid compositor resource pass compute configuration")
 
 		// Get parent material resource ID and initiate creating the compositor instance pass compute material resource
 		MaterialResourceManager& materialResourceManager = renderer.getMaterialResourceManager();
@@ -79,7 +79,7 @@ namespace Renderer
 		if (IsValid(mMaterialResourceId))
 		{
 			// Sanity check
-			RHI_ASSERT(!mRenderableManager.getRenderables().empty(), "No renderables")
+			SE_ASSERT(!mRenderableManager.getRenderables().empty(), "No renderables")
 
 			// Combined scoped profiler CPU and GPU sample as well as renderer debug event command
 			RENDERER_SCOPED_PROFILER_EVENT_DYNAMIC(getCompositorNodeInstance().getCompositorWorkspaceInstance().getRenderer().getContext(), commandBuffer, getCompositorResourcePass().getDebugName())
@@ -91,7 +91,7 @@ namespace Renderer
 				if (mComputeMaterialBlueprint)
 				{
 					// Sanity check
-					RHI_ASSERT(nullptr == renderTarget, "The compute compositor instance pass needs an invalid render target in case a compute material blueprint is used")
+					SE_ASSERT(nullptr == renderTarget, "The compute compositor instance pass needs an invalid render target in case a compute material blueprint is used")
 
 					// Fill command buffer using a compute material blueprint
 					mRenderQueue.fillComputeCommandBuffer(compositorContextData, commandBuffer);
@@ -99,7 +99,7 @@ namespace Renderer
 				else
 				{
 					// Sanity check
-					RHI_ASSERT(nullptr != renderTarget, "The compute compositor instance pass needs a valid render target in case a graphics material blueprint is used")
+					SE_ASSERT(nullptr != renderTarget, "The compute compositor instance pass needs a valid render target in case a graphics material blueprint is used")
 
 					// Fill command buffer using a graphics material blueprint
 					mRenderQueue.fillGraphicsCommandBuffer(*renderTarget, compositorContextData, commandBuffer);
@@ -114,7 +114,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	void CompositorInstancePassCompute::onLoadingStateChange(const IResource& resource)
 	{
-		RHI_ASSERT(resource.getId() == mMaterialResourceId, "Invalid material resource ID")
+		SE_ASSERT(resource.getId() == mMaterialResourceId, "Invalid material resource ID")
 		createMaterialResource(resource.getId());
 	}
 
@@ -127,8 +127,8 @@ namespace Renderer
 		const IRenderer& renderer = getCompositorNodeInstance().getCompositorWorkspaceInstance().getRenderer();
 
 		// Sanity checks
-		RHI_ASSERT(IsInvalid(mMaterialResourceId), "Invalid material resource ID")
-		RHI_ASSERT(IsValid(parentMaterialResourceId), "Invalid material resource ID")
+		SE_ASSERT(IsInvalid(mMaterialResourceId), "Invalid material resource ID")
+		SE_ASSERT(IsValid(parentMaterialResourceId), "Invalid material resource ID")
 
 		// Each compositor instance pass compute must have its own material resource since material property values might vary
 		MaterialResourceManager& materialResourceManager = renderer.getMaterialResourceManager();
@@ -139,9 +139,9 @@ namespace Renderer
 		MaterialResource& materialResource = materialResourceManager.getById(mMaterialResourceId);
 		{
 			const MaterialTechnique* materialTechnique = materialResource.getMaterialTechniqueById(MaterialResourceManager::DEFAULT_MATERIAL_TECHNIQUE_ID);
-			RHI_ASSERT(nullptr != materialTechnique, "Invalid material technique")
+			SE_ASSERT(nullptr != materialTechnique, "Invalid material technique")
 			MaterialBlueprintResource* materialBlueprintResource = renderer.getMaterialBlueprintResourceManager().tryGetById(materialTechnique->getMaterialBlueprintResourceId());
-			RHI_ASSERT(nullptr != materialBlueprintResource, "Invalid material blueprint resource")
+			SE_ASSERT(nullptr != materialBlueprintResource, "Invalid material blueprint resource")
 			mComputeMaterialBlueprint = IsValid(materialBlueprintResource->getComputeShaderBlueprintResourceId());
 		}
 

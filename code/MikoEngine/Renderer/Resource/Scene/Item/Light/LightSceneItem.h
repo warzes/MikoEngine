@@ -69,8 +69,8 @@ namespace Renderer
 			mPackedShaderData.lightType = static_cast<float>(lightType);
 
 			// Sanity checks
-			RHI_ASSERT(lightType == LightType::DIRECTIONAL || mPackedShaderData.radius > 0.0f, "Invalid data")
-			RHI_ASSERT(lightType != LightType::DIRECTIONAL || 0.0f == mPackedShaderData.radius, "Invalid data")
+			SE_ASSERT(lightType == LightType::DIRECTIONAL || mPackedShaderData.radius > 0.0f, "Invalid data")
+			SE_ASSERT(lightType != LightType::DIRECTIONAL || 0.0f == mPackedShaderData.radius, "Invalid data")
 		}
 
 		inline void setLightTypeAndRadius(LightType lightType, float radius)
@@ -79,8 +79,8 @@ namespace Renderer
 			mPackedShaderData.radius = radius;
 
 			// Sanity checks
-			RHI_ASSERT(lightType == LightType::DIRECTIONAL || mPackedShaderData.radius > 0.0f, "Invalid data")
-			RHI_ASSERT(lightType != LightType::DIRECTIONAL || 0.0f == mPackedShaderData.radius, "Invalid data")
+			SE_ASSERT(lightType == LightType::DIRECTIONAL || mPackedShaderData.radius > 0.0f, "Invalid data")
+			SE_ASSERT(lightType != LightType::DIRECTIONAL || 0.0f == mPackedShaderData.radius, "Invalid data")
 		}
 
 		[[nodiscard]] inline const glm::vec3& getColor() const
@@ -93,7 +93,7 @@ namespace Renderer
 			mPackedShaderData.color = color;
 
 			// Sanity checks
-			RHI_ASSERT(mPackedShaderData.color.x >= 0.0f && mPackedShaderData.color.y >= 0.0f && mPackedShaderData.color.z >= 0.0f, "Invalid data")
+			SE_ASSERT(mPackedShaderData.color.x >= 0.0f && mPackedShaderData.color.y >= 0.0f && mPackedShaderData.color.z >= 0.0f, "Invalid data")
 		}
 
 		[[nodiscard]] inline float getRadius() const
@@ -106,8 +106,8 @@ namespace Renderer
 			mPackedShaderData.radius = radius;
 
 			// Sanity checks
-			RHI_ASSERT(mPackedShaderData.lightType == static_cast<float>(LightType::DIRECTIONAL) || mPackedShaderData.radius > 0.0f, "Invalid data")
-			RHI_ASSERT(mPackedShaderData.lightType != static_cast<float>(LightType::DIRECTIONAL) || 0.0f == mPackedShaderData.radius, "Invalid data")
+			SE_ASSERT(mPackedShaderData.lightType == static_cast<float>(LightType::DIRECTIONAL) || mPackedShaderData.radius > 0.0f, "Invalid data")
+			SE_ASSERT(mPackedShaderData.lightType != static_cast<float>(LightType::DIRECTIONAL) || 0.0f == mPackedShaderData.radius, "Invalid data")
 		}
 
 		[[nodiscard]] inline float getInnerAngle() const
@@ -123,8 +123,8 @@ namespace Renderer
 			mPackedShaderData.innerAngle = std::cos(mInnerAngle);
 
 			// Sanity checks
-			RHI_ASSERT(mInnerAngle >= 0.0f, "Invalid data")
-			RHI_ASSERT(mInnerAngle < mOuterAngle, "Invalid data")
+			SE_ASSERT(mInnerAngle >= 0.0f, "Invalid data")
+			SE_ASSERT(mInnerAngle < mOuterAngle, "Invalid data")
 		}
 
 		[[nodiscard]] inline float getOuterAngle() const
@@ -140,8 +140,8 @@ namespace Renderer
 			mPackedShaderData.outerAngle = std::cos(mOuterAngle);
 
 			// Sanity checks
-			RHI_ASSERT(mOuterAngle < glm::radians(90.0f), "Invalid data")
-			RHI_ASSERT(mInnerAngle < mOuterAngle, "Invalid data")
+			SE_ASSERT(mOuterAngle < glm::radians(90.0f), "Invalid data")
+			SE_ASSERT(mInnerAngle < mOuterAngle, "Invalid data")
 		}
 
 		inline void setInnerOuterAngle(float innerAngle, float outerAngle)
@@ -154,9 +154,9 @@ namespace Renderer
 			mPackedShaderData.outerAngle = std::cos(mOuterAngle);
 
 			// Sanity checks
-			RHI_ASSERT(mInnerAngle >= 0.0f, "Invalid data")
-			RHI_ASSERT(mOuterAngle < glm::radians(90.0f), "Invalid data")
-			RHI_ASSERT(mInnerAngle < mOuterAngle, "Invalid data")
+			SE_ASSERT(mInnerAngle >= 0.0f, "Invalid data")
+			SE_ASSERT(mOuterAngle < glm::radians(90.0f), "Invalid data")
+			SE_ASSERT(mInnerAngle < mOuterAngle, "Invalid data")
 		}
 
 		[[nodiscard]] inline float getNearClipDistance() const
@@ -169,7 +169,7 @@ namespace Renderer
 			mPackedShaderData.nearClipDistance = nearClipDistance;
 
 			// Sanity check
-			RHI_ASSERT(mPackedShaderData.nearClipDistance >= 0.0f, "Invalid data")
+			SE_ASSERT(mPackedShaderData.nearClipDistance >= 0.0f, "Invalid data")
 		}
 
 		[[nodiscard]] inline bool isVisible() const

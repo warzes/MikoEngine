@@ -207,7 +207,7 @@ namespace NullRhi
 			for (uint32_t resourceIndex = 0; resourceIndex < mNumberOfResources; ++resourceIndex, ++resources)
 			{
 				Rhi::IResource* resource = *resources;
-				RHI_ASSERT(nullptr != resource, "Invalid null resource")
+				SE_ASSERT(nullptr != resource, "Invalid null resource")
 				mResources[resourceIndex] = resource;
 				resource->AddReference();
 			}
@@ -413,9 +413,9 @@ namespace NullRhi
 			Rhi::IRhi& rhi = getRhi();
 
 			// Sanity checks
-			RHI_ASSERT(rootParameterIndex < mRootSignature.numberOfParameters, "The null root parameter index is out-of-bounds")
-			RHI_ASSERT(numberOfResources > 0, "The number of null resources must not be zero")
-			RHI_ASSERT(nullptr != resources, "The null resource pointers must be valid")
+			SE_ASSERT(rootParameterIndex < mRootSignature.numberOfParameters, "The null root parameter index is out-of-bounds")
+			SE_ASSERT(numberOfResources > 0, "The number of null resources must not be zero")
+			SE_ASSERT(nullptr != resources, "The null resource pointers must be valid")
 
 			// Create resource group
 			return RHI_NEW(ResourceGroup)(rhi, rootParameterIndex, numberOfResources, resources, samplerStates RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -926,11 +926,11 @@ namespace NullRhi
 				const Rhi::VertexArrayVertexBuffer* vertexBufferEnd = vertexBuffers + numberOfVertexBuffers;
 				for (const Rhi::VertexArrayVertexBuffer* vertexBuffer = vertexBuffers; vertexBuffer < vertexBufferEnd; ++vertexBuffer)
 				{
-					RHI_ASSERT(&nullRhi == &vertexBuffer->vertexBuffer->getRhi(), "Null error: The given vertex buffer resource is owned by another RHI instance")
+					SE_ASSERT(&nullRhi == &vertexBuffer->vertexBuffer->getRhi(), "Null error: The given vertex buffer resource is owned by another RHI instance")
 				}
 			}
 			#endif
-			RHI_ASSERT(nullptr == indexBuffer || &nullRhi == &indexBuffer->getRhi(), "Null error: The given index buffer resource is owned by another RHI instance")
+			SE_ASSERT(nullptr == indexBuffer || &nullRhi == &indexBuffer->getRhi(), "Null error: The given index buffer resource is owned by another RHI instance")
 
 			// We don't keep a reference to the vertex buffers used by the vertex array attributes in here
 			// -> Ensure a correct reference counter behaviour
@@ -959,7 +959,7 @@ namespace NullRhi
 			NullRhi& nullRhi = static_cast<NullRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT((numberOfBytes % Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat)) == 0, "The null texture buffer size must be a multiple of the selected texture format bytes per texel")
+			SE_ASSERT((numberOfBytes % Rhi::TextureFormat::GetNumberOfBytesPerElement(textureFormat)) == 0, "The null texture buffer size must be a multiple of the selected texture format bytes per texel")
 
 			// Create the texture buffer
 			return RHI_NEW(TextureBuffer)(nullRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -970,8 +970,8 @@ namespace NullRhi
 			NullRhi& nullRhi = static_cast<NullRhi&>(getRhi());
 
 			// Sanity checks
-			RHI_ASSERT((numberOfBytes % numberOfStructureBytes) == 0, "The null structured buffer size must be a multiple of the given number of structure bytes")
-			RHI_ASSERT((numberOfBytes % (sizeof(float) * 4)) == 0, "Performance: The null structured buffer should be aligned to a 128-bit stride, see \"Understanding Structured Buffer Performance\" by Evan Hart, posted Apr 17 2015 at 11:33AM - https://developer.nvidia.com/content/understanding-structured-buffer-performance")
+			SE_ASSERT((numberOfBytes % numberOfStructureBytes) == 0, "The null structured buffer size must be a multiple of the given number of structure bytes")
+			SE_ASSERT((numberOfBytes % (sizeof(float) * 4)) == 0, "Performance: The null structured buffer should be aligned to a 128-bit stride, see \"Understanding Structured Buffer Performance\" by Evan Hart, posted Apr 17 2015 at 11:33AM - https://developer.nvidia.com/content/understanding-structured-buffer-performance")
 
 			// Create the structured buffer
 			return RHI_NEW(StructuredBuffer)(nullRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -982,10 +982,10 @@ namespace NullRhi
 			NullRhi& nullRhi = static_cast<NullRhi&>(getRhi());
 
 			// Sanity checks
-			RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 || (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0, "Invalid null flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" is missing")
-			RHI_ASSERT(!((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 && (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0), "Invalid null flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" must be set, but not both at one and the same time")
-			RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawArguments)) == 0, "Null indirect buffer element type flags specification is \"DRAW_ARGUMENTS\" but the given number of bytes don't align to this")
-			RHI_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawIndexedArguments)) == 0, "Null indirect buffer element type flags specification is \"DRAW_INDEXED_ARGUMENTS\" but the given number of bytes don't align to this")
+			SE_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 || (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0, "Invalid null flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" is missing")
+			SE_ASSERT(!((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) != 0 && (indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) != 0), "Invalid null flags, indirect buffer element type specification \"DRAW_ARGUMENTS\" or \"DRAW_INDEXED_ARGUMENTS\" must be set, but not both at one and the same time")
+			SE_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawArguments)) == 0, "Null indirect buffer element type flags specification is \"DRAW_ARGUMENTS\" but the given number of bytes don't align to this")
+			SE_ASSERT((indirectBufferFlags & Rhi::IndirectBufferFlag::DRAW_INDEXED_ARGUMENTS) == 0 || (numberOfBytes % sizeof(Rhi::DrawIndexedArguments)) == 0, "Null indirect buffer element type flags specification is \"DRAW_INDEXED_ARGUMENTS\" but the given number of bytes don't align to this")
 
 			// Create indirect buffer
 			return RHI_NEW(IndirectBuffer)(nullRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -996,8 +996,8 @@ namespace NullRhi
 			NullRhi& nullRhi = static_cast<NullRhi&>(getRhi());
 
 			// Don't remove this reminder comment block: There are no buffer flags by intent since an uniform buffer can't be used for unordered access and as a consequence an uniform buffer must always used as shader resource to not be pointless
-			// RHI_ASSERT((bufferFlags & Rhi::BufferFlag::UNORDERED_ACCESS) == 0, "Invalid null buffer flags, uniform buffer can't be used for unordered access")
-			// RHI_ASSERT((bufferFlags & Rhi::BufferFlag::SHADER_RESOURCE) != 0, "Invalid null buffer flags, uniform buffer must be used as shader resource")
+			// SE_ASSERT((bufferFlags & Rhi::BufferFlag::UNORDERED_ACCESS) == 0, "Invalid null buffer flags, uniform buffer can't be used for unordered access")
+			// SE_ASSERT((bufferFlags & Rhi::BufferFlag::SHADER_RESOURCE) != 0, "Invalid null buffer flags, uniform buffer must be used as shader resource")
 
 			// Create the uniform buffer
 			return RHI_NEW(UniformBuffer)(nullRhi RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -1497,7 +1497,7 @@ namespace NullRhi
 			NullRhi& nullRhi = static_cast<NullRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0, "Null create texture 1D was called with invalid parameters")
+			SE_ASSERT(width > 0, "Null create texture 1D was called with invalid parameters")
 
 			// Create 1D texture resource
 			return RHI_NEW(Texture1D)(nullRhi, width RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -1508,7 +1508,7 @@ namespace NullRhi
 			NullRhi& nullRhi = static_cast<NullRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0 && numberOfSlices > 0, "Null create texture 1D array was called with invalid parameters")
+			SE_ASSERT(width > 0 && numberOfSlices > 0, "Null create texture 1D array was called with invalid parameters")
 
 			// Create 1D texture array resource
 			return RHI_NEW(Texture1DArray)(nullRhi, width, numberOfSlices RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -1519,7 +1519,7 @@ namespace NullRhi
 			NullRhi& nullRhi = static_cast<NullRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0 && height > 0, "Null create texture 2D was called with invalid parameters")
+			SE_ASSERT(width > 0 && height > 0, "Null create texture 2D was called with invalid parameters")
 
 			// Create 2D texture resource
 			return RHI_NEW(Texture2D)(nullRhi, width, height RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -1530,7 +1530,7 @@ namespace NullRhi
 			NullRhi& nullRhi = static_cast<NullRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0 && height > 0 && numberOfSlices > 0, "Null create texture 2D array was called with invalid parameters")
+			SE_ASSERT(width > 0 && height > 0 && numberOfSlices > 0, "Null create texture 2D array was called with invalid parameters")
 
 			// Create 2D texture array resource
 			return RHI_NEW(Texture2DArray)(nullRhi, width, height, numberOfSlices RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -1541,7 +1541,7 @@ namespace NullRhi
 			NullRhi& nullRhi = static_cast<NullRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0 && height > 0 && depth > 0, "Null create texture 3D was called with invalid parameters")
+			SE_ASSERT(width > 0 && height > 0 && depth > 0, "Null create texture 3D was called with invalid parameters")
 
 			// Create 3D texture resource
 			return RHI_NEW(Texture3D)(nullRhi, width, height, depth RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -1552,7 +1552,7 @@ namespace NullRhi
 			NullRhi& nullRhi = static_cast<NullRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0, "Null create texture cube was called with invalid parameters")
+			SE_ASSERT(width > 0, "Null create texture cube was called with invalid parameters")
 
 			// Create cube texture resource
 			return RHI_NEW(TextureCube)(nullRhi, width RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -1563,7 +1563,7 @@ namespace NullRhi
 			NullRhi& nullRhi = static_cast<NullRhi&>(getRhi());
 
 			// Sanity check
-			RHI_ASSERT(width > 0, "Null create texture cube array was called with invalid parameters")
+			SE_ASSERT(width > 0, "Null create texture cube array was called with invalid parameters")
 
 			// Create cube texture array resource
 			return RHI_NEW(TextureCubeArray)(nullRhi, width, numberOfSlices RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -1687,7 +1687,7 @@ namespace NullRhi
 			mDepthStencilAttachmentTextureFormat(depthStencilAttachmentTextureFormat),
 			mNumberOfMultisamples(numberOfMultisamples)
 		{
-			RHI_ASSERT(mNumberOfColorAttachments < 8, "Invalid number of null color attachments")
+			SE_ASSERT(mNumberOfColorAttachments < 8, "Invalid number of null color attachments")
 			memcpy(mColorAttachmentTextureFormats, colorAttachmentTextureFormats, sizeof(Rhi::TextureFormat::Enum) * mNumberOfColorAttachments);
 		}
 
@@ -2822,11 +2822,11 @@ namespace NullRhi
 			// -> Optimization: Comparing the shader language name by directly comparing the pointer address of
 			//    the name is safe because we know that we always reference to one and the same name address
 			// TODO(co) Add security check: Is the given resource one of the currently used RHI?
-			RHI_ASSERT(nullptr == vertexShader || vertexShader->getShaderLanguageName() == ::detail::NULL_NAME, "Null vertex shader language mismatch")
-			RHI_ASSERT(nullptr == tessellationControlShader || tessellationControlShader->getShaderLanguageName() == ::detail::NULL_NAME, "Null tessellation control shader language mismatch")
-			RHI_ASSERT(nullptr == tessellationEvaluationShader || tessellationEvaluationShader->getShaderLanguageName() == ::detail::NULL_NAME, "Null tessellation evaluation shader language mismatch")
-			RHI_ASSERT(nullptr == geometryShader || geometryShader->getShaderLanguageName() == ::detail::NULL_NAME, "Null geometry shader language mismatch")
-			RHI_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::NULL_NAME, "Null fragment shader language mismatch")
+			SE_ASSERT(nullptr == vertexShader || vertexShader->getShaderLanguageName() == ::detail::NULL_NAME, "Null vertex shader language mismatch")
+			SE_ASSERT(nullptr == tessellationControlShader || tessellationControlShader->getShaderLanguageName() == ::detail::NULL_NAME, "Null tessellation control shader language mismatch")
+			SE_ASSERT(nullptr == tessellationEvaluationShader || tessellationEvaluationShader->getShaderLanguageName() == ::detail::NULL_NAME, "Null tessellation evaluation shader language mismatch")
+			SE_ASSERT(nullptr == geometryShader || geometryShader->getShaderLanguageName() == ::detail::NULL_NAME, "Null geometry shader language mismatch")
+			SE_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::NULL_NAME, "Null fragment shader language mismatch")
 
 			// Create the graphics program
 			return RHI_NEW(GraphicsProgram)(nullRhi, static_cast<VertexShader*>(vertexShader), static_cast<TessellationControlShader*>(tessellationControlShader), static_cast<TessellationEvaluationShader*>(tessellationEvaluationShader), static_cast<GeometryShader*>(geometryShader), static_cast<FragmentShader*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -2841,9 +2841,9 @@ namespace NullRhi
 			// -> Optimization: Comparing the shader language name by directly comparing the pointer address of
 			//    the name is safe because we know that we always reference to one and the same name address
 			// TODO(co) Add security check: Is the given resource one of the currently used RHI?
-			RHI_ASSERT(nullptr == taskShader || taskShader->getShaderLanguageName() == ::detail::NULL_NAME, "Null task shader language mismatch")
-			RHI_ASSERT(meshShader.getShaderLanguageName() == ::detail::NULL_NAME, "Null mesh shader language mismatch")
-			RHI_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::NULL_NAME, "Null fragment shader language mismatch")
+			SE_ASSERT(nullptr == taskShader || taskShader->getShaderLanguageName() == ::detail::NULL_NAME, "Null task shader language mismatch")
+			SE_ASSERT(meshShader.getShaderLanguageName() == ::detail::NULL_NAME, "Null mesh shader language mismatch")
+			SE_ASSERT(nullptr == fragmentShader || fragmentShader->getShaderLanguageName() == ::detail::NULL_NAME, "Null fragment shader language mismatch")
 
 			// Create the graphics program
 			return RHI_NEW(GraphicsProgram)(nullRhi, static_cast<TaskShader*>(taskShader), static_cast<MeshShader&>(meshShader), static_cast<FragmentShader*>(fragmentShader) RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -3073,7 +3073,7 @@ namespace
 			void ExecuteCommandBuffer(const void* data, Rhi::IRhi& rhi)
 			{
 				const Rhi::Command::ExecuteCommandBuffer* realData = static_cast<const Rhi::Command::ExecuteCommandBuffer*>(data);
-				RHI_ASSERT(nullptr != realData->commandBufferToExecute, "The null command buffer to execute must be valid")
+				SE_ASSERT(nullptr != realData->commandBufferToExecute, "The null command buffer to execute must be valid")
 				rhi.submitCommandBuffer(*realData->commandBufferToExecute);
 			}
 
@@ -3505,7 +3505,7 @@ namespace NullRhi
 		// Rasterizer (RS) stage
 
 		// Sanity check
-		RHI_ASSERT(numberOfViewports > 0 && nullptr != viewports, "Invalid null rasterizer state viewports")
+		SE_ASSERT(numberOfViewports > 0 && nullptr != viewports, "Invalid null rasterizer state viewports")
 	}
 
 	void NullRhi::setGraphicsScissorRectangles([[maybe_unused]] uint32_t numberOfScissorRectangles, [[maybe_unused]] const Rhi::ScissorRectangle* scissorRectangles)
@@ -3513,7 +3513,7 @@ namespace NullRhi
 		// Rasterizer (RS) stage
 
 		// Sanity check
-		RHI_ASSERT(numberOfScissorRectangles > 0 && nullptr != scissorRectangles, "Invalid null rasterizer state scissor rectangles")
+		SE_ASSERT(numberOfScissorRectangles > 0 && nullptr != scissorRectangles, "Invalid null rasterizer state scissor rectangles")
 	}
 
 	void NullRhi::setGraphicsRenderTarget(Rhi::IRenderTarget* renderTarget)
@@ -3558,28 +3558,28 @@ namespace NullRhi
 	void NullRhi::clearGraphics(uint32_t, const float [4], [[maybe_unused]] float z, uint32_t)
 	{
 		// Sanity check
-		RHI_ASSERT(z >= 0.0f && z <= 1.0f, "The null clear graphics z value must be between [0, 1] (inclusive)")
+		SE_ASSERT(z >= 0.0f && z <= 1.0f, "The null clear graphics z value must be between [0, 1] (inclusive)")
 	}
 
 	void NullRhi::drawGraphicsEmulated([[maybe_unused]] const uint8_t* emulationData, uint32_t, [[maybe_unused]] uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != emulationData, "The null emulation data must be valid")
-		RHI_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
+		SE_ASSERT(nullptr != emulationData, "The null emulation data must be valid")
+		SE_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
 	}
 
 	void NullRhi::drawIndexedGraphicsEmulated([[maybe_unused]] const uint8_t* emulationData, uint32_t, [[maybe_unused]] uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != emulationData, "The null emulation data must be valid")
-		RHI_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
+		SE_ASSERT(nullptr != emulationData, "The null emulation data must be valid")
+		SE_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
 	}
 
 	void NullRhi::drawMeshTasksEmulated([[maybe_unused]] const uint8_t* emulationData, uint32_t, [[maybe_unused]] uint32_t numberOfDraws)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != emulationData, "The null emulation data must be valid")
-		RHI_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
+		SE_ASSERT(nullptr != emulationData, "The null emulation data must be valid")
+		SE_ASSERT(numberOfDraws > 0, "The number of null draws must not be zero")
 	}
 
 
@@ -3738,7 +3738,7 @@ namespace NullRhi
 
 	const char* NullRhi::getShaderLanguageName([[maybe_unused]] uint32_t index) const
 	{
-		RHI_ASSERT(index < getNumberOfShaderLanguages(), "Null: Shader language index is out-of-bounds")
+		SE_ASSERT(index < getNumberOfShaderLanguages(), "Null: Shader language index is out-of-bounds")
 		return ::detail::NULL_NAME;
 	}
 
@@ -3789,7 +3789,7 @@ namespace NullRhi
 	{
 		// Sanity checks
 		RHI_MATCH_CHECK(*this, renderPass)
-		RHI_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle, "Null: The provided native window handle must not be a null handle")
+		SE_ASSERT(SE_NULL_HANDLE != windowHandle.nativeWindowHandle, "Null: The provided native window handle must not be a null handle")
 
 		// Create the swap chain
 		return RHI_NEW(SwapChain)(renderPass, windowHandle RHI_RESOURCE_DEBUG_PASS_PARAMETER);
@@ -3850,9 +3850,9 @@ namespace NullRhi
 	Rhi::IGraphicsPipelineState* NullRhi::createGraphicsPipelineState(const Rhi::GraphicsPipelineState& graphicsPipelineState RHI_RESOURCE_DEBUG_NAME_PARAMETER_NO_DEFAULT)
 	{
 		// Sanity checks
-		RHI_ASSERT(nullptr != graphicsPipelineState.rootSignature, "Null: Invalid graphics pipeline state root signature")
-		RHI_ASSERT(nullptr != graphicsPipelineState.graphicsProgram, "Null: Invalid graphics pipeline state graphics program")
-		RHI_ASSERT(nullptr != graphicsPipelineState.renderPass, "Null: Invalid graphics pipeline state render pass")
+		SE_ASSERT(nullptr != graphicsPipelineState.rootSignature, "Null: Invalid graphics pipeline state root signature")
+		SE_ASSERT(nullptr != graphicsPipelineState.graphicsProgram, "Null: Invalid graphics pipeline state graphics program")
+		SE_ASSERT(nullptr != graphicsPipelineState.renderPass, "Null: Invalid graphics pipeline state render pass")
 
 		// Create graphics pipeline state
 		uint16_t id = 0;
@@ -3925,7 +3925,7 @@ namespace NullRhi
 
 		// Sanity check
 		#if SE_DEBUG
-			RHI_ASSERT(false == mDebugBetweenBeginEndScene, "Null: Begin scene was called while scene rendering is already in progress, missing end scene call?")
+			SE_ASSERT(false == mDebugBetweenBeginEndScene, "Null: Begin scene was called while scene rendering is already in progress, missing end scene call?")
 			mDebugBetweenBeginEndScene = true;
 		#endif
 
@@ -3936,7 +3936,7 @@ namespace NullRhi
 	void NullRhi::submitCommandBuffer(const Rhi::CommandBuffer& commandBuffer)
 	{
 		// Sanity check
-		RHI_ASSERT(!commandBuffer.isEmpty(), "The null command buffer to execute mustn't be empty")
+		SE_ASSERT(!commandBuffer.isEmpty(), "The null command buffer to execute mustn't be empty")
 
 		// Loop through all commands
 		const uint8_t* commandPacketBuffer = commandBuffer.getCommandPacketBuffer();
@@ -3960,7 +3960,7 @@ namespace NullRhi
 	{
 		// Sanity check
 		#if SE_DEBUG
-			RHI_ASSERT(true == mDebugBetweenBeginEndScene, "Null: End scene was called while scene rendering isn't in progress, missing start scene call?")
+			SE_ASSERT(true == mDebugBetweenBeginEndScene, "Null: End scene was called while scene rendering isn't in progress, missing start scene call?")
 			mDebugBetweenBeginEndScene = false;
 		#endif
 

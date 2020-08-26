@@ -72,7 +72,7 @@ namespace
 
 			[[nodiscard]] inline uint32_t getCurrentCombinationIntegerProperty(size_t index) const
 			{
-				RHI_ASSERT(index < mCurrentCombination.size(), "Invalid index")
+				SE_ASSERT(index < mCurrentCombination.size(), "Invalid index")
 				return mCurrentCombination[index];
 			}
 
@@ -86,7 +86,7 @@ namespace
 			[[nodiscard]] bool iterate()
 			{
 				// Just a sanity check, in case someone forgot to start iterating first
-				RHI_ASSERT(mCurrentCombination.size() == mNumberOfPropertyValuesByPropertyIndex.size(), "Start iterate missing")
+				SE_ASSERT(mCurrentCombination.size() == mNumberOfPropertyValuesByPropertyIndex.size(), "Start iterate missing")
 
 				for (size_t index = 0; index < mCurrentCombination.size(); ++index)
 				{
@@ -153,7 +153,7 @@ namespace
 				case Renderer::MaterialPropertyValue::ValueType::TEXTURE_ASSET_ID:
 				case Renderer::MaterialPropertyValue::ValueType::GLOBAL_MATERIAL_PROPERTY_ID:
 				default:
-					RHI_ASSERT(false, "Invalid value type")	// TODO(co) Error handling
+					SE_ASSERT(false, "Invalid value type")	// TODO(co) Error handling
 					break;
 			}
 		}
@@ -310,7 +310,7 @@ namespace Renderer
 	void MaterialBlueprintResource::createPipelineStateCaches(bool mandatoryOnly)
 	{
 		// Sanity check
-		RHI_ASSERT(LoadingState::LOADED == getLoadingState(), "Material blueprint resource must be fully loaded, meaning also all referenced shader resources")
+		SE_ASSERT(LoadingState::LOADED == getLoadingState(), "Material blueprint resource must be fully loaded, meaning also all referenced shader resources")
 
 		// TODO(co) Optimization: Avoid constant allocations/deallocations, can't use a static instance to not get false-positive memory-leaks, add maybe some kind of context?
 		::detail::ShaderCombinationIterator shaderCombinationIterator(128);
@@ -355,7 +355,7 @@ namespace Renderer
 								else
 								{
 									// Error!
-									RHI_ASSERT(false, "Can't resolve reference")
+									SE_ASSERT(false, "Can't resolve reference")
 								}
 							}
 							break;
@@ -384,7 +384,7 @@ namespace Renderer
 						case MaterialProperty::ValueType::TEXTURE_ASSET_ID:
 						default:
 							// Error!
-							RHI_ASSERT(false, "Unsupported shader combination material property value type")
+							SE_ASSERT(false, "Unsupported shader combination material property value type")
 							break;
 					}
 				}

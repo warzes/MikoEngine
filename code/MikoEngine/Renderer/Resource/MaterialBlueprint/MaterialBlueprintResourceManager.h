@@ -102,7 +102,7 @@ namespace Renderer
 		[[nodiscard]] inline IMaterialBlueprintResourceListener& getMaterialBlueprintResourceListener() const
 		{
 			// We know this pointer must always be valid
-			RHI_ASSERT(nullptr != mMaterialBlueprintResourceListener, "Invalid material blueprint resource listener")
+			SE_ASSERT(nullptr != mMaterialBlueprintResourceListener, "Invalid material blueprint resource listener")
 			return *mMaterialBlueprintResourceListener;
 		}
 
@@ -159,28 +159,28 @@ namespace Renderer
 		[[nodiscard]] inline UniformInstanceBufferManager& getUniformInstanceBufferManager() const
 		{
 			// We know this pointer must always be valid
-			RHI_ASSERT(nullptr != mUniformInstanceBufferManager, "Invalid uniform instance buffer manager")
+			SE_ASSERT(nullptr != mUniformInstanceBufferManager, "Invalid uniform instance buffer manager")
 			return *mUniformInstanceBufferManager;
 		}
 
 		[[nodiscard]] inline TextureInstanceBufferManager& getTextureInstanceBufferManager() const
 		{
 			// We know this pointer must always be valid
-			RHI_ASSERT(nullptr != mTextureInstanceBufferManager, "Invalid texture instance buffer manager")
+			SE_ASSERT(nullptr != mTextureInstanceBufferManager, "Invalid texture instance buffer manager")
 			return *mTextureInstanceBufferManager;
 		}
 
 		[[nodiscard]] inline IndirectBufferManager& getIndirectBufferManager() const
 		{
 			// We know this pointer must always be valid
-			RHI_ASSERT(nullptr != mIndirectBufferManager, "Invalid indirect buffer manager")
+			SE_ASSERT(nullptr != mIndirectBufferManager, "Invalid indirect buffer manager")
 			return *mIndirectBufferManager;
 		}
 
 		[[nodiscard]] inline LightBufferManager& getLightBufferManager() const
 		{
 			// We know this pointer must always be valid
-			RHI_ASSERT(nullptr != mLightBufferManager, "Invalid light buffer manager")
+			SE_ASSERT(nullptr != mLightBufferManager, "Invalid light buffer manager")
 			return *mLightBufferManager;
 		}
 

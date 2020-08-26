@@ -159,7 +159,7 @@ bool Scene::init(int argc, const char * argv[])
 	// Create the renderer instance
 #ifdef __ANDROID__
 	struct android_app androidApp;	// TODO(co) Get Android app instance
-	RHI_ASSERT(rhi->getContext(), nullptr != androidApp.activity->assetManager, "Invalid Android asset manager instance")
+	SE_ASSERT(rhi->getContext(), nullptr != androidApp.activity->assetManager, "Invalid Android asset manager instance")
 		mFileManager = new Renderer::AndroidFileManager(rhi->getContext().getLog(), rhi->getContext().getAssert(), rhi->getContext().getAllocator(), std_filesystem::canonical(std_filesystem::current_path() / "..").generic_string(), *androidApp.activity->assetManager);
 #else
 	mFileManager = new Renderer::PhysicsFSFileManager(std::filesystem::canonical(std::filesystem::current_path() / "..").generic_string());
@@ -528,10 +528,10 @@ void Scene::onLoadingStateChange(const Renderer::IResource& resource)
 		if ( Renderer::IResource::LoadingState::LOADED == loadingState )
 		{
 			// Sanity checks
-			RHI_ASSERT(nullptr == mSceneNode, "Invalid scene node");
-			RHI_ASSERT(nullptr == mCameraSceneItem, "Invalid camera scene item");
-			RHI_ASSERT(nullptr == mSunlightSceneItem, "Invalid sunlight scene item");
-			RHI_ASSERT(nullptr == mSkeletonMeshSceneItem, "Invalid skeleton mesh scene item");
+			SE_ASSERT(nullptr == mSceneNode, "Invalid scene node");
+			SE_ASSERT(nullptr == mCameraSceneItem, "Invalid camera scene item");
+			SE_ASSERT(nullptr == mSunlightSceneItem, "Invalid sunlight scene item");
+			SE_ASSERT(nullptr == mSkeletonMeshSceneItem, "Invalid skeleton mesh scene item");
 
 			// Loop through all scene nodes and grab the first found camera, directional light and mesh
 			const Renderer::SceneResource& sceneResource = static_cast<const Renderer::SceneResource&>(resource);

@@ -44,7 +44,7 @@ namespace Renderer
 		mMemoryFile.read(&shaderPieceHeader, sizeof(v1ShaderPiece::ShaderPieceHeader));
 
 		// Sanity check
-		RHI_ASSERT(shaderPieceHeader.numberOfShaderSourceCodeBytes > 0, "Invalid shader piece asset without any shader source code detected")
+		SE_ASSERT(shaderPieceHeader.numberOfShaderSourceCodeBytes > 0, "Invalid shader piece asset without any shader source code detected")
 
 		// Allocate more temporary memory, if required
 		if (mMaximumNumberOfShaderSourceCodeBytes < shaderPieceHeader.numberOfShaderSourceCodeBytes)

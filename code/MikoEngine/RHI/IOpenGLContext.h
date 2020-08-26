@@ -636,7 +636,7 @@ namespace OpenGLRhi
 			else
 			{
 				const Rhi::Context& context = openGLRhi.getContext();
-				RHI_ASSERT(context.getType() == Rhi::Context::ContextType::X11, "Invalid OpenGL context type")
+				SE_ASSERT(context.getType() == Rhi::Context::ContextType::X11, "Invalid OpenGL context type")
 
 					// If the given RHI context is an X11 context use the display connection object provided by the context
 					if ( context.getType() == Rhi::Context::ContextType::X11 )

@@ -55,7 +55,7 @@ namespace Rhi
 } // namespace Rhi
 
 #include "RHIDebug.h"
-#include "DefaultAssert.h"
+#include "Core/AssertMacros.h"
 #include "DefaultLog.h"
 #include "DefaultAllocator.h"
 #include "RHITypes.h"

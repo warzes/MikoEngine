@@ -74,7 +74,7 @@ namespace Renderer
 
 			inline void setDebugName(const char debugName[])
 			{
-				RHI_ASSERT(strlen(debugName) < MAXIMUM_PASS_NAME_LENGTH, "Compositor resource pass debug name is not allowed to exceed 63 characters")
+				SE_ASSERT(strlen(debugName) < MAXIMUM_PASS_NAME_LENGTH, "Compositor resource pass debug name is not allowed to exceed 63 characters")
 				strncpy(mDebugName, debugName, MAXIMUM_PASS_NAME_LENGTH);
 				mDebugName[MAXIMUM_PASS_NAME_LENGTH - 1] = '\0';
 			}
@@ -124,7 +124,7 @@ namespace Renderer
 			#pragma pack(pop)
 
 			// Sanity check
-			RHI_ASSERT(sizeof(PassData) == numberOfBytes, "Invalid number of bytes")
+			SE_ASSERT(sizeof(PassData) == numberOfBytes, "Invalid number of bytes")
 
 			// Read data
 			const PassData* passData = reinterpret_cast<const PassData*>(data);
@@ -137,8 +137,8 @@ namespace Renderer
 			mSkipFirstExecution = passData->skipFirstExecution;
 
 			// Sanity checks
-			RHI_ASSERT(mNumberOfExecutions > 0, "Invalid number of executions")
-			RHI_ASSERT(!mSkipFirstExecution || mNumberOfExecutions > 1, "Invalid number of executions")
+			SE_ASSERT(mNumberOfExecutions > 0, "Invalid number of executions")
+			SE_ASSERT(!mSkipFirstExecution || mNumberOfExecutions > 1, "Invalid number of executions")
 		}
 
 		/**

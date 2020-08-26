@@ -43,11 +43,11 @@ namespace Renderer
 		mMemoryFile.read(&meshHeader, sizeof(v1Mesh::MeshHeader));
 
 		// Sanity checks
-		RHI_ASSERT(0 != meshHeader.numberOfBytesPerVertex, "Invalid mesh with zero bytes per vertex")
-		RHI_ASSERT(0 != meshHeader.numberOfVertices, "Invalid mesh which has no vertices")
-		RHI_ASSERT(0 != meshHeader.numberOfVertexAttributes, "Invalid mesh which has no vertex attributes")
-		RHI_ASSERT(0 != meshHeader.numberOfSubMeshes, "Invalid mesh which has no sub-meshes")
-		RHI_ASSERT(0 != meshHeader.numberOfLods, "Invalid mesh which has no LODs: There must always be at least one LOD, namely the original none reduced version")
+		SE_ASSERT(0 != meshHeader.numberOfBytesPerVertex, "Invalid mesh with zero bytes per vertex")
+		SE_ASSERT(0 != meshHeader.numberOfVertices, "Invalid mesh which has no vertices")
+		SE_ASSERT(0 != meshHeader.numberOfVertexAttributes, "Invalid mesh which has no vertex attributes")
+		SE_ASSERT(0 != meshHeader.numberOfSubMeshes, "Invalid mesh which has no sub-meshes")
+		SE_ASSERT(0 != meshHeader.numberOfLods, "Invalid mesh which has no LODs: There must always be at least one LOD, namely the original none reduced version")
 
 		// Set basic mesh resource data
 		mMeshResource->setBoundingBoxPosition(meshHeader.minimumBoundingBoxPosition, meshHeader.maximumBoundingBoxPosition);
@@ -174,7 +174,7 @@ namespace Renderer
 				subMesh.setNumberOfIndices(v1SubMesh.numberOfIndices);
 
 				// Sanity check
-				RHI_ASSERT(IsValid(subMesh.getMaterialResourceId()), "Invalid sub mesh material resource ID")
+				SE_ASSERT(IsValid(subMesh.getMaterialResourceId()), "Invalid sub mesh material resource ID")
 			}
 		}
 
