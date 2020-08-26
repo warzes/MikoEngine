@@ -14,9 +14,6 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Example\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="VrController.cpp">
-      <Filter>Example\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="FreeCameraController.cpp">
       <Filter>Example\Scene</Filter>
     </ClCompile>
@@ -116,9 +113,6 @@
       <Filter>Example\Scene</Filter>
     </ClInclude>
     <ClInclude Include="IController.h">
-      <Filter>Example\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="VrController.h">
       <Filter>Example\Scene</Filter>
     </ClInclude>
     <ClInclude Include="FreeCameraController.h">

@@ -187,7 +187,6 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
-    <ClCompile Include="VrController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BatchDrawInstanced.h" />
@@ -246,7 +245,6 @@
     <ClInclude Include="VertexBuffer_GLSL_ES3.h" />
     <ClInclude Include="VertexBuffer_HLSL_D3D11_D3D12.h" />
     <ClInclude Include="VertexBuffer_Null.h" />
-    <ClInclude Include="VrController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

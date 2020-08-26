@@ -36,9 +36,6 @@ namespace Renderer
 	#ifdef RENDERER_IMGUI
 		class DebugGuiManager;
 	#endif
-	#ifdef RENDERER_OPENVR
-		class IVrManager;
-	#endif
 }
 
 
@@ -412,21 +409,6 @@ namespace Renderer
 			}
 		#endif
 
-		#ifdef RENDERER_OPENVR
-			/**
-			*  @brief
-			*    Return the VR manager instance
-			*
-			*  @return
-			*    The VR manager instance, do not release the returned instance
-			*/
-			[[nodiscard]] inline IVrManager& getVrManager() const
-			{
-				return *mVrManager;
-			}
-		#endif
-
-
 	//[-------------------------------------------------------]
 	//[ Public virtual Renderer::IRenderer methods            ]
 	//[-------------------------------------------------------]
@@ -509,9 +491,6 @@ namespace Renderer
 			#ifdef RENDERER_IMGUI
 				, mDebugGuiManager(nullptr)
 			#endif
-			#ifdef RENDERER_OPENVR
-				, mVrManager(nullptr)
-			#endif
 		{
 			// Nothing here
 		}
@@ -556,11 +535,6 @@ namespace Renderer
 		#ifdef RENDERER_IMGUI
 			DebugGuiManager* mDebugGuiManager;
 		#endif
-		#ifdef RENDERER_OPENVR
-			IVrManager* mVrManager;
-		#endif
-
-
 	};
 
 

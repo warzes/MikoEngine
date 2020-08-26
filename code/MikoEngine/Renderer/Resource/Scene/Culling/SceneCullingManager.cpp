@@ -9,9 +9,6 @@
 #include "Renderer/Core/Thread/ThreadPool.h"
 #include "Renderer/Core/Math/Math.h"
 #include "Renderer/Core/Math/Frustum.h"
-#ifdef RENDERER_OPENVR
-	#include "Renderer/Vr/IVrManager.h"
-#endif
 #include "Renderer/IRenderer.h"
 #include "Renderer/Context.h"
 #include <xsimd/xsimd.hpp>
@@ -560,29 +557,6 @@ namespace Renderer
 		SE_ASSERT(nullptr != compositorContextData.getCompositorWorkspaceInstance(), "Invalid compositor workspace instance")
 		glm::mat4 viewSpaceToClipSpaceMatrix;
 		{
-			#ifdef RENDERER_OPENVR
-				const IVrManager& vrManager = renderer.getVrManager();
-				if (compositorContextData.getSinglePassStereoInstancing() && vrManager.isRunning() && !cameraSceneItem->hasCustomWorldSpaceToViewSpaceMatrix() && !cameraSceneItem->hasCustomViewSpaceToClipSpaceMatrix())
-				{
-					// TODO(co) There are currently multiple culling issues notable when using stereo rendering, so disabled culling for now until this has been resolved
-					// Fill render queue index ranges with the visible stuff
-					const glm::dvec3& cameraPosition = cameraSceneItem->getParentSceneNodeSafe().getGlobalTransform().position;	// 64 bit world space position of the camera
-					for (uint32_t i = 0; i < mCullableSceneItemSet->numberOfSceneItems; ++i)
-					{
-						::detail::gatherRenderQueueIndexRangesRenderableManagersBySceneItem(*mCullableSceneItemSet->sceneItemVector[i], cameraPosition, renderQueueIndexRanges, executeOnRenderingSceneItems);
-					}
-					// Fill render queue index ranges with the always-visible stuff
-					for (ISceneItem* sceneItem : mUncullableSceneItems)
-					{
-						::detail::gatherRenderQueueIndexRangesRenderableManagersBySceneItem(*sceneItem, cameraPosition, renderQueueIndexRanges, executeOnRenderingSceneItems);
-					}
-					return;
-
-					// TODO(co) Single pass stereo rendering: "You must conservatively cull on the CPU by about 5 degrees": http://media.steampowered.com/apps/valve/2015/Alex_Vlachos_Advanced_VR_Rendering_GDC2015.pdf
-					// viewSpaceToClipSpaceMatrix = vrManager.getHmdViewSpaceToClipSpaceMatrix(IVrManager::VrEye::LEFT, cameraSceneItem->getNearZ(), cameraSceneItem->getFarZ());
-				}
-				else
-			#endif
 			{
 				// Get the render target with and height
 				uint32_t renderTargetWidth = 0;

@@ -27,9 +27,6 @@
 #ifdef RENDERER_GRAPHICS_DEBUGGER
 	#include "Renderer/Core/IGraphicsDebugger.h"
 #endif
-#ifdef RENDERER_OPENVR
-	#include "Renderer/Vr/IVrManager.h"
-#endif
 #include "Renderer/IRenderer.h"
 #include "Renderer/Context.h"
 
@@ -112,19 +109,6 @@ namespace Renderer
 
 	void CompositorWorkspaceInstance::executeVr(Rhi::IRenderTarget& renderTarget, CameraSceneItem* cameraSceneItem, const LightSceneItem* lightSceneItem)
 	{
-		// Decide whether or not the VR-manager is used for rendering
-		#ifdef RENDERER_OPENVR
-			IVrManager& vrManager = mRenderer.getVrManager();
-			if (vrManager.isRunning())
-			{
-				// Update the VR-manager just before rendering
-				vrManager.updateHmdMatrixPose(cameraSceneItem);
-
-				// Execute the compositor workspace instance
-				vrManager.executeCompositorWorkspaceInstance(*this, renderTarget, cameraSceneItem, lightSceneItem);
-			}
-			else
-		#endif
 		{
 			// Execute the compositor workspace instance
 			execute(renderTarget, cameraSceneItem, lightSceneItem);

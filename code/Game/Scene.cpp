@@ -10,9 +10,6 @@
 #include "MikoEngine/Renderer/Resource/Mesh/MeshResource.h"
 #include "MikoEngine/Renderer/Resource/Texture/TextureResource.h"
 #include "FreeCameraController.h"
-#ifdef RENDERER_OPENVR
-#include "VrController.h"
-#endif
 #ifdef RENDERER_TOOLKIT
 #include <RendererToolkit/Public/RendererToolkit.h>
 #endif
@@ -26,9 +23,6 @@
 #ifdef RENDERER_IMGUI
 #include <Renderer/DebugGui/ImGuiLog.h>
 #include <Renderer/DebugGui/DebugGuiManager.h>
-#endif
-#ifdef RENDERER_OPENVR
-#include <Renderer/Vr/IVrManager.h>
 #endif
 #include <Renderer/Resource/Scene/SceneNode.h>
 #include <Renderer/Resource/Scene/SceneResource.h>
@@ -280,36 +274,6 @@ bool Scene::init(int argc, const char * argv[])
 
 	// Load the material resource we're going to clone
 	renderer.getMaterialResourceManager().loadMaterialResourceByAssetId(::detail::IMROD_MATERIAL_ASSET_ID, mMaterialResourceId, this);
-
-	// Try to startup the VR-manager if a HMD is present
-#ifdef RENDERER_OPENVR
-	{
-		Renderer::IVrManager& vrManager = renderer.getVrManager();
-		if ( vrManager.isHmdPresent() )
-		{
-			vrManager.setSceneResourceId(mSceneResourceId);
-			if ( vrManager.startup(SE_ASSET_ID("Example/Blueprint/Mesh/M_VrDevice")) )
-			{
-				// Select the VR compositor and enable MSAA by default since image stability is quite important for VR
-				// -> "Advanced VR Rendering" by Alex Vlachos, Valve -> page 26 -> "4xMSAA Minimum Quality" ( http://media.steampowered.com/apps/valve/2015/Alex_Vlachos_Advanced_VR_Rendering_GDC2015.pdf )
-				// -> We're using temporal MSAA which looks quite stable with 2xMSAA as well
-				if ( Compositor::DEBUG != static_cast<Compositor>(mCurrentCompositor) )
-				{
-					mInstancedCompositor = Compositor::VR;
-					mCurrentCompositor = static_cast<int>(mInstancedCompositor);
-				}
-				if ( mCurrentMsaa < static_cast<int>(Msaa::TWO) )
-				{
-					mCurrentMsaa = static_cast<int>(Msaa::TWO);
-				}
-				if ( mCurrentTextureFiltering < static_cast<int>(TextureFiltering::ANISOTROPIC_4) )
-				{
-					mCurrentTextureFiltering = static_cast<int>(TextureFiltering::ANISOTROPIC_4);
-				}
-			}
-		}
-	}
-#endif
 
 	// When using OpenGL ES 3, switch to a compositor which is designed for mobile devices
 	// TODO(co) The Vulkan/Direct3D 12 RHI implementation is under construction, so debug compositor for now
@@ -585,17 +549,6 @@ void Scene::onLoadingStateChange(const Renderer::IResource& resource)
 
 			if ( nullptr != mCameraSceneItem && nullptr != mCameraSceneItem->getParentSceneNode() )
 			{
-#ifdef RENDERER_OPENVR
-				if ( mCompositorWorkspaceInstance->getRenderer().getVrManager().isRunning() )
-				{
-					mController = new VrController(*mCameraSceneItem);
-
-					// For VR, set camera to origin
-					Renderer::SceneNode* sceneNode = mCameraSceneItem->getParentSceneNode();
-					sceneNode->teleportPositionRotation(Renderer::Math::DVEC3_ZERO, Renderer::Math::QUAT_IDENTITY);
-				}
-				else
-#endif
 				{
 					mController = new FreeCameraController(*mInputManager, *mCameraSceneItem);
 
@@ -678,9 +631,6 @@ void Scene::saveIni()
 
 			// Backup camera position and rotation for a following session, but only if VR isn't running right now
 #ifdef RENDERER_IMGUI
-#ifdef RENDERER_OPENVR
-			if ( !renderer.getVrManager().isRunning() )
-#endif
 			{
 				sprintf_s(temp, GLM_COUNTOF(temp), "%lf %lf %lf %f %f %f %f", mCameraTransformBackup.position.x, mCameraTransformBackup.position.y, mCameraTransformBackup.position.z, mCameraTransformBackup.rotation.w, mCameraTransformBackup.rotation.x, mCameraTransformBackup.rotation.y, mCameraTransformBackup.rotation.z);
 				if ( INI_NOT_FOUND == mCameraPositionRotationIniProperty )

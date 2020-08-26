@@ -6,10 +6,6 @@
 #include "Renderer/Resource/Texture/Loader/Lz4DdsTextureResourceLoader.h"
 #include "Renderer/Resource/Texture/Loader/KtxTextureResourceLoader.h"
 #include "Renderer/Resource/ResourceManagerTemplate.h"
-#ifdef RENDERER_OPENVR
-	#include "Renderer/Vr/OpenVR/Loader/OpenVRTextureResourceLoader.h"
-#endif
-
 
 //[-------------------------------------------------------]
 //[ Anonymous detail namespace                            ]
@@ -365,11 +361,6 @@ namespace Renderer
 
 			case KtxTextureResourceLoader::TYPE_ID:
 				return new KtxTextureResourceLoader(*this, mInternalResourceManager->getRenderer());
-
-			#ifdef RENDERER_OPENVR
-				case OpenVRTextureResourceLoader::TYPE_ID:
-					return new OpenVRTextureResourceLoader(*this, mInternalResourceManager->getRenderer());
-			#endif
 
 			default:
 				// TODO(co) Error handling

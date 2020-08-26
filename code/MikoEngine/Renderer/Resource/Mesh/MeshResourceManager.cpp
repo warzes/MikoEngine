@@ -3,10 +3,6 @@
 #include "Renderer/Resource/Mesh/MeshResource.h"
 #include "Renderer/Resource/Mesh/Loader/MeshResourceLoader.h"
 #include "Renderer/Resource/ResourceManagerTemplate.h"
-#ifdef RENDERER_OPENVR
-	#include "Renderer/Vr/OpenVR/Loader/OpenVRMeshResourceLoader.h"
-#endif
-
 
 //[-------------------------------------------------------]
 //[ Anonymous detail namespace                            ]
@@ -139,11 +135,6 @@ namespace Renderer
 		{
 			case MeshResourceLoader::TYPE_ID:
 				return new MeshResourceLoader(*this, mInternalResourceManager->getRenderer());
-
-			#ifdef RENDERER_OPENVR
-				case OpenVRMeshResourceLoader::TYPE_ID:
-					return new OpenVRMeshResourceLoader(*this, mInternalResourceManager->getRenderer());
-			#endif
 
 			default:
 				// TODO(co) Error handling

@@ -30,9 +30,6 @@
 		#include "Renderer/DebugGui/Detail/DebugGuiManagerLinux.h"
 	#endif
 #endif
-#ifdef RENDERER_OPENVR
-	#include "Renderer/Vr/OpenVR/VrManagerOpenVR.h"
-#endif
 #include "Renderer/Context.h"
 
 #include <cstring>
@@ -206,11 +203,6 @@ namespace Renderer
 			#endif
 			mDebugGuiManager->initializeImGuiKeyMap();
 		#endif
-
-		#ifdef RENDERER_OPENVR
-			mVrManager = new VrManagerOpenVR(*this);
-		#endif
-
 		// Don't try to load the pipeline state object cache at this point in time, the asset manager will have no asset packages and hence there will be no material blueprint assets
 	}
 
@@ -223,9 +215,6 @@ namespace Renderer
 		savePipelineStateObjectCache();
 
 		// Destroy the optional manager instances
-		#ifdef RENDERER_OPENVR
-			delete mVrManager;
-		#endif
 		#ifdef RENDERER_IMGUI
 			delete mDebugGuiManager;
 		#endif

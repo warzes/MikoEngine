@@ -13,9 +13,6 @@
 #include "Renderer/Core/Time/TimeManager.h"
 #include "Renderer/Core/Math/Transform.h"
 #include "Renderer/Core/Math/Math.h"
-#ifdef RENDERER_OPENVR
-	#include "Renderer/Vr/IVrManager.h"
-#endif
 #include "Renderer/IRenderer.h"
 
 #ifdef RENDERER_IMGUI
@@ -358,38 +355,12 @@ namespace Renderer
 		// Calculate required matrices basing whether or not the VR-manager is currently running
 		glm::mat4 viewSpaceToClipSpaceMatrix;
 		glm::mat4 viewSpaceToClipSpaceMatrixReversedZ;
-		#ifdef RENDERER_OPENVR
-			const IVrManager& vrManager = renderer.getVrManager();
-			const bool vrRendering = (singlePassStereoInstancing && vrManager.isRunning() && !cameraSceneItem->hasCustomWorldSpaceToViewSpaceMatrix() && !cameraSceneItem->hasCustomViewSpaceToClipSpaceMatrix());
-		#else
-			static constexpr bool vrRendering = false;
-		#endif
+		static constexpr bool vrRendering = false;
 		const uint32_t numberOfEyes = vrRendering ? 2u : 1u;
 		for (uint32_t eyeIndex = 0; eyeIndex < numberOfEyes; ++eyeIndex)
 		{
 			if (nullptr != cameraSceneItem)
 			{
-				#ifdef RENDERER_OPENVR
-					if (vrRendering)
-					{
-						// Virtual reality rendering
-
-						// Ask the virtual reality manager for the HMD transformation
-						// -> Near and far flipped due to usage of Reversed-Z (see e.g. https://developer.nvidia.com/content/depth-precision-visualized and https://nlguillemot.wordpress.com/2016/12/07/reversed-z-in-opengl/)
-						const IVrManager::VrEye vrEye = (0 == eyeIndex) ? IVrManager::VrEye::RIGHT : IVrManager::VrEye::LEFT;
-						viewSpaceToClipSpaceMatrix = vrManager.getHmdViewSpaceToClipSpaceMatrix(vrEye, mNearZ, mFarZ);
-						viewSpaceToClipSpaceMatrixReversedZ = vrManager.getHmdViewSpaceToClipSpaceMatrix(vrEye, mFarZ, mNearZ);
-
-						// Calculate the world space to view space matrix (Aka "view matrix")
-						const glm::mat4 hmdEyeSpaceToHeadSpaceMatrix = vrManager.getHmdEyeSpaceToHeadSpaceMatrix(vrEye);
-						const glm::mat4 inverseHmdEyeSpaceToHeadSpaceMatrix = glm::inverse(hmdEyeSpaceToHeadSpaceMatrix);
-						mCameraRelativeWorldSpaceCameraPosition[eyeIndex] = glm::vec3((hmdEyeSpaceToHeadSpaceMatrix * vrManager.getHmdHeadSpaceToWorldSpaceMatrix())[3]);
-						mPassData->cameraRelativeWorldSpaceToViewSpaceMatrix[eyeIndex] = (inverseHmdEyeSpaceToHeadSpaceMatrix * glm::inverse(vrManager.getHmdHeadSpaceToWorldSpaceMatrix())) * cameraSceneItem->getCameraRelativeWorldSpaceToViewSpaceMatrix();
-						cameraSceneItem->getPreviousCameraRelativeWorldSpaceToViewSpaceMatrix(mPassData->previousCameraRelativeWorldSpaceToViewSpaceMatrix[eyeIndex]);
-						mPassData->previousCameraRelativeWorldSpaceToViewSpaceMatrix[eyeIndex] = (inverseHmdEyeSpaceToHeadSpaceMatrix * glm::inverse(vrManager.getPreviousHmdHeadSpaceToWorldSpaceMatrix())) * mPassData->previousCameraRelativeWorldSpaceToViewSpaceMatrix[eyeIndex];
-					}
-					else
-				#endif
 				{
 					// Standard rendering using a camera scene item
 					mCameraRelativeWorldSpaceCameraPosition[eyeIndex] = Math::VEC3_ZERO;
