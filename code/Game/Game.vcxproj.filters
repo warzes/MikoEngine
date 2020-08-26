@@ -20,9 +20,6 @@
     <ClCompile Include="FreeCameraController.cpp">
       <Filter>Example\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\3rdparty\DeviceInput\DeviceInput.cpp">
-      <Filter>Example\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="IndirectBuffer.cpp">
       <Filter>Example\2_IndirectBuffer</Filter>
     </ClCompile>

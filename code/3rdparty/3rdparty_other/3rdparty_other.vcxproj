@@ -262,6 +262,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="DeviceInput\DeviceInput.cpp" />
     <ClCompile Include="glfw.c" />
     <ClCompile Include="glslang\glslangUnityBuild1.cpp" />
     <ClCompile Include="glslang\glslangUnityBuild2.cpp" />

@@ -776,6 +776,7 @@
     <ClCompile Include="crunch\crunchUnityBuild1.cpp">
       <Filter>crunch</Filter>
     </ClCompile>
+    <ClCompile Include="DeviceInput\DeviceInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h" />

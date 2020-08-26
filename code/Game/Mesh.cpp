@@ -1,5 +1,5 @@
 #include "Mesh.h"
-#include "MikoEngine/Renderer/Core/GetInvalid.h"
+#include "MikoEngine/Core/GetInvalid.h"
 #include "MikoEngine/Renderer/IRenderer.h"
 #include "MikoEngine/Renderer/Core/File/PhysicsFSFileManager.h"
 #include "MikoEngine/Renderer/Core/RemoteryProfiler.h"
@@ -86,10 +86,10 @@ bool Mesh::init(int argc, const char * argv[])
 
 
 
-	mMeshResourceId = Renderer::GetInvalid<Renderer::MeshResourceId>();
-	m_argb_nxaTextureResourceId = Renderer::GetInvalid<Renderer::TextureResourceId>();
-	m_hr_rg_mb_nyaTextureResourceId = Renderer::GetInvalid<Renderer::TextureResourceId>();
-	mEmissiveTextureResourceId = Renderer::GetInvalid<Renderer::TextureResourceId>();
+	mMeshResourceId = GetInvalid<Renderer::MeshResourceId>();
+	m_argb_nxaTextureResourceId = GetInvalid<Renderer::TextureResourceId>();
+	m_hr_rg_mb_nyaTextureResourceId = GetInvalid<Renderer::TextureResourceId>();
+	mEmissiveTextureResourceId = GetInvalid<Renderer::TextureResourceId>();
 	mObjectSpaceToClipSpaceMatrixUniformHandle = NULL_HANDLE;
 	mObjectSpaceToViewSpaceMatrixUniformHandle = NULL_HANDLE;
 	mGlobalTimer = 0.0f;
