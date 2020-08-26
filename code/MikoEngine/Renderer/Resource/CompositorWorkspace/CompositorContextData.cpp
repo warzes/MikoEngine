@@ -2,7 +2,7 @@
 #include "Renderer/Resource/CompositorWorkspace/CompositorContextData.h"
 #include "Renderer/Resource/Scene/Item/Camera/CameraSceneItem.h"
 #include "Renderer/Resource/Scene/SceneNode.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Math.h"
 
 
 //[-------------------------------------------------------]

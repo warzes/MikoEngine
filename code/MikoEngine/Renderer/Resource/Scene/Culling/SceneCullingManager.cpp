@@ -7,8 +7,8 @@
 #include "Renderer/Resource/CompositorWorkspace/CompositorWorkspaceInstance.h"
 #include "Renderer/RenderQueue/RenderableManager.h"
 #include "Renderer/Core/Thread/ThreadPool.h"
-#include "Renderer/Core/Math/Math.h"
-#include "Renderer/Core/Math/Frustum.h"
+#include "Math/Math.h"
+#include "Math/Frustum.h"
 #include "Renderer/IRenderer.h"
 #include "Renderer/Context.h"
 #include <xsimd/xsimd.hpp>
@@ -60,7 +60,7 @@ namespace
 		//[-------------------------------------------------------]
 		[[nodiscard]] uint32_t alignToSimdLaneCount(uint32_t value)
 		{
-			return Renderer::Math::makeMultipleOf(value, xsimd::simd_type<float>::size);
+			return Math::makeMultipleOf(value, xsimd::simd_type<float>::size);
 		}
 
 		[[nodiscard]] uint32_t removeNotVisible(const Renderer::SceneItemSet& sceneItemSet, uint32_t count, const uint32_t* inputIndirection, uint32_t* outputIndirection)

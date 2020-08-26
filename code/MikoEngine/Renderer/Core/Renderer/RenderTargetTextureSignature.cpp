@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Renderer/Core/Renderer/RenderTargetTextureSignature.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Math.h"
 #include "RHI/TextureTypes.h"
 
 namespace Renderer

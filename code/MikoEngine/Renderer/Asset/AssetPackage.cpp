@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Renderer/Asset/AssetPackage.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Math.h"
 #include "Renderer/Context.h"
 
 namespace

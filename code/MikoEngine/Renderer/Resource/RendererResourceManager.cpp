@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Renderer/Resource/RendererResourceManager.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Math.h"
 
 
 //[-------------------------------------------------------]

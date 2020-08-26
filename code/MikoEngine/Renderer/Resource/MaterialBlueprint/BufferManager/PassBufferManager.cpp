@@ -4,7 +4,7 @@
 #include "Renderer/Resource/MaterialBlueprint/MaterialBlueprintResource.h"
 #include "Renderer/Resource/MaterialBlueprint/Listener/IMaterialBlueprintResourceListener.h"
 #include "Renderer/Resource/Material/MaterialResource.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Math.h"
 #include "Renderer/IRenderer.h"
 
 

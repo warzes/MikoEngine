@@ -9,7 +9,7 @@
 #include "Renderer/Resource/Scene/Item/Light/LightSceneItem.h"
 #include "Renderer/Resource/Scene/SceneNode.h"
 #include "Renderer/RenderQueue/RenderableManager.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Math.h"
 #include "Renderer/Core/IProfiler.h"
 #include "Renderer/IRenderer.h"
 

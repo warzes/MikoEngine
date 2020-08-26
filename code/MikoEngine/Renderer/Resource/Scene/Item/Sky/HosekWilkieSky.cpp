@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Renderer/Resource/Scene/Item/Sky/HosekWilkieSky.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Math.h"
 
 #include <algorithm>
 

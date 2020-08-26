@@ -178,6 +178,11 @@
     <ClInclude Include="Core\GetInvalid.h" />
     <ClInclude Include="Core\Logger.h" />
     <ClInclude Include="Core\MemoryPtr.h" />
+    <ClInclude Include="Math\EulerAngles.h" />
+    <ClInclude Include="Math\Frustum.h" />
+    <ClInclude Include="Math\Math.h" />
+    <ClInclude Include="Math\Plane.h" />
+    <ClInclude Include="Math\Transform.h" />
     <ClInclude Include="MikoHeader.h" />
     <ClInclude Include="Renderer\Asset\Asset.h" />
     <ClInclude Include="Renderer\Asset\AssetManager.h" />
@@ -196,11 +201,6 @@
     <ClInclude Include="Renderer\Core\IProfiler.h" />
     <ClInclude Include="Renderer\Core\Loader.h" />
     <ClInclude Include="Renderer\Core\Manager.h" />
-    <ClInclude Include="Renderer\Core\Math\EulerAngles.h" />
-    <ClInclude Include="Renderer\Core\Math\Frustum.h" />
-    <ClInclude Include="Renderer\Core\Math\Math.h" />
-    <ClInclude Include="Renderer\Core\Math\Plane.h" />
-    <ClInclude Include="Renderer\Core\Math\Transform.h" />
     <ClInclude Include="Renderer\Core\PackedElementManager.h" />
     <ClInclude Include="Renderer\Core\Platform\PlatformManager.h" />
     <ClInclude Include="Renderer\Core\RemoteryProfiler.h" />
@@ -467,16 +467,16 @@
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="Core\Logger.cpp" />
+    <ClCompile Include="Math\EulerAngles.cpp" />
+    <ClCompile Include="Math\Frustum.cpp" />
+    <ClCompile Include="Math\Math.cpp" />
+    <ClCompile Include="Math\Transform.cpp" />
     <ClCompile Include="Renderer\Asset\AssetManager.cpp" />
     <ClCompile Include="Renderer\Asset\AssetPackage.cpp" />
     <ClCompile Include="Renderer\Asset\Loader\AssetPackageLoader.cpp" />
     <ClCompile Include="Renderer\Context.cpp" />
     <ClCompile Include="Renderer\Core\File\FileSystemHelper.cpp" />
     <ClCompile Include="Renderer\Core\File\MemoryFile.cpp" />
-    <ClCompile Include="Renderer\Core\Math\EulerAngles.cpp" />
-    <ClCompile Include="Renderer\Core\Math\Frustum.cpp" />
-    <ClCompile Include="Renderer\Core\Math\Math.cpp" />
-    <ClCompile Include="Renderer\Core\Math\Transform.cpp" />
     <ClCompile Include="Renderer\Core\Platform\PlatformManager.cpp" />
     <ClCompile Include="Renderer\Core\Renderer\FramebufferManager.cpp" />
     <ClCompile Include="Renderer\Core\Renderer\FramebufferSignature.cpp" />

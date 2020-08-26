@@ -1,7 +1,7 @@
 #include "FreeCameraController.h"
 #include <MikoEngine/MikoHeader.h>
-#include <Renderer/Core/Math/Math.h>
-#include <Renderer/Core/Math/EulerAngles.h>
+#include <Math/Math.h>
+#include <Math/EulerAngles.h>
 #include <Renderer/Resource/Scene/SceneNode.h>
 #include <Renderer/Resource/Scene/Item/Camera/CameraSceneItem.h>
 
@@ -66,7 +66,7 @@ void FreeCameraController::onUpdate(float pastSecondsSinceLastFrame, bool inputE
 	if ( nullptr != sceneNode )
 	{
 		// Get the current local transform
-		const Renderer::Transform& transform = sceneNode->getTransform();
+		const Transform& transform = sceneNode->getTransform();
 		glm::dvec3 newPosition = transform.position;	// 64 bit world space position
 		glm::quat newRotation = transform.rotation;
 
@@ -102,10 +102,10 @@ void FreeCameraController::onUpdate(float pastSecondsSinceLastFrame, bool inputE
 				}
 
 				// Get the movement vector, 32 bit is sufficient here
-				glm::vec3 movementVector = Renderer::Math::VEC3_ZERO;
+				glm::vec3 movementVector = Math::VEC3_ZERO;
 				{
 					{ // Move forward/backward
-						const glm::vec3 forwardVector = transform.rotation * Renderer::Math::VEC3_FORWARD;
+						const glm::vec3 forwardVector = transform.rotation * Math::VEC3_FORWARD;
 						if ( mVirtualStandardController->Forward.isPressed() )
 						{
 							movementVector += forwardVector * movementSpeed;
@@ -122,7 +122,7 @@ void FreeCameraController::onUpdate(float pastSecondsSinceLastFrame, bool inputE
 					}
 
 					{ // Strafe left/right
-						const glm::vec3 rightVector = transform.rotation * Renderer::Math::VEC3_RIGHT;
+						const glm::vec3 rightVector = transform.rotation * Math::VEC3_RIGHT;
 						if ( mVirtualStandardController->StrafeLeft.isPressed() )
 						{
 							movementVector -= rightVector * movementSpeed;
@@ -135,7 +135,7 @@ void FreeCameraController::onUpdate(float pastSecondsSinceLastFrame, bool inputE
 					}
 
 					{ // Strafe up/down
-						const glm::vec3 upVector = transform.rotation * Renderer::Math::VEC3_UP;
+						const glm::vec3 upVector = transform.rotation * Math::VEC3_UP;
 						if ( mVirtualStandardController->Up.isPressed() )
 						{
 							movementVector += upVector * movementSpeed;
@@ -186,7 +186,7 @@ void FreeCameraController::onUpdate(float pastSecondsSinceLastFrame, bool inputE
 					// -> See discussion at https://github.com/g-truc/glm/issues/569
 					float yaw = 0.0f, pitch = 0.0f;
 					{
-						const glm::vec3 eulerAngles = Renderer::EulerAngles::matrixToEuler(glm::mat3_cast(transform.rotation));
+						const glm::vec3 eulerAngles = EulerAngles::matrixToEuler(glm::mat3_cast(transform.rotation));
 						yaw = glm::degrees(eulerAngles.x);
 						pitch = glm::degrees(eulerAngles.y);
 					}
@@ -198,7 +198,7 @@ void FreeCameraController::onUpdate(float pastSecondsSinceLastFrame, bool inputE
 						yaw += rotateX * rotationSpeedX;
 
 						// Limit the yaw (too huge values may cause problems, so, bring them into a well known interval)
-						yaw = Renderer::Math::wrapToInterval(yaw, 0.0f, 360.0f);
+						yaw = Math::wrapToInterval(yaw, 0.0f, 360.0f);
 					}
 					if ( 0.0f != rotateY )
 					{

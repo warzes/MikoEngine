@@ -1,7 +1,7 @@
 #pragma once
 
 #include <MikoEngine/MikoHeader.h>
-#include <Renderer/Core/Math/Transform.h>
+#include <Math/Transform.h>
 #include <Renderer/DebugGui/DebugGuiHelper.h>
 #include <Renderer/Resource/IResourceListener.h>
 #include "MikoEngine/Renderer/Core/Time/Stopwatch.h"
@@ -176,7 +176,7 @@ private:
 	bool  mShowSkeleton;
 	// Scene hot-reloading memory
 	bool				mHasCameraTransformBackup;
-	Renderer::Transform mCameraTransformBackup;
+	Transform mCameraTransformBackup;
 	// Ini settings indices
 	std::vector<char> mIniFileContent;	// Defined here to avoid reallocations
 	ini_t*			  mIni;

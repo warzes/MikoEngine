@@ -7,7 +7,7 @@
 #include "Renderer/Resource/ShaderBlueprint/ShaderBlueprintResourceManager.h"
 #include "Renderer/Resource/VertexAttributes/VertexAttributesResourceManager.h"
 #include "Renderer/Resource/VertexAttributes/VertexAttributesResource.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Math.h"
 #include "Renderer/IRenderer.h"
 
 

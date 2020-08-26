@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Renderer/RenderQueue/RenderableManager.h"
-#include "Renderer/Core/Math/Transform.h"
+#include "Math/Transform.h"
 #include "Core/GetInvalid.h"
 
 
@@ -16,7 +16,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
-		const Renderer::Transform IdentityTransform;
+		const Transform IdentityTransform;
 
 
 //[-------------------------------------------------------]

@@ -77,18 +77,6 @@
     <ClCompile Include="Renderer\Core\Platform\PlatformManager.cpp">
       <Filter>5_Renderer\Core\Platform</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\Core\Math\EulerAngles.cpp">
-      <Filter>5_Renderer\Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\Core\Math\Frustum.cpp">
-      <Filter>5_Renderer\Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\Core\Math\Math.cpp">
-      <Filter>5_Renderer\Core\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\Core\Math\Transform.cpp">
-      <Filter>5_Renderer\Core\Math</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer\Core\File\FileSystemHelper.cpp">
       <Filter>5_Renderer\Core\File</Filter>
     </ClCompile>
@@ -415,6 +403,18 @@
     </ClCompile>
     <ClCompile Include="RHI\OpenGLRhi.cpp">
       <Filter>4_RHI\old</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\EulerAngles.cpp">
+      <Filter>3_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Frustum.cpp">
+      <Filter>3_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Math.cpp">
+      <Filter>3_Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Transform.cpp">
+      <Filter>3_Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -821,21 +821,6 @@
     </ClInclude>
     <ClInclude Include="Renderer\Core\Platform\PlatformManager.h">
       <Filter>5_Renderer\Core\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Core\Math\EulerAngles.h">
-      <Filter>5_Renderer\Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Core\Math\Frustum.h">
-      <Filter>5_Renderer\Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Core\Math\Math.h">
-      <Filter>5_Renderer\Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Core\Math\Plane.h">
-      <Filter>5_Renderer\Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Core\Math\Transform.h">
-      <Filter>5_Renderer\Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\File\AndroidFileManager.h">
       <Filter>5_Renderer\Core\File</Filter>
@@ -1320,6 +1305,21 @@
     <ClInclude Include="Utility\StringId.h">
       <Filter>2_Utility</Filter>
     </ClInclude>
+    <ClInclude Include="Math\EulerAngles.h">
+      <Filter>3_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Frustum.h">
+      <Filter>3_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Math.h">
+      <Filter>3_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Plane.h">
+      <Filter>3_Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Transform.h">
+      <Filter>3_Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
@@ -1372,9 +1372,6 @@
     </Filter>
     <Filter Include="5_Renderer\Asset\Loader">
       <UniqueIdentifier>{812da4d2-ba56-486e-8e5e-c1d0e73b99bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Core\Math">
-      <UniqueIdentifier>{b45d6a56-8faf-4b79-9010-7078931a52dd}</UniqueIdentifier>
     </Filter>
     <Filter Include="5_Renderer\Core\File">
       <UniqueIdentifier>{9203352e-9de2-40d7-8022-84f33c4f71b7}</UniqueIdentifier>

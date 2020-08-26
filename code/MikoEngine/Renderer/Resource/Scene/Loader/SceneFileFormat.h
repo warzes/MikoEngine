@@ -5,7 +5,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "Utility/StringId.h"
-#include "Renderer/Core/Math/Transform.h"
+#include "Math/Transform.h"
 #include "Renderer/Resource/Scene/Item/Light/LightSceneItem.h"
 #include "Core/GetInvalid.h"
 

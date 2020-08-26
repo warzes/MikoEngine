@@ -9,7 +9,7 @@
 #include "Renderer/Resource/MaterialBlueprint/MaterialBlueprintResource.h"
 #include "Renderer/Asset/AssetManager.h"
 #include "Renderer/Core/File/MemoryFile.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Math.h"
 #include "Renderer/IRenderer.h"
 
 

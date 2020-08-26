@@ -6,7 +6,7 @@
 #include "Renderer/Resource/Scene/SceneNode.h"
 #include "Renderer/Resource/Scene/SceneResource.h"
 #include "Renderer/Resource/Scene/Item/Light/LightSceneItem.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Math.h"
 #include "Renderer/IRenderer.h"
 
 #include <algorithm>

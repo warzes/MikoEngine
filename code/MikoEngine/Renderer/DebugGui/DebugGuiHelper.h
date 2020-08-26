@@ -10,9 +10,10 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+class Transform;
 namespace Renderer
 {
-	class Transform;
+	
 	class CameraSceneItem;
 	class SkeletonMeshSceneItem;
 	class CompositorWorkspaceInstance;

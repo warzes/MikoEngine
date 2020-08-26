@@ -1,29 +1,11 @@
 #pragma once
 
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-
 #include "Renderer/Resource/Scene/Item/ISceneItem.h"
-
-// Disable warnings in external headers, we can't fix them
-SE_PRAGMA_WARNING_PUSH
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4127)	// warning C4127: conditional expression is constant
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4201)	// warning C4201: nonstandard extension used: nameless struct/union
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4464)	// warning C4464: relative include path contains '..'
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4324)	// warning C4324: '<x>': structure was padded due to alignment specifier
-	#include <glm/glm.hpp>
-SE_PRAGMA_WARNING_POP
-
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace Renderer
-{
-	class Transform;
-}
+class Transform;
 
 
 //[-------------------------------------------------------]

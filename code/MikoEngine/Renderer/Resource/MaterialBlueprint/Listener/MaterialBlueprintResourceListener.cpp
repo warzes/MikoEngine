@@ -11,8 +11,8 @@
 #include "Renderer/Resource/CompositorWorkspace/CompositorContextData.h"
 #include "Renderer/Resource/Texture/TextureResourceManager.h"
 #include "Renderer/Core/Time/TimeManager.h"
-#include "Renderer/Core/Math/Transform.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Transform.h"
+#include "Math/Math.h"
 #include "Renderer/IRenderer.h"
 
 #ifdef RENDERER_IMGUI

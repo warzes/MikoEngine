@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Renderer/Core/Renderer/RenderPassManager.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Math.h"
 
 namespace Renderer
 {

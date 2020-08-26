@@ -14,7 +14,7 @@
 #include "Renderer/Asset/AssetManager.h"
 #include "Renderer/IRenderer.h"
 #include "Renderer/Context.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Math.h"
 
 
 // Disable warnings

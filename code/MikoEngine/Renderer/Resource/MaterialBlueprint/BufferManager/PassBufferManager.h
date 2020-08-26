@@ -5,34 +5,17 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "Renderer/Core/Manager.h"
-
 #include "Rhi/Rhi.h"
 
-// Disable warnings in external headers, we can't fix them
-SE_PRAGMA_WARNING_PUSH
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4127)	// warning C4127: conditional expression is constant
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4201)	// warning C4201: nonstandard extension used: nameless struct/union
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4464)	// warning C4464: relative include path contains '..'
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4324)	// warning C4324: '<x>': structure was padded due to alignment specifier
-	#include <glm/glm.hpp>
-	#include <glm/gtx/quaternion.hpp>
-SE_PRAGMA_WARNING_POP
-
-// Disable warnings in external headers, we can't fix them
-SE_PRAGMA_WARNING_PUSH
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4365)	// warning C4365: 'argument': conversion from 'long' to 'unsigned int', signed/unsigned mismatch
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4571)	// warning C4571: Informational: catch(...) semantics changed since Visual C++ 7.1; structured exceptions (SEH) are no longer caught
-	SE_PRAGMA_WARNING_DISABLE_MSVC(4668)	// warning C4668: '_M_HYBRID_X86_ARM64' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
-	#include <vector>
-SE_PRAGMA_WARNING_POP
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+class Transform;
 namespace Renderer
 {
-	class Transform;
+
 	class IBufferManager;
 	class IRenderer;
 	class MaterialResource;

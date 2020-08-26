@@ -1,5 +1,5 @@
 #include "BatchDrawInstanced.h"
-#include <Renderer/Core/Math/EulerAngles.h>
+#include <Math/EulerAngles.h>
 
 //[-------------------------------------------------------]
 //[ Public methods                                        ]
@@ -46,7 +46,7 @@ void BatchDrawInstanced::initialize(Rhi::IBufferManager& bufferManager, Rhi::IRo
 			}
 
 			{ // Rotation
-				rotation = Renderer::EulerAngles::eulerToQuaternion((rand() % 65536) / 65536.0f, (rand() % 65536) / 65536.0f * 2.0f, (rand() % 65536) / 65536.0f * 3.0f);
+				rotation = EulerAngles::eulerToQuaternion((rand() % 65536) / 65536.0f, (rand() % 65536) / 65536.0f * 2.0f, (rand() % 65536) / 65536.0f * 3.0f);
 
 				// r=x
 				*dataCurrent = rotation.x;

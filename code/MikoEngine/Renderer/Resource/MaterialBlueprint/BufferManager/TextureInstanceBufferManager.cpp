@@ -6,7 +6,7 @@
 #include "Renderer/Resource/Skeleton/SkeletonResourceManager.h"
 #include "Renderer/Resource/Skeleton/SkeletonResource.h"
 #include "Renderer/RenderQueue/RenderableManager.h"
-#include "Renderer/Core/Math/Transform.h"
+#include "Math/Transform.h"
 #include "Renderer/IRenderer.h"
 
 // Disable warnings in external headers, we can't fix them

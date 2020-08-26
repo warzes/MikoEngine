@@ -15,7 +15,7 @@
 #endif
 
 #include <Renderer/IRenderer.h>
-#include <Renderer/Core/Math/EulerAngles.h>
+#include <Math/EulerAngles.h>
 #include <Renderer/Core/Time/TimeManager.h>
 #ifdef RENDERER_GRAPHICS_DEBUGGER
 #include <Renderer/Core/RenderDocGraphicsDebugger.h>
@@ -318,9 +318,9 @@ void Scene::update(double delta)
 	// Update the scene node rotation
 	if ( nullptr != mSceneNode && mRotationSpeed > 0.0f )
 	{
-		glm::vec3 eulerAngles = Renderer::EulerAngles::matrixToEuler(glm::mat3_cast(mSceneNode->getGlobalTransform().rotation));
+		glm::vec3 eulerAngles = EulerAngles::matrixToEuler(glm::mat3_cast(mSceneNode->getGlobalTransform().rotation));
 		eulerAngles.x += renderer->getTimeManager().getPastSecondsSinceLastFrame() * mRotationSpeed;
-		mSceneNode->setRotation(Renderer::EulerAngles::eulerToQuaternion(eulerAngles));
+		mSceneNode->setRotation(EulerAngles::eulerToQuaternion(eulerAngles));
 	}
 
 	// Update controller
@@ -559,8 +559,8 @@ void Scene::onLoadingStateChange(const Renderer::IResource& resource)
 						const char* propertyValue = ini_property_value(mIni, INI_GLOBAL_SECTION, mCameraPositionRotationIniProperty);
 						if ( nullptr != propertyValue )
 						{
-							glm::dvec3 position = Renderer::Math::DVEC3_ZERO;
-							glm::quat rotation = Renderer::Math::QUAT_IDENTITY;
+							glm::dvec3 position = Math::DVEC3_ZERO;
+							glm::quat rotation = Math::QUAT_IDENTITY;
 							sscanf(propertyValue, "%lf %lf %lf %f %f %f %f", &position.x, &position.y, &position.z, &rotation.w, &rotation.x, &rotation.y, &rotation.z);
 							mCameraSceneItem->getParentSceneNode()->setPositionRotation(position, rotation);
 						}
@@ -1071,7 +1071,7 @@ void Scene::createDebugGui([[maybe_unused]] Rhi::IRenderTarget& mainRenderTarget
 					{
 						// Draw gizmo
 						ImGui::Separator();
-						Renderer::Transform transform = mSceneNode->getGlobalTransform();
+						Transform transform = mSceneNode->getGlobalTransform();
 						Renderer::DebugGuiHelper::drawGizmo(*mCameraSceneItem, mGizmoSettings, transform);
 						mSceneNode->setTransform(transform);
 

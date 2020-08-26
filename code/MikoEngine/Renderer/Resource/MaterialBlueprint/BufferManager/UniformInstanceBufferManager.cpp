@@ -4,7 +4,7 @@
 #include "Renderer/Resource/MaterialBlueprint/MaterialBlueprintResourceManager.h"
 #include "Renderer/Resource/Material/MaterialTechnique.h"
 #include "Renderer/RenderQueue/RenderableManager.h"
-#include "Renderer/Core/Math/Transform.h"
+#include "Math/Transform.h"
 #include "Renderer/IRenderer.h"
 
 #include <algorithm>

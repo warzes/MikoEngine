@@ -17,7 +17,7 @@
 #include "Renderer/Resource/MaterialBlueprint/BufferManager/UniformInstanceBufferManager.h"
 #include "Renderer/Resource/MaterialBlueprint/BufferManager/TextureInstanceBufferManager.h"
 #include "Renderer/Core/IProfiler.h"
-#include "Renderer/Core/Math/Transform.h"
+#include "Math/Transform.h"
 
 //[-------------------------------------------------------]
 //[ Anonymous detail namespace                            ]

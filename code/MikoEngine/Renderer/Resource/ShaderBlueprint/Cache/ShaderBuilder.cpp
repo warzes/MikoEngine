@@ -11,7 +11,7 @@
 #include "Renderer/Resource/ShaderPiece/ShaderPieceResourceManager.h"
 #include "Renderer/Resource/ShaderPiece/ShaderPieceResource.h"
 #include "Renderer/Asset/AssetManager.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Math.h"
 #include "Renderer/IRenderer.h"
 
 

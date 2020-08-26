@@ -2,7 +2,7 @@
 #include "Renderer/Resource/Scene/Item/Camera/CameraSceneItem.h"
 #include "Renderer/Resource/Scene/Loader/SceneFileFormat.h"
 #include "Renderer/Resource/Scene/SceneNode.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Math.h"
 
 // Disable warnings in external headers, we can't fix them
 SE_PRAGMA_WARNING_PUSH

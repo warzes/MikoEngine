@@ -2,7 +2,7 @@
 #include "Renderer/Resource/SkeletonAnimation/SkeletonAnimationEvaluator.h"
 #include "Renderer/Resource/SkeletonAnimation/SkeletonAnimationResourceManager.h"
 #include "Renderer/Resource/SkeletonAnimation/SkeletonAnimationResource.h"
-#include "Renderer/Core/Math/Math.h"
+#include "Math/Math.h"
 #include "RHI/DefaultAllocator.h"
 
 // Disable warnings in external headers, we can't fix them
