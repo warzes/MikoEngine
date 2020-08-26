@@ -1,9 +1,5 @@
 #pragma once
 
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "Renderer/Core/Manager.h"
 #include "Renderer/Resource/ShaderBlueprint/GraphicsShaderType.h"
 
 
@@ -49,7 +45,7 @@ namespace Renderer
 	*  @see
 	*    - See "Renderer::GraphicsPipelineStateCacheManager" and "Renderer::ComputePipelineStateCacheManager" for additional information
 	*/
-	class ShaderCacheManager final : private Manager
+	class ShaderCacheManager final
 	{
 
 

@@ -1,10 +1,5 @@
 #pragma once
 
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "Renderer/Core/Manager.h"
 #include "Renderer/Resource/IResource.h"
 
 
@@ -37,7 +32,7 @@ namespace Renderer
 	*  @brief
 	*    Public abstract resource manager interface
 	*/
-	class IResourceManager : private Manager
+	class IResourceManager
 	{
 
 

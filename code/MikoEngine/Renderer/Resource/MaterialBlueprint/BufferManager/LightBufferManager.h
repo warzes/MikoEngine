@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Renderer/Core/Manager.h"
 #include "Utility/StringId.h"
 #include "RHI/Rhi.h"
 
@@ -34,7 +33,7 @@ namespace Renderer
 	*  @brief
 	*    Light buffer manager
 	*/
-	class LightBufferManager final : private Manager
+	class LightBufferManager final
 	{
 
 

@@ -1,10 +1,5 @@
 #pragma once
 
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "Renderer/Core/Manager.h"
 #include "Renderer/Resource/MaterialBlueprint/MaterialBlueprintResource.h"
 
 
@@ -39,7 +34,7 @@ namespace Renderer
 	*     (including this comment) to avoid making the implementations too complex due to over-engineering. This is performance critical code and the topic is complex
 	*     enough as it is. When changing one implementation don't forget to update the other one as well.
 	*/
-	class UniformInstanceBufferManager final : private Manager
+	class UniformInstanceBufferManager final
 	{
 
 

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Renderer/Core/Manager.h"
 #include "Utility/StringId.h"
 #include "Renderer/Core/Renderer/RenderTargetTextureSignature.h"
 
@@ -26,7 +25,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	//[ Classes                                               ]
 	//[-------------------------------------------------------]
-	class RenderTargetTextureManager final : private Manager
+	class RenderTargetTextureManager final 
 	{
 
 

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Renderer/Core/Manager.h"
 #include "Utility/StringId.h"
 #include "RHI/Rhi.h"
 
@@ -38,7 +37,7 @@ namespace Renderer
 	*    - Using fixed build in RHI configuration, including shaders
 	*    - Using a material resource blueprint set by the caller
 	*/
-	class DebugGuiManager : private Manager
+	class DebugGuiManager
 	{
 
 

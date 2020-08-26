@@ -1,10 +1,5 @@
 #pragma once
 
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "Renderer/Core/Manager.h"
 #include "Renderer/RenderQueue/Renderable.h"
 
 
@@ -31,7 +26,7 @@ namespace Renderer
 	*  @note
 	*    - Example: Abstract representation of an mesh scene item containing sub-meshes
 	*/
-	class RenderableManager final : private Manager
+	class RenderableManager final
 	{
 
 

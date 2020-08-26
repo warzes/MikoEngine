@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Renderer/Core/Manager.h"
 #include "Renderer/Core/Renderer/FramebufferSignature.h"
 #include "RHI/Rhi.h"
 
@@ -30,7 +29,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	//[ Classes                                               ]
 	//[-------------------------------------------------------]
-	class FramebufferManager final : private Manager
+	class FramebufferManager final
 	{
 
 

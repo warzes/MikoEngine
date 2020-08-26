@@ -1,16 +1,7 @@
 #pragma once
 
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "Renderer/Core/Manager.h"
 #include "Renderer/Resource/CompositorWorkspace/CompositorWorkspaceInstance.h"
 
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
 namespace Rhi
 {
 	class IRenderTarget;
@@ -22,17 +13,8 @@ namespace Renderer
 	class CompositorContextData;
 }
 
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 namespace Renderer
 {
-
-
-	//[-------------------------------------------------------]
-	//[ Classes                                               ]
-	//[-------------------------------------------------------]
 	/**
 	*  @brief
 	*    Scene culling manager
@@ -40,13 +22,8 @@ namespace Renderer
 	*  @note
 	*    - The implementation is basing on "The Implementation of Frustum Culling in Stingray" - http://bitsquid.blogspot.de/2016/10/the-implementation-of-frustum-culling.html
 	*/
-	class SceneCullingManager final : public Manager
+	class SceneCullingManager final
 	{
-
-
-	//[-------------------------------------------------------]
-	//[ Public definitions                                    ]
-	//[-------------------------------------------------------]
 	public:
 		typedef std::vector<ISceneItem*> SceneItems;	// TODO(co) No raw-pointers (but no smart pointers either, use handles)
 

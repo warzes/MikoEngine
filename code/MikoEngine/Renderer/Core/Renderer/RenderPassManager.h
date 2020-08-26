@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Renderer/Core/Manager.h"
 #include "Rhi/Rhi.h"
 
 
@@ -14,7 +13,7 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	//[ Classes                                               ]
 	//[-------------------------------------------------------]
-	class RenderPassManager final : private Manager
+	class RenderPassManager final
 	{
 
 

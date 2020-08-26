@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Renderer/Core/Manager.h"
 #include "Renderer/Asset/Asset.h"
 
 namespace Renderer
@@ -15,7 +14,7 @@ namespace Renderer
 	typedef const char* VirtualFilename;		// UTF-8 virtual filename, the virtual filename scheme is "<mount point = project name>/<asset directory>/<asset name>.<file extension>" (example "Example/Mesh/Monster/Squirrel.mesh"), never ever a null pointer and always finished by a terminating zero
 	typedef const char* AbsoluteDirectoryName;	// UTF-8 absolute directory name (example: "c:/MyProject"), without "/" at the end, never ever a null pointer and always finished by a terminating zero
 
-	class AssetManager final : private Manager
+	class AssetManager final
 	{
 		friend class RendererImpl;
 	public:

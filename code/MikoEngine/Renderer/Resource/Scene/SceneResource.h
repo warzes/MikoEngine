@@ -5,7 +5,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "Renderer/Resource/IResource.h"
-#include "Renderer/Core/Manager.h"
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]

@@ -1,10 +1,5 @@
 #pragma once
 
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "Renderer/Core/Manager.h"
 #include "Rhi/Rhi.h"
 
 
@@ -39,7 +34,7 @@ namespace Renderer
 	*  @brief
 	*    Pass buffer manager
 	*/
-	class PassBufferManager final : private Manager
+	class PassBufferManager final
 	{
 
 

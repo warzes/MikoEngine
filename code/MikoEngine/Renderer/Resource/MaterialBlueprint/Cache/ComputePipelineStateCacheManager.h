@@ -1,11 +1,6 @@
 #pragma once
 
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
 #include "Renderer/Resource/MaterialBlueprint/Cache/ComputePipelineStateSignature.h"
-#include "Renderer/Core/Manager.h"
 #include "Renderer/Core/File/IFile.h"
 
 //[-------------------------------------------------------]
@@ -73,7 +68,7 @@ namespace Renderer
 	*    - TODO(co) For Vulkan, DirectX 12 and Apple Metal the pipeline state object instance will be managed in here
 	*    - TODO(co) Direct3D 12: Pipeline state object: Add support for "GetCachedBlob" (super efficient material cache), see https://github.com/Microsoft/DirectX-Graphics-Samples/blob/master/Samples/D3D12PipelineStateCache/src/PSOLibrary.cpp
 	*/
-	class ComputePipelineStateCacheManager final : private Manager
+	class ComputePipelineStateCacheManager final
 	{
 
 

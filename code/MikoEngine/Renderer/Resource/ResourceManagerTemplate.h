@@ -43,7 +43,7 @@ namespace Renderer
 	*    Internal resource manager template; not public used to keep template instantiation overhead under control
 	*/
 	template <class TYPE, class LOADER_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS>
-	class ResourceManagerTemplate : private Manager
+	class ResourceManagerTemplate
 	{
 
 

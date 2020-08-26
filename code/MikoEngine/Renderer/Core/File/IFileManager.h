@@ -1,23 +1,12 @@
 #pragma once
 
-#include "Renderer/Core/Manager.h"
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
 namespace Renderer
 {
 	class IFile;
 }
 
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 namespace Renderer
 {
-
-
 	//[-------------------------------------------------------]
 	//[ Global definitions                                    ]
 	//[-------------------------------------------------------]
@@ -52,13 +41,8 @@ namespace Renderer
 	*  @note
 	*    - Also known as virtual file system (VFS)
 	*/
-	class IFileManager : public Manager
+	class IFileManager
 	{
-
-
-	//[-------------------------------------------------------]
-	//[ Public definitions                                    ]
-	//[-------------------------------------------------------]
 	public:
 		enum class FileMode
 		{
