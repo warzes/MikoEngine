@@ -1,23 +1,9 @@
 #pragma once
 
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "Renderer/Core/Manager.h"
 #include "Core/GetInvalid.h"
 
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 namespace Renderer
 {
-
-
-	//[-------------------------------------------------------]
-	//[ Classes                                               ]
-	//[-------------------------------------------------------]
 	/**
 	*  @brief
 	*    Packed element manager template
@@ -26,13 +12,8 @@ namespace Renderer
 	*    - Basing on "Managing Decoupling Part 4 -- The ID Lookup Table" https://github.com/niklasfrykholm/blog/blob/master/2011/managing-decoupling-4.md by Niklas Frykholm ( http://www.frykholm.se/ )
 	*/
 	template <class ELEMENT_TYPE, typename ID_TYPE, uint32_t MAXIMUM_NUMBER_OF_ELEMENTS>
-	class PackedElementManager final : private Manager
+	class PackedElementManager final
 	{
-
-
-	//[-------------------------------------------------------]
-	//[ Public methods                                        ]
-	//[-------------------------------------------------------]
 	public:
 		inline PackedElementManager() :
 			mNumberOfElements(0),
@@ -164,12 +145,5 @@ namespace Renderer
 		Index				 mIndices[MAXIMUM_NUMBER_OF_ELEMENTS];
 		uint16_t			 mFreeListEnqueue;
 		uint16_t			 mFreeListDequeue;
-
-
 	};
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 } // Renderer

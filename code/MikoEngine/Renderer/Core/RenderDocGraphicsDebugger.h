@@ -2,70 +2,11 @@
 #ifndef RENDERER_GRAPHICS_DEBUGGER
 	#error "Do only include this header if the RENDERER_GRAPHICS_DEBUGGER preprocessor definition is set"
 #endif
-
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
 #include "Renderer/Core/IGraphicsDebugger.h"
-
 #include <RenderDoc/renderdoc_app.h>
 
-#ifdef _WIN32
-	// Set Windows version to Windows Vista (0x0600), we don't support Windows XP (0x0501)
-	#ifdef WINVER
-		#undef WINVER
-	#endif
-	#define WINVER			0x0600
-	#ifdef _WIN32_WINNT
-		#undef _WIN32_WINNT
-	#endif
-	#define _WIN32_WINNT	0x0600
-
-	// Exclude some stuff from "windows.h" to speed up compilation a bit
-	#define WIN32_LEAN_AND_MEAN
-	#define NOGDICAPMASKS
-	#define NOMENUS
-	#define NOICONS
-	#define NOKEYSTATES
-	#define NOSYSCOMMANDS
-	#define NORASTEROPS
-	#define OEMRESOURCE
-	#define NOATOM
-	#define NOMEMMGR
-	#define NOMETAFILE
-	#define NOOPENFILE
-	#define NOSCROLL
-	#define NOSERVICE
-	#define NOSOUND
-	#define NOWH
-	#define NOCOMM
-	#define NOKANJI
-	#define NOHELP
-	#define NOPROFILER
-	#define NODEFERWINDOWPOS
-	#define NOMCX
-	#define NOCRYPT
-	#include <Windows.h>
-
-	// Get rid of some nasty OS macros
-	#undef min
-	#undef max
-#elif defined LINUX
-	#include <dlfcn.h>
-#else
-	#error "Unsupported platform"
-#endif
-
-#include <stdio.h>
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 namespace Renderer
 {
-
 
 	//[-------------------------------------------------------]
 	//[ Classes                                               ]

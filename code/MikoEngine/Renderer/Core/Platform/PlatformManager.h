@@ -1,40 +1,15 @@
 #pragma once
 
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-
-#include "Renderer/Core/Manager.h"
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 namespace Renderer
 {
-
-
-	//[-------------------------------------------------------]
-	//[ Global definitions                                    ]
-	//[-------------------------------------------------------]
 	typedef const char* AbsoluteDirectoryName;	// UTF-8 absolute directory name (example: "c:/MyProject"), without "/" at the end, never ever a null pointer and always finished by a terminating zero
 
-
-	//[-------------------------------------------------------]
-	//[ Classes                                               ]
-	//[-------------------------------------------------------]
 	/**
 	*  @brief
 	*    Platform specific functionality
 	*/
-	class PlatformManager final : private Manager
+	class PlatformManager final
 	{
-
-
-	//[-------------------------------------------------------]
-	//[ Public static methods                                 ]
-	//[-------------------------------------------------------]
 	public:
 		/**
 		*  @brief
@@ -74,24 +49,11 @@ namespace Renderer
 		*    "true" if the URL has been opened successfully, else "false"
 		*/
 		static bool openUrlExternal(const char* url);
-
-
-	//[-------------------------------------------------------]
-	//[ Private methods                                       ]
-	//[-------------------------------------------------------]
 	private:
 		explicit PlatformManager(const PlatformManager&) = delete;
 		PlatformManager& operator=(const PlatformManager&) = delete;
-
-
 	};
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
 } // Renderer
-
 
 //[-------------------------------------------------------]
 //[ Debug                                                 ]
