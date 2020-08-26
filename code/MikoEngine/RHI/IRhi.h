@@ -4,12 +4,12 @@ namespace Rhi
 {
 	enum class NameId : uint32_t
 	{
-		VULKAN = 1646768219,	// Vulkan RHI implementation, same value as renderer STRING_ID("Vulkan")
-		DIRECT3D12 = 2152506057,// Direct3D 12 RHI implementation, same value as renderer STRING_ID("Direct3D12")
-		DIRECT3D11 = 2102173200,// Direct3D 11 RHI implementation, same value as renderer STRING_ID("Direct3D11")
-		OPENGL = 1149085807,	// OpenGL RHI implementation, same value as renderer STRING_ID("OpenGL")
-		OPENGLES3 = 4137012044,	// OpenGL ES 3 RHI implementation, same value as renderer STRING_ID("OpenGLES3")
-		NULL_DUMMY = 3816175889	// Null RHI implementation, same value as renderer STRING_ID("Null")
+		VULKAN = 1646768219,	// Vulkan RHI implementation, same value as renderer SE_STRING_ID("Vulkan")
+		DIRECT3D12 = 2152506057,// Direct3D 12 RHI implementation, same value as renderer SE_STRING_ID("Direct3D12")
+		DIRECT3D11 = 2102173200,// Direct3D 11 RHI implementation, same value as renderer SE_STRING_ID("Direct3D11")
+		OPENGL = 1149085807,	// OpenGL RHI implementation, same value as renderer SE_STRING_ID("OpenGL")
+		OPENGLES3 = 4137012044,	// OpenGL ES 3 RHI implementation, same value as renderer SE_STRING_ID("OpenGLES3")
+		NULL_DUMMY = 3816175889	// Null RHI implementation, same value as renderer SE_STRING_ID("Null")
 	};
 
 	class IRhi : public RefCount<IRhi>

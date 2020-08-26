@@ -62,7 +62,7 @@ namespace
 		//[-------------------------------------------------------]
 		namespace PipelineStateCache
 		{
-			static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("PipelineStateCache");
+			static constexpr uint32_t FORMAT_TYPE	 = SE_STRING_ID("PipelineStateCache");
 			static constexpr uint32_t FORMAT_VERSION = 1;
 		}
 

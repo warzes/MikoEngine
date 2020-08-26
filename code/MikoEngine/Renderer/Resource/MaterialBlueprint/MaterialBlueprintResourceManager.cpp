@@ -290,19 +290,19 @@ namespace Renderer
 	void MaterialBlueprintResourceManager::update()
 	{
 		const TimeManager& timeManager = mRenderer.getTimeManager();
-		mGlobalMaterialProperties.setPropertyById(STRING_ID("GlobalPastSecondsSinceLastFrame"), MaterialPropertyValue::fromFloat(timeManager.getPastSecondsSinceLastFrame()), MaterialProperty::Usage::SHADER_UNIFORM);
+		mGlobalMaterialProperties.setPropertyById(SE_STRING_ID("GlobalPastSecondsSinceLastFrame"), MaterialPropertyValue::fromFloat(timeManager.getPastSecondsSinceLastFrame()), MaterialProperty::Usage::SHADER_UNIFORM);
 		{ // Set previous global time in seconds
 			// TODO: хрень:
-			const MaterialProperty* materialProperty = mGlobalMaterialProperties.getPropertyById(STRING_ID("GlobalTimeInSeconds"));
+			const MaterialProperty* materialProperty = mGlobalMaterialProperties.getPropertyById(SE_STRING_ID("GlobalTimeInSeconds"));
 			const MaterialProperty* materialProperty2 = (const MaterialProperty*)&MaterialPropertyValue::fromFloat(timeManager.getGlobalTimeInSeconds());
 			
 			
 			mGlobalMaterialProperties.setPropertyById(
-				STRING_ID("PreviousGlobalTimeInSeconds"), 
+				SE_STRING_ID("PreviousGlobalTimeInSeconds"), 
 				(nullptr != materialProperty) ? *materialProperty : *materialProperty2,
 				MaterialProperty::Usage::SHADER_UNIFORM);
 		}
-		mGlobalMaterialProperties.setPropertyById(STRING_ID("GlobalTimeInSeconds"), MaterialPropertyValue::fromFloat(timeManager.getGlobalTimeInSeconds()), MaterialProperty::Usage::SHADER_UNIFORM);
+		mGlobalMaterialProperties.setPropertyById(SE_STRING_ID("GlobalTimeInSeconds"), MaterialPropertyValue::fromFloat(timeManager.getGlobalTimeInSeconds()), MaterialProperty::Usage::SHADER_UNIFORM);
 	}
 
 
@@ -347,7 +347,7 @@ namespace Renderer
 
 		// Update at once to have all managed global material properties known from the start
 		update();
-		mGlobalMaterialProperties.setPropertyById(STRING_ID("GlobalNumberOfMultisamples"), MaterialPropertyValue::fromInteger(0), MaterialProperty::Usage::SHADER_COMBINATION);
+		mGlobalMaterialProperties.setPropertyById(SE_STRING_ID("GlobalNumberOfMultisamples"), MaterialPropertyValue::fromInteger(0), MaterialProperty::Usage::SHADER_COMBINATION);
 	}
 
 	MaterialBlueprintResourceManager::~MaterialBlueprintResourceManager()

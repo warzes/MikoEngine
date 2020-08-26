@@ -35,7 +35,7 @@ namespace Renderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("Scene");
+		static constexpr uint32_t FORMAT_TYPE	 = SE_STRING_ID("Scene");
 		static constexpr uint32_t FORMAT_VERSION = 5;
 
 		#pragma pack(push)

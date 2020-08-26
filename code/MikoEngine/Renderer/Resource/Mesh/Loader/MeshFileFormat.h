@@ -43,7 +43,7 @@ namespace Renderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("Mesh");
+		static constexpr uint32_t FORMAT_TYPE	 = SE_STRING_ID("Mesh");
 		static constexpr uint32_t FORMAT_VERSION = 9;
 
 		#pragma pack(push)

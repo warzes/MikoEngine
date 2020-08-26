@@ -77,7 +77,7 @@ namespace
 			Rhi::ITexturePtr _hr_rg_mb_nyaIdentity2DTexturePtr(textureManager.createTexture2D(1, 1, Rhi::TextureFormat::R8G8B8A8, _hr_rg_mb_nyaIdentityData, Rhi::TextureFlag::SHADER_RESOURCE, Rhi::TextureUsage::IMMUTABLE, 1, nullptr RHI_RESOURCE_DEBUG_NAME("_hr_rg_mb_nya identity")));
 
 			// Define helper macro
-			#define CREATE_TEXTURE(name, texturePtr) textureResourceManager.createTextureResourceByAssetId(ASSET_ID("Engine/Texture/DynamicByCode/"#name), *texturePtr);
+			#define CREATE_TEXTURE(name, texturePtr) textureResourceManager.createTextureResourceByAssetId(SE_ASSET_ID("Engine/Texture/DynamicByCode/"#name), *texturePtr);
 
 			// Create default dynamic texture assets
 			CREATE_TEXTURE(WhiteMap1D,				whiteRgba1DTexturePtr)
@@ -122,7 +122,7 @@ namespace Renderer
 	void TextureResourceManager::getDefaultTextureAssetIds(AssetIds& assetIds)
 	{
 		// Define helper macros
-		#define ADD_ASSET_ID(name) assetIds.push_back(ASSET_ID(name));
+		#define ADD_ASSET_ID(name) assetIds.push_back(SE_ASSET_ID(name));
 
 		// Add asset IDs
 		ADD_ASSET_ID("Engine/Texture/DynamicByCode/WhiteMap1D")

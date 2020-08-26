@@ -54,7 +54,7 @@ namespace Renderer
 	void LightBufferManager::getDefaultTextureAssetIds(AssetIds& assetIds)
 	{
 		// Define helper macro
-		#define ADD_ASSET_ID(name) assetIds.push_back(ASSET_ID(name));
+		#define ADD_ASSET_ID(name) assetIds.push_back(SE_ASSET_ID(name));
 
 		// Add asset IDs
 		ADD_ASSET_ID("Engine/Texture/DynamicByCode/LightClustersMap3D")
@@ -82,7 +82,7 @@ namespace Renderer
 
 		// Create the clusters 3D texture resource
 		mClusters3DTextureResourceId = mRenderer.getTextureResourceManager().createTextureResourceByAssetId(
-			ASSET_ID("Engine/Texture/DynamicByCode/LightClustersMap3D"),
+			SE_ASSET_ID("Engine/Texture/DynamicByCode/LightClustersMap3D"),
 			*mRenderer.getTextureManager().createTexture3D(::detail::CLUSTER_X, ::detail::CLUSTER_Y, ::detail::CLUSTER_Z, Rhi::TextureFormat::R32_UINT, nullptr, Rhi::TextureFlag::SHADER_RESOURCE, Rhi::TextureUsage::DYNAMIC RHI_RESOURCE_DEBUG_NAME("Light clusters")));
 	}
 

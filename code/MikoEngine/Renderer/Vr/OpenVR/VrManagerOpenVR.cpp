@@ -72,7 +72,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t ASSET_PACKAGE_ID = STRING_ID("Engine/OpenVR");
+		static constexpr uint32_t ASSET_PACKAGE_ID = SE_STRING_ID("Engine/OpenVR");
 
 
 		//[-------------------------------------------------------]

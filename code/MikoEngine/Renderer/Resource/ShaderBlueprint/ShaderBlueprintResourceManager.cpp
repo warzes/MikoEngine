@@ -89,8 +89,8 @@ namespace Renderer
 		Rhi::IRhi& rhi = mRenderer.getRhi();
 		const Rhi::Capabilities& capabilities = rhi.getCapabilities();
 		mRhiShaderProperties.setPropertyValue(static_cast<uint32_t>(rhi.getNameId()), 1);
-		mRhiShaderProperties.setPropertyValue(STRING_ID("ZeroToOneClipZ"), capabilities.zeroToOneClipZ ? 1 : 0);
-		mRhiShaderProperties.setPropertyValue(STRING_ID("UpperLeftOrigin"), capabilities.upperLeftOrigin ? 1 : 0);
+		mRhiShaderProperties.setPropertyValue(SE_STRING_ID("ZeroToOneClipZ"), capabilities.zeroToOneClipZ ? 1 : 0);
+		mRhiShaderProperties.setPropertyValue(SE_STRING_ID("UpperLeftOrigin"), capabilities.upperLeftOrigin ? 1 : 0);
 		mRhiShaderProperties.setPropertyValue(StringId(rhi.getDefaultShaderLanguage().getShaderLanguageName()), 1);
 	}
 

@@ -10,7 +10,7 @@ namespace Renderer
 	// - Assets
 	namespace v1AssetPackage
 	{
-		static constexpr uint32_t FORMAT_TYPE = STRING_ID("AssetPackage");
+		static constexpr uint32_t FORMAT_TYPE = SE_STRING_ID("AssetPackage");
 		static constexpr uint32_t FORMAT_VERSION = 3;
 
 #pragma pack(push)

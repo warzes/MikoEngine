@@ -50,7 +50,7 @@ namespace Renderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t DEFAULT_MATERIAL_TECHNIQUE_ID = STRING_ID("Default");
+		static constexpr uint32_t DEFAULT_MATERIAL_TECHNIQUE_ID = SE_STRING_ID("Default");
 
 
 	//[-------------------------------------------------------]

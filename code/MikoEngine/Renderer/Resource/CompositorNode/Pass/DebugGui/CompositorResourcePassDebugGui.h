@@ -38,7 +38,7 @@ namespace Renderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("DebugGui");
+		static constexpr uint32_t TYPE_ID = SE_STRING_ID("DebugGui");
 
 
 	//[-------------------------------------------------------]

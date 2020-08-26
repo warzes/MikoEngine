@@ -27,8 +27,8 @@ namespace
 		//[-------------------------------------------------------]
 		static constexpr float	  SHADOW_MAP_FILTER_SIZE							  = 7.0f;
 		static constexpr uint8_t  INTERMEDIATE_CASCADE_INDEX						  = 3;
-		static constexpr uint32_t DEPTH_SHADOW_MAP_TEXTURE_ASSET_ID					  = ASSET_ID("Engine/Texture/DynamicByCode/DepthShadowMap");
-		static constexpr uint32_t INTERMEDIATE_DEPTH_BLUR_SHADOW_MAP_TEXTURE_ASSET_ID = ASSET_ID("Engine/Texture/DynamicByCode/IntermediateDepthBlurShadowMap");
+		static constexpr uint32_t DEPTH_SHADOW_MAP_TEXTURE_ASSET_ID					  = SE_ASSET_ID("Engine/Texture/DynamicByCode/DepthShadowMap");
+		static constexpr uint32_t INTERMEDIATE_DEPTH_BLUR_SHADOW_MAP_TEXTURE_ASSET_ID = SE_ASSET_ID("Engine/Texture/DynamicByCode/IntermediateDepthBlurShadowMap");
 
 
 		//[-------------------------------------------------------]
@@ -482,8 +482,8 @@ namespace Renderer
 
 				{ // Depth to exponential variance
 					MaterialProperties materialProperties;
-					materialProperties.setPropertyById(STRING_ID("DepthMap"), MaterialPropertyValue::fromTextureAssetId(::detail::DEPTH_SHADOW_MAP_TEXTURE_ASSET_ID), MaterialProperty::Usage::UNKNOWN, true);
-					materialProperties.setPropertyById(STRING_ID("NumberOfMultisamples"), MaterialPropertyValue::fromInteger((numberOfShadowMultisamples == 1) ? 0 : numberOfShadowMultisamples), MaterialProperty::Usage::UNKNOWN, true);
+					materialProperties.setPropertyById(SE_STRING_ID("DepthMap"), MaterialPropertyValue::fromTextureAssetId(::detail::DEPTH_SHADOW_MAP_TEXTURE_ASSET_ID), MaterialProperty::Usage::UNKNOWN, true);
+					materialProperties.setPropertyById(SE_STRING_ID("NumberOfMultisamples"), MaterialPropertyValue::fromInteger((numberOfShadowMultisamples == 1) ? 0 : numberOfShadowMultisamples), MaterialProperty::Usage::UNKNOWN, true);
 					mDepthToExponentialVarianceCompositorResourcePassCompute = new CompositorResourcePassCompute(compositorResourcePassShadowMap.getCompositorTarget(), compositorResourcePassShadowMap.getDepthToExponentialVarianceMaterialBlueprintAssetId(), materialProperties);
 					#if defined(RHI_DEBUG) || defined(RENDERER_PROFILER)
 						mDepthToExponentialVarianceCompositorResourcePassCompute->setDebugName("Depth to exponential variance");
@@ -526,8 +526,8 @@ namespace Renderer
 
 				{ // Horizontal blur
 					MaterialProperties materialProperties;
-					materialProperties.setPropertyById(STRING_ID("VerticalBlur"), MaterialPropertyValue::fromBoolean(false), MaterialProperty::Usage::UNKNOWN, true);
-					materialProperties.setPropertyById(STRING_ID("ColorMap"), MaterialPropertyValue::fromTextureAssetId(assetId), MaterialProperty::Usage::UNKNOWN, true);
+					materialProperties.setPropertyById(SE_STRING_ID("VerticalBlur"), MaterialPropertyValue::fromBoolean(false), MaterialProperty::Usage::UNKNOWN, true);
+					materialProperties.setPropertyById(SE_STRING_ID("ColorMap"), MaterialPropertyValue::fromTextureAssetId(assetId), MaterialProperty::Usage::UNKNOWN, true);
 					mHorizontalBlurCompositorResourcePassCompute = new CompositorResourcePassCompute(compositorResourcePassShadowMap.getCompositorTarget(), compositorResourcePassShadowMap.getBlurMaterialBlueprintAssetId(), materialProperties);
 					#if defined(RHI_DEBUG) || defined(RENDERER_PROFILER)
 						mHorizontalBlurCompositorResourcePassCompute->setDebugName("Horizontal blur");
@@ -537,8 +537,8 @@ namespace Renderer
 
 				{ // Vertical blur
 					MaterialProperties materialProperties;
-					materialProperties.setPropertyById(STRING_ID("VerticalBlur"), MaterialPropertyValue::fromBoolean(true), MaterialProperty::Usage::UNKNOWN, true);
-					materialProperties.setPropertyById(STRING_ID("ColorMap"), MaterialPropertyValue::fromTextureAssetId(::detail::INTERMEDIATE_DEPTH_BLUR_SHADOW_MAP_TEXTURE_ASSET_ID), MaterialProperty::Usage::UNKNOWN, true);
+					materialProperties.setPropertyById(SE_STRING_ID("VerticalBlur"), MaterialPropertyValue::fromBoolean(true), MaterialProperty::Usage::UNKNOWN, true);
+					materialProperties.setPropertyById(SE_STRING_ID("ColorMap"), MaterialPropertyValue::fromTextureAssetId(::detail::INTERMEDIATE_DEPTH_BLUR_SHADOW_MAP_TEXTURE_ASSET_ID), MaterialProperty::Usage::UNKNOWN, true);
 					mVerticalBlurCompositorResourcePassCompute = new CompositorResourcePassCompute(compositorResourcePassShadowMap.getCompositorTarget(), compositorResourcePassShadowMap.getBlurMaterialBlueprintAssetId(), materialProperties);
 					#if defined(RHI_DEBUG) || defined(RENDERER_PROFILER)
 						mVerticalBlurCompositorResourcePassCompute->setDebugName("Vertical blur");

@@ -38,7 +38,7 @@ namespace Renderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("ParticlesSceneItem");
+		static constexpr uint32_t TYPE_ID = SE_STRING_ID("ParticlesSceneItem");
 		struct ParticleDataStruct final
 		{
 			float PositionSize[4];	// Object space particle xyz-position, w = particle size

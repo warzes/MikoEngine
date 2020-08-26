@@ -24,7 +24,7 @@ namespace Renderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("crn_array");
+		static constexpr uint32_t FORMAT_TYPE	 = SE_STRING_ID("crn_array");
 		static constexpr uint32_t FORMAT_VERSION = 1;
 
 		struct CrnArrayHeader final

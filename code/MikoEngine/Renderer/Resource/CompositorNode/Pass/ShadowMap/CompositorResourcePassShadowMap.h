@@ -41,7 +41,7 @@ namespace Renderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("ShadowMap");
+		static constexpr uint32_t TYPE_ID = SE_STRING_ID("ShadowMap");
 		static constexpr uint32_t MAXIMUM_NUMBER_OF_SHADOW_CASCADES = 4;
 
 

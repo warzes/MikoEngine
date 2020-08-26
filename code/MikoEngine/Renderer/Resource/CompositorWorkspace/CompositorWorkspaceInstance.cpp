@@ -149,7 +149,7 @@ namespace Renderer
 			// Tell the global material properties managed by the material blueprint resource manager about the number of multisamples
 			// -> Since there can be multiple compositor workspace instances we can't do this once inside "Renderer::CompositorWorkspaceInstance::setNumberOfMultisamples()"
 			MaterialBlueprintResourceManager& materialBlueprintResourceManager = mRenderer.getMaterialBlueprintResourceManager();
-			materialBlueprintResourceManager.getGlobalMaterialProperties().setPropertyById(STRING_ID("GlobalNumberOfMultisamples"), MaterialPropertyValue::fromInteger((mNumberOfMultisamples == 1) ? 0 : mNumberOfMultisamples));
+			materialBlueprintResourceManager.getGlobalMaterialProperties().setPropertyById(SE_STRING_ID("GlobalNumberOfMultisamples"), MaterialPropertyValue::fromInteger((mNumberOfMultisamples == 1) ? 0 : mNumberOfMultisamples));
 
 			// Add reference to the render target
 			renderTarget.AddReference();

@@ -40,7 +40,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		#define DEFINE_CONSTANT(name) static constexpr uint32_t name = STRING_ID(#name);
+		#define DEFINE_CONSTANT(name) static constexpr uint32_t name = SE_STRING_ID(#name);
 			// Pass data influenced by single pass stereo rendering via instancing as described in "High Performance Stereo Rendering For VR", Timothy Wilson, San Diego, Virtual Reality Meetup
 			DEFINE_CONSTANT(WORLD_SPACE_TO_VIEW_SPACE_MATRIX)				// "FLOAT_4_4"-type
 			DEFINE_CONSTANT(WORLD_SPACE_TO_VIEW_SPACE_MATRIX_2)				// "FLOAT_4_4"-type
@@ -139,7 +139,7 @@ namespace
 
 			// Create dynamic texture asset
 			return renderer.getTextureResourceManager().createTextureResourceByAssetId(
-				ASSET_ID("Engine/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D"),
+				SE_ASSET_ID("Engine/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D"),
 				*renderer.getTextureManager().createTexture3D(SIZE, SIZE, SIZE, Rhi::TextureFormat::R8G8B8A8, data, Rhi::TextureFlag::SHADER_RESOURCE, Rhi::TextureUsage::IMMUTABLE RHI_RESOURCE_DEBUG_NAME("Identity color correction lookup table (LUT)")));
 		}
 
@@ -185,7 +185,7 @@ namespace
 
 			// Create dynamic texture asset
 			return renderer.getTextureResourceManager().createTextureResourceByAssetId(
-				ASSET_ID("Engine/Texture/DynamicByCode/SsaoSampleKernel"),
+				SE_ASSET_ID("Engine/Texture/DynamicByCode/SsaoSampleKernel"),
 				*renderer.getTextureManager().createTexture1D(KERNEL_SIZE, Rhi::TextureFormat::R32G32B32A32F, kernel, Rhi::TextureFlag::SHADER_RESOURCE, Rhi::TextureUsage::IMMUTABLE RHI_RESOURCE_DEBUG_NAME("Screen space ambient occlusion sample kernel")));
 		}
 
@@ -222,7 +222,7 @@ namespace
 
 			// Create dynamic texture asset
 			return renderer.getTextureResourceManager().createTextureResourceByAssetId(
-				ASSET_ID("Engine/Texture/DynamicByCode/SsaoNoise4x4"),
+				SE_ASSET_ID("Engine/Texture/DynamicByCode/SsaoNoise4x4"),
 				*renderer.getTextureManager().createTexture2D(NOISE_SIZE, NOISE_SIZE, Rhi::TextureFormat::R32G32B32A32F, noise, Rhi::TextureFlag::SHADER_RESOURCE, Rhi::TextureUsage::IMMUTABLE, 1, nullptr RHI_RESOURCE_DEBUG_NAME("Screen space ambient occlusion 4x4 noise")));
 		}
 
@@ -273,7 +273,7 @@ namespace Renderer
 	void MaterialBlueprintResourceListener::getDefaultTextureAssetIds(AssetIds& assetIds)
 	{
 		// Define helper macro
-		#define ADD_ASSET_ID(name) assetIds.push_back(ASSET_ID(name));
+		#define ADD_ASSET_ID(name) assetIds.push_back(SE_ASSET_ID(name));
 
 		// Add asset IDs
 		ADD_ASSET_ID("Engine/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D")

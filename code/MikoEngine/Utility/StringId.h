@@ -9,7 +9,7 @@
 *  @remarks
 *    The following example shows how to use the string ID class:
 *    @code
-*    uint32_t id = STRING_ID("Example/Mesh/Default/Squirrel");	// Result will be 2906231359
+*    uint32_t id = SE_STRING_ID("Example/Mesh/Default/Squirrel");	// Result will be 2906231359
 *    @endcode
 *
 *  @note
@@ -62,7 +62,7 @@ public:
 	inline StringId(const char(&string)[N]) noexcept : mId(CompileTimeFNV(string))
 	{
 		// It's a trap!
-		static_assert(false, "Use the \"STRING_ID()\" macro to mark compile string IDs");
+		static_assert(false, "Use the \"SE_STRING_ID()\" macro to mark compile string IDs");
 	}
 
 	// Constructor for calculating the hash value of a given dynamic string
@@ -115,6 +115,6 @@ private:
 };
 
 // Compile time string ID macro
-#define STRING_ID(string) std::integral_constant<uint32_t, StringId::CompileTimeFNV(string)>::value
-// Compile time asset ID macro; use this alias instead of "STRING_ID()" to be able to easily search for asset references
-#define ASSET_ID(string) STRING_ID(string)
+#define SE_STRING_ID(string) std::integral_constant<uint32_t, StringId::CompileTimeFNV(string)>::value
+// Compile time asset ID macro; use this alias instead of "SE_STRING_ID()" to be able to easily search for asset references
+#define SE_ASSET_ID(string) SE_STRING_ID(string)

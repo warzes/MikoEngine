@@ -26,7 +26,7 @@ namespace Renderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("SkeletonAnimation");
+		static constexpr uint32_t FORMAT_TYPE	 = SE_STRING_ID("SkeletonAnimation");
 		static constexpr uint32_t FORMAT_VERSION = 3;
 
 		#pragma pack(push)

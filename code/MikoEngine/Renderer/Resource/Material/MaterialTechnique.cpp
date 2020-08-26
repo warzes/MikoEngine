@@ -24,7 +24,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-		#define DEFINE_CONSTANT(name) static constexpr uint32_t name = STRING_ID(#name);
+		#define DEFINE_CONSTANT(name) static constexpr uint32_t name = SE_STRING_ID(#name);
 			DEFINE_CONSTANT(CullMode)
 			DEFINE_CONSTANT(AlphaToCoverageEnable)
 		#undef DEFINE_CONSTANT

@@ -68,8 +68,8 @@ namespace
 	namespace detail
 	{
 		static constexpr const char*    VIRTUAL_SETTINGS_FILENAME = "LocalData/SceneExample.ini";
-		static constexpr uint32_t SCENE_ASSET_ID = ASSET_ID("Example/Scene/S_Scene");
-		static constexpr uint32_t IMROD_MATERIAL_ASSET_ID = ASSET_ID("Example/Mesh/Imrod/M_Imrod");
+		static constexpr uint32_t SCENE_ASSET_ID = SE_ASSET_ID("Example/Scene/S_Scene");
+		static constexpr uint32_t IMROD_MATERIAL_ASSET_ID = SE_ASSET_ID("Example/Mesh/Imrod/M_Imrod");
 	} // detail
 }
 
@@ -288,7 +288,7 @@ bool Scene::init(int argc, const char * argv[])
 		if ( vrManager.isHmdPresent() )
 		{
 			vrManager.setSceneResourceId(mSceneResourceId);
-			if ( vrManager.startup(ASSET_ID("Example/Blueprint/Mesh/M_VrDevice")) )
+			if ( vrManager.startup(SE_ASSET_ID("Example/Blueprint/Mesh/M_VrDevice")) )
 			{
 				// Select the VR compositor and enable MSAA by default since image stability is quite important for VR
 				// -> "Advanced VR Rendering" by Alex Vlachos, Valve -> page 26 -> "4xMSAA Minimum Quality" ( http://media.steampowered.com/apps/valve/2015/Alex_Vlachos_Advanced_VR_Rendering_GDC2015.pdf )
@@ -339,16 +339,16 @@ void Scene::update(double delta)
 	{ // Tell the material blueprint resource manager about our global material properties
 		Renderer::MaterialProperties& globalMaterialProperties = renderer->getMaterialBlueprintResourceManager().getGlobalMaterialProperties();
 		// Graphics
-		globalMaterialProperties.setPropertyById(STRING_ID("GlobalReceiveShadows"), Renderer::MaterialPropertyValue::fromBoolean(ShadowQuality::NONE != mShadowQuality));
-		globalMaterialProperties.setPropertyById(STRING_ID("GlobalHighQualityRendering"), Renderer::MaterialPropertyValue::fromBoolean(mHighQualityRendering));
-		globalMaterialProperties.setPropertyById(STRING_ID("GlobalHighQualityLighting"), Renderer::MaterialPropertyValue::fromBoolean(mHighQualityLighting));
-		globalMaterialProperties.setPropertyById(STRING_ID("GlobalSoftParticles"), Renderer::MaterialPropertyValue::fromBoolean(mSoftParticles));
-		globalMaterialProperties.setPropertyById(STRING_ID("GlobalTessellatedTriangleWidth"), Renderer::MaterialPropertyValue::fromFloat(static_cast<float>(mTerrainTessellatedTriangleWidth)));
+		globalMaterialProperties.setPropertyById(SE_STRING_ID("GlobalReceiveShadows"), Renderer::MaterialPropertyValue::fromBoolean(ShadowQuality::NONE != mShadowQuality));
+		globalMaterialProperties.setPropertyById(SE_STRING_ID("GlobalHighQualityRendering"), Renderer::MaterialPropertyValue::fromBoolean(mHighQualityRendering));
+		globalMaterialProperties.setPropertyById(SE_STRING_ID("GlobalHighQualityLighting"), Renderer::MaterialPropertyValue::fromBoolean(mHighQualityLighting));
+		globalMaterialProperties.setPropertyById(SE_STRING_ID("GlobalSoftParticles"), Renderer::MaterialPropertyValue::fromBoolean(mSoftParticles));
+		globalMaterialProperties.setPropertyById(SE_STRING_ID("GlobalTessellatedTriangleWidth"), Renderer::MaterialPropertyValue::fromFloat(static_cast<float>(mTerrainTessellatedTriangleWidth)));
 		// Environment
-		globalMaterialProperties.setPropertyById(STRING_ID("GlobalCloudsIntensity"), Renderer::MaterialPropertyValue::fromFloat(mCloudsIntensity));
-		globalMaterialProperties.setPropertyById(STRING_ID("GlobalWindDirectionStrength"), Renderer::MaterialPropertyValue::fromFloat4(1.0f, 0.0f, 0.0f, mWindSpeed));
-		globalMaterialProperties.setPropertyById(STRING_ID("GlobalUseWetSurfaces"), Renderer::MaterialPropertyValue::fromBoolean(mWetSurfaces[0] > 0.0f));
-		globalMaterialProperties.setPropertyById(STRING_ID("GlobalWetSurfaces"), Renderer::MaterialPropertyValue::fromFloat4(mWetSurfaces));
+		globalMaterialProperties.setPropertyById(SE_STRING_ID("GlobalCloudsIntensity"), Renderer::MaterialPropertyValue::fromFloat(mCloudsIntensity));
+		globalMaterialProperties.setPropertyById(SE_STRING_ID("GlobalWindDirectionStrength"), Renderer::MaterialPropertyValue::fromFloat4(1.0f, 0.0f, 0.0f, mWindSpeed));
+		globalMaterialProperties.setPropertyById(SE_STRING_ID("GlobalUseWetSurfaces"), Renderer::MaterialPropertyValue::fromBoolean(mWetSurfaces[0] > 0.0f));
+		globalMaterialProperties.setPropertyById(SE_STRING_ID("GlobalWetSurfaces"), Renderer::MaterialPropertyValue::fromFloat4(mWetSurfaces));
 	}
 
 	// Update the scene node rotation
@@ -867,33 +867,33 @@ void Scene::applyCurrentSettings(Rhi::IRenderTarget& mainRenderTarget)
 			const Renderer::MaterialResourceManager& materialResourceManager = renderer.getMaterialResourceManager();
 
 			// Depth of field compositor material
-			Renderer::MaterialResource* materialResource = materialResourceManager.getMaterialResourceByAssetId(ASSET_ID("Example/Blueprint/Compositor/MB_DepthOfField"));
+			Renderer::MaterialResource* materialResource = materialResourceManager.getMaterialResourceByAssetId(SE_ASSET_ID("Example/Blueprint/Compositor/MB_DepthOfField"));
 			if ( nullptr != materialResource )
 			{
-				materialResource->setPropertyById(STRING_ID("BlurrinessCutoff"), Renderer::MaterialPropertyValue::fromFloat(mDepthOfFieldBlurrinessCutoff));
+				materialResource->setPropertyById(SE_STRING_ID("BlurrinessCutoff"), Renderer::MaterialPropertyValue::fromFloat(mDepthOfFieldBlurrinessCutoff));
 			}
 
 			// Final compositor material
-			materialResource = materialResourceManager.getMaterialResourceByAssetId(ASSET_ID("Example/Blueprint/Compositor/MB_Final"));
+			materialResource = materialResourceManager.getMaterialResourceByAssetId(SE_ASSET_ID("Example/Blueprint/Compositor/MB_Final"));
 			if ( nullptr != materialResource )
 			{
-				static constexpr uint32_t IDENTITY_TEXTURE_ASSET_ID = ASSET_ID("Engine/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D");
-				static constexpr uint32_t SEPIA_TEXTURE_ASSET_ID = ASSET_ID("Example/Blueprint/Compositor/T_SepiaColorCorrectionLookupTable16x1");
-				materialResource->setPropertyById(STRING_ID("ColorCorrectionLookupTableMap"), Renderer::MaterialPropertyValue::fromTextureAssetId(mPerformSepiaColorCorrection ? SEPIA_TEXTURE_ASSET_ID : IDENTITY_TEXTURE_ASSET_ID));
-				materialResource->setPropertyById(STRING_ID("Fxaa"), Renderer::MaterialPropertyValue::fromBoolean(mPerformFxaa));
-				materialResource->setPropertyById(STRING_ID("Sharpen"), Renderer::MaterialPropertyValue::fromBoolean(mPerformSharpen));
-				materialResource->setPropertyById(STRING_ID("ChromaticAberration"), Renderer::MaterialPropertyValue::fromBoolean(mPerformChromaticAberration));
-				materialResource->setPropertyById(STRING_ID("OldCrtEffect"), Renderer::MaterialPropertyValue::fromBoolean(mPerformOldCrtEffect));
-				materialResource->setPropertyById(STRING_ID("FilmGrain"), Renderer::MaterialPropertyValue::fromBoolean(mPerformFilmGrain));
-				materialResource->setPropertyById(STRING_ID("Vignette"), Renderer::MaterialPropertyValue::fromBoolean(mPerformVignette));
+				static constexpr uint32_t IDENTITY_TEXTURE_ASSET_ID = SE_ASSET_ID("Engine/Texture/DynamicByCode/IdentityColorCorrectionLookupTable3D");
+				static constexpr uint32_t SEPIA_TEXTURE_ASSET_ID = SE_ASSET_ID("Example/Blueprint/Compositor/T_SepiaColorCorrectionLookupTable16x1");
+				materialResource->setPropertyById(SE_STRING_ID("ColorCorrectionLookupTableMap"), Renderer::MaterialPropertyValue::fromTextureAssetId(mPerformSepiaColorCorrection ? SEPIA_TEXTURE_ASSET_ID : IDENTITY_TEXTURE_ASSET_ID));
+				materialResource->setPropertyById(SE_STRING_ID("Fxaa"), Renderer::MaterialPropertyValue::fromBoolean(mPerformFxaa));
+				materialResource->setPropertyById(SE_STRING_ID("Sharpen"), Renderer::MaterialPropertyValue::fromBoolean(mPerformSharpen));
+				materialResource->setPropertyById(SE_STRING_ID("ChromaticAberration"), Renderer::MaterialPropertyValue::fromBoolean(mPerformChromaticAberration));
+				materialResource->setPropertyById(SE_STRING_ID("OldCrtEffect"), Renderer::MaterialPropertyValue::fromBoolean(mPerformOldCrtEffect));
+				materialResource->setPropertyById(SE_STRING_ID("FilmGrain"), Renderer::MaterialPropertyValue::fromBoolean(mPerformFilmGrain));
+				materialResource->setPropertyById(SE_STRING_ID("Vignette"), Renderer::MaterialPropertyValue::fromBoolean(mPerformVignette));
 			}
 
 			// Imrod material clone
 			materialResource = materialResourceManager.tryGetById(mCloneMaterialResourceId);
 			if ( nullptr != materialResource )
 			{
-				materialResource->setPropertyById(STRING_ID("UseEmissiveMap"), Renderer::MaterialPropertyValue::fromBoolean(mUseEmissiveMap));
-				materialResource->setPropertyById(STRING_ID("AlbedoColor"), Renderer::MaterialPropertyValue::fromFloat3(mAlbedoColor));
+				materialResource->setPropertyById(SE_STRING_ID("UseEmissiveMap"), Renderer::MaterialPropertyValue::fromBoolean(mUseEmissiveMap));
+				materialResource->setPropertyById(SE_STRING_ID("AlbedoColor"), Renderer::MaterialPropertyValue::fromFloat3(mAlbedoColor));
 			}
 		}
 	}
@@ -904,10 +904,10 @@ void Scene::createCompositorWorkspace()
 	// Create/recreate the compositor workspace instance
 	static constexpr uint32_t COMPOSITOR_WORKSPACE_ASSET_ID[4] =
 	{
-		ASSET_ID("Example/CompositorWorkspace/CW_Debug"),
-		ASSET_ID("Example/CompositorWorkspace/CW_Forward"),
-		ASSET_ID("Example/CompositorWorkspace/CW_Deferred"),
-		ASSET_ID("Example/CompositorWorkspace/CW_Vr")
+		SE_ASSET_ID("Example/CompositorWorkspace/CW_Debug"),
+		SE_ASSET_ID("Example/CompositorWorkspace/CW_Forward"),
+		SE_ASSET_ID("Example/CompositorWorkspace/CW_Deferred"),
+		SE_ASSET_ID("Example/CompositorWorkspace/CW_Vr")
 	};
 	delete mCompositorWorkspaceInstance;
 	mCompositorWorkspaceInstance = new Renderer::CompositorWorkspaceInstance(*getRenderer(), COMPOSITOR_WORKSPACE_ASSET_ID[static_cast<int>(mInstancedCompositor)]);

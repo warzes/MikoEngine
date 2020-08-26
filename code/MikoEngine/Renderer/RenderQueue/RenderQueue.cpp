@@ -169,7 +169,7 @@ namespace
 			// Automatic "UseGpuSkinning"-property setting
 			if (IsValid(renderable.getSkeletonResourceId()))
 			{
-				static constexpr uint32_t USE_GPU_SKINNING = STRING_ID("UseGpuSkinning");
+				static constexpr uint32_t USE_GPU_SKINNING = SE_STRING_ID("UseGpuSkinning");
 				if (nullptr != materialBlueprintResource.getMaterialProperties().getPropertyById(USE_GPU_SKINNING))
 				{
 					shaderProperties.setPropertyValue(USE_GPU_SKINNING, 1);
@@ -181,7 +181,7 @@ namespace
 			// Automatic build-in "SinglePassStereoInstancing"-property setting
 			if (singlePassStereoInstancing)
 			{
-				static constexpr uint32_t SINGLE_PASS_STEREO_INSTANCING = STRING_ID("SinglePassStereoInstancing");
+				static constexpr uint32_t SINGLE_PASS_STEREO_INSTANCING = SE_STRING_ID("SinglePassStereoInstancing");
 				scratchOptimizedShaderProperties.setPropertyValue(SINGLE_PASS_STEREO_INSTANCING, 1);
 			}
 		}

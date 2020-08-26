@@ -32,7 +32,7 @@ namespace Renderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID		 = STRING_ID("lz4dds");
+		static constexpr uint32_t TYPE_ID		 = SE_STRING_ID("lz4dds");
 		static constexpr uint32_t FORMAT_TYPE	 = TYPE_ID;
 		static constexpr uint32_t FORMAT_VERSION = 1;
 

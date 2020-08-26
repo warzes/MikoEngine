@@ -38,7 +38,7 @@ namespace Renderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("MaterialBlueprint");
+		static constexpr uint32_t FORMAT_TYPE	 = SE_STRING_ID("MaterialBlueprint");
 		static constexpr uint32_t FORMAT_VERSION = 11;
 
 		#pragma pack(push)

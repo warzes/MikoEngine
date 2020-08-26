@@ -28,7 +28,7 @@ namespace
 		//[-------------------------------------------------------]
 		//[ Global definitions                                    ]
 		//[-------------------------------------------------------]
-#define DEFINE_CONSTANT(name) static constexpr uint32_t name = STRING_ID(#name);
+#define DEFINE_CONSTANT(name) static constexpr uint32_t name = SE_STRING_ID(#name);
 	// Pass
 		DEFINE_CONSTANT(IMGUI_OBJECT_SPACE_TO_CLIP_SPACE_MATRIX);
 #undef DEFINE_CONSTANT

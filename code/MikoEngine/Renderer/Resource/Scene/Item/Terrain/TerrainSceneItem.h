@@ -54,7 +54,7 @@ namespace Renderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("TerrainSceneItem");
+		static constexpr uint32_t TYPE_ID = SE_STRING_ID("TerrainSceneItem");
 		static const Rhi::VertexAttributes VERTEX_ATTRIBUTES;
 
 

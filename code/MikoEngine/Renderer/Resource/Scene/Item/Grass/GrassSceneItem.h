@@ -38,7 +38,7 @@ namespace Renderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("GrassSceneItem");
+		static constexpr uint32_t TYPE_ID = SE_STRING_ID("GrassSceneItem");
 		struct GrassDataStruct final
 		{
 			float PositionSize[4];	// Object space grass xyz-position, w = grass size

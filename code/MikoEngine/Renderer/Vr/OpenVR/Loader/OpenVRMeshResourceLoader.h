@@ -69,7 +69,7 @@ namespace Renderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("openvr_mesh");
+		static constexpr uint32_t TYPE_ID = SE_STRING_ID("openvr_mesh");
 		typedef std::vector<glm::vec3> BufferData;
 
 

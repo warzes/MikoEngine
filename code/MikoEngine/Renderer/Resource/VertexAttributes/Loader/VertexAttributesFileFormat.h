@@ -24,7 +24,7 @@ namespace Renderer
 		//[-------------------------------------------------------]
 		//[ Definitions                                           ]
 		//[-------------------------------------------------------]
-		static constexpr uint32_t FORMAT_TYPE	 = STRING_ID("VertexAttributes");
+		static constexpr uint32_t FORMAT_TYPE	 = SE_STRING_ID("VertexAttributes");
 		static constexpr uint32_t FORMAT_VERSION = 1;
 
 		#pragma pack(push)

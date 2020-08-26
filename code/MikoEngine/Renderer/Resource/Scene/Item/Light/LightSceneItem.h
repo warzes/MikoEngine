@@ -46,7 +46,7 @@ namespace Renderer
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static constexpr uint32_t TYPE_ID = STRING_ID("LightSceneItem");
+		static constexpr uint32_t TYPE_ID = SE_STRING_ID("LightSceneItem");
 		enum class LightType
 		{
 			DIRECTIONAL = 0,
