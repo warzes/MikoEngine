@@ -1,12 +1,6 @@
 #pragma once
 
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "Renderer/Core/Loader.h"
 #include "Renderer/Asset/Asset.h"
-
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
@@ -17,7 +11,6 @@ namespace Renderer
 	class IResource;
 	class IResourceManager;
 }
-
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
@@ -35,13 +28,8 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	//[ Classes                                               ]
 	//[-------------------------------------------------------]
-	class IResourceLoader : protected Loader
+	class IResourceLoader
 	{
-
-
-	//[-------------------------------------------------------]
-	//[ Friends                                               ]
-	//[-------------------------------------------------------]
 		friend class ResourceStreamer;	// Needs to be able to destroy resource loader instances
 
 

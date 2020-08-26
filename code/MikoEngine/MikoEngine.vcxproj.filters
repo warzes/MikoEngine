@@ -777,9 +777,6 @@
     <ClInclude Include="Renderer\Core\IProfiler.h">
       <Filter>5_Renderer\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\Core\Loader.h">
-      <Filter>5_Renderer\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer\Core\PackedElementManager.h">
       <Filter>5_Renderer\Core</Filter>
     </ClInclude>

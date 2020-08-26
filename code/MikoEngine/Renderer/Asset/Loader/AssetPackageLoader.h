@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Renderer/Core/Loader.h"
-
 namespace Renderer
 {
 	class IFile;
@@ -10,7 +8,7 @@ namespace Renderer
 
 namespace Renderer
 {
-	class AssetPackageLoader final : protected Loader
+	class AssetPackageLoader final
 	{
 		friend class AssetManager;
 	private:

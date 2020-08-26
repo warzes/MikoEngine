@@ -199,7 +199,6 @@
     <ClInclude Include="Renderer\Core\File\PhysicsFSFileManager.h" />
     <ClInclude Include="Renderer\Core\IGraphicsDebugger.h" />
     <ClInclude Include="Renderer\Core\IProfiler.h" />
-    <ClInclude Include="Renderer\Core\Loader.h" />
     <ClInclude Include="Renderer\Core\PackedElementManager.h" />
     <ClInclude Include="Renderer\Core\Platform\PlatformManager.h" />
     <ClInclude Include="Renderer\Core\RemoteryProfiler.h" />
