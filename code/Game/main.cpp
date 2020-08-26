@@ -8,6 +8,7 @@
 #include "Mesh.h"
 #include "Scene.h"
 //-----------------------------------------------------------------------------
+//#pragma comment(lib, "3rdparty_assimp.lib")
 #pragma comment(lib, "3rdparty_other.lib")
 #pragma comment(lib, "MikoEngine.lib")
 //-----------------------------------------------------------------------------

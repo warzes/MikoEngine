@@ -93,7 +93,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;$(SolutionDir)3rdparty\3rdparty_other\acl\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\acl\;$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <WarningLevel>EnableAllWarnings</WarningLevel>
@@ -110,7 +110,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;$(SolutionDir)3rdparty\3rdparty_other\acl\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\acl\;$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <WarningLevel>EnableAllWarnings</WarningLevel>
@@ -129,7 +129,7 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;$(SolutionDir)3rdparty\3rdparty_other\acl\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\acl\;$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <WarningLevel>EnableAllWarnings</WarningLevel>
     </ClCompile>
@@ -149,7 +149,7 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;$(SolutionDir)3rdparty\3rdparty_other\acl\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\acl\;$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <WarningLevel>EnableAllWarnings</WarningLevel>
     </ClCompile>

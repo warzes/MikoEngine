@@ -98,7 +98,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;$(SolutionDir)MikoEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;$(SolutionDir)MikoEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -116,7 +116,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;$(SolutionDir)MikoEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;$(SolutionDir)MikoEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -136,7 +136,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;$(SolutionDir)MikoEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;$(SolutionDir)MikoEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -157,7 +157,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;$(SolutionDir)MikoEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)3rdparty\;$(SolutionDir)3rdparty\3rdparty_other\;$(SolutionDir)3rdparty\3rdparty_other\assimp\include\;$(SolutionDir)3rdparty\3rdparty_other\glslang\src\;$(SolutionDir)MikoEngine\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
