@@ -19,6 +19,7 @@
 //#pragma comment(lib, "3rdparty_assimp.lib")
 #pragma comment(lib, "3rdparty_other.lib")
 #pragma comment(lib, "MikoEngine.lib")
+#pragma comment(lib, "TGD.lib")
 //-----------------------------------------------------------------------------
 int main(
 	[[maybe_unused]] int argc,
@@ -26,7 +27,7 @@ int main(
 {
 	try
 	{
-		Mesh app;
+		Texture app;
 		return app.Run(argc, argv);
 	}
 	catch ( const std::exception &e )

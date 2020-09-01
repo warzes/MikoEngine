@@ -462,9 +462,6 @@
     <ClInclude Include="Base\BaseHeader.h">
       <Filter>0_Base</Filter>
     </ClInclude>
-    <ClInclude Include="RHI\MakeID.h">
-      <Filter>4_RHI\old\temp</Filter>
-    </ClInclude>
     <ClInclude Include="Base\PlatformTypes.h">
       <Filter>0_Base</Filter>
     </ClInclude>
@@ -1314,6 +1311,9 @@
     <ClInclude Include="Core\File\PhysicsFSFileManager.h">
       <Filter>1_Core\File</Filter>
     </ClInclude>
+    <ClInclude Include="Utility\MakeID.h">
+      <Filter>2_Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
@@ -1543,9 +1543,6 @@
     </Filter>
     <Filter Include="4_RHI\old\RHI\Interface">
       <UniqueIdentifier>{365a6a36-e0e9-4b82-a866-76cf233456cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="4_RHI\old\temp">
-      <UniqueIdentifier>{a62fb0f6-3995-4842-a79b-a8ad16b67a37}</UniqueIdentifier>
     </Filter>
     <Filter Include="4_RHI\old\Utility">
       <UniqueIdentifier>{2fa7478c-9570-4554-8276-db81f464ad93}</UniqueIdentifier>

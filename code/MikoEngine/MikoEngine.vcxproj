@@ -429,7 +429,6 @@
     <ClInclude Include="RHI\IVertexArray.h" />
     <ClInclude Include="RHI\IVertexBuffer.h" />
     <ClInclude Include="RHI\IVertexShader.h" />
-    <ClInclude Include="RHI\MakeID.h" />
     <ClInclude Include="RHI\OpenGLCore.h" />
     <ClInclude Include="RHI\OpenGLExtensions.h" />
     <ClInclude Include="RHI\OpenGLFunc.h" />
@@ -458,6 +457,7 @@
     <ClInclude Include="RHI\VulkanRuntimeLinking.h" />
     <ClInclude Include="RHI\VulkanUnsort.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Utility\MakeID.h" />
     <ClInclude Include="Utility\StringId.h" />
     <ClInclude Include="Utility\Timer.h" />
     <ClInclude Include="Utility\Version.h" />

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #if SE_OPENGL
 #include "Rhi.h"
-#include "MakeID.h"
+#include "Utility/MakeID.h"
 #include "OpenGLFunc.h"
 #include "OpenGLCore.h"
 #include "OpenGLRhi.h"

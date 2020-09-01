@@ -197,7 +197,7 @@ ApplicationSetting Texture::intial_app_settings()
 	settings.width = 1280;
 	settings.height = 720;
 	settings.title = "Texture Example";
-	settings.rhiApi = RHIApi::Direct3D11;
+	settings.rhiApi = RHIApi::Vulkan;
 	return settings;
 }
 
