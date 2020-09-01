@@ -2,7 +2,7 @@
 #include "Renderer/DebugGui/DebugGuiManager.h"
 #include "Renderer/DebugGui/DebugGuiHelper.h"
 #include "Renderer/Resource/Texture/TextureResourceManager.h"
-#include "Renderer/Core/File/IFileManager.h"
+#include "Core/File/IFileManager.h"
 #include "Renderer/Core/IProfiler.h"
 #include "Renderer/IRenderer.h"
 #include "Renderer/Context.h"

@@ -1,4 +1,8 @@
-﻿- режимы
+﻿- по скриптам
+	для доки и понимания брать https://dascript.org/doc/reference/language/lexical_structure.html
+	https://github.com/RuntimeCompiledCPlusPlus/RuntimeCompiledCPlusPlus
+
+- режимы
 	- 2д режим. в движке выключен весь 3д функционал.
 	- 3д режим. ничего не выключено, настроено на разработку 3д
 	- смешанный. ничего не выключено, настроено на разработку 2д
