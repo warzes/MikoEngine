@@ -3,7 +3,7 @@
 #include "Renderer/Resource/SkeletonAnimation/SkeletonAnimationResourceManager.h"
 #include "Renderer/Resource/SkeletonAnimation/SkeletonAnimationResource.h"
 #include "Math/Math.h"
-#include "RHI/DefaultAllocator.h"
+#include "Core/DefaultAllocator.h"
 
 // Disable warnings in external headers, we can't fix them
 SE_PRAGMA_WARNING_PUSH
@@ -68,12 +68,12 @@ namespace
 		public:
 			virtual void* allocate(size_t size, size_t alignment = k_default_alignment) override
 			{
-				return GetAllocator().reallocate(nullptr, 0, size, alignment);
+				return DefaultAllocator::Reallocate(nullptr, size, alignment);
 			}
 
 			virtual void deallocate(void* ptr, size_t size) override
 			{
-				GetAllocator().reallocate(ptr, size, 0, 1);
+				DefaultAllocator::Reallocate(ptr, 0, 1);
 			}
 	};
 

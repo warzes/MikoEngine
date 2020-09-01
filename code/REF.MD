@@ -1,6 +1,8 @@
 ﻿===================================================================================================
 Репозитории
 ===================================================================================================
+https://github.com/DragonJoker/Castor3D
+https://github.com/amzeratul/halley						- ecs?
 https://github.com/przemektmalon/VulkanDevUtility       - полезные обертки
 https://github.com/0xc0dec/solo
 https://github.com/WinteryFox/VixenEngineVulkan
@@ -10,6 +12,7 @@ aether3d
 https://github.com/DKGL/DKGL
 https://github.com/ScrappyCocco/ScrapEngine             - простая сцена
 https://github.com/GPUOpen-LibrariesAndSDKs/V-EZ
+
 
 ===================================================================================================
 для вдохновения
@@ -39,6 +42,7 @@ https://www.youtube.com/watch?v=qx1c190aGhs
 http://nfrechette.github.io/2015/05/11/memory_allocator_interface/ (unrimp example Allocator)
 http://cnicholson.net/2009/02/stupid-c-tricks-adventures-in-assert/
 https://milty.nl/grad_guide/index.html     !!!!!!!!!! терминология GAPI
+The interface design is basing on "Nicholas Frechette's Blog Raw bits" - "A memory allocator interface" - http://nfrechette.github.io/2015/05/11/memory_allocator_interface/
 
 Графика
 https://bartwronski.files.wordpress.com/2014/08/bwronski_volumetric_fog_siggraph2014.pdf

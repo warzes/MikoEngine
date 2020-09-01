@@ -28,17 +28,17 @@ namespace
 		//[-------------------------------------------------------]
 		[[nodiscard]] void* RmtMalloc(void* mm_context, rmtU32 size)
 		{
-			return static_cast<DefaultAllocator*>(mm_context)->reallocate(nullptr, 0, size, 1);
+			return DefaultAllocator::Reallocate(nullptr, size, 1);
 		}
 
 		[[nodiscard]] void* RmtRealloc(void* mm_context, void* ptr, rmtU32 size)
 		{
-			return static_cast<DefaultAllocator*>(mm_context)->reallocate(ptr, 0, size, 1);
+			return DefaultAllocator::Reallocate(ptr, size, 1);
 		}
 
 		void RmtFreePtr(void* mm_context, void* ptr)
 		{
-			static_cast<DefaultAllocator*>(mm_context)->reallocate(ptr, 0, 0, 1);
+			DefaultAllocator::Reallocate(ptr, 0, 1);
 		}
 
 
@@ -93,7 +93,7 @@ namespace Renderer
 				settings->malloc	 = &::detail::RmtMalloc;
 				settings->realloc	 = &::detail::RmtRealloc;
 				settings->free		 = &::detail::RmtFreePtr;
-				settings->mm_context = &GetAllocator();
+				settings->mm_context = nullptr;
 			}
 
 			// Create global Remotery instance

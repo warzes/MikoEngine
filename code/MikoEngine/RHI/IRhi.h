@@ -48,7 +48,6 @@ namespace Rhi
 		friend class IMeshShader;
 		friend class IComputeShader;
 
-	// Public methods
 	public:
 		inline virtual ~IRhi() override = default;
 
@@ -81,8 +80,6 @@ namespace Rhi
 		}
 #endif
 
-	// Public virtual Rhi::IRhi methods
-	public:
 		[[nodiscard]] virtual const char* getName() const = 0;
 
 		[[nodiscard]] virtual bool isInitialized() const = 0;
@@ -411,7 +408,6 @@ namespace Rhi
 			m_nativeWindowHandle(nativeWindowHandle)
 		{
 		}
-
 		explicit IRhi(const IRhi&) = delete;
 		IRhi& operator=(const IRhi&) = delete;
 
@@ -421,11 +417,10 @@ namespace Rhi
 			return mStatistics;
 		}
 #endif
-		// Protected data
-	protected:
-		NameId		   mNameId;
+
+		NameId mNameId;
 		const handle m_nativeWindowHandle;
-		Capabilities   mCapabilities;
+		Capabilities mCapabilities;
 
 #if SE_RHI_STATISTICS
 	private:

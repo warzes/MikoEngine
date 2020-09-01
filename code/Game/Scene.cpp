@@ -44,13 +44,13 @@
 #include <Renderer/Resource/ResourceStreamer.h>
 #include <Renderer/Context.h>
 
-#include <Rhi/DefaultAllocator.h>
+#include <Core/DefaultAllocator.h>
 
 #include <DeviceInput/DeviceInput.h>
 
 #define INI_IMPLEMENTATION
-#define INI_MALLOC(ctx, size) (static_cast<DefaultAllocator*>(ctx)->reallocate(nullptr, 0, size, 1))
-#define INI_FREE(ctx, ptr) (static_cast<DefaultAllocator*>(ctx)->reallocate(ptr, 0, 0, 1))
+#define INI_MALLOC(ctx, size) (DefaultAllocator::Reallocate(nullptr, size, 1))
+#define INI_FREE(ctx, ptr) (DefaultAllocator::Reallocate(ptr, 0, 1))
 #include <ini/ini.h>
 
 #ifdef RENDERER_IMGUI
@@ -129,7 +129,7 @@ Scene::Scene() :
 	mOpenMetricsWindowIniProperty(INI_NOT_FOUND)
 {
 #ifdef RENDERER_IMGUI
-	Renderer::DebugGuiManager::setImGuiAllocatorFunctions(GetAllocator());
+	//Renderer::DebugGuiManager::setImGuiAllocatorFunctions(GetAllocator());
 	mImGuiLog = new Renderer::ImGuiLog();
 	//setCustomLog(mImGuiLog);
 #endif
@@ -606,7 +606,7 @@ void Scene::loadIni()
 			mIniFileContent.resize(file->getNumberOfBytes());
 			file->read(mIniFileContent.data(), mIniFileContent.size());
 			fileManager.closeFile(*file);
-			mIni = ini_load(mIniFileContent.data(), &GetAllocator());
+			mIni = ini_load(mIniFileContent.data(), nullptr);
 			mMainWindowPositionSizeIniProperty = ini_find_property(mIni, INI_GLOBAL_SECTION, "MainWindowPositionSize", 0);
 			mCameraPositionRotationIniProperty = ini_find_property(mIni, INI_GLOBAL_SECTION, "CameraPositionRotation", 0);
 			mOpenMetricsWindowIniProperty = ini_find_property(mIni, INI_GLOBAL_SECTION, "OpenMetricsWindow", 0);
@@ -614,7 +614,7 @@ void Scene::loadIni()
 	}
 	if ( nullptr == mIni )
 	{
-		mIni = ini_create(&GetAllocator());
+		mIni = ini_create(nullptr);
 	}
 }
 

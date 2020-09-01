@@ -108,11 +108,11 @@ extern "C" {
 #endif
 	[[nodiscard]] void* __stdcall AmdAgsAllocCallback(size_t allocationSize)
 	{
-		return GetAllocator().reallocate(nullptr, 0, allocationSize, 1);
+		return DefaultAllocator::Reallocate(nullptr, allocationSize, 1);
 	}
 	void __stdcall AmdAgsFreeCallback(void* allocationPtr)
 	{
-		GetAllocator().reallocate(allocationPtr, 0, 0, 1);
+		DefaultAllocator::Reallocate(allocationPtr, 0, 1);
 	}
 }
 

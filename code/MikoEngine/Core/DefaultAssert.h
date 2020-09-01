@@ -16,7 +16,6 @@ class DefaultAssert
 {
 public:
 	DefaultAssert() noexcept = default;
-	~DefaultAssert() noexcept = default;
 
 	[[nodiscard]] bool HandleAssert(const char* expression, const char* file, uint32_t line, const char* format, ...) noexcept
 	{

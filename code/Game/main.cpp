@@ -27,7 +27,7 @@ int main(
 {
 	try
 	{
-		Texture app;
+		InstancedCubes app;
 		return app.Run(argc, argv);
 	}
 	catch ( const std::exception &e )

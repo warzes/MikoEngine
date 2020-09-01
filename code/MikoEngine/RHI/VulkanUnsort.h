@@ -8176,17 +8176,17 @@ namespace
 
 		[[nodiscard]] VKAPI_ATTR void* VKAPI_CALL vkAllocationFunction(void* pUserData, size_t size, size_t alignment, VkSystemAllocationScope)
 		{
-			return GetAllocator().reallocate(nullptr, 0, size, alignment);
+			return DefaultAllocator::Reallocate(nullptr, size, alignment);
 		}
 
 		[[nodiscard]] VKAPI_ATTR void* VKAPI_CALL vkReallocationFunction(void* pUserData, void* pOriginal, size_t size, size_t alignment, VkSystemAllocationScope)
 		{
-			return GetAllocator().reallocate(pOriginal, 0, size, alignment);
+			return DefaultAllocator::Reallocate(pOriginal, size, alignment);
 		}
 
 		VKAPI_ATTR void VKAPI_CALL vkFreeFunction(void* pUserData, void* pMemory)
 		{
-			GetAllocator().reallocate(pMemory, 0, 0, 1);
+			DefaultAllocator::Reallocate(pMemory, 0, 1);
 		}
 
 		namespace ImplementationDispatch

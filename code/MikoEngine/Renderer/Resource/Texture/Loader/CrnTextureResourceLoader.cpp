@@ -35,7 +35,7 @@ namespace
 			{
 				*pActual_size = size;
 			}
-			return static_cast<DefaultAllocator*>(pUser_data)->reallocate(p, 0, size, CRNLIB_MIN_ALLOC_ALIGNMENT);
+			return DefaultAllocator::Reallocate(p, size, CRNLIB_MIN_ALLOC_ALIGNMENT);
 		}
 
 		size_t crunchMsize(void*, void*)
@@ -294,7 +294,7 @@ namespace Renderer
 		{
 			crnd::g_pRealloc   = ::detail::crunchRealloc;
 			crnd::g_pMSize	   = ::detail::crunchMsize;
-			crnd::g_pUser_data = &GetAllocator();
+			crnd::g_pUser_data = nullptr;
 			crunchAllocatorSet = true;
 		}
 	}

@@ -51,14 +51,14 @@ namespace Renderer
 	//[ Public static methods                                 ]
 	//[-------------------------------------------------------]
 	public:
-		/**
-		*  @brief
-		*    Set ImGui allocator functions
-		*
-		*  @param[in] allocator
-		*    RHI allocator to use
-		*/
-		static void setImGuiAllocatorFunctions(DefaultAllocator& allocator);
+		///**
+		//*  @brief
+		//*    Set ImGui allocator functions
+		//*
+		//*  @param[in] allocator
+		//*    RHI allocator to use
+		//*/
+		//static void setImGuiAllocatorFunctions(DefaultAllocator& allocator);
 
 		/**
 		*  @brief

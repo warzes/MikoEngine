@@ -70,12 +70,12 @@ namespace
 		//[-------------------------------------------------------]
 		[[nodiscard]] void* AllocFunc(size_t sz, void* user_data)
 		{
-			return static_cast<DefaultAllocator*>(user_data)->reallocate(nullptr, 0, sz, 1);
+			return static_cast<DefaultAllocator*>(user_data)->Reallocate(nullptr, sz, 1);
 		}
 
 		void FreeFunc(void* ptr, void* user_data)
 		{
-			static_cast<DefaultAllocator*>(user_data)->reallocate(ptr, 0, 0, 1);
+			static_cast<DefaultAllocator*>(user_data)->Reallocate(ptr, 0, 1);
 		}
 
 
@@ -96,10 +96,10 @@ namespace Renderer
 	//[-------------------------------------------------------]
 	//[ Public static methods                                 ]
 	//[-------------------------------------------------------]
-	void DebugGuiManager::setImGuiAllocatorFunctions(DefaultAllocator& allocator)
-	{
-		ImGui::SetAllocatorFunctions(::detail::AllocFunc, ::detail::FreeFunc, &allocator);
-	}
+	//void DebugGuiManager::setImGuiAllocatorFunctions(DefaultAllocator& allocator)
+	//{
+	//	ImGui::SetAllocatorFunctions(::detail::AllocFunc, ::detail::FreeFunc, &allocator);
+	//}
 
 	void DebugGuiManager::getDefaultTextureAssetIds(AssetIds& assetIds)
 	{
@@ -342,7 +342,7 @@ namespace Renderer
 		mOpenMetricsWindow(false)
 	{
 		// Set ImGui allocator functions
-		setImGuiAllocatorFunctions(GetAllocator());
+		//setImGuiAllocatorFunctions(GetAllocator());
 
 		// Create ImGui context
 		mImGuiContext = ImGui::CreateContext();

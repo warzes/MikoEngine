@@ -1,6 +1,8 @@
 ﻿- по скриптам
 	для доки и понимания брать https://dascript.org/doc/reference/language/lexical_structure.html
 	https://github.com/RuntimeCompiledCPlusPlus/RuntimeCompiledCPlusPlus
+	V8. кстати и исходники node.js
+	https://habr.com/ru/company/oleg-bunin/blog/417459/
 
 - режимы
 	- 2д режим. в движке выключен весь 3д функционал.

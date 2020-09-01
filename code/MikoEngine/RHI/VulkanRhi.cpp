@@ -17,7 +17,7 @@ namespace VulkanRhi
 		VertexArrayMakeId(),
 		GraphicsPipelineStateMakeId(),
 		ComputePipelineStateMakeId(),
-		mVkAllocationCallbacks{&GetAllocator(), &::detail::vkAllocationFunction, &::detail::vkReallocationFunction, &::detail::vkFreeFunction, nullptr, nullptr},
+		mVkAllocationCallbacks{ nullptr, &::detail::vkAllocationFunction, &::detail::vkReallocationFunction, &::detail::vkFreeFunction, nullptr, nullptr},
 		mVulkanRuntimeLinking(nullptr),
 		mVulkanContext(nullptr),
 		mShaderLanguageGlsl(nullptr),

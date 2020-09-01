@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DefaultAllocator.h"
+#include "Core/DefaultAllocator.h"
 
 /*
 Author:
@@ -77,7 +77,7 @@ private:
 
 public:
 	MakeID(const uint max_id = std::numeric_limits<uint>::max()) :
-		m_Ranges(static_cast<Range*>(GetAllocator().reallocate(nullptr, 0, sizeof(Range), 1))),
+		m_Ranges(static_cast<Range*>(DefaultAllocator::Reallocate(nullptr, sizeof(Range), 1))),
 		m_Count(1),
 		m_Capacity(1)
 	{
@@ -88,7 +88,7 @@ public:
 
 	~MakeID()
 	{
-		GetAllocator().reallocate(m_Ranges, 0, 0, 1);
+		DefaultAllocator::Reallocate(m_Ranges, 0, 1);
 	}
 
 	bool CreateID(uint& id)
@@ -342,7 +342,7 @@ private:
 	{
 		if (m_Count >= m_Capacity)
 		{
-			m_Ranges = static_cast<Range*>(GetAllocator().reallocate(m_Ranges, sizeof(Range) * m_Capacity, (m_Capacity + m_Capacity) * sizeof(Range), 1));
+			m_Ranges = static_cast<Range*>(DefaultAllocator::Reallocate(m_Ranges, (m_Capacity + m_Capacity) * sizeof(Range), 1));
 			m_Capacity += m_Capacity;
 		}
 

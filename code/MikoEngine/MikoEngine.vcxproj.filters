@@ -11,9 +11,6 @@
     <ClCompile Include="Utility\Timer.cpp">
       <Filter>2_Utility</Filter>
     </ClCompile>
-    <ClCompile Include="RHI\DefaultAllocator.cpp">
-      <Filter>4_RHI\old\Utility</Filter>
-    </ClCompile>
     <ClCompile Include="RHI\DefaultLog.cpp">
       <Filter>4_RHI\old\Utility</Filter>
     </ClCompile>
@@ -467,9 +464,6 @@
     </ClInclude>
     <ClInclude Include="RHI\D3D11RuntimeLinking.inl">
       <Filter>4_RHI\old\D3D11</Filter>
-    </ClInclude>
-    <ClInclude Include="RHI\DefaultAllocator.h">
-      <Filter>4_RHI\old\Utility</Filter>
     </ClInclude>
     <ClInclude Include="RHI\DefaultLog.h">
       <Filter>4_RHI\old\Utility</Filter>
@@ -1314,6 +1308,9 @@
     <ClInclude Include="Utility\MakeID.h">
       <Filter>2_Utility</Filter>
     </ClInclude>
+    <ClInclude Include="Core\DefaultAllocator.h">
+      <Filter>1_Core\Memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
@@ -1570,6 +1567,9 @@
     </Filter>
     <Filter Include="1_Core\File">
       <UniqueIdentifier>{206c46d4-2074-48ba-b68f-a4095af835e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1_Core\Memory">
+      <UniqueIdentifier>{29cbac8b-a288-4a91-a1c5-cbbf98afe658}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
