@@ -317,8 +317,8 @@ ApplicationSetting InstancedCubes::intial_app_settings()
 	settings.height = 720;
 	settings.title = "InstancedCubes";
 	settings.vsync = false;
-	settings.refresh_rate = 1200;
-	settings.rhiApi = RHIApi::OpenGL;
+	settings.refresh_rate = 60;
+	settings.rhiApi = RHIApi::Vulkan;
 	return settings;
 }
 

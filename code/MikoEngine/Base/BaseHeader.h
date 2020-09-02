@@ -225,6 +225,7 @@ SE_PRAGMA_WARNING_LEVEL(0);
 #	include <VersionHelpers.h>
 #	include <wrl.h> // Windows Runtime Library. Needed for Microsoft::WRL::ComPtr<> template class.
 #	include <shellapi.h>
+#	include <strsafe.h>
 #	undef near
 #	undef far
 #else

@@ -413,6 +413,12 @@
     <ClCompile Include="Core\File\MemoryFile.cpp">
       <Filter>1_Core\File</Filter>
     </ClCompile>
+    <ClCompile Include="Core\LogSystem\CoreLogThread.cpp">
+      <Filter>1_Core\LogSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\LogSystem\CoreLogSystem.cpp">
+      <Filter>1_Core\LogSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -1311,6 +1317,33 @@
     <ClInclude Include="Core\DefaultAllocator.h">
       <Filter>1_Core\Memory</Filter>
     </ClInclude>
+    <ClInclude Include="Core\LogSystem\LogVerbosity.h">
+      <Filter>1_Core\LogSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\LogSystem\CoreLogThread.h">
+      <Filter>1_Core\LogSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\LogSystem\PlatformCoreLog.h">
+      <Filter>1_Core\LogSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\LogSystem\CoreLogSystem.h">
+      <Filter>1_Core\LogSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\LogSystem\Log.h">
+      <Filter>1_Core\LogSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\LogSystem\Platform\WindowsPlatformCoreLog.h">
+      <Filter>1_Core\LogSystem\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\LogSystem\Platform\AndroidPlatformCoreLog.h">
+      <Filter>1_Core\LogSystem\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\LogSystem\Platform\LinuxPlatformCoreLog.h">
+      <Filter>1_Core\LogSystem\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\LogSystem\Platform\EmscriptenPlatformCoreLog.h">
+      <Filter>1_Core\LogSystem\Platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
@@ -1570,6 +1603,12 @@
     </Filter>
     <Filter Include="1_Core\Memory">
       <UniqueIdentifier>{29cbac8b-a288-4a91-a1c5-cbbf98afe658}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1_Core\LogSystem">
+      <UniqueIdentifier>{3407a671-7766-4e36-a5a3-3b7ccc25a11f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1_Core\LogSystem\Platform">
+      <UniqueIdentifier>{6bd1fe82-e5ee-46c6-9732-dc65c2fdb4b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
