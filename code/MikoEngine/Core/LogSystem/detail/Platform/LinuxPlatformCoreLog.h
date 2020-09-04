@@ -1,6 +1,6 @@
 #pragma once
 
-inline void PlatformLogPrint(std::string_view str, const LogVerbosity verbosity)
+inline void PlatformLogPrint(std::string_view str, const LogVerbosity verbosity) noexcept
 {
 	int fd = 0;
 	switch ( level )

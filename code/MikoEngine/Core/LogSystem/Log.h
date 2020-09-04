@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CoreLogSystem.h"
+#include "Core/LogSystem/detail/CoreLogSystem.h"
 
 #define SE_LOG(level, str)  {CoreLogSystem::Print(str, level);}
 #define SE_LOG_ERROR(str)   {CoreLogSystem::Print(str, LogVerbosity::Error);}

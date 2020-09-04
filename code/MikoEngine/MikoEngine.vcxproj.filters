@@ -413,11 +413,11 @@
     <ClCompile Include="Core\File\MemoryFile.cpp">
       <Filter>1_Core\File</Filter>
     </ClCompile>
-    <ClCompile Include="Core\LogSystem\CoreLogThread.cpp">
-      <Filter>1_Core\LogSystem</Filter>
+    <ClCompile Include="Core\LogSystem\detail\CoreLogSystem.cpp">
+      <Filter>1_Core\LogSystem\detail</Filter>
     </ClCompile>
-    <ClCompile Include="Core\LogSystem\CoreLogSystem.cpp">
-      <Filter>1_Core\LogSystem</Filter>
+    <ClCompile Include="Core\LogSystem\detail\CoreLogThread.cpp">
+      <Filter>1_Core\LogSystem\detail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1317,32 +1317,32 @@
     <ClInclude Include="Core\DefaultAllocator.h">
       <Filter>1_Core\Memory</Filter>
     </ClInclude>
-    <ClInclude Include="Core\LogSystem\LogVerbosity.h">
-      <Filter>1_Core\LogSystem</Filter>
+    <ClInclude Include="Core\LogSystem\detail\Platform\AndroidPlatformCoreLog.h">
+      <Filter>1_Core\LogSystem\detail\Platform</Filter>
     </ClInclude>
-    <ClInclude Include="Core\LogSystem\CoreLogThread.h">
-      <Filter>1_Core\LogSystem</Filter>
+    <ClInclude Include="Core\LogSystem\detail\Platform\EmscriptenPlatformCoreLog.h">
+      <Filter>1_Core\LogSystem\detail\Platform</Filter>
     </ClInclude>
-    <ClInclude Include="Core\LogSystem\PlatformCoreLog.h">
-      <Filter>1_Core\LogSystem</Filter>
+    <ClInclude Include="Core\LogSystem\detail\Platform\LinuxPlatformCoreLog.h">
+      <Filter>1_Core\LogSystem\detail\Platform</Filter>
     </ClInclude>
-    <ClInclude Include="Core\LogSystem\CoreLogSystem.h">
-      <Filter>1_Core\LogSystem</Filter>
+    <ClInclude Include="Core\LogSystem\detail\Platform\WindowsPlatformCoreLog.h">
+      <Filter>1_Core\LogSystem\detail\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\LogSystem\detail\PlatformCoreLog.h">
+      <Filter>1_Core\LogSystem\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\LogSystem\detail\CoreLogSystem.h">
+      <Filter>1_Core\LogSystem\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\LogSystem\detail\CoreLogThread.h">
+      <Filter>1_Core\LogSystem\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\LogSystem\detail\LogVerbosity.h">
+      <Filter>1_Core\LogSystem\detail</Filter>
     </ClInclude>
     <ClInclude Include="Core\LogSystem\Log.h">
       <Filter>1_Core\LogSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\LogSystem\Platform\WindowsPlatformCoreLog.h">
-      <Filter>1_Core\LogSystem\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\LogSystem\Platform\AndroidPlatformCoreLog.h">
-      <Filter>1_Core\LogSystem\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\LogSystem\Platform\LinuxPlatformCoreLog.h">
-      <Filter>1_Core\LogSystem\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\LogSystem\Platform\EmscriptenPlatformCoreLog.h">
-      <Filter>1_Core\LogSystem\Platform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1607,8 +1607,11 @@
     <Filter Include="1_Core\LogSystem">
       <UniqueIdentifier>{3407a671-7766-4e36-a5a3-3b7ccc25a11f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1_Core\LogSystem\Platform">
-      <UniqueIdentifier>{6bd1fe82-e5ee-46c6-9732-dc65c2fdb4b1}</UniqueIdentifier>
+    <Filter Include="1_Core\LogSystem\detail">
+      <UniqueIdentifier>{887d4173-24b8-4dd0-9688-9dc8411a9aa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1_Core\LogSystem\detail\Platform">
+      <UniqueIdentifier>{af2e0a8f-381a-409e-9488-757e95c9c0aa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

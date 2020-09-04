@@ -9,7 +9,7 @@ enum class LogVerbosity : uint8_t
 	Debug,
 };
 
-inline constexpr const char* LogTypeToString(LogVerbosity type)
+[[nodiscard]] inline constexpr const char* LogTypeToString(LogVerbosity type) noexcept
 {
 	switch ( type )
 	{

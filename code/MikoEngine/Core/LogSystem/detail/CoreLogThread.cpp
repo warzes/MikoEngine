@@ -1,10 +1,13 @@
 #include "stdafx.h"
 #if !SE_PLATFORM_EMSCRIPTEN
 #include "CoreLogThread.h"
+#include "PlatformCoreLog.h"
 //-----------------------------------------------------------------------------
-CoreLogThread::CoreLogThread(logFlushImpl *flushFunc)
-	: m_logFlushImpl(flushFunc)
+CoreLogThread::CoreLogThread()
 {
+#if !SE_PLATFORM_EMSCRIPTEN
+	m_thread = std::thread(&CoreLogThread::LogLoop, this);
+#endif
 }
 //-----------------------------------------------------------------------------
 CoreLogThread::~CoreLogThread()
@@ -15,25 +18,25 @@ CoreLogThread::~CoreLogThread()
 void CoreLogThread::print(const std::string &str, const LogVerbosity verbosity) const
 {
 	std::unique_lock<std::mutex> lock(m_queueMutex);
-	m_commandQueue.push(command(command::Type::LogString, verbosity, str));
+	m_logQueue.push(commandLog(verbosity, str));
 	lock.unlock();
 	m_queueCondition.notify_all();
 }
 //-----------------------------------------------------------------------------
 void CoreLogThread::LogLoop()
 {
-	for ( ;;)
+	for ( ;; )
 	{
 		std::unique_lock<std::mutex> lock(m_queueMutex);
-		while ( m_commandQueue.empty() )
+		while ( m_logQueue.empty() )
 			m_queueCondition.wait(lock);
-		auto command = std::move(m_commandQueue.front());
-		m_commandQueue.pop();
+		const auto command = std::move(m_logQueue.front());
+		m_logQueue.pop();
 		lock.unlock();
 
-		if ( command.type == command::Type::LogString )
-			m_logFlushImpl(command.str, command.verbosity);
-		else if ( command.type == command::Type::Quit )
+		PlatformLogPrint(command.str, command.verbosity);
+
+		if ( m_quitCommand )
 			break;
 	}
 }
@@ -43,7 +46,7 @@ void CoreLogThread::close()
 	if ( m_isClose ) return;
 
 	std::unique_lock<std::mutex> lock(m_queueMutex);
-	m_commandQueue.push(command(command::Type::Quit));
+	m_quitCommand = true;
 	lock.unlock();
 	m_queueCondition.notify_all();
 
