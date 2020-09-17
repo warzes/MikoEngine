@@ -70,5 +70,5 @@ namespace Renderer
 #if SE_DEBUG
 #	define RENDERER_SET_CURRENT_THREAD_DEBUG_NAME(shortName, descriptiveName) Renderer::PlatformManager::setCurrentThreadName(shortName, descriptiveName);
 #else
-#d	efine RENDERER_SET_CURRENT_THREAD_DEBUG_NAME(shortName, descriptiveName)
+#	define RENDERER_SET_CURRENT_THREAD_DEBUG_NAME(shortName, descriptiveName)
 #endif

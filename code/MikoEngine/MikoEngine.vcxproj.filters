@@ -3,421 +3,421 @@
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Application\Application.cpp">
-      <Filter>x_Application</Filter>
+      <Filter>old\x_Application</Filter>
     </ClCompile>
     <ClCompile Include="Core\Logger.cpp">
-      <Filter>1_Core</Filter>
+      <Filter>old\1_Core</Filter>
     </ClCompile>
     <ClCompile Include="Utility\Timer.cpp">
-      <Filter>2_Utility</Filter>
+      <Filter>old\2_Utility</Filter>
     </ClCompile>
     <ClCompile Include="RHI\DefaultLog.cpp">
-      <Filter>4_RHI\old\Utility</Filter>
+      <Filter>old\4_RHI\old\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Context.cpp">
-      <Filter>5_Renderer</Filter>
+      <Filter>old\5_Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\RendererImpl.cpp">
-      <Filter>5_Renderer</Filter>
+      <Filter>old\5_Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\RenderQueue\Renderable.cpp">
-      <Filter>5_Renderer\RenderQueue</Filter>
+      <Filter>old\5_Renderer\RenderQueue</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\RenderQueue\RenderableManager.cpp">
-      <Filter>5_Renderer\RenderQueue</Filter>
+      <Filter>old\5_Renderer\RenderQueue</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\RenderQueue\RenderQueue.cpp">
-      <Filter>5_Renderer\RenderQueue</Filter>
+      <Filter>old\5_Renderer\RenderQueue</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\DebugGui\DebugGuiHelper.cpp">
-      <Filter>5_Renderer\DebugGui</Filter>
+      <Filter>old\5_Renderer\DebugGui</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\DebugGui\DebugGuiManager.cpp">
-      <Filter>5_Renderer\DebugGui</Filter>
+      <Filter>old\5_Renderer\DebugGui</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\DebugGui\Detail\DebugGuiManagerLinux.cpp">
-      <Filter>5_Renderer\DebugGui\Detail</Filter>
+      <Filter>old\5_Renderer\DebugGui\Detail</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\DebugGui\Detail\DebugGuiManagerWindows.cpp">
-      <Filter>5_Renderer\DebugGui\Detail</Filter>
+      <Filter>old\5_Renderer\DebugGui\Detail</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Asset\AssetManager.cpp">
-      <Filter>5_Renderer\Asset</Filter>
+      <Filter>old\5_Renderer\Asset</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Asset\AssetPackage.cpp">
-      <Filter>5_Renderer\Asset</Filter>
+      <Filter>old\5_Renderer\Asset</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Asset\Loader\AssetPackageLoader.cpp">
-      <Filter>5_Renderer\Asset\Loader</Filter>
+      <Filter>old\5_Renderer\Asset\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Core\Time\Stopwatch.cpp">
-      <Filter>5_Renderer\Core\Time</Filter>
+      <Filter>old\5_Renderer\Core\Time</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Core\Time\TimeManager.cpp">
-      <Filter>5_Renderer\Core\Time</Filter>
+      <Filter>old\5_Renderer\Core\Time</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Core\Renderer\FramebufferManager.cpp">
-      <Filter>5_Renderer\Core\Renderer</Filter>
+      <Filter>old\5_Renderer\Core\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Core\Renderer\FramebufferSignature.cpp">
-      <Filter>5_Renderer\Core\Renderer</Filter>
+      <Filter>old\5_Renderer\Core\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Core\Renderer\RenderPassManager.cpp">
-      <Filter>5_Renderer\Core\Renderer</Filter>
+      <Filter>old\5_Renderer\Core\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Core\Renderer\RenderTargetTextureManager.cpp">
-      <Filter>5_Renderer\Core\Renderer</Filter>
+      <Filter>old\5_Renderer\Core\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Core\Renderer\RenderTargetTextureSignature.cpp">
-      <Filter>5_Renderer\Core\Renderer</Filter>
+      <Filter>old\5_Renderer\Core\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Core\Platform\PlatformManager.cpp">
-      <Filter>5_Renderer\Core\Platform</Filter>
+      <Filter>old\5_Renderer\Core\Platform</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\IResource.cpp">
-      <Filter>5_Renderer\Resource</Filter>
+      <Filter>old\5_Renderer\Resource</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\IResourceListener.cpp">
-      <Filter>5_Renderer\Resource</Filter>
+      <Filter>old\5_Renderer\Resource</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\RendererResourceManager.cpp">
-      <Filter>5_Renderer\Resource</Filter>
+      <Filter>old\5_Renderer\Resource</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\ResourceStreamer.cpp">
-      <Filter>5_Renderer\Resource</Filter>
+      <Filter>old\5_Renderer\Resource</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\VertexAttributes\VertexAttributesResourceManager.cpp">
-      <Filter>5_Renderer\Resource\VertexAttributes</Filter>
+      <Filter>old\5_Renderer\Resource\VertexAttributes</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\VertexAttributes\Loader\VertexAttributesResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\VertexAttributes\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\VertexAttributes\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Texture\TextureResourceManager.cpp">
-      <Filter>5_Renderer\Resource\Texture</Filter>
+      <Filter>old\5_Renderer\Resource\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Texture\Loader\CrnArrayTextureResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\Texture\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Texture\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Texture\Loader\CrnTextureResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\Texture\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Texture\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Texture\Loader\ITextureResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\Texture\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Texture\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Texture\Loader\KtxTextureResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\Texture\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Texture\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Texture\Loader\Lz4DdsTextureResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\Texture\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Texture\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\SkeletonAnimation\SkeletonAnimationController.cpp">
-      <Filter>5_Renderer\Resource\SkeletonAnimation</Filter>
+      <Filter>old\5_Renderer\Resource\SkeletonAnimation</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\SkeletonAnimation\SkeletonAnimationEvaluator.cpp">
-      <Filter>5_Renderer\Resource\SkeletonAnimation</Filter>
+      <Filter>old\5_Renderer\Resource\SkeletonAnimation</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\SkeletonAnimation\SkeletonAnimationResourceManager.cpp">
-      <Filter>5_Renderer\Resource\SkeletonAnimation</Filter>
+      <Filter>old\5_Renderer\Resource\SkeletonAnimation</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\SkeletonAnimation\Loader\SkeletonAnimationResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\SkeletonAnimation\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\SkeletonAnimation\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Skeleton\SkeletonResource.cpp">
-      <Filter>5_Renderer\Resource\Skeleton</Filter>
+      <Filter>old\5_Renderer\Resource\Skeleton</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Skeleton\SkeletonResourceManager.cpp">
-      <Filter>5_Renderer\Resource\Skeleton</Filter>
+      <Filter>old\5_Renderer\Resource\Skeleton</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Skeleton\Loader\SkeletonResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\Skeleton\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Skeleton\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\ShaderPiece\ShaderPieceResourceManager.cpp">
-      <Filter>5_Renderer\Resource\ShaderPiece</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderPiece</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\ShaderPiece\Loader\ShaderPieceResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\ShaderPiece\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderPiece\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\ShaderBlueprint\ShaderBlueprintResourceManager.cpp">
-      <Filter>5_Renderer\Resource\ShaderBlueprint</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\ShaderBlueprint\Loader\ShaderBlueprintResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\ShaderBlueprint\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\ShaderBlueprint\Cache\Preprocessor.cpp">
-      <Filter>5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\ShaderBlueprint\Cache\ShaderBuilder.cpp">
-      <Filter>5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\ShaderBlueprint\Cache\ShaderCacheManager.cpp">
-      <Filter>5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\ShaderBlueprint\Cache\ShaderProperties.cpp">
-      <Filter>5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\SceneNode.cpp">
-      <Filter>5_Renderer\Resource\Scene</Filter>
+      <Filter>old\5_Renderer\Resource\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\SceneResource.cpp">
-      <Filter>5_Renderer\Resource\Scene</Filter>
+      <Filter>old\5_Renderer\Resource\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\SceneResourceManager.cpp">
-      <Filter>5_Renderer\Resource\Scene</Filter>
+      <Filter>old\5_Renderer\Resource\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Culling\SceneCullingManager.cpp">
-      <Filter>5_Renderer\Resource\Scene\Culling</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Culling</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Factory\SceneFactory.cpp">
-      <Filter>5_Renderer\Resource\Scene\Factory</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Factory</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Item\ISceneItem.cpp">
-      <Filter>5_Renderer\Resource\Scene\Item</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Item\MaterialSceneItem.cpp">
-      <Filter>5_Renderer\Resource\Scene\Item</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Item\Camera\CameraSceneItem.cpp">
-      <Filter>5_Renderer\Resource\Scene\Item\Camera</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Item\Grass\GrassSceneItem.cpp">
-      <Filter>5_Renderer\Resource\Scene\Item\Grass</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Grass</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Item\Light\LightSceneItem.cpp">
-      <Filter>5_Renderer\Resource\Scene\Item\Light</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Light</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Item\Light\SunlightSceneItem.cpp">
-      <Filter>5_Renderer\Resource\Scene\Item\Light</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Light</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Item\Mesh\MeshSceneItem.cpp">
-      <Filter>5_Renderer\Resource\Scene\Item\Mesh</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Item\Mesh\SkeletonMeshSceneItem.cpp">
-      <Filter>5_Renderer\Resource\Scene\Item\Mesh</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Item\Particles\ParticlesSceneItem.cpp">
-      <Filter>5_Renderer\Resource\Scene\Item\Particles</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Particles</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Item\Sky\HosekWilkieSky.cpp">
-      <Filter>5_Renderer\Resource\Scene\Item\Sky</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Sky</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Item\Sky\SkySceneItem.cpp">
-      <Filter>5_Renderer\Resource\Scene\Item\Sky</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Sky</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Item\Terrain\TerrainSceneItem.cpp">
-      <Filter>5_Renderer\Resource\Scene\Item\Terrain</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Terrain</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Item\Volume\VolumeSceneItem.cpp">
-      <Filter>5_Renderer\Resource\Scene\Item\Volume</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Volume</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Scene\Loader\SceneResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\Scene\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Mesh\MeshResource.cpp">
-      <Filter>5_Renderer\Resource\Mesh</Filter>
+      <Filter>old\5_Renderer\Resource\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Mesh\MeshResourceManager.cpp">
-      <Filter>5_Renderer\Resource\Mesh</Filter>
+      <Filter>old\5_Renderer\Resource\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Mesh\Loader\IMeshResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\Mesh\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Mesh\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Mesh\Loader\MeshResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\Mesh\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Mesh\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\MaterialBlueprintResource.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\MaterialBlueprintResourceManager.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\BufferManager\IndirectBufferManager.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\BufferManager\LightBufferManager.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\BufferManager\MaterialBufferManager.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\BufferManager\MaterialBufferSlot.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\BufferManager\PassBufferManager.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\BufferManager\TextureInstanceBufferManager.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\BufferManager\UniformInstanceBufferManager.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\Cache\ComputePipelineStateCacheManager.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\Cache\ComputePipelineStateCompiler.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\Cache\ComputePipelineStateSignature.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\Cache\GraphicsPipelineStateCacheManager.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\Cache\GraphicsPipelineStateCompiler.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\Cache\GraphicsPipelineStateSignature.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\Cache\GraphicsProgramCacheManager.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\Listener\MaterialBlueprintResourceListener.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Listener</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Listener</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\MaterialBlueprint\Loader\MaterialBlueprintResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Material\MaterialProperties.cpp">
-      <Filter>5_Renderer\Resource\Material</Filter>
+      <Filter>old\5_Renderer\Resource\Material</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Material\MaterialPropertyValue.cpp">
-      <Filter>5_Renderer\Resource\Material</Filter>
+      <Filter>old\5_Renderer\Resource\Material</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Material\MaterialResource.cpp">
-      <Filter>5_Renderer\Resource\Material</Filter>
+      <Filter>old\5_Renderer\Resource\Material</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Material\MaterialResourceManager.cpp">
-      <Filter>5_Renderer\Resource\Material</Filter>
+      <Filter>old\5_Renderer\Resource\Material</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Material\MaterialTechnique.cpp">
-      <Filter>5_Renderer\Resource\Material</Filter>
+      <Filter>old\5_Renderer\Resource\Material</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\Material\Loader\MaterialResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\Material\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Material\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorWorkspace\CompositorContextData.cpp">
-      <Filter>5_Renderer\Resource\CompositorWorkspace</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorWorkspace</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorWorkspace\CompositorWorkspaceInstance.cpp">
-      <Filter>5_Renderer\Resource\CompositorWorkspace</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorWorkspace</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorWorkspace\CompositorWorkspaceResourceManager.cpp">
-      <Filter>5_Renderer\Resource\CompositorWorkspace</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorWorkspace</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorWorkspace\Loader\CompositorWorkspaceResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\CompositorWorkspace\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorWorkspace\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\CompositorNodeInstance.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\CompositorNodeResource.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\CompositorNodeResourceManager.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\CompositorTarget.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Loader\CompositorNodeResourceLoader.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Loader</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\CompositorPassFactory.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\Clear\CompositorInstancePassClear.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Clear</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Clear</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\Clear\CompositorResourcePassClear.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Clear</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Clear</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\Compute\CompositorInstancePassCompute.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Compute</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Compute</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\Compute\CompositorResourcePassCompute.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Compute</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Compute</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\Copy\CompositorInstancePassCopy.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Copy</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Copy</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\Copy\CompositorResourcePassCopy.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Copy</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Copy</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\DebugGui\CompositorInstancePassDebugGui.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\DebugGui</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\DebugGui</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\GenerateMipmaps\CompositorInstancePassGenerateMipmaps.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\GenerateMipmaps</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\GenerateMipmaps</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\GenerateMipmaps\CompositorResourcePassGenerateMipmaps.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\GenerateMipmaps</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\GenerateMipmaps</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\ResolveMultisample\CompositorInstancePassResolveMultisample.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\ResolveMultisample</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\ResolveMultisample</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\ResolveMultisample\CompositorResourcePassResolveMultisample.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\ResolveMultisample</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\ResolveMultisample</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\Scene\CompositorInstancePassScene.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Scene</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\Scene\CompositorResourcePassScene.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Scene</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\ShadowMap\CompositorInstancePassShadowMap.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\ShadowMap</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\ShadowMap</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\ShadowMap\CompositorResourcePassShadowMap.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\ShadowMap</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\ShadowMap</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\CompositorInstancePassVrHiddenAreaMesh.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\CompositorResourcePassVrHiddenAreaMesh.cpp">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh</Filter>
     </ClCompile>
     <ClCompile Include="RHI\VulkanRhi.cpp">
-      <Filter>4_RHI\old</Filter>
+      <Filter>old\4_RHI\old</Filter>
     </ClCompile>
     <ClCompile Include="RHI\Direct3D11Rhi.cpp">
-      <Filter>4_RHI\old</Filter>
+      <Filter>old\4_RHI\old</Filter>
     </ClCompile>
     <ClCompile Include="RHI\Direct3D12Rhi.cpp">
-      <Filter>4_RHI\old</Filter>
+      <Filter>old\4_RHI\old</Filter>
     </ClCompile>
     <ClCompile Include="RHI\NullRhi.cpp">
-      <Filter>4_RHI\old</Filter>
+      <Filter>old\4_RHI\old</Filter>
     </ClCompile>
     <ClCompile Include="RHI\OpenGLES3Rhi.cpp">
-      <Filter>4_RHI\old</Filter>
+      <Filter>old\4_RHI\old</Filter>
     </ClCompile>
     <ClCompile Include="RHI\OpenGLRhi.cpp">
-      <Filter>4_RHI\old</Filter>
+      <Filter>old\4_RHI\old</Filter>
     </ClCompile>
     <ClCompile Include="Math\EulerAngles.cpp">
-      <Filter>3_Math</Filter>
+      <Filter>old\3_Math</Filter>
     </ClCompile>
     <ClCompile Include="Math\Frustum.cpp">
-      <Filter>3_Math</Filter>
+      <Filter>old\3_Math</Filter>
     </ClCompile>
     <ClCompile Include="Math\Math.cpp">
-      <Filter>3_Math</Filter>
+      <Filter>old\3_Math</Filter>
     </ClCompile>
     <ClCompile Include="Math\Transform.cpp">
-      <Filter>3_Math</Filter>
+      <Filter>old\3_Math</Filter>
     </ClCompile>
     <ClCompile Include="Core\File\FileSystemHelper.cpp">
-      <Filter>1_Core\File</Filter>
+      <Filter>old\1_Core\File</Filter>
     </ClCompile>
     <ClCompile Include="Core\File\MemoryFile.cpp">
-      <Filter>1_Core\File</Filter>
+      <Filter>old\1_Core\File</Filter>
     </ClCompile>
     <ClCompile Include="Core\LogSystem\detail\CoreLogSystem.cpp">
-      <Filter>1_Core\LogSystem\detail</Filter>
+      <Filter>old\1_Core\LogSystem\detail</Filter>
     </ClCompile>
     <ClCompile Include="Core\LogSystem\detail\CoreLogThread.cpp">
-      <Filter>1_Core\LogSystem\detail</Filter>
+      <Filter>old\1_Core\LogSystem\detail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -441,13 +441,13 @@
       <Filter>0_Base</Filter>
     </ClInclude>
     <ClInclude Include="Utility\Version.h">
-      <Filter>2_Utility</Filter>
+      <Filter>old\2_Utility</Filter>
     </ClInclude>
     <ClInclude Include="Application\Application.h">
-      <Filter>x_Application</Filter>
+      <Filter>old\x_Application</Filter>
     </ClInclude>
     <ClInclude Include="Application\ApplicationSettings.h">
-      <Filter>x_Application</Filter>
+      <Filter>old\x_Application</Filter>
     </ClInclude>
     <ClInclude Include="Base\InlineFunc.h">
       <Filter>0_Base</Filter>
@@ -456,10 +456,10 @@
       <Filter>0_Base</Filter>
     </ClInclude>
     <ClInclude Include="Core\Logger.h">
-      <Filter>1_Core</Filter>
+      <Filter>old\1_Core</Filter>
     </ClInclude>
     <ClInclude Include="Utility\Timer.h">
-      <Filter>2_Utility</Filter>
+      <Filter>old\2_Utility</Filter>
     </ClInclude>
     <ClInclude Include="MikoHeader.h" />
     <ClInclude Include="Base\BaseHeader.h">
@@ -469,1148 +469,1151 @@
       <Filter>0_Base</Filter>
     </ClInclude>
     <ClInclude Include="RHI\D3D11RuntimeLinking.inl">
-      <Filter>4_RHI\old\D3D11</Filter>
+      <Filter>old\4_RHI\old\D3D11</Filter>
     </ClInclude>
     <ClInclude Include="RHI\DefaultLog.h">
-      <Filter>4_RHI\old\Utility</Filter>
+      <Filter>old\4_RHI\old\Utility</Filter>
     </ClInclude>
     <ClInclude Include="RHI\SamplerStateTypes.h">
-      <Filter>4_RHI\ResourceTypes</Filter>
+      <Filter>old\4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\RootSignatureTypes.h">
-      <Filter>4_RHI\ResourceTypes</Filter>
+      <Filter>old\4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\TextureTypes.h">
-      <Filter>4_RHI\ResourceTypes</Filter>
+      <Filter>old\4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\BlendStateTypes.h">
-      <Filter>4_RHI\ResourceTypes</Filter>
+      <Filter>old\4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\BufferTypes.h">
-      <Filter>4_RHI\ResourceTypes</Filter>
+      <Filter>old\4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\VertexArrayTypes.h">
-      <Filter>4_RHI\ResourceTypes</Filter>
+      <Filter>old\4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IndexBufferTypes.h">
-      <Filter>4_RHI\ResourceTypes</Filter>
+      <Filter>old\4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IndirectBufferTypes.h">
-      <Filter>4_RHI\ResourceTypes</Filter>
+      <Filter>old\4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\RasterizerStateTypes.h">
-      <Filter>4_RHI\ResourceTypes</Filter>
+      <Filter>old\4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\DepthStencilStateTypes.h">
-      <Filter>4_RHI\ResourceTypes</Filter>
+      <Filter>old\4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\PipelineStateTypes.h">
-      <Filter>4_RHI\ResourceTypes</Filter>
+      <Filter>old\4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ShaderTypes.h">
-      <Filter>4_RHI\ResourceTypes</Filter>
+      <Filter>old\4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="RHI\QueryType.h">
-      <Filter>4_RHI\ResourceTypes</Filter>
+      <Filter>old\4_RHI\ResourceTypes</Filter>
     </ClInclude>
     <ClInclude Include="Core\MemoryPtr.h">
-      <Filter>1_Core</Filter>
+      <Filter>old\1_Core</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IRhi.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IShaderLanguage.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IResource.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IRootSignature.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IResourceGroup.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IGraphicsProgram.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IRenderPass.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IQueryPool.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IRenderTarget.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ISwapChain.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IFramebuffer.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IBufferManager.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IVertexArray.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IBuffer.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IVertexBuffer.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IIndexBuffer.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITextureBuffer.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IStructuredBuffer.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IIndirectBuffer.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IUniformBuffer.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITextureManager.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITexture.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITexture1D.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITexture1DArray.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITexture2D.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITexture2DArray.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITexture3D.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITextureCube.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITextureCubeArray.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IState.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IPipelineState.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IGraphicsPipelineState.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IComputePipelineState.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ISamplerState.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IShader.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IVertexShader.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITessellationControlShader.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITessellationEvaluationShader.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IGeometryShader.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IFragmentShader.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ITaskShader.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IMeshShader.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IComputeShader.h">
-      <Filter>4_RHI\old\RHI\Interface</Filter>
+      <Filter>old\4_RHI\old\RHI\Interface</Filter>
     </ClInclude>
     <ClInclude Include="RHI\CommandBuffer.h">
-      <Filter>4_RHI\old\RHI</Filter>
+      <Filter>old\4_RHI\old\RHI</Filter>
     </ClInclude>
     <ClInclude Include="RHI\Rhi.h">
-      <Filter>4_RHI\old\RHI</Filter>
+      <Filter>old\4_RHI\old\RHI</Filter>
     </ClInclude>
     <ClInclude Include="RHI\OpenGLCore.h">
-      <Filter>4_RHI\old\OpenGL</Filter>
+      <Filter>old\4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\OpenGLFunc.h">
-      <Filter>4_RHI\old\OpenGL</Filter>
+      <Filter>old\4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\OpenGLRhi.h">
-      <Filter>4_RHI\old\OpenGL</Filter>
+      <Filter>old\4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\OpenGLRuntimeLinking.h">
-      <Filter>4_RHI\old\OpenGL</Filter>
+      <Filter>old\4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\OpenGLExtensions.h">
-      <Filter>4_RHI\old\OpenGL</Filter>
+      <Filter>old\4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\IOpenGLContext.h">
-      <Filter>4_RHI\old\OpenGL</Filter>
+      <Filter>old\4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\OpenGLMapping.h">
-      <Filter>4_RHI\old\OpenGL</Filter>
+      <Filter>old\4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\ResourceGroup.h">
-      <Filter>4_RHI\old\OpenGL\Resource</Filter>
+      <Filter>old\4_RHI\old\OpenGL\Resource</Filter>
     </ClInclude>
     <ClInclude Include="RHI\RootSignature.h">
-      <Filter>4_RHI\old\OpenGL\Resource</Filter>
+      <Filter>old\4_RHI\old\OpenGL\Resource</Filter>
     </ClInclude>
     <ClInclude Include="RHI\OpenGLUnsort.h">
-      <Filter>4_RHI\old\OpenGL</Filter>
+      <Filter>old\4_RHI\old\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="RHI\Direct3D12Unsort.h">
-      <Filter>4_RHI\old\D3D12</Filter>
+      <Filter>old\4_RHI\old\D3D12</Filter>
     </ClInclude>
     <ClInclude Include="RHI\Direct3D12Rhi.h">
-      <Filter>4_RHI\old\D3D12</Filter>
+      <Filter>old\4_RHI\old\D3D12</Filter>
     </ClInclude>
     <ClInclude Include="RHI\Direct3D12Core.h">
-      <Filter>4_RHI\old\D3D12</Filter>
+      <Filter>old\4_RHI\old\D3D12</Filter>
     </ClInclude>
     <ClInclude Include="RHI\VulkanCore.h">
-      <Filter>4_RHI\old\Vulkan</Filter>
+      <Filter>old\4_RHI\old\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="RHI\VulkanUnsort.h">
-      <Filter>4_RHI\old\Vulkan</Filter>
+      <Filter>old\4_RHI\old\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="RHI\VulkanRhi.h">
-      <Filter>4_RHI\old\Vulkan</Filter>
+      <Filter>old\4_RHI\old\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="RHI\VulkanRuntimeLinking.h">
-      <Filter>4_RHI\old\Vulkan</Filter>
+      <Filter>old\4_RHI\old\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="RHI\VulkanContext.h">
-      <Filter>4_RHI\old\Vulkan</Filter>
+      <Filter>old\4_RHI\old\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Context.h">
-      <Filter>5_Renderer</Filter>
+      <Filter>old\5_Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\IRenderer.h">
-      <Filter>5_Renderer</Filter>
+      <Filter>old\5_Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\RendererImpl.h">
-      <Filter>5_Renderer</Filter>
+      <Filter>old\5_Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\RendererInstance.h">
-      <Filter>5_Renderer</Filter>
+      <Filter>old\5_Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\RenderQueue\Renderable.h">
-      <Filter>5_Renderer\RenderQueue</Filter>
+      <Filter>old\5_Renderer\RenderQueue</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\RenderQueue\RenderableManager.h">
-      <Filter>5_Renderer\RenderQueue</Filter>
+      <Filter>old\5_Renderer\RenderQueue</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\RenderQueue\RenderQueue.h">
-      <Filter>5_Renderer\RenderQueue</Filter>
+      <Filter>old\5_Renderer\RenderQueue</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\DebugGui\DebugGuiHelper.h">
-      <Filter>5_Renderer\DebugGui</Filter>
+      <Filter>old\5_Renderer\DebugGui</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\DebugGui\DebugGuiManager.h">
-      <Filter>5_Renderer\DebugGui</Filter>
+      <Filter>old\5_Renderer\DebugGui</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\DebugGui\Detail\DebugGuiManagerLinux.h">
-      <Filter>5_Renderer\DebugGui\Detail</Filter>
+      <Filter>old\5_Renderer\DebugGui\Detail</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\DebugGui\Detail\DebugGuiManagerWindows.h">
-      <Filter>5_Renderer\DebugGui\Detail</Filter>
+      <Filter>old\5_Renderer\DebugGui\Detail</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_GLSL_410.h">
-      <Filter>5_Renderer\DebugGui\Detail\Shader</Filter>
+      <Filter>old\5_Renderer\DebugGui\Detail\Shader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_GLSL_450.h">
-      <Filter>5_Renderer\DebugGui\Detail\Shader</Filter>
+      <Filter>old\5_Renderer\DebugGui\Detail\Shader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_GLSL_ES3.h">
-      <Filter>5_Renderer\DebugGui\Detail\Shader</Filter>
+      <Filter>old\5_Renderer\DebugGui\Detail\Shader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_Null.h">
-      <Filter>5_Renderer\DebugGui\Detail\Shader</Filter>
+      <Filter>old\5_Renderer\DebugGui\Detail\Shader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Asset\Asset.h">
-      <Filter>5_Renderer\Asset</Filter>
+      <Filter>old\5_Renderer\Asset</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Asset\AssetManager.h">
-      <Filter>5_Renderer\Asset</Filter>
+      <Filter>old\5_Renderer\Asset</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Asset\AssetPackage.h">
-      <Filter>5_Renderer\Asset</Filter>
+      <Filter>old\5_Renderer\Asset</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Asset\Loader\AssetPackageFileFormat.h">
-      <Filter>5_Renderer\Asset\Loader</Filter>
+      <Filter>old\5_Renderer\Asset\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Asset\Loader\AssetPackageLoader.h">
-      <Filter>5_Renderer\Asset\Loader</Filter>
+      <Filter>old\5_Renderer\Asset\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\IGraphicsDebugger.h">
-      <Filter>5_Renderer\Core</Filter>
+      <Filter>old\5_Renderer\Core</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\IProfiler.h">
-      <Filter>5_Renderer\Core</Filter>
+      <Filter>old\5_Renderer\Core</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\PackedElementManager.h">
-      <Filter>5_Renderer\Core</Filter>
+      <Filter>old\5_Renderer\Core</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\RemoteryProfiler.h">
-      <Filter>5_Renderer\Core</Filter>
+      <Filter>old\5_Renderer\Core</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\RenderDocGraphicsDebugger.h">
-      <Filter>5_Renderer\Core</Filter>
+      <Filter>old\5_Renderer\Core</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\SwizzleVectorElementRemove.h">
-      <Filter>5_Renderer\Core</Filter>
+      <Filter>old\5_Renderer\Core</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\Time\Stopwatch.h">
-      <Filter>5_Renderer\Core\Time</Filter>
+      <Filter>old\5_Renderer\Core\Time</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\Time\TimeManager.h">
-      <Filter>5_Renderer\Core\Time</Filter>
+      <Filter>old\5_Renderer\Core\Time</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\Thread\ThreadPool.h">
-      <Filter>5_Renderer\Core\Thread</Filter>
+      <Filter>old\5_Renderer\Core\Thread</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\Renderer\FramebufferManager.h">
-      <Filter>5_Renderer\Core\Renderer</Filter>
+      <Filter>old\5_Renderer\Core\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\Renderer\FramebufferSignature.h">
-      <Filter>5_Renderer\Core\Renderer</Filter>
+      <Filter>old\5_Renderer\Core\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\Renderer\RenderPassManager.h">
-      <Filter>5_Renderer\Core\Renderer</Filter>
+      <Filter>old\5_Renderer\Core\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\Renderer\RenderTargetTextureManager.h">
-      <Filter>5_Renderer\Core\Renderer</Filter>
+      <Filter>old\5_Renderer\Core\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\Renderer\RenderTargetTextureSignature.h">
-      <Filter>5_Renderer\Core\Renderer</Filter>
+      <Filter>old\5_Renderer\Core\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Core\Platform\PlatformManager.h">
-      <Filter>5_Renderer\Core\Platform</Filter>
+      <Filter>old\5_Renderer\Core\Platform</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\IResource.h">
-      <Filter>5_Renderer\Resource</Filter>
+      <Filter>old\5_Renderer\Resource</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\IResourceListener.h">
-      <Filter>5_Renderer\Resource</Filter>
+      <Filter>old\5_Renderer\Resource</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\IResourceLoader.h">
-      <Filter>5_Renderer\Resource</Filter>
+      <Filter>old\5_Renderer\Resource</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\IResourceManager.h">
-      <Filter>5_Renderer\Resource</Filter>
+      <Filter>old\5_Renderer\Resource</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\RendererResourceManager.h">
-      <Filter>5_Renderer\Resource</Filter>
+      <Filter>old\5_Renderer\Resource</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ResourceManager.h">
-      <Filter>5_Renderer\Resource</Filter>
+      <Filter>old\5_Renderer\Resource</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ResourceManagerTemplate.h">
-      <Filter>5_Renderer\Resource</Filter>
+      <Filter>old\5_Renderer\Resource</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ResourceStreamer.h">
-      <Filter>5_Renderer\Resource</Filter>
+      <Filter>old\5_Renderer\Resource</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\VertexAttributes\VertexAttributesResource.h">
-      <Filter>5_Renderer\Resource\VertexAttributes</Filter>
+      <Filter>old\5_Renderer\Resource\VertexAttributes</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\VertexAttributes\VertexAttributesResourceManager.h">
-      <Filter>5_Renderer\Resource\VertexAttributes</Filter>
+      <Filter>old\5_Renderer\Resource\VertexAttributes</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\VertexAttributes\Loader\VertexAttributesFileFormat.h">
-      <Filter>5_Renderer\Resource\VertexAttributes\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\VertexAttributes\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\VertexAttributes\Loader\VertexAttributesResourceLoader.h">
-      <Filter>5_Renderer\Resource\VertexAttributes\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\VertexAttributes\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Texture\TextureResource.h">
-      <Filter>5_Renderer\Resource\Texture</Filter>
+      <Filter>old\5_Renderer\Resource\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Texture\TextureResourceManager.h">
-      <Filter>5_Renderer\Resource\Texture</Filter>
+      <Filter>old\5_Renderer\Resource\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Texture\Loader\CrnArrayFileFormat.h">
-      <Filter>5_Renderer\Resource\Texture\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Texture\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Texture\Loader\CrnArrayTextureResourceLoader.h">
-      <Filter>5_Renderer\Resource\Texture\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Texture\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Texture\Loader\CrnTextureResourceLoader.h">
-      <Filter>5_Renderer\Resource\Texture\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Texture\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Texture\Loader\ITextureResourceLoader.h">
-      <Filter>5_Renderer\Resource\Texture\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Texture\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Texture\Loader\KtxTextureResourceLoader.h">
-      <Filter>5_Renderer\Resource\Texture\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Texture\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Texture\Loader\Lz4DdsTextureResourceLoader.h">
-      <Filter>5_Renderer\Resource\Texture\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Texture\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\SkeletonAnimation\SkeletonAnimationController.h">
-      <Filter>5_Renderer\Resource\SkeletonAnimation</Filter>
+      <Filter>old\5_Renderer\Resource\SkeletonAnimation</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\SkeletonAnimation\SkeletonAnimationEvaluator.h">
-      <Filter>5_Renderer\Resource\SkeletonAnimation</Filter>
+      <Filter>old\5_Renderer\Resource\SkeletonAnimation</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\SkeletonAnimation\SkeletonAnimationResource.h">
-      <Filter>5_Renderer\Resource\SkeletonAnimation</Filter>
+      <Filter>old\5_Renderer\Resource\SkeletonAnimation</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\SkeletonAnimation\SkeletonAnimationResourceManager.h">
-      <Filter>5_Renderer\Resource\SkeletonAnimation</Filter>
+      <Filter>old\5_Renderer\Resource\SkeletonAnimation</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\SkeletonAnimation\Loader\SkeletonAnimationFileFormat.h">
-      <Filter>5_Renderer\Resource\SkeletonAnimation\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\SkeletonAnimation\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\SkeletonAnimation\Loader\SkeletonAnimationResourceLoader.h">
-      <Filter>5_Renderer\Resource\SkeletonAnimation\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\SkeletonAnimation\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Skeleton\SkeletonResource.h">
-      <Filter>5_Renderer\Resource\Skeleton</Filter>
+      <Filter>old\5_Renderer\Resource\Skeleton</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Skeleton\SkeletonResourceManager.h">
-      <Filter>5_Renderer\Resource\Skeleton</Filter>
+      <Filter>old\5_Renderer\Resource\Skeleton</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Skeleton\Loader\SkeletonFileFormat.h">
-      <Filter>5_Renderer\Resource\Skeleton\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Skeleton\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Skeleton\Loader\SkeletonResourceLoader.h">
-      <Filter>5_Renderer\Resource\Skeleton\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Skeleton\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ShaderPiece\ShaderPieceResource.h">
-      <Filter>5_Renderer\Resource\ShaderPiece</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderPiece</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ShaderPiece\ShaderPieceResourceManager.h">
-      <Filter>5_Renderer\Resource\ShaderPiece</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderPiece</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ShaderPiece\Loader\ShaderPieceFileFormat.h">
-      <Filter>5_Renderer\Resource\ShaderPiece\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderPiece\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ShaderPiece\Loader\ShaderPieceResourceLoader.h">
-      <Filter>5_Renderer\Resource\ShaderPiece\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderPiece\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ShaderBlueprint\GraphicsShaderType.h">
-      <Filter>5_Renderer\Resource\ShaderBlueprint</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ShaderBlueprint\ShaderBlueprintResource.h">
-      <Filter>5_Renderer\Resource\ShaderBlueprint</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ShaderBlueprint\ShaderBlueprintResourceManager.h">
-      <Filter>5_Renderer\Resource\ShaderBlueprint</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ShaderBlueprint\Loader\ShaderBlueprintFileFormat.h">
-      <Filter>5_Renderer\Resource\ShaderBlueprint\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ShaderBlueprint\Loader\ShaderBlueprintResourceLoader.h">
-      <Filter>5_Renderer\Resource\ShaderBlueprint\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ShaderBlueprint\Cache\Preprocessor.h">
-      <Filter>5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ShaderBlueprint\Cache\ShaderBuilder.h">
-      <Filter>5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ShaderBlueprint\Cache\ShaderCache.h">
-      <Filter>5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ShaderBlueprint\Cache\ShaderCacheManager.h">
-      <Filter>5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\ShaderBlueprint\Cache\ShaderProperties.h">
-      <Filter>5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\ShaderBlueprint\Cache</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\SceneNode.h">
-      <Filter>5_Renderer\Resource\Scene</Filter>
+      <Filter>old\5_Renderer\Resource\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\SceneResource.h">
-      <Filter>5_Renderer\Resource\Scene</Filter>
+      <Filter>old\5_Renderer\Resource\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\SceneResourceManager.h">
-      <Filter>5_Renderer\Resource\Scene</Filter>
+      <Filter>old\5_Renderer\Resource\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Culling\SceneCullingManager.h">
-      <Filter>5_Renderer\Resource\Scene\Culling</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Culling</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Culling\SceneItemSet.h">
-      <Filter>5_Renderer\Resource\Scene\Culling</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Culling</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Factory\ISceneFactory.h">
-      <Filter>5_Renderer\Resource\Scene\Factory</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Factory</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Factory\SceneFactory.h">
-      <Filter>5_Renderer\Resource\Scene\Factory</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Factory</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Item\ISceneItem.h">
-      <Filter>5_Renderer\Resource\Scene\Item</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Item\MaterialSceneItem.h">
-      <Filter>5_Renderer\Resource\Scene\Item</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Item\Camera\CameraSceneItem.h">
-      <Filter>5_Renderer\Resource\Scene\Item\Camera</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Item\Grass\GrassSceneItem.h">
-      <Filter>5_Renderer\Resource\Scene\Item\Grass</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Grass</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Item\Light\LightSceneItem.h">
-      <Filter>5_Renderer\Resource\Scene\Item\Light</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Light</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Item\Light\SunlightSceneItem.h">
-      <Filter>5_Renderer\Resource\Scene\Item\Light</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Light</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Item\Mesh\MeshSceneItem.h">
-      <Filter>5_Renderer\Resource\Scene\Item\Mesh</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Item\Mesh\SkeletonMeshSceneItem.h">
-      <Filter>5_Renderer\Resource\Scene\Item\Mesh</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Item\Particles\ParticlesSceneItem.h">
-      <Filter>5_Renderer\Resource\Scene\Item\Particles</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Particles</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Item\Sky\ArHosekSkyModelData_RGB.h">
-      <Filter>5_Renderer\Resource\Scene\Item\Sky</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Sky</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Item\Sky\HosekWilkieSky.h">
-      <Filter>5_Renderer\Resource\Scene\Item\Sky</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Sky</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Item\Sky\SkySceneItem.h">
-      <Filter>5_Renderer\Resource\Scene\Item\Sky</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Sky</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Item\Terrain\TerrainSceneItem.h">
-      <Filter>5_Renderer\Resource\Scene\Item\Terrain</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Terrain</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Item\Volume\VolumeSceneItem.h">
-      <Filter>5_Renderer\Resource\Scene\Item\Volume</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Item\Volume</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Loader\SceneFileFormat.h">
-      <Filter>5_Renderer\Resource\Scene\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Scene\Loader\SceneResourceLoader.h">
-      <Filter>5_Renderer\Resource\Scene\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Scene\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Mesh\MeshResource.h">
-      <Filter>5_Renderer\Resource\Mesh</Filter>
+      <Filter>old\5_Renderer\Resource\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Mesh\MeshResourceManager.h">
-      <Filter>5_Renderer\Resource\Mesh</Filter>
+      <Filter>old\5_Renderer\Resource\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Mesh\SubMesh.h">
-      <Filter>5_Renderer\Resource\Mesh</Filter>
+      <Filter>old\5_Renderer\Resource\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Mesh\Loader\IMeshResourceLoader.h">
-      <Filter>5_Renderer\Resource\Mesh\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Mesh\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Mesh\Loader\MeshFileFormat.h">
-      <Filter>5_Renderer\Resource\Mesh\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Mesh\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Mesh\Loader\MeshResourceLoader.h">
-      <Filter>5_Renderer\Resource\Mesh\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Mesh\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\MaterialBlueprintResource.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\MaterialBlueprintResourceManager.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\BufferManager\IndirectBufferManager.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\BufferManager\LightBufferManager.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\BufferManager\MaterialBufferManager.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\BufferManager\MaterialBufferSlot.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\BufferManager\PassBufferManager.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\BufferManager\TextureInstanceBufferManager.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\BufferManager\UniformInstanceBufferManager.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\BufferManager</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\Cache\ComputePipelineStateCache.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\Cache\ComputePipelineStateCacheManager.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\Cache\ComputePipelineStateCompiler.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\Cache\ComputePipelineStateSignature.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\Cache\GraphicsPipelineStateCache.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\Cache\GraphicsPipelineStateCacheManager.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\Cache\GraphicsPipelineStateCompiler.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\Cache\GraphicsPipelineStateSignature.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\Cache\GraphicsProgramCache.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\Cache\GraphicsProgramCacheManager.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Cache</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\Listener\IMaterialBlueprintResourceListener.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Listener</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Listener</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\Listener\MaterialBlueprintResourceListener.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Listener</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Listener</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\Loader\MaterialBlueprintFileFormat.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\MaterialBlueprint\Loader\MaterialBlueprintResourceLoader.h">
-      <Filter>5_Renderer\Resource\MaterialBlueprint\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\MaterialBlueprint\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Material\MaterialProperties.h">
-      <Filter>5_Renderer\Resource\Material</Filter>
+      <Filter>old\5_Renderer\Resource\Material</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Material\MaterialProperty.h">
-      <Filter>5_Renderer\Resource\Material</Filter>
+      <Filter>old\5_Renderer\Resource\Material</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Material\MaterialPropertyValue.h">
-      <Filter>5_Renderer\Resource\Material</Filter>
+      <Filter>old\5_Renderer\Resource\Material</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Material\MaterialResource.h">
-      <Filter>5_Renderer\Resource\Material</Filter>
+      <Filter>old\5_Renderer\Resource\Material</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Material\MaterialResourceManager.h">
-      <Filter>5_Renderer\Resource\Material</Filter>
+      <Filter>old\5_Renderer\Resource\Material</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Material\MaterialTechnique.h">
-      <Filter>5_Renderer\Resource\Material</Filter>
+      <Filter>old\5_Renderer\Resource\Material</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Material\Loader\MaterialFileFormat.h">
-      <Filter>5_Renderer\Resource\Material\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Material\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\Material\Loader\MaterialResourceLoader.h">
-      <Filter>5_Renderer\Resource\Material\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\Material\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorWorkspace\CompositorContextData.h">
-      <Filter>5_Renderer\Resource\CompositorWorkspace</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorWorkspace</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorWorkspace\CompositorWorkspaceInstance.h">
-      <Filter>5_Renderer\Resource\CompositorWorkspace</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorWorkspace</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorWorkspace\CompositorWorkspaceResource.h">
-      <Filter>5_Renderer\Resource\CompositorWorkspace</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorWorkspace</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorWorkspace\CompositorWorkspaceResourceManager.h">
-      <Filter>5_Renderer\Resource\CompositorWorkspace</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorWorkspace</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorWorkspace\Loader\CompositorWorkspaceFileFormat.h">
-      <Filter>5_Renderer\Resource\CompositorWorkspace\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorWorkspace\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorWorkspace\Loader\CompositorWorkspaceResourceLoader.h">
-      <Filter>5_Renderer\Resource\CompositorWorkspace\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorWorkspace\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\CompositorChannel.h">
-      <Filter>5_Renderer\Resource\CompositorNode</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\CompositorFramebuffer.h">
-      <Filter>5_Renderer\Resource\CompositorNode</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\CompositorNodeInstance.h">
-      <Filter>5_Renderer\Resource\CompositorNode</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\CompositorNodeResource.h">
-      <Filter>5_Renderer\Resource\CompositorNode</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\CompositorNodeResourceManager.h">
-      <Filter>5_Renderer\Resource\CompositorNode</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\CompositorRenderTargetTexture.h">
-      <Filter>5_Renderer\Resource\CompositorNode</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\CompositorTarget.h">
-      <Filter>5_Renderer\Resource\CompositorNode</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Loader\CompositorNodeFileFormat.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Loader\CompositorNodeResourceLoader.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Loader</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Loader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\CompositorPassFactory.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\ICompositorInstancePass.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\ICompositorPassFactory.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\ICompositorResourcePass.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\Clear\CompositorInstancePassClear.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Clear</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Clear</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\Clear\CompositorResourcePassClear.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Clear</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Clear</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\Compute\CompositorInstancePassCompute.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Compute</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Compute</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\Compute\CompositorResourcePassCompute.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Compute</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Compute</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\Copy\CompositorInstancePassCopy.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Copy</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Copy</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\Copy\CompositorResourcePassCopy.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Copy</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Copy</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\DebugGui\CompositorInstancePassDebugGui.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\DebugGui</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\DebugGui</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\DebugGui\CompositorResourcePassDebugGui.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\DebugGui</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\DebugGui</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\GenerateMipmaps\CompositorInstancePassGenerateMipmaps.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\GenerateMipmaps</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\GenerateMipmaps</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\GenerateMipmaps\CompositorResourcePassGenerateMipmaps.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\GenerateMipmaps</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\GenerateMipmaps</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\ResolveMultisample\CompositorInstancePassResolveMultisample.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\ResolveMultisample</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\ResolveMultisample</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\ResolveMultisample\CompositorResourcePassResolveMultisample.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\ResolveMultisample</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\ResolveMultisample</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\Scene\CompositorInstancePassScene.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Scene</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\Scene\CompositorResourcePassScene.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\Scene</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\ShadowMap\CompositorInstancePassShadowMap.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\ShadowMap</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\ShadowMap</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\ShadowMap\CompositorResourcePassShadowMap.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\ShadowMap</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\ShadowMap</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\CompositorInstancePassVrHiddenAreaMesh.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\CompositorResourcePassVrHiddenAreaMesh.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_GLSL_410.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_GLSL_ES3.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_Null.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\DebugGui\Detail\Shader\DebugGui_HLSL_D3D11_D3D12.h">
-      <Filter>5_Renderer\DebugGui\Detail\Shader</Filter>
+      <Filter>old\5_Renderer\DebugGui\Detail\Shader</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader\VrHiddenAreaMesh_HLSL_D3D11_D3D12.h">
-      <Filter>5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader</Filter>
+      <Filter>old\5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader</Filter>
     </ClInclude>
     <ClInclude Include="RHI\RHIDebug.h">
-      <Filter>4_RHI\Core</Filter>
+      <Filter>old\4_RHI\Core</Filter>
     </ClInclude>
     <ClInclude Include="RHI\Statistics.h">
-      <Filter>4_RHI\Core</Filter>
+      <Filter>old\4_RHI\Core</Filter>
     </ClInclude>
     <ClInclude Include="RHI\Capabilities.h">
-      <Filter>4_RHI\Core</Filter>
+      <Filter>old\4_RHI\Core</Filter>
     </ClInclude>
     <ClInclude Include="RHI\RHITypes.h">
-      <Filter>4_RHI\Core</Filter>
+      <Filter>old\4_RHI\Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\AssertMacros.h">
-      <Filter>1_Core\Debug</Filter>
+      <Filter>old\1_Core\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Core\GetInvalid.h">
-      <Filter>1_Core\Object</Filter>
+      <Filter>old\1_Core\Object</Filter>
     </ClInclude>
     <ClInclude Include="Core\DefaultAssert.h">
-      <Filter>1_Core\Debug</Filter>
+      <Filter>old\1_Core\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Utility\StringId.h">
-      <Filter>2_Utility</Filter>
+      <Filter>old\2_Utility</Filter>
     </ClInclude>
     <ClInclude Include="Math\EulerAngles.h">
-      <Filter>3_Math</Filter>
+      <Filter>old\3_Math</Filter>
     </ClInclude>
     <ClInclude Include="Math\Frustum.h">
-      <Filter>3_Math</Filter>
+      <Filter>old\3_Math</Filter>
     </ClInclude>
     <ClInclude Include="Math\Math.h">
-      <Filter>3_Math</Filter>
+      <Filter>old\3_Math</Filter>
     </ClInclude>
     <ClInclude Include="Math\Plane.h">
-      <Filter>3_Math</Filter>
+      <Filter>old\3_Math</Filter>
     </ClInclude>
     <ClInclude Include="Math\Transform.h">
-      <Filter>3_Math</Filter>
+      <Filter>old\3_Math</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\DebugGui\ImGuiLog.h">
-      <Filter>5_Renderer\DebugGui</Filter>
+      <Filter>old\5_Renderer\DebugGui</Filter>
     </ClInclude>
     <ClInclude Include="Core\File\AndroidFileManager.h">
-      <Filter>1_Core\File</Filter>
+      <Filter>old\1_Core\File</Filter>
     </ClInclude>
     <ClInclude Include="Core\File\DefaultFileManager.h">
-      <Filter>1_Core\File</Filter>
+      <Filter>old\1_Core\File</Filter>
     </ClInclude>
     <ClInclude Include="Core\File\FileSystemHelper.h">
-      <Filter>1_Core\File</Filter>
+      <Filter>old\1_Core\File</Filter>
     </ClInclude>
     <ClInclude Include="Core\File\IFile.h">
-      <Filter>1_Core\File</Filter>
+      <Filter>old\1_Core\File</Filter>
     </ClInclude>
     <ClInclude Include="Core\File\IFileManager.h">
-      <Filter>1_Core\File</Filter>
+      <Filter>old\1_Core\File</Filter>
     </ClInclude>
     <ClInclude Include="Core\File\MemoryFile.h">
-      <Filter>1_Core\File</Filter>
+      <Filter>old\1_Core\File</Filter>
     </ClInclude>
     <ClInclude Include="Core\File\PhysicsFSFileManager.h">
-      <Filter>1_Core\File</Filter>
+      <Filter>old\1_Core\File</Filter>
     </ClInclude>
     <ClInclude Include="Utility\MakeID.h">
-      <Filter>2_Utility</Filter>
+      <Filter>old\2_Utility</Filter>
     </ClInclude>
     <ClInclude Include="Core\DefaultAllocator.h">
-      <Filter>1_Core\Memory</Filter>
+      <Filter>old\1_Core\Memory</Filter>
     </ClInclude>
     <ClInclude Include="Core\LogSystem\detail\Platform\AndroidPlatformCoreLog.h">
-      <Filter>1_Core\LogSystem\detail\Platform</Filter>
+      <Filter>old\1_Core\LogSystem\detail\Platform</Filter>
     </ClInclude>
     <ClInclude Include="Core\LogSystem\detail\Platform\EmscriptenPlatformCoreLog.h">
-      <Filter>1_Core\LogSystem\detail\Platform</Filter>
+      <Filter>old\1_Core\LogSystem\detail\Platform</Filter>
     </ClInclude>
     <ClInclude Include="Core\LogSystem\detail\Platform\LinuxPlatformCoreLog.h">
-      <Filter>1_Core\LogSystem\detail\Platform</Filter>
+      <Filter>old\1_Core\LogSystem\detail\Platform</Filter>
     </ClInclude>
     <ClInclude Include="Core\LogSystem\detail\Platform\WindowsPlatformCoreLog.h">
-      <Filter>1_Core\LogSystem\detail\Platform</Filter>
+      <Filter>old\1_Core\LogSystem\detail\Platform</Filter>
     </ClInclude>
     <ClInclude Include="Core\LogSystem\detail\PlatformCoreLog.h">
-      <Filter>1_Core\LogSystem\detail</Filter>
+      <Filter>old\1_Core\LogSystem\detail</Filter>
     </ClInclude>
     <ClInclude Include="Core\LogSystem\detail\CoreLogSystem.h">
-      <Filter>1_Core\LogSystem\detail</Filter>
+      <Filter>old\1_Core\LogSystem\detail</Filter>
     </ClInclude>
     <ClInclude Include="Core\LogSystem\detail\CoreLogThread.h">
-      <Filter>1_Core\LogSystem\detail</Filter>
+      <Filter>old\1_Core\LogSystem\detail</Filter>
     </ClInclude>
     <ClInclude Include="Core\LogSystem\detail\LogVerbosity.h">
-      <Filter>1_Core\LogSystem\detail</Filter>
+      <Filter>old\1_Core\LogSystem\detail</Filter>
     </ClInclude>
     <ClInclude Include="Core\LogSystem\Log.h">
-      <Filter>1_Core\LogSystem</Filter>
+      <Filter>old\1_Core\LogSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0_Base">
       <UniqueIdentifier>{a1cd305b-0c49-4ae6-ad9f-a14b9b407400}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1_Core">
-      <UniqueIdentifier>{d718705e-21b5-45e2-bdd7-1afe309e949d}</UniqueIdentifier>
+    <Filter Include="old">
+      <UniqueIdentifier>{6fd6897f-dae2-4864-9879-04b6225d61f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2_Utility">
-      <UniqueIdentifier>{0ef567a3-df2a-4196-98f4-72fea53ef287}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="x_Application">
+    <Filter Include="old\x_Application">
       <UniqueIdentifier>{300e355c-439e-45ff-a74c-237736a3baa6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3_Math">
-      <UniqueIdentifier>{917e468f-60ce-4828-b8a9-daa924241558}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="4_RHI">
-      <UniqueIdentifier>{2fab659a-bf18-4b6e-bcca-503b118d0b59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="6_Graphics">
-      <UniqueIdentifier>{e94f0097-25a8-4f5c-94cb-ec3c0e99e0d1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="7_Scene">
+    <Filter Include="old\7_Scene">
       <UniqueIdentifier>{e611321d-1fe1-4774-bec1-9f09faadc156}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer">
+    <Filter Include="old\6_Graphics">
+      <UniqueIdentifier>{e94f0097-25a8-4f5c-94cb-ec3c0e99e0d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer">
       <UniqueIdentifier>{e7a059f2-6e98-49bc-aedf-c4f93a8f7749}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Asset">
+    <Filter Include="old\5_Renderer\Asset">
       <UniqueIdentifier>{f653630d-6c1b-459e-bd3f-b9f10b07336e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Core">
-      <UniqueIdentifier>{0b7889de-c6b5-4a18-9746-9b166d42db07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\DebugGui">
-      <UniqueIdentifier>{33c9dbb2-58d3-46d2-bcca-2d8c60f51cc8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\RenderQueue">
-      <UniqueIdentifier>{72063d6c-c9a4-4027-a2a0-d54721b0c8cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource">
-      <UniqueIdentifier>{2df4e050-f606-44cc-b4f2-7ad4def76654}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\DebugGui\Detail">
-      <UniqueIdentifier>{5bb16557-e7f6-4fec-b738-0b0913674209}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\DebugGui\Detail\Shader">
-      <UniqueIdentifier>{9024ab88-33a1-4ab1-ba65-059a0238e48c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Asset\Loader">
+    <Filter Include="old\5_Renderer\Asset\Loader">
       <UniqueIdentifier>{812da4d2-ba56-486e-8e5e-c1d0e73b99bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Core\Platform">
+    <Filter Include="old\5_Renderer\Core">
+      <UniqueIdentifier>{0b7889de-c6b5-4a18-9746-9b166d42db07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Core\Platform">
       <UniqueIdentifier>{98a19945-da62-4964-8592-4ae50f86fae1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Core\Renderer">
+    <Filter Include="old\5_Renderer\Core\Renderer">
       <UniqueIdentifier>{38b56174-0aa2-43d5-be9e-30cf1606b5f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Core\Thread">
+    <Filter Include="old\5_Renderer\Core\Thread">
       <UniqueIdentifier>{dd14cb0a-3fd6-495c-ba8d-e12ca5cb51a5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Core\Time">
+    <Filter Include="old\5_Renderer\Core\Time">
       <UniqueIdentifier>{948cf36e-22dc-46cb-89c6-803117c63bba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Resource\CompositorNode">
+    <Filter Include="old\5_Renderer\DebugGui">
+      <UniqueIdentifier>{33c9dbb2-58d3-46d2-bcca-2d8c60f51cc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\DebugGui\Detail">
+      <UniqueIdentifier>{5bb16557-e7f6-4fec-b738-0b0913674209}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\DebugGui\Detail\Shader">
+      <UniqueIdentifier>{9024ab88-33a1-4ab1-ba65-059a0238e48c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\RenderQueue">
+      <UniqueIdentifier>{72063d6c-c9a4-4027-a2a0-d54721b0c8cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource">
+      <UniqueIdentifier>{2df4e050-f606-44cc-b4f2-7ad4def76654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\CompositorNode">
       <UniqueIdentifier>{477fb316-2f33-4e7f-944e-3ba040854149}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Resource\CompositorWorkspace">
-      <UniqueIdentifier>{81960e15-f494-4be8-98c7-cc79c77182e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Material">
-      <UniqueIdentifier>{3f9bab21-bdcd-45d2-8bd1-83911d33b352}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\MaterialBlueprint">
-      <UniqueIdentifier>{cce80f15-6ed1-44c4-a308-0cf5a6b424ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Mesh">
-      <UniqueIdentifier>{789e89f7-df04-45f8-bb3d-7da5d3d8fbc8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Scene">
-      <UniqueIdentifier>{6293f262-0cb4-4c76-b198-ed2c1a59fada}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\ShaderBlueprint">
-      <UniqueIdentifier>{99bc9d25-9df1-45db-9ea5-e2291b6a2fb5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\ShaderPiece">
-      <UniqueIdentifier>{023ccdd7-5212-45f8-b729-bb3efc3cbf1a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Skeleton">
-      <UniqueIdentifier>{53287675-b434-4c17-9648-f4976ae24abc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\SkeletonAnimation">
-      <UniqueIdentifier>{9004eda6-1822-42d7-9d6e-c2fd5aa6512b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Texture">
-      <UniqueIdentifier>{6af8d50a-bf49-433e-8621-d706a14a73a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\VertexAttributes">
-      <UniqueIdentifier>{79be9121-23c6-4f67-bee8-422afaaf9d86}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\CompositorNode\Loader">
+    <Filter Include="old\5_Renderer\Resource\CompositorNode\Loader">
       <UniqueIdentifier>{323ceb02-8f20-4b57-9874-f432bd88ef60}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Resource\VertexAttributes\Loader">
-      <UniqueIdentifier>{4b60c541-5714-41f4-943b-71450bc79594}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\CompositorWorkspace\Loader">
-      <UniqueIdentifier>{a189926c-c66b-4236-9cde-c248221ceb60}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Material\Loader">
-      <UniqueIdentifier>{da9901bd-fa58-4811-a27d-938ac7a86ccb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\MaterialBlueprint\Loader">
-      <UniqueIdentifier>{b8ff05e1-a8b0-4bfb-b053-e6b878d3d0f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Mesh\Loader">
-      <UniqueIdentifier>{32e1a3b4-b6ab-4310-a4a9-142b2b7a1131}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Texture\Loader">
-      <UniqueIdentifier>{ade709ce-ae3b-4fc7-9f56-e58f114d3c75}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\SkeletonAnimation\Loader">
-      <UniqueIdentifier>{ecb0451b-e77d-4c5d-9eb8-c9753c015355}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Skeleton\Loader">
-      <UniqueIdentifier>{d0f498f1-a5b9-4178-be38-8e4869ca2287}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\ShaderPiece\Loader">
-      <UniqueIdentifier>{447dfb88-a53e-4710-bb9f-3729e7ef999a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\ShaderBlueprint\Loader">
-      <UniqueIdentifier>{fe8879e6-3e5d-4041-9bf7-ff88104b8d3c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Scene\Loader">
-      <UniqueIdentifier>{03b28e24-fab4-4957-9f32-8e11b6d5fc5d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\ShaderBlueprint\Cache">
-      <UniqueIdentifier>{bf36c7f2-7a5d-4ac4-9e06-9e5e40f639bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Scene\Culling">
-      <UniqueIdentifier>{e220980c-4ad6-4040-8176-c43bbb7046a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Scene\Factory">
-      <UniqueIdentifier>{7da4a96b-be5d-4276-a3b0-35ec46e80150}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Scene\Item">
-      <UniqueIdentifier>{3a2a4166-6426-4aef-a91e-ee84cf7d6476}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Scene\Item\Camera">
-      <UniqueIdentifier>{dec45975-91ae-46e7-9e55-569540bcd02c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Scene\Item\Grass">
-      <UniqueIdentifier>{b55a78c9-9217-4059-baeb-44de8a6ea681}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Scene\Item\Light">
-      <UniqueIdentifier>{f9bcb557-7afc-414f-bd75-3c6453e4e181}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Scene\Item\Mesh">
-      <UniqueIdentifier>{d625b378-5b78-45d6-a0a0-80f528c276fa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Scene\Item\Particles">
-      <UniqueIdentifier>{fbda2695-edc0-4f06-9f3b-afede9a6d705}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Scene\Item\Sky">
-      <UniqueIdentifier>{71ca92e4-91b6-482c-b4f4-ec8f27e85907}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Scene\Item\Terrain">
-      <UniqueIdentifier>{dd8d9436-9123-4c49-a0d1-d88f27bfaae9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\Scene\Item\Volume">
-      <UniqueIdentifier>{1883caeb-45b2-42a9-bb0a-8e863a9137b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\MaterialBlueprint\BufferManager">
-      <UniqueIdentifier>{724c99b4-28d1-4833-947a-7f7846a0218d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\MaterialBlueprint\Cache">
-      <UniqueIdentifier>{c44a7778-b50e-4585-a2f0-f8df09b1f8ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\MaterialBlueprint\Listener">
-      <UniqueIdentifier>{c2515424-837a-4902-b4f3-35378aaecc57}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="5_Renderer\Resource\CompositorNode\Pass">
+    <Filter Include="old\5_Renderer\Resource\CompositorNode\Pass">
       <UniqueIdentifier>{aaa058c2-90ca-497b-a9c8-b1e1139ccf91}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Resource\CompositorNode\Pass\Clear">
+    <Filter Include="old\5_Renderer\Resource\CompositorNode\Pass\Clear">
       <UniqueIdentifier>{0a978707-df69-4d86-b4a1-8e196a18d858}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Resource\CompositorNode\Pass\Compute">
+    <Filter Include="old\5_Renderer\Resource\CompositorNode\Pass\Compute">
       <UniqueIdentifier>{dc3d5dcc-2a54-46d7-9034-5136cc06cfcc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Resource\CompositorNode\Pass\Copy">
+    <Filter Include="old\5_Renderer\Resource\CompositorNode\Pass\Copy">
       <UniqueIdentifier>{8ce8983c-a4c6-4d64-92fc-f11f3e24a35b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Resource\CompositorNode\Pass\DebugGui">
+    <Filter Include="old\5_Renderer\Resource\CompositorNode\Pass\DebugGui">
       <UniqueIdentifier>{0e6565e4-37f9-43f3-b642-5cc92ad39ef5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Resource\CompositorNode\Pass\GenerateMipmaps">
+    <Filter Include="old\5_Renderer\Resource\CompositorNode\Pass\GenerateMipmaps">
       <UniqueIdentifier>{9734fd7a-5151-454c-96fb-e638908d1828}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Resource\CompositorNode\Pass\ResolveMultisample">
+    <Filter Include="old\5_Renderer\Resource\CompositorNode\Pass\ResolveMultisample">
       <UniqueIdentifier>{1023f399-431a-490b-a137-1ac87bd13572}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Resource\CompositorNode\Pass\Scene">
+    <Filter Include="old\5_Renderer\Resource\CompositorNode\Pass\Scene">
       <UniqueIdentifier>{d0612997-271a-49cf-8357-058539337db7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Resource\CompositorNode\Pass\ShadowMap">
+    <Filter Include="old\5_Renderer\Resource\CompositorNode\Pass\ShadowMap">
       <UniqueIdentifier>{b75f5b43-e778-43e6-ae0f-d698fc0b9acf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh">
+    <Filter Include="old\5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh">
       <UniqueIdentifier>{6715e714-6721-481c-a951-ec05d2f4bc25}</UniqueIdentifier>
     </Filter>
-    <Filter Include="5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader">
+    <Filter Include="old\5_Renderer\Resource\CompositorNode\Pass\VrHiddenAreaMesh\Shader">
       <UniqueIdentifier>{be6bc490-593a-474b-8b9b-800f926a1140}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4_RHI\old">
+    <Filter Include="old\5_Renderer\Resource\CompositorWorkspace">
+      <UniqueIdentifier>{81960e15-f494-4be8-98c7-cc79c77182e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\CompositorWorkspace\Loader">
+      <UniqueIdentifier>{a189926c-c66b-4236-9cde-c248221ceb60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Material">
+      <UniqueIdentifier>{3f9bab21-bdcd-45d2-8bd1-83911d33b352}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Material\Loader">
+      <UniqueIdentifier>{da9901bd-fa58-4811-a27d-938ac7a86ccb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\MaterialBlueprint">
+      <UniqueIdentifier>{cce80f15-6ed1-44c4-a308-0cf5a6b424ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\MaterialBlueprint\Loader">
+      <UniqueIdentifier>{b8ff05e1-a8b0-4bfb-b053-e6b878d3d0f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\MaterialBlueprint\BufferManager">
+      <UniqueIdentifier>{724c99b4-28d1-4833-947a-7f7846a0218d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\MaterialBlueprint\Cache">
+      <UniqueIdentifier>{c44a7778-b50e-4585-a2f0-f8df09b1f8ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\MaterialBlueprint\Listener">
+      <UniqueIdentifier>{c2515424-837a-4902-b4f3-35378aaecc57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Mesh">
+      <UniqueIdentifier>{789e89f7-df04-45f8-bb3d-7da5d3d8fbc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Mesh\Loader">
+      <UniqueIdentifier>{32e1a3b4-b6ab-4310-a4a9-142b2b7a1131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Scene">
+      <UniqueIdentifier>{6293f262-0cb4-4c76-b198-ed2c1a59fada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Scene\Loader">
+      <UniqueIdentifier>{03b28e24-fab4-4957-9f32-8e11b6d5fc5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Scene\Culling">
+      <UniqueIdentifier>{e220980c-4ad6-4040-8176-c43bbb7046a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Scene\Factory">
+      <UniqueIdentifier>{7da4a96b-be5d-4276-a3b0-35ec46e80150}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Scene\Item">
+      <UniqueIdentifier>{3a2a4166-6426-4aef-a91e-ee84cf7d6476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Scene\Item\Camera">
+      <UniqueIdentifier>{dec45975-91ae-46e7-9e55-569540bcd02c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Scene\Item\Grass">
+      <UniqueIdentifier>{b55a78c9-9217-4059-baeb-44de8a6ea681}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Scene\Item\Light">
+      <UniqueIdentifier>{f9bcb557-7afc-414f-bd75-3c6453e4e181}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Scene\Item\Mesh">
+      <UniqueIdentifier>{d625b378-5b78-45d6-a0a0-80f528c276fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Scene\Item\Particles">
+      <UniqueIdentifier>{fbda2695-edc0-4f06-9f3b-afede9a6d705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Scene\Item\Sky">
+      <UniqueIdentifier>{71ca92e4-91b6-482c-b4f4-ec8f27e85907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Scene\Item\Terrain">
+      <UniqueIdentifier>{dd8d9436-9123-4c49-a0d1-d88f27bfaae9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Scene\Item\Volume">
+      <UniqueIdentifier>{1883caeb-45b2-42a9-bb0a-8e863a9137b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\ShaderBlueprint">
+      <UniqueIdentifier>{99bc9d25-9df1-45db-9ea5-e2291b6a2fb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\ShaderBlueprint\Loader">
+      <UniqueIdentifier>{fe8879e6-3e5d-4041-9bf7-ff88104b8d3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\ShaderBlueprint\Cache">
+      <UniqueIdentifier>{bf36c7f2-7a5d-4ac4-9e06-9e5e40f639bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\ShaderPiece">
+      <UniqueIdentifier>{023ccdd7-5212-45f8-b729-bb3efc3cbf1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\ShaderPiece\Loader">
+      <UniqueIdentifier>{447dfb88-a53e-4710-bb9f-3729e7ef999a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Skeleton">
+      <UniqueIdentifier>{53287675-b434-4c17-9648-f4976ae24abc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Skeleton\Loader">
+      <UniqueIdentifier>{d0f498f1-a5b9-4178-be38-8e4869ca2287}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\SkeletonAnimation">
+      <UniqueIdentifier>{9004eda6-1822-42d7-9d6e-c2fd5aa6512b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\SkeletonAnimation\Loader">
+      <UniqueIdentifier>{ecb0451b-e77d-4c5d-9eb8-c9753c015355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Texture">
+      <UniqueIdentifier>{6af8d50a-bf49-433e-8621-d706a14a73a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\Texture\Loader">
+      <UniqueIdentifier>{ade709ce-ae3b-4fc7-9f56-e58f114d3c75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\VertexAttributes">
+      <UniqueIdentifier>{79be9121-23c6-4f67-bee8-422afaaf9d86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\5_Renderer\Resource\VertexAttributes\Loader">
+      <UniqueIdentifier>{4b60c541-5714-41f4-943b-71450bc79594}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\4_RHI">
+      <UniqueIdentifier>{2fab659a-bf18-4b6e-bcca-503b118d0b59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\4_RHI\old">
       <UniqueIdentifier>{304ee7b9-e519-4039-92ef-63dfec5b7fe9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4_RHI\old\OpenGL">
+    <Filter Include="old\4_RHI\old\OpenGL">
       <UniqueIdentifier>{b16f6fcd-5941-410f-9a4b-ec5d1787a81c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4_RHI\old\OpenGL\Resource">
+    <Filter Include="old\4_RHI\old\OpenGL\Resource">
       <UniqueIdentifier>{762a1050-d116-491f-8cbd-825a3808cc41}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4_RHI\old\RHI">
+    <Filter Include="old\4_RHI\old\RHI">
       <UniqueIdentifier>{9c5e9ebd-df77-4f8f-9056-f1331a6275ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4_RHI\old\RHI\Interface">
+    <Filter Include="old\4_RHI\old\RHI\Interface">
       <UniqueIdentifier>{365a6a36-e0e9-4b82-a866-76cf233456cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4_RHI\old\Utility">
+    <Filter Include="old\4_RHI\old\Utility">
       <UniqueIdentifier>{2fa7478c-9570-4554-8276-db81f464ad93}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4_RHI\old\Vulkan">
+    <Filter Include="old\4_RHI\old\Vulkan">
       <UniqueIdentifier>{87399581-bcd9-4299-a6ac-65022f3f4f79}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4_RHI\old\D3D12">
+    <Filter Include="old\4_RHI\old\D3D12">
       <UniqueIdentifier>{5f3e1101-6089-43ee-baca-06f881ece6e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4_RHI\old\D3D11">
+    <Filter Include="old\4_RHI\old\D3D11">
       <UniqueIdentifier>{44ea876d-907a-44ca-8aca-736d5092507e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4_RHI\Core">
+    <Filter Include="old\4_RHI\Core">
       <UniqueIdentifier>{cfbbd14e-bfae-4a63-b19b-898e3ef4cc63}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4_RHI\ResourceTypes">
+    <Filter Include="old\4_RHI\ResourceTypes">
       <UniqueIdentifier>{86fab3e2-257a-49cc-b4c1-1ec824d2670a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1_Core\Debug">
+    <Filter Include="old\3_Math">
+      <UniqueIdentifier>{917e468f-60ce-4828-b8a9-daa924241558}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\2_Utility">
+      <UniqueIdentifier>{0ef567a3-df2a-4196-98f4-72fea53ef287}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\1_Core">
+      <UniqueIdentifier>{d718705e-21b5-45e2-bdd7-1afe309e949d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="old\1_Core\Debug">
       <UniqueIdentifier>{65f9552f-068e-413e-85c5-d138a2ec3130}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1_Core\Object">
+    <Filter Include="old\1_Core\Object">
       <UniqueIdentifier>{69205f8a-10ad-45b3-93ba-2d1294e86aea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1_Core\File">
+    <Filter Include="old\1_Core\File">
       <UniqueIdentifier>{206c46d4-2074-48ba-b68f-a4095af835e7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1_Core\Memory">
+    <Filter Include="old\1_Core\Memory">
       <UniqueIdentifier>{29cbac8b-a288-4a91-a1c5-cbbf98afe658}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1_Core\LogSystem">
+    <Filter Include="old\1_Core\LogSystem">
       <UniqueIdentifier>{3407a671-7766-4e36-a5a3-3b7ccc25a11f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1_Core\LogSystem\detail">
+    <Filter Include="old\1_Core\LogSystem\detail">
       <UniqueIdentifier>{887d4173-24b8-4dd0-9688-9dc8411a9aa3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1_Core\LogSystem\detail\Platform">
+    <Filter Include="old\1_Core\LogSystem\detail\Platform">
       <UniqueIdentifier>{af2e0a8f-381a-409e-9488-757e95c9c0aa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
